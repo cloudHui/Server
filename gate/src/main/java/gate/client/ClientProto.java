@@ -45,11 +45,11 @@ public class ClientProto {
         return false;
     };
 
-    public final static boolean transferMsg(long connectId, TCPMessage msg) {
+    public static boolean transferMsg(long connectId, TCPMessage msg) {
         return transferMsg(connectId, msg, null);
     }
 
-    public final static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg) {
+    public static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg) {
         Sender sender = ConnectHandler.getSender(connectId);
         if (null != sender) {
             if (null != innerMsg) {

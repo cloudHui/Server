@@ -1,0 +1,13 @@
+syntax = "proto3";
+package msg;
+
+
+message CTGLogin {
+  string vert = 1;   //验证码
+  string channel = 2;//渠道
+}
+
+message GTCLogin {
+  int64 roleId = 1;  //角色id
+  string channel = 2;//渠道
+}

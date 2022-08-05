@@ -1,8 +1,9 @@
 
-protoc.exe --java_out=.  common.proto
+protoc.exe --java_out=./  ./proto/game.proto
+protoc.exe --java_out=./  ./proto/gate.proto
 
-
-XCOPY .\proto\CommonProto.java ..\..\..\..\..\gate\src\main\java\proto\*.* /S /Y
+XCOPY .\msg\Game.java ..\..\..\..\gate\src\main\java\msg\*.* /S /Y
+XCOPY .\msg\Gate.java ..\..\..\..\gate\src\main\java\msg\*.* /S /Y
 
 
 pause
