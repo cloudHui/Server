@@ -1,0 +1,6 @@
+.idea/*
+gate/target/*
+hall/target/*
+room/target/*
+router/target/*
+*.iml

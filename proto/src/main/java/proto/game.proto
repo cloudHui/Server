@@ -1,0 +1,12 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.cloud.protocol.msg;
+
+
+message CTGEnterTable {
+  int32 tableId = 1;      //桌子号
+}
+
+message GTCEnterTable {
+  int32 tableId = 1;      //桌子号
+}
