@@ -1,13 +1,23 @@
 syntax = "proto3";
 package msg;
 
+//服务 注册消息
+message Register {
+  int32 serverId = 1;//服务id
+}
 
-message CTGLogin {
+//服务 注册消息
+message Heart {
+}
+
+//客户端登录大厅
+message CTHLogin {
   string vert = 1;   //验证码
   string channel = 2;//渠道
 }
 
-message GTCLogin {
+//大厅回复客户端登录
+message HTCLogin {
   int64 roleId = 1;  //角色id
   string channel = 2;//渠道
 }

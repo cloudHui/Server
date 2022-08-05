@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
+import msg.MsgId;
 import net.client.Sender;
 import net.connect.ConnectHandler;
 import net.handler.Handler;
@@ -15,58 +16,73 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ClientProto {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ClientProto.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(ClientProto.class);
 
-    public final static Parser PARSER = (id, msg) -> {
-        switch (id) {
+	public final static Parser PARSER = (id, msg) -> {
+		switch (id) {
 
-            default: {
-                return null;
-            }
-        }
-    };
-
-
-    private final static Map<Integer, Handler> handlers;
-    static {
-        handlers = new HashMap<>();
-
-    }
-    public final static Handlers HANDLERS = handlers::get;
+			default: {
+				return null;
+			}
+		}
+	};
 
 
-    public final static Transfer<GateClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
+	private final static Map<Integer, Handler> handlers;
 
-        switch (tcpMessage.getMessageId()){
-            default:
-                break;
-        }
+	static {
+		handlers = new HashMap<>();
 
-        return false;
-    };
+	}
 
-    public static boolean transferMsg(long connectId, TCPMessage msg) {
-        return transferMsg(connectId, msg, null);
-    }
+	public final static Handlers HANDLERS = handlers::get;
 
-    public static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg) {
-        Sender sender = ConnectHandler.getSender(connectId);
-        if (null != sender) {
-            if (null != innerMsg) {
-                sender.sendMessage(replace(msg, innerMsg));
-            } else {
-                sender.sendMessage(msg);
-            }
 
-            return true;
-        }
+	public final static Transfer<GateClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
+		//Todo  special  server back msg need fill gate client serverId
+		int msgId = tcpMessage.getMessageId();
+		if (msgId % 2 == 0) {
+			msgId /= MsgId.BASE_ID_INDEX;
+			switch (msgId) {
+				case MsgId.GAME_TYPE:
+					break;
+				case MsgId.GATE_TYPE:
+					break;
+				case MsgId.HALL_TYPE:
+					break;
+				case MsgId.ROOM_TYPE:
+					break;
+				default:
+					LOGGER.error("[error msg head:{} msgId:{}]", msgId, tcpMessage.getMessageId());
+					break;
+			}
+		} else {
+			return transferMsg(gateClient.getId(), tcpMessage);
+		}
+		return false;
+	};
 
-        LOGGER.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
-        return false;
-    }
+	public static boolean transferMsg(long connectId, TCPMessage msg) {
+		return transferMsg(connectId, msg, null);
+	}
 
-    public static TCPMessage replace(TCPMessage tcpMessage, Message msg) {
-        tcpMessage.setMessage(msg.toByteArray());
-        return tcpMessage;
-    }
+	public static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg) {
+		Sender sender = ConnectHandler.getSender(connectId);
+		if (null != sender) {
+			if (null != innerMsg) {
+				sender.sendMessage(replace(msg, innerMsg));
+			} else {
+				sender.sendMessage(msg);
+			}
+			return true;
+		}
+
+		LOGGER.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
+		return false;
+	}
+
+	public static TCPMessage replace(TCPMessage tcpMessage, Message msg) {
+		tcpMessage.setMessage(msg.toByteArray());
+		return tcpMessage;
+	}
 }

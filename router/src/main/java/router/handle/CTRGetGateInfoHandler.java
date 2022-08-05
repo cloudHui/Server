@@ -40,7 +40,7 @@ public class CTRGetGateInfoHandler implements Handler<CTRGetGateInfo> {
 
 		linker.sendMessage(ack);
 		start = System.currentTimeMillis() - start;
-		LOGGER.info("[req:{}]", req.toString());
-		return false;
+		LOGGER.info("[req:{} start:{}ms]", req.toString(), start);
+		return true;
 	}
 }

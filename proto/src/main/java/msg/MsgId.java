@@ -5,11 +5,12 @@ import java.util.Map;
 
 public interface MsgId {
 
-	int gateIdIndex = 10000;
-	int hallIdIndex = 20000;
-	int roomIdIndex = 30000;
-	int gameIdIndex = 40000;
-	int routerIdIndex = 50000;
+	int GATE_TYPE = 1;
+	int GAME_TYPE = 2;
+	int HALL_TYPE = 3;
+	int ROOM_TYPE = 4;
+
+	int BASE_ID_INDEX = 10000;
 
 	enum GateMsg {
 		LOGIN_REQ(10001, Gate.CTGLogin.class),

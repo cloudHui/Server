@@ -1,5 +1,7 @@
 package router;
 
+import java.util.concurrent.Future;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadtutil.thread.ExecutorPool;
@@ -11,10 +13,15 @@ public class Router {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Router.class);
 	private static Router instance = new Router();
 	private Timer timer;
+	private ExecutorPool executorPool;
 
 	private Router() {
-		ExecutorPool executorPool = new ExecutorPool("router.Router");
+		executorPool = new ExecutorPool("router.Router");
 		this.timer = new Timer().setRunners(executorPool);
+	}
+
+	public Future<?> execute(Runnable r) {
+		return executorPool.execute(r);
 	}
 
 	public static Router getInstance() {
@@ -32,7 +39,6 @@ public class Router {
 
 	private void start() {
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
-		String svr = cfgMgr.getProperty("router.Router");
 		new RouterHttpService().start(cfgMgr.getServers().get("router.Router").getHostList().get(0));
 	}
 
