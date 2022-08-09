@@ -32,7 +32,7 @@ public class ResponseMaker<T> implements HttpResponseMaker<T> {
 
     public FullHttpResponse wrap(String content) {
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, Unpooled.copiedBuffer(content, CharsetUtil.UTF_8));
-        response.headers().set("Content-Type", "application/json;charset=utf-8");
+        response.headers().set("Content-Type", CONTENT_TYPE_JSON_URL);
         response.headers().set("Access-Control-Allow-Origin", "*");
         response.headers().set("Content-Length", response.content().readableBytes());
         if (LOGGER.isDebugEnabled()) {

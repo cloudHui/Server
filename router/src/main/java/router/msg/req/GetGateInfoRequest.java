@@ -1,9 +1,9 @@
 package router.msg.req;
 
-public class CTRGetGateInfo {
+public class GetGateInfoRequest {
 	private String uniqCode;
 
-	public CTRGetGateInfo() {
+	public GetGateInfoRequest() {
 	}
 
 	public String getUniqCode() {

@@ -3,22 +3,30 @@ package gate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
+import http.client.HttpClientPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.http.RegisterGateInfoRequest;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
+import utils.utils.IpUtil;
 
 public class Gate {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Gate.class);
 
-	public final static Gate INSTANCE = new Gate();
+	public final static Gate instance = new Gate();
 
 	private final ExecutorPool executorPool;
 	private final Timer timer;
+
+	private String port;
+	private String ip;
+	private String innerIp;
+	private String router;
 
 	private Gate() {
 		executorPool = new ExecutorPool("Gate");
@@ -41,14 +49,21 @@ public class Gate {
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
-		ServerConfiguration serverConfiguration = cfgMgr.getServers().get("gate");
-		if (null == serverConfiguration || !serverConfiguration.hasHostString()) {
+		ServerConfiguration configuration = cfgMgr.getServers().get("gate");
+		if (null == configuration || !configuration.hasHostString()) {
 			LOGGER.error("ERROR! failed for can not find server config");
 			return;
 		}
 
+		port = cfgMgr.getProperty("localPort");
 
-		new GateService(90).start(serverConfiguration.getHostList());
+		ip = IpUtil.getOutIp();
+
+		innerIp = IpUtil.getLocalIP();
+
+		router = cfgMgr.getProperty("router");
+
+		new GateService(90).start(configuration.getHostList());
 
 		LOGGER.info("[START] gate server is start!!!");
 	}
@@ -56,10 +71,20 @@ public class Gate {
 
 	public static void main(String[] args) {
 		try {
-			INSTANCE.start();
+			instance.start();
+			instance.sendRegisterGateInfoToRouter();
 		} catch (Exception e) {
 			LOGGER.error("failed for start gate server!", e);
 		}
 	}
 
+	/**
+	 * 发送 gate ip 端口到 路由服务
+	 */
+	private void sendRegisterGateInfoToRouter() {
+		RegisterGateInfoRequest request = new RegisterGateInfoRequest();
+		request.getInnerIpPort().add(ip + ":" + port);
+		request.getIpPort().add(innerIp + ":" + port);
+		LOGGER.error(new HttpClientPool("utf-8").init(1).sendPost(router, request.toString()));
+	}
 }
