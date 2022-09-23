@@ -1,4 +1,4 @@
-package gate;
+package hall;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
@@ -15,10 +15,10 @@ import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
 
-public class Gate {
-	private final static Logger LOGGER = LoggerFactory.getLogger(Gate.class);
+public class Hall {
+	private final static Logger LOGGER = LoggerFactory.getLogger(Hall.class);
 
-	public final static Gate instance = new Gate();
+	public final static Hall instance = new Hall();
 
 	private final ExecutorPool executorPool;
 	private final Timer timer;
@@ -28,8 +28,9 @@ public class Gate {
 	private String innerIp;
 	private String router;
 
-	private Gate() {
-		executorPool = new ExecutorPool("Gate");
+
+	private Hall() {
+		executorPool = new ExecutorPool("Hall");
 		timer = new Timer().setRunners(executorPool);
 	}
 
@@ -46,10 +47,14 @@ public class Gate {
 	}
 
 
+	public static Hall getInstance() {
+		return instance;
+	}
+
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
-		ServerConfiguration configuration = cfgMgr.getServers().get("gate");
+		ServerConfiguration configuration = cfgMgr.getServers().get("hall");
 		if (null == configuration || !configuration.hasHostString()) {
 			LOGGER.error("ERROR! failed for can not find server config");
 			return;
@@ -61,11 +66,11 @@ public class Gate {
 
 		innerIp = IpUtil.getLocalIP();
 
-		router = cfgMgr.getProperty("router");
+		router = cfgMgr.getProperty("hall");
 
-		new GateService(90).start(configuration.getHostList());
+		new HallService(90).start(configuration.getHostList());
 
-		LOGGER.info("[START] gate server is start!!!");
+		LOGGER.info("[START] hall server is start!!!");
 	}
 
 

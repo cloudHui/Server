@@ -1,4 +1,4 @@
-package router.msg.req;
+package msg.http.req;
 
 public class GetGateInfoRequest {
 	private String uniqCode;

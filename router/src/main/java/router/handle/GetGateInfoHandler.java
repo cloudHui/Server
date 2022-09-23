@@ -4,11 +4,11 @@ import java.util.List;
 
 import http.Linker;
 import http.handler.Handler;
+import msg.http.req.GetGateInfoRequest;
+import msg.http.res.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import router.Router;
-import router.msg.req.GetGateInfoRequest;
-import router.msg.res.Response;
 import utils.utils.JsonUtils;
 
 /**

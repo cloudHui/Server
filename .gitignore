@@ -4,3 +4,4 @@ hall/target/*
 room/target/*
 router/target/*
 *.iml
+proto/target/

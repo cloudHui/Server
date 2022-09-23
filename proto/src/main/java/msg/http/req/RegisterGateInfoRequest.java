@@ -1,6 +1,5 @@
-package proto.http;
+package msg.http.req;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,9 +7,9 @@ import java.util.List;
  */
 public class RegisterGateInfoRequest {
 
-	private List<String> innerIpPort = new ArrayList<>();
+	private List<String> innerIpPort;
 
-	private List<String> ipPort = new ArrayList<>();
+	private List<String> ipPort;
 
 	public RegisterGateInfoRequest() {
 	}

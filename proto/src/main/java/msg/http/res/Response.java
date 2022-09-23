@@ -1,4 +1,4 @@
-package router.msg.res;
+package msg.http.res;
 
 public class Response<T> {
 	private int ret;

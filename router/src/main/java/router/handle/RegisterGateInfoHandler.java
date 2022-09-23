@@ -4,11 +4,11 @@ import java.util.List;
 
 import http.Linker;
 import http.handler.Handler;
+import msg.http.req.RegisterGateInfoRequest;
+import msg.http.res.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import router.Router;
-import router.msg.req.RegisterGateInfoRequest;
-import router.msg.res.Response;
 import utils.utils.JsonUtils;
 
 /**
@@ -45,7 +45,7 @@ public class RegisterGateInfoHandler implements Handler<RegisterGateInfoRequest>
 			long start = System.currentTimeMillis();
 			List<String> ipPort = req.getIpPort();
 			List<String> innerIpPort = req.getInnerIpPort();
-			Response ack = new Response();
+			Response<String> ack = new Response<>();
 			if (ipPort != null && innerIpPort != null && !ipPort.isEmpty() && !innerIpPort.isEmpty()
 					&& ipPort.size() == innerIpPort.size()) {
 				Router.getInstance().getIpPortList().addAll(ipPort);
