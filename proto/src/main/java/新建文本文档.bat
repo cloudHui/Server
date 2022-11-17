@@ -1,9 +1,12 @@
 
-protoc.exe --java_out=./  ./proto/game.proto
-protoc.exe --java_out=./  ./proto/gate.proto
+protoc.exe --java_out=./  ./game.proto
+protoc.exe --java_out=./  ./gate.proto
+protoc.exe --java_out=./  ./hall.proto
 
-::XCOPY .\msg\Game.java ..\..\..\..\gate\src\main\java\msg\*.* /S /Y
-::XCOPY .\msg\Gate.java ..\..\..\..\gate\src\main\java\msg\*.* /S /Y
+::可以不用复制
+::XCOPY .\proto\GateProto.java ..\..\..\..\gate\src\main\java\msg\*.* /S /Y
 
+::XCOPY .\proto\GameProto.java ..\..\..\..\game\src\main\java\msg\*.* /S /Y
 
+::XCOPY .\proto\HallProto.java ..\..\..\..\hall\src\main\java\msg\*.* /S /Y
 pause

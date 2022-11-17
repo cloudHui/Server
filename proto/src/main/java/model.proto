@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_outer_classname = "ModelProto";
+
+package proto;
+
+message KeyValue {
+  string key = 1;
+  int32 value = 2;
+}

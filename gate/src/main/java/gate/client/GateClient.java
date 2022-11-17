@@ -1,5 +1,6 @@
 package gate.client;
 
+import msg.MsgId;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
@@ -17,46 +18,55 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 	private int roomId;
 	private int hallId;
 
+	private boolean safe = false;
+
 	public GateClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent((CloseEvent<GateClient>) client -> {
+			//Todo
+			//发送这个玩家下线到其他服务
+			//删除这个玩家的链接和数据
+			//记录等出日志
 		});
 
-		setSafe((Safe<GateClient, TCPMessage>) (id, msg) -> {
-			return true;
+		setSafe((Safe<GateClient, TCPMessage>) (gateClient, msg) -> {
+			if (MsgId.GateMsg.LOGIN_REQ.getId() == msg.getMessageId()) {
+				return true;
+			}
+			return safe;
 		});
 	}
 
-    public long getUserId() {
-        return userId;
-    }
+	public long getUserId() {
+		return userId;
+	}
 
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
-    public int getGameId() {
-        return gameId;
-    }
+	public int getGameId() {
+		return gameId;
+	}
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
-    }
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
 
-    public int getRoomId() {
-        return roomId;
-    }
+	public int getRoomId() {
+		return roomId;
+	}
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
 
-    public int getHallId() {
-        return hallId;
-    }
+	public int getHallId() {
+		return hallId;
+	}
 
-    public void setHallId(int hallId) {
-        this.hallId = hallId;
-    }
+	public void setHallId(int hallId) {
+		this.hallId = hallId;
+	}
 }

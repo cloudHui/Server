@@ -50,8 +50,6 @@ public class ClientProto {
 					break;
 				case MsgId.HALL_TYPE:
 					break;
-				case MsgId.ROOM_TYPE:
-					break;
 				default:
 					LOGGER.error("[error msg head:{} msgId:{}]", msgId, tcpMessage.getMessageId());
 					break;

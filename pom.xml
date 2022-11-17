@@ -12,8 +12,9 @@
         <module>router</module>
         <module>gate</module>
         <module>hall</module>
-        <module>room</module>
+        <module>game</module>
         <module>proto</module>
+        <module>tool</module>
     </modules>
 
     <dependencies>

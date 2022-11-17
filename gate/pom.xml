@@ -70,7 +70,11 @@
             <groupId>com.cloud</groupId>
             <artifactId>proto</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.cloud</groupId>
+            <artifactId>tool</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

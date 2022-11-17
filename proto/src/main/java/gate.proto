@@ -1,0 +1,30 @@
+syntax = "proto3";
+option java_outer_classname = "GateProto";
+
+package proto;
+
+import "model.proto";
+
+
+message ReqLogin {
+  string cert = 1; //证书
+  int32 certType = 2; //证书类型
+  string channel = 3; //渠道
+  string userName = 4; //用户
+  string nickName = 5; //昵称
+  string avatar = 6; //头像信息
+  int32 sex = 7;
+  string country = 8;
+  string province = 9;
+  string city = 10;
+  string verify = 11;
+  string gameToken = 12;//游戏自己生成的token
+  repeated KeyValue keyValues = 13;//冗余字段
+}
+
+message AckLogin {
+  int32 result = 1;
+  string httpResult = 2;
+  string gameToken = 3;//游戏自己生成的token
+  int32  white = 4;//白名单 0不是,1是
+}

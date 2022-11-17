@@ -1,0 +1,21 @@
+syntax = "proto3";
+option java_outer_classname = "HallProto";
+
+package proto;
+
+import "model.proto";
+
+message ReqGetRoomList {
+  repeated KeyValue append = 1;
+}
+
+message Room{
+  int32 roomId = 1;
+  string des = 2;
+  int32 score = 3;
+}
+
+message AckGetRoomList {
+  repeated Room roomList = 1;
+  repeated KeyValue append = 2;
+}
