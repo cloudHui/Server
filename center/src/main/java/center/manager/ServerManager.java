@@ -1,11 +1,11 @@
-package gate.manager;
+package center.manager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import gate.client.GateClient;
+import center.client.CenterClient;
 import msg.ServerType;
 import utils.utils.RandomUtils;
 
@@ -16,7 +16,7 @@ public class ServerManager {
 
 	private static ServerManager instance;
 
-	private Map<ServerType, Map<Integer, GateClient>> serverMap = new ConcurrentHashMap<>();
+	private Map<ServerType, Map<Integer, CenterClient>> serverMap = new ConcurrentHashMap<>();
 
 	static {
 		instance = new ServerManager();
@@ -36,7 +36,7 @@ public class ServerManager {
 	 * @param client     链接
 	 * @param serverId   服务id
 	 */
-	public void addServerClient(ServerType serverType, GateClient client, int serverId) {
+	public void addServerClient(ServerType serverType, CenterClient client, int serverId) {
 		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).put(serverId, client);
 	}
 
@@ -56,7 +56,7 @@ public class ServerManager {
 	 * @param serverType 服务类型
 	 * @param serverId   链接id
 	 */
-	public GateClient getServerClient(ServerType serverType, int serverId) {
+	public CenterClient getServerClient(ServerType serverType, int serverId) {
 		return serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).get(serverId);
 	}
 
@@ -65,13 +65,22 @@ public class ServerManager {
 	 *
 	 * @param serverType 服务类型
 	 */
-	public GateClient getServerClient(ServerType serverType) {
-		Map<Integer, GateClient> serverClient = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
+	public CenterClient getServerClient(ServerType serverType) {
+		Map<Integer, CenterClient> serverClient = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
 		if (!serverClient.isEmpty()) {
 			List<Integer> list = new ArrayList<>(serverClient.keySet());
 			int serverId = list.get(RandomUtils.Random(0, list.size()));
 			return serverClient.get(serverId);
 		}
 		return null;
+	}
+
+	/**
+	 * 获取所有类型服务链接
+	 *
+	 * @param serverType 服务类型
+	 */
+	public List<CenterClient> getAllServerClient(ServerType serverType) {
+		return new ArrayList<>(serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).values());
 	}
 }

@@ -1,6 +1,6 @@
 package gate.client;
 
-import msg.MsgId;
+import msg.MessageHandel;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class GateClient extends ClientHandler<GateClient, TCPMessage> {
-	private final static Logger LOGGER = LoggerFactory.getLogger(GateClient.class);
+	private final static Logger logger = LoggerFactory.getLogger(GateClient.class);
 
 	private long userId;
 	private int gameId;
@@ -31,7 +31,7 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 		});
 
 		setSafe((Safe<GateClient, TCPMessage>) (gateClient, msg) -> {
-			if (MsgId.GateMsg.LOGIN_REQ.getId() == msg.getMessageId()) {
+			if (MessageHandel.GateMsg.LOGIN_REQ.getId() == msg.getMessageId()) {
 				return true;
 			}
 			return safe;

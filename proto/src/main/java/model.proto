@@ -13,15 +13,31 @@ message ReqHeart {
   int32 serverType = 1;
   int64 reqTime = 2;
 }
-
 message AckHeart {
   int64 reqTime = 1;
   int64 ackTime = 2;
 }
 
-//服务在路由注册信息
-message RegisterNotice {
+message ServerInfo{
   int32 serverType = 1;
   int32 serverId = 2;
   string ipConfig = 3;
+}
+
+//服务在路由注册信息
+message RegisterNotice {
+  ServerInfo serverInfo = 1;
+}
+
+//服务变更通知
+message RegisterChange {
+  repeated ServerInfo servers = 1;
+}
+
+//获取服务信息
+message ReqServerInfo {
+  repeated int32 serverType = 1;
+}
+message AckServerInfo {
+  repeated ServerInfo servers = 1;
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
-import msg.MsgId;
+import msg.MessageHandel;
 import net.client.Sender;
 import net.connect.ConnectHandler;
 import net.handler.Handler;
@@ -16,15 +16,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ClientProto {
-	private final static Logger LOGGER = LoggerFactory.getLogger(ClientProto.class);
+	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
-	public final static Parser PARSER = (id, msg) -> {
-		switch (id) {
-
-			default: {
-				return null;
+	public final static Parser PARSER = (id, bytes) -> {
+		MessageHandel.CenterMsg centerMsg = MessageHandel.CenterMsg.get(id);
+		if (centerMsg != null) {
+			Class className = centerMsg.getClassName();
+			try {
+				return (Message) MessageHandel.getMessageObject(className, bytes);
+			} catch (Exception e) {
+				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
 			}
 		}
+		return null;
 	};
 
 
@@ -42,16 +46,16 @@ public class ClientProto {
 		//Todo  special  server back msg need fill gate client serverId
 		int msgId = tcpMessage.getMessageId();
 		if (msgId % 2 == 0) {
-			msgId /= MsgId.BASE_ID_INDEX;
+			msgId /= MessageHandel.BASE_ID_INDEX;
 			switch (msgId) {
-				case MsgId.GAME_TYPE:
+				case MessageHandel.GAME_TYPE:
 					break;
-				case MsgId.GATE_TYPE:
+				case MessageHandel.GATE_TYPE:
 					break;
-				case MsgId.HALL_TYPE:
+				case MessageHandel.HALL_TYPE:
 					break;
 				default:
-					LOGGER.error("[error msg head:{} msgId:{}]", msgId, tcpMessage.getMessageId());
+					logger.error("[error msg head:{} msgId:{}]", msgId, tcpMessage.getMessageId());
 					break;
 			}
 		} else {
@@ -75,7 +79,7 @@ public class ClientProto {
 			return true;
 		}
 
-		LOGGER.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
+		logger.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
 		return false;
 	}
 

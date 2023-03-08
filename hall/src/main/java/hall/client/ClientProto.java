@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
-import msg.MsgId;
+import msg.MessageHandel;
 import net.client.Sender;
 import net.connect.ConnectHandler;
 import net.handler.Handler;
@@ -42,13 +42,13 @@ public class ClientProto {
 		//Todo  special  server back msg need fill gate client serverId
 		int msgId = tcpMessage.getMessageId();
 		if (msgId % 2 == 0) {
-			msgId /= MsgId.BASE_ID_INDEX;
+			msgId /= MessageHandel.BASE_ID_INDEX;
 			switch (msgId) {
-				case MsgId.GAME_TYPE:
+				case MessageHandel.GAME_TYPE:
 					break;
-				case MsgId.GATE_TYPE:
+				case MessageHandel.GATE_TYPE:
 					break;
-				case MsgId.HALL_TYPE:
+				case MessageHandel.HALL_TYPE:
 					break;
 				default:
 					LOGGER.error("[error msg head:{} msgId:{}]", msgId, tcpMessage.getMessageId());

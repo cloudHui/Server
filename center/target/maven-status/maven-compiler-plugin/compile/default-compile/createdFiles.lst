@@ -1,0 +1,6 @@
+router\RouterHttpService.class
+router\client\ResponseMaker.class
+router\client\ServerDecoder.class
+router\handle\GetGateInfoHandler.class
+router\handle\RegisterGateInfoHandler.class
+router\Router.class
