@@ -47,7 +47,7 @@ public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 			CenterClient serverClient = instance.getServerClient(ServerType.Gate);
 			if (serverClient != null) {
 				ack.setRet(1);
-				ack.setMsg(serverClient.getServerInfo());
+				ack.setMsg(JsonUtils.writeValue(serverClient.getServerInfo()));
 			}
 			linker.sendMessage(ack);
 			start = System.currentTimeMillis() - start;

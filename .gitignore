@@ -6,3 +6,4 @@ router/target/*
 *.iml
 proto/target/
 game/target/
+*.class

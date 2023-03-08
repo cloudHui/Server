@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property name="APPName" value="router"/>
+    <property name="APPName" value="center"/>
     <property name="LOGGER_ROOT" value="../logs"/>
     <contextName>${APPName}</contextName>
 

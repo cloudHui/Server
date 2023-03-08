@@ -9,7 +9,7 @@ import net.message.TCPMessage;
 import net.safe.Safe;
 import proto.ModelProto;
 
-public class RegisterEventHandler implements Handler<ModelProto.RegisterNotice> {
+public class RegisterEventHandler implements Handler<ModelProto.ReqRegisterNotice> {
 
 	private static RegisterEventHandler instance = new RegisterEventHandler();
 
@@ -18,7 +18,7 @@ public class RegisterEventHandler implements Handler<ModelProto.RegisterNotice> 
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.RegisterNotice req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.ReqRegisterNotice req) {
 		ServerManager manager = ServerManager.getInstance();
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());

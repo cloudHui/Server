@@ -18,15 +18,46 @@ import utils.utils.IpUtil;
 public class Gate {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Gate.class);
 
-	public final static Gate instance = new Gate();
+	private final static Gate instance = new Gate();
 
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
 	private String port;
 	private String ip;
+	private int serverId;
 	private String innerIp;
 	private String router;
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(int serverId) {
+		this.serverId = serverId;
+	}
+
+	public static Gate getInstance() {
+		return instance;
+	}
+
+
 
 	private Gate() {
 		executorPool = new ExecutorPool("Gate");
@@ -58,6 +89,8 @@ public class Gate {
 		port = cfgMgr.getProperty("localPort");
 
 		ip = IpUtil.getOutIp();
+
+		serverId = cfgMgr.getInt("id", 0);
 
 		innerIp = IpUtil.getLocalIP();
 
