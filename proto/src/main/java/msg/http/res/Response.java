@@ -1,9 +1,8 @@
 package msg.http.res;
 
-public class Response<T> {
+public class Response {
 	private int ret;
 	private String msg;
-	private T data;
 
 	public Response() {
 	}
@@ -24,11 +23,4 @@ public class Response<T> {
 		this.msg = msg;
 	}
 
-	public T getData() {
-		return this.data;
-	}
-
-	public void setData(T data) {
-		this.data = data;
-	}
 }

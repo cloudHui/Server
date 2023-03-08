@@ -65,13 +65,12 @@ public class ServerManager {
 	 * @param serverType 服务类型
 	 */
 	public GateClient getServerClient(ServerType serverType) {
-		GateClient client = null;
 		Map<Integer, GateClient> serverClient = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
 		if (!serverClient.isEmpty()) {
 			List<Integer> list = new ArrayList<>(serverClient.keySet());
 			int serverId = list.get(RandomUtils.Random(0, list.size()));
 			return serverClient.get(serverId);
 		}
-		return client;
+		return null;
 	}
 }

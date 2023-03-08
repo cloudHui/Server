@@ -1,12 +1,13 @@
 package router;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.InetSocketAddress;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadtutil.thread.ExecutorPool;
+import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.config.ConfigurationManager;
@@ -17,16 +18,6 @@ public class Router {
 	private Timer timer;
 	private ExecutorPool executorPool;
 
-	/**
-	 * 内网 ip
-	 */
-	private List<String> innerIpPortList = new ArrayList<>();
-
-	/**
-	 * 外网ip 端口
-	 */
-	private List<String> ipPortList = new ArrayList<>();
-
 	private Router() {
 		executorPool = new ExecutorPool("router.Router");
 		this.timer = new Timer().setRunners(executorPool);
@@ -34,6 +25,10 @@ public class Router {
 
 	public Future<?> execute(Runnable r) {
 		return executorPool.execute(r);
+	}
+
+	public <T extends Task> CompletableFuture<T> serialExecute(T t) {
+		return executorPool.serialExecute(t);
 	}
 
 	public static Router getInstance() {
@@ -48,26 +43,14 @@ public class Router {
 		this.timer.register(delay, interval, -1, runner, param);
 	}
 
-	public List<String> getIpPortList() {
-		return ipPortList;
-	}
-
-	public void setIpPortList(List<String> ipPortList) {
-		this.ipPortList = ipPortList;
-	}
-
-	public List<String> getInnerIpPortList() {
-		return innerIpPortList;
-	}
-
-	public void setInnerIpPortList(List<String> innerIpPortList) {
-		this.innerIpPortList = innerIpPortList;
-	}
-
 	private void start() {
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
 		try {
-			new RouterHttpService().start(cfgMgr.getServers().get("router.Router").getHostList().get(0));
+			new RouterService().start(cfgMgr.getServers().get("router").getHostList());
+			String http = cfgMgr.getProperty("http");
+			String[] hosts = http.split(":");
+			new RouterHttpService().start(new InetSocketAddress(hosts[0], Integer.parseInt(hosts[1])))
+			;
 		} catch (Exception e) {
 			LOGGER.error("[Router start error ]", e);
 			System.exit(0);

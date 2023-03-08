@@ -5,8 +5,7 @@ import java.util.Map;
 
 import http.HttpDecoder;
 import http.handler.Handler;
-import router.handle.GetGateInfoHandler;
-import router.handle.RegisterGateInfoHandler;
+import router.handle.http.GetGateInfoHandler;
 
 public class ServerDecoder extends HttpDecoder {
 	private static final Map<String, Handler> handlers = new HashMap();
@@ -15,7 +14,7 @@ public class ServerDecoder extends HttpDecoder {
 	}
 
 	public Handler getHandler(String path) {
-		return handlers.get(path);
+		return (Handler) handlers.get(path);
 	}
 
 	private static void register(Handler handler) {
@@ -24,6 +23,5 @@ public class ServerDecoder extends HttpDecoder {
 
 	static {
 		register(GetGateInfoHandler.getInstance());
-		register(RegisterGateInfoHandler.getInstance());
 	}
 }

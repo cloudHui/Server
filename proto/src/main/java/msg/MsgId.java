@@ -12,6 +12,10 @@ public interface MsgId {
 	int GAME_TYPE = 2;
 	int HALL_TYPE = 3;
 
+	int HEART_REQ = 1;
+	int HEART_ACK = 2;
+	int REGISTER = 3;
+
 	int BASE_ID_INDEX = 10000;
 
 	enum GateMsg {

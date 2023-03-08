@@ -5,5 +5,23 @@ package proto;
 
 message KeyValue {
   string key = 1;
-  int32 value = 2;
+  string value = 2;
+}
+
+//心跳
+message ReqHeart {
+  int32 serverType = 1;
+  int64 reqTime = 2;
+}
+
+message AckHeart {
+  int64 reqTime = 1;
+  int64 ackTime = 2;
+}
+
+//服务在路由注册信息
+message RegisterNotice {
+  int32 serverType = 1;
+  int32 serverId = 2;
+  string ipConfig = 3;
 }

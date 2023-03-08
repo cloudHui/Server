@@ -61,7 +61,7 @@ public class Gate {
 
 		innerIp = IpUtil.getLocalIP();
 
-		router = cfgMgr.getProperty("router");
+		router = cfgMgr.getProperty("gate");
 
 		new GateService(90).start(configuration.getHostList());
 

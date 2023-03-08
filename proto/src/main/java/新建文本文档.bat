@@ -2,6 +2,7 @@
 protoc.exe --java_out=./  ./game.proto
 protoc.exe --java_out=./  ./gate.proto
 protoc.exe --java_out=./  ./hall.proto
+protoc.exe --java_out=./  ./model.proto
 
 ::可以不用复制
 ::XCOPY .\proto\GateProto.java ..\..\..\..\gate\src\main\java\msg\*.* /S /Y

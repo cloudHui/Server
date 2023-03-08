@@ -1,14 +1,15 @@
-package router.handle;
-
-import java.util.List;
+package router.handle.http;
 
 import http.Linker;
 import http.handler.Handler;
+import msg.ServerType;
 import msg.http.req.GetGateInfoRequest;
 import msg.http.res.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import router.Router;
+import router.client.RouterClient;
+import router.manager.ServerManager;
 import utils.utils.JsonUtils;
 
 /**
@@ -16,18 +17,16 @@ import utils.utils.JsonUtils;
  */
 public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 
+	private GetGateInfoHandler() {
+	}
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(GetGateInfoHandler.class);
 
 	private static GetGateInfoHandler instance = new GetGateInfoHandler();
 
-	private GetGateInfoHandler() {
-
-	}
-
 	public static GetGateInfoHandler getInstance() {
 		return instance;
 	}
-
 
 	public String path() {
 		return "calRate";
@@ -43,16 +42,16 @@ public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 		}
 		Router.getInstance().execute(() -> {
 			long start = System.currentTimeMillis();
-			String unicode = req.getUniqCode();
-			Response<List<String>> ack = new Response<>();
-			if (unicode != null) {
-				ack.setData(Router.getInstance().getIpPortList());
-			} else {
-				ack.setData(Router.getInstance().getInnerIpPortList());
+			Response ack = new Response();
+			ServerManager instance = ServerManager.getInstance();
+			RouterClient serverClient = instance.getServerClient(ServerType.Gate);
+			if (serverClient != null) {
+				ack.setRet(1);
+				ack.setMsg(serverClient.getIpConfig());
 			}
 			linker.sendMessage(ack);
 			start = System.currentTimeMillis() - start;
-			LOGGER.info("[req:{} start:{}ms]", req.toString(), start);
+			LOGGER.info("[req:{} cost:{}ms]", req.toString(), start);
 		});
 		return true;
 	}
