@@ -1,4 +1,4 @@
-package hall.client;
+package game.client;
 
 import msg.MessageHandel;
 import net.client.event.CloseEvent;
@@ -10,22 +10,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class HallClient extends ClientHandler<HallClient, TCPMessage> {
-	private final static Logger logger = LoggerFactory.getLogger(HallClient.class);
+public class GameClient extends ClientHandler<GameClient, TCPMessage> {
+	private final static Logger logger = LoggerFactory.getLogger(GameClient.class);
 
 	private long userId;
-	private int gameId;
-	private int gateId;
+	private int hallId;
 
 	private boolean safe = false;
 
-	public HallClient() {
+	public GameClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent((CloseEvent<HallClient>) client -> {
+		setCloseEvent((CloseEvent<GameClient>) client -> {
 		});
 
-		setSafe((Safe<HallClient, TCPMessage>) (gateClient, msg) -> {
+		setSafe((Safe<GameClient, TCPMessage>) (gateClient, msg) -> {
 			if (MessageHandel.GateMsg.LOGIN_REQ.getId() == msg.getMessageId()) {
 				return true;
 			}
@@ -41,11 +40,11 @@ public class HallClient extends ClientHandler<HallClient, TCPMessage> {
 		this.userId = userId;
 	}
 
-	public int getGameId() {
-		return gameId;
+	public int getHallId() {
+		return hallId;
 	}
 
-	public void setGameId(int gameId) {
-		this.gameId = gameId;
+	public void setHallId(int hallId) {
+		this.hallId = hallId;
 	}
 }

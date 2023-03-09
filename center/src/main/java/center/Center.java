@@ -19,7 +19,7 @@ public class Center {
 	private ExecutorPool executorPool;
 
 	private Center() {
-		executorPool = new ExecutorPool("router.Router");
+		executorPool = new ExecutorPool("Center");
 		this.timer = new Timer().setRunners(executorPool);
 	}
 

@@ -33,7 +33,7 @@ message AckRegister {
 }
 
 //服务变更通知
-message RegisterChange {
+message NoticeRegisterInfo {
   repeated ServerInfo servers = 1;
 }
 

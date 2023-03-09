@@ -1,15 +1,13 @@
-package gate;
+package game;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import gate.client.ClientProto;
-import msg.MessageHandel;
+import game.client.ClientProto;
+import game.client.GameClient;
 import msg.ServerType;
-import net.connect.TCPConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
@@ -19,10 +17,10 @@ import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
 
-public class Gate {
-	private final static Logger LOGGER = LoggerFactory.getLogger(Gate.class);
+public class Game {
+	private final static Logger LOGGER = LoggerFactory.getLogger(Game.class);
 
-	private final static Gate instance = new Gate();
+	private final static Game instance = new Game();
 
 	private final ExecutorPool executorPool;
 	private final Timer timer;
@@ -32,6 +30,8 @@ public class Gate {
 	private int serverId;
 	private String innerIp;
 	private String center;
+
+	private GameClient gateClient;
 
 	private ServerManager serverManager;
 
@@ -83,13 +83,21 @@ public class Gate {
 		this.serverManager = serverManager;
 	}
 
-	public static Gate getInstance() {
+	public GameClient getGateClient() {
+		return gateClient;
+	}
+
+	public void setGateClient(GameClient gateClient) {
+		this.gateClient = gateClient;
+	}
+
+	public static Game getInstance() {
 		return instance;
 	}
 
 
-	private Gate() {
-		executorPool = new ExecutorPool("Gate");
+	private Game() {
+		executorPool = new ExecutorPool("Game");
 		timer = new Timer().setRunners(executorPool);
 	}
 
@@ -109,7 +117,7 @@ public class Gate {
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
-		ServerConfiguration configuration = cfgMgr.getServers().get("gate");
+		ServerConfiguration configuration = cfgMgr.getServers().get("game");
 		if (null == configuration || !configuration.hasHostString()) {
 			LOGGER.error("ERROR! failed for can not find server config");
 			return;
@@ -125,15 +133,12 @@ public class Gate {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new GateService(90).start(configuration.getHostList());
+		new GameService(90).start(configuration.getHostList());
 
 		//向注册中心注册
 		registerToCenter();
 
-		//获取其他服务
-		getAllOtherServer();
-
-		LOGGER.info("[START] gate server is start!!!");
+		LOGGER.info("[START] game server is start!!!");
 	}
 
 	/**
@@ -144,47 +149,14 @@ public class Gate {
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 		serverManager.connect(ipPort[0], Integer.parseInt(ipPort[1]), ClientProto.TRANSFER, ClientProto.PARSER,
-				ClientProto.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + "" + getPort());
-		sendHeart(ServerType.Center);
+				ClientProto.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + "" + getPort());
 	}
-
-	/**
-	 * 服务间发送心跳
-	 *
-	 * @param serverType 服务类型
-	 */
-	public void sendHeart(ServerType serverType) {
-		registerTimer(1000, 1000, -1, (gate) -> {
-			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
-					.setReqTime(System.currentTimeMillis()).build();
-			serverManager.getServerClient(serverType).sendMessage(MessageHandel.HEART_REQ, heartbeat, null);
-			return false;
-		}, this);
-	}
-
-	/**
-	 * 获取其他除注册中心意外的所有服务端口ip
-	 */
-	private void getAllOtherServer() {
-		execute(() -> {
-			TCPConnect serverClient = serverManager.getServerClient(ServerType.Center);
-			if (serverClient != null) {
-				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
-				req.addServerType(ServerType.Game.getServerType());
-				req.addServerType(ServerType.Hall.getServerType());
-				serverClient.sendMessage(MessageHandel.CenterMsg.SERVER_REQ.getId(), req.build(), null);
-			} else {
-				getAllOtherServer();
-			}
-		});
-	}
-
 
 	public static void main(String[] args) {
 		try {
 			instance.start();
 		} catch (Exception e) {
-			LOGGER.error("failed for start gate server!", e);
+			LOGGER.error("failed for start game server!", e);
 		}
 	}
 }

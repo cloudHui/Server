@@ -46,7 +46,7 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 			List<CenterClient> typeServer = manager.getAllTypeServer(ServerType.Gate);
 			if (typeServer != null && !typeServer.isEmpty()) {
 				for (CenterClient client : typeServer) {
-					ModelProto.RegisterChange.Builder change = ModelProto.RegisterChange.newBuilder();
+					ModelProto.NoticeRegisterInfo.Builder change = ModelProto.NoticeRegisterInfo.newBuilder();
 					change.addServers(serverInfo);
 					client.sendMessage(MessageHandel.CenterMsg.SERVER_REQ.getId(), change.build(), null);
 				}

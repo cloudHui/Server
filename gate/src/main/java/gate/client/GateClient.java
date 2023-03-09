@@ -15,7 +15,6 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 
 	private long userId;
 	private int gameId;
-	private int roomId;
 	private int hallId;
 
 	private boolean safe = false;
@@ -52,14 +51,6 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
-	}
-
-	public int getRoomId() {
-		return roomId;
-	}
-
-	public void setRoomId(int roomId) {
-		this.roomId = roomId;
 	}
 
 	public int getHallId() {

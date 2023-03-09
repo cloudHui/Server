@@ -1,12 +1,11 @@
-package gate.client;
+package game.client;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
-import gate.handel.AckServerInfoHandel;
-import gate.handel.HeartHandler;
-import gate.handel.RegisterNoticeHandler;
+import game.handel.HeartHandler;
+import game.handel.ReqRegisterHandler;
 import msg.MessageHandel;
 import net.client.Sender;
 import net.connect.ConnectHandler;
@@ -23,7 +22,6 @@ public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	public final static Parser PARSER = (id, bytes) -> {
-
 		switch (id) {
 			case MessageHandel.HEART_REQ:
 				return ModelProto.ReqHeart.parseFrom(bytes);
@@ -38,23 +36,13 @@ public class ClientProto {
 	 * 消息转化
 	 */
 	private static Message parserMessage(int id, byte[] bytes) {
-		MessageHandel.GateMsg gateMsg = MessageHandel.GateMsg.get(id);
-		if (gateMsg != null) {
-			Class className = gateMsg.getClassName();
+		MessageHandel.GameMsg centerMsg = MessageHandel.GameMsg.get(id);
+		if (centerMsg != null) {
+			Class className = centerMsg.getClassName();
 			try {
 				return (Message) MessageHandel.getMessageObject(className, bytes);
 			} catch (Exception e) {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
-			}
-		} else {
-			MessageHandel.CenterMsg centerMsg = MessageHandel.CenterMsg.get(id);
-			if (centerMsg != null) {
-				Class className = centerMsg.getClassName();
-				try {
-					return (Message) MessageHandel.getMessageObject(className, bytes);
-				} catch (Exception e) {
-					logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
-				}
 			}
 		}
 		return null;
@@ -64,9 +52,8 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
-		handlers.put(MessageHandel.HEART_REQ, HeartHandler.getInstance());
-		handlers.put(MessageHandel.CenterMsg.SERVER_ACK.getId(), AckServerInfoHandel.getInstance());
+		handlers.put(MessageHandel.HEART_ACK, HeartHandler.getInstance());
+		handlers.put(MessageHandel.REGISTER, ReqRegisterHandler.getInstance());
 
 
 	}
@@ -74,7 +61,7 @@ public class ClientProto {
 	public final static Handlers HANDLERS = handlers::get;
 
 
-	public final static Transfer<GateClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
+	public final static Transfer<GameClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
 		//Todo  special  server back msg need fill gate client serverId
 		int msgId = tcpMessage.getMessageId();
 		if (msgId % 2 == 0) {

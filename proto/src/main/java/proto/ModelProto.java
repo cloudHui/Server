@@ -3520,8 +3520,8 @@ public final class ModelProto {
 
   }
 
-  public interface RegisterChangeOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.RegisterChange)
+  public interface NoticeRegisterInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.NoticeRegisterInfo)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3553,18 +3553,18 @@ public final class ModelProto {
    *服务变更通知
    * </pre>
    *
-   * Protobuf type {@code proto.RegisterChange}
+   * Protobuf type {@code proto.NoticeRegisterInfo}
    */
-  public  static final class RegisterChange extends
+  public  static final class NoticeRegisterInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.RegisterChange)
-      RegisterChangeOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.NoticeRegisterInfo)
+      NoticeRegisterInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use RegisterChange.newBuilder() to construct.
-    private RegisterChange(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use NoticeRegisterInfo.newBuilder() to construct.
+    private NoticeRegisterInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private RegisterChange() {
+    private NoticeRegisterInfo() {
       servers_ = java.util.Collections.emptyList();
     }
 
@@ -3573,7 +3573,7 @@ public final class ModelProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private RegisterChange(
+    private NoticeRegisterInfo(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3622,14 +3622,14 @@ public final class ModelProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.ModelProto.internal_static_proto_RegisterChange_descriptor;
+      return proto.ModelProto.internal_static_proto_NoticeRegisterInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_RegisterChange_fieldAccessorTable
+      return proto.ModelProto.internal_static_proto_NoticeRegisterInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.ModelProto.RegisterChange.class, proto.ModelProto.RegisterChange.Builder.class);
+              proto.ModelProto.NoticeRegisterInfo.class, proto.ModelProto.NoticeRegisterInfo.Builder.class);
     }
 
     public static final int SERVERS_FIELD_NUMBER = 1;
@@ -3704,10 +3704,10 @@ public final class ModelProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.ModelProto.RegisterChange)) {
+      if (!(obj instanceof proto.ModelProto.NoticeRegisterInfo)) {
         return super.equals(obj);
       }
-      proto.ModelProto.RegisterChange other = (proto.ModelProto.RegisterChange) obj;
+      proto.ModelProto.NoticeRegisterInfo other = (proto.ModelProto.NoticeRegisterInfo) obj;
 
       boolean result = true;
       result = result && getServersList()
@@ -3732,69 +3732,69 @@ public final class ModelProto {
       return hash;
     }
 
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(byte[] data)
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(java.io.InputStream input)
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ModelProto.RegisterChange parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ModelProto.NoticeRegisterInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.RegisterChange parseDelimitedFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.RegisterChange parseFrom(
+    public static proto.ModelProto.NoticeRegisterInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3806,7 +3806,7 @@ public final class ModelProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.ModelProto.RegisterChange prototype) {
+    public static Builder newBuilder(proto.ModelProto.NoticeRegisterInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -3825,25 +3825,25 @@ public final class ModelProto {
      *服务变更通知
      * </pre>
      *
-     * Protobuf type {@code proto.RegisterChange}
+     * Protobuf type {@code proto.NoticeRegisterInfo}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.RegisterChange)
-        proto.ModelProto.RegisterChangeOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.NoticeRegisterInfo)
+        proto.ModelProto.NoticeRegisterInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.ModelProto.internal_static_proto_RegisterChange_descriptor;
+        return proto.ModelProto.internal_static_proto_NoticeRegisterInfo_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_RegisterChange_fieldAccessorTable
+        return proto.ModelProto.internal_static_proto_NoticeRegisterInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.ModelProto.RegisterChange.class, proto.ModelProto.RegisterChange.Builder.class);
+                proto.ModelProto.NoticeRegisterInfo.class, proto.ModelProto.NoticeRegisterInfo.Builder.class);
       }
 
-      // Construct using proto.ModelProto.RegisterChange.newBuilder()
+      // Construct using proto.ModelProto.NoticeRegisterInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3872,23 +3872,23 @@ public final class ModelProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_RegisterChange_descriptor;
+        return proto.ModelProto.internal_static_proto_NoticeRegisterInfo_descriptor;
       }
 
-      public proto.ModelProto.RegisterChange getDefaultInstanceForType() {
-        return proto.ModelProto.RegisterChange.getDefaultInstance();
+      public proto.ModelProto.NoticeRegisterInfo getDefaultInstanceForType() {
+        return proto.ModelProto.NoticeRegisterInfo.getDefaultInstance();
       }
 
-      public proto.ModelProto.RegisterChange build() {
-        proto.ModelProto.RegisterChange result = buildPartial();
+      public proto.ModelProto.NoticeRegisterInfo build() {
+        proto.ModelProto.NoticeRegisterInfo result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.ModelProto.RegisterChange buildPartial() {
-        proto.ModelProto.RegisterChange result = new proto.ModelProto.RegisterChange(this);
+      public proto.ModelProto.NoticeRegisterInfo buildPartial() {
+        proto.ModelProto.NoticeRegisterInfo result = new proto.ModelProto.NoticeRegisterInfo(this);
         int from_bitField0_ = bitField0_;
         if (serversBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3930,16 +3930,16 @@ public final class ModelProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.RegisterChange) {
-          return mergeFrom((proto.ModelProto.RegisterChange)other);
+        if (other instanceof proto.ModelProto.NoticeRegisterInfo) {
+          return mergeFrom((proto.ModelProto.NoticeRegisterInfo)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.ModelProto.RegisterChange other) {
-        if (other == proto.ModelProto.RegisterChange.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ModelProto.NoticeRegisterInfo other) {
+        if (other == proto.ModelProto.NoticeRegisterInfo.getDefaultInstance()) return this;
         if (serversBuilder_ == null) {
           if (!other.servers_.isEmpty()) {
             if (servers_.isEmpty()) {
@@ -3979,11 +3979,11 @@ public final class ModelProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.RegisterChange parsedMessage = null;
+        proto.ModelProto.NoticeRegisterInfo parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.RegisterChange) e.getUnfinishedMessage();
+          parsedMessage = (proto.ModelProto.NoticeRegisterInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4244,39 +4244,39 @@ public final class ModelProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.RegisterChange)
+      // @@protoc_insertion_point(builder_scope:proto.NoticeRegisterInfo)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.RegisterChange)
-    private static final proto.ModelProto.RegisterChange DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.NoticeRegisterInfo)
+    private static final proto.ModelProto.NoticeRegisterInfo DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.ModelProto.RegisterChange();
+      DEFAULT_INSTANCE = new proto.ModelProto.NoticeRegisterInfo();
     }
 
-    public static proto.ModelProto.RegisterChange getDefaultInstance() {
+    public static proto.ModelProto.NoticeRegisterInfo getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<RegisterChange>
-        PARSER = new com.google.protobuf.AbstractParser<RegisterChange>() {
-      public RegisterChange parsePartialFrom(
+    private static final com.google.protobuf.Parser<NoticeRegisterInfo>
+        PARSER = new com.google.protobuf.AbstractParser<NoticeRegisterInfo>() {
+      public NoticeRegisterInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new RegisterChange(input, extensionRegistry);
+          return new NoticeRegisterInfo(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<RegisterChange> parser() {
+    public static com.google.protobuf.Parser<NoticeRegisterInfo> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<RegisterChange> getParserForType() {
+    public com.google.protobuf.Parser<NoticeRegisterInfo> getParserForType() {
       return PARSER;
     }
 
-    public proto.ModelProto.RegisterChange getDefaultInstanceForType() {
+    public proto.ModelProto.NoticeRegisterInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5634,10 +5634,10 @@ public final class ModelProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckRegister_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_RegisterChange_descriptor;
+    internal_static_proto_NoticeRegisterInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_RegisterChange_fieldAccessorTable;
+      internal_static_proto_NoticeRegisterInfo_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ReqServerInfo_descriptor;
   private static final 
@@ -5665,11 +5665,11 @@ public final class ModelProto {
       "d\030\002 \001(\005\022\020\n\010ipConfig\030\003 \001(\t\"4\n\013ReqRegister" +
       "\022%\n\nserverInfo\030\001 \001(\0132\021.proto.ServerInfo\"" +
       "4\n\013AckRegister\022%\n\nserverInfo\030\001 \001(\0132\021.pro" +
-      "to.ServerInfo\"4\n\016RegisterChange\022\"\n\007serve" +
-      "rs\030\001 \003(\0132\021.proto.ServerInfo\"#\n\rReqServer",
-      "Info\022\022\n\nserverType\030\001 \003(\005\"3\n\rAckServerInf" +
-      "o\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfoB\014B" +
-      "\nModelProtob\006proto3"
+      "to.ServerInfo\"8\n\022NoticeRegisterInfo\022\"\n\007s" +
+      "ervers\030\001 \003(\0132\021.proto.ServerInfo\"#\n\rReqSe",
+      "rverInfo\022\022\n\nserverType\030\001 \003(\005\"3\n\rAckServe" +
+      "rInfo\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInf" +
+      "oB\014B\nModelProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5719,11 +5719,11 @@ public final class ModelProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRegister_descriptor,
         new java.lang.String[] { "ServerInfo", });
-    internal_static_proto_RegisterChange_descriptor =
+    internal_static_proto_NoticeRegisterInfo_descriptor =
       getDescriptor().getMessageTypes().get(6);
-    internal_static_proto_RegisterChange_fieldAccessorTable = new
+    internal_static_proto_NoticeRegisterInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_RegisterChange_descriptor,
+        internal_static_proto_NoticeRegisterInfo_descriptor,
         new java.lang.String[] { "Servers", });
     internal_static_proto_ReqServerInfo_descriptor =
       getDescriptor().getMessageTypes().get(7);

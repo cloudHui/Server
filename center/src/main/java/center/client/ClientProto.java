@@ -15,12 +15,27 @@ import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 
 public class ClientProto {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	public final static Parser PARSER = (id, bytes) -> {
+		switch (id) {
+			case MessageHandel.HEART_REQ:
+				return ModelProto.ReqHeart.parseFrom(bytes);
+			case MessageHandel.REGISTER:
+				return ModelProto.ReqRegister.parseFrom(bytes);
+			default:
+				return parserMessage(id, bytes);
+		}
+	};
+
+	/**
+	 * 消息转化
+	 */
+	private static Message parserMessage(int id, byte[] bytes) {
 		MessageHandel.CenterMsg centerMsg = MessageHandel.CenterMsg.get(id);
 		if (centerMsg != null) {
 			Class className = centerMsg.getClassName();
@@ -31,7 +46,7 @@ public class ClientProto {
 			}
 		}
 		return null;
-	};
+	}
 
 
 	private final static Map<Integer, Handler> handlers;
@@ -41,8 +56,6 @@ public class ClientProto {
 		handlers.put(MessageHandel.HEART_REQ, HeartHandler.getInstance());
 		handlers.put(MessageHandel.REGISTER, ReqRegisterHandler.getInstance());
 		handlers.put(MessageHandel.CenterMsg.SERVER_REQ.getId(), ReqServerInfoHandler.getInstance());
-
-
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

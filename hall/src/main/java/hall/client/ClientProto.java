@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
+import hall.handel.HeartHandler;
 import msg.MessageHandel;
 import net.client.Sender;
 import net.connect.ConnectHandler;
@@ -14,17 +15,26 @@ import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 
 public class ClientProto {
-	private final static Logger LOGGER = LoggerFactory.getLogger(ClientProto.class);
+	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
-	public final static Parser PARSER = (id, msg) -> {
-		switch (id) {
-
-			default: {
-				return null;
+	public final static Parser PARSER = (id, bytes) -> {
+		if (id == MessageHandel.HEART_ACK) {
+			return ModelProto.ReqHeart.parseFrom(bytes);
+		} else {
+			MessageHandel.GameMsg gameMsg = MessageHandel.GameMsg.get(id);
+			if (gameMsg != null) {
+				Class className = gameMsg.getClassName();
+				try {
+					return (Message) MessageHandel.getMessageObject(className, bytes);
+				} catch (Exception e) {
+					logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
+				}
 			}
 		}
+		return null;
 	};
 
 
@@ -32,13 +42,13 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-
+		handlers.put(MessageHandel.HEART_ACK, HeartHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
 
 
-	public final static Transfer<HallClient, TCPMessage> TRANSFER = (hallClient, tcpMessage) -> {
+	public final static Transfer<HallClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
 		//Todo  special  server back msg need fill gate client serverId
 		int msgId = tcpMessage.getMessageId();
 		if (msgId % 2 == 0) {
@@ -51,11 +61,11 @@ public class ClientProto {
 				case MessageHandel.HALL_TYPE:
 					break;
 				default:
-					LOGGER.error("[error msg head:{} msgId:{}]", msgId, tcpMessage.getMessageId());
+					logger.error("[error msg head:{} msgId:{}]", msgId, tcpMessage.getMessageId());
 					break;
 			}
 		} else {
-			return transferMsg(hallClient.getId(), tcpMessage);
+			return transferMsg(gateClient.getId(), tcpMessage);
 		}
 		return false;
 	};
@@ -75,7 +85,7 @@ public class ClientProto {
 			return true;
 		}
 
-		LOGGER.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
+		logger.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
 		return false;
 	}
 

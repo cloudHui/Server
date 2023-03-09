@@ -3,14 +3,15 @@ package hall;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import http.client.HttpClientPool;
-import msg.http.req.RegisterGateInfoRequest;
+import hall.client.ClientProto;
+import msg.ServerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
+import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
@@ -18,19 +19,74 @@ import utils.utils.IpUtil;
 public class Hall {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Hall.class);
 
-	public final static Hall instance = new Hall();
+	private final static Hall instance = new Hall();
 
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
-	private String port;
+	private int port;
 	private String ip;
+	private int serverId;
 	private String innerIp;
-	private String router;
+	private String center;
+
+	private ServerManager serverManager;
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(int serverId) {
+		this.serverId = serverId;
+	}
+
+	public String getInnerIp() {
+		return innerIp;
+	}
+
+	public void setInnerIp(String innerIp) {
+		this.innerIp = innerIp;
+	}
+
+	public String getCenter() {
+		return center;
+	}
+
+	public void setCenter(String center) {
+		this.center = center;
+	}
+
+	public ServerManager getServerManager() {
+		return serverManager;
+	}
+
+	public void setServerManager(ServerManager serverManager) {
+		this.serverManager = serverManager;
+	}
+
+	public static Hall getInstance() {
+		return instance;
+	}
 
 
 	private Hall() {
-		executorPool = new ExecutorPool("Hall");
+		executorPool = new ExecutorPool("Game");
 		timer = new Timer().setRunners(executorPool);
 	}
 
@@ -47,49 +103,49 @@ public class Hall {
 	}
 
 
-	public static Hall getInstance() {
-		return instance;
-	}
-
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
-		ServerConfiguration configuration = cfgMgr.getServers().get("hall");
+		ServerConfiguration configuration = cfgMgr.getServers().get("game");
 		if (null == configuration || !configuration.hasHostString()) {
 			LOGGER.error("ERROR! failed for can not find server config");
 			return;
 		}
 
-		port = cfgMgr.getProperty("localPort");
+		setPort(cfgMgr.getInt("port", 0));
 
-		ip = IpUtil.getOutIp();
+		setIp(IpUtil.getOutIp());
 
-		innerIp = IpUtil.getLocalIP();
+		setServerId(cfgMgr.getInt("id", 0));
 
-		router = cfgMgr.getProperty("hall");
+		setCenter(cfgMgr.getProperty("center"));
+
+		setInnerIp(IpUtil.getLocalIP());
 
 		new HallService(90).start(configuration.getHostList());
 
-		LOGGER.info("[START] hall server is start!!!");
+		//向注册中心注册
+		registerToCenter();
+
+		LOGGER.info("[START] game server is start!!!");
 	}
 
+	/**
+	 * 向注册中心注册
+	 */
+	private void registerToCenter() {
+		setServerManager(new ServerManager());
+		ServerManager serverManager = getServerManager();
+		String[] ipPort = getCenter().split(":");
+		serverManager.connect(ipPort[0], Integer.parseInt(ipPort[1]), ClientProto.TRANSFER, ClientProto.PARSER,
+				ClientProto.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + "" + getPort());
+	}
 
 	public static void main(String[] args) {
 		try {
 			instance.start();
-			instance.sendRegisterGateInfoToRouter();
 		} catch (Exception e) {
-			LOGGER.error("failed for start gate server!", e);
+			LOGGER.error("failed for start game server!", e);
 		}
-	}
-
-	/**
-	 * 发送 gate ip 端口到 路由服务
-	 */
-	private void sendRegisterGateInfoToRouter() {
-		RegisterGateInfoRequest request = new RegisterGateInfoRequest();
-		request.getInnerIpPort().add(ip + ":" + port);
-		request.getIpPort().add(innerIp + ":" + port);
-		LOGGER.error(new HttpClientPool("utf-8").init(1).sendPost(router, request.toString()));
 	}
 }

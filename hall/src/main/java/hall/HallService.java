@@ -9,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import net.service.TCPService;
 
 public class HallService extends TCPService {
+
 	public HallService() {
 		this(0);
 	}

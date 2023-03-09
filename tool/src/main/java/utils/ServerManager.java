@@ -127,10 +127,6 @@ public class ServerManager {
 				});
 	}
 
-	public void connect(String ip, int port, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent) {
-		connect(new InetSocketAddress(ip, port), transfer, parser, handlers, registerEvent);
-	}
-
 	public void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,
 				socketAddress,
@@ -139,11 +135,11 @@ public class ServerManager {
 				handlers,
 				registerEvent);
 
-		tcpConnection.setIdleRunner(c -> {
+		//连接后的操作
+		tcpConnection.setIdleRunner(handler -> {
 			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
 					.setReqTime(System.currentTimeMillis()).build();
-
-			c.sendMessage(MessageHandel.HEART_REQ, heartbeat, null);
+			handler.sendMessage(MessageHandel.HEART_REQ, heartbeat, null);
 		});
 
 		tcpConnection.connect();
