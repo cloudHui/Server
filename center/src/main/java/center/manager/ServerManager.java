@@ -80,7 +80,7 @@ public class ServerManager {
 	 *
 	 * @param serverType 服务类型
 	 */
-	public List<CenterClient> getAllServerClient(ServerType serverType) {
+	public List<CenterClient> getAllTypeServer(ServerType serverType) {
 		return new ArrayList<>(serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).values());
 	}
 }

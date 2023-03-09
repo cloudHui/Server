@@ -17,7 +17,7 @@ public interface MessageHandel {
 	int HEART_REQ = 1;
 	int HEART_ACK = 2;
 	int REGISTER = 3;
-
+	int REGISTER_NOTICE = 4;
 	int BASE_ID_INDEX = 10000;
 
 	enum GateMsg {
@@ -48,8 +48,12 @@ public interface MessageHandel {
 			return className;
 		}
 
-		public static Map<Integer, GateMsg> getEs() {
+		private static Map<Integer, GateMsg> getEs() {
 			return es;
+		}
+
+		public static GateMsg get(int msgId) {
+			return getEs().get(msgId);
 		}
 	}
 
@@ -82,8 +86,12 @@ public interface MessageHandel {
 			return className;
 		}
 
-		public static Map<Integer, GameMsg> getEs() {
+		private static Map<Integer, GameMsg> getEs() {
 			return es;
+		}
+
+		public static GameMsg get(int msgId) {
+			return getEs().get(msgId);
 		}
 	}
 

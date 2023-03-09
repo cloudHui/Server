@@ -7,7 +7,7 @@ public enum ServerType {
 	Gate(1, "网关"),
 	Game(2, "游戏"),
 	Hall(3, "大厅"),
-	Router(4, "路由"),
+	Center(4, "注册中心"),
 	;
 
 	private static Map<Integer, ServerType> es = new HashMap<>();

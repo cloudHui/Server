@@ -1,4 +1,4 @@
-package center.handle;
+package center.handel;
 
 import java.util.List;
 
@@ -10,6 +10,9 @@ import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
 
+/**
+ * 获取 服务信息请求
+ */
 public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
 
 	private static ReqServerInfoHandler instance = new ReqServerInfoHandler();
@@ -28,7 +31,7 @@ public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
 		for (int serverType : serverTypeList) {
 			server = ServerType.get(serverType);
 			if (server != null) {
-				allServerClient = manager.getAllServerClient(server);
+				allServerClient = manager.getAllTypeServer(server);
 				if (allServerClient != null && !allServerClient.isEmpty()) {
 					for (CenterClient client : allServerClient) {
 						ack.addServers(client.getServerInfo());

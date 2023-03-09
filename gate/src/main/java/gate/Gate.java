@@ -3,12 +3,18 @@ package gate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
+import gate.client.ClientProto;
+import msg.MessageHandel;
+import msg.ServerType;
+import net.connect.TCPConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
+import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
@@ -21,17 +27,19 @@ public class Gate {
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
-	private String port;
+	private int port;
 	private String ip;
 	private int serverId;
 	private String innerIp;
-	private String router;
+	private String center;
 
-	public String getPort() {
+	private ServerManager serverManager;
+
+	public int getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
+	public void setPort(int port) {
 		this.port = port;
 	}
 
@@ -49,6 +57,22 @@ public class Gate {
 
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
+	}
+
+	public String getInnerIp() {
+		return innerIp;
+	}
+
+	public void setInnerIp(String innerIp) {
+		this.innerIp = innerIp;
+	}
+
+	public String getCenter() {
+		return center;
+	}
+
+	public void setCenter(String center) {
+		this.center = center;
 	}
 
 	public static Gate getInstance() {
@@ -83,19 +107,52 @@ public class Gate {
 			return;
 		}
 
-		port = cfgMgr.getProperty("localPort");
+		setPort(cfgMgr.getInt("port", 0));
 
-		ip = IpUtil.getOutIp();
+		setIp(IpUtil.getOutIp());
 
-		serverId = cfgMgr.getInt("id", 0);
+		setServerId(cfgMgr.getInt("id", 0));
 
-		innerIp = IpUtil.getLocalIP();
+		setCenter(cfgMgr.getProperty("center"));
 
-		router = cfgMgr.getProperty("gate");
+		setInnerIp(IpUtil.getLocalIP());
 
 		new GateService(90).start(configuration.getHostList());
 
+		//初始化链接
+		initConnect();
+
+		//获取其他服务
+		getAllOtherServer();
+
 		LOGGER.info("[START] gate server is start!!!");
+	}
+
+	/**
+	 * 初始化链接
+	 */
+	private void initConnect() {
+		serverManager = new ServerManager();
+		String[] ipPort = getCenter().split(":");
+		serverManager.connect(ipPort[0], Integer.parseInt(ipPort[1]), ClientProto.TRANSFER, ClientProto.PARSER,
+				ClientProto.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + "" + getPort());
+	}
+
+	/**
+	 * 获取其他除注册中心意外的所有服务端口ip
+	 */
+	private void getAllOtherServer() {
+		execute(() -> {
+			TCPConnect serverClient = serverManager.getServerClient(ServerType.Center);
+			if (serverClient != null) {
+				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
+				req.addServerType(ServerType.Game.getServerType());
+				req.addServerType(ServerType.Hall.getServerType());
+				serverClient.sendMessage(MessageHandel.CenterMsg.SERVER_REQ.getId(), req.build(), null);
+			} else {
+				getAllOtherServer();
+			}
+		});
 	}
 
 

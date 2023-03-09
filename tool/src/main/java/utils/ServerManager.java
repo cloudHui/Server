@@ -1,4 +1,4 @@
-package gate.manager;
+package utils;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
-import gate.Gate;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageHandel;
@@ -29,20 +28,7 @@ import utils.utils.RandomUtils;
 public class ServerManager {
 	private final static Logger logger = LoggerFactory.getLogger(ServerManager.class);
 
-	private static ServerManager instance;
-
 	private Map<ServerType, Map<Integer, TCPConnect>> serverMap = new ConcurrentHashMap<>();
-
-	static {
-		instance = new ServerManager();
-	}
-
-	private ServerManager() {
-	}
-
-	public static ServerManager getInstance() {
-		return instance;
-	}
 
 	private final EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -53,7 +39,7 @@ public class ServerManager {
 	 * @param client     链接
 	 * @param serverId   服务id
 	 */
-	public void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
+	private void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
 		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).put(serverId, client);
 	}
 
@@ -92,36 +78,48 @@ public class ServerManager {
 		return null;
 	}
 
-	public TCPConnect connect(int serverType, String ip, int port, Transfer transfer, Parser parser, Handlers handlers) {
-		return connect(serverType, new InetSocketAddress(ip, port), transfer, parser, handlers);
+	/**
+	 * 主动链接远程tcp
+	 *
+	 * @param ip          远程ip
+	 * @param port        远程端口
+	 * @param transfer    消息转发处理接口
+	 * @param parser      消息转化接口
+	 * @param handlers    消息处理 handel
+	 * @param localServer 本地服务类型
+	 * @param localId     本地服务 id
+	 * @param localPort   本地服务 IP 端口
+	 */
+	public void connect(String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+		connect(new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort);
 	}
 
-	public TCPConnect connect(int serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers) {
-		return connect(serverType,
+	public void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+		connect(
 				socketAddress,
 				transfer,
 				parser,
 				handlers,
-				(RegisterEvent<TCPConnect>) c -> {
-					ModelProto.ReqRegisterNotice.Builder notice = ModelProto.ReqRegisterNotice.newBuilder();
+				(RegisterEvent<TCPConnect>) tcpConnect -> {
+					ModelProto.ReqRegister.Builder notice = ModelProto.ReqRegister.newBuilder();
 					ModelProto.ServerInfo.Builder server = ModelProto.ServerInfo.newBuilder();
-					server.setServerType(ServerType.Gate.getServerType());
-					server.setServerId(Gate.getInstance().getServerId());
-					server.setIpConfig(Gate.getInstance().getIp() + ":" + Gate.getInstance().getPort());
+					server.setServerType(localServer.getServerType());
+					server.setServerId(localId);
+					server.setIpConfig(localPort);
 					notice.setServerInfo(server.build());
 
 
-					c.sendMessage(MessageHandel.REGISTER, notice.build(), null, 10)
-							.whenComplete((BiConsumer<ModelProto.AckRegisterNotice, Exception>) (r, e) -> {
+					tcpConnect.sendMessage(MessageHandel.REGISTER, notice.build(), null, 10)
+							.whenComplete((BiConsumer<ModelProto.AckRegister, Exception>) (r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
 									logger.error("ERROR! failed for send register message to {}:{}",
 											s.getAddress().getHostAddress(), s.getPort(), e);
 								} else {
 									ModelProto.ServerInfo serverInfo = r.getServerInfo();
-									c.setServerId(serverInfo.getServerId());
+									tcpConnect.setServerId(serverInfo.getServerId());
 
-									addServerClient(ServerType.get(serverInfo.getServerType()), c, serverInfo.getServerId());
+									addServerClient(ServerType.get(serverInfo.getServerType()), tcpConnect, serverInfo.getServerId());
 									logger.info("send register message to {}:{} success",
 											s.getAddress().getHostAddress(), s.getPort());
 								}
@@ -129,11 +127,11 @@ public class ServerManager {
 				});
 	}
 
-	public TCPConnect connect(int serverType, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent) {
-		return connect(serverType, new InetSocketAddress(ip, port), transfer, parser, handlers, registerEvent);
+	public void connect(String ip, int port, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent) {
+		connect(new InetSocketAddress(ip, port), transfer, parser, handlers, registerEvent);
 	}
 
-	public TCPConnect connect(int serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent) {
+	public void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,
 				socketAddress,
 				transfer,
@@ -150,6 +148,5 @@ public class ServerManager {
 
 		tcpConnection.connect();
 
-		return tcpConnection;
 	}
 }

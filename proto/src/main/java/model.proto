@@ -25,10 +25,10 @@ message ServerInfo{
 }
 
 //服务在路由注册信息
-message ReqRegisterNotice {
+message ReqRegister {
   ServerInfo serverInfo = 1;
 }
-message AckRegisterNotice {
+message AckRegister {
   ServerInfo serverInfo = 1;
 }
 

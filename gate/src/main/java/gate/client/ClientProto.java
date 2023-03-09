@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
+import gate.handel.RegisterNoticeHandler;
 import msg.MessageHandel;
 import net.client.Sender;
 import net.connect.ConnectHandler;
@@ -19,9 +20,9 @@ public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	public final static Parser PARSER = (id, bytes) -> {
-		MessageHandel.CenterMsg centerMsg = MessageHandel.CenterMsg.get(id);
-		if (centerMsg != null) {
-			Class className = centerMsg.getClassName();
+		MessageHandel.GateMsg gateMsg = MessageHandel.GateMsg.get(id);
+		if (gateMsg != null) {
+			Class className = gateMsg.getClassName();
 			try {
 				return (Message) MessageHandel.getMessageObject(className, bytes);
 			} catch (Exception e) {
@@ -36,7 +37,7 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-
+		handlers.put(MessageHandel.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

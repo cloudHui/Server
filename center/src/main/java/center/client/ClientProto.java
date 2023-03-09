@@ -3,9 +3,9 @@ package center.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import center.handle.HeartHandler;
-import center.handle.RegisterEventHandler;
-import center.handle.ReqServerInfoHandler;
+import center.handel.HeartHandler;
+import center.handel.ReqRegisterHandler;
+import center.handel.ReqServerInfoHandler;
 import com.google.protobuf.Message;
 import msg.MessageHandel;
 import net.handler.Handler;
@@ -39,7 +39,7 @@ public class ClientProto {
 	static {
 		handlers = new HashMap<>();
 		handlers.put(MessageHandel.HEART_REQ, HeartHandler.getInstance());
-		handlers.put(MessageHandel.REGISTER, RegisterEventHandler.getInstance());
+		handlers.put(MessageHandel.REGISTER, ReqRegisterHandler.getInstance());
 		handlers.put(MessageHandel.CenterMsg.SERVER_REQ.getId(), ReqServerInfoHandler.getInstance());
 
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import http.HttpDecoder;
 import http.handler.Handler;
-import center.handle.http.GetGateInfoHandler;
+import center.handel.http.GetGateInfoHandler;
 
 public class ServerDecoder extends HttpDecoder {
 	private static final Map<String, Handler> handlers = new HashMap();

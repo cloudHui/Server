@@ -1,4 +1,4 @@
-package center.handle;
+package center.handel;
 
 import msg.MessageHandel;
 import net.client.Sender;
@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 
+/**
+ * 心跳请求
+ */
 public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);
