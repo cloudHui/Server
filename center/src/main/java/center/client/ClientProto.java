@@ -6,7 +6,6 @@ import java.util.Map;
 import center.handel.HeartHandler;
 import center.handel.ReqRegisterHandler;
 import center.handel.ReqServerInfoHandler;
-import com.google.protobuf.Message;
 import msg.MessageHandel;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -27,27 +26,12 @@ public class ClientProto {
 				return ModelProto.ReqHeart.parseFrom(bytes);
 			case MessageHandel.REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
+			case MessageHandel.SERVER_REQ:
+				return ModelProto.ReqRegister.parseFrom(bytes);
 			default:
-				return parserMessage(id, bytes);
+				return null;
 		}
 	};
-
-	/**
-	 * 消息转化
-	 */
-	private static Message parserMessage(int id, byte[] bytes) {
-		MessageHandel.CenterMsg centerMsg = MessageHandel.CenterMsg.get(id);
-		if (centerMsg != null) {
-			Class className = centerMsg.getClassName();
-			try {
-				return (Message) MessageHandel.getMessageObject(className, bytes);
-			} catch (Exception e) {
-				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
-			}
-		}
-		return null;
-	}
-
 
 	private final static Map<Integer, Handler> handlers;
 
@@ -55,7 +39,7 @@ public class ClientProto {
 		handlers = new HashMap<>();
 		handlers.put(MessageHandel.HEART_REQ, HeartHandler.getInstance());
 		handlers.put(MessageHandel.REGISTER, ReqRegisterHandler.getInstance());
-		handlers.put(MessageHandel.CenterMsg.SERVER_REQ.getId(), ReqServerInfoHandler.getInstance());
+		handlers.put(MessageHandel.SERVER_REQ, ReqServerInfoHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

@@ -48,7 +48,7 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 				for (CenterClient client : typeServer) {
 					ModelProto.NoticeRegisterInfo.Builder change = ModelProto.NoticeRegisterInfo.newBuilder();
 					change.addServers(serverInfo);
-					client.sendMessage(MessageHandel.CenterMsg.SERVER_REQ.getId(), change.build(), null);
+					client.sendMessage(MessageHandel.REGISTER_NOTICE, change.build(), null);
 				}
 			}
 		}

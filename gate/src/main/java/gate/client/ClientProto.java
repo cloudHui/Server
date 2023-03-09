@@ -29,6 +29,8 @@ public class ClientProto {
 				return ModelProto.ReqHeart.parseFrom(bytes);
 			case MessageHandel.REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
+			case MessageHandel.SERVER_ACK:
+				return ModelProto.AckServerInfo.parseFrom(bytes);
 			default:
 				return parserMessage(id, bytes);
 		}
@@ -46,16 +48,6 @@ public class ClientProto {
 			} catch (Exception e) {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
 			}
-		} else {
-			MessageHandel.CenterMsg centerMsg = MessageHandel.CenterMsg.get(id);
-			if (centerMsg != null) {
-				Class className = centerMsg.getClassName();
-				try {
-					return (Message) MessageHandel.getMessageObject(className, bytes);
-				} catch (Exception e) {
-					logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
-				}
-			}
 		}
 		return null;
 	}
@@ -66,7 +58,7 @@ public class ClientProto {
 		handlers = new HashMap<>();
 		handlers.put(MessageHandel.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 		handlers.put(MessageHandel.HEART_REQ, HeartHandler.getInstance());
-		handlers.put(MessageHandel.CenterMsg.SERVER_ACK.getId(), AckServerInfoHandel.getInstance());
+		handlers.put(MessageHandel.SERVER_ACK, AckServerInfoHandel.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

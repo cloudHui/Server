@@ -5,19 +5,25 @@ import java.util.Map;
 
 import com.google.protobuf.MessageLite;
 import proto.GameProto;
-import proto.GateProto;
-import proto.ModelProto;
+import proto.HallProto;
 
+// BASE_ID_INDEX 以下 的是通用消息
+// 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
+// 客户端回复消息都是 大于 BASE_ID_INDEX 对2 取余为0的
 public interface MessageHandel {
 
 	int GATE_TYPE = 1;
 	int GAME_TYPE = 2;
 	int HALL_TYPE = 3;
 
-	int HEART_REQ = 1;
-	int HEART_ACK = 2;
-	int REGISTER = 3;
-	int REGISTER_NOTICE = 4;
+	int HEART_REQ = 1;//心跳
+	int HEART_ACK = 2;//回复
+	int REGISTER = 3;//请求注册
+	int REGISTER_NOTICE = 4;//注册通知
+
+	int SERVER_REQ = 5;//服务信息请
+	int SERVER_ACK = 6;//服务信息回复
+
 	int BASE_ID_INDEX = 10000;
 
 	enum GateMsg {
@@ -63,8 +69,7 @@ public interface MessageHandel {
 
 		private Class className;
 
-		private static Map<Integer,
-				GameMsg> es = new HashMap<>();
+		private static Map<Integer, GameMsg> es = new HashMap<>();
 
 		static {
 			for (GameMsg msg : values()) {
@@ -93,23 +98,23 @@ public interface MessageHandel {
 		}
 	}
 
-	enum CenterMsg {
-		SERVER_REQ(50001, ModelProto.ReqServerInfo.class),
-		SERVER_ACK(50002, ModelProto.AckServerInfo.class),
+	enum HallMsg {
+		REQ_LOGIN(30001, HallProto.ReqLogin.class),
+		ACK_LOGIN(30002, HallProto.AckLogin.class),
 		;
 		private int id;
 
 		private Class className;
 
-		private static Map<Integer, CenterMsg> es = new HashMap<>();
+		private static Map<Integer, HallMsg> es = new HashMap<>();
 
 		static {
-			for (CenterMsg msg : values()) {
+			for (HallMsg msg : values()) {
 				es.put(msg.getId(), msg);
 			}
 		}
 
-		CenterMsg(int id, Class className) {
+		HallMsg(int id, Class className) {
 			this.id = id;
 		}
 
@@ -121,11 +126,11 @@ public interface MessageHandel {
 			return className;
 		}
 
-		private static Map<Integer, CenterMsg> getEs() {
+		private static Map<Integer, HallMsg> getEs() {
 			return es;
 		}
 
-		public static CenterMsg get(int msgId) {
+		public static HallMsg get(int msgId) {
 			return getEs().get(msgId);
 		}
 	}

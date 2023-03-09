@@ -172,7 +172,7 @@ public class Gate {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
-				serverClient.sendMessage(MessageHandel.CenterMsg.SERVER_REQ.getId(), req.build(), null);
+				serverClient.sendMessage(MessageHandel.SERVER_REQ, req.build(), null);
 			} else {
 				getAllOtherServer();
 			}
