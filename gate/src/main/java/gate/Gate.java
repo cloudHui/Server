@@ -3,8 +3,6 @@ package gate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import http.client.HttpClientPool;
-import msg.http.req.RegisterGateInfoRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadtutil.thread.ExecutorPool;
@@ -58,7 +56,6 @@ public class Gate {
 	}
 
 
-
 	private Gate() {
 		executorPool = new ExecutorPool("Gate");
 		timer = new Timer().setRunners(executorPool);
@@ -105,19 +102,8 @@ public class Gate {
 	public static void main(String[] args) {
 		try {
 			instance.start();
-			instance.sendRegisterGateInfoToRouter();
 		} catch (Exception e) {
 			LOGGER.error("failed for start gate server!", e);
 		}
-	}
-
-	/**
-	 * 发送 gate ip 端口到 路由服务
-	 */
-	private void sendRegisterGateInfoToRouter() {
-		RegisterGateInfoRequest request = new RegisterGateInfoRequest();
-		request.getInnerIpPort().add(ip + ":" + port);
-		request.getIpPort().add(innerIp + ":" + port);
-		LOGGER.error(new HttpClientPool("utf-8").init(1).sendPost(router, request.toString()));
 	}
 }

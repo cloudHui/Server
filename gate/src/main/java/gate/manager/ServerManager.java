@@ -9,13 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 import gate.Gate;
-import gate.client.GateClient;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageHandel;
 import msg.ServerType;
 import net.client.event.RegisterEvent;
-import net.client.handler.ClientHandler;
 import net.connect.TCPConnect;
 import net.handler.Handlers;
 import net.message.Parser;
@@ -50,7 +48,8 @@ public class ServerManager {
 
 	/**
 	 * 添加服务链接
-	 *  @param serverType 服务类型
+	 *
+	 * @param serverType 服务类型
 	 * @param client     链接
 	 * @param serverId   服务id
 	 */
