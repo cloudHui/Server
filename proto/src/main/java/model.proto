@@ -4,8 +4,8 @@ option java_outer_classname = "ModelProto";
 package proto;
 
 message KeyValue {
-  string key = 1;
-  string value = 2;
+  bytes key = 1;
+  bytes value = 2;
 }
 
 //心跳
@@ -21,7 +21,7 @@ message AckHeart {
 message ServerInfo{
   int32 serverType = 1;
   int32 serverId = 2;
-  string ipConfig = 3;
+  bytes ipConfig = 3;
 }
 
 //服务在路由注册信息

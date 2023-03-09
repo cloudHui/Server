@@ -26,9 +26,6 @@ public class HallClient extends ClientHandler<HallClient, TCPMessage> {
 		});
 
 		setSafe((Safe<HallClient, TCPMessage>) (gateClient, msg) -> {
-			if (MessageHandel.GateMsg.LOGIN_REQ.getId() == msg.getMessageId()) {
-				return true;
-			}
 			return safe;
 		});
 	}

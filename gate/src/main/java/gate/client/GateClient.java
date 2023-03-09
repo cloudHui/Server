@@ -30,9 +30,6 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 		});
 
 		setSafe((Safe<GateClient, TCPMessage>) (gateClient, msg) -> {
-			if (MessageHandel.GateMsg.LOGIN_REQ.getId() == msg.getMessageId()) {
-				return true;
-			}
 			return safe;
 		});
 	}

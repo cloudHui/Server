@@ -21,8 +21,6 @@ public interface MessageHandel {
 	int BASE_ID_INDEX = 10000;
 
 	enum GateMsg {
-		LOGIN_REQ(10001, GateProto.ReqLogin.class),
-		LOGIN_ACK(10002, GateProto.AckLogin.class),
 		;
 		private int id;
 

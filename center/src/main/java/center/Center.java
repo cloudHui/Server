@@ -46,7 +46,7 @@ public class Center {
 	private void start() {
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
 		try {
-			new CenterService().start(cfgMgr.getServers().get("Center").getHostList());
+			new CenterService().start(cfgMgr.getServers().get("center").getHostList());
 			String http = cfgMgr.getProperty("http");
 			String[] hosts = http.split(":");
 			new CenterHttpService().start(new InetSocketAddress(hosts[0], Integer.parseInt(hosts[1])));

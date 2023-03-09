@@ -37,7 +37,7 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NoticeRegisterI
 		ServerType serverType;
 		String localInnerIpConfig = instance.getInnerIp() + "" + instance.getPort();
 		for (ModelProto.ServerInfo serverInfo : serversList2) {
-			ipConfig = serverInfo.getIpConfig().split(":");
+			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
 			serverManager.connect(ipConfig[0], Integer.parseInt(ipConfig[1]), ClientProto.TRANSFER, ClientProto.PARSER,
 					ClientProto.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig);
 			serverType = ServerType.get(serverInfo.getServerType());

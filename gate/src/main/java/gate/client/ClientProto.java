@@ -67,8 +67,6 @@ public class ClientProto {
 		handlers.put(MessageHandel.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 		handlers.put(MessageHandel.HEART_REQ, HeartHandler.getInstance());
 		handlers.put(MessageHandel.CenterMsg.SERVER_ACK.getId(), AckServerInfoHandel.getInstance());
-
-
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

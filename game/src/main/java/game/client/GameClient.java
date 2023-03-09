@@ -25,9 +25,6 @@ public class GameClient extends ClientHandler<GameClient, TCPMessage> {
 		});
 
 		setSafe((Safe<GameClient, TCPMessage>) (gateClient, msg) -> {
-			if (MessageHandel.GateMsg.LOGIN_REQ.getId() == msg.getMessageId()) {
-				return true;
-			}
 			return safe;
 		});
 	}

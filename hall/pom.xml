@@ -43,7 +43,7 @@
                             <mainClass>hall.Hall</mainClass>
                         </manifest>
                     </archive>
-                    <finalName>Test</finalName>
+                    <finalName>Hall</finalName>
                     <excludes>
                         <exclude>*.properties</exclude>
                         <exclude>logback.xml</exclude>
@@ -65,7 +65,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>
-                                ${session.executionRootDirectory}/build/gate/lib
+                                ${session.executionRootDirectory}/build/hall/lib
                             </outputDirectory>
                         </configuration>
                     </execution>

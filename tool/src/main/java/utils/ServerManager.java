@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
+import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageHandel;
@@ -105,7 +106,7 @@ public class ServerManager {
 					ModelProto.ServerInfo.Builder server = ModelProto.ServerInfo.newBuilder();
 					server.setServerType(localServer.getServerType());
 					server.setServerId(localId);
-					server.setIpConfig(localPort);
+					server.setIpConfig(ByteString.copyFromUtf8(localPort));
 					notice.setServerInfo(server.build());
 
 

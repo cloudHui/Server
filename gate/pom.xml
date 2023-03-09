@@ -27,7 +27,7 @@
                             <mainClass>gate.Gate</mainClass>
                         </manifest>
                     </archive>
-                    <finalName>Test</finalName>
+                    <finalName>Gate</finalName>
                     <excludes>
                         <exclude>*.properties</exclude>
                         <exclude>logback.xml</exclude>

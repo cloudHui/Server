@@ -19,24 +19,14 @@ public final class ModelProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string key = 1;</code>
+     * <code>bytes key = 1;</code>
      */
-    java.lang.String getKey();
-    /**
-     * <code>string key = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getKeyBytes();
+    com.google.protobuf.ByteString getKey();
 
     /**
-     * <code>string value = 2;</code>
+     * <code>bytes value = 2;</code>
      */
-    java.lang.String getValue();
-    /**
-     * <code>string value = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getValueBytes();
+    com.google.protobuf.ByteString getValue();
   }
   /**
    * Protobuf type {@code proto.KeyValue}
@@ -51,8 +41,8 @@ public final class ModelProto {
       super(builder);
     }
     private KeyValue() {
-      key_ = "";
-      value_ = "";
+      key_ = com.google.protobuf.ByteString.EMPTY;
+      value_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -84,15 +74,13 @@ public final class ModelProto {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
 
-              key_ = s;
+              key_ = input.readBytes();
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
 
-              value_ = s;
+              value_ = input.readBytes();
               break;
             }
           }
@@ -120,71 +108,21 @@ public final class ModelProto {
     }
 
     public static final int KEY_FIELD_NUMBER = 1;
-    private volatile java.lang.Object key_;
+    private com.google.protobuf.ByteString key_;
     /**
-     * <code>string key = 1;</code>
+     * <code>bytes key = 1;</code>
      */
-    public java.lang.String getKey() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        key_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string key = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getKeyBytes() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        key_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public com.google.protobuf.ByteString getKey() {
+      return key_;
     }
 
     public static final int VALUE_FIELD_NUMBER = 2;
-    private volatile java.lang.Object value_;
+    private com.google.protobuf.ByteString value_;
     /**
-     * <code>string value = 2;</code>
+     * <code>bytes value = 2;</code>
      */
-    public java.lang.String getValue() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        value_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string value = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getValueBytes() {
-      java.lang.Object ref = value_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        value_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public com.google.protobuf.ByteString getValue() {
+      return value_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -199,11 +137,11 @@ public final class ModelProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getKeyBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, key_);
+      if (!key_.isEmpty()) {
+        output.writeBytes(1, key_);
       }
-      if (!getValueBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
+      if (!value_.isEmpty()) {
+        output.writeBytes(2, value_);
       }
       unknownFields.writeTo(output);
     }
@@ -213,11 +151,13 @@ public final class ModelProto {
       if (size != -1) return size;
 
       size = 0;
-      if (!getKeyBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, key_);
+      if (!key_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, key_);
       }
-      if (!getValueBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
+      if (!value_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, value_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -383,9 +323,9 @@ public final class ModelProto {
       }
       public Builder clear() {
         super.clear();
-        key_ = "";
+        key_ = com.google.protobuf.ByteString.EMPTY;
 
-        value_ = "";
+        value_ = com.google.protobuf.ByteString.EMPTY;
 
         return this;
       }
@@ -452,13 +392,11 @@ public final class ModelProto {
 
       public Builder mergeFrom(proto.ModelProto.KeyValue other) {
         if (other == proto.ModelProto.KeyValue.getDefaultInstance()) return this;
-        if (!other.getKey().isEmpty()) {
-          key_ = other.key_;
-          onChanged();
+        if (other.getKey() != com.google.protobuf.ByteString.EMPTY) {
+          setKey(other.getKey());
         }
-        if (!other.getValue().isEmpty()) {
-          value_ = other.value_;
-          onChanged();
+        if (other.getValue() != com.google.protobuf.ByteString.EMPTY) {
+          setValue(other.getValue());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -487,43 +425,17 @@ public final class ModelProto {
         return this;
       }
 
-      private java.lang.Object key_ = "";
+      private com.google.protobuf.ByteString key_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>string key = 1;</code>
+       * <code>bytes key = 1;</code>
        */
-      public java.lang.String getKey() {
-        java.lang.Object ref = key_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          key_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public com.google.protobuf.ByteString getKey() {
+        return key_;
       }
       /**
-       * <code>string key = 1;</code>
+       * <code>bytes key = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getKeyBytes() {
-        java.lang.Object ref = key_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          key_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string key = 1;</code>
-       */
-      public Builder setKey(
-          java.lang.String value) {
+      public Builder setKey(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -533,7 +445,7 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>string key = 1;</code>
+       * <code>bytes key = 1;</code>
        */
       public Builder clearKey() {
         
@@ -541,58 +453,18 @@ public final class ModelProto {
         onChanged();
         return this;
       }
-      /**
-       * <code>string key = 1;</code>
-       */
-      public Builder setKeyBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        key_ = value;
-        onChanged();
-        return this;
-      }
 
-      private java.lang.Object value_ = "";
+      private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>string value = 2;</code>
+       * <code>bytes value = 2;</code>
        */
-      public java.lang.String getValue() {
-        java.lang.Object ref = value_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          value_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public com.google.protobuf.ByteString getValue() {
+        return value_;
       }
       /**
-       * <code>string value = 2;</code>
+       * <code>bytes value = 2;</code>
        */
-      public com.google.protobuf.ByteString
-          getValueBytes() {
-        java.lang.Object ref = value_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          value_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string value = 2;</code>
-       */
-      public Builder setValue(
-          java.lang.String value) {
+      public Builder setValue(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -602,25 +474,11 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>string value = 2;</code>
+       * <code>bytes value = 2;</code>
        */
       public Builder clearValue() {
         
         value_ = getDefaultInstance().getValue();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string value = 2;</code>
-       */
-      public Builder setValueBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        value_ = value;
         onChanged();
         return this;
       }
@@ -1721,14 +1579,9 @@ public final class ModelProto {
     int getServerId();
 
     /**
-     * <code>string ipConfig = 3;</code>
+     * <code>bytes ipConfig = 3;</code>
      */
-    java.lang.String getIpConfig();
-    /**
-     * <code>string ipConfig = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getIpConfigBytes();
+    com.google.protobuf.ByteString getIpConfig();
   }
   /**
    * Protobuf type {@code proto.ServerInfo}
@@ -1745,7 +1598,7 @@ public final class ModelProto {
     private ServerInfo() {
       serverType_ = 0;
       serverId_ = 0;
-      ipConfig_ = "";
+      ipConfig_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -1787,9 +1640,8 @@ public final class ModelProto {
               break;
             }
             case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
 
-              ipConfig_ = s;
+              ipConfig_ = input.readBytes();
               break;
             }
           }
@@ -1835,37 +1687,12 @@ public final class ModelProto {
     }
 
     public static final int IPCONFIG_FIELD_NUMBER = 3;
-    private volatile java.lang.Object ipConfig_;
+    private com.google.protobuf.ByteString ipConfig_;
     /**
-     * <code>string ipConfig = 3;</code>
+     * <code>bytes ipConfig = 3;</code>
      */
-    public java.lang.String getIpConfig() {
-      java.lang.Object ref = ipConfig_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        ipConfig_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string ipConfig = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIpConfigBytes() {
-      java.lang.Object ref = ipConfig_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        ipConfig_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public com.google.protobuf.ByteString getIpConfig() {
+      return ipConfig_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1886,8 +1713,8 @@ public final class ModelProto {
       if (serverId_ != 0) {
         output.writeInt32(2, serverId_);
       }
-      if (!getIpConfigBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, ipConfig_);
+      if (!ipConfig_.isEmpty()) {
+        output.writeBytes(3, ipConfig_);
       }
       unknownFields.writeTo(output);
     }
@@ -1905,8 +1732,9 @@ public final class ModelProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, serverId_);
       }
-      if (!getIpConfigBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, ipConfig_);
+      if (!ipConfig_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, ipConfig_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2080,7 +1908,7 @@ public final class ModelProto {
 
         serverId_ = 0;
 
-        ipConfig_ = "";
+        ipConfig_ = com.google.protobuf.ByteString.EMPTY;
 
         return this;
       }
@@ -2154,9 +1982,8 @@ public final class ModelProto {
         if (other.getServerId() != 0) {
           setServerId(other.getServerId());
         }
-        if (!other.getIpConfig().isEmpty()) {
-          ipConfig_ = other.ipConfig_;
-          onChanged();
+        if (other.getIpConfig() != com.google.protobuf.ByteString.EMPTY) {
+          setIpConfig(other.getIpConfig());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2237,43 +2064,17 @@ public final class ModelProto {
         return this;
       }
 
-      private java.lang.Object ipConfig_ = "";
+      private com.google.protobuf.ByteString ipConfig_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>string ipConfig = 3;</code>
+       * <code>bytes ipConfig = 3;</code>
        */
-      public java.lang.String getIpConfig() {
-        java.lang.Object ref = ipConfig_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          ipConfig_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public com.google.protobuf.ByteString getIpConfig() {
+        return ipConfig_;
       }
       /**
-       * <code>string ipConfig = 3;</code>
+       * <code>bytes ipConfig = 3;</code>
        */
-      public com.google.protobuf.ByteString
-          getIpConfigBytes() {
-        java.lang.Object ref = ipConfig_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          ipConfig_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string ipConfig = 3;</code>
-       */
-      public Builder setIpConfig(
-          java.lang.String value) {
+      public Builder setIpConfig(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -2283,25 +2084,11 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>string ipConfig = 3;</code>
+       * <code>bytes ipConfig = 3;</code>
        */
       public Builder clearIpConfig() {
         
         ipConfig_ = getDefaultInstance().getIpConfig();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string ipConfig = 3;</code>
-       */
-      public Builder setIpConfigBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        ipConfig_ = value;
         onChanged();
         return this;
       }
@@ -5658,11 +5445,11 @@ public final class ModelProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\013model.proto\022\005proto\"&\n\010KeyValue\022\013\n\003key\030" +
-      "\001 \001(\t\022\r\n\005value\030\002 \001(\t\"/\n\010ReqHeart\022\022\n\nserv" +
+      "\001 \001(\014\022\r\n\005value\030\002 \001(\014\"/\n\010ReqHeart\022\022\n\nserv" +
       "erType\030\001 \001(\005\022\017\n\007reqTime\030\002 \001(\003\",\n\010AckHear" +
       "t\022\017\n\007reqTime\030\001 \001(\003\022\017\n\007ackTime\030\002 \001(\003\"D\n\nS" +
       "erverInfo\022\022\n\nserverType\030\001 \001(\005\022\020\n\010serverI" +
-      "d\030\002 \001(\005\022\020\n\010ipConfig\030\003 \001(\t\"4\n\013ReqRegister" +
+      "d\030\002 \001(\005\022\020\n\010ipConfig\030\003 \001(\014\"4\n\013ReqRegister" +
       "\022%\n\nserverInfo\030\001 \001(\0132\021.proto.ServerInfo\"" +
       "4\n\013AckRegister\022%\n\nserverInfo\030\001 \001(\0132\021.pro" +
       "to.ServerInfo\"8\n\022NoticeRegisterInfo\022\"\n\007s" +
