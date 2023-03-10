@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 	private final static Logger logger = LoggerFactory.getLogger(GateClient.class);
 
-	private long userId;
-	private int gameId;
-	private int hallId;
+	private long userId = 0;
+	private int gameId = 0;
+	private int hallId = 0;
 
 	private boolean safe = false;
 

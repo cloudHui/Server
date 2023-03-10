@@ -9,22 +9,23 @@ import proto.HallProto;
 
 // BASE_ID_INDEX 以下 的是通用消息
 // 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
-// 客户端回复消息都是 大于 BASE_ID_INDEX 对2 取余为0的
+// 客户端回复消息都是 大于 BASE_ID_INDEX
 public interface MessageHandel {
 
 	int GATE_TYPE = 1;
 	int GAME_TYPE = 2;
 	int HALL_TYPE = 3;
 
-	int HEART_REQ = 1;//心跳
+	int HEART = 1;//心跳
 	int HEART_ACK = 2;//回复
-	int REGISTER = 3;//请求注册
-	int REGISTER_NOTICE = 4;//注册通知
+	int REQ_REGISTER = 3;//请求注册
+	int ACK_REGISTER = 4;//注册回复
+	int REGISTER_NOTICE = 5;//注册通知
 
-	int SERVER_REQ = 5;//服务信息请
-	int SERVER_ACK = 6;//服务信息回复
+	int REQ_SERVER = 7;//服务信息请
+	int ACK_SERVER = 8;//服务信息回复
 
-	int BASE_ID_INDEX = 10000;
+	int BASE_ID_INDEX = 100000;
 
 	enum GateMsg {
 		;
@@ -62,8 +63,8 @@ public interface MessageHandel {
 	}
 
 	enum GameMsg {
-		ENTER_TABLE_REQ(20001, GameProto.ReqEnterTable.class),
-		ENTER_TABLE_ACK(20002, GameProto.AckEnterTable.class),
+		ENTER_TABLE_REQ(GAME_TYPE * BASE_ID_INDEX | 1, GameProto.ReqEnterTable.class),
+		ENTER_TABLE_ACK(GAME_TYPE * BASE_ID_INDEX | 2, GameProto.AckEnterTable.class),
 		;
 		private int id;
 
@@ -99,8 +100,8 @@ public interface MessageHandel {
 	}
 
 	enum HallMsg {
-		REQ_LOGIN(30001, HallProto.ReqLogin.class),
-		ACK_LOGIN(30002, HallProto.AckLogin.class),
+		REQ_LOGIN(HALL_TYPE * BASE_ID_INDEX | 1, HallProto.ReqLogin.class),
+		ACK_LOGIN(HALL_TYPE * BASE_ID_INDEX | 2, HallProto.AckLogin.class),
 		;
 		private int id;
 

@@ -3,7 +3,7 @@ package gate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import gate.client.ClientProto;
+import gate.connect.ConnectProcessor;
 import msg.MessageHandel;
 import msg.ServerType;
 import net.connect.TCPConnect;
@@ -20,7 +20,7 @@ import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
 
 public class Gate {
-	private final static Logger LOGGER = LoggerFactory.getLogger(Gate.class);
+	private final static Logger logger = LoggerFactory.getLogger(Gate.class);
 
 	private final static Gate instance = new Gate();
 
@@ -111,7 +111,7 @@ public class Gate {
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
 		ServerConfiguration configuration = cfgMgr.getServers().get("gate");
 		if (null == configuration || !configuration.hasHostString()) {
-			LOGGER.error("ERROR! failed for can not find server config");
+			logger.error("ERROR! failed for can not find server config");
 			return;
 		}
 
@@ -133,7 +133,7 @@ public class Gate {
 		//获取其他服务
 		getAllOtherServer();
 
-		LOGGER.info("[START] gate server is start!!!");
+		logger.info("[START] gate server is start!!!");
 	}
 
 	/**
@@ -143,23 +143,8 @@ public class Gate {
 		setServerManager(new ServerManager());
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
-		serverManager.connect(ipPort[0], Integer.parseInt(ipPort[1]), ClientProto.TRANSFER, ClientProto.PARSER,
-				ClientProto.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + "" + getPort());
-		sendHeart(ServerType.Center);
-	}
-
-	/**
-	 * 服务间发送心跳
-	 *
-	 * @param serverType 服务类型
-	 */
-	public void sendHeart(ServerType serverType) {
-		registerTimer(1000, 1000, -1, (gate) -> {
-			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
-					.setReqTime(System.currentTimeMillis()).build();
-			serverManager.getServerClient(serverType).sendMessage(MessageHandel.HEART_REQ, heartbeat, null);
-			return false;
-		}, this);
+		serverManager.connect(ServerType.Center,ipPort[0], Integer.parseInt(ipPort[1]), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + "" + getPort());
 	}
 
 	/**
@@ -172,7 +157,7 @@ public class Gate {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
-				serverClient.sendMessage(MessageHandel.SERVER_REQ, req.build(), null);
+				serverClient.sendMessage(MessageHandel.REQ_SERVER, req.build(), null);
 			} else {
 				getAllOtherServer();
 			}
@@ -184,7 +169,7 @@ public class Gate {
 		try {
 			instance.start();
 		} catch (Exception e) {
-			LOGGER.error("failed for start gate server!", e);
+			logger.error("failed for start gate server!", e);
 		}
 	}
 }

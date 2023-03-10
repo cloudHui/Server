@@ -22,7 +22,7 @@ public class ClientProto {
 
 	public final static Parser PARSER = (id, bytes) -> {
 		if (id == MessageHandel.HEART_ACK) {
-			return ModelProto.ReqHeart.parseFrom(bytes);
+			return ModelProto.Heart.parseFrom(bytes);
 		} else {
 			MessageHandel.GameMsg gameMsg = MessageHandel.GameMsg.get(id);
 			if (gameMsg != null) {
@@ -48,7 +48,7 @@ public class ClientProto {
 	public final static Handlers HANDLERS = handlers::get;
 
 
-	public final static Transfer<HallClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
+	public final static Transfer<HallClient, TCPMessage> TRANSFER = (hallClient, tcpMessage) -> {
 		//Todo  special  server back msg need fill gate client serverId
 		int msgId = tcpMessage.getMessageId();
 		if (msgId % 2 == 0) {
@@ -65,7 +65,7 @@ public class ClientProto {
 					break;
 			}
 		} else {
-			return transferMsg(gateClient.getId(), tcpMessage);
+			return transferMsg(hallClient.getId(), tcpMessage);
 		}
 		return false;
 	};

@@ -9,13 +9,9 @@ message KeyValue {
 }
 
 //心跳
-message ReqHeart {
+message Heart {
   int32 serverType = 1;
   int64 reqTime = 2;
-}
-message AckHeart {
-  int64 reqTime = 1;
-  int64 ackTime = 2;
 }
 
 message ServerInfo{

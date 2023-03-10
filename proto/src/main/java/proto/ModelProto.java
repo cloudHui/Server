@@ -531,8 +531,8 @@ public final class ModelProto {
 
   }
 
-  public interface ReqHeartOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqHeart)
+  public interface HeartOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.Heart)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -550,18 +550,18 @@ public final class ModelProto {
    *心跳
    * </pre>
    *
-   * Protobuf type {@code proto.ReqHeart}
+   * Protobuf type {@code proto.Heart}
    */
-  public  static final class ReqHeart extends
+  public  static final class Heart extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqHeart)
-      ReqHeartOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.Heart)
+      HeartOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ReqHeart.newBuilder() to construct.
-    private ReqHeart(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use Heart.newBuilder() to construct.
+    private Heart(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ReqHeart() {
+    private Heart() {
       serverType_ = 0;
       reqTime_ = 0L;
     }
@@ -571,7 +571,7 @@ public final class ModelProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqHeart(
+    private Heart(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -618,14 +618,14 @@ public final class ModelProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.ModelProto.internal_static_proto_ReqHeart_descriptor;
+      return proto.ModelProto.internal_static_proto_Heart_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_ReqHeart_fieldAccessorTable
+      return proto.ModelProto.internal_static_proto_Heart_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.ModelProto.ReqHeart.class, proto.ModelProto.ReqHeart.Builder.class);
+              proto.ModelProto.Heart.class, proto.ModelProto.Heart.Builder.class);
     }
 
     public static final int SERVERTYPE_FIELD_NUMBER = 1;
@@ -690,10 +690,10 @@ public final class ModelProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.ModelProto.ReqHeart)) {
+      if (!(obj instanceof proto.ModelProto.Heart)) {
         return super.equals(obj);
       }
-      proto.ModelProto.ReqHeart other = (proto.ModelProto.ReqHeart) obj;
+      proto.ModelProto.Heart other = (proto.ModelProto.Heart) obj;
 
       boolean result = true;
       result = result && (getServerType()
@@ -721,69 +721,69 @@ public final class ModelProto {
       return hash;
     }
 
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(byte[] data)
+    public static proto.ModelProto.Heart parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(java.io.InputStream input)
+    public static proto.ModelProto.Heart parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ModelProto.ReqHeart parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ModelProto.Heart parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.ReqHeart parseDelimitedFrom(
+    public static proto.ModelProto.Heart parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.ReqHeart parseFrom(
+    public static proto.ModelProto.Heart parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -795,7 +795,7 @@ public final class ModelProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.ModelProto.ReqHeart prototype) {
+    public static Builder newBuilder(proto.ModelProto.Heart prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -814,25 +814,25 @@ public final class ModelProto {
      *心跳
      * </pre>
      *
-     * Protobuf type {@code proto.ReqHeart}
+     * Protobuf type {@code proto.Heart}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqHeart)
-        proto.ModelProto.ReqHeartOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.Heart)
+        proto.ModelProto.HeartOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.ModelProto.internal_static_proto_ReqHeart_descriptor;
+        return proto.ModelProto.internal_static_proto_Heart_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_ReqHeart_fieldAccessorTable
+        return proto.ModelProto.internal_static_proto_Heart_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.ModelProto.ReqHeart.class, proto.ModelProto.ReqHeart.Builder.class);
+                proto.ModelProto.Heart.class, proto.ModelProto.Heart.Builder.class);
       }
 
-      // Construct using proto.ModelProto.ReqHeart.newBuilder()
+      // Construct using proto.ModelProto.Heart.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -858,23 +858,23 @@ public final class ModelProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_ReqHeart_descriptor;
+        return proto.ModelProto.internal_static_proto_Heart_descriptor;
       }
 
-      public proto.ModelProto.ReqHeart getDefaultInstanceForType() {
-        return proto.ModelProto.ReqHeart.getDefaultInstance();
+      public proto.ModelProto.Heart getDefaultInstanceForType() {
+        return proto.ModelProto.Heart.getDefaultInstance();
       }
 
-      public proto.ModelProto.ReqHeart build() {
-        proto.ModelProto.ReqHeart result = buildPartial();
+      public proto.ModelProto.Heart build() {
+        proto.ModelProto.Heart result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.ModelProto.ReqHeart buildPartial() {
-        proto.ModelProto.ReqHeart result = new proto.ModelProto.ReqHeart(this);
+      public proto.ModelProto.Heart buildPartial() {
+        proto.ModelProto.Heart result = new proto.ModelProto.Heart(this);
         result.serverType_ = serverType_;
         result.reqTime_ = reqTime_;
         onBuilt();
@@ -908,16 +908,16 @@ public final class ModelProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.ReqHeart) {
-          return mergeFrom((proto.ModelProto.ReqHeart)other);
+        if (other instanceof proto.ModelProto.Heart) {
+          return mergeFrom((proto.ModelProto.Heart)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.ModelProto.ReqHeart other) {
-        if (other == proto.ModelProto.ReqHeart.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ModelProto.Heart other) {
+        if (other == proto.ModelProto.Heart.getDefaultInstance()) return this;
         if (other.getServerType() != 0) {
           setServerType(other.getServerType());
         }
@@ -937,11 +937,11 @@ public final class ModelProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.ReqHeart parsedMessage = null;
+        proto.ModelProto.Heart parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.ReqHeart) e.getUnfinishedMessage();
+          parsedMessage = (proto.ModelProto.Heart) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1013,552 +1013,39 @@ public final class ModelProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.ReqHeart)
+      // @@protoc_insertion_point(builder_scope:proto.Heart)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.ReqHeart)
-    private static final proto.ModelProto.ReqHeart DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.Heart)
+    private static final proto.ModelProto.Heart DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.ModelProto.ReqHeart();
+      DEFAULT_INSTANCE = new proto.ModelProto.Heart();
     }
 
-    public static proto.ModelProto.ReqHeart getDefaultInstance() {
+    public static proto.ModelProto.Heart getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ReqHeart>
-        PARSER = new com.google.protobuf.AbstractParser<ReqHeart>() {
-      public ReqHeart parsePartialFrom(
+    private static final com.google.protobuf.Parser<Heart>
+        PARSER = new com.google.protobuf.AbstractParser<Heart>() {
+      public Heart parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqHeart(input, extensionRegistry);
+          return new Heart(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<ReqHeart> parser() {
+    public static com.google.protobuf.Parser<Heart> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ReqHeart> getParserForType() {
+    public com.google.protobuf.Parser<Heart> getParserForType() {
       return PARSER;
     }
 
-    public proto.ModelProto.ReqHeart getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface AckHeartOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckHeart)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int64 reqTime = 1;</code>
-     */
-    long getReqTime();
-
-    /**
-     * <code>int64 ackTime = 2;</code>
-     */
-    long getAckTime();
-  }
-  /**
-   * Protobuf type {@code proto.AckHeart}
-   */
-  public  static final class AckHeart extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckHeart)
-      AckHeartOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use AckHeart.newBuilder() to construct.
-    private AckHeart(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private AckHeart() {
-      reqTime_ = 0L;
-      ackTime_ = 0L;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private AckHeart(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              reqTime_ = input.readInt64();
-              break;
-            }
-            case 16: {
-
-              ackTime_ = input.readInt64();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_AckHeart_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_AckHeart_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.AckHeart.class, proto.ModelProto.AckHeart.Builder.class);
-    }
-
-    public static final int REQTIME_FIELD_NUMBER = 1;
-    private long reqTime_;
-    /**
-     * <code>int64 reqTime = 1;</code>
-     */
-    public long getReqTime() {
-      return reqTime_;
-    }
-
-    public static final int ACKTIME_FIELD_NUMBER = 2;
-    private long ackTime_;
-    /**
-     * <code>int64 ackTime = 2;</code>
-     */
-    public long getAckTime() {
-      return ackTime_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (reqTime_ != 0L) {
-        output.writeInt64(1, reqTime_);
-      }
-      if (ackTime_ != 0L) {
-        output.writeInt64(2, ackTime_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (reqTime_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, reqTime_);
-      }
-      if (ackTime_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, ackTime_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.AckHeart)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.AckHeart other = (proto.ModelProto.AckHeart) obj;
-
-      boolean result = true;
-      result = result && (getReqTime()
-          == other.getReqTime());
-      result = result && (getAckTime()
-          == other.getAckTime());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + REQTIME_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getReqTime());
-      hash = (37 * hash) + ACKTIME_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getAckTime());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.AckHeart parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckHeart parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.AckHeart prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.AckHeart}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckHeart)
-        proto.ModelProto.AckHeartOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_AckHeart_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_AckHeart_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.AckHeart.class, proto.ModelProto.AckHeart.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.AckHeart.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        reqTime_ = 0L;
-
-        ackTime_ = 0L;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_AckHeart_descriptor;
-      }
-
-      public proto.ModelProto.AckHeart getDefaultInstanceForType() {
-        return proto.ModelProto.AckHeart.getDefaultInstance();
-      }
-
-      public proto.ModelProto.AckHeart build() {
-        proto.ModelProto.AckHeart result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.AckHeart buildPartial() {
-        proto.ModelProto.AckHeart result = new proto.ModelProto.AckHeart(this);
-        result.reqTime_ = reqTime_;
-        result.ackTime_ = ackTime_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.AckHeart) {
-          return mergeFrom((proto.ModelProto.AckHeart)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.AckHeart other) {
-        if (other == proto.ModelProto.AckHeart.getDefaultInstance()) return this;
-        if (other.getReqTime() != 0L) {
-          setReqTime(other.getReqTime());
-        }
-        if (other.getAckTime() != 0L) {
-          setAckTime(other.getAckTime());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.AckHeart parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.AckHeart) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private long reqTime_ ;
-      /**
-       * <code>int64 reqTime = 1;</code>
-       */
-      public long getReqTime() {
-        return reqTime_;
-      }
-      /**
-       * <code>int64 reqTime = 1;</code>
-       */
-      public Builder setReqTime(long value) {
-        
-        reqTime_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 reqTime = 1;</code>
-       */
-      public Builder clearReqTime() {
-        
-        reqTime_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private long ackTime_ ;
-      /**
-       * <code>int64 ackTime = 2;</code>
-       */
-      public long getAckTime() {
-        return ackTime_;
-      }
-      /**
-       * <code>int64 ackTime = 2;</code>
-       */
-      public Builder setAckTime(long value) {
-        
-        ackTime_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 ackTime = 2;</code>
-       */
-      public Builder clearAckTime() {
-        
-        ackTime_ = 0L;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.AckHeart)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.AckHeart)
-    private static final proto.ModelProto.AckHeart DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.AckHeart();
-    }
-
-    public static proto.ModelProto.AckHeart getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<AckHeart>
-        PARSER = new com.google.protobuf.AbstractParser<AckHeart>() {
-      public AckHeart parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckHeart(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AckHeart> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AckHeart> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.AckHeart getDefaultInstanceForType() {
+    public proto.ModelProto.Heart getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5396,15 +4883,10 @@ public final class ModelProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_KeyValue_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqHeart_descriptor;
+    internal_static_proto_Heart_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqHeart_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckHeart_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckHeart_fieldAccessorTable;
+      internal_static_proto_Heart_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ServerInfo_descriptor;
   private static final 
@@ -5445,18 +4927,17 @@ public final class ModelProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\013model.proto\022\005proto\"&\n\010KeyValue\022\013\n\003key\030" +
-      "\001 \001(\014\022\r\n\005value\030\002 \001(\014\"/\n\010ReqHeart\022\022\n\nserv" +
-      "erType\030\001 \001(\005\022\017\n\007reqTime\030\002 \001(\003\",\n\010AckHear" +
-      "t\022\017\n\007reqTime\030\001 \001(\003\022\017\n\007ackTime\030\002 \001(\003\"D\n\nS" +
-      "erverInfo\022\022\n\nserverType\030\001 \001(\005\022\020\n\010serverI" +
-      "d\030\002 \001(\005\022\020\n\010ipConfig\030\003 \001(\014\"4\n\013ReqRegister" +
-      "\022%\n\nserverInfo\030\001 \001(\0132\021.proto.ServerInfo\"" +
-      "4\n\013AckRegister\022%\n\nserverInfo\030\001 \001(\0132\021.pro" +
-      "to.ServerInfo\"8\n\022NoticeRegisterInfo\022\"\n\007s" +
-      "ervers\030\001 \003(\0132\021.proto.ServerInfo\"#\n\rReqSe",
-      "rverInfo\022\022\n\nserverType\030\001 \003(\005\"3\n\rAckServe" +
-      "rInfo\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInf" +
-      "oB\014B\nModelProtob\006proto3"
+      "\001 \001(\014\022\r\n\005value\030\002 \001(\014\",\n\005Heart\022\022\n\nserverT" +
+      "ype\030\001 \001(\005\022\017\n\007reqTime\030\002 \001(\003\"D\n\nServerInfo" +
+      "\022\022\n\nserverType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\020" +
+      "\n\010ipConfig\030\003 \001(\014\"4\n\013ReqRegister\022%\n\nserve" +
+      "rInfo\030\001 \001(\0132\021.proto.ServerInfo\"4\n\013AckReg" +
+      "ister\022%\n\nserverInfo\030\001 \001(\0132\021.proto.Server" +
+      "Info\"8\n\022NoticeRegisterInfo\022\"\n\007servers\030\001 " +
+      "\003(\0132\021.proto.ServerInfo\"#\n\rReqServerInfo\022" +
+      "\022\n\nserverType\030\001 \003(\005\"3\n\rAckServerInfo\022\"\n\007",
+      "servers\030\001 \003(\0132\021.proto.ServerInfoB\014B\nMode" +
+      "lProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5476,50 +4957,44 @@ public final class ModelProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_KeyValue_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_proto_ReqHeart_descriptor =
+    internal_static_proto_Heart_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_proto_ReqHeart_fieldAccessorTable = new
+    internal_static_proto_Heart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqHeart_descriptor,
+        internal_static_proto_Heart_descriptor,
         new java.lang.String[] { "ServerType", "ReqTime", });
-    internal_static_proto_AckHeart_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_proto_AckHeart_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckHeart_descriptor,
-        new java.lang.String[] { "ReqTime", "AckTime", });
     internal_static_proto_ServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_proto_ServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ServerInfo_descriptor,
         new java.lang.String[] { "ServerType", "ServerId", "IpConfig", });
     internal_static_proto_ReqRegister_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_proto_ReqRegister_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqRegister_descriptor,
         new java.lang.String[] { "ServerInfo", });
     internal_static_proto_AckRegister_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_proto_AckRegister_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRegister_descriptor,
         new java.lang.String[] { "ServerInfo", });
     internal_static_proto_NoticeRegisterInfo_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_proto_NoticeRegisterInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NoticeRegisterInfo_descriptor,
         new java.lang.String[] { "Servers", });
     internal_static_proto_ReqServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_proto_ReqServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqServerInfo_descriptor,
         new java.lang.String[] { "ServerType", });
     internal_static_proto_AckServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_proto_AckServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckServerInfo_descriptor,

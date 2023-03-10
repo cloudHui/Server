@@ -82,6 +82,7 @@ public class ServerManager {
 	/**
 	 * 主动链接远程tcp
 	 *
+	 * @param connect     要链接的服务
 	 * @param ip          远程ip
 	 * @param port        远程端口
 	 * @param transfer    消息转发处理接口
@@ -91,11 +92,11 @@ public class ServerManager {
 	 * @param localId     本地服务 id
 	 * @param localPort   本地服务 IP 端口
 	 */
-	public void connect(String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
-		connect(new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort);
+	public void connect(ServerType connect, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+		connect(connect, new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort);
 	}
 
-	public void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+	public void connect(ServerType serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
 		connect(
 				socketAddress,
 				transfer,
@@ -110,7 +111,7 @@ public class ServerManager {
 					notice.setServerInfo(server.build());
 
 
-					tcpConnect.sendMessage(MessageHandel.REGISTER, notice.build(), null, 10L)
+					tcpConnect.sendMessage(MessageHandel.REQ_REGISTER, notice.build(), null, 3L)
 							.whenComplete((BiConsumer<ModelProto.AckRegister, Exception>) (r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
@@ -120,15 +121,15 @@ public class ServerManager {
 									ModelProto.ServerInfo serverInfo = r.getServerInfo();
 									tcpConnect.setServerId(serverInfo.getServerId());
 
-									addServerClient(ServerType.get(serverInfo.getServerType()), tcpConnect, serverInfo.getServerId());
+									addServerClient(serverType, tcpConnect, serverInfo.getServerId());
 									logger.info("send register message to {}:{} success",
 											s.getAddress().getHostAddress(), s.getPort());
 								}
 							});
-				});
+				}, localServer);
 	}
 
-	public void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent) {
+	public void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,
 				socketAddress,
 				transfer,
@@ -138,9 +139,10 @@ public class ServerManager {
 
 		//连接后的操作
 		tcpConnection.setIdleRunner(handler -> {
-			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
-					.setReqTime(System.currentTimeMillis()).build();
-			handler.sendMessage(MessageHandel.HEART_REQ, heartbeat, null);
+			ModelProto.Heart heartbeat = ModelProto.Heart.newBuilder()
+					.setReqTime(System.currentTimeMillis())
+					.setServerType(localServer.getServerType()).build();
+			handler.sendMessage(MessageHandel.HEART, heartbeat, null);
 		});
 
 		tcpConnection.connect();

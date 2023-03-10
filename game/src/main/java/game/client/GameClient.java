@@ -1,6 +1,5 @@
 package game.client;
 
-import msg.MessageHandel;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
@@ -22,6 +21,7 @@ public class GameClient extends ClientHandler<GameClient, TCPMessage> {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent((CloseEvent<GameClient>) client -> {
+			logger.error("close :{}", getRemoteIP(this));
 		});
 
 		setSafe((Safe<GameClient, TCPMessage>) (gateClient, msg) -> {

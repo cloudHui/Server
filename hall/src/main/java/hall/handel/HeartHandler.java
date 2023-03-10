@@ -25,7 +25,7 @@ public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 		ModelProto.AckHeart.Builder ackHeart = ModelProto.AckHeart.newBuilder();
 		ackHeart.setReqTime(req.getReqTime());
 		ackHeart.setAckTime(System.currentTimeMillis());
-		sender.sendMessage(MessageHandel.HEART_REQ, ackHeart.build(), null);
+		sender.sendMessage(MessageHandel.HEART, ackHeart.build(), null);
 		long cost = ackHeart.getAckTime() - ackHeart.getReqTime();
 		logger.info("server:{}, heart cost:{}ms", req.getServerType(), cost);
 		if (cost > 50) {

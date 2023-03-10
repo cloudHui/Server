@@ -39,7 +39,7 @@ public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
 				}
 			}
 		}
-		sender.sendMessage(MessageHandel.SERVER_ACK, ack.build(), null);
+		sender.sendMessage(MessageHandel.ACK_SERVER, ack.build(), null);
 		return true;
 	}
 }

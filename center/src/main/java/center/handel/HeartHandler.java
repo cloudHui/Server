@@ -1,6 +1,6 @@
 package center.handel;
 
-import msg.MessageHandel;
+import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import proto.ModelProto;
 /**
  * 心跳请求
  */
-public class HeartHandler implements Handler<ModelProto.ReqHeart> {
+public class HeartHandler implements Handler<ModelProto.Heart> {
 
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);
 
@@ -21,16 +21,13 @@ public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.ReqHeart req) {
-		ModelProto.AckHeart.Builder ackHeart = ModelProto.AckHeart.newBuilder();
-		ackHeart.setReqTime(req.getReqTime());
-		ackHeart.setAckTime(System.currentTimeMillis());
-		sender.sendMessage(MessageHandel.HEART_REQ, ackHeart.build(), null);
-		long cost = ackHeart.getAckTime() - ackHeart.getReqTime();
-		logger.info("server:{}, heart cost:{}ms", req.getServerType(), cost);
+	public boolean handler(Sender sender, Long aLong, ModelProto.Heart req) {
+		long cost = System.currentTimeMillis() - req.getReqTime();
+		int serverType = req.getServerType();
+		logger.info("server:{}, heart req cost:{}ms", ServerType.get(serverType), cost);
 		if (cost > 50) {
 			//超过50毫秒 打印错误日志
-			logger.error("server:{}, heart toolong cost:{}ms ", req.getServerType(), cost);
+			logger.error("server:{}, heart toolong cost:{}ms ", ServerType.get(serverType), cost);
 		}
 		return true;
 	}
