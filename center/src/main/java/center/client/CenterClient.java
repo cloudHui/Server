@@ -1,6 +1,5 @@
 package center.client;
 
-import msg.MessageHandel;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
@@ -23,7 +22,7 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 		setCloseEvent((CloseEvent<CenterClient>) client -> {
 		});
 
-		setSafe((Safe<CenterClient, TCPMessage>) (client, msg) -> msg.getMessageId() == MessageHandel.REQ_REGISTER || msg.getMessageId() == MessageHandel.HEART);
+		setSafe((Safe<CenterClient, TCPMessage>) (client, msg) -> true);
 	}
 
 	public ModelProto.ServerInfo getServerInfo() {
