@@ -110,7 +110,7 @@ public class ServerManager {
 					notice.setServerInfo(server.build());
 
 
-					tcpConnect.sendMessage(MessageHandel.REGISTER, notice.build(), null, 10)
+					tcpConnect.sendMessage(MessageHandel.REGISTER, notice.build(), null, 10L)
 							.whenComplete((BiConsumer<ModelProto.AckRegister, Exception>) (r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {

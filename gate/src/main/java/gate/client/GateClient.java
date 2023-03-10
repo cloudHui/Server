@@ -1,6 +1,5 @@
 package gate.client;
 
-import msg.MessageHandel;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
