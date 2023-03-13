@@ -1,4 +1,4 @@
-package center.handel;
+package hall.handel;
 
 import msg.MessageHandel;
 import msg.ServerType;
@@ -27,7 +27,7 @@ public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 		int serverType = req.getServerType();
 		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
 		ack.setReqTime(now);
-		ack.setServerType(ServerType.Center.getServerType());
+		ack.setServerType(ServerType.Hall.getServerType());
 		sender.sendMessage(MessageHandel.HEART_ACK, ack.build(), null);
 		logger.error("server:{}, heart req", ServerType.get(serverType));
 		return true;

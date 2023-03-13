@@ -27,7 +27,7 @@ public class ConnectProcessor {
 			case MessageHandel.ACK_REGISTER:
 				return ModelProto.AckRegister.parseFrom(bytes);
 			case MessageHandel.REGISTER_NOTICE:
-				return ModelProto.NoticeRegisterInfo.parseFrom(bytes);
+				return ModelProto.NotRegisterInfo.parseFrom(bytes);
 			default: {
 				return null;
 			}

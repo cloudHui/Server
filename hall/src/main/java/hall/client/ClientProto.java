@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
+import hall.handel.HeartHandler;
 import hall.handel.NotBreakHandler;
+import hall.handel.ReqLoginHandler;
 import hall.handel.ReqRegisterHandler;
 import msg.MessageHandel;
 import net.handler.Handler;
@@ -25,7 +27,7 @@ public class ClientProto {
 		switch (id) {
 			case MessageHandel.REQ_REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
-			case MessageHandel.HEART_ACK:
+			case MessageHandel.HEART:
 				return ModelProto.ReqHeart.parseFrom(bytes);
 			case MessageHandel.NOT_BREAK:
 				return ModelProto.NotBreak.parseFrom(bytes);
@@ -55,9 +57,10 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.HEART_ACK, HeartAckHandler.getInstance());
+		handlers.put(MessageHandel.HEART, HeartHandler.getInstance());
 		handlers.put(MessageHandel.REQ_REGISTER, ReqRegisterHandler.getInstance());
 		handlers.put(MessageHandel.NOT_BREAK, NotBreakHandler.getInstance());
+		handlers.put(MessageHandel.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
