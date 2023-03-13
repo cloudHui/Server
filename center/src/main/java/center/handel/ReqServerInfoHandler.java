@@ -22,7 +22,7 @@ public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.ReqServerInfo req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.ReqServerInfo req, int mapId) {
 		ServerManager manager = ServerManager.getInstance();
 		List<Integer> serverTypeList = req.getServerTypeList();
 		ModelProto.AckServerInfo.Builder ack = ModelProto.AckServerInfo.newBuilder();

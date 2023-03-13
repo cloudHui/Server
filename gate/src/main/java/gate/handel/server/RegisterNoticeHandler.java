@@ -22,7 +22,7 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.NotRegisterInfo req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.NotRegisterInfo req, int mapId) {
 		return connectToSever(req.getServersList());
 	}
 
@@ -35,10 +35,14 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo
 		String[] ipConfig;
 		int localServerId = instance.getServerId();
 		String localInnerIpConfig = instance.getInnerIp() + ":" + instance.getPort();
+		ServerType serverType;
 		for (ModelProto.ServerInfo serverInfo : serverInfos) {
 			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
-			serverManager.registerToCenter(ipConfig, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-					ConnectProcessor.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig);
+			serverType = ServerType.get(serverInfo.getServerType());
+			if (serverType != null) {
+				serverManager.registerSever(ipConfig, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+						ConnectProcessor.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig, serverType);
+			}
 		}
 		return true;
 	}

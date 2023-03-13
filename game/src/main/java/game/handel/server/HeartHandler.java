@@ -1,4 +1,4 @@
-package hall.handel;
+package game.handel.server;
 
 import msg.MessageHandel;
 import msg.ServerType;
@@ -22,12 +22,12 @@ public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.ReqHeart req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.ReqHeart req, int mapId) {
 		long now = System.currentTimeMillis();
 		int serverType = req.getServerType();
 		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
 		ack.setReqTime(now);
-		ack.setServerType(ServerType.Hall.getServerType());
+		ack.setServerType(ServerType.Game.getServerType());
 		sender.sendMessage(MessageHandel.HEART_ACK, ack.build(), null);
 		logger.error("server:{}, heart req", ServerType.get(serverType));
 		return true;

@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
-import game.handel.HeartHandler;
-import game.handel.NotBreakHandler;
-import game.handel.ReqRegisterHandler;
+import game.handel.ReqEnterTableHandler;
+import game.handel.server.HeartHandler;
+import game.handel.server.NotBreakHandler;
+import game.handel.server.ReqRegisterHandler;
 import msg.MessageHandel;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -59,6 +60,10 @@ public class ClientProto {
 		handlers.put(MessageHandel.HEART, HeartHandler.getInstance());
 		handlers.put(MessageHandel.REQ_REGISTER, ReqRegisterHandler.getInstance());
 		handlers.put(MessageHandel.NOT_BREAK, NotBreakHandler.getInstance());
+
+
+		handlers.put(MessageHandel.GameMsg.ENTER_TABLE_REQ.getId(), ReqEnterTableHandler.getInstance());
+
 
 	}
 

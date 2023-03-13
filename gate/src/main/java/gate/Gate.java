@@ -144,8 +144,9 @@ public class Gate {
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 
-		serverManager.registerToCenter(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + ":" + getPort());
+		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + ":" + getPort(),
+				ServerType.Center);
 	}
 
 	/**

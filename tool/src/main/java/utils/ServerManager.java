@@ -149,11 +149,25 @@ public class ServerManager {
 	}
 
 	/**
+	 * 测试链接
+	 */
+	public TCPConnect connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers) {
+		TCPConnect tcpConnection = new TCPConnect(workerGroup,
+				socketAddress,
+				transfer,
+				parser,
+				handlers,
+				null);
+		return tcpConnection.connect();
+	}
+
+
+	/**
 	 * 向注册中心注册
 	 */
-	public void registerToCenter(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers,
-	                             ServerType serverType, int serverId, String ipPorts) {
-		connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
+	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers,
+	                          ServerType serverType, int serverId, String ipPorts, ServerType connectServer) {
+		connect(connectServer, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
 				handlers, serverType, serverId, ipPorts);
 	}
 }

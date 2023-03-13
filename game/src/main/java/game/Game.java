@@ -158,8 +158,9 @@ public class Game {
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 
-		serverManager.registerToCenter(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + ":" + getPort());
+		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + ":" + getPort(),
+				ServerType.Center);
 	}
 
 	/**

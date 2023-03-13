@@ -148,8 +148,9 @@ public class Hall {
 		setServerManager(new ServerManager());
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
-		serverManager.registerToCenter(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Hall, getServerId(), getInnerIp() + ":" + getPort());
+		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS, ServerType.Hall, getServerId(), getInnerIp() + ":" + getPort(),
+				ServerType.Center);
 	}
 
 	public static void main(String[] args) {

@@ -20,7 +20,7 @@ public class AckRegisterHandler implements Handler<ModelProto.AckRegister> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.AckRegister req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.AckRegister req, int mapId) {
 		ServerManager manager = Gate.getInstance().getServerManager();
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());

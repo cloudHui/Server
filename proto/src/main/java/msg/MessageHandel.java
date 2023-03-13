@@ -3,6 +3,7 @@ package msg;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.Internal;
 import com.google.protobuf.MessageLite;
 import proto.GameProto;
 import proto.HallProto;
@@ -12,9 +13,8 @@ import proto.HallProto;
 // 客户端回复消息都是 大于 BASE_ID_INDEX
 public interface MessageHandel {
 
-	int GATE_TYPE = 1;
-	int GAME_TYPE = 2;
-	int HALL_TYPE = 3;
+	int GAME_TYPE = 0x2000;
+	int HALL_TYPE = 0x4000;
 
 	int HEART = 1;//心跳
 	int HEART_ACK = 2;//回复
@@ -27,7 +27,7 @@ public interface MessageHandel {
 
 	int NOT_BREAK = 9;//通知玩家掉线
 
-	int BASE_ID_INDEX = 100000;
+	int BASE_ID_INDEX = 0x1000;
 
 	enum GateMsg {
 		;
@@ -45,6 +45,7 @@ public interface MessageHandel {
 
 		GateMsg(int id, Class className) {
 			this.id = id;
+			this.className = className;
 		}
 
 		public int getId() {
@@ -65,8 +66,8 @@ public interface MessageHandel {
 	}
 
 	enum GameMsg {
-		ENTER_TABLE_REQ(GAME_TYPE * BASE_ID_INDEX | 1, GameProto.ReqEnterTable.class),
-		ENTER_TABLE_ACK(GAME_TYPE * BASE_ID_INDEX | 2, GameProto.AckEnterTable.class),
+		ENTER_TABLE_REQ(GAME_TYPE | 1, GameProto.ReqEnterTable.class),
+		ENTER_TABLE_ACK(GAME_TYPE | 2, GameProto.AckEnterTable.class),
 		;
 		private int id;
 
@@ -82,6 +83,7 @@ public interface MessageHandel {
 
 		GameMsg(int id, Class className) {
 			this.id = id;
+			this.className = className;
 		}
 
 		public int getId() {
@@ -102,8 +104,8 @@ public interface MessageHandel {
 	}
 
 	enum HallMsg {
-		REQ_LOGIN(HALL_TYPE * BASE_ID_INDEX | 1, HallProto.ReqLogin.class),
-		ACK_LOGIN(HALL_TYPE * BASE_ID_INDEX | 2, HallProto.AckLogin.class),
+		REQ_LOGIN(HALL_TYPE | 1, HallProto.ReqLogin.class),
+		ACK_LOGIN(HALL_TYPE | 2, HallProto.AckLogin.class),
 		;
 		private int id;
 
@@ -119,6 +121,7 @@ public interface MessageHandel {
 
 		HallMsg(int id, Class className) {
 			this.id = id;
+			this.className = className;
 		}
 
 		public int getId() {
@@ -139,7 +142,7 @@ public interface MessageHandel {
 	}
 
 	static MessageLite getMessageObject(Class<MessageLite> clazz, byte[] bytes) throws Exception {
-		MessageLite defaultInstance = com.google.protobuf.Internal.getDefaultInstance(clazz);
+		MessageLite defaultInstance = Internal.getDefaultInstance(clazz);
 		if (null == bytes) {
 			return defaultInstance.newBuilderForType().build();
 		} else {

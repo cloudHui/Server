@@ -15,6 +15,7 @@
         <module>game</module>
         <module>proto</module>
         <module>tool</module>
+        <module>Test</module>
     </modules>
 
     <dependencies>

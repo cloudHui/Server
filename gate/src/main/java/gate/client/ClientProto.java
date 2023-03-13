@@ -7,8 +7,6 @@ import com.google.protobuf.Message;
 import gate.Gate;
 import msg.MessageHandel;
 import msg.ServerType;
-import net.client.Sender;
-import net.connect.ConnectHandler;
 import net.connect.TCPConnect;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -40,6 +38,7 @@ public class ClientProto {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
 			}
 		}
+
 		return null;
 	}
 
@@ -60,7 +59,7 @@ public class ClientProto {
 	 */
 	public final static Transfer<GateClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if ((msgId & MessageHandel.BASE_ID_INDEX) == 0) {
+		if (msgId > MessageHandel.BASE_ID_INDEX) {
 			return transferMessage(gateClient, tcpMessage, msgId);
 		}
 		return false;
@@ -102,34 +101,8 @@ public class ClientProto {
 					return true;
 				}
 			}
-		} else {
-			//直接转发给客户端的
-			return transferMsg(tcpMessage.getMapId(), tcpMessage);
 		}
 		logger.error("[error msg transferMessage to server msgId:{}]", msgId);
 		return false;
-	}
-
-	public static boolean transferMsg(long connectId, TCPMessage msg) {
-		return transferMsg(connectId, msg, null);
-	}
-
-	public static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg) {
-		Sender sender = ConnectHandler.getSender(connectId);
-		if (null != sender) {
-			if (null != innerMsg) {
-				sender.sendMessage(replace(msg, innerMsg));
-			} else {
-				sender.sendMessage(msg);
-			}
-			return true;
-		}
-		logger.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
-		return false;
-	}
-
-	public static TCPMessage replace(TCPMessage tcpMessage, Message msg) {
-		tcpMessage.setMessage(msg.toByteArray());
-		return tcpMessage;
 	}
 }

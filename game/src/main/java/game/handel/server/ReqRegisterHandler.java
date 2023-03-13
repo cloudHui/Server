@@ -1,7 +1,7 @@
-package hall.handel;
+package game.handel.server;
 
-import hall.Hall;
-import hall.client.HallClient;
+import game.Game;
+import game.client.GameClient;
 import msg.MessageHandel;
 import msg.ServerType;
 import net.client.Sender;
@@ -20,14 +20,14 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.ReqRegister req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.ReqRegister req, int mapId) {
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
 		if (serverType == null) {
 			return true;
 		}
 
-		Hall.getInstance().setGateClient((HallClient) sender);
+		Game.getInstance().setGateClient((GameClient) sender);
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);

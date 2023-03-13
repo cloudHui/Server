@@ -24,7 +24,7 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.ReqRegister req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.ReqRegister req, int mapId) {
 		ServerManager manager = ServerManager.getInstance();
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());

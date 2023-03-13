@@ -22,7 +22,7 @@ public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.ReqHeart req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.ReqHeart req, int mapId) {
 		long now = System.currentTimeMillis();
 		int serverType = req.getServerType();
 		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();

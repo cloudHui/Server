@@ -16,7 +16,7 @@ public class AckServerInfoHandel implements Handler<ModelProto.AckServerInfo> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.AckServerInfo req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.AckServerInfo req, int mapId) {
 		return RegisterNoticeHandler.connectToSever(req.getServersList());
 	}
 }

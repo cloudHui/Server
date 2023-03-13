@@ -1,5 +1,6 @@
 package hall.handel;
 
+import msg.MessageHandel;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.HallProto;
@@ -25,7 +26,7 @@ public class ReqLoginHandler implements Handler<HallProto.ReqLogin> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, HallProto.ReqLogin req) {
+	public boolean handler(Sender sender, Long aLong, HallProto.ReqLogin req, int mapId) {
 		String avatar = req.getAvatar().toStringUtf8();
 		String cert = req.getCert().toStringUtf8();
 		int certType = req.getCertType();
@@ -39,6 +40,9 @@ public class ReqLoginHandler implements Handler<HallProto.ReqLogin> {
 			default:
 				break;
 		}
+		HallProto.AckLogin.Builder ack = HallProto.AckLogin.newBuilder();
+		ack.setCertType(1);
+		sender.sendMessage(MessageHandel.HallMsg.ACK_LOGIN.getId(), ack.build(), null, mapId);
 		return true;
 	}
 }

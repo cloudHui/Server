@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
-import hall.handel.HeartHandler;
-import hall.handel.NotBreakHandler;
+import hall.handel.server.HeartHandler;
+import hall.handel.server.NotBreakHandler;
 import hall.handel.ReqLoginHandler;
-import hall.handel.ReqRegisterHandler;
+import hall.handel.server.ReqRegisterHandler;
 import msg.MessageHandel;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -17,7 +17,6 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
-import utils.handel.HeartAckHandler;
 
 public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
