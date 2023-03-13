@@ -60,7 +60,7 @@ public class ClientProto {
 	 */
 	public final static Transfer<GateClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if ((msgId &= MessageHandel.BASE_ID_INDEX) == 0) {
+		if ((msgId & MessageHandel.BASE_ID_INDEX) == 0) {
 			return transferMessage(gateClient, tcpMessage, msgId);
 		}
 		return false;

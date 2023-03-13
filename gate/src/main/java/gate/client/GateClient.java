@@ -1,22 +1,18 @@
 package gate.client;
 
+import msg.MessageHandel;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import net.message.TCPMessage;
 import net.safe.Safe;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class GateClient extends ClientHandler<GateClient, TCPMessage> {
-	private final static Logger logger = LoggerFactory.getLogger(GateClient.class);
 
 	private long userId = 0;
 	private int gameId = 0;
 	private int hallId = 0;
-
-	private boolean safe = false;
 
 	public GateClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
@@ -28,9 +24,7 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 			//记录等出日志
 		});
 
-		setSafe((Safe<GateClient, TCPMessage>) (gateClient, msg) -> {
-			return safe;
-		});
+		setSafe((Safe<GateClient, TCPMessage>) (gateClient, msg) -> msg.getMessageId() == MessageHandel.HallMsg.REQ_LOGIN.getId() || userId != 0);
 	}
 
 	public long getUserId() {
