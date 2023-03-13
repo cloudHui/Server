@@ -44,7 +44,7 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);
-		sender.sendMessage(Math.toIntExact(aLong),MessageHandel.ACK_REGISTER, ackRegister.build(), null);
+		sender.sendMessage(Math.toIntExact(aLong), MessageHandel.ACK_REGISTER, ackRegister.build(), null);
 		if (serverType != ServerType.Gate) {
 			//向 gate 同步 其他服务信息
 			List<CenterClient> typeServer = manager.getAllTypeServer(ServerType.Gate);

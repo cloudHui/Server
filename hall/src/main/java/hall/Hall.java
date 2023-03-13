@@ -3,6 +3,7 @@ package hall;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
+import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
 import msg.ServerType;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ public class Hall {
 	private int serverId;
 	private String innerIp;
 	private String center;
+
+	private HallClient gateClient;
 
 	private ServerManager serverManager;
 
@@ -78,6 +81,14 @@ public class Hall {
 
 	public void setServerManager(ServerManager serverManager) {
 		this.serverManager = serverManager;
+	}
+
+	public HallClient getGateClient() {
+		return gateClient;
+	}
+
+	public void setGateClient(HallClient gateClient) {
+		this.gateClient = gateClient;
 	}
 
 	public static Hall getInstance() {
@@ -137,7 +148,7 @@ public class Hall {
 		setServerManager(new ServerManager());
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
-		serverManager.connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+		serverManager.registerToCenter(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Hall, getServerId(), getInnerIp() + ":" + getPort());
 	}
 

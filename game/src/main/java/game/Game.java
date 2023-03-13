@@ -149,7 +149,7 @@ public class Game {
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 
-		serverManager.connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+		serverManager.registerToCenter(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + ":" + getPort());
 	}
 

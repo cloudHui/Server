@@ -31,8 +31,6 @@ public class ServerManager {
 
 	private Map<ServerType, Map<Integer, TCPConnect>> serverMap = new ConcurrentHashMap<>();
 
-	private Map<ServerType, Map<Integer, Long>> serverHeartMap = new ConcurrentHashMap<>();
-
 	private final EventLoopGroup workerGroup = new NioEventLoopGroup();
 
 	/**
@@ -75,7 +73,7 @@ public class ServerManager {
 		Map<Integer, TCPConnect> serverClient = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
 		if (!serverClient.isEmpty()) {
 			List<Integer> list = new ArrayList<>(serverClient.keySet());
-			int serverId = list.get(RandomUtils.Random(0, list.size()));
+			int serverId = list.get(RandomUtils.randomRange(list.size()));
 			return serverClient.get(serverId);
 		}
 		return null;
@@ -148,5 +146,14 @@ public class ServerManager {
 		});
 
 		tcpConnection.connect();
+	}
+
+	/**
+	 * 向注册中心注册
+	 */
+	public void registerToCenter(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers,
+	                              ServerType serverType, int serverId, String ipPorts) {
+		connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
+				handlers, serverType, serverId, ipPorts);
 	}
 }

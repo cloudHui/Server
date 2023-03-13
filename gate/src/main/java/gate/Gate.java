@@ -143,7 +143,8 @@ public class Gate {
 		setServerManager(new ServerManager());
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
-		serverManager.connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+
+		serverManager.registerToCenter(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + ":" + getPort());
 	}
 
@@ -151,17 +152,17 @@ public class Gate {
 	 * 获取其他除注册中心意外的所有服务端口ip
 	 */
 	private void getAllOtherServer() {
-		execute(() -> {
+		registerTimer(3000, 1000, -1, gate -> {
 			TCPConnect serverClient = serverManager.getServerClient(ServerType.Center);
 			if (serverClient != null) {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
 				serverClient.sendMessage(MessageHandel.REQ_SERVER, req.build(), null);
-			} else {
-				getAllOtherServer();
+				return true;
 			}
-		});
+			return false;
+		}, this);
 	}
 
 

@@ -1,18 +1,16 @@
 package center.client;
 
+import center.manager.ServerManager;
+import msg.ServerType;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import net.message.TCPMessage;
 import net.safe.Safe;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 
 
 public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
-
-	private static final Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	private ModelProto.ServerInfo serverInfo;
 
@@ -20,6 +18,7 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent((CloseEvent<CenterClient>) client -> {
+			ServerManager.getInstance().removeServerClient(ServerType.get(serverInfo.getServerType()), serverInfo.getServerId());
 		});
 
 		setSafe((Safe<CenterClient, TCPMessage>) (client, msg) -> true);

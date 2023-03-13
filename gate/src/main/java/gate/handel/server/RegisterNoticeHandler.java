@@ -3,7 +3,7 @@ package gate.handel.server;
 import java.util.List;
 
 import gate.Gate;
-import gate.client.ClientProto;
+import gate.connect.ConnectProcessor;
 import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -26,21 +26,19 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NoticeRegisterI
 		return connectToSever(req.getServersList());
 	}
 
-	static boolean connectToSever(List<ModelProto.ServerInfo> serversList2) {
-		if (serversList2 == null || serversList2.isEmpty()) {
+	static boolean connectToSever(List<ModelProto.ServerInfo> serverInfos) {
+		if (serverInfos == null || serverInfos.isEmpty()) {
 			return true;
 		}
 		Gate instance = Gate.getInstance();
 		ServerManager serverManager = instance.getServerManager();
 		String[] ipConfig;
 		int localServerId = instance.getServerId();
-		String localInnerIpConfig = instance.getInnerIp() + "" + instance.getPort();
-		ServerType serverType;
-		for (ModelProto.ServerInfo serverInfo : serversList2) {
+		String localInnerIpConfig = instance.getInnerIp() + ":" + instance.getPort();
+		for (ModelProto.ServerInfo serverInfo : serverInfos) {
 			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
-			serverType = ServerType.get(serverInfo.getServerType());
-			serverManager.connect(serverType, ipConfig[0], Integer.parseInt(ipConfig[1]), ClientProto.TRANSFER, ClientProto.PARSER,
-					ClientProto.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig);
+			serverManager.registerToCenter(ipConfig, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+					ConnectProcessor.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig);
 		}
 		return true;
 	}
