@@ -3,8 +3,8 @@ package game;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import game.client.ClientProto;
 import game.client.GameClient;
+import game.connect.ConnectProcessor;
 import msg.ServerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,8 +148,9 @@ public class Game {
 		setServerManager(new ServerManager());
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
-		serverManager.connect(ipPort[0], Integer.parseInt(ipPort[1]), ClientProto.TRANSFER, ClientProto.PARSER,
-				ClientProto.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + "" + getPort());
+
+		serverManager.connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + ":" + getPort());
 	}
 
 	public static void main(String[] args) {

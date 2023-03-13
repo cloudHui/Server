@@ -31,6 +31,8 @@ public class ServerManager {
 
 	private Map<ServerType, Map<Integer, TCPConnect>> serverMap = new ConcurrentHashMap<>();
 
+	private Map<ServerType, Map<Integer, Long>> serverHeartMap = new ConcurrentHashMap<>();
+
 	private final EventLoopGroup workerGroup = new NioEventLoopGroup();
 
 	/**
@@ -40,18 +42,8 @@ public class ServerManager {
 	 * @param client     链接
 	 * @param serverId   服务id
 	 */
-	private void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
+	public void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
 		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).put(serverId, client);
-	}
-
-	/**
-	 * 移除服务链接
-	 *
-	 * @param serverType 服务类型
-	 * @param serverId   服务id
-	 */
-	public void removeServerClient(ServerType serverType, int serverId) {
-		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).remove(serverId);
 	}
 
 	/**
@@ -62,6 +54,16 @@ public class ServerManager {
 	 */
 	public TCPConnect getServerClient(ServerType serverType, int serverId) {
 		return serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).get(serverId);
+	}
+
+	/**
+	 * 移除服务链接
+	 *
+	 * @param serverType 服务类型
+	 * @param serverId   服务id
+	 */
+	public void removeServerClient(ServerType serverType, int serverId) {
+		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).remove(serverId);
 	}
 
 	/**
@@ -137,15 +139,14 @@ public class ServerManager {
 				handlers,
 				registerEvent);
 
-		//连接后的操作
+		//连接后 触发 读,写空闲事件后的处理 发送心跳
 		tcpConnection.setIdleRunner(handler -> {
-			ModelProto.Heart heartbeat = ModelProto.Heart.newBuilder()
+			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
 					.setReqTime(System.currentTimeMillis())
 					.setServerType(localServer.getServerType()).build();
 			handler.sendMessage(MessageHandel.HEART, heartbeat, null);
 		});
 
 		tcpConnection.connect();
-
 	}
 }

@@ -143,8 +143,8 @@ public class Gate {
 		setServerManager(new ServerManager());
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
-		serverManager.connect(ServerType.Center,ipPort[0], Integer.parseInt(ipPort[1]), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + "" + getPort());
+		serverManager.connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + ":" + getPort());
 	}
 
 	/**

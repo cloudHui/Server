@@ -19,7 +19,7 @@ public class ClientProto {
 	public final static Parser PARSER = (id, bytes) -> {
 		switch (id) {
 			case MessageHandel.HEART:
-				return ModelProto.Heart.parseFrom(bytes);
+				return ModelProto.ReqHeart.parseFrom(bytes);
 			case MessageHandel.REQ_REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
 			case MessageHandel.REQ_SERVER:

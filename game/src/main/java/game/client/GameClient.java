@@ -21,12 +21,9 @@ public class GameClient extends ClientHandler<GameClient, TCPMessage> {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent((CloseEvent<GameClient>) client -> {
-			logger.error("close :{}", getRemoteIP(this));
 		});
 
-		setSafe((Safe<GameClient, TCPMessage>) (gateClient, msg) -> {
-			return safe;
-		});
+		setSafe((Safe<GameClient, TCPMessage>) (gateClient, msg) -> true);
 	}
 
 	public long getUserId() {

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
-import hall.handel.HeartHandler;
 import msg.MessageHandel;
 import net.client.Sender;
 import net.connect.ConnectHandler;
@@ -16,13 +15,14 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import utils.handel.HeartAckHandler;
 
 public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	public final static Parser PARSER = (id, bytes) -> {
 		if (id == MessageHandel.HEART_ACK) {
-			return ModelProto.Heart.parseFrom(bytes);
+			return ModelProto.AckHeart.parseFrom(bytes);
 		} else {
 			MessageHandel.GameMsg gameMsg = MessageHandel.GameMsg.get(id);
 			if (gameMsg != null) {
@@ -42,7 +42,7 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.HEART_ACK, HeartHandler.getInstance());
+		handlers.put(MessageHandel.HEART_ACK, HeartAckHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

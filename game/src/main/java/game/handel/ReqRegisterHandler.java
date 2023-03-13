@@ -2,6 +2,7 @@ package game.handel;
 
 import game.Game;
 import game.client.GameClient;
+import msg.MessageHandel;
 import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -25,7 +26,12 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 		if (serverType == null) {
 			return true;
 		}
+
 		Game.getInstance().setGateClient((GameClient) sender);
+
+		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
+		ackRegister.setServerInfo(serverInfo);
+		sender.sendMessage(Math.toIntExact(aLong), MessageHandel.ACK_REGISTER, ackRegister.build(), null);
 		return true;
 	}
 }

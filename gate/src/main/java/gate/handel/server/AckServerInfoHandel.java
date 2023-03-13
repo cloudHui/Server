@@ -1,4 +1,4 @@
-package gate.handel;
+package gate.handel.server;
 
 import net.client.Sender;
 import net.handler.Handler;

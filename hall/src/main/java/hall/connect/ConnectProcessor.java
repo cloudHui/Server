@@ -1,10 +1,8 @@
-package gate.connect;
+package hall.connect;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import gate.handel.server.AckServerInfoHandel;
-import gate.handel.server.RegisterNoticeHandler;
 import msg.MessageHandel;
 import net.connect.TCPConnect;
 import net.handler.Handler;
@@ -20,14 +18,8 @@ public class ConnectProcessor {
 		switch (id) {
 			case MessageHandel.HEART_ACK:
 				return ModelProto.AckHeart.parseFrom(bytes);
-			case MessageHandel.REQ_REGISTER:
-				return ModelProto.ReqRegister.parseFrom(bytes);
-			case MessageHandel.ACK_SERVER:
-				return ModelProto.AckServerInfo.parseFrom(bytes);
 			case MessageHandel.ACK_REGISTER:
 				return ModelProto.AckRegister.parseFrom(bytes);
-			case MessageHandel.REGISTER_NOTICE:
-				return ModelProto.NoticeRegisterInfo.parseFrom(bytes);
 			default: {
 				return null;
 			}
@@ -38,9 +30,7 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 		handlers.put(MessageHandel.HEART_ACK, HeartAckHandler.getInstance());
-		handlers.put(MessageHandel.ACK_SERVER, AckServerInfoHandel.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

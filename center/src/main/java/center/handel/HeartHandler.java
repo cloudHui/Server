@@ -1,5 +1,6 @@
 package center.handel;
 
+import msg.MessageHandel;
 import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -10,7 +11,7 @@ import proto.ModelProto;
 /**
  * 心跳请求
  */
-public class HeartHandler implements Handler<ModelProto.Heart> {
+public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);
 
@@ -21,9 +22,14 @@ public class HeartHandler implements Handler<ModelProto.Heart> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.Heart req) {
-		long cost = System.currentTimeMillis() - req.getReqTime();
+	public boolean handler(Sender sender, Long aLong, ModelProto.ReqHeart req) {
+		long now = System.currentTimeMillis();
+		long cost = now - req.getReqTime();
 		int serverType = req.getServerType();
+		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
+		ack.setReqTime(now);
+		ack.setServerType(ServerType.Center.getServerType());
+		sender.sendMessage(MessageHandel.HEART_ACK, ack.build(), null);
 		logger.info("server:{}, heart req cost:{}ms", ServerType.get(serverType), cost);
 		if (cost > 50) {
 			//超过50毫秒 打印错误日志
