@@ -25,6 +25,8 @@ public interface MessageHandel {
 	int REQ_SERVER = 7;//服务信息请
 	int ACK_SERVER = 8;//服务信息回复
 
+	int NOT_BREAK = 9;//通知玩家掉线
+
 	int BASE_ID_INDEX = 100000;
 
 	enum GateMsg {

@@ -5,6 +5,7 @@ import java.util.concurrent.Future;
 
 import game.client.GameClient;
 import game.connect.ConnectProcessor;
+import game.manager.TableManager;
 import msg.ServerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
+import utils.utils.TimeUtil;
 
 public class Game {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Game.class);
@@ -105,6 +107,10 @@ public class Game {
 		timer.register(delay, interval, count, runner, param);
 	}
 
+	public <T> void registerSerialTimer(int groupId, int delay, int interval, int count, Runner<T> runner, T param) {
+		timer.registerSerial(groupId, delay, interval, count, runner, param);
+	}
+
 	public Future<?> execute(Runnable r) {
 		return executorPool.execute(r);
 	}
@@ -138,6 +144,9 @@ public class Game {
 		//向注册中心注册
 		registerToCenter();
 
+		//每天 0 点 重置 桌子号参数
+		resetTableIndex();
+
 		LOGGER.info("[START] game server is start!!!");
 	}
 
@@ -151,6 +160,17 @@ public class Game {
 
 		serverManager.registerToCenter(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + ":" + getPort());
+	}
+
+	/**
+	 * 每天 0 点 重置 桌子号参数
+	 */
+	private void resetTableIndex() {
+		long nextZero = TimeUtil.curZeroHourTime(System.currentTimeMillis()) + TimeUtil.DAY;
+		registerTimer((int) nextZero / 1000, (int) TimeUtil.DAY / 1000, -1, game -> {
+			TableManager.getInstance().resetTableId();
+			return false;
+		}, this);
 	}
 
 	public static void main(String[] args) {

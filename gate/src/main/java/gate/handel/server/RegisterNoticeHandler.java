@@ -13,7 +13,7 @@ import utils.ServerManager;
 /**
  * 注册信息通知
  */
-public class RegisterNoticeHandler implements Handler<ModelProto.NoticeRegisterInfo> {
+public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo> {
 
 	private static RegisterNoticeHandler instance = new RegisterNoticeHandler();
 
@@ -22,7 +22,7 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NoticeRegisterI
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.NoticeRegisterInfo req) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.NotRegisterInfo req) {
 		return connectToSever(req.getServersList());
 	}
 

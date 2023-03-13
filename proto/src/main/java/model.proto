@@ -35,7 +35,7 @@ message AckRegister {
 }
 
 //服务变更通知
-message NoticeRegisterInfo {
+message NotRegisterInfo {
   repeated ServerInfo servers = 1;
 }
 
@@ -45,4 +45,9 @@ message ReqServerInfo {
 }
 message AckServerInfo {
   repeated ServerInfo servers = 1;
+}
+
+//通知玩家掉线
+message NotBreak {
+  int32 userId = 1;//用户id
 }
