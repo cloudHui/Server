@@ -5,7 +5,6 @@ import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import net.message.TCPMessage;
-import net.safe.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +18,5 @@ public class HallClient extends ClientHandler<HallClient, TCPMessage> {
 		setCloseEvent((CloseEvent<HallClient>) client -> {
 			Hall.getInstance().setGateClient(null);
 		});
-
-		setSafe((Safe<HallClient, TCPMessage>) (gateClient, msg) -> true);
 	}
 }
