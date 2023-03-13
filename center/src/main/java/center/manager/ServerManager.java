@@ -69,7 +69,7 @@ public class ServerManager {
 		Map<Integer, CenterClient> serverClient = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
 		if (!serverClient.isEmpty()) {
 			List<Integer> list = new ArrayList<>(serverClient.keySet());
-			int serverId = list.get(RandomUtils.Random(0, list.size()));
+			int serverId = list.get(RandomUtils.randomRange(list.size()));
 			return serverClient.get(serverId);
 		}
 		return null;
