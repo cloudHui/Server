@@ -92,11 +92,11 @@ public class ServerManager {
 	 * @param localId     本地服务 id
 	 * @param localPort   本地服务 IP 端口
 	 */
-	public void connect(ServerType connect, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+	private void connect(ServerType connect, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
 		connect(connect, new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort);
 	}
 
-	public void connect(ServerType serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+	private void connect(ServerType serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
 		connect(
 				socketAddress,
 				transfer,
@@ -129,7 +129,7 @@ public class ServerManager {
 				}, localServer);
 	}
 
-	public void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer) {
+	private void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,
 				socketAddress,
 				transfer,
@@ -152,7 +152,7 @@ public class ServerManager {
 	 * 向注册中心注册
 	 */
 	public void registerToCenter(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers,
-	                              ServerType serverType, int serverId, String ipPorts) {
+	                             ServerType serverType, int serverId, String ipPorts) {
 		connect(ServerType.Center, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
 				handlers, serverType, serverId, ipPorts);
 	}
