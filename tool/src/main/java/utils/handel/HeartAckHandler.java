@@ -21,7 +21,7 @@ public class HeartAckHandler implements Handler<ModelProto.AckHeart> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.AckHeart ack) {
+	public boolean handler(Sender sender, Long aLong, ModelProto.AckHeart ack,int mapId) {
 		int serverType = ack.getServerType();
 		logger.info("server:{}, heart ack", ServerType.get(serverType));
 		return true;
