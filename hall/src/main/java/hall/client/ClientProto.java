@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.protobuf.Message;
-import hall.handel.server.HeartHandler;
-import hall.handel.server.NotBreakHandler;
 import hall.handel.ReqLoginHandler;
-import hall.handel.server.ReqRegisterHandler;
+import hall.handel.server.ServerHandel;
 import msg.MessageHandel;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -56,9 +54,9 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.HEART, HeartHandler.getInstance());
-		handlers.put(MessageHandel.REQ_REGISTER, ReqRegisterHandler.getInstance());
-		handlers.put(MessageHandel.NOT_BREAK, NotBreakHandler.getInstance());
+		handlers.put(MessageHandel.HEART, ServerHandel.HEART_HANDLER);
+		handlers.put(MessageHandel.REQ_REGISTER, ServerHandel.REGISTER_HANDLER);
+		handlers.put(MessageHandel.NOT_BREAK, ServerHandel.NOT_BREAK_HANDLER);
 		handlers.put(MessageHandel.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
 	}
 

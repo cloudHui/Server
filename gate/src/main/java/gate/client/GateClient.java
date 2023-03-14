@@ -23,9 +23,6 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent((CloseEvent<GateClient>) client -> {
-			//Todo
-			//发送这个玩家下线到其他服务
-			//删除这个玩家的链接和数据
 			notServerBreak();
 		});
 

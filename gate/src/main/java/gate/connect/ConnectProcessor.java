@@ -5,12 +5,10 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import gate.client.ClientProto;
-import gate.handel.server.AckServerInfoHandel;
-import gate.handel.server.RegisterNoticeHandler;
+import gate.client.GateClient;
+import gate.handel.server.ServerHandel;
 import msg.MessageHandel;
-import net.client.Sender;
 import net.client.handler.ClientHandler;
-import net.connect.ConnectHandler;
 import net.connect.TCPConnect;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -19,6 +17,7 @@ import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.HallProto;
 import proto.ModelProto;
 import utils.handel.HeartAckHandler;
 
@@ -49,9 +48,9 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
+		handlers.put(MessageHandel.REGISTER_NOTICE, ServerHandel.NOT_REGISTER_INFO);
 		handlers.put(MessageHandel.HEART_ACK, HeartAckHandler.getInstance());
-		handlers.put(MessageHandel.ACK_SERVER, AckServerInfoHandel.getInstance());
+		handlers.put(MessageHandel.ACK_SERVER, ServerHandel.ACK_SERVER_INFO);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
@@ -62,23 +61,30 @@ public class ConnectProcessor {
 	public final static Transfer<TCPConnect, TCPMessage> TRANSFER = (tcpConnect, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
 		if (msgId > MessageHandel.BASE_ID_INDEX) {
+			int userId = 0;
+			if (msgId == MessageHandel.HallMsg.ACK_LOGIN.getId()) {
+				HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
+				userId = ack.getUserId();
+			}
 			//直接转发给客户端的
-			return transferMsg(tcpMessage.getMapId(), tcpMessage);
+			return transferMsg(tcpMessage.getMapId(), tcpMessage, null, userId);
 		}
 		return false;
 	};
 
-	public static boolean transferMsg(long connectId, TCPMessage msg) {
-		return transferMsg(connectId, msg, null);
-	}
-
-	public static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg) {
-		Sender sender = ClientHandler.getClient(connectId);
-		if (null != sender) {
+	/**
+	 * 找到客户端链接 并转发消息
+	 */
+	public static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg, int userId) {
+		GateClient gateClient = (GateClient) ClientHandler.getClient(connectId);
+		if (null != gateClient) {
+			if (userId != 0) {
+				gateClient.setUserId(userId);
+			}
 			if (null != innerMsg) {
-				sender.sendMessage(replace(msg, innerMsg));
+				gateClient.sendMessage(replace(msg, innerMsg));
 			} else {
-				sender.sendMessage(msg);
+				gateClient.sendMessage(msg);
 			}
 			return true;
 		}

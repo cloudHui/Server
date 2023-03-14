@@ -1,31 +1,32 @@
 package gate.handel.server;
 
+
 import java.util.List;
 
 import gate.Gate;
 import gate.connect.ConnectProcessor;
 import msg.ServerType;
-import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
 import utils.ServerManager;
 
-/**
- * 注册信息通知
- */
-public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo> {
+public class ServerHandel {
 
-	private static RegisterNoticeHandler instance = new RegisterNoticeHandler();
+	/**
+	 * 注册信息回复
+	 */
+	public final static Handler<ModelProto.AckServerInfo> ACK_SERVER_INFO = (sender, sequence, ack, mapId) ->
+			connectToSever(ack.getServersList());
 
-	public static RegisterNoticeHandler getInstance() {
-		return instance;
-	}
+	/**
+	 * 注册信息通知
+	 */
+	public final static Handler<ModelProto.NotRegisterInfo> NOT_REGISTER_INFO = (sender, sequence, ack, mapId) ->
+			connectToSever(ack.getServersList());
 
-	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.NotRegisterInfo req, int mapId) {
-		return connectToSever(req.getServersList());
-	}
-
+	/**
+	 * 去链接 服务
+	 */
 	static boolean connectToSever(List<ModelProto.ServerInfo> serverInfos) {
 		if (serverInfos == null || serverInfos.isEmpty()) {
 			return true;

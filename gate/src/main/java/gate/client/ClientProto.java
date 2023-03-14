@@ -89,7 +89,7 @@ public class ClientProto {
 					return true;
 				}
 			} else if ((msgId & MessageHandel.HALL_TYPE) != 0) {
-				clientId = gateClient.getGameId();
+				clientId = gateClient.getHallId();
 				if (clientId != 0) {
 					serverClient = serverManager.getServerClient(ServerType.Hall, clientId);
 				} else {
