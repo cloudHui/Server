@@ -4,7 +4,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import gate.connect.ConnectProcessor;
-import msg.MessageHandel;
+import msg.Message;
 import msg.ServerType;
 import net.connect.TCPConnect;
 import org.slf4j.Logger;
@@ -159,7 +159,7 @@ public class Gate {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
-				serverClient.sendMessage(MessageHandel.REQ_SERVER, req.build(), null);
+				serverClient.sendMessage(Message.REQ_SERVER, req.build(), null);
 				return true;
 			}
 			return false;

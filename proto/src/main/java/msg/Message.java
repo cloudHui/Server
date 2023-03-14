@@ -11,7 +11,7 @@ import proto.HallProto;
 // BASE_ID_INDEX 以下 的是通用消息
 // 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
 // 客户端回复消息都是 大于 BASE_ID_INDEX
-public interface MessageHandel {
+public interface Message {
 
 	int GAME_TYPE = 0x2000;
 	int HALL_TYPE = 0x4000;
@@ -66,8 +66,8 @@ public interface MessageHandel {
 	}
 
 	enum GameMsg {
-		ENTER_TABLE_REQ(GAME_TYPE | 1, GameProto.ReqEnterTable.class),
-		ENTER_TABLE_ACK(GAME_TYPE | 2, GameProto.AckEnterTable.class),
+		REQ_ENTER_TABLE(GAME_TYPE | 1, GameProto.ReqEnterTable.class),
+		ACK_ENTER_TABLE(GAME_TYPE | 2, GameProto.AckEnterTable.class),
 		;
 		private int id;
 

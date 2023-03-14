@@ -1,7 +1,7 @@
 package gate.client;
 
 import gate.Gate;
-import msg.MessageHandel;
+import msg.Message;
 import msg.ServerType;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
@@ -26,7 +26,7 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 			notServerBreak();
 		});
 
-		setSafe((Safe<GateClient, TCPMessage>) (gateClient, msg) -> msg.getMessageId() == MessageHandel.HallMsg.REQ_LOGIN.getId() || userId != 0);
+		setSafe((Safe<GateClient, TCPMessage>) (gateClient, msg) -> msg.getMessageId() == Message.HallMsg.REQ_LOGIN.getId() || userId != 0);
 	}
 
 	public int getUserId() {
@@ -62,11 +62,11 @@ public class GateClient extends ClientHandler<GateClient, TCPMessage> {
 		ServerManager serverManager = Gate.getInstance().getServerManager();
 		TCPConnect serverClient = serverManager.getServerClient(ServerType.Game, getGameId());
 		if (serverClient != null) {
-			serverClient.sendMessage(MessageHandel.NOT_BREAK, not.build(), null);
+			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
 		}
 		serverClient = serverManager.getServerClient(ServerType.Hall, getHallId());
 		if (serverClient != null) {
-			serverClient.sendMessage(MessageHandel.NOT_BREAK, not.build(), null);
+			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
 		}
 	}
 }

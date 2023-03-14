@@ -11,7 +11,7 @@ import java.util.function.BiConsumer;
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import msg.MessageHandel;
+import msg.Message;
 import msg.ServerType;
 import net.client.event.RegisterEvent;
 import net.connect.TCPConnect;
@@ -111,7 +111,7 @@ public class ServerManager {
 					notice.setServerInfo(server.build());
 
 
-					tcpConnect.sendMessage(MessageHandel.REQ_REGISTER, notice.build(), null, 3L)
+					tcpConnect.sendMessage(Message.REQ_REGISTER, notice.build(), null, 3L)
 							.whenComplete((BiConsumer<ModelProto.AckRegister, Exception>) (r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
@@ -142,7 +142,7 @@ public class ServerManager {
 			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
 					.setReqTime(System.currentTimeMillis())
 					.setServerType(localServer.getServerType()).build();
-			handler.sendMessage(MessageHandel.HEART, heartbeat, null);
+			handler.sendMessage(Message.HEART, heartbeat, null);
 		});
 
 		tcpConnection.connect();

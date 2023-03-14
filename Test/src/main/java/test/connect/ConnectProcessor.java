@@ -3,8 +3,7 @@ package test.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.protobuf.Message;
-import msg.MessageHandel;
+import msg.Message;
 import net.connect.TCPConnect;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -13,8 +12,7 @@ import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import test.handel.AckLoginHandler;
-import utils.handel.HeartAckHandler;
+import test.handel.ServerHandel;
 
 /**
  * 与 gate 消息处理
@@ -28,14 +26,24 @@ public class ConnectProcessor {
 	/**
 	 * 消息转化
 	 */
-	private static Message parserMessage(int id, byte[] bytes) {
-		MessageHandel.HallMsg hallMsg = MessageHandel.HallMsg.get(id);
+	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
+		Message.HallMsg hallMsg = Message.HallMsg.get(id);
 		if (hallMsg != null) {
 			Class className = hallMsg.getClassName();
 			try {
-				return (Message) MessageHandel.getMessageObject(className, bytes);
+				return (com.google.protobuf.Message) Message.getMessageObject(className, bytes);
 			} catch (Exception e) {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
+			}
+		} else {
+			Message.GameMsg gameMsg = Message.GameMsg.get(id);
+			if (gameMsg != null) {
+				Class className = gameMsg.getClassName();
+				try {
+					return (com.google.protobuf.Message) Message.getMessageObject(className, bytes);
+				} catch (Exception e) {
+					logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
+				}
 			}
 		}
 		return null;
@@ -45,7 +53,8 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.HallMsg.ACK_LOGIN.getId(), AckLoginHandler.getInstance());
+		handlers.put(Message.HallMsg.ACK_LOGIN.getId(), ServerHandel.ACK_LOGIN_HANDLER);
+		handlers.put(Message.GameMsg.ACK_ENTER_TABLE.getId(), ServerHandel.ACK_ENTER_TABLE_HANDLER);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

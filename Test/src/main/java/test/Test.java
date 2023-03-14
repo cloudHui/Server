@@ -4,7 +4,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import msg.MessageHandel;
+import msg.Message;
 import net.connect.TCPConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +105,7 @@ public class Test {
 	private void sendLogin() {
 		HallProto.ReqLogin.Builder req = HallProto.ReqLogin.newBuilder();
 		req.setSex(1);
-		gateConnect.sendMessage(MessageHandel.HallMsg.REQ_LOGIN.getId(), req.build(), null);
+		gateConnect.sendMessage(Message.HallMsg.REQ_LOGIN.getId(), req.build(), null);
 	}
 
 

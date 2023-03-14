@@ -3,10 +3,9 @@ package game.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.protobuf.Message;
 import game.handel.client.ReqEnterTableHandler;
 import game.handel.server.ServerHandel;
-import msg.MessageHandel;
+import msg.Message;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
@@ -24,11 +23,11 @@ public class ClientProto {
 
 	public final static Parser PARSER = (id, bytes) -> {
 		switch (id) {
-			case MessageHandel.REQ_REGISTER:
+			case Message.REQ_REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
-			case MessageHandel.HEART:
+			case Message.HEART:
 				return ModelProto.ReqHeart.parseFrom(bytes);
-			case MessageHandel.NOT_BREAK:
+			case Message.NOT_BREAK:
 				return ModelProto.NotBreak.parseFrom(bytes);
 			default:
 				return parserMessage(id, bytes);
@@ -38,12 +37,12 @@ public class ClientProto {
 	/**
 	 * 消息转化
 	 */
-	private static Message parserMessage(int id, byte[] bytes) {
-		MessageHandel.GameMsg gameMsg = MessageHandel.GameMsg.get(id);
+	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
+		Message.GameMsg gameMsg = Message.GameMsg.get(id);
 		if (gameMsg != null) {
 			Class className = gameMsg.getClassName();
 			try {
-				return (Message) MessageHandel.getMessageObject(className, bytes);
+				return (com.google.protobuf.Message) Message.getMessageObject(className, bytes);
 			} catch (Exception e) {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
 			}
@@ -55,12 +54,12 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.HEART, ServerHandel.HEART_HANDLER);
-		handlers.put(MessageHandel.REQ_REGISTER, ServerHandel.REGISTER_HANDLER);
-		handlers.put(MessageHandel.NOT_BREAK, ServerHandel.NOT_BREAK_HANDLER);
+		handlers.put(Message.HEART, ServerHandel.HEART_HANDLER);
+		handlers.put(Message.REQ_REGISTER, ServerHandel.REGISTER_HANDLER);
+		handlers.put(Message.NOT_BREAK, ServerHandel.NOT_BREAK_HANDLER);
 
 
-		handlers.put(MessageHandel.GameMsg.ENTER_TABLE_REQ.getId(), ReqEnterTableHandler.getInstance());
+		handlers.put(Message.GameMsg.REQ_ENTER_TABLE.getId(), ReqEnterTableHandler.getInstance());
 
 
 	}

@@ -3,9 +3,8 @@ package gate.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.protobuf.Message;
 import gate.Gate;
-import msg.MessageHandel;
+import msg.Message;
 import msg.ServerType;
 import net.connect.TCPConnect;
 import net.handler.Handler;
@@ -28,12 +27,12 @@ public class ClientProto {
 	/**
 	 * 消息转化
 	 */
-	private static Message parserMessage(int id, byte[] bytes) {
-		MessageHandel.GateMsg gateMsg = MessageHandel.GateMsg.get(id);
+	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
+		Message.GateMsg gateMsg = Message.GateMsg.get(id);
 		if (gateMsg != null) {
 			Class className = gateMsg.getClassName();
 			try {
-				return (Message) MessageHandel.getMessageObject(className, bytes);
+				return (com.google.protobuf.Message) Message.getMessageObject(className, bytes);
 			} catch (Exception e) {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
 			}
@@ -59,7 +58,7 @@ public class ClientProto {
 	 */
 	public final static Transfer<GateClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if (msgId > MessageHandel.BASE_ID_INDEX) {
+		if (msgId > Message.BASE_ID_INDEX) {
 			return transferMessage(gateClient, tcpMessage, msgId);
 		}
 		return false;
@@ -76,7 +75,7 @@ public class ClientProto {
 			tcpMessage.setMapId((int) gateClient.getId());
 			int clientId;
 			TCPConnect serverClient;
-			if ((msgId & MessageHandel.GAME_TYPE) != 0) {
+			if ((msgId & Message.GAME_TYPE) != 0) {
 				clientId = gateClient.getGameId();
 				if (clientId != 0) {
 					serverClient = serverManager.getServerClient(ServerType.Game, clientId);
@@ -88,7 +87,7 @@ public class ClientProto {
 					serverClient.sendMessage(tcpMessage);
 					return true;
 				}
-			} else if ((msgId & MessageHandel.HALL_TYPE) != 0) {
+			} else if ((msgId & Message.HALL_TYPE) != 0) {
 				clientId = gateClient.getHallId();
 				if (clientId != 0) {
 					serverClient = serverManager.getServerClient(ServerType.Hall, clientId);

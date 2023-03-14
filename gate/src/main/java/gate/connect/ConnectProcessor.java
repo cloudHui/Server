@@ -3,11 +3,10 @@ package gate.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.protobuf.Message;
 import gate.client.ClientProto;
 import gate.client.GateClient;
 import gate.handel.server.ServerHandel;
-import msg.MessageHandel;
+import msg.Message;
 import net.client.handler.ClientHandler;
 import net.connect.TCPConnect;
 import net.handler.Handler;
@@ -28,15 +27,15 @@ public class ConnectProcessor {
 
 	public final static Parser PARSER = (id, bytes) -> {
 		switch (id) {
-			case MessageHandel.HEART_ACK:
+			case Message.HEART_ACK:
 				return ModelProto.AckHeart.parseFrom(bytes);
-			case MessageHandel.REQ_REGISTER:
+			case Message.REQ_REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
-			case MessageHandel.ACK_SERVER:
+			case Message.ACK_SERVER:
 				return ModelProto.AckServerInfo.parseFrom(bytes);
-			case MessageHandel.ACK_REGISTER:
+			case Message.ACK_REGISTER:
 				return ModelProto.AckRegister.parseFrom(bytes);
-			case MessageHandel.REGISTER_NOTICE:
+			case Message.REGISTER_NOTICE:
 				return ModelProto.NotRegisterInfo.parseFrom(bytes);
 			default: {
 				return null;
@@ -48,9 +47,9 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.REGISTER_NOTICE, ServerHandel.NOT_REGISTER_INFO);
-		handlers.put(MessageHandel.HEART_ACK, HeartAckHandler.getInstance());
-		handlers.put(MessageHandel.ACK_SERVER, ServerHandel.ACK_SERVER_INFO);
+		handlers.put(Message.REGISTER_NOTICE, ServerHandel.NOT_REGISTER_INFO);
+		handlers.put(Message.HEART_ACK, HeartAckHandler.getInstance());
+		handlers.put(Message.ACK_SERVER, ServerHandel.ACK_SERVER_INFO);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
@@ -60,9 +59,9 @@ public class ConnectProcessor {
 	 */
 	public final static Transfer<TCPConnect, TCPMessage> TRANSFER = (tcpConnect, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if (msgId > MessageHandel.BASE_ID_INDEX) {
+		if (msgId > Message.BASE_ID_INDEX) {
 			int userId = 0;
-			if (msgId == MessageHandel.HallMsg.ACK_LOGIN.getId()) {
+			if (msgId == Message.HallMsg.ACK_LOGIN.getId()) {
 				HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
 				userId = ack.getUserId();
 			}
@@ -75,7 +74,7 @@ public class ConnectProcessor {
 	/**
 	 * 找到客户端链接 并转发消息
 	 */
-	public static boolean transferMsg(long connectId, TCPMessage msg, Message innerMsg, int userId) {
+	public static boolean transferMsg(long connectId, TCPMessage msg, com.google.protobuf.Message innerMsg, int userId) {
 		GateClient gateClient = (GateClient) ClientHandler.getClient(connectId);
 		if (null != gateClient) {
 			if (userId != 0) {
@@ -92,7 +91,7 @@ public class ConnectProcessor {
 		return false;
 	}
 
-	public static TCPMessage replace(TCPMessage tcpMessage, Message msg) {
+	public static TCPMessage replace(TCPMessage tcpMessage, com.google.protobuf.Message msg) {
 		tcpMessage.setMessage(msg.toByteArray());
 		return tcpMessage;
 	}

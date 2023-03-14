@@ -3,7 +3,7 @@ package hall.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.MessageHandel;
+import msg.Message;
 import net.connect.TCPConnect;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -16,9 +16,9 @@ import utils.handel.HeartAckHandler;
 public class ConnectProcessor {
 	public final static Parser PARSER = (id, bytes) -> {
 		switch (id) {
-			case MessageHandel.HEART_ACK:
+			case Message.HEART_ACK:
 				return ModelProto.AckHeart.parseFrom(bytes);
-			case MessageHandel.ACK_REGISTER:
+			case Message.ACK_REGISTER:
 				return ModelProto.AckRegister.parseFrom(bytes);
 			default: {
 				return null;
@@ -30,7 +30,7 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageHandel.HEART_ACK, HeartAckHandler.getInstance());
+		handlers.put(Message.HEART_ACK, HeartAckHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

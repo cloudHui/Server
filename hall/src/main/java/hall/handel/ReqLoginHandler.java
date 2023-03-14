@@ -1,6 +1,6 @@
 package hall.handel;
 
-import msg.MessageHandel;
+import msg.Message;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.HallProto;
@@ -41,8 +41,8 @@ public class ReqLoginHandler implements Handler<HallProto.ReqLogin> {
 				break;
 		}
 		HallProto.AckLogin.Builder ack = HallProto.AckLogin.newBuilder();
-		ack.setCertType(1);
-		sender.sendMessage(MessageHandel.HallMsg.ACK_LOGIN.getId(), ack.build(), null, mapId);
+		ack.setUserId(1);
+		sender.sendMessage(Message.HallMsg.ACK_LOGIN.getId(), ack.build(), null, mapId);
 		return true;
 	}
 }

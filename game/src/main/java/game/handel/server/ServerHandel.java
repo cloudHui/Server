@@ -3,7 +3,7 @@ package game.handel.server;
 
 import game.Game;
 import game.client.GameClient;
-import msg.MessageHandel;
+import msg.Message;
 import msg.ServerType;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class ServerHandel {
 		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
 		ack.setReqTime(now);
 		ack.setServerType(ServerType.Game.getServerType());
-		sender.sendMessage(MessageHandel.HEART_ACK, ack.build(), null);
+		sender.sendMessage(Message.HEART_ACK, ack.build(), null);
 		logger.error("server:{}, heart req", ServerType.get(serverType));
 		return true;
 	};
@@ -42,7 +42,7 @@ public class ServerHandel {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);
-		sender.sendMessage(Math.toIntExact(sequence), MessageHandel.ACK_REGISTER, ackRegister.build(), null);
+		sender.sendMessage(Math.toIntExact(sequence), Message.ACK_REGISTER, ackRegister.build(), null);
 		return true;
 	};
 
