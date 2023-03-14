@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import game.handel.client.ReqEnterTableHandler;
-import game.handel.server.ServerHandel;
+import game.handel.server.HeartHandler;
+import game.handel.server.NotBreakHandler;
+import game.handel.server.ReqRegisterHandler;
 import msg.Message;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -54,9 +56,9 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(Message.HEART, ServerHandel.HEART_HANDLER);
-		handlers.put(Message.REQ_REGISTER, ServerHandel.REGISTER_HANDLER);
-		handlers.put(Message.NOT_BREAK, ServerHandel.NOT_BREAK_HANDLER);
+		handlers.put(Message.HEART, HeartHandler.getInstance());
+		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
+		handlers.put(Message.NOT_BREAK, NotBreakHandler.getInstance());
 
 
 		handlers.put(Message.GameMsg.REQ_ENTER_TABLE.getId(), ReqEnterTableHandler.getInstance());

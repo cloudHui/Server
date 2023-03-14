@@ -3,7 +3,9 @@ package center.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import center.handel.ServerHandel;
+import center.handel.HeartHandler;
+import center.handel.ReqRegisterHandler;
+import center.handel.ReqServerInfoHandler;
 import msg.Message;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -31,9 +33,9 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(Message.HEART, ServerHandel.HEART_HANDLER);
-		handlers.put(Message.REQ_REGISTER, ServerHandel.REGISTER_HANDLER);
-		handlers.put(Message.REQ_SERVER, ServerHandel.SERVER_INFO_HANDLER);
+		handlers.put(Message.HEART, HeartHandler.getInstance());
+		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
+		handlers.put(Message.REQ_SERVER, ReqServerInfoHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

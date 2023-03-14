@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hall.handel.ReqLoginHandler;
-import hall.handel.server.ServerHandel;
+import hall.handel.server.HeartHandler;
+import hall.handel.server.NotBreakHandler;
+import hall.handel.server.ReqRegisterHandler;
 import msg.Message;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -53,9 +55,9 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(Message.HEART, ServerHandel.HEART_HANDLER);
-		handlers.put(Message.REQ_REGISTER, ServerHandel.REGISTER_HANDLER);
-		handlers.put(Message.NOT_BREAK, ServerHandel.NOT_BREAK_HANDLER);
+		handlers.put(Message.HEART, HeartHandler.getInstance());
+		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
+		handlers.put(Message.NOT_BREAK, NotBreakHandler.getInstance());
 		handlers.put(Message.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
 	}
 

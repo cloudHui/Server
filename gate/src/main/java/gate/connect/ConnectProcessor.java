@@ -5,7 +5,8 @@ import java.util.Map;
 
 import gate.client.ClientProto;
 import gate.client.GateClient;
-import gate.handel.server.ServerHandel;
+import gate.handel.server.AckServerInfoHandel;
+import gate.handel.server.RegisterNoticeHandler;
 import msg.Message;
 import net.client.handler.ClientHandler;
 import net.connect.TCPConnect;
@@ -47,9 +48,9 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(Message.REGISTER_NOTICE, ServerHandel.NOT_REGISTER_INFO);
+		handlers.put(Message.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 		handlers.put(Message.HEART_ACK, HeartAckHandler.getInstance());
-		handlers.put(Message.ACK_SERVER, ServerHandel.ACK_SERVER_INFO);
+		handlers.put(Message.ACK_SERVER, AckServerInfoHandel.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
