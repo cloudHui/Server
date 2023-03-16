@@ -1,5 +1,6 @@
 package game.manager;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -16,6 +17,10 @@ public class TableManager {
 
 	private final static Logger logger = LoggerFactory.getLogger(TableManager.class);
 
+	/**
+	 * 基础值
+	 */
+	private static int BASE_ROUND = 10000;
 	/**
 	 * 当前初始化桌子号
 	 */
@@ -96,10 +101,12 @@ public class TableManager {
 	 */
 	public synchronized String getTableId() {
 		if (getRandomBeginTableIndex() == 0) {
-			setRandomBeginTableIndex(RandomUtils.randomRange(100000) + 100000);
+			setRandomBeginTableIndex(RandomUtils.randomRangeObtain(BASE_ROUND, BASE_ROUND * 2));
 		}
 		setRandomBeginTableIndex(getRandomBeginTableIndex() + 1);
-		return getIdHead() + getRandomBeginTableIndex() + getIdTail();
+		String tableId = getIdHead() + getRandomBeginTableIndex() + getIdTail();
+		logger.info("[Create new table id:{}]", tableId);
+		return tableId;
 	}
 
 	/**
@@ -110,6 +117,7 @@ public class TableManager {
 		String head = sp.format(new Date());
 		setIdHead(head.substring(0, head.length() / 2));
 		setIdTail(head.substring(head.length() / 2));
-		setRandomBeginTableIndex(RandomUtils.randomRange(100000) + 100000);
+		setRandomBeginTableIndex(RandomUtils.randomRangeObtain(BASE_ROUND, BASE_ROUND * 2));
+		logger.info("[resettableId {} baseId:{}]", new Timestamp(System.currentTimeMillis()), getRandomBeginTableIndex());
 	}
 }

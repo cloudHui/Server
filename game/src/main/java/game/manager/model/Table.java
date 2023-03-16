@@ -34,10 +34,9 @@ public class Table {
 	/**
 	 * 添加玩家上桌
 	 *
-	 * @param user
-	 * @return
+	 * @return 是否入卓成功
 	 */
-	public boolean addUser(User user) {
+	public boolean addUser(GameUser user) {
 		return false;
 	}
 }

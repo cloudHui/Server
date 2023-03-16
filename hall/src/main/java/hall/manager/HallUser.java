@@ -1,15 +1,16 @@
 package hall.manager;
 
-import hall.manager.model.UserData;
-import hall.manager.model.UserInfo;
+import model.User;
+import model.UserData;
+import model.UserInfo;
 
-public class User {
+public class HallUser extends User {
 
 	private UserInfo userInfo;
 
 	private UserData userData;
 
-	public User() {
+	public HallUser() {
 	}
 
 	public UserInfo getUserInfo() {
@@ -26,5 +27,10 @@ public class User {
 
 	public void setUserData(UserData userData) {
 		this.userData = userData;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "  " + userInfo.toString() + "  " + userData.toString();
 	}
 }
