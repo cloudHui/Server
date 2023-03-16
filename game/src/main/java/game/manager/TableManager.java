@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import game.Game;
 import game.manager.model.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.utils.RandomUtils;
+import utils.utils.TimeUtil;
 
 public class TableManager {
 
@@ -25,7 +27,7 @@ public class TableManager {
 	//桌子号的尾
 	private String idTail;
 
-	private static TableManager instance = new TableManager();
+	private TableManager instance = new TableManager();
 
 	private Map<String, Table> tableMap;
 
@@ -53,17 +55,14 @@ public class TableManager {
 		this.randomBeginTableIndex = randomBeginTableIndex;
 	}
 
-	public static TableManager getInstance() {
+	public TableManager getInstance() {
 		return instance;
 	}
 
-	private TableManager() {
+	public TableManager() {
 		tableMap = new ConcurrentHashMap<>();
 		resetTableId();
-	}
-
-	public TableManager init(int serverId) {
-		return this;
+		registerResetTableTask();
 	}
 
 	public void addTable(Table table) {
@@ -76,6 +75,20 @@ public class TableManager {
 
 	public Table delTable(String tableId) {
 		return tableMap.remove(tableId);
+	}
+
+	/**
+	 * 每天 0 点 重置 桌子号和其他参数
+	 */
+	private void registerResetTableTask() {
+		long nextZero = TimeUtil.curZeroHourTime(System.currentTimeMillis()) + TimeUtil.DAY;
+		Game.getInstance().registerTimer((int) nextZero / 1000,
+				(int) TimeUtil.DAY / 1000,
+				-1,
+				game -> {
+					resetTableId();
+					return false;
+				}, this);
 	}
 
 	/**

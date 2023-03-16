@@ -17,7 +17,6 @@ import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
-import utils.utils.TimeUtil;
 
 public class Game {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Game.class);
@@ -36,6 +35,8 @@ public class Game {
 	private GameClient gateClient;
 
 	private ServerManager serverManager;
+
+	private TableManager tableManager;
 
 	public int getPort() {
 		return port;
@@ -93,6 +94,14 @@ public class Game {
 		this.gateClient = gateClient;
 	}
 
+	public TableManager getTableManager() {
+		return tableManager;
+	}
+
+	public void setTableManager(TableManager tableManager) {
+		this.tableManager = tableManager;
+	}
+
 	public static Game getInstance() {
 		return instance;
 	}
@@ -144,8 +153,8 @@ public class Game {
 		//向注册中心注册
 		registerToCenter();
 
-		//每天 0 点 重置 桌子号参数
-		resetTableIndex();
+		//初始化
+		init();
 
 		LOGGER.info("[START] game server is start!!!");
 	}
@@ -164,14 +173,10 @@ public class Game {
 	}
 
 	/**
-	 * 每天 0 点 重置 桌子号参数
+	 * 初始化
 	 */
-	private void resetTableIndex() {
-		long nextZero = TimeUtil.curZeroHourTime(System.currentTimeMillis()) + TimeUtil.DAY;
-		registerTimer((int) nextZero / 1000, (int) TimeUtil.DAY / 1000, -1, game -> {
-			TableManager.getInstance().resetTableId();
-			return false;
-		}, this);
+	private void init() {
+		tableManager = new TableManager();
 	}
 
 	public static void main(String[] args) {
