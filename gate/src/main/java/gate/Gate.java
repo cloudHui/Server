@@ -16,7 +16,6 @@ import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
-import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
 
 public class Gate {
@@ -109,11 +108,6 @@ public class Gate {
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
-		ServerConfiguration configuration = cfgMgr.getServers().get("gate");
-		if (null == configuration || !configuration.hasHostString()) {
-			logger.error("ERROR! failed for can not find server config");
-			return;
-		}
 
 		setPort(cfgMgr.getInt("port", 0));
 
@@ -125,13 +119,14 @@ public class Gate {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new GateService(90).start(configuration.getHostList());
+		new GateService().start(cfgMgr.getServers().get("gate").getHostList());
 
-		//向注册中心注册
-		registerToCenter();
-
-		//获取其他服务
-		getAllOtherServer();
+		new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
+//		//向注册中心注册
+//		registerToCenter();
+//
+//		//获取其他服务
+//		getAllOtherServer();
 
 		logger.info("[START] gate server is start!!!");
 	}

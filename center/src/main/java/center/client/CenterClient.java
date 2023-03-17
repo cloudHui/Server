@@ -18,7 +18,14 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent((CloseEvent<CenterClient>) client -> {
-			ServerManager.getInstance().removeServerClient(ServerType.get(serverInfo.getServerType()), serverInfo.getServerId());
+			if (serverInfo == null) {
+				return;
+			}
+			ServerType serverType = ServerType.get(serverInfo.getServerType());
+			if (serverType == null) {
+				return;
+			}
+			ServerManager.getInstance().removeServerClient(serverType, serverInfo.getServerId());
 		});
 
 		setSafe((Safe<CenterClient, TCPMessage>) (client, msg) -> true);

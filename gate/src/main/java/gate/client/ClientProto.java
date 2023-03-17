@@ -56,7 +56,7 @@ public class ClientProto {
 	/**
 	 * 转发消息接口
 	 */
-	public final static Transfer<GateClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
+	public final static Transfer<GateTcpClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
 		if (msgId > Message.BASE_ID_INDEX) {
 			return transferMessage(gateClient, tcpMessage, msgId);
@@ -68,7 +68,7 @@ public class ClientProto {
 	/**
 	 * 消息转发到服务器
 	 */
-	private static boolean transferMessage(GateClient gateClient, TCPMessage tcpMessage, int msgId) {
+	private static boolean transferMessage(GateTcpClient gateClient, TCPMessage tcpMessage, int msgId) {
 		//奇数消息是发给服务的
 		if ((msgId & 1) != 0) {
 			ServerManager serverManager = Gate.getInstance().getServerManager();

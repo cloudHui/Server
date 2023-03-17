@@ -1,11 +1,17 @@
 package test;
 
 import java.net.InetSocketAddress;
+import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import msg.Message;
 import net.connect.TCPConnect;
+import org.java_websocket.WebSocket;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.handshake.ServerHandshake;
+import org.java_websocket.server.WebSocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
@@ -18,25 +24,25 @@ import utils.ServerManager;
 import utils.config.ConfigurationManager;
 
 public class Test {
-	private final static Logger LOGGER = LoggerFactory.getLogger(Test.class);
+	private final static Logger logger = LoggerFactory.getLogger(Test.class);
 
 	private final static Test instance = new Test();
 
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
-	private String center;
+	private String gate;
 
 	private TCPConnect gateConnect;
 
 	private ServerManager serverManager;
 
-	public String getCenter() {
-		return center;
+	public String getGate() {
+		return gate;
 	}
 
-	public void setCenter(String center) {
-		this.center = center;
+	public void setGate(String gate) {
+		this.gate = gate;
 	}
 
 	public static Test getInstance() {
@@ -66,13 +72,13 @@ public class Test {
 	}
 
 
-	private void start() {
+	private void start() throws Exception {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
 
-		setCenter(cfgMgr.getProperty("gate"));
+		setGate(cfgMgr.getProperty("gate"));
 
-		LOGGER.info("[START] test server is start!!!");
+		logger.info("[START] test server is start!!!");
 
 		test();
 	}
@@ -80,16 +86,17 @@ public class Test {
 	/**
 	 * 测试
 	 */
-	private void test() {
-		testConnect();
-		sendLogin();
+	private void test() throws Exception {
+//		testTcpConnect();
+		testWSTcpConnect();
+//		sendLogin();
 	}
 
 	/**
 	 * 链接测试
 	 */
-	private void testConnect() {
-		String center = getCenter();
+	private void testTcpConnect() {
+		String center = getGate();
 
 		ServerManager serverManager = new ServerManager();
 		String[] ipPort = center.split(":");
@@ -97,6 +104,79 @@ public class Test {
 		gateConnect = serverManager.connect(new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS);
+	}
+
+	/**
+	 * 链接测试
+	 */
+	private void testWSTcpConnect() throws Exception {
+		String center = getGate();
+		String[] ipPort = center.split(":");
+		WebSocketClient client = new WebSocketClient(new URI("ws://" + ipPort[0] + ":" + Integer.parseInt(ipPort[1]) + "/webSocket")) {
+			@Override
+			public void onOpen(ServerHandshake serverHandshake) {
+				sendPing();
+				send("12133");
+				send("12133");
+				send("12133");
+				send("12133");
+//				int length = msg.getMessage() == null ? 0 : msg.getMessage().length;
+//				ByteBuf buf = Unpooled.buffer(length + 40);
+//				buf.writeInt(msg.getVersion());
+//				buf.writeInt(msg.getMessageId());
+//				buf.writeInt(length);
+//				buf.writeInt(msg.getSequence());
+//				if (length > 0) {
+//					buf.writeBytes(msg.getMessage());
+//				}
+//				ByteBuffer byteBuffer = new ByteBuffer();
+//				send(buf);
+			}
+
+			@Override
+			public void onMessage(String s) {
+				System.out.println(s);
+			}
+
+			@Override
+			public void onClose(int i, String s, boolean b) {
+
+			}
+
+			@Override
+			public void onError(Exception e) {
+			}
+		};
+		client.connect();
+	}
+
+	public void webSocketServer() {
+		WebSocketServer server = new WebSocketServer() {
+			@Override
+			public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
+			}
+
+			@Override
+			public void onClose(WebSocket webSocket, int i, String s, boolean b) {
+
+			}
+
+			@Override
+			public void onMessage(WebSocket webSocket, String s) {
+				System.out.println(s);
+			}
+
+			@Override
+			public void onError(WebSocket webSocket, Exception e) {
+
+			}
+
+			@Override
+			public void onStart() {
+
+			}
+		};
+		server.start();
 	}
 
 	/**
@@ -112,9 +192,8 @@ public class Test {
 	public static void main(String[] args) {
 		try {
 			instance.start();
-//			System.out.println(MessageHandel.HallMsg.REQ_LOGIN.getId() & MessageHandel.GAME_TYPE);
 		} catch (Exception e) {
-			LOGGER.error("failed for start test server!", e);
+			logger.error("failed for start test server!", e);
 		}
 	}
 }

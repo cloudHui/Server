@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import utils.utils.JsonUtils;
 
 /**
- * 处理查询 gate 信息
+ * 处理查询 gate 信息()
  */
 public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 

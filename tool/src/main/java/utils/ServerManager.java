@@ -15,6 +15,7 @@ import msg.Message;
 import msg.ServerType;
 import net.client.event.RegisterEvent;
 import net.connect.TCPConnect;
+import net.connect.WSTCPConnect;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
@@ -149,7 +150,7 @@ public class ServerManager {
 	}
 
 	/**
-	 * 测试链接
+	 * 链接
 	 */
 	public TCPConnect connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,

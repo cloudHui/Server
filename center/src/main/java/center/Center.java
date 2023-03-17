@@ -1,6 +1,5 @@
 package center;
 
-import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -13,7 +12,7 @@ import threadtutil.timer.Timer;
 import utils.config.ConfigurationManager;
 
 public class Center {
-	private static final Logger LOGGER = LoggerFactory.getLogger(Center.class);
+	private static final Logger logger = LoggerFactory.getLogger(Center.class);
 	private static Center instance = new Center();
 	private Timer timer;
 	private ExecutorPool executorPool;
@@ -47,12 +46,9 @@ public class Center {
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
 		try {
 			new CenterService().start(cfgMgr.getServers().get("center").getHostList());
-			String http = cfgMgr.getProperty("http");
-			String[] hosts = http.split(":");
-			new CenterHttpService().start(new InetSocketAddress(hosts[0], Integer.parseInt(hosts[1])));
-			LOGGER.info("[Center start success]");
+			logger.info("[Center Tcp Server start success]");
 		} catch (Exception e) {
-			LOGGER.error("[Center start error ]", e);
+			logger.error("[Center start error ]", e);
 			System.exit(0);
 		}
 	}

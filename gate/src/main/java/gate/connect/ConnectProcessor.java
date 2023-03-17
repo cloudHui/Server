@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import gate.client.ClientProto;
-import gate.client.GateClient;
+import gate.client.GateTcpClient;
 import gate.handel.server.AckServerInfoHandel;
 import gate.handel.server.RegisterNoticeHandler;
 import msg.Message;
@@ -76,7 +76,7 @@ public class ConnectProcessor {
 	 * 找到客户端链接 并转发消息
 	 */
 	public static boolean transferMsg(long connectId, TCPMessage msg, com.google.protobuf.Message innerMsg, int userId) {
-		GateClient gateClient = (GateClient) ClientHandler.getClient(connectId);
+		GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(connectId);
 		if (null != gateClient) {
 			if (userId != 0) {
 				gateClient.setUserId(userId);
