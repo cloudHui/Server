@@ -88,8 +88,9 @@ public class Test {
 	 */
 	private void test() throws Exception {
 //		testTcpConnect();
-		testWSTcpConnect();
 //		sendLogin();
+		webSocketServer();
+		testWSTcpConnect();
 	}
 
 	/**
@@ -112,14 +113,13 @@ public class Test {
 	private void testWSTcpConnect() throws Exception {
 		String center = getGate();
 		String[] ipPort = center.split(":");
-		WebSocketClient client = new WebSocketClient(new URI("ws://" + ipPort[0] + ":" + Integer.parseInt(ipPort[1]) + "/webSocket")) {
+		URI uri = new URI("ws://" + ipPort[0] + ":" + Integer.parseInt(ipPort[1]) + "/webSocket");
+		//这样的 后面的 路径不是必须的 /webSocke
+		uri = new URI("ws://" + ipPort[0] + ":" + 80 + "/webSocket");
+		WebSocketClient client = new WebSocketClient(uri) {
 			@Override
 			public void onOpen(ServerHandshake serverHandshake) {
-				sendPing();
-				send("12133");
-				send("12133");
-				send("12133");
-				send("12133");
+				send("send");
 //				int length = msg.getMessage() == null ? 0 : msg.getMessage().length;
 //				ByteBuf buf = Unpooled.buffer(length + 40);
 //				buf.writeInt(msg.getVersion());
@@ -164,6 +164,7 @@ public class Test {
 			@Override
 			public void onMessage(WebSocket webSocket, String s) {
 				System.out.println(s);
+				webSocket.send("back");
 			}
 
 			@Override
