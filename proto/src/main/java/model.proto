@@ -47,6 +47,11 @@ message AckServerInfo {
   repeated ServerInfo servers = 1;
 }
 
+//通知服务掉线
+message NotServerBreak {
+  repeated ServerInfo servers = 1;
+}
+
 //通知玩家掉线
 message NotBreak {
   int32 userId = 1;//用户id

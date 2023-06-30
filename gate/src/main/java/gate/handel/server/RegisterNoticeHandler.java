@@ -7,6 +7,8 @@ import gate.connect.ConnectProcessor;
 import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import utils.ServerManager;
 
@@ -14,6 +16,8 @@ import utils.ServerManager;
  * 注册信息通知
  */
 public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo> {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterNoticeHandler.class);
 
 	private static RegisterNoticeHandler instance = new RegisterNoticeHandler();
 
@@ -42,6 +46,7 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo
 			if (serverType != null) {
 				serverManager.registerSever(ipConfig, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 						ConnectProcessor.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig, serverType);
+				LOGGER.error("[gate register server:{} info:{} break]", serverType, serverInfo.toString());
 			}
 		}
 		return true;

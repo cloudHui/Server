@@ -7,6 +7,7 @@ import gate.client.ClientProto;
 import gate.client.GateTcpClient;
 import gate.handel.server.AckServerInfoHandel;
 import gate.handel.server.RegisterNoticeHandler;
+import gate.handel.server.ServerBreakNoticeHandler;
 import msg.Message;
 import net.client.handler.ClientHandler;
 import net.connect.TCPConnect;
@@ -51,6 +52,8 @@ public class ConnectProcessor {
 		handlers.put(Message.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 		handlers.put(Message.HEART_ACK, HeartAckHandler.getInstance());
 		handlers.put(Message.ACK_SERVER, AckServerInfoHandel.getInstance());
+		handlers.put(Message.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
+
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

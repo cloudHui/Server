@@ -122,11 +122,11 @@ public class Gate {
 		new GateService().start(cfgMgr.getServers().get("gate").getHostList());
 
 		new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
-//		//向注册中心注册
-//		registerToCenter();
-//
-//		//获取其他服务
-//		getAllOtherServer();
+		//向注册中心注册
+		registerToCenter();
+
+		//获取其他服务
+		getAllOtherServer();
 
 		logger.info("[START] gate server is start!!!");
 	}

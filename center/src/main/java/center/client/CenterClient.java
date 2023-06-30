@@ -1,16 +1,24 @@
 package center.client;
 
+import java.util.List;
+
 import center.Center;
+import msg.Message;
 import msg.ServerType;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import net.message.TCPMessage;
 import net.safe.Safe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import utils.ServerClientManager;
 
 
 public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CenterClient.class);
 
 	private ModelProto.ServerInfo serverInfo;
 
@@ -25,7 +33,20 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 			if (serverType == null) {
 				return;
 			}
-			Center.getInstance().serverManager.removeServerClient(serverType, serverInfo.getServerId());
+			ServerClientManager serverClientManager = Center.getInstance().serverManager;
+			serverClientManager.removeServerClient(serverType, serverInfo.getServerId());
+			if (serverType != ServerType.Gate) {
+				//向 gate 同步 其他服务信息
+				List<ClientHandler> typeServer = serverClientManager.getAllTypeServer(ServerType.Gate);
+				if (!typeServer.isEmpty()) {
+					for (ClientHandler gate : typeServer) {
+						ModelProto.NotServerBreak.Builder change = ModelProto.NotServerBreak.newBuilder();
+						change.addServers(serverInfo);
+						gate.sendMessage(Message.BREAK_NOTICE, change.build(), null);
+					}
+				}
+				LOGGER.error("[center server:{} info:{} break]", serverType, serverInfo.toString());
+			}
 		});
 
 		setSafe((Safe<CenterClient, TCPMessage>) (client, msg) -> true);
@@ -38,4 +59,6 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 	public void setServerInfo(ModelProto.ServerInfo serverInfo) {
 		this.serverInfo = serverInfo;
 	}
+
+
 }

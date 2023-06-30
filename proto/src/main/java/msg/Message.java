@@ -21,6 +21,8 @@ public interface Message {
 	int REQ_REGISTER = 3;//请求注册
 	int ACK_REGISTER = 4;//注册回复
 	int REGISTER_NOTICE = 5;//注册通知
+	int BREAK_NOTICE = 6;//服务掉线通知
+
 
 	int REQ_SERVER = 7;//服务信息请
 	int ACK_SERVER = 8;//服务信息回复

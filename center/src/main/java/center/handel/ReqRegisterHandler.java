@@ -11,6 +11,8 @@ import net.client.handler.ClientHandler;
 import net.handler.Handler;
 import net.message.TCPMessage;
 import net.safe.Safe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import utils.ServerClientManager;
 
@@ -18,6 +20,8 @@ import utils.ServerClientManager;
  * 注册服务信息请求
  */
 public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandler.class);
 
 	private static ReqRegisterHandler instance = new ReqRegisterHandler();
 
@@ -57,6 +61,7 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 					client.sendMessage(Message.REGISTER_NOTICE, change.build(), null);
 				}
 			}
+			LOGGER.error("[center server:{} info:{} reqRegister]", serverType, serverInfo.toString());
 		}
 		return true;
 	}

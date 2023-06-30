@@ -15,7 +15,6 @@ import msg.Message;
 import msg.ServerType;
 import net.client.event.RegisterEvent;
 import net.connect.TCPConnect;
-import net.connect.WSTCPConnect;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
@@ -164,7 +163,7 @@ public class ServerManager {
 
 
 	/**
-	 * 向注册中心注册
+	 * 注册服务
 	 */
 	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers,
 	                          ServerType serverType, int serverId, String ipPorts, ServerType connectServer) {
