@@ -6,12 +6,16 @@ import msg.Message;
 import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 
 /**
  * 注册服务信息请求
  */
 public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandler.class);
 
 	private static ReqRegisterHandler instance = new ReqRegisterHandler();
 
@@ -27,7 +31,12 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 			return true;
 		}
 
-		Game.getInstance().setGateClient((GameClient) sender);
+		GameClient client = (GameClient) sender;
+
+		client.setServerInfo(serverInfo);
+
+		Game.getInstance().serverClientManager.addServerClient(serverType, (GameClient) sender, serverInfo.getServerId());
+
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);

@@ -12,6 +12,7 @@ import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
+import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
@@ -31,7 +32,8 @@ public class Hall {
 	private String innerIp;
 	private String center;
 
-	private HallClient gateClient;
+	public ServerClientManager serverClientManager = new ServerClientManager();
+
 
 	private ServerManager serverManager;
 
@@ -81,14 +83,6 @@ public class Hall {
 
 	public void setServerManager(ServerManager serverManager) {
 		this.serverManager = serverManager;
-	}
-
-	public HallClient getGateClient() {
-		return gateClient;
-	}
-
-	public void setGateClient(HallClient gateClient) {
-		this.gateClient = gateClient;
 	}
 
 	public static Hall getInstance() {

@@ -3,7 +3,6 @@ package game;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import game.client.GameClient;
 import game.connect.ConnectProcessor;
 import game.manager.TableManager;
 import msg.ServerType;
@@ -13,6 +12,7 @@ import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
+import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
@@ -32,9 +32,9 @@ public class Game {
 	private String innerIp;
 	private String center;
 
-	private GameClient gateClient;
+	public ServerClientManager serverClientManager = new ServerClientManager();
 
-	private ServerManager serverManager;
+	private ServerManager serverManager = new ServerManager();
 
 	private TableManager tableManager;
 
@@ -80,18 +80,6 @@ public class Game {
 
 	public ServerManager getServerManager() {
 		return serverManager;
-	}
-
-	public void setServerManager(ServerManager serverManager) {
-		this.serverManager = serverManager;
-	}
-
-	public GameClient getGateClient() {
-		return gateClient;
-	}
-
-	public void setGateClient(GameClient gateClient) {
-		this.gateClient = gateClient;
 	}
 
 	public TableManager getTableManager() {
@@ -163,7 +151,6 @@ public class Game {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
-		setServerManager(new ServerManager());
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 

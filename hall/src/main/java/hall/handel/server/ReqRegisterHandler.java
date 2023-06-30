@@ -6,12 +6,17 @@ import msg.Message;
 import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 
 /**
  * 注册服务信息请求
  */
 public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandler.class);
+
 
 	private static ReqRegisterHandler instance = new ReqRegisterHandler();
 
@@ -26,8 +31,12 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 		if (serverType == null) {
 			return true;
 		}
+		HallClient client = (HallClient) sender;
 
-		Hall.getInstance().setGateClient((HallClient) sender);
+		client.setServerInfo(serverInfo);
+
+
+		Hall.getInstance().serverClientManager.addServerClient(serverType, client, serverInfo.getServerId());
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);

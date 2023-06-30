@@ -1,7 +1,7 @@
 package center.handel.http;
 
+import center.Center;
 import center.client.CenterClient;
-import center.manager.ServerManager;
 import http.Linker;
 import http.handler.Handler;
 import msg.ServerType;
@@ -41,8 +41,7 @@ public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 		}
 		long start = System.currentTimeMillis();
 		Response ack = new Response();
-		ServerManager instance = ServerManager.getInstance();
-		CenterClient serverClient = instance.getServerClient(ServerType.Gate);
+		CenterClient serverClient = (CenterClient) Center.getInstance().serverManager.getServerClient(ServerType.Gate);
 		if (serverClient != null) {
 			ack.setRet(1);
 			ack.setMsg(JsonUtils.writeValue(serverClient.getServerInfo()));

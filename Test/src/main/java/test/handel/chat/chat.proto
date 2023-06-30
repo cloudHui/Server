@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-message ChatMessage {
-    string fromUser = 1;
-    string message = 2;
-}

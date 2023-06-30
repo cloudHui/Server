@@ -1,6 +1,6 @@
 package center.client;
 
-import center.manager.ServerManager;
+import center.Center;
 import msg.ServerType;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
@@ -25,7 +25,7 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 			if (serverType == null) {
 				return;
 			}
-			ServerManager.getInstance().removeServerClient(serverType, serverInfo.getServerId());
+			Center.getInstance().serverManager.removeServerClient(serverType, serverInfo.getServerId());
 		});
 
 		setSafe((Safe<CenterClient, TCPMessage>) (client, msg) -> true);

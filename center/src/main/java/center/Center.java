@@ -9,6 +9,7 @@ import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
+import utils.ServerClientManager;
 import utils.config.ConfigurationManager;
 
 public class Center {
@@ -16,6 +17,7 @@ public class Center {
 	private static Center instance = new Center();
 	private Timer timer;
 	private ExecutorPool executorPool;
+	public ServerClientManager serverManager = new ServerClientManager();
 
 	private Center() {
 		executorPool = new ExecutorPool("Center");
