@@ -39,6 +39,8 @@ public class ConnectProcessor {
 				return ModelProto.AckRegister.parseFrom(bytes);
 			case Message.REGISTER_NOTICE:
 				return ModelProto.NotRegisterInfo.parseFrom(bytes);
+			case Message.BREAK_NOTICE:
+				return ModelProto.NotServerBreak.parseFrom(bytes);
 			default: {
 				return null;
 			}

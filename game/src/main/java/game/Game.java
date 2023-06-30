@@ -156,7 +156,7 @@ public class Game {
 
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + ":" + getPort(),
-				ServerType.Center);
+				ServerType.Center, 0);
 	}
 
 	/**

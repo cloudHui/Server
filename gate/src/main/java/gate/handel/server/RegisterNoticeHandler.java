@@ -45,8 +45,8 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo
 			serverType = ServerType.get(serverInfo.getServerType());
 			if (serverType != null) {
 				serverManager.registerSever(ipConfig, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-						ConnectProcessor.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig, serverType);
-				LOGGER.error("[gate register server:{} info:{} break]", serverType, serverInfo.toString());
+						ConnectProcessor.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig, serverType, 0);
+				LOGGER.error("[gate register server:{} info:{}]", serverType, serverInfo.toString());
 			}
 		}
 		return true;

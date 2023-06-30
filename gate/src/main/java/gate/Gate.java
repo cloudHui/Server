@@ -141,7 +141,7 @@ public class Gate {
 
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + ":" + getPort(),
-				ServerType.Center);
+				ServerType.Center, 0);
 	}
 
 	/**

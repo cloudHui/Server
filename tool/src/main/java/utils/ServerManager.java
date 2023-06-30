@@ -92,11 +92,11 @@ public class ServerManager {
 	 * @param localId     本地服务 id
 	 * @param localPort   本地服务 IP 端口
 	 */
-	private void connect(ServerType connect, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
-		connect(connect, new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort);
+	private void connect(ServerType connect, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort, int disRetry) {
+		connect(connect, new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort, disRetry);
 	}
 
-	private void connect(ServerType serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+	private void connect(ServerType serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort, int disRetry) {
 		connect(
 				socketAddress,
 				transfer,
@@ -126,10 +126,10 @@ public class ServerManager {
 											s.getAddress().getHostAddress(), s.getPort());
 								}
 							});
-				}, localServer);
+				}, localServer, disRetry);
 	}
 
-	private void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer) {
+	private void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer, int disRetry) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,
 				socketAddress,
 				transfer,
@@ -145,20 +145,20 @@ public class ServerManager {
 			handler.sendMessage(Message.HEART, heartbeat, null);
 		});
 
-		tcpConnection.connect();
+		tcpConnection.connect(disRetry);
 	}
 
 	/**
 	 * 链接
 	 */
-	public TCPConnect connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers) {
+	public TCPConnect connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers,int disRetry) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,
 				socketAddress,
 				transfer,
 				parser,
 				handlers,
 				null);
-		return tcpConnection.connect();
+		return tcpConnection.connect(disRetry);
 	}
 
 
@@ -166,8 +166,8 @@ public class ServerManager {
 	 * 注册服务
 	 */
 	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers,
-	                          ServerType serverType, int serverId, String ipPorts, ServerType connectServer) {
+	                          ServerType serverType, int serverId, String ipPorts, ServerType connectServer, int disRetry) {
 		connect(connectServer, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
-				handlers, serverType, serverId, ipPorts);
+				handlers, serverType, serverId, ipPorts, disRetry);
 	}
 }

@@ -42,4 +42,12 @@ public enum ServerType {
 	public static ServerType get(int serverType) {
 		return getEs().get(serverType);
 	}
+
+	@Override
+	public String toString() {
+		return "ServerType{" +
+				"serverType=" + serverType +
+				", desc='" + desc + '\'' +
+				'}';
+	}
 }

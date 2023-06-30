@@ -32,8 +32,6 @@ public class TableManager {
 	//桌子号的尾
 	private String idTail;
 
-	private TableManager instance = new TableManager();
-
 	private Map<String, Table> tableMap;
 
 	public String getIdHead() {
@@ -60,10 +58,6 @@ public class TableManager {
 		this.randomBeginTableIndex = randomBeginTableIndex;
 	}
 
-	public TableManager getInstance() {
-		return instance;
-	}
-
 	public TableManager() {
 		tableMap = new ConcurrentHashMap<>();
 		resetTableId();
@@ -87,8 +81,8 @@ public class TableManager {
 	 */
 	private void registerResetTableTask() {
 		long nextZero = TimeUtil.curZeroHourTime(System.currentTimeMillis()) + TimeUtil.DAY;
-		Game.getInstance().registerTimer((int) nextZero / 1000,
-				(int) TimeUtil.DAY / 1000,
+		Game.getInstance().registerTimer((int) nextZero,
+				(int) TimeUtil.DAY,
 				-1,
 				game -> {
 					resetTableId();
