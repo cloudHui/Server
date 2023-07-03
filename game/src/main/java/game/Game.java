@@ -3,9 +3,11 @@ package game;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
+import game.client.GameClient;
 import game.connect.ConnectProcessor;
 import game.manager.TableManager;
 import msg.ServerType;
+import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadtutil.thread.ExecutorPool;
@@ -136,7 +138,7 @@ public class Game {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new GameService(90).start(configuration.getHostList());
+		new ServerService(0, GameClient.class).start(configuration.getHostList());
 
 		//向注册中心注册
 		registerToCenter();

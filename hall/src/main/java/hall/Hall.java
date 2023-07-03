@@ -3,8 +3,10 @@ package hall;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
+import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
 import msg.ServerType;
+import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadtutil.thread.ExecutorPool;
@@ -126,7 +128,7 @@ public class Hall {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new HallService(90).start(configuration.getHostList());
+		new ServerService(90, HallClient.class).start(configuration.getHostList());
 
 		//向注册中心注册
 		registerToCenter();

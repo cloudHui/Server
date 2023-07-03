@@ -3,10 +3,12 @@ package gate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
+import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
 import msg.Message;
 import msg.ServerType;
 import net.connect.TCPConnect;
+import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
@@ -119,7 +121,7 @@ public class Gate {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new GateService().start(cfgMgr.getServers().get("gate").getHostList());
+		new ServerService(90, GateTcpClient.class).start(cfgMgr.getServers().get("gate").getHostList());
 
 		new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
 		//向注册中心注册

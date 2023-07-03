@@ -3,6 +3,8 @@ package center;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
+import center.client.CenterClient;
+import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import threadtutil.thread.ExecutorPool;
@@ -47,7 +49,7 @@ public class Center {
 	private void start() {
 		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
 		try {
-			new CenterService().start(cfgMgr.getServers().get("center").getHostList());
+			new ServerService(0, CenterClient.class).start(cfgMgr.getServers().get("center").getHostList());
 
 			new CenterHttpService().start(cfgMgr.getServers().get("http").getHostList().get(0));
 			logger.info("[Center Tcp Server start success]");
