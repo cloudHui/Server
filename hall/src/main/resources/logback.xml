@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
     <property name="APPName" value="hall"/>
-    <property name="LOGGER_ROOT" value="../logs"/>
+    <!--<property name="LOGGER_ROOT" value="../logs"/>-->
+    <property name="LOGGER_ROOT" value="./logs"/>
     <contextName>${APPName}</contextName>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
