@@ -70,35 +70,33 @@ public class ClientProto {
 	 */
 	private static boolean transferMessage(GateTcpClient gateClient, TCPMessage tcpMessage, int msgId) {
 		//奇数消息是发给服务的
-		if ((msgId & 1) != 0) {
-			ServerManager serverManager = Gate.getInstance().getServerManager();
-			tcpMessage.setMapId((int) gateClient.getId());
-			int clientId;
-			TCPConnect serverClient;
-			if ((msgId & Message.GAME_TYPE) != 0) {
-				clientId = gateClient.getGameId();
-				if (clientId != 0) {
-					serverClient = serverManager.getServerClient(ServerType.Game, clientId);
-				} else {
-					serverClient = serverManager.getServerClient(ServerType.Game);
-					gateClient.setGameId((int) serverClient.getId());
-				}
-				if (serverClient != null) {
-					serverClient.sendMessage(tcpMessage);
-					return true;
-				}
-			} else if ((msgId & Message.HALL_TYPE) != 0) {
-				clientId = gateClient.getHallId();
-				if (clientId != 0) {
-					serverClient = serverManager.getServerClient(ServerType.Hall, clientId);
-				} else {
-					serverClient = serverManager.getServerClient(ServerType.Hall);
-					gateClient.setHallId((int) serverClient.getId());
-				}
-				if (serverClient != null) {
-					serverClient.sendMessage(tcpMessage);
-					return true;
-				}
+		ServerManager serverManager = Gate.getInstance().getServerManager();
+		tcpMessage.setMapId((int) gateClient.getId());
+		int clientId;
+		TCPConnect serverClient;
+		if ((msgId & Message.GAME_TYPE) != 0) {
+			clientId = gateClient.getGameId();
+			if (clientId != 0) {
+				serverClient = serverManager.getServerClient(ServerType.Game, clientId);
+			} else {
+				serverClient = serverManager.getServerClient(ServerType.Game);
+				gateClient.setGameId((int) serverClient.getServerId());
+			}
+			if (serverClient != null) {
+				serverClient.sendMessage(tcpMessage);
+				return true;
+			}
+		} else if ((msgId & Message.HALL_TYPE) != 0) {
+			clientId = gateClient.getHallId();
+			if (clientId != 0) {
+				serverClient = serverManager.getServerClient(ServerType.Hall, clientId);
+			} else {
+				serverClient = serverManager.getServerClient(ServerType.Hall);
+				gateClient.setHallId((int) serverClient.getServerId());
+			}
+			if (serverClient != null) {
+				serverClient.sendMessage(tcpMessage);
+				return true;
 			}
 		}
 		logger.error("[error msg transferMessage to server msgId:{}]", msgId);

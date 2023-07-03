@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hall.handel.ReqLoginHandler;
+import hall.handel.ReqRoomListHandler;
 import hall.handel.server.HeartHandler;
 import hall.handel.server.NotBreakHandler;
 import hall.handel.server.ReqRegisterHandler;
@@ -59,6 +60,7 @@ public class ClientProto {
 		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
 		handlers.put(Message.NOT_BREAK, NotBreakHandler.getInstance());
 		handlers.put(Message.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
+		handlers.put(Message.HallMsg.REQ_ROOM_LIST.getId(), ReqRoomListHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

@@ -1,5 +1,7 @@
 package hall.handel;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import msg.Message;
 import net.client.Sender;
 import net.handler.Handler;
@@ -21,6 +23,8 @@ public class ReqLoginHandler implements Handler<HallProto.ReqLogin> {
 	//token登录
 	private final static int TOKEN = 3;
 
+	private static AtomicInteger ROLE_ID = new AtomicInteger(1);
+
 	public static ReqLoginHandler getInstance() {
 		return instance;
 	}
@@ -41,7 +45,7 @@ public class ReqLoginHandler implements Handler<HallProto.ReqLogin> {
 				break;
 		}
 		HallProto.AckLogin.Builder ack = HallProto.AckLogin.newBuilder();
-		ack.setUserId(1);
+		ack.setUserId(ROLE_ID.getAndAdd(1));
 		sender.sendMessage(Message.HallMsg.ACK_LOGIN.getId(), ack.build(), null, mapId);
 		return true;
 	}

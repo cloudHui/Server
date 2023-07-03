@@ -22,9 +22,7 @@ public class GateTcpClient extends ClientHandler<GateTcpClient, TCPMessage> {
 	public GateTcpClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent((CloseEvent<GateTcpClient>) client -> {
-			notServerBreak();
-		});
+		setCloseEvent((CloseEvent<GateTcpClient>) client -> notServerBreak());
 
 		setSafe((Safe<GateTcpClient, TCPMessage>) (gateClient, msg) -> msg.getMessageId() == Message.HallMsg.REQ_LOGIN.getId() || userId != 0);
 	}

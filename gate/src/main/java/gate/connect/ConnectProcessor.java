@@ -3,11 +3,10 @@ package gate.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import gate.client.ClientProto;
 import gate.client.GateTcpClient;
-import gate.handel.server.AckServerInfoHandel;
-import gate.handel.server.RegisterNoticeHandler;
-import gate.handel.server.ServerBreakNoticeHandler;
+import gate.handel.AckServerInfoHandel;
+import gate.handel.RegisterNoticeHandler;
+import gate.handel.ServerBreakNoticeHandler;
 import msg.Message;
 import net.client.handler.ClientHandler;
 import net.connect.TCPConnect;
@@ -24,7 +23,7 @@ import utils.handel.HeartAckHandler;
 
 public class ConnectProcessor {
 
-	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
+	private final static Logger logger = LoggerFactory.getLogger(ConnectProcessor.class);
 
 
 	public final static Parser PARSER = (id, bytes) -> {

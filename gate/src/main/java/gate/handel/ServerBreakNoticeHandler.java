@@ -1,4 +1,4 @@
-package gate.handel.server;
+package gate.handel;
 
 import java.util.List;
 

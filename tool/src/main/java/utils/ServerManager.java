@@ -174,9 +174,17 @@ public class ServerManager {
 	/**
 	 * 注册服务
 	 */
-	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers,
-	                          ServerType serverType, int serverId, String ipPorts, ServerType connectServer, int disRetry) {
+	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType serverType,
+	                          int serverId, String ipPorts, ServerType connectServer, int disRetry) {
 		connect(connectServer, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
 				handlers, serverType, serverId, ipPorts, disRetry);
+	}
+
+	/**
+	 * 链接
+	 */
+	public TCPConnect connectSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, int disRetry) {
+		return connect(new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])), transfer, parser,
+				handlers, disRetry);
 	}
 }

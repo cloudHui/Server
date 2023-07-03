@@ -108,6 +108,8 @@ public interface Message {
 	enum HallMsg {
 		REQ_LOGIN(HALL_TYPE | 1, HallProto.ReqLogin.class),
 		ACK_LOGIN(HALL_TYPE | 2, HallProto.AckLogin.class),
+		REQ_ROOM_LIST(HALL_TYPE | 3, HallProto.ReqGetRoomList.class),
+		ACK_ROOM_LIST(HALL_TYPE | 4, HallProto.AckGetRoomList.class),
 		;
 		private int id;
 
