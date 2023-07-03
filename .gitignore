@@ -7,11 +7,5 @@ tool/target/
 center/target/
 *.iml
 *.class
-gate/build/
-hall/build/
-proto/build/
-game/build/
-tool/build/
-center/build/
 build/
-Test/target/
+robot/target/
