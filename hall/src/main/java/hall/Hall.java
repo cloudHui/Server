@@ -128,7 +128,7 @@ public class Hall {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new ServerService(90, HallClient.class).start(configuration.getHostList());
+		new ServerService(0, HallClient.class).start(configuration.getHostList());
 
 		//向注册中心注册
 		registerToCenter();
