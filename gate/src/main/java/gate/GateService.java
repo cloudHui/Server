@@ -10,7 +10,7 @@ import net.service.TCPService;
 
 public class GateService extends TCPService {
 	public GateService() {
-		this(0);
+		this(90);
 	}
 
 	public GateService(int idleTime) {

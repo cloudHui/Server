@@ -40,8 +40,13 @@ public class ServerManager {
 	 * @param client     链接
 	 * @param serverId   服务id
 	 */
-	public void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
-		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).put(serverId, client);
+	public void addServerClient(ServerType serverType, TCPConnect client, int serverId) throws Exception {
+		Map<Integer, TCPConnect> typeMap = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
+		TCPConnect tcpConnect = typeMap.get(serverId);
+		if (tcpConnect != null) {
+			tcpConnect.channelInactive(null);
+		}
+		typeMap.put(serverId, client);
 	}
 
 	/**
@@ -121,7 +126,11 @@ public class ServerManager {
 									ModelProto.ServerInfo serverInfo = r.getServerInfo();
 									tcpConnect.setServerId(serverInfo.getServerId());
 
-									addServerClient(serverType, tcpConnect, serverInfo.getServerId());
+									try {
+										addServerClient(serverType, tcpConnect, serverInfo.getServerId());
+									} catch (Exception ex) {
+										ex.printStackTrace();
+									}
 									logger.info("send register message to {}:{} success",
 											s.getAddress().getHostAddress(), s.getPort());
 								}
@@ -151,7 +160,7 @@ public class ServerManager {
 	/**
 	 * 链接
 	 */
-	public TCPConnect connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers,int disRetry) {
+	public TCPConnect connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, int disRetry) {
 		TCPConnect tcpConnection = new TCPConnect(workerGroup,
 				socketAddress,
 				transfer,
