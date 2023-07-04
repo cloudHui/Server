@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "--//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="db.dao.UserDao">
 
-    <resultMap id="UserInfo" type="db.model.UserInfos">
+    <resultMap id="UserInfo" type="db.entity.UserInfos">
 
     </resultMap>
 

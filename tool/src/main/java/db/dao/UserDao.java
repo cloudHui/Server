@@ -1,7 +1,7 @@
 package db.dao;
 
 
-import db.model.UserInfos;
+import db.entity.UserInfos;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserDao {

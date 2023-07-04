@@ -1,7 +1,7 @@
 package db.service;
 
 import db.dao.UserDao;
-import db.model.UserInfos;
+import db.entity.UserInfos;
 import db.mysql.DBService;
 import org.apache.ibatis.session.SqlSessionFactory;
 
