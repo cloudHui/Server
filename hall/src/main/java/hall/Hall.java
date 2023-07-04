@@ -28,7 +28,6 @@ public class Hall {
 	private final Timer timer;
 
 	private int port;
-	private String ip;
 	private int serverId;
 	private String innerIp;
 	private String center;
@@ -44,14 +43,6 @@ public class Hall {
 
 	public void setPort(int port) {
 		this.port = port;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
 	}
 
 	public int getServerId() {
@@ -119,8 +110,6 @@ public class Hall {
 		}
 
 		setPort(cfgMgr.getInt("port", 0));
-
-		setIp(IpUtil.getOutIp());
 
 		setServerId(cfgMgr.getInt("id", 0));
 
