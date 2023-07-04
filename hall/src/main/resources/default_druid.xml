@@ -27,31 +27,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mapper/SettingMapper.xml"/>
-        <mapper resource="mapper/ServerClusterMapper.xml"/>
-        <mapper resource="mapper/ServerMapper.xml"/>
-        <mapper resource="mapper/UserInfoMapper.xml"/>
-        <mapper resource="mapper/UserCurrencyMapper.xml"/>
-        <mapper resource="mapper/LowerMapper.xml"/>
-        <mapper resource="mapper/UserInboxMapper.xml"/>
-        <mapper resource="mapper/SysNoticeMapper.xml"/>
-        <mapper resource="mapper/ConsumeDataMapper.xml"/>
-        <mapper resource="mapper/UserPlayingMapper.xml"/>
-        <mapper resource="mapper/PopularizeMapper.xml"/>
-
-        <mapper resource="mapper/ActivitiesCfgMapper.xml"/>
-        <mapper resource="mapper/ActivitiesRecMapper.xml"/>
-        <mapper resource="mapper/SysNoticeMapper.xml"/>
-        <mapper resource="mapper/MonitorMapper.xml"/>
-
-        <mapper resource="mapper/UserVipMapper.xml"/>
-
-        <mapper resource="mapper/RecMobileVerifyMapper.xml"/>
-
-        <mapper resource="mapper/UserLogoutMapper.xml"/>
-        <mapper resource="mapper/RankMapper.xml"/>
-        <mapper resource="mapper/UserWatchAdMapper.xml"/>
-        <mapper resource="mapper/ClientVersionMapper.xml"/>
-
+        <mapper resource="mapper/User.xml"/>
     </mappers>
 </configuration>
