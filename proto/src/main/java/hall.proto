@@ -5,21 +5,6 @@ package proto;
 
 import "model.proto";
 
-//请求room 列表
-message ReqGetRoomList {
-}
-
-message Room{
-  int32 roomId = 1;
-  int32 currCount = 2;//当前玩家数量
-  int32 configTypeId = 3;//房间类型
-}
-
-message AckGetRoomList {
-  repeated Room roomList = 1;
-  repeated KeyValue append = 2;
-}
-
 //请求登录
 message ReqLogin {
   bytes cert = 1; //证书

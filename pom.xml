@@ -16,6 +16,7 @@
         <module>proto</module>
         <module>tool</module>
         <module>robot</module>
+        <module>room</module>
     </modules>
 
     <dependencies>

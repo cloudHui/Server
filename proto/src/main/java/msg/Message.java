@@ -15,6 +15,7 @@ public interface Message {
 
 	int GAME_TYPE = 0x2000;
 	int HALL_TYPE = 0x4000;
+	int ROOM_TYPE = 0x8000;
 
 	int HEART = 1;//心跳
 	int HEART_ACK = 2;//回复
@@ -141,6 +142,44 @@ public interface Message {
 		}
 
 		public static HallMsg get(int msgId) {
+			return getEs().get(msgId);
+		}
+	}
+
+	enum RoomMsg {
+		REQ_ROOM_LIST(ROOM_TYPE | 1, HallProto.ReqLogin.class),
+		ACK_ROOM_LIST(ROOM_TYPE | 2, HallProto.AckLogin.class),
+		;
+		private int id;
+
+		private Class className;
+
+		private static Map<Integer, RoomMsg> es = new HashMap<>();
+
+		static {
+			for (RoomMsg msg : values()) {
+				es.put(msg.getId(), msg);
+			}
+		}
+
+		RoomMsg(int id, Class className) {
+			this.id = id;
+			this.className = className;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public Class getClassName() {
+			return className;
+		}
+
+		private static Map<Integer, RoomMsg> getEs() {
+			return es;
+		}
+
+		public static RoomMsg get(int msgId) {
 			return getEs().get(msgId);
 		}
 	}
