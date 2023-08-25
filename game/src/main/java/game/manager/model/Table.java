@@ -26,6 +26,8 @@ public class Table {
 
 	/**
 	 * 桌子循环
+	 *
+	 * @return 是否需要结束任务循环 true是  false不停止
 	 */
 	public boolean tableLoop(Table table) {
 		return false;
@@ -34,7 +36,7 @@ public class Table {
 	/**
 	 * 添加玩家上桌
 	 *
-	 * @return 是否入卓成功
+	 * @return 是否入桌成功
 	 */
 	public boolean addUser(GameUser user) {
 		return false;

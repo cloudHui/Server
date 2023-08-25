@@ -98,6 +98,18 @@ public class ClientProto {
 				serverClient.sendMessage(tcpMessage);
 				return true;
 			}
+		} else if ((msgId & Message.ROOM_TYPE) != 0) {
+			clientId = gateClient.getRoomId();
+			if (clientId != 0) {
+				serverClient = serverManager.getServerClient(ServerType.Room, clientId);
+			} else {
+				serverClient = serverManager.getServerClient(ServerType.Room);
+				gateClient.setRoomId((int) serverClient.getServerId());
+			}
+			if (serverClient != null) {
+				serverClient.sendMessage(tcpMessage);
+				return true;
+			}
 		}
 		logger.error("[error msg transferMessage to server msgId:{}]", msgId);
 		return false;

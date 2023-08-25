@@ -18,6 +18,7 @@ public class GateTcpClient extends ClientHandler<GateTcpClient, TCPMessage> {
 	private int userId = 0;
 	private int gameId = 0;
 	private int hallId = 0;
+	private int roomId = 0;
 
 	public GateTcpClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
@@ -51,6 +52,14 @@ public class GateTcpClient extends ClientHandler<GateTcpClient, TCPMessage> {
 		this.hallId = hallId;
 	}
 
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
 	/**
 	 * 通知服务器玩家离线
 	 */
@@ -66,6 +75,10 @@ public class GateTcpClient extends ClientHandler<GateTcpClient, TCPMessage> {
 			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
 		}
 		serverClient = serverManager.getServerClient(ServerType.Hall, getHallId());
+		if (serverClient != null) {
+			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
+		}
+		serverClient = serverManager.getServerClient(ServerType.Room, getHallId());
 		if (serverClient != null) {
 			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
 		}

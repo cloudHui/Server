@@ -9,6 +9,7 @@ public enum ServerType {
 	Hall(3, "大厅"),
 	Center(4, "注册中心"),
 	Robot(5, "机器人"),
+	Room(6, "房间"),
 	;
 
 	private static Map<Integer, ServerType> es = new HashMap<>();

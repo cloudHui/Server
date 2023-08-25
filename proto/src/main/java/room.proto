@@ -1,5 +1,5 @@
 syntax = "proto3";
-option java_outer_classname = "HallProto";
+option java_outer_classname = "RoomProto";
 
 package proto;
 

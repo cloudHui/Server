@@ -1,12 +1,8 @@
-package hall.client;
+package room.client;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import hall.handel.ReqLoginHandler;
-import hall.handel.server.HeartHandler;
-import hall.handel.server.NotBreakHandler;
-import hall.handel.server.ReqRegisterHandler;
 import msg.Message;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -16,6 +12,10 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import room.handel.HeartHandler;
+import room.handel.NotBreakHandler;
+import room.handel.ReqRegisterHandler;
+import room.handel.ReqRoomListHandler;
 
 public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
@@ -38,9 +38,9 @@ public class ClientProto {
 	 * 消息转化
 	 */
 	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
-		Message.HallMsg hallMsg = Message.HallMsg.get(id);
-		if (hallMsg != null) {
-			Class className = hallMsg.getClassName();
+		Message.RoomMsg roomMsg = Message.RoomMsg.get(id);
+		if (roomMsg != null) {
+			Class className = roomMsg.getClassName();
 			try {
 				return (com.google.protobuf.Message) Message.getMessageObject(className, bytes);
 			} catch (Exception e) {
@@ -58,11 +58,11 @@ public class ClientProto {
 		handlers.put(Message.HEART, HeartHandler.getInstance());
 		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
 		handlers.put(Message.NOT_BREAK, NotBreakHandler.getInstance());
-		handlers.put(Message.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
+		handlers.put(Message.RoomMsg.REQ_ROOM_LIST.getId(), ReqRoomListHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
 
 
-	public final static Transfer<HallClient, TCPMessage> TRANSFER = (hallClient, tcpMessage) -> false;
+	public final static Transfer<RoomClient, TCPMessage> TRANSFER = (hallClient, tcpMessage) -> false;
 }

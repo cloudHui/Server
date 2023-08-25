@@ -7,6 +7,7 @@ import com.google.protobuf.Internal;
 import com.google.protobuf.MessageLite;
 import proto.GameProto;
 import proto.HallProto;
+import proto.RoomProto;
 
 // BASE_ID_INDEX 以下 的是通用消息
 // 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
@@ -109,8 +110,6 @@ public interface Message {
 	enum HallMsg {
 		REQ_LOGIN(HALL_TYPE | 1, HallProto.ReqLogin.class),
 		ACK_LOGIN(HALL_TYPE | 2, HallProto.AckLogin.class),
-		REQ_ROOM_LIST(HALL_TYPE | 3, HallProto.ReqGetRoomList.class),
-		ACK_ROOM_LIST(HALL_TYPE | 4, HallProto.AckGetRoomList.class),
 		;
 		private int id;
 
@@ -147,8 +146,8 @@ public interface Message {
 	}
 
 	enum RoomMsg {
-		REQ_ROOM_LIST(ROOM_TYPE | 1, HallProto.ReqLogin.class),
-		ACK_ROOM_LIST(ROOM_TYPE | 2, HallProto.AckLogin.class),
+		REQ_ROOM_LIST(ROOM_TYPE | 1, RoomProto.ReqGetRoomList.class),
+		ACK_ROOM_LIST(ROOM_TYPE | 2, RoomProto.AckGetRoomList.class),
 		;
 		private int id;
 

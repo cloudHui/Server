@@ -20,7 +20,7 @@ public class TableManager {
 	/**
 	 * 基础值
 	 */
-	private static int BASE_ROUND = 10000;
+	private static int BASE_ROUND = 10000000;
 	/**
 	 * 当前初始化桌子号
 	 */
@@ -107,7 +107,7 @@ public class TableManager {
 	 * 重置id 头尾拼接字段
 	 */
 	public synchronized void resetTableId() {
-		SimpleDateFormat sp = new SimpleDateFormat("yyMMddmm");
+		SimpleDateFormat sp = new SimpleDateFormat("yyMMddHH");
 		String head = sp.format(new Date());
 		setIdHead(head.substring(0, head.length() / 2));
 		setIdTail(head.substring(head.length() / 2));
