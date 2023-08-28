@@ -66,4 +66,18 @@ public class SvnManager {
 	public void jarUpdate() {
 		ExecCommand.exeCommand("svn update " + getJarUrl());
 	}
+
+	/**
+	 * 更新代码
+	 */
+	public void callBat() {
+		String path = System.getProperty("user.dir");
+		String separator = System.getProperty("file.separator");
+		String osName = System.getProperty("os.name");
+		if (osName.contains("Windows")) {
+			ExecCommand.exeBatSh(path + separator + "Update.bat");
+		} else {
+			ExecCommand.exeBatSh(path + separator + " Update.sh");
+		}
+	}
 }

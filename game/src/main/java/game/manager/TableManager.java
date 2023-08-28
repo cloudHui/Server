@@ -81,13 +81,10 @@ public class TableManager {
 	 */
 	private void registerResetTableTask() {
 		long nextZero = TimeUtil.curZeroHourTime(System.currentTimeMillis()) + TimeUtil.DAY;
-		Game.getInstance().registerTimer((int) nextZero,
-				(int) TimeUtil.DAY,
-				-1,
-				game -> {
-					resetTableId();
-					return false;
-				}, this);
+		Game.getInstance().registerTimer(nextZero, TimeUtil.DAY, -1, game -> {
+			resetTableId();
+			return false;
+		}, this);
 	}
 
 	/**

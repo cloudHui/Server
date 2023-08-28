@@ -16,6 +16,7 @@ import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerClientManager;
 import utils.ServerManager;
+import utils.SvnManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.utils.IpUtil;
@@ -37,6 +38,8 @@ public class Game {
 	public ServerClientManager serverClientManager = new ServerClientManager();
 
 	private ServerManager serverManager = new ServerManager();
+
+	private SvnManager svnManager = new SvnManager();
 
 	private TableManager tableManager;
 
@@ -102,18 +105,24 @@ public class Game {
 		timer = new Timer().setRunners(executorPool);
 	}
 
-	public <T> void registerTimer(int delay, int interval, int count, Runner<T> runner, T param) {
+	public <T> void registerTimer(long delay, long interval, int count, Runner<T> runner, T param) {
 		timer.register(delay, interval, count, runner, param);
 	}
 
-	public <T> void registerSerialTimer(int groupId, int delay, int interval, int count, Runner<T> runner, T param) {
+	public <T> void registerSerialTimer(int groupId, long delay, long interval, int count, Runner<T> runner, T param) {
 		timer.registerSerial(groupId, delay, interval, count, runner, param);
 	}
 
+	/**
+	 * 直接提交处理
+	 */
 	public Future<?> execute(Runnable r) {
 		return executorPool.execute(r);
 	}
 
+	/**
+	 * 按顺序有序处理
+	 */
 	public <T extends Task> CompletableFuture<T> serialExecute(T t) {
 		return executorPool.serialExecute(t);
 	}
@@ -146,6 +155,9 @@ public class Game {
 		//初始化
 		init();
 
+		//初始化代码管理
+		initSvn();
+
 		LOGGER.info("[START] game server is start!!!");
 	}
 
@@ -162,10 +174,25 @@ public class Game {
 	}
 
 	/**
-	 * 初始化
+	 * 初始化桌子管理
 	 */
 	private void init() {
 		tableManager = new TableManager();
+	}
+
+	/**
+	 * 初始化svn 代码管理
+	 */
+	private void initSvn() {
+		registerTimer(3000, 60000, -1, game -> {
+			svnManager.jarUpdate();
+			boolean update = svnManager.checkJarVersionUpdate();
+			if (update) {
+				svnManager.callBat();
+				System.exit(0);
+			}
+			return false;
+		}, this);
 	}
 
 	public static void main(String[] args) {
