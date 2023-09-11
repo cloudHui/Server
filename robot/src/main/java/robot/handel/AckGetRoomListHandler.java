@@ -4,12 +4,12 @@ import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.HallProto;
+import proto.RoomProto;
 
 /**
  * 获取房间回复
  */
-public class AckGetRoomListHandler implements Handler<HallProto.AckGetRoomList> {
+public class AckGetRoomListHandler implements Handler<RoomProto.AckGetRoomList> {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckGetRoomListHandler.class);
 
@@ -21,7 +21,7 @@ public class AckGetRoomListHandler implements Handler<HallProto.AckGetRoomList> 
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, HallProto.AckGetRoomList ack, int mapId) {
+	public boolean handler(Sender sender, Long aLong, RoomProto.AckGetRoomList ack, int mapId) {
 		logger.error("get room ack:{}", ack.toString());
 		return true;
 	}

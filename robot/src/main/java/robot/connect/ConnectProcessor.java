@@ -11,6 +11,7 @@ import net.message.Parser;
 import net.message.TCPMessage;
 import net.message.Transfer;
 import proto.HallProto;
+import proto.RoomProto;
 import robot.handel.AckGetRoomListHandler;
 import robot.handel.AckLoginHandler;
 
@@ -21,8 +22,8 @@ public class ConnectProcessor {
 	public final static Parser PARSER = (id, bytes) -> {
 		if (id == Message.HallMsg.ACK_LOGIN.getId()) {
 			return HallProto.AckLogin.parseFrom(bytes);
-		} else if (id == Message.HallMsg.ACK_ROOM_LIST.getId()) {
-			return HallProto.AckGetRoomList.parseFrom(bytes);
+		} else if (id == Message.RoomMsg.ACK_ROOM_LIST.getId()) {
+			return RoomProto.AckGetRoomList.parseFrom(bytes);
 		}
 		return null;
 	};
@@ -32,7 +33,7 @@ public class ConnectProcessor {
 	static {
 		handlers = new HashMap<>();
 		handlers.put(Message.HallMsg.ACK_LOGIN.getId(), AckLoginHandler.getInstance());
-		handlers.put(Message.HallMsg.ACK_ROOM_LIST.getId(), AckGetRoomListHandler.getInstance());
+		handlers.put(Message.RoomMsg.ACK_ROOM_LIST.getId(), AckGetRoomListHandler.getInstance());
 
 	}
 

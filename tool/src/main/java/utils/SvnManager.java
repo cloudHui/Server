@@ -2,16 +2,15 @@ package utils;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.utils.ExecCommand;
 import utils.utils.StringUtils;
 
 public class SvnManager {
 
-	private static SvnManager instance;
+	private final static Logger logger = LoggerFactory.getLogger(SvnManager.class);
 
-	public static SvnManager getInstance() {
-		return instance;
-	}
 
 	private String REV = "Revision: ";
 
@@ -20,6 +19,10 @@ public class SvnManager {
 		List<String> exeCommands = ExecCommand.exeCommand("svn info " + path);
 		jarUrl = ExecCommand.getExeCommandResult(exeCommands, "Url: ");
 		jarLastVersion = ExecCommand.getExeCommandResult(exeCommands, REV);
+		if (jarLastVersion.length() == 0 || jarUrl.length() == 0) {
+			logger.error("get url version error", new Exception());
+			System.exit(0);
+		}
 	}
 
 	/**

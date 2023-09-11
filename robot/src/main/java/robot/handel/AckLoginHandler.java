@@ -6,6 +6,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
+import proto.RoomProto;
 
 /**
  * 登录回复
@@ -24,8 +25,8 @@ public class AckLoginHandler implements Handler<HallProto.AckLogin> {
 	@Override
 	public boolean handler(Sender sender, Long aLong, HallProto.AckLogin ack, int mapId) {
 		logger.error("login ack:{}", ack.toString());
-		HallProto.ReqGetRoomList.Builder getRoom = HallProto.ReqGetRoomList.newBuilder();
-		sender.sendMessage(Message.HallMsg.REQ_ROOM_LIST.getId(), getRoom.build(), null);
+		RoomProto.ReqGetRoomList.Builder getRoom = RoomProto.ReqGetRoomList.newBuilder();
+		sender.sendMessage(Message.RoomMsg.REQ_ROOM_LIST.getId(), getRoom.build(), null);
 		return true;
 	}
 }
