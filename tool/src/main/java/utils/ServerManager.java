@@ -29,7 +29,7 @@ import utils.utils.RandomUtils;
 public class ServerManager {
 	private final static Logger logger = LoggerFactory.getLogger(ServerManager.class);
 
-	private Map<ServerType, Map<Integer, TCPConnect>> serverMap = new ConcurrentHashMap<>();
+	private final Map<ServerType, Map<Integer, TCPConnect>> serverMap = new ConcurrentHashMap<>();
 
 	private final EventLoopGroup workerGroup = new NioEventLoopGroup();
 

@@ -1,12 +1,12 @@
 package room.client;
 
-import hall.Hall;
 import msg.ServerType;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import net.message.TCPMessage;
 import proto.ModelProto;
+import room.Room;
 
 
 public class RoomClient extends ClientHandler<RoomClient, TCPMessage> {
@@ -25,7 +25,7 @@ public class RoomClient extends ClientHandler<RoomClient, TCPMessage> {
 
 			ServerType serverType = ServerType.get(serverInfo.getServerType());
 			if (serverType != null) {
-				Hall.getInstance().serverClientManager.removeServerClient(serverType, serverInfo.getServerId());
+				Room.getInstance().serverClientManager.removeServerClient(serverType, serverInfo.getServerId());
 			}
 		});
 	}

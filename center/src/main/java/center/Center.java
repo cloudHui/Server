@@ -9,7 +9,7 @@ import utils.config.ConfigurationManager;
 
 public class Center {
 	private static final Logger logger = LoggerFactory.getLogger(Center.class);
-	private static Center instance = new Center();
+	private static final Center instance = new Center();
 	public ServerClientManager serverManager = new ServerClientManager();
 
 	private Center() {
@@ -24,7 +24,7 @@ public class Center {
 	}
 
 	private void start() {
-		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
+		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		try {
 			new ServerService(0, CenterClient.class).start(cfgMgr.getServers().get("center").getHostList());
 

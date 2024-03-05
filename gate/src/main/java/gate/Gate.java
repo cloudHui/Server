@@ -1,8 +1,5 @@
 package gate;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-
 import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
 import msg.Message;
@@ -98,18 +95,18 @@ public class Gate {
 		timer.register(delay, interval, count, runner, param);
 	}
 
-	public Future<?> execute(Runnable r) {
-		return executorPool.execute(r);
+	public void execute(Runnable r) {
+		executorPool.execute(r);
 	}
 
-	public <T extends Task> CompletableFuture<T> serialExecute(T t) {
-		return executorPool.serialExecute(t);
+	public void serialExecute(Task t) {
+		executorPool.serialExecute(t);
 	}
 
 
 	private void start() {
 
-		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
+		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 
 		setPort(cfgMgr.getInt("port", 0));
 

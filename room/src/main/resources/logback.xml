@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property name="APPName" value="game"/>
+    <property name="APPName" value="room"/>
     <!--<property name="LOGGER_ROOT" value="../logs"/>-->
     <property name="LOGGER_ROOT" value="./logs"/>
     <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss}[%t]%-5level %logger{36}.%M %m%n" />

@@ -12,7 +12,7 @@ public class SvnManager {
 	private final static Logger logger = LoggerFactory.getLogger(SvnManager.class);
 
 
-	private String REV = "Revision: ";
+	private final String REV = "Revision: ";
 
 	public SvnManager() {
 		String path = System.getProperty("user.dir");
@@ -21,19 +21,18 @@ public class SvnManager {
 		jarLastVersion = ExecCommand.getExeCommandResult(exeCommands, REV);
 		if (jarLastVersion.length() == 0 || jarUrl.length() == 0) {
 			logger.error("get url version error", new Exception());
-			System.exit(0);
 		}
 	}
 
 	/**
 	 * 运行包地址
 	 */
-	private String jarUrl;
+	private final String jarUrl;
 
 	/**
 	 * 上一次检测版本
 	 */
-	private String jarLastVersion;
+	private final String jarLastVersion;
 
 	public String getJarUrl() {
 		return jarUrl;

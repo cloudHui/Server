@@ -1,8 +1,5 @@
 package room;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-
 import msg.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -91,18 +88,18 @@ public class Room {
 		timer.register(delay, interval, count, runner, param);
 	}
 
-	public Future<?> execute(Runnable r) {
-		return executorPool.execute(r);
+	public void execute(Runnable r) {
+		executorPool.execute(r);
 	}
 
-	public <T extends Task> CompletableFuture<T> serialExecute(T t) {
-		return executorPool.serialExecute(t);
+	public void serialExecute(Task t) {
+		executorPool.serialExecute(t);
 	}
 
 
 	private void start() {
 
-		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
+		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		ServerConfiguration configuration = cfgMgr.getServers().get("hall");
 		if (null == configuration || !configuration.hasHostString()) {
 			LOGGER.error("ERROR! failed for can not find server config");

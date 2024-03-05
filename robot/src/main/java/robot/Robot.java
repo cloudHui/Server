@@ -1,8 +1,5 @@
 package robot;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-
 import msg.Message;
 import msg.ServerType;
 import net.connect.TCPConnect;
@@ -54,12 +51,12 @@ public class Robot {
 		timer.register(delay, interval, count, runner, param);
 	}
 
-	public Future<?> execute(Runnable r) {
-		return executorPool.execute(r);
+	public void execute(Runnable r) {
+		executorPool.execute(r);
 	}
 
-	public <T extends Task> CompletableFuture<T> serialExecute(T t) {
-		return executorPool.serialExecute(t);
+	public void serialExecute(Task t) {
+		executorPool.serialExecute(t);
 	}
 
 

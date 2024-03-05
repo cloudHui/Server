@@ -14,7 +14,7 @@ import utils.utils.RandomUtils;
  */
 public class ServerClientManager {
 
-	private Map<ServerType, Map<Integer, ClientHandler>> serverMap = new ConcurrentHashMap<>();
+	private final Map<ServerType, Map<Integer, ClientHandler>> serverMap = new ConcurrentHashMap<>();
 
 	/**
 	 * 添加服务链接

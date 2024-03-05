@@ -1,11 +1,10 @@
 package game;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-
+import com.alibaba.fastjson.JSON;
 import game.client.GameClient;
 import game.connect.ConnectProcessor;
 import game.manager.TableManager;
+import monitor.ServerMonitor;
 import msg.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -19,6 +18,7 @@ import utils.ServerManager;
 import utils.SvnManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
+import utils.utils.DingTalkWaring;
 import utils.utils.IpUtil;
 
 public class Game {
@@ -37,9 +37,9 @@ public class Game {
 
 	public ServerClientManager serverClientManager = new ServerClientManager();
 
-	private ServerManager serverManager = new ServerManager();
+	private final ServerManager serverManager = new ServerManager();
 
-	private SvnManager svnManager = new SvnManager();
+	private final SvnManager svnManager = new SvnManager();
 
 	private TableManager tableManager;
 
@@ -116,21 +116,21 @@ public class Game {
 	/**
 	 * 直接提交处理
 	 */
-	public Future<?> execute(Runnable r) {
-		return executorPool.execute(r);
+	public void execute(Runnable r) {
+		executorPool.execute(r);
 	}
 
 	/**
 	 * 按顺序有序处理
 	 */
-	public <T extends Task> CompletableFuture<T> serialExecute(T t) {
-		return executorPool.serialExecute(t);
+	public void serialExecute(Task t) {
+		executorPool.serialExecute(t);
 	}
 
 
 	private void start() {
 
-		ConfigurationManager cfgMgr = ConfigurationManager.INSTANCE().load();
+		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		ServerConfiguration configuration = cfgMgr.getServers().get("game");
 		if (null == configuration || !configuration.hasHostString()) {
 			LOGGER.error("ERROR! failed for can not find server config");
@@ -197,7 +197,9 @@ public class Game {
 
 	public static void main(String[] args) {
 		try {
-			instance.start();
+			DingTalkWaring dingTalkWaring = new DingTalkWaring();
+			dingTalkWaring.sendMsg("我要测试", "17671292550");
+			//instance.start();
 		} catch (Exception e) {
 			LOGGER.error("failed for start game server!", e);
 		}

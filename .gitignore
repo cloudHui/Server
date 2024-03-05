@@ -9,3 +9,5 @@ center/target/
 *.class
 build/
 robot/target/
+logs
+room/target
