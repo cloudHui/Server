@@ -1,5 +1,6 @@
 package model; 
  
+ 
 public class TableModel {
 
     //主键
@@ -56,6 +57,18 @@ public class TableModel {
 
     public void setRuleValue(int[] ruleValue) {
         this.ruleValue = ruleValue;
+    }
+
+ 
+    @Override
+    public String toString() {
+        return "TableModel{"+
+                "     id="+id+ 
+                "     type="+type+ 
+                "     watch="+watch+ 
+                "     rule="+rule+ 
+                "     ruleValue="+ruleValue+ 
+                '}';
     }
 
  }

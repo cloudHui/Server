@@ -1,5 +1,9 @@
 package room.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import model.TableModel;
 import utils.utils.excel.ExcelUtil;
 
 /**
@@ -16,7 +20,15 @@ public class RoomModelManager {
 	public void readTableModel() {
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "room");
+
+		TableModel model;
+		List<Object> prperties = new ArrayList<>();
+		ExcelUtil.readExcelJavaValue("TableModel.xlsx", prperties);
+		for (Object object : prperties) {
+			model = (TableModel) object;
+			System.out.println(model.toString());
+		}
 	}
 }
