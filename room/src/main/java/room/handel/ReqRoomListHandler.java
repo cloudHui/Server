@@ -11,7 +11,7 @@ import proto.RoomProto;
  */
 public class ReqRoomListHandler implements Handler<RoomProto.ReqGetRoomList> {
 
-	private static ReqRoomListHandler instance = new ReqRoomListHandler();
+	private static final ReqRoomListHandler instance = new ReqRoomListHandler();
 
 	public static ReqRoomListHandler getInstance() {
 		return instance;

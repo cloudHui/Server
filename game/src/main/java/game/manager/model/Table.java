@@ -3,11 +3,11 @@ package game.manager.model;
 import game.Game;
 
 public class Table {
+	private final String tableId;
+
 	public Table(String tableId) {
 		this.tableId = tableId;
 	}
-
-	private String tableId;
 
 	public String getTableId() {
 		return tableId;

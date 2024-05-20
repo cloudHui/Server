@@ -20,19 +20,22 @@ public class TableManager {
 	/**
 	 * 基础值
 	 */
-	private static int BASE_ROUND = 10000000;
+	private static final int BASE_ROUND = 10000000;
+	private final Map<String, Table> tableMap;
 	/**
 	 * 当前初始化桌子号
 	 */
 	private int randomBeginTableIndex = 0;
-
 	//桌子号的头
 	private String idHead;
-
 	//桌子号的尾
 	private String idTail;
 
-	private Map<String, Table> tableMap;
+	public TableManager() {
+		tableMap = new ConcurrentHashMap<>();
+		resetTableId();
+		registerResetTableTask();
+	}
 
 	public String getIdHead() {
 		return idHead;
@@ -56,12 +59,6 @@ public class TableManager {
 
 	public void setRandomBeginTableIndex(int randomBeginTableIndex) {
 		this.randomBeginTableIndex = randomBeginTableIndex;
-	}
-
-	public TableManager() {
-		tableMap = new ConcurrentHashMap<>();
-		resetTableId();
-		registerResetTableTask();
 	}
 
 	public void addTable(Table table) {

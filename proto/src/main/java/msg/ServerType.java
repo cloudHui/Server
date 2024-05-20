@@ -12,7 +12,7 @@ public enum ServerType {
 	Room(6, "房间"),
 	;
 
-	private static Map<Integer, ServerType> es = new HashMap<>();
+	private static final Map<Integer, ServerType> es = new HashMap<>();
 
 	static {
 		for (ServerType type : values()) {
@@ -25,9 +25,9 @@ public enum ServerType {
 		this.desc = desc;
 	}
 
-	private int serverType;
+	private final int serverType;
 
-	private String desc;
+	private final String desc;
 
 	public int getServerType() {
 		return serverType;

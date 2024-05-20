@@ -4,55 +4,55 @@ option java_outer_classname = "ModelProto";
 package proto;
 
 message KeyValue {
-  bytes key = 1;
-  bytes value = 2;
+    bytes key = 1;
+    bytes value = 2;
 }
 
 //心跳
 message ReqHeart {
-  int32 serverType = 1;
-  int32 serverId = 2;
-  int64 reqTime = 3;
+    int32 serverType = 1;
+    int32 serverId = 2;
+    int64 reqTime = 3;
 }
 message AckHeart {
-  int32 serverType = 1;
-  int32 serverId = 2;
-  int64 reqTime = 3;
+    int32 serverType = 1;
+    int32 serverId = 2;
+    int64 reqTime = 3;
 }
 
 message ServerInfo{
-  int32 serverType = 1;
-  int32 serverId = 2;
-  bytes ipConfig = 3;
+    int32 serverType = 1;
+    int32 serverId = 2;
+    bytes ipConfig = 3;
 }
 
 //服务在路由注册信息
 message ReqRegister {
-  ServerInfo serverInfo = 1;
+    ServerInfo serverInfo = 1;
 }
 message AckRegister {
-  ServerInfo serverInfo = 1;
+    ServerInfo serverInfo = 1;
 }
 
 //服务变更通知
 message NotRegisterInfo {
-  repeated ServerInfo servers = 1;
+    repeated ServerInfo servers = 1;
 }
 
 //获取服务信息
 message ReqServerInfo {
-  repeated int32 serverType = 1;
+    repeated int32 serverType = 1;
 }
 message AckServerInfo {
-  repeated ServerInfo servers = 1;
+    repeated ServerInfo servers = 1;
 }
 
 //通知服务掉线
 message NotServerBreak {
-  repeated ServerInfo servers = 1;
+    repeated ServerInfo servers = 1;
 }
 
 //通知玩家掉线
 message NotBreak {
-  int32 userId = 1;//用户id
+    int32 userId = 1;//用户id
 }

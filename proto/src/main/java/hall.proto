@@ -7,25 +7,25 @@ import "model.proto";
 
 //请求登录
 message ReqLogin {
-  bytes cert = 1; //证书
-  int32 certType = 2; //证书类型
-  bytes channel = 3; //渠道
-  bytes userName = 4; //用户
-  bytes nickName = 5; //昵称
-  bytes avatar = 6; //头像信息
-  int32 sex = 7;
-  bytes country = 8;
-  bytes province = 9;
-  bytes city = 10;
-  bytes verify = 11;
-  repeated KeyValue keyValues = 12;//冗余字段
+    bytes cert = 1; //证书
+    int32 certType = 2; //证书类型
+    bytes channel = 3; //渠道
+    bytes userName = 4; //用户
+    bytes nickName = 5; //昵称
+    bytes avatar = 6; //头像信息
+    int32 sex = 7;
+    bytes country = 8;
+    bytes province = 9;
+    bytes city = 10;
+    bytes verify = 11;
+    repeated KeyValue keyValues = 12;//冗余字段
 }
 
 message AckLogin {
-  int32 result = 1;
-  bytes cert = 2;//证书
-  int32 certType = 3; //证书类型
-  int32 userId = 4;//用户id
-  repeated int32 tableId = 5;//桌子号
-  repeated KeyValue keyValues = 12;//冗余字段
+    int32 result = 1;
+    bytes cert = 2;//证书
+    int32 certType = 3; //证书类型
+    int32 userId = 4;//用户id
+    repeated int32 tableId = 5;//桌子号
+    repeated KeyValue keyValues = 12;//冗余字段
 }

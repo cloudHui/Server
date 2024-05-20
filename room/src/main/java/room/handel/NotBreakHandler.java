@@ -9,7 +9,7 @@ import proto.ModelProto;
  */
 public class NotBreakHandler implements Handler<ModelProto.NotBreak> {
 
-	private static NotBreakHandler instance = new NotBreakHandler();
+	private static final NotBreakHandler instance = new NotBreakHandler();
 
 	public static NotBreakHandler getInstance() {
 		return instance;

@@ -12,16 +12,15 @@ import org.slf4j.LoggerFactory;
 import utils.utils.JsonUtils;
 
 /**
- * 处理查询 gate 信息()
+ * 处理查询 gate 信息
  */
 public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(GetGateInfoHandler.class);
+	private static final GetGateInfoHandler instance = new GetGateInfoHandler();
+
 	private GetGateInfoHandler() {
 	}
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(GetGateInfoHandler.class);
-
-	private static GetGateInfoHandler instance = new GetGateInfoHandler();
 
 	public static GetGateInfoHandler getInstance() {
 		return instance;

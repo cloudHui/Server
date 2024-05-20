@@ -21,8 +21,8 @@ import proto.ModelProto;
  * 处理gate转发消息处理
  */
 public class ClientProto {
+	public final static Transfer<GameClient, TCPMessage> TRANSFER = (gameClient, tcpMessage) -> false;
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
-
 	public final static Parser PARSER = (id, bytes) -> {
 		switch (id) {
 			case Message.REQ_REGISTER:
@@ -35,6 +35,20 @@ public class ClientProto {
 				return parserMessage(id, bytes);
 		}
 	};
+	private final static Map<Integer, Handler> handlers;
+	public final static Handlers HANDLERS = handlers::get;
+
+	static {
+		handlers = new HashMap<>();
+		handlers.put(Message.HEART, HeartHandler.getInstance());
+		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
+		handlers.put(Message.NOT_BREAK, NotBreakHandler.getInstance());
+
+
+		handlers.put(Message.GameMsg.REQ_ENTER_TABLE.getId(), ReqEnterTableHandler.getInstance());
+
+
+	}
 
 	/**
 	 * 消息转化
@@ -51,23 +65,4 @@ public class ClientProto {
 		}
 		return null;
 	}
-
-	private final static Map<Integer, Handler> handlers;
-
-	static {
-		handlers = new HashMap<>();
-		handlers.put(Message.HEART, HeartHandler.getInstance());
-		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
-		handlers.put(Message.NOT_BREAK, NotBreakHandler.getInstance());
-
-
-		handlers.put(Message.GameMsg.REQ_ENTER_TABLE.getId(), ReqEnterTableHandler.getInstance());
-
-
-	}
-
-	public final static Handlers HANDLERS = handlers::get;
-
-
-	public final static Transfer<GameClient, TCPMessage> TRANSFER = (gameClient, tcpMessage) -> false;
 }

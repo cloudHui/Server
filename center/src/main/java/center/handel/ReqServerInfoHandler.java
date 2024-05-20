@@ -17,7 +17,7 @@ import utils.ServerClientManager;
  */
 public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
 
-	private static ReqServerInfoHandler instance = new ReqServerInfoHandler();
+	private static final ReqServerInfoHandler instance = new ReqServerInfoHandler();
 
 	public static ReqServerInfoHandler getInstance() {
 		return instance;

@@ -18,16 +18,16 @@ public class RegisterGateInfoRequest {
 		return ipPort;
 	}
 
+	public void setIpPort(List<String> ipPort) {
+		this.ipPort = ipPort;
+	}
+
 	public List<String> getInnerIpPort() {
 		return innerIpPort;
 	}
 
 	public void setInnerIpPort(List<String> innerIpPort) {
 		this.innerIpPort = innerIpPort;
-	}
-
-	public void setIpPort(List<String> ipPort) {
-		this.ipPort = ipPort;
 	}
 
 	@Override

@@ -23,19 +23,16 @@ public class ConnectProcessor {
 		}
 		return null;
 	};
-
+	/**
+	 * 转发消息接口
+	 */
+	public final static Transfer<TCPConnect, TCPMessage> TRANSFER = (tcpConnect, tcpMessage) -> false;
 	private final static Map<Integer, Handler> handlers;
+	public final static Handlers HANDLERS = handlers::get;
 
 	static {
 		handlers = new HashMap<>();
 		handlers.put(Message.HEART_ACK, HeartAckHandler.getInstance());
 	}
-
-	public final static Handlers HANDLERS = handlers::get;
-
-	/**
-	 * 转发消息接口
-	 */
-	public final static Transfer<TCPConnect, TCPMessage> TRANSFER = (tcpConnect, tcpMessage) -> false;
 
 }

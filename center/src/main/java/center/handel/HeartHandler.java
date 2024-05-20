@@ -15,7 +15,7 @@ public class HeartHandler implements Handler<ModelProto.ReqHeart> {
 
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);
 
-	private static HeartHandler instance = new HeartHandler();
+	private static final HeartHandler instance = new HeartHandler();
 
 	public static HeartHandler getInstance() {
 		return instance;

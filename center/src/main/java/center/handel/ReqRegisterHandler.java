@@ -23,7 +23,7 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandler.class);
 
-	private static ReqRegisterHandler instance = new ReqRegisterHandler();
+	private static final ReqRegisterHandler instance = new ReqRegisterHandler();
 
 	public static ReqRegisterHandler getInstance() {
 		return instance;

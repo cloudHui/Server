@@ -10,7 +10,7 @@ import proto.GameProto;
  */
 public class ReqEnterTableHandler implements Handler<GameProto.ReqEnterTable> {
 
-	private static ReqEnterTableHandler instance = new ReqEnterTableHandler();
+	private static final ReqEnterTableHandler instance = new ReqEnterTableHandler();
 
 	public static ReqEnterTableHandler getInstance() {
 		return instance;

@@ -6,11 +6,11 @@ package proto;
 import "model.proto";
 
 message ReqEnterTable {
-  int32 tableId = 1;
-  repeated KeyValue append = 2;
+    int32 tableId = 1;
+    repeated KeyValue append = 2;
 }
 
 message AckEnterTable {
-  int32 tableId = 1;
-  repeated KeyValue append = 2;
+    int32 tableId = 1;
+    repeated KeyValue append = 2;
 }

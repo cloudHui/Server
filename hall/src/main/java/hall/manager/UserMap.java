@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class UserMap {
 
-	private Map<Integer, HallUser> users;
+	private final Map<Integer, HallUser> users;
 
 	public UserMap() {
 		this.users = new ConcurrentHashMap<>();
