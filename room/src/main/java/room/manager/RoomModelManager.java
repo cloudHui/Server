@@ -21,10 +21,12 @@ public class RoomModelManager {
 	}
 
 	public static void main(String[] args) {
+		//读取文件生成结构
 		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "room");
 
 		TableModel model;
 		List<Object> prperties = new ArrayList<>();
+		//读取数据
 		ExcelUtil.readExcelJavaValue("TableModel.xlsx", prperties);
 		for (Object object : prperties) {
 			model = (TableModel) object;
