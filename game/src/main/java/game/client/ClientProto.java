@@ -36,7 +36,6 @@ public class ClientProto {
 		}
 	};
 	private final static Map<Integer, Handler> handlers;
-	public final static Handlers HANDLERS = handlers::get;
 
 	static {
 		handlers = new HashMap<>();
@@ -49,6 +48,8 @@ public class ClientProto {
 
 
 	}
+
+	public final static Handlers HANDLERS = handlers::get;
 
 	/**
 	 * 消息转化

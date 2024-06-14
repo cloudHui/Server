@@ -1,10 +1,8 @@
 package game;
 
-import com.alibaba.fastjson.JSON;
 import game.client.GameClient;
 import game.connect.ConnectProcessor;
 import game.manager.TableManager;
-import monitor.ServerMonitor;
 import msg.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -18,7 +16,6 @@ import utils.ServerManager;
 import utils.SvnManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
-import utils.utils.DingTalkWaring;
 import utils.utils.IpUtil;
 
 public class Game {
@@ -157,8 +154,6 @@ public class Game {
 
 		//初始化代码管理
 		initSvn();
-
-		LOGGER.info("[START] game server is start!!!");
 	}
 
 	/**
@@ -195,11 +190,27 @@ public class Game {
 		}, this);
 	}
 
+	/**
+	 * 测试日志
+	 */
+	private void testLog() {
+		LOGGER.info("in testlog");
+		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
+		LOGGER.info(cfgMgr.getServers().toString());
+		registerTimer(1, 30000, -1, game -> {
+			LOGGER.info("game server 测试日志");
+			return false;
+		}, this);
+	}
+
 	public static void main(String[] args) {
 		try {
-			DingTalkWaring dingTalkWaring = new DingTalkWaring();
-			dingTalkWaring.sendMsg("我要测试", "17671292550");
+			System.setProperty("file.encoding", "UTF-8");
+			//DingTalkWaring dingTalkWaring = new DingTalkWaring();
+			//dingTalkWaring.sendMsg("我要测试", "17671292550");
 			//instance.start();
+			instance.testLog();
+			LOGGER.info("[START] game server is start!!!");
 		} catch (Exception e) {
 			LOGGER.error("failed for start game server!", e);
 		}
