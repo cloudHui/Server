@@ -19,7 +19,7 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterNoticeHandler.class);
 
-	private static RegisterNoticeHandler instance = new RegisterNoticeHandler();
+	private static final RegisterNoticeHandler instance = new RegisterNoticeHandler();
 
 	public static RegisterNoticeHandler getInstance() {
 		return instance;

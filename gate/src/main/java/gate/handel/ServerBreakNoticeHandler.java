@@ -18,7 +18,7 @@ public class ServerBreakNoticeHandler implements Handler<ModelProto.NotServerBre
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandler.class);
 
-	private static ServerBreakNoticeHandler instance = new ServerBreakNoticeHandler();
+	private static final ServerBreakNoticeHandler instance = new ServerBreakNoticeHandler();
 
 	public static ServerBreakNoticeHandler getInstance() {
 		return instance;

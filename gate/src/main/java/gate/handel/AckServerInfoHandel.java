@@ -9,7 +9,7 @@ import proto.ModelProto;
  */
 public class AckServerInfoHandel implements Handler<ModelProto.AckServerInfo> {
 
-	private static AckServerInfoHandel instance = new AckServerInfoHandel();
+	private static final AckServerInfoHandel instance = new AckServerInfoHandel();
 
 	public static AckServerInfoHandel getInstance() {
 		return instance;
