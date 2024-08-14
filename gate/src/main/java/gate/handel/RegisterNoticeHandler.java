@@ -1,23 +1,16 @@
 package gate.handel;
 
-import java.util.List;
-
+import com.google.protobuf.Message;
 import gate.Gate;
 import gate.connect.ConnectProcessor;
-import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import proto.ModelProto;
-import utils.ServerManager;
 
 /**
  * 注册信息通知
  */
-public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo> {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterNoticeHandler.class);
+public class RegisterNoticeHandler implements Handler {
 
 	private static final RegisterNoticeHandler instance = new RegisterNoticeHandler();
 
@@ -26,29 +19,12 @@ public class RegisterNoticeHandler implements Handler<ModelProto.NotRegisterInfo
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.NotRegisterInfo req, int mapId) {
-		return connectToSever(req.getServersList());
-	}
+	public boolean handler(Sender sender, long aLong, Message registerInfo, int mapId) {
+		ModelProto.NotRegisterInfo req = (ModelProto.NotRegisterInfo) registerInfo;
 
-	static boolean connectToSever(List<ModelProto.ServerInfo> serverInfos) {
-		if (serverInfos == null || serverInfos.isEmpty()) {
-			return true;
-		}
-		Gate instance = Gate.getInstance();
-		ServerManager serverManager = instance.getServerManager();
-		String[] ipConfig;
-		int localServerId = instance.getServerId();
-		String localInnerIpConfig = instance.getInnerIp() + ":" + instance.getPort();
-		ServerType serverType;
-		for (ModelProto.ServerInfo serverInfo : serverInfos) {
-			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
-			serverType = ServerType.get(serverInfo.getServerType());
-			if (serverType != null) {
-				serverManager.registerSever(ipConfig, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-						ConnectProcessor.HANDLERS, ServerType.Gate, localServerId, localInnerIpConfig, serverType, 0);
-				LOGGER.error("[gate register server:{} info:{}]", serverType, serverInfo.toString());
-			}
-		}
-		return true;
+		return Gate.getInstance().getServerManager().connectToSever(req.getServersList(),
+				Gate.getInstance().getServerId(), Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort(),
+				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS);
 	}
 }

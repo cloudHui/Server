@@ -3,8 +3,9 @@ package gate.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.MessageLite;
 import gate.Gate;
-import msg.Message;
+import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
 import net.handler.Handler;
@@ -28,11 +29,11 @@ public class ClientProto {
 	 * 消息转化
 	 */
 	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
-		Message.GateMsg gateMsg = Message.GateMsg.get(id);
+		MessageId.GateMsg gateMsg = MessageId.GateMsg.get(id);
 		if (gateMsg != null) {
-			Class className = gateMsg.getClassName();
+			Class<?> className = gateMsg.getClassName();
 			try {
-				return (com.google.protobuf.Message) Message.getMessageObject(className, bytes);
+				return (com.google.protobuf.Message) MessageId.getMessageObject((Class<MessageLite>) className, bytes);
 			} catch (Exception e) {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
 			}
@@ -56,10 +57,10 @@ public class ClientProto {
 	/**
 	 * 转发消息接口
 	 */
-	public final static Transfer<GateTcpClient, TCPMessage> TRANSFER = (gateClient, tcpMessage) -> {
+	public final static Transfer TRANSFER = (gateClient, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if (msgId > Message.BASE_ID_INDEX) {
-			return transferMessage(gateClient, tcpMessage, msgId);
+		if (msgId > MessageId.BASE_ID_INDEX) {
+			return transferMessage((GateTcpClient)gateClient, tcpMessage, msgId);
 		}
 		return false;
 	};
@@ -72,9 +73,10 @@ public class ClientProto {
 		//奇数消息是发给服务的
 		ServerManager serverManager = Gate.getInstance().getServerManager();
 		tcpMessage.setMapId((int) gateClient.getId());
+		tcpMessage.setRoleId(gateClient.getRoleId());
 		int clientId;
 		TCPConnect serverClient;
-		if ((msgId & Message.GAME_TYPE) != 0) {
+		if ((msgId & MessageId.GAME_TYPE) != 0) {
 			clientId = gateClient.getGameId();
 			if (clientId != 0) {
 				serverClient = serverManager.getServerClient(ServerType.Game, clientId);
@@ -85,8 +87,10 @@ public class ClientProto {
 			if (serverClient != null) {
 				serverClient.sendMessage(tcpMessage);
 				return true;
+			} else {
+				logger.error("transform game msg error clientId :{} can‘t find game server", clientId);
 			}
-		} else if ((msgId & Message.HALL_TYPE) != 0) {
+		} else if ((msgId & MessageId.HALL_TYPE) != 0) {
 			clientId = gateClient.getHallId();
 			if (clientId != 0) {
 				serverClient = serverManager.getServerClient(ServerType.Hall, clientId);
@@ -97,8 +101,10 @@ public class ClientProto {
 			if (serverClient != null) {
 				serverClient.sendMessage(tcpMessage);
 				return true;
+			} else {
+				logger.error("transform hall msg error clientId :{} can‘t find hall server", clientId);
 			}
-		} else if ((msgId & Message.ROOM_TYPE) != 0) {
+		} else if ((msgId & MessageId.ROOM_TYPE) != 0) {
 			clientId = gateClient.getRoomId();
 			if (clientId != 0) {
 				serverClient = serverManager.getServerClient(ServerType.Room, clientId);
@@ -109,6 +115,8 @@ public class ClientProto {
 			if (serverClient != null) {
 				serverClient.sendMessage(tcpMessage);
 				return true;
+			} else {
+				logger.error("transform room msg error clientId :{} can‘t find room server", clientId);
 			}
 		}
 		logger.error("[error msg transferMessage to server msgId:{}]", msgId);

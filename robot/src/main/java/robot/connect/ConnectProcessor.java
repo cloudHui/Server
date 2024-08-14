@@ -3,7 +3,7 @@ package robot.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.Message;
+import msg.MessageId;
 import net.connect.TCPConnect;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -20,9 +20,9 @@ import robot.handel.AckLoginHandler;
  */
 public class ConnectProcessor {
 	public final static Parser PARSER = (id, bytes) -> {
-		if (id == Message.HallMsg.ACK_LOGIN.getId()) {
+		if (id == MessageId.HallMsg.ACK_LOGIN.getId()) {
 			return HallProto.AckLogin.parseFrom(bytes);
-		} else if (id == Message.RoomMsg.ACK_ROOM_LIST.getId()) {
+		} else if (id == MessageId.RoomMsg.ACK_ROOM_LIST.getId()) {
 			return RoomProto.AckGetRoomList.parseFrom(bytes);
 		}
 		return null;
@@ -32,8 +32,8 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(Message.HallMsg.ACK_LOGIN.getId(), AckLoginHandler.getInstance());
-		handlers.put(Message.RoomMsg.ACK_ROOM_LIST.getId(), AckGetRoomListHandler.getInstance());
+		handlers.put(MessageId.HallMsg.ACK_LOGIN.getId(), AckLoginHandler.getInstance());
+		handlers.put(MessageId.RoomMsg.ACK_ROOM_LIST.getId(), AckGetRoomListHandler.getInstance());
 
 	}
 

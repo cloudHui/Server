@@ -4,7 +4,8 @@ import java.util.List;
 
 import center.Center;
 import center.client.CenterClient;
-import msg.Message;
+import com.google.protobuf.Message;
+import msg.MessageId;
 import msg.ServerType;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
@@ -15,7 +16,7 @@ import utils.ServerClientManager;
 /**
  * 获取 服务信息请求
  */
-public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
+public class ReqServerInfoHandler implements Handler {
 
 	private static final ReqServerInfoHandler instance = new ReqServerInfoHandler();
 
@@ -24,7 +25,8 @@ public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.ReqServerInfo req, int mapId) {
+	public boolean handler(Sender sender, long aLong, Message reqServerInfo, int mapId) {
+		ModelProto.ReqServerInfo req = (ModelProto.ReqServerInfo) reqServerInfo;
 		ServerClientManager manager = Center.getInstance().serverManager;
 		List<Integer> serverTypeList = req.getServerTypeList();
 		ModelProto.AckServerInfo.Builder ack = ModelProto.AckServerInfo.newBuilder();
@@ -43,7 +45,7 @@ public class ReqServerInfoHandler implements Handler<ModelProto.ReqServerInfo> {
 				}
 			}
 		}
-		sender.sendMessage(Message.ACK_SERVER, ack.build(), null);
+		sender.sendMessage(MessageId.ACK_SERVER, ack.build(), null);
 		return true;
 	}
 }

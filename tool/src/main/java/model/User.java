@@ -13,7 +13,7 @@ public abstract class User {
 
 	private long diamond;
 
-	private Set<String> tableIds = new HashSet<>();
+	private final Set<String> tableIds = new HashSet<>();
 
 	public int getUserId() {
 		return userId;
@@ -53,6 +53,10 @@ public abstract class User {
 
 	public void addTable(String tableId) {
 		this.tableIds.add(tableId);
+	}
+
+	public void removeTable(String tableId) {
+		this.tableIds.remove(tableId);
 	}
 
 	@Override

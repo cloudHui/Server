@@ -1,6 +1,7 @@
 package game.handel.client;
 
-import msg.Message;
+import com.google.protobuf.Message;
+import msg.MessageId;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.GameProto;
@@ -8,7 +9,7 @@ import proto.GameProto;
 /**
  * 通知玩家掉线
  */
-public class ReqEnterTableHandler implements Handler<GameProto.ReqEnterTable> {
+public class ReqEnterTableHandler implements Handler {
 
 	private static final ReqEnterTableHandler instance = new ReqEnterTableHandler();
 
@@ -17,10 +18,11 @@ public class ReqEnterTableHandler implements Handler<GameProto.ReqEnterTable> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, GameProto.ReqEnterTable req, int mapId) {
+	public boolean handler(Sender sender, long roleId, Message msg, int mapId) {
+		GameProto.ReqEnterTable req = (GameProto.ReqEnterTable) msg;
 		GameProto.AckEnterTable.Builder ack = GameProto.AckEnterTable.newBuilder();
 		ack.setTableId(1);
-		sender.sendMessage(Message.GameMsg.ACK_ENTER_TABLE.getId(), ack.build(), null, mapId);
+		sender.sendMessage(MessageId.GameMsg.ACK_ENTER_TABLE.getId(), ack.build(), null, mapId);
 		return true;
 	}
 }

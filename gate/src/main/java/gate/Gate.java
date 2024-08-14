@@ -2,7 +2,7 @@ package gate;
 
 import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
-import msg.Message;
+import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
 import net.service.ServerService;
@@ -153,7 +153,7 @@ public class Gate {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
-				serverClient.sendMessage(Message.REQ_SERVER, req.build(), null);
+				serverClient.sendMessage(MessageId.REQ_SERVER, req.build(), null);
 				return true;
 			}
 			return false;

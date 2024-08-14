@@ -1,6 +1,6 @@
 package robot;
 
-import msg.Message;
+import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
 import org.slf4j.Logger;
@@ -80,7 +80,7 @@ public class Robot {
 			TCPConnect serverClient = serverManager.getServerClient(ServerType.Gate);
 			if (serverClient != null) {
 				HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
-				serverClient.sendMessage(Message.HallMsg.REQ_LOGIN.getId(), ack.build(), null);
+				serverClient.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build(), null);
 				return true;
 			}
 			return false;

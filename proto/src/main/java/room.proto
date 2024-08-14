@@ -22,23 +22,23 @@ message Room{
         int32 creatorId = 2;
         int32 ownerId = 3;
         int64 overTimes = 4;
-        repeated Rule rules = 5;//规则
     }
 
-    message Rule{
-        int32 id = 1;
-        int32 type = 2;//0必选 1可不选
-        repeated int32 canChoose = 3;//可选id
-        int32 choose = 4;//选择id
-    }
-
-    enum GameRule{
-        ROLE = 0 ;//玩家人数 2,3,4
-        HUN = 1 ;//混数量 0,4
-    }
 }
 
 message AckGetRoomList {
     repeated Room roomList = 1;
     repeated KeyValue append = 2;
+}
+
+
+//请求入桌分配位置
+message ReqEnterTable {
+    int32 tableId = 1;
+}
+
+message AckEnterTable {
+    int32 tableId = 1;
+    TableRole self = 2;
+    repeated TableRole tableRoles = 3;
 }

@@ -7,7 +7,7 @@ import hall.handel.ReqLoginHandler;
 import hall.handel.server.HeartHandler;
 import hall.handel.server.NotBreakHandler;
 import hall.handel.server.ReqRegisterHandler;
-import msg.Message;
+import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
@@ -23,11 +23,11 @@ public class ClientProto {
 	public final static Parser PARSER = (id, bytes) -> {
 
 		switch (id) {
-			case Message.REQ_REGISTER:
+			case MessageId.REQ_REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
-			case Message.HEART:
+			case MessageId.HEART:
 				return ModelProto.ReqHeart.parseFrom(bytes);
-			case Message.NOT_BREAK:
+			case MessageId.NOT_BREAK:
 				return ModelProto.NotBreak.parseFrom(bytes);
 			default:
 				return parserMessage(id, bytes);
@@ -38,11 +38,11 @@ public class ClientProto {
 	 * 消息转化
 	 */
 	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
-		Message.HallMsg hallMsg = Message.HallMsg.get(id);
+		MessageId.HallMsg hallMsg = MessageId.HallMsg.get(id);
 		if (hallMsg != null) {
 			Class className = hallMsg.getClassName();
 			try {
-				return (com.google.protobuf.Message) Message.getMessageObject(className, bytes);
+				return (com.google.protobuf.Message) MessageId.getMessageObject(className, bytes);
 			} catch (Exception e) {
 				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
 			}
@@ -55,10 +55,10 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(Message.HEART, HeartHandler.getInstance());
-		handlers.put(Message.REQ_REGISTER, ReqRegisterHandler.getInstance());
-		handlers.put(Message.NOT_BREAK, NotBreakHandler.getInstance());
-		handlers.put(Message.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
+		handlers.put(MessageId.HEART, HeartHandler.getInstance());
+		handlers.put(MessageId.REQ_REGISTER, ReqRegisterHandler.getInstance());
+		handlers.put(MessageId.NOT_BREAK, NotBreakHandler.getInstance());
+		handlers.put(MessageId.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

@@ -3,20 +3,17 @@ package center.client;
 import java.util.List;
 
 import center.Center;
-import msg.Message;
+import msg.MessageId;
 import msg.ServerType;
-import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
-import net.message.TCPMessage;
-import net.safe.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import utils.ServerClientManager;
 
 
-public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
+public class CenterClient extends ClientHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CenterClient.class);
 
@@ -25,7 +22,7 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 	public CenterClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent((CloseEvent<CenterClient>) client -> {
+		setCloseEvent(client -> {
 			if (serverInfo == null) {
 				return;
 			}
@@ -42,14 +39,14 @@ public class CenterClient extends ClientHandler<CenterClient, TCPMessage> {
 					for (ClientHandler gate : typeServer) {
 						ModelProto.NotServerBreak.Builder change = ModelProto.NotServerBreak.newBuilder();
 						change.addServers(serverInfo);
-						gate.sendMessage(Message.BREAK_NOTICE, change.build(), null);
+						gate.sendMessage(MessageId.BREAK_NOTICE, change.build(), null);
 					}
 				}
 				LOGGER.error("[center server:{} info:{} break]", serverType, serverInfo.toString());
 			}
 		});
 
-		setSafe((Safe<CenterClient, TCPMessage>) (client, msg) -> true);
+		setSafe((msgId) -> true);
 	}
 
 	public ModelProto.ServerInfo getServerInfo() {

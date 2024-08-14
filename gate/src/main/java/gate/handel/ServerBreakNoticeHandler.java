@@ -2,6 +2,7 @@ package gate.handel;
 
 import java.util.List;
 
+import com.google.protobuf.Message;
 import gate.Gate;
 import msg.ServerType;
 import net.client.Sender;
@@ -14,7 +15,7 @@ import utils.ServerManager;
 /**
  * 服务掉线通知
  */
-public class ServerBreakNoticeHandler implements Handler<ModelProto.NotServerBreak> {
+public class ServerBreakNoticeHandler implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandler.class);
 
@@ -25,7 +26,8 @@ public class ServerBreakNoticeHandler implements Handler<ModelProto.NotServerBre
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.NotServerBreak req, int mapId) {
+	public boolean handler(Sender sender, long aLong, Message notServerBreak, int mapId) {
+		ModelProto.NotServerBreak req = (ModelProto.NotServerBreak) notServerBreak;
 		return connectToSever(req.getServersList());
 	}
 

@@ -1,9 +1,8 @@
 package room.handel;
 
-import msg.Message;
+import msg.MessageId;
 import net.client.Sender;
 import net.handler.Handler;
-import proto.HallProto;
 import proto.RoomProto;
 
 /**
@@ -18,9 +17,9 @@ public class ReqRoomListHandler implements Handler<RoomProto.ReqGetRoomList> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, RoomProto.ReqGetRoomList req, int mapId) {
+	public boolean handler(Sender sender, long aLong, RoomProto.ReqGetRoomList req, int mapId) {
 		RoomProto.AckGetRoomList.Builder ack = RoomProto.AckGetRoomList.newBuilder();
-		sender.sendMessage(Message.RoomMsg.ACK_ROOM_LIST.getId(), ack.build(), null, mapId);
+		sender.sendMessage(MessageId.RoomMsg.ACK_ROOM_LIST.getId(), ack.build(), null, mapId);
 		return true;
 	}
 }

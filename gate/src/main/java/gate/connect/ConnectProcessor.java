@@ -7,9 +7,8 @@ import gate.client.GateTcpClient;
 import gate.handel.AckServerInfoHandel;
 import gate.handel.RegisterNoticeHandler;
 import gate.handel.ServerBreakNoticeHandler;
-import msg.Message;
+import msg.MessageId;
 import net.client.handler.ClientHandler;
-import net.connect.TCPConnect;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
@@ -28,17 +27,17 @@ public class ConnectProcessor {
 
 	public final static Parser PARSER = (id, bytes) -> {
 		switch (id) {
-			case Message.HEART_ACK:
+			case MessageId.HEART_ACK:
 				return ModelProto.AckHeart.parseFrom(bytes);
-			case Message.REQ_REGISTER:
+			case MessageId.REQ_REGISTER:
 				return ModelProto.ReqRegister.parseFrom(bytes);
-			case Message.ACK_SERVER:
+			case MessageId.ACK_SERVER:
 				return ModelProto.AckServerInfo.parseFrom(bytes);
-			case Message.ACK_REGISTER:
+			case MessageId.ACK_REGISTER:
 				return ModelProto.AckRegister.parseFrom(bytes);
-			case Message.REGISTER_NOTICE:
+			case MessageId.REGISTER_NOTICE:
 				return ModelProto.NotRegisterInfo.parseFrom(bytes);
-			case Message.BREAK_NOTICE:
+			case MessageId.BREAK_NOTICE:
 				return ModelProto.NotServerBreak.parseFrom(bytes);
 			default: {
 				return null;
@@ -50,10 +49,10 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(Message.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
-		handlers.put(Message.HEART_ACK, HeartAckHandler.getInstance());
-		handlers.put(Message.ACK_SERVER, AckServerInfoHandel.getInstance());
-		handlers.put(Message.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
+		handlers.put(MessageId.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
+		handlers.put(MessageId.HEART_ACK, HeartAckHandler.getInstance());
+		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
+		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
 
 	}
 
@@ -62,16 +61,16 @@ public class ConnectProcessor {
 	/**
 	 * 转发消息接口
 	 */
-	public final static Transfer<TCPConnect, TCPMessage> TRANSFER = (tcpConnect, tcpMessage) -> {
+	public final static Transfer TRANSFER = (tcpConnect, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if (msgId > Message.BASE_ID_INDEX) {
+		if (msgId > MessageId.BASE_ID_INDEX) {
 			int userId = 0;
-			if (msgId == Message.HallMsg.ACK_LOGIN.getId()) {
+			if (msgId == MessageId.HallMsg.ACK_LOGIN.getId()) {
 				HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
 				userId = ack.getUserId();
 			}
 			//直接转发给客户端的
-			return transferMsg(tcpMessage.getMapId(), tcpMessage, null, userId);
+			return transferMsg(tcpMessage.getMapId(), tcpMessage, userId);
 		}
 		return false;
 	};
@@ -79,25 +78,16 @@ public class ConnectProcessor {
 	/**
 	 * 找到客户端链接 并转发消息
 	 */
-	public static boolean transferMsg(long connectId, TCPMessage msg, com.google.protobuf.Message innerMsg, int userId) {
+	public static boolean transferMsg(long connectId, TCPMessage msg, int userId) {
 		GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(connectId);
 		if (null != gateClient) {
 			if (userId != 0) {
-				gateClient.setUserId(userId);
+				gateClient.setRoleId(userId);
 			}
-			if (null != innerMsg) {
-				gateClient.sendMessage(replace(msg, innerMsg));
-			} else {
-				gateClient.sendMessage(msg);
-			}
+			gateClient.sendMessage(msg);
 			return true;
 		}
 		logger.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
 		return false;
-	}
-
-	public static TCPMessage replace(TCPMessage tcpMessage, com.google.protobuf.Message msg) {
-		tcpMessage.setMessage(msg.toByteArray());
-		return tcpMessage;
 	}
 }

@@ -56,3 +56,18 @@ message NotServerBreak {
 message NotBreak {
     int32 userId = 1;//用户id
 }
+
+message TableRole {
+    int32 roleId = 1;
+    int32 position = 2;
+    bytes avatar = 3;
+    bytes nickName = 4;
+    int32 score = 6;
+    Hero player = 7;
+    repeated int32 cards = 8;
+}
+
+message Hero {
+    int32 heroId = 1;
+    repeated int32 skills = 2;//能用的技能是1 不能用就是0
+}

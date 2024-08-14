@@ -21,7 +21,7 @@ public class AckGetRoomListHandler implements Handler<RoomProto.AckGetRoomList> 
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, RoomProto.AckGetRoomList ack, int mapId) {
+	public boolean handler(Sender sender, long aLong, RoomProto.AckGetRoomList ack, int mapId) {
 		logger.error("get room ack:{}", ack.toString());
 		return true;
 	}

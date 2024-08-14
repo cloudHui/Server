@@ -11,7 +11,7 @@ import java.util.function.BiConsumer;
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import msg.Message;
+import msg.MessageId;
 import msg.ServerType;
 import net.client.event.RegisterEvent;
 import net.connect.TCPConnect;
@@ -107,7 +107,8 @@ public class ServerManager {
 				transfer,
 				parser,
 				handlers,
-				(RegisterEvent<TCPConnect>) tcpConnect -> {
+				(channelHandler -> {
+					TCPConnect tcpConnect = (TCPConnect) channelHandler;
 					ModelProto.ReqRegister.Builder notice = ModelProto.ReqRegister.newBuilder();
 					ModelProto.ServerInfo.Builder server = ModelProto.ServerInfo.newBuilder();
 					server.setServerType(localServer.getServerType());
@@ -116,7 +117,7 @@ public class ServerManager {
 					notice.setServerInfo(server.build());
 
 
-					tcpConnect.sendMessage(Message.REQ_REGISTER, notice.build(), null, 3L)
+					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), null, 3L)
 							.whenComplete((BiConsumer<ModelProto.AckRegister, Exception>) (r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
@@ -135,7 +136,7 @@ public class ServerManager {
 											s.getAddress().getHostAddress(), s.getPort());
 								}
 							});
-				}, localServer, disRetry);
+				}), localServer, disRetry);
 	}
 
 	private void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer, int disRetry) {
@@ -151,7 +152,7 @@ public class ServerManager {
 			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
 					.setReqTime(System.currentTimeMillis())
 					.setServerType(localServer.getServerType()).build();
-			handler.sendMessage(Message.HEART, heartbeat, null);
+			handler.sendMessage(MessageId.HEART, heartbeat, null);
 		});
 
 		tcpConnection.connect(disRetry);
@@ -186,5 +187,22 @@ public class ServerManager {
 	public TCPConnect connectSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, int disRetry) {
 		return connect(new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])), transfer, parser,
 				handlers, disRetry);
+	}
+
+	public  boolean connectToSever(List<ModelProto.ServerInfo> serverInfos, int serverId, String ipPort,Transfer transfer, Parser parser, Handlers handlers) {
+		if (serverInfos == null || serverInfos.isEmpty()) {
+			return true;
+		}
+		String[] ipConfig;
+		ServerType serverType;
+		for (ModelProto.ServerInfo serverInfo : serverInfos) {
+			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
+			serverType = ServerType.get(serverInfo.getServerType());
+			if (serverType != null) {
+				registerSever(ipConfig, transfer, parser, handlers, ServerType.Gate, serverId, ipPort, serverType, 0);
+				logger.error("[register server:{} info:{}]", serverType, serverInfo.toString());
+			}
+		}
+		return true;
 	}
 }

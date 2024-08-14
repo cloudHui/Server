@@ -1,15 +1,13 @@
 package room.client;
 
 import msg.ServerType;
-import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
-import net.message.TCPMessage;
 import proto.ModelProto;
 import room.Room;
 
 
-public class RoomClient extends ClientHandler<RoomClient, TCPMessage> {
+public class RoomClient extends ClientHandler {
 
 
 	private ModelProto.ServerInfo serverInfo;
@@ -21,7 +19,7 @@ public class RoomClient extends ClientHandler<RoomClient, TCPMessage> {
 	public RoomClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent((CloseEvent<RoomClient>) client -> {
+		setCloseEvent(client -> {
 
 			ServerType serverType = ServerType.get(serverInfo.getServerType());
 			if (serverType != null) {

@@ -1,9 +1,12 @@
 package room;
 
+import msg.MessageId;
 import msg.ServerType;
+import net.connect.TCPConnect;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import room.client.RoomClient;
 import room.connect.ConnectProcessor;
 import threadtutil.thread.ExecutorPool;
@@ -132,6 +135,22 @@ public class Room {
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Room, getServerId(), getInnerIp() + ":" + getPort(),
 				ServerType.Center, 0);
+	}
+
+	/**
+	 * 获取其他除注册中心意外的所有服务端口ip
+	 */
+	private void getGameServer() {
+		registerTimer(3000, 1000, -1, gate -> {
+			TCPConnect serverClient = serverManager.getServerClient(ServerType.Center);
+			if (serverClient != null) {
+				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
+				req.addServerType(ServerType.Game.getServerType());
+				serverClient.sendMessage(MessageId.REQ_SERVER, req.build(), null);
+				return true;
+			}
+			return false;
+		}, this);
 	}
 
 	public static void main(String[] args) {

@@ -12,7 +12,7 @@ import proto.RoomProto;
 // BASE_ID_INDEX 以下 的是通用消息
 // 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
 // 客户端回复消息都是 大于 BASE_ID_INDEX
-public interface Message {
+public interface MessageId {
 
 	int GAME_TYPE = 0x2000;
 	int HALL_TYPE = 0x4000;
@@ -35,11 +35,11 @@ public interface Message {
 
 	enum GateMsg {
 		;
-		private int id;
+		private final int id;
 
-		private Class className;
+		private final Class<?> className;
 
-		private static Map<Integer, GateMsg> es = new HashMap<>();
+		private static final Map<Integer, GateMsg> es = new HashMap<>();
 
 		static {
 			for (GateMsg msg : values()) {
@@ -47,7 +47,7 @@ public interface Message {
 			}
 		}
 
-		GateMsg(int id, Class className) {
+		GateMsg(int id, Class<?> className) {
 			this.id = id;
 			this.className = className;
 		}
@@ -56,7 +56,7 @@ public interface Message {
 			return id;
 		}
 
-		public Class getClassName() {
+		public Class<?> getClassName() {
 			return className;
 		}
 
@@ -73,11 +73,11 @@ public interface Message {
 		REQ_ENTER_TABLE(GAME_TYPE | 1, GameProto.ReqEnterTable.class),
 		ACK_ENTER_TABLE(GAME_TYPE | 2, GameProto.AckEnterTable.class),
 		;
-		private int id;
+		private final int id;
 
-		private Class className;
+		private final Class<?> className;
 
-		private static Map<Integer, GameMsg> es = new HashMap<>();
+		private static final Map<Integer, GameMsg> es = new HashMap<>();
 
 		static {
 			for (GameMsg msg : values()) {
@@ -85,7 +85,7 @@ public interface Message {
 			}
 		}
 
-		GameMsg(int id, Class className) {
+		GameMsg(int id, Class<?> className) {
 			this.id = id;
 			this.className = className;
 		}
@@ -94,7 +94,7 @@ public interface Message {
 			return id;
 		}
 
-		public Class getClassName() {
+		public Class<?> getClassName() {
 			return className;
 		}
 
@@ -111,11 +111,11 @@ public interface Message {
 		REQ_LOGIN(HALL_TYPE | 1, HallProto.ReqLogin.class),
 		ACK_LOGIN(HALL_TYPE | 2, HallProto.AckLogin.class),
 		;
-		private int id;
+		private final int id;
 
-		private Class className;
+		private final Class<?> className;
 
-		private static Map<Integer, HallMsg> es = new HashMap<>();
+		private static final Map<Integer, HallMsg> es = new HashMap<>();
 
 		static {
 			for (HallMsg msg : values()) {
@@ -123,7 +123,7 @@ public interface Message {
 			}
 		}
 
-		HallMsg(int id, Class className) {
+		HallMsg(int id, Class<?> className) {
 			this.id = id;
 			this.className = className;
 		}
@@ -132,7 +132,7 @@ public interface Message {
 			return id;
 		}
 
-		public Class getClassName() {
+		public Class<?> getClassName() {
 			return className;
 		}
 
@@ -149,11 +149,11 @@ public interface Message {
 		REQ_ROOM_LIST(ROOM_TYPE | 1, RoomProto.ReqGetRoomList.class),
 		ACK_ROOM_LIST(ROOM_TYPE | 2, RoomProto.AckGetRoomList.class),
 		;
-		private int id;
+		private final int id;
 
-		private Class className;
+		private final Class<?> className;
 
-		private static Map<Integer, RoomMsg> es = new HashMap<>();
+		private static final Map<Integer, RoomMsg> es = new HashMap<>();
 
 		static {
 			for (RoomMsg msg : values()) {
@@ -161,7 +161,7 @@ public interface Message {
 			}
 		}
 
-		RoomMsg(int id, Class className) {
+		RoomMsg(int id, Class<?> className) {
 			this.id = id;
 			this.className = className;
 		}
@@ -170,7 +170,7 @@ public interface Message {
 			return id;
 		}
 
-		public Class getClassName() {
+		public Class<?> getClassName() {
 			return className;
 		}
 

@@ -1,5 +1,8 @@
 package gate.handel;
 
+import com.google.protobuf.Message;
+import gate.Gate;
+import gate.connect.ConnectProcessor;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -7,7 +10,7 @@ import proto.ModelProto;
 /**
  * 注册信息通知
  */
-public class AckServerInfoHandel implements Handler<ModelProto.AckServerInfo> {
+public class AckServerInfoHandel implements Handler {
 
 	private static final AckServerInfoHandel instance = new AckServerInfoHandel();
 
@@ -16,7 +19,14 @@ public class AckServerInfoHandel implements Handler<ModelProto.AckServerInfo> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, Long aLong, ModelProto.AckServerInfo req, int mapId) {
-		return RegisterNoticeHandler.connectToSever(req.getServersList());
+	public boolean handler(Sender sender, long aLong, Message ackServerInfo, int mapId) {
+
+		ModelProto.AckServerInfo req = (ModelProto.AckServerInfo) ackServerInfo;
+
+		return Gate.getInstance().getServerManager().connectToSever(req.getServersList(),
+				Gate.getInstance().getServerId(),
+				Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort(),
+				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS);
 	}
 }

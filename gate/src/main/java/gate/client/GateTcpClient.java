@@ -1,7 +1,7 @@
 package gate.client;
 
 import gate.Gate;
-import msg.Message;
+import msg.MessageId;
 import msg.ServerType;
 import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
@@ -13,9 +13,9 @@ import proto.ModelProto;
 import utils.ServerManager;
 
 
-public class GateTcpClient extends ClientHandler<GateTcpClient, TCPMessage> {
+public class GateTcpClient extends ClientHandler {
 
-	private int userId = 0;
+	private int roleId = 0;
 	private int gameId = 0;
 	private int hallId = 0;
 	private int roomId = 0;
@@ -23,17 +23,17 @@ public class GateTcpClient extends ClientHandler<GateTcpClient, TCPMessage> {
 	public GateTcpClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent((CloseEvent<GateTcpClient>) client -> notServerBreak());
+		setCloseEvent(client -> notServerBreak());
 
-		setSafe((Safe<GateTcpClient, TCPMessage>) (gateClient, msg) -> msg.getMessageId() == Message.HallMsg.REQ_LOGIN.getId() || userId != 0);
+		setSafe((msgId) -> msgId == MessageId.HallMsg.REQ_LOGIN.getId() || roleId != 0);
 	}
 
-	public int getUserId() {
-		return userId;
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public int getGameId() {
@@ -65,22 +65,22 @@ public class GateTcpClient extends ClientHandler<GateTcpClient, TCPMessage> {
 	 */
 	public void notServerBreak() {
 		ModelProto.NotBreak.Builder not = ModelProto.NotBreak.newBuilder();
-		not.setUserId(getUserId());
+		not.setUserId(getRoleId());
 		ServerManager serverManager = Gate.getInstance().getServerManager();
 		if (serverManager == null) {
 			return;
 		}
 		TCPConnect serverClient = serverManager.getServerClient(ServerType.Game, getGameId());
 		if (serverClient != null) {
-			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build(), null);
 		}
 		serverClient = serverManager.getServerClient(ServerType.Hall, getHallId());
 		if (serverClient != null) {
-			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build(), null);
 		}
 		serverClient = serverManager.getServerClient(ServerType.Room, getHallId());
 		if (serverClient != null) {
-			serverClient.sendMessage(Message.NOT_BREAK, not.build(), null);
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build(), null);
 		}
 	}
 }
