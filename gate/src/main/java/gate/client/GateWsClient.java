@@ -3,17 +3,14 @@ package gate.client;
 import gate.Gate;
 import msg.MessageId;
 import msg.ServerType;
-import net.client.event.CloseEvent;
 import net.client.handler.WsClientHandler;
 import net.connect.TCPConnect;
 import net.message.TCPMaker;
-import net.message.TCPMessage;
-import net.safe.Safe;
 import proto.ModelProto;
 import utils.ServerManager;
 
 
-public class GateWsClient extends WsClientHandler<GateWsClient, TCPMessage> {
+public class GateWsClient extends WsClientHandler {
 
 	private int userId = 0;
 	private int gameId = 0;
@@ -22,11 +19,11 @@ public class GateWsClient extends WsClientHandler<GateWsClient, TCPMessage> {
 	public GateWsClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent((CloseEvent<GateWsClient>) client -> {
+		setCloseEvent(client -> {
 			notServerBreak();
 		});
 
-		setSafe((Safe<GateWsClient, TCPMessage>) (gateClient, msg) -> msg.getMessageId() == MessageId.HallMsg.REQ_LOGIN.getId() || userId != 0);
+		setSafe((msgId) -> msgId == MessageId.HallMsg.REQ_LOGIN.getId() || userId != 0);
 	}
 
 	public int getUserId() {
