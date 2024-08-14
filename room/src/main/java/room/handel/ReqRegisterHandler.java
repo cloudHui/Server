@@ -1,5 +1,6 @@
 package room.handel;
 
+import com.google.protobuf.Message;
 import msg.MessageId;
 import msg.ServerType;
 import net.client.Sender;
@@ -11,7 +12,7 @@ import room.client.RoomClient;
 /**
  * 注册服务信息请求
  */
-public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
+public class ReqRegisterHandler implements Handler {
 
 	private static final ReqRegisterHandler instance = new ReqRegisterHandler();
 
@@ -20,7 +21,8 @@ public class ReqRegisterHandler implements Handler<ModelProto.ReqRegister> {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, ModelProto.ReqRegister req, int mapId) {
+	public boolean handler(Sender sender, long aLong, Message msg, int mapId) {
+		ModelProto.ReqRegister req = (ModelProto.ReqRegister) msg;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
 		if (serverType == null) {

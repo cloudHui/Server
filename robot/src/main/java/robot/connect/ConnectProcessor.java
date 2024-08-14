@@ -42,6 +42,6 @@ public class ConnectProcessor {
 	/**
 	 * 转发消息接口
 	 */
-	public final static Transfer<TCPConnect, TCPMessage> TRANSFER = (tcpConnect, tcpMessage) -> false;
+	public final static Transfer TRANSFER = (tcpConnect, tcpMessage) -> false;
 
 }

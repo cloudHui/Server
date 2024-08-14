@@ -51,7 +51,7 @@ public class ClientProto {
 	}
 
 
-	private final static Map<Integer, Handler<?>> handlers;
+	private final static Map<Integer, Handler> handlers;
 
 	static {
 		handlers = new HashMap<>();
@@ -64,5 +64,5 @@ public class ClientProto {
 	public final static Handlers HANDLERS = handlers::get;
 
 
-	public final static Transfer<RoomClient, TCPMessage> TRANSFER = (hallClient, tcpMessage) -> false;
+	public final static Transfer TRANSFER = (hallClient, tcpMessage) -> false;
 }
