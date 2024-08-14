@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import msg.MessageId;
-import net.connect.TCPConnect;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
-import net.message.TCPMessage;
 import net.message.Transfer;
 import proto.ModelProto;
 import utils.handel.HeartAckHandler;
@@ -38,6 +36,6 @@ public class ConnectProcessor {
 	/**
 	 * 转发消息接口
 	 */
-	public final static Transfer<TCPConnect, TCPMessage> TRANSFER = (tcpConnect, tcpMessage) -> false;
+	public final static Transfer TRANSFER = (tcpConnect, tcpMessage) -> false;
 
 }
