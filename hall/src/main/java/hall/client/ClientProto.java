@@ -11,7 +11,6 @@ import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
-import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,5 +63,5 @@ public class ClientProto {
 	public final static Handlers HANDLERS = handlers::get;
 
 
-	public final static Transfer<HallClient, TCPMessage> TRANSFER = (hallClient, tcpMessage) -> false;
+	public final static Transfer TRANSFER = (hallClient, tcpMessage) -> false;
 }

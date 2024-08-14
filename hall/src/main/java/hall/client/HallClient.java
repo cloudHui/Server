@@ -2,14 +2,12 @@ package hall.client;
 
 import hall.Hall;
 import msg.ServerType;
-import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
-import net.message.TCPMessage;
 import proto.ModelProto;
 
 
-public class HallClient extends ClientHandler<HallClient, TCPMessage> {
+public class HallClient extends ClientHandler {
 
 
 	private ModelProto.ServerInfo serverInfo;
@@ -21,7 +19,7 @@ public class HallClient extends ClientHandler<HallClient, TCPMessage> {
 	public HallClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent((CloseEvent<HallClient>) client -> {
+		setCloseEvent(client -> {
 
 			ServerType serverType = ServerType.get(serverInfo.getServerType());
 			if (serverType != null) {

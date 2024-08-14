@@ -1,5 +1,6 @@
 package robot.handel;
 
+import com.google.protobuf.Message;
 import msg.MessageId;
 import net.client.Sender;
 import net.handler.Handler;
@@ -11,19 +12,20 @@ import proto.RoomProto;
 /**
  * 登录回复
  */
-public class AckLoginHandler implements Handler<HallProto.AckLogin> {
+public class AckLoginHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckLoginHandler.class);
 
 
-	private static AckLoginHandler instance = new AckLoginHandler();
+	private static final AckLoginHandler instance = new AckLoginHandler();
 
 	public static AckLoginHandler getInstance() {
 		return instance;
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, HallProto.AckLogin ack, int mapId) {
+	public boolean handler(Sender sender, long aLong, Message msg, int mapId) {
+		HallProto.AckLogin ack = (HallProto.AckLogin) msg;
 		logger.error("login ack:{}", ack.toString());
 		RoomProto.ReqGetRoomList.Builder getRoom = RoomProto.ReqGetRoomList.newBuilder();
 		sender.sendMessage(MessageId.RoomMsg.REQ_ROOM_LIST.getId(), getRoom.build(), null);
