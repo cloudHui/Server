@@ -23,7 +23,7 @@ public class HeartHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message reqHeart, int mapId) {
+	public boolean handler(Sender sender, int clientId, Message reqHeart, int mapId, long sequence) {
 		ModelProto.ReqHeart req = (ModelProto.ReqHeart) reqHeart;
 		long now = System.currentTimeMillis();
 		int serverType = req.getServerType();

@@ -17,7 +17,7 @@ public class NotBreakHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message msg, int mapId) {
+	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
 		ModelProto.NotBreak req = (ModelProto.NotBreak) msg;
 		return true;
 	}

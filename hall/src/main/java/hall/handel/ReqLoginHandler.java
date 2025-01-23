@@ -18,13 +18,13 @@ public class ReqLoginHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long roleId, Message msg, int mapId) {
+	public boolean handler(Sender sender, int roleId, Message msg, int mapId, long sequence) {
 		HallProto.ReqLogin req = (HallProto.ReqLogin) msg;
 		String avatar = req.getAvatar().toStringUtf8();
 		String cert = req.getCert().toStringUtf8();
 		HallProto.AckLogin.Builder ack = HallProto.AckLogin.newBuilder();
 		ack.setUserId(1);
-		sender.sendMessage(ack.getUserId(), MessageId.HallMsg.ACK_LOGIN.getId(), mapId, 0, ack.build());
+		sender.sendMessage(ack.getUserId(), MessageId.HallMsg.ACK_LOGIN.getId(), mapId, 0, ack.build(), sequence);
 		return true;
 	}
 }

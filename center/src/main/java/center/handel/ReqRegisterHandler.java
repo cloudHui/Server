@@ -29,7 +29,7 @@ public class ReqRegisterHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message reqRegister, int mapId) {
+	public boolean handler(Sender sender, int clientId, Message reqRegister, int mapId, long sequence) {
 		ModelProto.ReqRegister req = (ModelProto.ReqRegister) reqRegister;
 		ServerClientManager manager = Center.getInstance().serverManager;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
@@ -50,7 +50,7 @@ public class ReqRegisterHandler implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);
-		sender.sendMessage(Math.toIntExact(aLong), MessageId.ACK_REGISTER, ackRegister.build(), null);
+		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build(), null);
 		if (serverType != ServerType.Gate) {
 			//向 gate 同步 其他服务信息
 			List<ClientHandler> typeServer = manager.getAllTypeServer(ServerType.Gate);

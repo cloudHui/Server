@@ -26,7 +26,7 @@ public class ServerBreakNoticeHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message notServerBreak, int mapId) {
+	public boolean handler(Sender sender, int aLong, Message notServerBreak, int mapId, long sequence) {
 		ModelProto.NotServerBreak req = (ModelProto.NotServerBreak) notServerBreak;
 		return connectToSever(req.getServersList());
 	}

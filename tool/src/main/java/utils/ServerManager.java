@@ -40,7 +40,7 @@ public class ServerManager {
 	 * @param client     链接
 	 * @param serverId   服务id
 	 */
-	public void addServerClient(ServerType serverType, TCPConnect client, int serverId) throws Exception {
+	public void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
 		Map<Integer, TCPConnect> typeMap = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
 		TCPConnect tcpConnect = typeMap.get(serverId);
 		if (tcpConnect != null) {
@@ -116,8 +116,7 @@ public class ServerManager {
 					server.setIpConfig(ByteString.copyFromUtf8(localPort));
 					notice.setServerInfo(server.build());
 
-
-					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), null, 3L)
+					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), null, 3)
 							.whenComplete((BiConsumer<ModelProto.AckRegister, Exception>) (r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
@@ -176,7 +175,7 @@ public class ServerManager {
 	 * 注册服务
 	 */
 	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType serverType,
-	                          int serverId, String ipPorts, ServerType connectServer, int disRetry) {
+							  int serverId, String ipPorts, ServerType connectServer, int disRetry) {
 		connect(connectServer, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
 				handlers, serverType, serverId, ipPorts, disRetry);
 	}
@@ -189,7 +188,7 @@ public class ServerManager {
 				handlers, disRetry);
 	}
 
-	public  boolean connectToSever(List<ModelProto.ServerInfo> serverInfos, int serverId, String ipPort,Transfer transfer, Parser parser, Handlers handlers) {
+	public boolean connectToSever(List<ModelProto.ServerInfo> serverInfos, int serverId, String ipPort, Transfer transfer, Parser parser, Handlers handlers) {
 		if (serverInfos == null || serverInfos.isEmpty()) {
 			return true;
 		}

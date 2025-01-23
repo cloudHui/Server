@@ -19,7 +19,7 @@ public class AckServerInfoHandel implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message ackServerInfo, int mapId) {
+	public boolean handler(Sender sender, int aLong, Message ackServerInfo, int mapId,long sequence) {
 
 		ModelProto.AckServerInfo req = (ModelProto.AckServerInfo) ackServerInfo;
 

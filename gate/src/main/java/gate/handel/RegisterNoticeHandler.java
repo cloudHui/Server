@@ -19,7 +19,7 @@ public class RegisterNoticeHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message registerInfo, int mapId) {
+	public boolean handler(Sender sender, int aLong, Message registerInfo, int mapId, long sequence) {
 		ModelProto.NotRegisterInfo req = (ModelProto.NotRegisterInfo) registerInfo;
 
 		return Gate.getInstance().getServerManager().connectToSever(req.getServersList(),

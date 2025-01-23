@@ -27,9 +27,9 @@ public class Center {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		try {
 			new ServerService(0, CenterClient.class).start(cfgMgr.getServers().get("center").getHostList());
-
-			new CenterHttpService().start(cfgMgr.getServers().get("http").getHostList().get(0));
 			logger.info("[Center Tcp Server start success]");
+			new CenterHttpService().start(cfgMgr.getServers().get("http").getHostList().get(0));
+			logger.info("[Center http Server start success]");
 		} catch (Exception e) {
 			logger.error("[Center start error ]", e);
 			System.exit(0);

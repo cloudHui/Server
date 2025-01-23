@@ -120,7 +120,7 @@ public class Gate {
 
 		new ServerService(90, GateTcpClient.class).start(cfgMgr.getServers().get("gate").getHostList());
 
-		new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
+		//new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
 		//向注册中心注册
 		registerToCenter();
 

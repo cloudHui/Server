@@ -73,7 +73,7 @@ public class ClientProto {
 		//奇数消息是发给服务的
 		ServerManager serverManager = Gate.getInstance().getServerManager();
 		tcpMessage.setMapId((int) gateClient.getId());
-		tcpMessage.setRoleId(gateClient.getRoleId());
+		tcpMessage.setClientId(gateClient.getRoleId());
 		int clientId;
 		TCPConnect serverClient;
 		if ((msgId & MessageId.GAME_TYPE) != 0) {

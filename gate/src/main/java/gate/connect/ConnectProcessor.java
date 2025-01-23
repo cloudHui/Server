@@ -5,6 +5,7 @@ import java.util.Map;
 
 import gate.client.GateTcpClient;
 import gate.handel.AckServerInfoHandel;
+import utils.handel.RegisterAckHandler;
 import gate.handel.RegisterNoticeHandler;
 import gate.handel.ServerBreakNoticeHandler;
 import msg.MessageId;
@@ -53,7 +54,7 @@ public class ConnectProcessor {
 		handlers.put(MessageId.HEART_ACK, HeartAckHandler.getInstance());
 		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
 		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
-
+		handlers.put(MessageId.ACK_REGISTER, RegisterAckHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

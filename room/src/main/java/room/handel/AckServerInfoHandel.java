@@ -19,7 +19,7 @@ public class AckServerInfoHandel implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message msg, int mapId) {
+	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
 		ModelProto.AckServerInfo ack= (ModelProto.AckServerInfo) msg;
 		return Room.getInstance().getServerManager().connectToSever(ack.getServersList(),
 				Room.getInstance().getServerId(),

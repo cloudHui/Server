@@ -22,7 +22,7 @@ public class HeartAckHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long roleId, Message msg, int mapId) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		ModelProto.AckHeart ack = (ModelProto.AckHeart) msg;
 		int serverType = ack.getServerType();
 		logger.info("server:{}, heart ack cost:{}ms", ServerType.get(serverType),System.currentTimeMillis()- ack.getReqTime());

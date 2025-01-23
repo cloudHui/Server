@@ -21,7 +21,7 @@ public class ReqRegisterHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long roleId, Message reqRegister, int mapId) {
+	public boolean handler(Sender sender, int roleId, Message reqRegister, int mapId, long sequence) {
 		ModelProto.ReqRegister req = (ModelProto.ReqRegister) reqRegister;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
