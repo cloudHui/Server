@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiConsumer;
 
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
@@ -117,13 +116,13 @@ public class ServerManager {
 					notice.setServerInfo(server.build());
 
 					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), null, 3)
-							.whenComplete((BiConsumer<ModelProto.AckRegister, Exception>) (r, e) -> {
+							.whenComplete((r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
 									logger.error("ERROR! failed for send register message to {}:{}",
 											s.getAddress().getHostAddress(), s.getPort(), e);
 								} else {
-									ModelProto.ServerInfo serverInfo = r.getServerInfo();
+									ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) r).getServerInfo();
 									tcpConnect.setServerId(serverInfo.getServerId());
 
 									try {
