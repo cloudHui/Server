@@ -103,7 +103,7 @@ public class Room {
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
-		ServerConfiguration configuration = cfgMgr.getServers().get("hall");
+		ServerConfiguration configuration = cfgMgr.getServers().get("room");
 		if (null == configuration || !configuration.hasHostString()) {
 			LOGGER.error("ERROR! failed for can not find server config");
 			return;

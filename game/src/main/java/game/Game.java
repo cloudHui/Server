@@ -205,11 +205,11 @@ public class Game {
 
 	public static void main(String[] args) {
 		try {
-			System.setProperty("file.encoding", "UTF-8");
+			//System.setProperty("file.encoding", "UTF-8");
 			//DingTalkWaring dingTalkWaring = new DingTalkWaring();
 			//dingTalkWaring.sendMsg("我要测试", "17671292550");
-			//instance.start();
-			instance.testLog();
+			instance.start();
+			//instance.testLog();
 			LOGGER.info("[START] game server is start!!!");
 		} catch (Exception e) {
 			LOGGER.error("failed for start game server!", e);
