@@ -45,7 +45,7 @@ public class ReqServerInfoHandler implements Handler {
 				}
 			}
 		}
-		sender.sendMessage(MessageId.ACK_SERVER, ack.build(), null);
+		sender.sendMessage(MessageId.ACK_SERVER, ack.build());
 		return true;
 	}
 }

@@ -115,7 +115,7 @@ public class ServerManager {
 					server.setIpConfig(ByteString.copyFromUtf8(localPort));
 					notice.setServerInfo(server.build());
 
-					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), null, 3)
+					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(),  3)
 							.whenComplete((r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
@@ -150,7 +150,7 @@ public class ServerManager {
 			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
 					.setReqTime(System.currentTimeMillis())
 					.setServerType(localServer.getServerType()).build();
-			handler.sendMessage(MessageId.HEART, heartbeat, null);
+			handler.sendMessage(MessageId.HEART, heartbeat);
 		});
 
 		tcpConnection.connect(disRetry);

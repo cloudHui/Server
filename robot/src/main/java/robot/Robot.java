@@ -80,7 +80,7 @@ public class Robot {
 			TCPConnect serverClient = serverManager.getServerClient(ServerType.Gate);
 			if (serverClient != null) {
 				HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
-				serverClient.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build(), null);
+				serverClient.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build());
 				return true;
 			}
 			return false;

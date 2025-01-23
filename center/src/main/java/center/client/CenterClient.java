@@ -39,7 +39,7 @@ public class CenterClient extends ClientHandler {
 					for (ClientHandler gate : typeServer) {
 						ModelProto.NotServerBreak.Builder change = ModelProto.NotServerBreak.newBuilder();
 						change.addServers(serverInfo);
-						gate.sendMessage(MessageId.BREAK_NOTICE, change.build(), null);
+						gate.sendMessage(MessageId.BREAK_NOTICE, change.build());
 					}
 				}
 				LOGGER.error("[center server:{} info:{} break]", serverType, serverInfo.toString());

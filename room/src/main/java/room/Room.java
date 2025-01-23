@@ -146,7 +146,7 @@ public class Room {
 			if (serverClient != null) {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
-				serverClient.sendMessage(MessageId.REQ_SERVER, req.build(), null);
+				serverClient.sendMessage(MessageId.REQ_SERVER, req.build());
 				return true;
 			}
 			return false;

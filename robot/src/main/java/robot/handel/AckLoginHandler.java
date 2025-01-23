@@ -28,7 +28,7 @@ public class AckLoginHandler implements Handler {
 		HallProto.AckLogin ack = (HallProto.AckLogin) msg;
 		logger.error("login ack:{}", ack.toString());
 		RoomProto.ReqGetRoomList.Builder getRoom = RoomProto.ReqGetRoomList.newBuilder();
-		sender.sendMessage(MessageId.RoomMsg.REQ_ROOM_LIST.getId(), getRoom.build(), null);
+		sender.sendMessage(MessageId.RoomMsg.REQ_ROOM_LIST.getId(), getRoom.build());
 		return true;
 	}
 }

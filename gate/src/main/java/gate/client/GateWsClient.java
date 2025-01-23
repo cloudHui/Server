@@ -62,11 +62,11 @@ public class GateWsClient extends WsClientHandler {
 		}
 		TCPConnect serverClient = serverManager.getServerClient(ServerType.Game, getGameId());
 		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build(), null);
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
 		}
 		serverClient = serverManager.getServerClient(ServerType.Hall, getHallId());
 		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build(), null);
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
 		}
 	}
 }

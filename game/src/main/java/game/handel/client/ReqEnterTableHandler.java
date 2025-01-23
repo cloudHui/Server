@@ -22,7 +22,7 @@ public class ReqEnterTableHandler implements Handler {
 		GameProto.ReqEnterTable req = (GameProto.ReqEnterTable) msg;
 		GameProto.AckEnterTable.Builder ack = GameProto.AckEnterTable.newBuilder();
 		ack.setTableId(1);
-		sender.sendMessage(MessageId.GameMsg.ACK_ENTER_TABLE.getId(), ack.build(), null, mapId, sequence);
+		sender.sendMessage(MessageId.GameMsg.ACK_ENTER_TABLE.getId(), ack.build(),  mapId, sequence);
 		return true;
 	}
 }

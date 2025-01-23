@@ -38,7 +38,7 @@ public class ReqRegisterHandler implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);
-		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build(), null);
+		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build());
 		return true;
 	}
 }
