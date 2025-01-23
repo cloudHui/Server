@@ -3,7 +3,6 @@ package center.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import center.handel.HeartHandler;
 import center.handel.ReqRegisterHandler;
 import center.handel.ReqServerInfoHandler;
 import msg.MessageId;
@@ -12,6 +11,7 @@ import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
 import proto.ModelProto;
+import utils.handel.HeartHandler;
 
 public class ClientProto {
 

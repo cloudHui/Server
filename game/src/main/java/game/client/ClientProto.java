@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import game.handel.client.ReqEnterTableHandler;
-import game.handel.server.HeartHandler;
 import game.handel.server.NotBreakHandler;
 import game.handel.server.ReqRegisterHandler;
 import msg.MessageId;
@@ -15,6 +14,7 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import utils.handel.HeartHandler;
 
 /**
  * 处理gate转发消息处理

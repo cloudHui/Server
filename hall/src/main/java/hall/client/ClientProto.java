@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hall.handel.ReqLoginHandler;
-import hall.handel.server.HeartHandler;
 import hall.handel.server.NotBreakHandler;
 import hall.handel.server.ReqRegisterHandler;
 import msg.MessageId;
@@ -15,6 +14,7 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import utils.handel.HeartHandler;
 
 public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);

@@ -25,7 +25,7 @@ public class HeartAckHandler implements Handler {
 	public boolean handler(Sender sender, long roleId, Message msg, int mapId) {
 		ModelProto.AckHeart ack = (ModelProto.AckHeart) msg;
 		int serverType = ack.getServerType();
-		logger.info("server:{}, heart ack", ServerType.get(serverType));
+		logger.info("server:{}, heart ack cost:{}ms", ServerType.get(serverType),System.currentTimeMillis()- ack.getReqTime());
 		return true;
 	}
 }

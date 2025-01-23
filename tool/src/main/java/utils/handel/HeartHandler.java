@@ -1,4 +1,4 @@
-package hall.handel.server;
+package utils.handel;
 
 import com.google.protobuf.Message;
 import msg.MessageId;
@@ -23,15 +23,15 @@ public class HeartHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, long aLong, Message msg, int mapId) {
-		ModelProto.ReqHeart req = (ModelProto.ReqHeart) msg;
+	public boolean handler(Sender sender, long aLong, Message reqHeart, int mapId) {
+		ModelProto.ReqHeart req = (ModelProto.ReqHeart) reqHeart;
 		long now = System.currentTimeMillis();
 		int serverType = req.getServerType();
 		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
 		ack.setReqTime(now);
-		ack.setServerType(ServerType.Hall.getServerType());
+		ack.setServerType(ServerType.Center.getServerType());
 		sender.sendMessage(MessageId.HEART_ACK, ack.build(), null);
-		logger.error("server:{}, heart req", ServerType.get(serverType));
+		logger.error("server:{}, heart req cost:{}ms", ServerType.get(serverType), now - req.getReqTime());
 		return true;
 	}
 }
