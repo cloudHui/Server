@@ -1,5 +1,10 @@
 package gate;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+
 import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
 import msg.MessageId;
@@ -118,7 +123,9 @@ public class Gate {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		ServerService gate = new ServerService(90, GateTcpClient.class).start(cfgMgr.getServers().get("gate").getHostList());
+		List<SocketAddress> addresses = new ArrayList<>();
+		addresses.add(new InetSocketAddress(getInnerIp(), getPort()));
+		ServerService gate = new ServerService(90, GateTcpClient.class).start(addresses);
 		setServerManager(new ServerManager(gate.getWorkerGroup()));
 		//new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
 		//向注册中心注册
@@ -135,9 +142,10 @@ public class Gate {
 	 */
 	private void registerToCenter() {
 		String[] ipPort = getCenter().split(":");
-
+		int plant = ConfigurationManager.getInstance().getInt("plant", 0);
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(),
+				plant == 2 ? getIp() + ":" + getPort() : getInnerIp() + ":" + getPort(),
 				ServerType.Gate);
 	}
 

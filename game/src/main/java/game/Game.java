@@ -1,5 +1,10 @@
 package game;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+
 import game.client.GameClient;
 import game.connect.ConnectProcessor;
 import game.manager.TableManager;
@@ -7,6 +12,7 @@ import msg.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
@@ -15,8 +21,6 @@ import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.SvnManager;
 import utils.config.ConfigurationManager;
-import utils.config.ServerConfiguration;
-import utils.utils.IpUtil;
 
 public class Game {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Game.class);
@@ -26,11 +30,13 @@ public class Game {
 	private ExecutorPool executorPool;
 	private Timer timer;
 
-	private int port;
-	private String ip;
 	private int serverId;
-	private String innerIp;
 	private String center;
+
+	/**
+	 * 本服务信息
+	 */
+	private ModelProto.ServerInfo.Builder serverInfo;
 
 
 	static {
@@ -48,36 +54,12 @@ public class Game {
 
 	private TableManager tableManager;
 
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
 	public int getServerId() {
 		return serverId;
 	}
 
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
-	}
-
-	public String getInnerIp() {
-		return innerIp;
-	}
-
-	public void setInnerIp(String innerIp) {
-		this.innerIp = innerIp;
 	}
 
 	public String getCenter() {
@@ -103,6 +85,11 @@ public class Game {
 	public void setTableManager(TableManager tableManager) {
 		this.tableManager = tableManager;
 	}
+
+	public ModelProto.ServerInfo.Builder getServerInfo() {
+		return serverInfo;
+	}
+
 
 	public static Game getInstance() {
 		return instance;
@@ -137,23 +124,16 @@ public class Game {
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
-		ServerConfiguration configuration = cfgMgr.getServers().get("game");
-		if (null == configuration || !configuration.hasHostString()) {
-			LOGGER.error("[ERROR! failed for can not find server config]");
-			return;
-		}
 
-		setPort(cfgMgr.getInt("port", 0));
-
-		setIp(IpUtil.getOutIp());
-
-		setServerId(cfgMgr.getInt("id", 0));
+		serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Game);
 
 		setCenter(cfgMgr.getProperty("center"));
 
-		setInnerIp(IpUtil.getLocalIP());
-
-		ServerService service = new ServerService(0, GameClient.class).start(configuration.getHostList());
+		setServerId(cfgMgr.getInt("id", 0));
+		List<SocketAddress> addresses = new ArrayList<>();
+		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
+		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
+		ServerService service = new ServerService(0, GameClient.class).start(addresses);
 		serverManager = new ServerManager(service.getWorkerGroup());
 		//向注册中心注册
 		registerToCenter();
@@ -162,7 +142,7 @@ public class Game {
 		init();
 
 		//初始化代码管理
-		if(cfgMgr.getInt("plant",0) !=0){
+		if (cfgMgr.getInt("plant", 0) != 0) {
 			initSvn();
 		}
 	}
@@ -173,9 +153,8 @@ public class Game {
 	private void registerToCenter() {
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
-
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				null, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				null, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
 				ServerType.Game);
 	}
 

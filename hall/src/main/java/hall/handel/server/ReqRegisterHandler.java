@@ -37,7 +37,7 @@ public class ReqRegisterHandler implements Handler {
 		Hall.getInstance().serverClientManager.addServerClient(serverType, client, serverInfo.getServerId());
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
-		ackRegister.setServerInfo(serverInfo);
+		ackRegister.setServerInfo(Hall.getInstance().getServerInfo());
 		sender.sendMessage(Math.toIntExact(aLong), MessageId.ACK_REGISTER, ackRegister.build(),  sequence);
 		return true;
 	}

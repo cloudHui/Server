@@ -3,12 +3,11 @@
     <property name="APPName" value="room"/>
     <!--<property name="LOGGER_ROOT" value="../logs"/>-->
     <property name="LOGGER_ROOT" value="./logs"/>
-    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss}[%t]%-5level %logger{36}.%M %m%n" />
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}[%t]%-5level %logger{36}.%M %m%n" />
     <contextName>${APPName}</contextName>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF8">
-<!--            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger - %msg%n</pattern>-->
             <pattern>${PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -27,7 +26,6 @@
         </rollingPolicy>
 
         <encoder charset="UTF8">
-<!--            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger - %msg%n</pattern>-->
             <pattern>${PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">

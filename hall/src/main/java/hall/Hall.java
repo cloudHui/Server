@@ -1,5 +1,10 @@
 package hall;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+
 import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
 import msg.MessageId;
@@ -27,23 +32,19 @@ public class Hall {
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
-	private int port;
 	private int serverId;
-	private String innerIp;
 	private String center;
+
+	/**
+	 * 本服务信息
+	 */
+	private ModelProto.ServerInfo.Builder serverInfo;
+
 
 	public ServerClientManager serverClientManager = new ServerClientManager();
 
 
 	private ServerManager serverManager;
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
 
 	public int getServerId() {
 		return serverId;
@@ -51,14 +52,6 @@ public class Hall {
 
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
-	}
-
-	public String getInnerIp() {
-		return innerIp;
-	}
-
-	public void setInnerIp(String innerIp) {
-		this.innerIp = innerIp;
 	}
 
 	public String getCenter() {
@@ -81,6 +74,9 @@ public class Hall {
 		return instance;
 	}
 
+	public ModelProto.ServerInfo.Builder getServerInfo() {
+		return serverInfo;
+	}
 
 	private Hall() {
 		executorPool = new ExecutorPool("Game");
@@ -109,15 +105,14 @@ public class Hall {
 			return;
 		}
 
-		setPort(cfgMgr.getInt("port", 0));
-
+		serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Hall);
 		setServerId(cfgMgr.getInt("id", 0));
 
 		setCenter(cfgMgr.getProperty("center"));
-
-		setInnerIp(IpUtil.getLocalIP());
-
-		ServerService service = new ServerService(0, HallClient.class).start(configuration.getHostList());
+		List<SocketAddress> addresses = new ArrayList<>();
+		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
+		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
+		ServerService service = new ServerService(0, HallClient.class).start(addresses);
 		setServerManager(new ServerManager(service.getWorkerGroup()));
 		//向注册中心注册
 		registerToCenter();
@@ -131,7 +126,7 @@ public class Hall {
 	private void registerToCenter() {
 		String[] ipPort = getCenter().split(":");
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
 				ServerType.Hall);
 	}
 

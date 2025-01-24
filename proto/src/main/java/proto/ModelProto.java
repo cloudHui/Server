@@ -2374,14 +2374,26 @@ public final class ModelProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     *要注册的请求方信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     boolean hasServerInfo();
     /**
+     * <pre>
+     *要注册的请求方信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     proto.ModelProto.ServerInfo getServerInfo();
     /**
+     * <pre>
+     *要注册的请求方信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder();
@@ -2473,18 +2485,30 @@ public final class ModelProto {
     public static final int SERVERINFO_FIELD_NUMBER = 1;
     private proto.ModelProto.ServerInfo serverInfo_;
     /**
+     * <pre>
+     *要注册的请求方信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     public boolean hasServerInfo() {
       return serverInfo_ != null;
     }
     /**
+     * <pre>
+     *要注册的请求方信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     public proto.ModelProto.ServerInfo getServerInfo() {
       return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
     }
     /**
+     * <pre>
+     *要注册的请求方信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
@@ -2795,12 +2819,20 @@ public final class ModelProto {
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serverInfoBuilder_;
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public boolean hasServerInfo() {
         return serverInfoBuilder_ != null || serverInfo_ != null;
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfo getServerInfo() {
@@ -2811,6 +2843,10 @@ public final class ModelProto {
         }
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(proto.ModelProto.ServerInfo value) {
@@ -2827,6 +2863,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(
@@ -2841,6 +2881,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder mergeServerInfo(proto.ModelProto.ServerInfo value) {
@@ -2859,6 +2903,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder clearServerInfo() {
@@ -2873,6 +2921,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfo.Builder getServerInfoBuilder() {
@@ -2881,6 +2933,10 @@ public final class ModelProto {
         return getServerInfoFieldBuilder().getBuilder();
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
@@ -2892,6 +2948,10 @@ public final class ModelProto {
         }
       }
       /**
+       * <pre>
+       *要注册的请求方信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -2961,14 +3021,26 @@ public final class ModelProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     *服务器信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     boolean hasServerInfo();
     /**
+     * <pre>
+     *服务器信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     proto.ModelProto.ServerInfo getServerInfo();
     /**
+     * <pre>
+     *服务器信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder();
@@ -3056,18 +3128,30 @@ public final class ModelProto {
     public static final int SERVERINFO_FIELD_NUMBER = 1;
     private proto.ModelProto.ServerInfo serverInfo_;
     /**
+     * <pre>
+     *服务器信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     public boolean hasServerInfo() {
       return serverInfo_ != null;
     }
     /**
+     * <pre>
+     *服务器信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     public proto.ModelProto.ServerInfo getServerInfo() {
       return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
     }
     /**
+     * <pre>
+     *服务器信息
+     * </pre>
+     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
@@ -3374,12 +3458,20 @@ public final class ModelProto {
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serverInfoBuilder_;
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public boolean hasServerInfo() {
         return serverInfoBuilder_ != null || serverInfo_ != null;
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfo getServerInfo() {
@@ -3390,6 +3482,10 @@ public final class ModelProto {
         }
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(proto.ModelProto.ServerInfo value) {
@@ -3406,6 +3502,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(
@@ -3420,6 +3520,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder mergeServerInfo(proto.ModelProto.ServerInfo value) {
@@ -3438,6 +3542,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder clearServerInfo() {
@@ -3452,6 +3560,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfo.Builder getServerInfoBuilder() {
@@ -3460,6 +3572,10 @@ public final class ModelProto {
         return getServerInfoFieldBuilder().getBuilder();
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
@@ -3471,6 +3587,10 @@ public final class ModelProto {
         }
       }
       /**
+       * <pre>
+       *服务器信息
+       * </pre>
+       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<

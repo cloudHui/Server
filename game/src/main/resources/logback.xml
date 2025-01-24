@@ -3,7 +3,7 @@
     <property name="APPName" value="game"/>
     <!--<property name="LOGGER_ROOT" value="../logs"/>-->
     <property name="LOGGER_ROOT" value="./logs"/>
-    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss}[%t]%-5level %logger{36}.%M %m%n" />
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}[%t]%-5level %logger{36}.%M %m%n" />
     <contextName>${APPName}</contextName>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

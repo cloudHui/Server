@@ -1,5 +1,10 @@
 package room;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+
 import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
@@ -17,7 +22,6 @@ import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
-import utils.utils.IpUtil;
 
 public class Room {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Room.class);
@@ -27,23 +31,18 @@ public class Room {
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
-	private int port;
 	private int serverId;
-	private String innerIp;
 	private String center;
+
+	/**
+	 * 本服务信息
+	 */
+	private ModelProto.ServerInfo.Builder serverInfo;
 
 	public ServerClientManager serverClientManager = new ServerClientManager();
 
 
 	private ServerManager serverManager;
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
 
 	public int getServerId() {
 		return serverId;
@@ -51,14 +50,6 @@ public class Room {
 
 	public void setServerId(int serverId) {
 		this.serverId = serverId;
-	}
-
-	public String getInnerIp() {
-		return innerIp;
-	}
-
-	public void setInnerIp(String innerIp) {
-		this.innerIp = innerIp;
 	}
 
 	public String getCenter() {
@@ -77,10 +68,13 @@ public class Room {
 		this.serverManager = serverManager;
 	}
 
+	public ModelProto.ServerInfo.Builder getServerInfo() {
+		return serverInfo;
+	}
+
 	public static Room getInstance() {
 		return instance;
 	}
-
 
 	private Room() {
 		executorPool = new ExecutorPool("Game");
@@ -108,16 +102,15 @@ public class Room {
 			LOGGER.error("[ERROR! failed for can not find server config]");
 			return;
 		}
-
-		setPort(cfgMgr.getInt("port", 0));
-
+		serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Room);
 		setServerId(cfgMgr.getInt("id", 0));
 
 		setCenter(cfgMgr.getProperty("center"));
 
-		setInnerIp(IpUtil.getLocalIP());
-
-		ServerService service = new ServerService(0, RoomClient.class).start(configuration.getHostList());
+		List<SocketAddress> addresses = new ArrayList<>();
+		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
+		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
+		ServerService service = new ServerService(0, RoomClient.class).start(addresses);
 		setServerManager(new ServerManager(service.getWorkerGroup()));
 		//向注册中心注册
 		registerToCenter();
@@ -131,7 +124,7 @@ public class Room {
 	private void registerToCenter() {
 		String[] ipPort = getCenter().split(":");
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
 				ServerType.Room);
 	}
 

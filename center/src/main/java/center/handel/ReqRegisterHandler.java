@@ -4,6 +4,7 @@ import java.util.List;
 
 import center.Center;
 import center.client.CenterClient;
+import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import msg.MessageId;
 import msg.ServerType;
@@ -49,7 +50,7 @@ public class ReqRegisterHandler implements Handler {
 		manager.addServerClient(serverType, serverClient, serverId);
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
-		ackRegister.setServerInfo(serverInfo);
+		ackRegister.setServerInfo(Center.getInstance().getServerInfo());
 		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build(), sequence);
 		switch (serverType) {
 			case Game:
@@ -87,4 +88,5 @@ public class ReqRegisterHandler implements Handler {
 			LOGGER.error("[center server:{} info:{} reqRegister]", serverType, serverInfo.toString());
 		}
 	}
+
 }

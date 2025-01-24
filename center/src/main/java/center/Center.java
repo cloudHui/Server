@@ -1,10 +1,18 @@
 package center;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+
 import center.client.CenterClient;
+import msg.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import utils.ServerClientManager;
+import utils.ServerManager;
 import utils.config.ConfigurationManager;
 
 public class Center {
@@ -12,6 +20,11 @@ public class Center {
 	private static final Center instance = new Center();
 
 	private final ServerClientManager serverManager = new ServerClientManager();
+
+	/**
+	 * 本服务信息
+	 */
+	private ModelProto.ServerInfo.Builder serverInfo;
 
 	public ServerClientManager getServerManager() {
 		return serverManager;
@@ -24,6 +37,10 @@ public class Center {
 		return instance;
 	}
 
+	public ModelProto.ServerInfo.Builder getServerInfo() {
+		return serverInfo;
+	}
+
 	public static void main(String[] args) {
 		instance.start();
 	}
@@ -31,9 +48,13 @@ public class Center {
 	private void start() {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		try {
-			new ServerService(0, CenterClient.class).start(cfgMgr.getServers().get("center").getHostList());
+			serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Center);
+			List<SocketAddress> addresses = new ArrayList<>();
+			String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
+			addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
+			new ServerService(0, CenterClient.class).start(addresses);
 			logger.info("[Center Tcp Server start success]");
-			new CenterHttpService().start(cfgMgr.getServers().get("http").getHostList().get(0));
+			new CenterHttpService().start(new InetSocketAddress(split[0], cfgMgr.getInt("httpPort", 0)));
 			logger.info("[Center http Server start success]");
 		} catch (Exception e) {
 			logger.error("[Center start error ]", e);

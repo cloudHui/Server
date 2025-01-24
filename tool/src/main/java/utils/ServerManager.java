@@ -3,6 +3,7 @@ package utils;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,6 +20,8 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import utils.config.ConfigurationManager;
+import utils.utils.IpUtil;
 import utils.utils.RandomUtils;
 
 /**
@@ -38,7 +41,7 @@ public class ServerManager {
 
 	public ServerManager(EventLoopGroup workerGroup) {
 		this.workerGroup = workerGroup;
-		serverMap = new ConcurrentHashMap<>();
+		serverMap = new HashMap<>();
 	}
 
 	/**
@@ -48,7 +51,7 @@ public class ServerManager {
 	 * @param client     链接
 	 * @param serverId   服务id
 	 */
-	public void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
+	public synchronized void addServerClient(ServerType serverType, TCPConnect client, int serverId) {
 		Map<Integer, TCPConnect> typeMap = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
 		TCPConnect tcpConnect = typeMap.get(serverId);
 		if (tcpConnect != null) {
@@ -63,7 +66,7 @@ public class ServerManager {
 	 * @param serverType 服务类型
 	 * @param serverId   链接id
 	 */
-	public TCPConnect getServerClient(ServerType serverType, int serverId) {
+	public synchronized TCPConnect getServerClient(ServerType serverType, int serverId) {
 		return serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).get(serverId);
 	}
 
@@ -73,8 +76,11 @@ public class ServerManager {
 	 * @param serverType 服务类型
 	 * @param serverId   服务id
 	 */
-	public void removeServerClient(ServerType serverType, int serverId) {
-		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).remove(serverId);
+	public synchronized void removeServerClient(ServerType serverType, int serverId) {
+		TCPConnect remove = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).remove(serverId);
+		if (remove != null) {
+			remove.channelInactive(null);
+		}
 	}
 
 	/**
@@ -82,7 +88,7 @@ public class ServerManager {
 	 *
 	 * @param serverType 服务类型
 	 */
-	public TCPConnect getServerClient(ServerType serverType) {
+	public synchronized TCPConnect getServerClient(ServerType serverType) {
 		Map<Integer, TCPConnect> serverClient = serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>());
 		if (!serverClient.isEmpty()) {
 			List<Integer> list = new ArrayList<>(serverClient.keySet());
@@ -142,7 +148,7 @@ public class ServerManager {
 				}), localServer, serverType);
 	}
 
-	private void connect(SocketAddress address, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer, ServerType connect) {
+	private synchronized void connect(SocketAddress address, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer, ServerType connect) {
 		TCPConnect tcpConnect = new TCPConnect(workerGroup,
 				address,
 				transfer,
@@ -251,5 +257,17 @@ public class ServerManager {
 			}
 		}
 		return true;
+	}
+
+
+	/**
+	 * 组织服务信息
+	 */
+	public static ModelProto.ServerInfo.Builder manageServerInfo(ConfigurationManager cfgMgr, ServerType serverType) {
+		ModelProto.ServerInfo.Builder serverInfo = ModelProto.ServerInfo.newBuilder();
+		serverInfo.setServerId(cfgMgr.getInt("id", 0));
+		serverInfo.setServerType(serverType.getServerType());
+		serverInfo.setIpConfig(ByteString.copyFromUtf8(IpUtil.getLocalIP() + ":" + cfgMgr.getInt("port", 0)));
+		return serverInfo;
 	}
 }

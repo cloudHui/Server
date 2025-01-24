@@ -29,10 +29,10 @@ message ServerInfo{
 
 //服务在路由注册信息
 message ReqRegister {
-    ServerInfo serverInfo = 1;
+    ServerInfo serverInfo = 1;//要注册的请求方信息
 }
 message AckRegister {
-    ServerInfo serverInfo = 1;
+    ServerInfo serverInfo = 1;//服务器信息
 }
 
 //服务变更通知
