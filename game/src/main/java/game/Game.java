@@ -133,8 +133,8 @@ public class Game {
 		List<SocketAddress> addresses = new ArrayList<>();
 		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
 		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
-		ServerService service = new ServerService(0, GameClient.class).start(addresses);
-		serverManager = new ServerManager(service.getWorkerGroup());
+		new ServerService(0, GameClient.class).start(addresses);
+		serverManager = new ServerManager();
 		//向注册中心注册
 		registerToCenter();
 

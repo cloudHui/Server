@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageId;
 import msg.ServerType;
 import net.client.event.RegisterEvent;
@@ -32,15 +33,14 @@ public class ServerManager {
 
 	private final Map<ServerType, Map<Integer, TCPConnect>> serverMap;
 
-	private final EventLoopGroup workerGroup;
+	private final EventLoopGroup workerGroup = new NioEventLoopGroup(1);
 
 	private final static int RETRY = 3;//重试次数
 
 	private final static int OVER_TIME = 3;//超时时间S
 
 
-	public ServerManager(EventLoopGroup workerGroup) {
-		this.workerGroup = workerGroup;
+	public ServerManager() {
 		serverMap = new HashMap<>();
 	}
 
@@ -156,10 +156,7 @@ public class ServerManager {
 				handlers,
 				registerEvent);
 
-		//链接关闭事件 移除链接关闭链接
-		tcpConnect.setCloseEvent((handler) -> removeServerClient(connect, (int) ((TCPConnect) handler).getServerId()));
-		//调度链接 断连重试
-		tcpConnect.connect(RETRY);
+		tcpConnect.connect();
 
 		//设置通道写空闲 1秒发送心跳
 		tcpConnect.setIdleRunner(handler -> sendHearReq(localServer.getServerType(), 0, address, connect));

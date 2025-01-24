@@ -112,8 +112,8 @@ public class Hall {
 		List<SocketAddress> addresses = new ArrayList<>();
 		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
 		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
-		ServerService service = new ServerService(0, HallClient.class).start(addresses);
-		setServerManager(new ServerManager(service.getWorkerGroup()));
+		new ServerService(0, HallClient.class).start(addresses);
+		setServerManager(new ServerManager());
 		//向注册中心注册
 		registerToCenter();
 		getRoomServer();

@@ -62,7 +62,7 @@ public class Robot {
 
 
 	private void start() {
-		serverManager = new ServerManager(new NioEventLoopGroup());
+		serverManager = new ServerManager();
 		String[] ipPort = new String[2];
 		ipPort[0] = "127.0.0.1";
 		ipPort[1] = "5600";

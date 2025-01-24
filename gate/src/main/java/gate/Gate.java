@@ -125,8 +125,8 @@ public class Gate {
 
 		List<SocketAddress> addresses = new ArrayList<>();
 		addresses.add(new InetSocketAddress(getInnerIp(), getPort()));
-		ServerService gate = new ServerService(90, GateTcpClient.class).start(addresses);
-		setServerManager(new ServerManager(gate.getWorkerGroup()));
+		new ServerService(90, GateTcpClient.class).start(addresses);
+		setServerManager(new ServerManager());
 		//new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
 		//向注册中心注册
 		registerToCenter();
