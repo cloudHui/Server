@@ -105,7 +105,7 @@ public class Room {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		ServerConfiguration configuration = cfgMgr.getServers().get("room");
 		if (null == configuration || !configuration.hasHostString()) {
-			LOGGER.error("ERROR! failed for can not find server config");
+			LOGGER.error("[ERROR! failed for can not find server config]");
 			return;
 		}
 
@@ -121,8 +121,8 @@ public class Room {
 		setServerManager(new ServerManager(service.getWorkerGroup()));
 		//向注册中心注册
 		registerToCenter();
-
-		LOGGER.info("[START] game server is start!!!");
+		getGameServer();
+		LOGGER.info("[game server is start!!!]");
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class Room {
 	}
 
 	/**
-	 * 获取其他除注册中心意外的所有服务端口ip
+	 * 获取其他除注册中心意外的游戏服务端口ip
 	 */
 	private void getGameServer() {
 		registerTimer(3000, 1000, -1, gate -> {
@@ -155,7 +155,7 @@ public class Room {
 		try {
 			instance.start();
 		} catch (Exception e) {
-			LOGGER.error("failed for start game server!", e);
+			LOGGER.error("[failed for start game server!]", e);
 		}
 	}
 }

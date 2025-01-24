@@ -43,7 +43,7 @@ public class ClientProto {
 			try {
 				return (com.google.protobuf.Message) MessageId.getMessageObject(className, bytes);
 			} catch (Exception e) {
-				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
+				logger.error("[parse message error messageId :{} className:{}]", id, className.getSimpleName());
 			}
 		}
 		return null;

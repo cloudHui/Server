@@ -2,10 +2,13 @@ package hall;
 
 import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
+import msg.MessageId;
 import msg.ServerType;
+import net.connect.TCPConnect;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
@@ -118,8 +121,8 @@ public class Hall {
 		setServerManager(new ServerManager(service.getWorkerGroup()));
 		//向注册中心注册
 		registerToCenter();
-
-		LOGGER.info("[START] game server is start!!!");
+		getRoomServer();
+		LOGGER.info("[game server is start!!!]");
 	}
 
 	/**
@@ -132,11 +135,27 @@ public class Hall {
 				ServerType.Hall);
 	}
 
+	/**
+	 * 获取其他除注册中心意外的游戏服务端口ip
+	 */
+	private void getRoomServer() {
+		registerTimer(3000, 1000, -1, gate -> {
+			TCPConnect serverClient = serverManager.getServerClient(ServerType.Center);
+			if (serverClient != null) {
+				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
+				req.addServerType(ServerType.Room.getServerType());
+				serverClient.sendMessage(MessageId.REQ_SERVER, req.build());
+				return true;
+			}
+			return false;
+		}, this);
+	}
+
 	public static void main(String[] args) {
 		try {
 			instance.start();
 		} catch (Exception e) {
-			LOGGER.error("failed for start game server!", e);
+			LOGGER.error("[failed for start game server!]", e);
 		}
 	}
 }

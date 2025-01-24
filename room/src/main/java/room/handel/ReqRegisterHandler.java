@@ -21,7 +21,7 @@ public class ReqRegisterHandler implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence ) {
+	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
 		ModelProto.ReqRegister req = (ModelProto.ReqRegister) msg;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
@@ -37,7 +37,7 @@ public class ReqRegisterHandler implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);
-		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build());
+		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build(), sequence);
 		return true;
 	}
 }

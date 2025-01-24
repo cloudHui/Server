@@ -22,7 +22,7 @@ public class AckGetRoomListHandler implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message ack, int mapId , long sequence) {
-		logger.error("get room ack:{}", ack.toString());
+		logger.error("[get room ack:{}]", ack.toString());
 		return true;
 	}
 }

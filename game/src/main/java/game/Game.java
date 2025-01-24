@@ -139,7 +139,7 @@ public class Game {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		ServerConfiguration configuration = cfgMgr.getServers().get("game");
 		if (null == configuration || !configuration.hasHostString()) {
-			LOGGER.error("ERROR! failed for can not find server config");
+			LOGGER.error("[ERROR! failed for can not find server config]");
 			return;
 		}
 
@@ -175,7 +175,7 @@ public class Game {
 		String[] ipPort = getCenter().split(":");
 
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				null, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
 				ServerType.Game);
 	}
 
@@ -221,9 +221,9 @@ public class Game {
 			//dingTalkWaring.sendMsg("我要测试", "17671292550");
 			instance.start();
 			//instance.testLog();
-			LOGGER.info("[START] game server is start!!!");
+			LOGGER.info("[game server is start!!!] ");
 		} catch (Exception e) {
-			LOGGER.error("failed for start game server!", e);
+			LOGGER.error("[failed for start game server!]", e);
 		}
 	}
 }

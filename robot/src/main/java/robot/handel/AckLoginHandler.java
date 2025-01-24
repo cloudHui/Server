@@ -26,7 +26,7 @@ public class AckLoginHandler implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		HallProto.AckLogin ack = (HallProto.AckLogin) msg;
-		logger.error("login ack:{}", ack.toString());
+		logger.error("[login ack:{}]", ack.toString());
 		RoomProto.ReqGetRoomList.Builder getRoom = RoomProto.ReqGetRoomList.newBuilder();
 		sender.sendMessage(MessageId.RoomMsg.REQ_ROOM_LIST.getId(), getRoom.build());
 		return true;

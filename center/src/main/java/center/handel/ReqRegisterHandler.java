@@ -51,18 +51,40 @@ public class ReqRegisterHandler implements Handler {
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);
 		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build(), sequence);
-		if (serverType != ServerType.Gate) {
-			//向 gate 同步 其他服务信息
-			List<ClientHandler> typeServer = manager.getAllTypeServer(ServerType.Gate);
-			if (typeServer != null && !typeServer.isEmpty()) {
-				for (ClientHandler client : typeServer) {
-					ModelProto.NotRegisterInfo.Builder change = ModelProto.NotRegisterInfo.newBuilder();
-					change.addServers(serverInfo);
-					client.sendMessage(MessageId.REGISTER_NOTICE, change.build());
-				}
+		switch (serverType) {
+			case Game:
+				noticeConnect(manager, serverInfo, ServerType.Gate);
+				noticeConnect(manager, serverInfo, ServerType.Room);
+				break;
+			case Room:
+				noticeConnect(manager, serverInfo, ServerType.Gate);
+				noticeConnect(manager, serverInfo, ServerType.Hall);
+				break;
+			case Hall:
+				noticeConnect(manager, serverInfo, ServerType.Gate);
+				break;
+			default:
+				break;
+		}
+		return true;
+	}
+
+	/**
+	 * 通知服务链接
+	 *
+	 * @param serverInfo 链接上来的服务信息
+	 * @param serverType 要通知的服务
+	 */
+	private void noticeConnect(ServerClientManager manager, ModelProto.ServerInfo serverInfo, ServerType serverType) {
+		//向 serverType 同步 其他服务信息
+		List<ClientHandler> typeServer = manager.getAllTypeServer(serverType);
+		if (typeServer != null && !typeServer.isEmpty()) {
+			for (ClientHandler client : typeServer) {
+				ModelProto.NotRegisterInfo.Builder change = ModelProto.NotRegisterInfo.newBuilder();
+				change.addServers(serverInfo);
+				client.sendMessage(MessageId.REGISTER_NOTICE, change.build());
 			}
 			LOGGER.error("[center server:{} info:{} reqRegister]", serverType, serverInfo.toString());
 		}
-		return true;
 	}
 }

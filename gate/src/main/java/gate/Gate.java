@@ -127,7 +127,7 @@ public class Gate {
 		//获取其他服务
 		getAllOtherServer();
 
-		logger.info("[START] gate server is start!!!");
+		logger.info("[gate server is start!!!]");
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class Gate {
 		try {
 			instance.start();
 		} catch (Exception e) {
-			logger.error("failed for start gate server!", e);
+			logger.error("[failed for start gate server!]", e);
 		}
 	}
 }

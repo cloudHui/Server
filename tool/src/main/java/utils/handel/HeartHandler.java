@@ -29,10 +29,9 @@ public class HeartHandler implements Handler {
 		int serverType = req.getServerType();
 		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
 		ack.setReqTime(now);
-		ack.setServerType(ServerType.Center.getServerType());
 		ack.setRetryTime(req.getRetryTime());
 		sender.sendMessage(MessageId.HEART_ACK, ack.build(), sequence);
-		logger.info("server:{}, heart req cost:{}ms", ServerType.get(serverType), now - req.getReqTime());
+		logger.info("[server:{}, heart req cost:{}ms]", ServerType.get(serverType), now - req.getReqTime());
 		return true;
 	}
 }

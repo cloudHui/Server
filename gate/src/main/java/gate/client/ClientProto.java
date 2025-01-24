@@ -31,7 +31,7 @@ public class ClientProto {
 			try {
 				return (com.google.protobuf.Message) MessageId.getMessageObject((Class<MessageLite>) className, bytes);
 			} catch (Exception e) {
-				logger.error("parse message error messageId :{} className:{}", id, className.getSimpleName());
+				logger.error("[parse message error messageId :{} className:{}]", id, className.getSimpleName());
 			}
 		}
 
@@ -84,7 +84,7 @@ public class ClientProto {
 				serverClient.sendMessage(tcpMessage);
 				return true;
 			} else {
-				logger.error("transform game msg error clientId :{} can‘t find game server", clientId);
+				logger.error("[transform game msg error clientId :{} can‘t find game server]", clientId);
 			}
 		} else if ((msgId & MessageId.HALL_TYPE) != 0) {
 			clientId = gateClient.getHallId();
@@ -98,7 +98,7 @@ public class ClientProto {
 				serverClient.sendMessage(tcpMessage);
 				return true;
 			} else {
-				logger.error("transform hall msg error clientId :{} can‘t find hall server", clientId);
+				logger.error("[transform hall msg error clientId :{} can‘t find hall server]", clientId);
 			}
 		} else if ((msgId & MessageId.ROOM_TYPE) != 0) {
 			clientId = gateClient.getRoomId();
@@ -112,7 +112,7 @@ public class ClientProto {
 				serverClient.sendMessage(tcpMessage);
 				return true;
 			} else {
-				logger.error("transform room msg error clientId :{} can‘t find room server", clientId);
+				logger.error("[transform room msg error clientId :{} can‘t find room server]", clientId);
 			}
 		}
 		logger.error("[error msg transferMessage to server msgId:{}]", msgId);

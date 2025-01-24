@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
@@ -31,6 +30,11 @@ public class ServerManager {
 	private final Map<ServerType, Map<Integer, TCPConnect>> serverMap;
 
 	private final EventLoopGroup workerGroup;
+
+	private final static int RETRY = 3;//重试次数
+
+	private final static int OVER_TIME = 3;//超时时间S
+
 
 	public ServerManager(EventLoopGroup workerGroup) {
 		this.workerGroup = workerGroup;
@@ -119,17 +123,17 @@ public class ServerManager {
 					server.setIpConfig(ByteString.copyFromUtf8(localPort));
 					notice.setServerInfo(server.build());
 
-					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), 3)
+					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), OVER_TIME)
 							.whenComplete((r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
-									logger.error("ERROR! failed for send register message to {}:{}", s.getAddress().getHostAddress(), s.getPort(), e);
+									logger.error("[ERROR! failed for send register message to {}:{}]", s.getAddress().getHostAddress(), s.getPort(), e);
 								} else {
 									try {
 										ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) r).getServerInfo();
 										tcpConnect.setServerId(serverInfo.getServerId());
 										addServerClient(serverType, tcpConnect, serverInfo.getServerId());
-										logger.info("receive register message to {}:{} success", s.getAddress().getHostAddress(), s.getPort());
+										logger.info("[receive register message to {}:{} success]", s.getAddress().getHostAddress(), s.getPort());
 									} catch (Exception ex) {
 										ex.printStackTrace();
 									}
@@ -149,16 +153,10 @@ public class ServerManager {
 		//链接关闭事件 移除链接关闭链接
 		tcpConnect.setCloseEvent((handler) -> removeServerClient(connect, (int) ((TCPConnect) handler).getServerId()));
 		//调度链接 断连重试
-		workerGroup.scheduleWithFixedDelay(() -> {
-			TCPConnect handler = getServerClient(connect);
-			if (handler != null) {
-				return;
-			}
-			tcpConnect.connect();
-			//调度发送心跳
-			workerGroup.scheduleWithFixedDelay(() -> sendHearReq(localServer.getServerType(), 0, address, connect), 3L, 1L, TimeUnit.SECONDS);
-		}, 0L, 1L, TimeUnit.SECONDS);
+		tcpConnect.connect(RETRY);
 
+		//设置通道写空闲 1秒发送心跳
+		tcpConnect.setIdleRunner(handler -> sendHearReq(localServer.getServerType(), 0, address, connect));
 	}
 
 	/**
@@ -178,29 +176,31 @@ public class ServerManager {
 		//调度延迟发送心跳
 		TCPConnect handler = getServerClient(connect);
 		if (handler == null) {
+			logger.error("[sendHearReq error connect:{} null localServer:{}]", connect, ServerType.get(localServer));
 			return;
 		}
-		handler.sendMessage(MessageId.HEART, manageHeart(localServer, retryTime), 3).whenComplete((message, e) -> {
+		final InetSocketAddress socketAddress = (InetSocketAddress) address;
+		handler.sendMessage(MessageId.HEART, manageHeart(localServer, retryTime), OVER_TIME).whenComplete((message, e) -> {
 			if (null != e) {
-				logger.error("ERROR! failed for send HEART  message {}:{} retryTime:{} {}", ((InetSocketAddress) address).getHostName(),
-						((InetSocketAddress) address).getPort(), retryTime, e.getMessage());
+				logger.error("[ERROR! failed for send HEART  ipPort {}:{} retryTime:{} {}]", socketAddress.getHostName(),
+						socketAddress.getPort(), retryTime, e.getMessage());
 			} else {
 				try {
 					ModelProto.AckHeart ack = ((ModelProto.AckHeart) message);
 					long cost = System.currentTimeMillis() - ack.getReqTime();
-					logger.info("receive connect:{}  HEART_ACK message {}:{} cost:{}ms retryTime:{} success", connect, ((InetSocketAddress) address).getHostName(),
-							((InetSocketAddress) address).getPort(), cost, ack.getRetryTime());
+					logger.info("[receive connect:{}  HEART_ACK ipPort {}:{} cost:{}ms retryTime:{} success]", connect, socketAddress.getHostName(),
+							socketAddress.getPort(), cost, ack.getRetryTime());
 					return;
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
-			if (retryTime + 1 <= 3) {
+			if (retryTime + 1 <= RETRY) {
 				sendHearReq(localServer, retryTime + 1, address, connect);
 				return;
 			}
 			handler.channelInactive(null);
-			logger.error("close connect {}:{} ", ((InetSocketAddress) address).getHostName(), ((InetSocketAddress) address).getPort());
+			logger.error("[close connect {}:{}]", socketAddress.getHostName(), socketAddress.getPort());
 		});
 	}
 

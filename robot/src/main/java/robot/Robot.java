@@ -70,7 +70,7 @@ public class Robot {
 				0);
 		serverManager.addServerClient(ServerType.Gate, connect, (int) connect.getServerId());
 		checkConnect();
-		LOGGER.info("[START] robot server is start!!!");
+		LOGGER.info("[robot server is start!!!]");
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class Robot {
 		try {
 			instance.start();
 		} catch (Exception e) {
-			LOGGER.error("failed for start robot server!", e);
+			LOGGER.error("[failed for start robot server!]", e);
 			System.exit(0);
 		}
 	}

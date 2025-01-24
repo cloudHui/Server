@@ -1202,17 +1202,12 @@ public final class ModelProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 serverType = 1;</code>
-     */
-    int getServerType();
-
-    /**
-     * <code>int32 serverId = 2;</code>
+     * <code>int32 serverId = 1;</code>
      */
     int getServerId();
 
     /**
-     * <code>int64 reqTime = 3;</code>
+     * <code>int64 reqTime = 2;</code>
      */
     long getReqTime();
 
@@ -1221,7 +1216,7 @@ public final class ModelProto {
      *重试次数
      * </pre>
      *
-     * <code>int32 retryTime = 4;</code>
+     * <code>int32 retryTime = 3;</code>
      */
     int getRetryTime();
   }
@@ -1238,7 +1233,6 @@ public final class ModelProto {
       super(builder);
     }
     private AckHeart() {
-      serverType_ = 0;
       serverId_ = 0;
       reqTime_ = 0L;
       retryTime_ = 0;
@@ -1274,20 +1268,15 @@ public final class ModelProto {
             }
             case 8: {
 
-              serverType_ = input.readInt32();
+              serverId_ = input.readInt32();
               break;
             }
             case 16: {
 
-              serverId_ = input.readInt32();
-              break;
-            }
-            case 24: {
-
               reqTime_ = input.readInt64();
               break;
             }
-            case 32: {
+            case 24: {
 
               retryTime_ = input.readInt32();
               break;
@@ -1316,41 +1305,32 @@ public final class ModelProto {
               proto.ModelProto.AckHeart.class, proto.ModelProto.AckHeart.Builder.class);
     }
 
-    public static final int SERVERTYPE_FIELD_NUMBER = 1;
-    private int serverType_;
-    /**
-     * <code>int32 serverType = 1;</code>
-     */
-    public int getServerType() {
-      return serverType_;
-    }
-
-    public static final int SERVERID_FIELD_NUMBER = 2;
+    public static final int SERVERID_FIELD_NUMBER = 1;
     private int serverId_;
     /**
-     * <code>int32 serverId = 2;</code>
+     * <code>int32 serverId = 1;</code>
      */
     public int getServerId() {
       return serverId_;
     }
 
-    public static final int REQTIME_FIELD_NUMBER = 3;
+    public static final int REQTIME_FIELD_NUMBER = 2;
     private long reqTime_;
     /**
-     * <code>int64 reqTime = 3;</code>
+     * <code>int64 reqTime = 2;</code>
      */
     public long getReqTime() {
       return reqTime_;
     }
 
-    public static final int RETRYTIME_FIELD_NUMBER = 4;
+    public static final int RETRYTIME_FIELD_NUMBER = 3;
     private int retryTime_;
     /**
      * <pre>
      *重试次数
      * </pre>
      *
-     * <code>int32 retryTime = 4;</code>
+     * <code>int32 retryTime = 3;</code>
      */
     public int getRetryTime() {
       return retryTime_;
@@ -1368,17 +1348,14 @@ public final class ModelProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (serverType_ != 0) {
-        output.writeInt32(1, serverType_);
-      }
       if (serverId_ != 0) {
-        output.writeInt32(2, serverId_);
+        output.writeInt32(1, serverId_);
       }
       if (reqTime_ != 0L) {
-        output.writeInt64(3, reqTime_);
+        output.writeInt64(2, reqTime_);
       }
       if (retryTime_ != 0) {
-        output.writeInt32(4, retryTime_);
+        output.writeInt32(3, retryTime_);
       }
       unknownFields.writeTo(output);
     }
@@ -1388,21 +1365,17 @@ public final class ModelProto {
       if (size != -1) return size;
 
       size = 0;
-      if (serverType_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, serverType_);
-      }
       if (serverId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, serverId_);
+          .computeInt32Size(1, serverId_);
       }
       if (reqTime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, reqTime_);
+          .computeInt64Size(2, reqTime_);
       }
       if (retryTime_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, retryTime_);
+          .computeInt32Size(3, retryTime_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1420,8 +1393,6 @@ public final class ModelProto {
       proto.ModelProto.AckHeart other = (proto.ModelProto.AckHeart) obj;
 
       boolean result = true;
-      result = result && (getServerType()
-          == other.getServerType());
       result = result && (getServerId()
           == other.getServerId());
       result = result && (getReqTime()
@@ -1439,8 +1410,6 @@ public final class ModelProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SERVERTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getServerType();
       hash = (37 * hash) + SERVERID_FIELD_NUMBER;
       hash = (53 * hash) + getServerId();
       hash = (37 * hash) + REQTIME_FIELD_NUMBER;
@@ -1577,8 +1546,6 @@ public final class ModelProto {
       }
       public Builder clear() {
         super.clear();
-        serverType_ = 0;
-
         serverId_ = 0;
 
         reqTime_ = 0L;
@@ -1607,7 +1574,6 @@ public final class ModelProto {
 
       public proto.ModelProto.AckHeart buildPartial() {
         proto.ModelProto.AckHeart result = new proto.ModelProto.AckHeart(this);
-        result.serverType_ = serverType_;
         result.serverId_ = serverId_;
         result.reqTime_ = reqTime_;
         result.retryTime_ = retryTime_;
@@ -1652,9 +1618,6 @@ public final class ModelProto {
 
       public Builder mergeFrom(proto.ModelProto.AckHeart other) {
         if (other == proto.ModelProto.AckHeart.getDefaultInstance()) return this;
-        if (other.getServerType() != 0) {
-          setServerType(other.getServerType());
-        }
         if (other.getServerId() != 0) {
           setServerId(other.getServerId());
         }
@@ -1691,41 +1654,15 @@ public final class ModelProto {
         return this;
       }
 
-      private int serverType_ ;
-      /**
-       * <code>int32 serverType = 1;</code>
-       */
-      public int getServerType() {
-        return serverType_;
-      }
-      /**
-       * <code>int32 serverType = 1;</code>
-       */
-      public Builder setServerType(int value) {
-        
-        serverType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 serverType = 1;</code>
-       */
-      public Builder clearServerType() {
-        
-        serverType_ = 0;
-        onChanged();
-        return this;
-      }
-
       private int serverId_ ;
       /**
-       * <code>int32 serverId = 2;</code>
+       * <code>int32 serverId = 1;</code>
        */
       public int getServerId() {
         return serverId_;
       }
       /**
-       * <code>int32 serverId = 2;</code>
+       * <code>int32 serverId = 1;</code>
        */
       public Builder setServerId(int value) {
         
@@ -1734,7 +1671,7 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>int32 serverId = 2;</code>
+       * <code>int32 serverId = 1;</code>
        */
       public Builder clearServerId() {
         
@@ -1745,13 +1682,13 @@ public final class ModelProto {
 
       private long reqTime_ ;
       /**
-       * <code>int64 reqTime = 3;</code>
+       * <code>int64 reqTime = 2;</code>
        */
       public long getReqTime() {
         return reqTime_;
       }
       /**
-       * <code>int64 reqTime = 3;</code>
+       * <code>int64 reqTime = 2;</code>
        */
       public Builder setReqTime(long value) {
         
@@ -1760,7 +1697,7 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>int64 reqTime = 3;</code>
+       * <code>int64 reqTime = 2;</code>
        */
       public Builder clearReqTime() {
         
@@ -1775,7 +1712,7 @@ public final class ModelProto {
        *重试次数
        * </pre>
        *
-       * <code>int32 retryTime = 4;</code>
+       * <code>int32 retryTime = 3;</code>
        */
       public int getRetryTime() {
         return retryTime_;
@@ -1785,7 +1722,7 @@ public final class ModelProto {
        *重试次数
        * </pre>
        *
-       * <code>int32 retryTime = 4;</code>
+       * <code>int32 retryTime = 3;</code>
        */
       public Builder setRetryTime(int value) {
         
@@ -1798,7 +1735,7 @@ public final class ModelProto {
        *重试次数
        * </pre>
        *
-       * <code>int32 retryTime = 4;</code>
+       * <code>int32 retryTime = 3;</code>
        */
       public Builder clearRetryTime() {
         
@@ -8750,24 +8687,24 @@ public final class ModelProto {
       "\n\013model.proto\022\005proto\"&\n\010KeyValue\022\013\n\003key\030" +
       "\001 \001(\014\022\r\n\005value\030\002 \001(\014\"T\n\010ReqHeart\022\022\n\nserv" +
       "erType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\017\n\007reqTim" +
-      "e\030\003 \001(\003\022\021\n\tretryTime\030\004 \001(\005\"T\n\010AckHeart\022\022" +
-      "\n\nserverType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\017\n\007" +
-      "reqTime\030\003 \001(\003\022\021\n\tretryTime\030\004 \001(\005\"D\n\nServ" +
-      "erInfo\022\022\n\nserverType\030\001 \001(\005\022\020\n\010serverId\030\002" +
-      " \001(\005\022\020\n\010ipConfig\030\003 \001(\014\"4\n\013ReqRegister\022%\n" +
-      "\nserverInfo\030\001 \001(\0132\021.proto.ServerInfo\"4\n\013" +
-      "AckRegister\022%\n\nserverInfo\030\001 \001(\0132\021.proto.",
-      "ServerInfo\"5\n\017NotRegisterInfo\022\"\n\007servers" +
-      "\030\001 \003(\0132\021.proto.ServerInfo\"#\n\rReqServerIn" +
-      "fo\022\022\n\nserverType\030\001 \003(\005\"3\n\rAckServerInfo\022" +
-      "\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo\"4\n\016N" +
-      "otServerBreak\022\"\n\007servers\030\001 \003(\0132\021.proto.S" +
-      "erverInfo\"\032\n\010NotBreak\022\016\n\006userId\030\001 \001(\005\"\212\001" +
-      "\n\tTableRole\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030" +
-      "\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022" +
-      "\r\n\005score\030\006 \001(\005\022\033\n\006player\030\007 \001(\0132\013.proto.H" +
-      "ero\022\r\n\005cards\030\010 \003(\005\"&\n\004Hero\022\016\n\006heroId\030\001 \001",
-      "(\005\022\016\n\006skills\030\002 \003(\005B\014B\nModelProtob\006proto3"
+      "e\030\003 \001(\003\022\021\n\tretryTime\030\004 \001(\005\"@\n\010AckHeart\022\020" +
+      "\n\010serverId\030\001 \001(\005\022\017\n\007reqTime\030\002 \001(\003\022\021\n\tret" +
+      "ryTime\030\003 \001(\005\"D\n\nServerInfo\022\022\n\nserverType" +
+      "\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\020\n\010ipConfig\030\003 \001" +
+      "(\014\"4\n\013ReqRegister\022%\n\nserverInfo\030\001 \001(\0132\021." +
+      "proto.ServerInfo\"4\n\013AckRegister\022%\n\nserve" +
+      "rInfo\030\001 \001(\0132\021.proto.ServerInfo\"5\n\017NotReg",
+      "isterInfo\022\"\n\007servers\030\001 \003(\0132\021.proto.Serve" +
+      "rInfo\"#\n\rReqServerInfo\022\022\n\nserverType\030\001 \003" +
+      "(\005\"3\n\rAckServerInfo\022\"\n\007servers\030\001 \003(\0132\021.p" +
+      "roto.ServerInfo\"4\n\016NotServerBreak\022\"\n\007ser" +
+      "vers\030\001 \003(\0132\021.proto.ServerInfo\"\032\n\010NotBrea" +
+      "k\022\016\n\006userId\030\001 \001(\005\"\212\001\n\tTableRole\022\016\n\006roleI" +
+      "d\030\001 \001(\005\022\020\n\010position\030\002 \001(\005\022\016\n\006avatar\030\003 \001(" +
+      "\014\022\020\n\010nickName\030\004 \001(\014\022\r\n\005score\030\006 \001(\005\022\033\n\006pl" +
+      "ayer\030\007 \001(\0132\013.proto.Hero\022\r\n\005cards\030\010 \003(\005\"&" +
+      "\n\004Hero\022\016\n\006heroId\030\001 \001(\005\022\016\n\006skills\030\002 \003(\005B\014",
+      "B\nModelProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -8798,7 +8735,7 @@ public final class ModelProto {
     internal_static_proto_AckHeart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckHeart_descriptor,
-        new java.lang.String[] { "ServerType", "ServerId", "ReqTime", "RetryTime", });
+        new java.lang.String[] { "ServerId", "ReqTime", "RetryTime", });
     internal_static_proto_ServerInfo_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_proto_ServerInfo_fieldAccessorTable = new

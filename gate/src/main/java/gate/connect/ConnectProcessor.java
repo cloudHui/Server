@@ -86,7 +86,7 @@ public class ConnectProcessor {
 			gateClient.sendMessage(msg);
 			return true;
 		}
-		logger.error("ERROR! failed for transfer message(connect:{} message id:{})", connectId, msg.getMessageId());
+		logger.error("[ERROR! failed for transfer message(connect:{} message id:{})]", connectId, msg.getMessageId());
 		return false;
 	}
 }

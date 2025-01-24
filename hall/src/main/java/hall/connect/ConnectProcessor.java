@@ -3,6 +3,9 @@ package hall.connect;
 import java.util.HashMap;
 import java.util.Map;
 
+import hall.handel.server.AckServerInfoHandel;
+import hall.handel.server.RegisterNoticeHandler;
+import hall.handel.server.ServerBreakNoticeHandler;
 import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -18,6 +21,12 @@ public class ConnectProcessor {
 				return ModelProto.AckHeart.parseFrom(bytes);
 			case MessageId.ACK_REGISTER:
 				return ModelProto.AckRegister.parseFrom(bytes);
+			case MessageId.ACK_SERVER:
+				return ModelProto.AckServerInfo.parseFrom(bytes);
+			case MessageId.REGISTER_NOTICE:
+				return ModelProto.NotRegisterInfo.parseFrom(bytes);
+			case MessageId.BREAK_NOTICE:
+				return ModelProto.NotServerBreak.parseFrom(bytes);
 			default: {
 				return null;
 			}
@@ -29,6 +38,9 @@ public class ConnectProcessor {
 	static {
 		handlers = new HashMap<>();
 		handlers.put(MessageId.HEART_ACK, HeartAckHandler.getInstance());
+		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
+		handlers.put(MessageId.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
+		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

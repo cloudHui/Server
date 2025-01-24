@@ -20,7 +20,7 @@ public class SvnManager {
 		jarUrl = ExecCommand.getExeCommandResult(exeCommands, "Url: ");
 		jarLastVersion = ExecCommand.getExeCommandResult(exeCommands, REV);
 		if (jarLastVersion.length() == 0 || jarUrl.length() == 0) {
-			logger.error("get url version error");
+			logger.error("[get url version error]");
 		}
 	}
 
