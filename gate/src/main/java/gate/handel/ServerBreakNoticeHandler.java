@@ -28,11 +28,8 @@ public class ServerBreakNoticeHandler implements Handler {
 	@Override
 	public boolean handler(Sender sender, int aLong, Message notServerBreak, int mapId, long sequence) {
 		ModelProto.NotServerBreak req = (ModelProto.NotServerBreak) notServerBreak;
-		return connectToSever(req.getServersList());
-	}
-
-	static boolean connectToSever(List<ModelProto.ServerInfo> serverInfos) {
-		if (serverInfos == null || serverInfos.isEmpty()) {
+		List<ModelProto.ServerInfo> serverInfos = req.getServersList();
+		if (serverInfos.isEmpty()) {
 			return true;
 		}
 		Gate instance = Gate.getInstance();

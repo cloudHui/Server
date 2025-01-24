@@ -3,12 +3,9 @@ package gate.client;
 import gate.Gate;
 import msg.MessageId;
 import msg.ServerType;
-import net.client.event.CloseEvent;
 import net.client.handler.ClientHandler;
 import net.connect.TCPConnect;
 import net.message.TCPMaker;
-import net.message.TCPMessage;
-import net.safe.Safe;
 import proto.ModelProto;
 import utils.ServerManager;
 
@@ -21,9 +18,9 @@ public class GateTcpClient extends ClientHandler {
 	private int roomId = 0;
 
 	public GateTcpClient() {
-		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
+		super(ClientProto.PARSER, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent(client -> notServerBreak());
+		setCloseEvent(client -> ClientProto.notServerBreak(roleId, gameId, hallId, roomId));
 
 		setSafe((msgId) -> msgId == MessageId.HallMsg.REQ_LOGIN.getId() || roleId != 0);
 	}
@@ -58,29 +55,5 @@ public class GateTcpClient extends ClientHandler {
 
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
-	}
-
-	/**
-	 * 通知服务器玩家离线
-	 */
-	public void notServerBreak() {
-		ModelProto.NotBreak.Builder not = ModelProto.NotBreak.newBuilder();
-		not.setUserId(getRoleId());
-		ServerManager serverManager = Gate.getInstance().getServerManager();
-		if (serverManager == null) {
-			return;
-		}
-		TCPConnect serverClient = serverManager.getServerClient(ServerType.Game, getGameId());
-		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
-		}
-		serverClient = serverManager.getServerClient(ServerType.Hall, getHallId());
-		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
-		}
-		serverClient = serverManager.getServerClient(ServerType.Room, getHallId());
-		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
-		}
 	}
 }

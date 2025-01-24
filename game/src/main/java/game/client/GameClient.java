@@ -17,7 +17,7 @@ public class GameClient extends ClientHandler {
 		setCloseEvent(client -> {
 			ServerType serverType = ServerType.get(serverInfo.getServerType());
 			if (serverType != null) {
-				Game.getInstance().serverClientManager.removeServerClient(serverType, serverInfo.getServerId());
+				Game.getInstance().getServerClientManager().removeServerClient(serverType, serverInfo.getServerId());
 			}
 		});
 	}

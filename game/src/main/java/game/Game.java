@@ -21,10 +21,10 @@ import utils.utils.IpUtil;
 public class Game {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Game.class);
 
-	private final static Game instance = new Game();
+	private static final Game instance;
 
-	private final ExecutorPool executorPool;
-	private final Timer timer;
+	private ExecutorPool executorPool;
+	private Timer timer;
 
 	private int port;
 	private String ip;
@@ -32,9 +32,17 @@ public class Game {
 	private String innerIp;
 	private String center;
 
-	public ServerClientManager serverClientManager = new ServerClientManager();
 
-	private final ServerManager serverManager = new ServerManager();
+	static {
+		instance = new Game();
+		instance.executorPool = new ExecutorPool("Game");
+		instance.timer = new Timer().setRunners(instance.executorPool);
+	}
+
+
+	private final ServerClientManager serverClientManager = new ServerClientManager();
+
+	private ServerManager serverManager;
 
 	private final SvnManager svnManager = new SvnManager();
 
@@ -84,6 +92,10 @@ public class Game {
 		return serverManager;
 	}
 
+	public ServerClientManager getServerClientManager() {
+		return serverClientManager;
+	}
+
 	public TableManager getTableManager() {
 		return tableManager;
 	}
@@ -96,10 +108,7 @@ public class Game {
 		return instance;
 	}
 
-
 	private Game() {
-		executorPool = new ExecutorPool("Game");
-		timer = new Timer().setRunners(executorPool);
 	}
 
 	public <T> void registerTimer(long delay, long interval, int count, Runner<T> runner, T param) {
@@ -144,8 +153,8 @@ public class Game {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new ServerService(0, GameClient.class).start(configuration.getHostList());
-
+		ServerService service = new ServerService(0, GameClient.class).start(configuration.getHostList());
+		serverManager = new ServerManager(service.getWorkerGroup());
 		//向注册中心注册
 		registerToCenter();
 
@@ -153,7 +162,9 @@ public class Game {
 		init();
 
 		//初始化代码管理
-		initSvn();
+		if(cfgMgr.getInt("plant",0) !=0){
+			initSvn();
+		}
 	}
 
 	/**
@@ -164,8 +175,8 @@ public class Game {
 		String[] ipPort = getCenter().split(":");
 
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Game, getServerId(), getInnerIp() + ":" + getPort(),
-				ServerType.Center, 0);
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				ServerType.Game);
 	}
 
 	/**

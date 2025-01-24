@@ -33,12 +33,12 @@ public class ReqRegisterHandler implements Handler {
 
 		client.setServerInfo(serverInfo);
 
-		Game.getInstance().serverClientManager.addServerClient(serverType, (GameClient) sender, serverInfo.getServerId());
+		Game.getInstance().getServerClientManager().addServerClient(serverType, (GameClient) sender, serverInfo.getServerId());
 
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(serverInfo);
-		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build());
+		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build(), sequence);
 		return true;
 	}
 }

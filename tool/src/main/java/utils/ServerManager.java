@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageId;
 import msg.ServerType;
 import net.client.event.RegisterEvent;
@@ -28,9 +28,14 @@ import utils.utils.RandomUtils;
 public class ServerManager {
 	private final static Logger logger = LoggerFactory.getLogger(ServerManager.class);
 
-	private final Map<ServerType, Map<Integer, TCPConnect>> serverMap = new ConcurrentHashMap<>();
+	private final Map<ServerType, Map<Integer, TCPConnect>> serverMap;
 
-	private final EventLoopGroup workerGroup = new NioEventLoopGroup();
+	private final EventLoopGroup workerGroup;
+
+	public ServerManager(EventLoopGroup workerGroup) {
+		this.workerGroup = workerGroup;
+		serverMap = new ConcurrentHashMap<>();
+	}
 
 	/**
 	 * 添加服务链接
@@ -96,13 +101,12 @@ public class ServerManager {
 	 * @param localId     本地服务 id
 	 * @param localPort   本地服务 IP 端口
 	 */
-	private void connect(ServerType connect, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort, int disRetry) {
-		connect(connect, new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort, disRetry);
+	private void connect(ServerType connect, String ip, int port, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+		connect(connect, new InetSocketAddress(ip, port), transfer, parser, handlers, localServer, localId, localPort);
 	}
 
-	private void connect(ServerType serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort, int disRetry) {
-		connect(
-				socketAddress,
+	private void connect(ServerType serverType, SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer, int localId, String localPort) {
+		connect(socketAddress,
 				transfer,
 				parser,
 				handlers,
@@ -115,45 +119,89 @@ public class ServerManager {
 					server.setIpConfig(ByteString.copyFromUtf8(localPort));
 					notice.setServerInfo(server.build());
 
-					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(),  3)
+					tcpConnect.sendMessage(MessageId.REQ_REGISTER, notice.build(), 3)
 							.whenComplete((r, e) -> {
 								InetSocketAddress s = (InetSocketAddress) socketAddress;
 								if (null != e) {
-									logger.error("ERROR! failed for send register message to {}:{}",
-											s.getAddress().getHostAddress(), s.getPort(), e);
+									logger.error("ERROR! failed for send register message to {}:{}", s.getAddress().getHostAddress(), s.getPort(), e);
 								} else {
-									ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) r).getServerInfo();
-									tcpConnect.setServerId(serverInfo.getServerId());
-
 									try {
+										ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) r).getServerInfo();
+										tcpConnect.setServerId(serverInfo.getServerId());
 										addServerClient(serverType, tcpConnect, serverInfo.getServerId());
+										logger.info("receive register message to {}:{} success", s.getAddress().getHostAddress(), s.getPort());
 									} catch (Exception ex) {
 										ex.printStackTrace();
 									}
-									logger.info("send register message to {}:{} success",
-											s.getAddress().getHostAddress(), s.getPort());
 								}
 							});
-				}), localServer, disRetry);
+				}), localServer, serverType);
 	}
 
-	private void connect(SocketAddress socketAddress, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer, int disRetry) {
-		TCPConnect tcpConnection = new TCPConnect(workerGroup,
-				socketAddress,
+	private void connect(SocketAddress address, Transfer transfer, Parser parser, Handlers handlers, RegisterEvent registerEvent, ServerType localServer, ServerType connect) {
+		TCPConnect tcpConnect = new TCPConnect(workerGroup,
+				address,
 				transfer,
 				parser,
 				handlers,
 				registerEvent);
 
-		//连接后 触发 读,写空闲事件后的处理 发送心跳
-		tcpConnection.setIdleRunner(handler -> {
-			ModelProto.ReqHeart heartbeat = ModelProto.ReqHeart.newBuilder()
-					.setReqTime(System.currentTimeMillis())
-					.setServerType(localServer.getServerType()).build();
-			handler.sendMessage(MessageId.HEART, heartbeat);
-		});
+		//链接关闭事件 移除链接关闭链接
+		tcpConnect.setCloseEvent((handler) -> removeServerClient(connect, (int) ((TCPConnect) handler).getServerId()));
+		//调度链接 断连重试
+		workerGroup.scheduleWithFixedDelay(() -> {
+			TCPConnect handler = getServerClient(connect);
+			if (handler != null) {
+				return;
+			}
+			tcpConnect.connect();
+			//调度发送心跳
+			workerGroup.scheduleWithFixedDelay(() -> sendHearReq(localServer.getServerType(), 0, address, connect), 3L, 1L, TimeUnit.SECONDS);
+		}, 0L, 1L, TimeUnit.SECONDS);
 
-		tcpConnection.connect(disRetry);
+	}
+
+	/**
+	 * 组织心跳消息
+	 */
+	private ModelProto.ReqHeart manageHeart(int serverType, int retryTime) {
+		return ModelProto.ReqHeart.newBuilder()
+				.setReqTime(System.currentTimeMillis())
+				.setRetryTime(retryTime)
+				.setServerType(serverType).build();
+	}
+
+	/**
+	 * 发送心跳请求并回调处理
+	 */
+	private void sendHearReq(int localServer, int retryTime, SocketAddress address, ServerType connect) {
+		//调度延迟发送心跳
+		TCPConnect handler = getServerClient(connect);
+		if (handler == null) {
+			return;
+		}
+		handler.sendMessage(MessageId.HEART, manageHeart(localServer, retryTime), 3).whenComplete((message, e) -> {
+			if (null != e) {
+				logger.error("ERROR! failed for send HEART  message {}:{} retryTime:{} {}", ((InetSocketAddress) address).getHostName(),
+						((InetSocketAddress) address).getPort(), retryTime, e.getMessage());
+			} else {
+				try {
+					ModelProto.AckHeart ack = ((ModelProto.AckHeart) message);
+					long cost = System.currentTimeMillis() - ack.getReqTime();
+					logger.info("receive connect:{}  HEART_ACK message {}:{} cost:{}ms retryTime:{} success", connect, ((InetSocketAddress) address).getHostName(),
+							((InetSocketAddress) address).getPort(), cost, ack.getRetryTime());
+					return;
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			if (retryTime + 1 <= 3) {
+				sendHearReq(localServer, retryTime + 1, address, connect);
+				return;
+			}
+			handler.channelInactive(null);
+			logger.error("close connect {}:{} ", ((InetSocketAddress) address).getHostName(), ((InetSocketAddress) address).getPort());
+		});
 	}
 
 	/**
@@ -172,33 +220,34 @@ public class ServerManager {
 
 	/**
 	 * 注册服务
+	 *
+	 * @param serverType  要链接的服务类型
+	 * @param localServer 本地服务类型
 	 */
-	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType serverType,
-							  int serverId, String ipPorts, ServerType connectServer, int disRetry) {
-		connect(connectServer, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser,
-				handlers, serverType, serverId, ipPorts, disRetry);
+	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType serverType, int serverId, String ipPorts, ServerType localServer) {
+		connect(serverType, ipPort[0], Integer.parseInt(ipPort[1]), transfer, parser, handlers, localServer, serverId, ipPorts);
 	}
 
 	/**
 	 * 链接
 	 */
 	public TCPConnect connectSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, int disRetry) {
-		return connect(new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])), transfer, parser,
-				handlers, disRetry);
+		return connect(new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])), transfer, parser, handlers, disRetry);
 	}
 
-	public boolean connectToSever(List<ModelProto.ServerInfo> serverInfos, int serverId, String ipPort, Transfer transfer, Parser parser, Handlers handlers) {
+
+	public boolean connectToSever(List<ModelProto.ServerInfo> serverInfos, int localServerId, String localIpPort, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer) {
 		if (serverInfos == null || serverInfos.isEmpty()) {
 			return true;
 		}
 		String[] ipConfig;
-		ServerType serverType;
+		ServerType connectServer;
 		for (ModelProto.ServerInfo serverInfo : serverInfos) {
 			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
-			serverType = ServerType.get(serverInfo.getServerType());
-			if (serverType != null) {
-				registerSever(ipConfig, transfer, parser, handlers, ServerType.Gate, serverId, ipPort, serverType, 0);
-				logger.error("[register server:{} info:{}]", serverType, serverInfo.toString());
+			connectServer = ServerType.get(serverInfo.getServerType());
+			if (connectServer != null) {
+				registerSever(ipConfig, transfer, parser, handlers, connectServer, localServerId, localIpPort, localServer);
+				logger.error("[registerSever server:{} info:{}]", connectServer, serverInfo.toString());
 			}
 		}
 		return true;

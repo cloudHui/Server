@@ -114,8 +114,8 @@ public class Hall {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new ServerService(0, HallClient.class).start(configuration.getHostList());
-
+		ServerService service = new ServerService(0, HallClient.class).start(configuration.getHostList());
+		setServerManager(new ServerManager(service.getWorkerGroup()));
 		//向注册中心注册
 		registerToCenter();
 
@@ -126,12 +126,10 @@ public class Hall {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
-		setServerManager(new ServerManager());
-		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Hall, getServerId(), getInnerIp() + ":" + getPort(),
-				ServerType.Center, 0);
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				ServerType.Hall);
 	}
 
 	public static void main(String[] args) {

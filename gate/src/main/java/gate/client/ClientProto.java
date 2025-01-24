@@ -1,20 +1,16 @@
 package gate.client;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.protobuf.MessageLite;
 import gate.Gate;
 import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
-import net.handler.Handler;
-import net.handler.Handlers;
 import net.message.Parser;
 import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import utils.ServerManager;
 
 public class ClientProto {
@@ -42,16 +38,16 @@ public class ClientProto {
 		return null;
 	}
 
-	private final static Map<Integer, Handler> handlers;
+	//private final static Map<Integer, Handler> handlers;
 
-	static {
-		handlers = new HashMap<>();
-	}
+	//static {
+	//	handlers = new HashMap<>();
+	//}
 
-	/**
-	 * 消息处理接口
-	 */
-	public final static Handlers HANDLERS = handlers::get;
+	///**
+	// * 消息处理接口
+	// */
+	//public final static Handlers HANDLERS = handlers::get;
 
 
 	/**
@@ -60,7 +56,7 @@ public class ClientProto {
 	public final static Transfer TRANSFER = (gateClient, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
 		if (msgId > MessageId.BASE_ID_INDEX) {
-			return transferMessage((GateTcpClient)gateClient, tcpMessage, msgId);
+			return transferMessage((GateTcpClient) gateClient, tcpMessage, msgId);
 		}
 		return false;
 	};
@@ -121,5 +117,30 @@ public class ClientProto {
 		}
 		logger.error("[error msg transferMessage to server msgId:{}]", msgId);
 		return false;
+	}
+
+
+	/**
+	 * 通知服务器玩家离线
+	 */
+	protected static void notServerBreak(int userId, int gameId, int hallId, int roomId) {
+		ModelProto.NotBreak.Builder not = ModelProto.NotBreak.newBuilder();
+		not.setUserId(userId);
+		ServerManager serverManager = Gate.getInstance().getServerManager();
+		if (serverManager == null) {
+			return;
+		}
+		TCPConnect serverClient = serverManager.getServerClient(ServerType.Game, gameId);
+		if (serverClient != null) {
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
+		}
+		serverClient = serverManager.getServerClient(ServerType.Hall, hallId);
+		if (serverClient != null) {
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
+		}
+		serverClient = serverManager.getServerClient(ServerType.Room, roomId);
+		if (serverClient != null) {
+			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
+		}
 	}
 }

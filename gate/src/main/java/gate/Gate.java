@@ -118,8 +118,8 @@ public class Gate {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new ServerService(90, GateTcpClient.class).start(cfgMgr.getServers().get("gate").getHostList());
-
+		ServerService gate = new ServerService(90, GateTcpClient.class).start(cfgMgr.getServers().get("gate").getHostList());
+		setServerManager(new ServerManager(gate.getWorkerGroup()));
 		//new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
 		//向注册中心注册
 		registerToCenter();
@@ -134,13 +134,11 @@ public class Gate {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
-		setServerManager(new ServerManager());
-		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Gate, getServerId(), getInnerIp() + ":" + getPort(),
-				ServerType.Center, 0);
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				ServerType.Gate);
 	}
 
 	/**
@@ -153,6 +151,7 @@ public class Gate {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
+				req.addServerType(ServerType.Room.getServerType());
 				serverClient.sendMessage(MessageId.REQ_SERVER, req.build());
 				return true;
 			}

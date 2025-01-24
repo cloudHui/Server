@@ -1,5 +1,6 @@
 package robot;
 
+import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
@@ -60,8 +61,8 @@ public class Robot {
 	}
 
 
-	private void start() throws Exception {
-		serverManager = new ServerManager();
+	private void start() {
+		serverManager = new ServerManager(new NioEventLoopGroup());
 		String[] ipPort = new String[2];
 		ipPort[0] = "127.0.0.1";
 		ipPort[1] = "5600";

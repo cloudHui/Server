@@ -549,6 +549,15 @@ public final class ModelProto {
      * <code>int64 reqTime = 3;</code>
      */
     long getReqTime();
+
+    /**
+     * <pre>
+     *重试次数
+     * </pre>
+     *
+     * <code>int32 retryTime = 4;</code>
+     */
+    int getRetryTime();
   }
   /**
    * <pre>
@@ -570,6 +579,7 @@ public final class ModelProto {
       serverType_ = 0;
       serverId_ = 0;
       reqTime_ = 0L;
+      retryTime_ = 0;
     }
 
     @java.lang.Override
@@ -613,6 +623,11 @@ public final class ModelProto {
             case 24: {
 
               reqTime_ = input.readInt64();
+              break;
+            }
+            case 32: {
+
+              retryTime_ = input.readInt32();
               break;
             }
           }
@@ -666,6 +681,19 @@ public final class ModelProto {
       return reqTime_;
     }
 
+    public static final int RETRYTIME_FIELD_NUMBER = 4;
+    private int retryTime_;
+    /**
+     * <pre>
+     *重试次数
+     * </pre>
+     *
+     * <code>int32 retryTime = 4;</code>
+     */
+    public int getRetryTime() {
+      return retryTime_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -687,6 +715,9 @@ public final class ModelProto {
       if (reqTime_ != 0L) {
         output.writeInt64(3, reqTime_);
       }
+      if (retryTime_ != 0) {
+        output.writeInt32(4, retryTime_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -706,6 +737,10 @@ public final class ModelProto {
       if (reqTime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, reqTime_);
+      }
+      if (retryTime_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, retryTime_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -729,6 +764,8 @@ public final class ModelProto {
           == other.getServerId());
       result = result && (getReqTime()
           == other.getReqTime());
+      result = result && (getRetryTime()
+          == other.getRetryTime());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -747,6 +784,8 @@ public final class ModelProto {
       hash = (37 * hash) + REQTIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getReqTime());
+      hash = (37 * hash) + RETRYTIME_FIELD_NUMBER;
+      hash = (53 * hash) + getRetryTime();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -886,6 +925,8 @@ public final class ModelProto {
 
         reqTime_ = 0L;
 
+        retryTime_ = 0;
+
         return this;
       }
 
@@ -911,6 +952,7 @@ public final class ModelProto {
         result.serverType_ = serverType_;
         result.serverId_ = serverId_;
         result.reqTime_ = reqTime_;
+        result.retryTime_ = retryTime_;
         onBuilt();
         return result;
       }
@@ -960,6 +1002,9 @@ public final class ModelProto {
         }
         if (other.getReqTime() != 0L) {
           setReqTime(other.getReqTime());
+        }
+        if (other.getRetryTime() != 0) {
+          setRetryTime(other.getRetryTime());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1065,6 +1110,44 @@ public final class ModelProto {
         onChanged();
         return this;
       }
+
+      private int retryTime_ ;
+      /**
+       * <pre>
+       *重试次数
+       * </pre>
+       *
+       * <code>int32 retryTime = 4;</code>
+       */
+      public int getRetryTime() {
+        return retryTime_;
+      }
+      /**
+       * <pre>
+       *重试次数
+       * </pre>
+       *
+       * <code>int32 retryTime = 4;</code>
+       */
+      public Builder setRetryTime(int value) {
+        
+        retryTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *重试次数
+       * </pre>
+       *
+       * <code>int32 retryTime = 4;</code>
+       */
+      public Builder clearRetryTime() {
+        
+        retryTime_ = 0;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
@@ -1132,6 +1215,15 @@ public final class ModelProto {
      * <code>int64 reqTime = 3;</code>
      */
     long getReqTime();
+
+    /**
+     * <pre>
+     *重试次数
+     * </pre>
+     *
+     * <code>int32 retryTime = 4;</code>
+     */
+    int getRetryTime();
   }
   /**
    * Protobuf type {@code proto.AckHeart}
@@ -1149,6 +1241,7 @@ public final class ModelProto {
       serverType_ = 0;
       serverId_ = 0;
       reqTime_ = 0L;
+      retryTime_ = 0;
     }
 
     @java.lang.Override
@@ -1192,6 +1285,11 @@ public final class ModelProto {
             case 24: {
 
               reqTime_ = input.readInt64();
+              break;
+            }
+            case 32: {
+
+              retryTime_ = input.readInt32();
               break;
             }
           }
@@ -1245,6 +1343,19 @@ public final class ModelProto {
       return reqTime_;
     }
 
+    public static final int RETRYTIME_FIELD_NUMBER = 4;
+    private int retryTime_;
+    /**
+     * <pre>
+     *重试次数
+     * </pre>
+     *
+     * <code>int32 retryTime = 4;</code>
+     */
+    public int getRetryTime() {
+      return retryTime_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -1266,6 +1377,9 @@ public final class ModelProto {
       if (reqTime_ != 0L) {
         output.writeInt64(3, reqTime_);
       }
+      if (retryTime_ != 0) {
+        output.writeInt32(4, retryTime_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1285,6 +1399,10 @@ public final class ModelProto {
       if (reqTime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, reqTime_);
+      }
+      if (retryTime_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, retryTime_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1308,6 +1426,8 @@ public final class ModelProto {
           == other.getServerId());
       result = result && (getReqTime()
           == other.getReqTime());
+      result = result && (getRetryTime()
+          == other.getRetryTime());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1326,6 +1446,8 @@ public final class ModelProto {
       hash = (37 * hash) + REQTIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getReqTime());
+      hash = (37 * hash) + RETRYTIME_FIELD_NUMBER;
+      hash = (53 * hash) + getRetryTime();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1461,6 +1583,8 @@ public final class ModelProto {
 
         reqTime_ = 0L;
 
+        retryTime_ = 0;
+
         return this;
       }
 
@@ -1486,6 +1610,7 @@ public final class ModelProto {
         result.serverType_ = serverType_;
         result.serverId_ = serverId_;
         result.reqTime_ = reqTime_;
+        result.retryTime_ = retryTime_;
         onBuilt();
         return result;
       }
@@ -1535,6 +1660,9 @@ public final class ModelProto {
         }
         if (other.getReqTime() != 0L) {
           setReqTime(other.getReqTime());
+        }
+        if (other.getRetryTime() != 0) {
+          setRetryTime(other.getRetryTime());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1637,6 +1765,44 @@ public final class ModelProto {
       public Builder clearReqTime() {
         
         reqTime_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int retryTime_ ;
+      /**
+       * <pre>
+       *重试次数
+       * </pre>
+       *
+       * <code>int32 retryTime = 4;</code>
+       */
+      public int getRetryTime() {
+        return retryTime_;
+      }
+      /**
+       * <pre>
+       *重试次数
+       * </pre>
+       *
+       * <code>int32 retryTime = 4;</code>
+       */
+      public Builder setRetryTime(int value) {
+        
+        retryTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *重试次数
+       * </pre>
+       *
+       * <code>int32 retryTime = 4;</code>
+       */
+      public Builder clearRetryTime() {
+        
+        retryTime_ = 0;
         onChanged();
         return this;
       }
@@ -8582,26 +8748,26 @@ public final class ModelProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\013model.proto\022\005proto\"&\n\010KeyValue\022\013\n\003key\030" +
-      "\001 \001(\014\022\r\n\005value\030\002 \001(\014\"A\n\010ReqHeart\022\022\n\nserv" +
+      "\001 \001(\014\022\r\n\005value\030\002 \001(\014\"T\n\010ReqHeart\022\022\n\nserv" +
       "erType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\017\n\007reqTim" +
-      "e\030\003 \001(\003\"A\n\010AckHeart\022\022\n\nserverType\030\001 \001(\005\022" +
-      "\020\n\010serverId\030\002 \001(\005\022\017\n\007reqTime\030\003 \001(\003\"D\n\nSe" +
-      "rverInfo\022\022\n\nserverType\030\001 \001(\005\022\020\n\010serverId" +
-      "\030\002 \001(\005\022\020\n\010ipConfig\030\003 \001(\014\"4\n\013ReqRegister\022" +
-      "%\n\nserverInfo\030\001 \001(\0132\021.proto.ServerInfo\"4" +
-      "\n\013AckRegister\022%\n\nserverInfo\030\001 \001(\0132\021.prot" +
-      "o.ServerInfo\"5\n\017NotRegisterInfo\022\"\n\007serve",
-      "rs\030\001 \003(\0132\021.proto.ServerInfo\"#\n\rReqServer" +
-      "Info\022\022\n\nserverType\030\001 \003(\005\"3\n\rAckServerInf" +
-      "o\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo\"4\n" +
-      "\016NotServerBreak\022\"\n\007servers\030\001 \003(\0132\021.proto" +
-      ".ServerInfo\"\032\n\010NotBreak\022\016\n\006userId\030\001 \001(\005\"" +
-      "\212\001\n\tTableRole\022\016\n\006roleId\030\001 \001(\005\022\020\n\010positio" +
-      "n\030\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(" +
-      "\014\022\r\n\005score\030\006 \001(\005\022\033\n\006player\030\007 \001(\0132\013.proto" +
-      ".Hero\022\r\n\005cards\030\010 \003(\005\"&\n\004Hero\022\016\n\006heroId\030\001" +
-      " \001(\005\022\016\n\006skills\030\002 \003(\005B\014B\nModelProtob\006prot",
-      "o3"
+      "e\030\003 \001(\003\022\021\n\tretryTime\030\004 \001(\005\"T\n\010AckHeart\022\022" +
+      "\n\nserverType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\017\n\007" +
+      "reqTime\030\003 \001(\003\022\021\n\tretryTime\030\004 \001(\005\"D\n\nServ" +
+      "erInfo\022\022\n\nserverType\030\001 \001(\005\022\020\n\010serverId\030\002" +
+      " \001(\005\022\020\n\010ipConfig\030\003 \001(\014\"4\n\013ReqRegister\022%\n" +
+      "\nserverInfo\030\001 \001(\0132\021.proto.ServerInfo\"4\n\013" +
+      "AckRegister\022%\n\nserverInfo\030\001 \001(\0132\021.proto.",
+      "ServerInfo\"5\n\017NotRegisterInfo\022\"\n\007servers" +
+      "\030\001 \003(\0132\021.proto.ServerInfo\"#\n\rReqServerIn" +
+      "fo\022\022\n\nserverType\030\001 \003(\005\"3\n\rAckServerInfo\022" +
+      "\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo\"4\n\016N" +
+      "otServerBreak\022\"\n\007servers\030\001 \003(\0132\021.proto.S" +
+      "erverInfo\"\032\n\010NotBreak\022\016\n\006userId\030\001 \001(\005\"\212\001" +
+      "\n\tTableRole\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030" +
+      "\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022" +
+      "\r\n\005score\030\006 \001(\005\022\033\n\006player\030\007 \001(\0132\013.proto.H" +
+      "ero\022\r\n\005cards\030\010 \003(\005\"&\n\004Hero\022\016\n\006heroId\030\001 \001",
+      "(\005\022\016\n\006skills\030\002 \003(\005B\014B\nModelProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -8626,13 +8792,13 @@ public final class ModelProto {
     internal_static_proto_ReqHeart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqHeart_descriptor,
-        new java.lang.String[] { "ServerType", "ServerId", "ReqTime", });
+        new java.lang.String[] { "ServerType", "ServerId", "ReqTime", "RetryTime", });
     internal_static_proto_AckHeart_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_AckHeart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckHeart_descriptor,
-        new java.lang.String[] { "ServerType", "ServerId", "ReqTime", });
+        new java.lang.String[] { "ServerType", "ServerId", "ReqTime", "RetryTime", });
     internal_static_proto_ServerInfo_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_proto_ServerInfo_fieldAccessorTable = new

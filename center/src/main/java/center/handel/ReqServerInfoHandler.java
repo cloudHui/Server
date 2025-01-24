@@ -27,7 +27,7 @@ public class ReqServerInfoHandler implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqServerInfo, int mapId, long sequence) {
 		ModelProto.ReqServerInfo req = (ModelProto.ReqServerInfo) reqServerInfo;
-		ServerClientManager manager = Center.getInstance().serverManager;
+		ServerClientManager manager = Center.getInstance().getServerManager();
 		List<Integer> serverTypeList = req.getServerTypeList();
 		ModelProto.AckServerInfo.Builder ack = ModelProto.AckServerInfo.newBuilder();
 		ServerType server;

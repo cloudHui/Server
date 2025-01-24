@@ -117,8 +117,8 @@ public class Room {
 
 		setInnerIp(IpUtil.getLocalIP());
 
-		new ServerService(0, RoomClient.class).start(configuration.getHostList());
-
+		ServerService service = new ServerService(0, RoomClient.class).start(configuration.getHostList());
+		setServerManager(new ServerManager(service.getWorkerGroup()));
 		//向注册中心注册
 		registerToCenter();
 
@@ -129,12 +129,10 @@ public class Room {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
-		setServerManager(new ServerManager());
-		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Room, getServerId(), getInnerIp() + ":" + getPort(),
-				ServerType.Center, 0);
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), getInnerIp() + ":" + getPort(),
+				ServerType.Room);
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package room.handel;
 
 import com.google.protobuf.Message;
+import msg.ServerType;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -20,11 +21,11 @@ public class AckServerInfoHandel implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
-		ModelProto.AckServerInfo ack= (ModelProto.AckServerInfo) msg;
+		ModelProto.AckServerInfo ack = (ModelProto.AckServerInfo) msg;
 		return Room.getInstance().getServerManager().connectToSever(ack.getServersList(),
 				Room.getInstance().getServerId(),
 				Room.getInstance().getInnerIp() + "：" + Room.getInstance().getPort(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS);
+				ConnectProcessor.HANDLERS, ServerType.Room);
 	}
 }

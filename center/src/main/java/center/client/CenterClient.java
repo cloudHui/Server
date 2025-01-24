@@ -30,7 +30,7 @@ public class CenterClient extends ClientHandler {
 			if (serverType == null) {
 				return;
 			}
-			ServerClientManager serverClientManager = Center.getInstance().serverManager;
+			ServerClientManager serverClientManager = Center.getInstance().getServerManager();
 			serverClientManager.removeServerClient(serverType, serverInfo.getServerId());
 			if (serverType != ServerType.Gate) {
 				//向 gate 同步 其他服务信息
@@ -47,6 +47,7 @@ public class CenterClient extends ClientHandler {
 		});
 
 		setSafe((msgId) -> true);
+
 	}
 
 	public ModelProto.ServerInfo getServerInfo() {

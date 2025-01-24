@@ -31,7 +31,7 @@ public class ReqRegisterHandler implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqRegister, int mapId, long sequence) {
 		ModelProto.ReqRegister req = (ModelProto.ReqRegister) reqRegister;
-		ServerClientManager manager = Center.getInstance().serverManager;
+		ServerClientManager manager = Center.getInstance().getServerManager();
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
 		if (serverType == null) {

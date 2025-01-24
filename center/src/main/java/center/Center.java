@@ -10,7 +10,12 @@ import utils.config.ConfigurationManager;
 public class Center {
 	private static final Logger logger = LoggerFactory.getLogger(Center.class);
 	private static final Center instance = new Center();
-	public ServerClientManager serverManager = new ServerClientManager();
+
+	private final ServerClientManager serverManager = new ServerClientManager();
+
+	public ServerClientManager getServerManager() {
+		return serverManager;
+	}
 
 	private Center() {
 	}
