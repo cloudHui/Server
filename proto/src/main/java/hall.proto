@@ -3,8 +3,6 @@ option java_outer_classname = "HallProto";
 
 package proto;
 
-import "model.proto";
-
 //请求登录
 message ReqLogin {
     bytes cert = 1; //证书

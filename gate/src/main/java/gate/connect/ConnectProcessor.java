@@ -5,6 +5,7 @@ import java.util.Map;
 
 import gate.client.GateTcpClient;
 import gate.handel.AckServerInfoHandel;
+import gate.handel.BroadCastHandler;
 import gate.handel.RegisterNoticeHandler;
 import gate.handel.ServerBreakNoticeHandler;
 import msg.MessageId;
@@ -16,6 +17,7 @@ import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.GateProto;
 import proto.HallProto;
 import proto.ModelProto;
 
@@ -38,6 +40,8 @@ public class ConnectProcessor {
 				return ModelProto.NotRegisterInfo.parseFrom(bytes);
 			case MessageId.BREAK_NOTICE:
 				return ModelProto.NotServerBreak.parseFrom(bytes);
+			case MessageId.BROAD:
+				return GateProto.BroadCast.parseFrom(bytes);
 			default: {
 				return null;
 			}
@@ -51,6 +55,8 @@ public class ConnectProcessor {
 		handlers.put(MessageId.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
 		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
+		handlers.put(MessageId.BROAD, BroadCastHandler.getInstance());
+
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
@@ -67,7 +73,7 @@ public class ConnectProcessor {
 				userId = ack.getUserId();
 			}
 			//直接转发给客户端的
-			return transferMsg(tcpMessage.getMapId(), tcpMessage, userId);
+			return transferMsg(tcpMessage.getClientId(), tcpMessage, userId);
 		}
 		return false;
 	};
@@ -75,8 +81,8 @@ public class ConnectProcessor {
 	/**
 	 * 找到客户端链接 并转发消息
 	 */
-	public static boolean transferMsg(long connectId, TCPMessage msg, int userId) {
-		GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(connectId);
+	public static boolean transferMsg(int clientId, TCPMessage msg, int userId) {
+		GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(clientId);
 		if (null != gateClient) {
 			if (userId != 0) {
 				gateClient.setRoleId(userId);
@@ -84,7 +90,7 @@ public class ConnectProcessor {
 			gateClient.sendMessage(msg);
 			return true;
 		}
-		logger.error("[ERROR! failed for transfer message(connect:{} message id:{})]", connectId, msg.getMessageId());
+		logger.error("[ERROR! failed for transfer message(clientId:{} message id:{})]", clientId, msg.getMessageId());
 		return false;
 	}
 }

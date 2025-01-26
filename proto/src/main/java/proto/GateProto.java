@@ -14,6 +14,754 @@ public final class GateProto {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  public interface BroadCastOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.BroadCast)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *消息内容
+     * </pre>
+     *
+     * <code>bytes message = 1;</code>
+     */
+    com.google.protobuf.ByteString getMessage();
+
+    /**
+     * <pre>
+     *0个人 全服广播1 全渠道广播2 全工会广播3
+     * </pre>
+     *
+     * <code>int32 type = 2;</code>
+     */
+    int getType();
+
+    /**
+     * <code>int32 clientId = 3;</code>
+     */
+    int getClientId();
+
+    /**
+     * <code>int32 channel = 4;</code>
+     */
+    int getChannel();
+
+    /**
+     * <code>int32 club = 5;</code>
+     */
+    int getClub();
+  }
+  /**
+   * Protobuf type {@code proto.BroadCast}
+   */
+  public  static final class BroadCast extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.BroadCast)
+      BroadCastOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BroadCast.newBuilder() to construct.
+    private BroadCast(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BroadCast() {
+      message_ = com.google.protobuf.ByteString.EMPTY;
+      type_ = 0;
+      clientId_ = 0;
+      channel_ = 0;
+      club_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private BroadCast(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+
+              message_ = input.readBytes();
+              break;
+            }
+            case 16: {
+
+              type_ = input.readInt32();
+              break;
+            }
+            case 24: {
+
+              clientId_ = input.readInt32();
+              break;
+            }
+            case 32: {
+
+              channel_ = input.readInt32();
+              break;
+            }
+            case 40: {
+
+              club_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GateProto.internal_static_proto_BroadCast_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GateProto.internal_static_proto_BroadCast_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GateProto.BroadCast.class, proto.GateProto.BroadCast.Builder.class);
+    }
+
+    public static final int MESSAGE_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString message_;
+    /**
+     * <pre>
+     *消息内容
+     * </pre>
+     *
+     * <code>bytes message = 1;</code>
+     */
+    public com.google.protobuf.ByteString getMessage() {
+      return message_;
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 2;
+    private int type_;
+    /**
+     * <pre>
+     *0个人 全服广播1 全渠道广播2 全工会广播3
+     * </pre>
+     *
+     * <code>int32 type = 2;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+
+    public static final int CLIENTID_FIELD_NUMBER = 3;
+    private int clientId_;
+    /**
+     * <code>int32 clientId = 3;</code>
+     */
+    public int getClientId() {
+      return clientId_;
+    }
+
+    public static final int CHANNEL_FIELD_NUMBER = 4;
+    private int channel_;
+    /**
+     * <code>int32 channel = 4;</code>
+     */
+    public int getChannel() {
+      return channel_;
+    }
+
+    public static final int CLUB_FIELD_NUMBER = 5;
+    private int club_;
+    /**
+     * <code>int32 club = 5;</code>
+     */
+    public int getClub() {
+      return club_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!message_.isEmpty()) {
+        output.writeBytes(1, message_);
+      }
+      if (type_ != 0) {
+        output.writeInt32(2, type_);
+      }
+      if (clientId_ != 0) {
+        output.writeInt32(3, clientId_);
+      }
+      if (channel_ != 0) {
+        output.writeInt32(4, channel_);
+      }
+      if (club_ != 0) {
+        output.writeInt32(5, club_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!message_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, message_);
+      }
+      if (type_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, type_);
+      }
+      if (clientId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, clientId_);
+      }
+      if (channel_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, channel_);
+      }
+      if (club_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, club_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GateProto.BroadCast)) {
+        return super.equals(obj);
+      }
+      proto.GateProto.BroadCast other = (proto.GateProto.BroadCast) obj;
+
+      boolean result = true;
+      result = result && getMessage()
+          .equals(other.getMessage());
+      result = result && (getType()
+          == other.getType());
+      result = result && (getClientId()
+          == other.getClientId());
+      result = result && (getChannel()
+          == other.getChannel());
+      result = result && (getClub()
+          == other.getClub());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getMessage().hashCode();
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getType();
+      hash = (37 * hash) + CLIENTID_FIELD_NUMBER;
+      hash = (53 * hash) + getClientId();
+      hash = (37 * hash) + CHANNEL_FIELD_NUMBER;
+      hash = (53 * hash) + getChannel();
+      hash = (37 * hash) + CLUB_FIELD_NUMBER;
+      hash = (53 * hash) + getClub();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GateProto.BroadCast parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GateProto.BroadCast parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GateProto.BroadCast parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GateProto.BroadCast parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GateProto.BroadCast parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GateProto.BroadCast parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GateProto.BroadCast parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GateProto.BroadCast parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GateProto.BroadCast parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GateProto.BroadCast parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GateProto.BroadCast parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GateProto.BroadCast parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GateProto.BroadCast prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.BroadCast}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.BroadCast)
+        proto.GateProto.BroadCastOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GateProto.internal_static_proto_BroadCast_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GateProto.internal_static_proto_BroadCast_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GateProto.BroadCast.class, proto.GateProto.BroadCast.Builder.class);
+      }
+
+      // Construct using proto.GateProto.BroadCast.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        message_ = com.google.protobuf.ByteString.EMPTY;
+
+        type_ = 0;
+
+        clientId_ = 0;
+
+        channel_ = 0;
+
+        club_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GateProto.internal_static_proto_BroadCast_descriptor;
+      }
+
+      public proto.GateProto.BroadCast getDefaultInstanceForType() {
+        return proto.GateProto.BroadCast.getDefaultInstance();
+      }
+
+      public proto.GateProto.BroadCast build() {
+        proto.GateProto.BroadCast result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GateProto.BroadCast buildPartial() {
+        proto.GateProto.BroadCast result = new proto.GateProto.BroadCast(this);
+        result.message_ = message_;
+        result.type_ = type_;
+        result.clientId_ = clientId_;
+        result.channel_ = channel_;
+        result.club_ = club_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GateProto.BroadCast) {
+          return mergeFrom((proto.GateProto.BroadCast)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GateProto.BroadCast other) {
+        if (other == proto.GateProto.BroadCast.getDefaultInstance()) return this;
+        if (other.getMessage() != com.google.protobuf.ByteString.EMPTY) {
+          setMessage(other.getMessage());
+        }
+        if (other.getType() != 0) {
+          setType(other.getType());
+        }
+        if (other.getClientId() != 0) {
+          setClientId(other.getClientId());
+        }
+        if (other.getChannel() != 0) {
+          setChannel(other.getChannel());
+        }
+        if (other.getClub() != 0) {
+          setClub(other.getClub());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GateProto.BroadCast parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GateProto.BroadCast) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private com.google.protobuf.ByteString message_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       *消息内容
+       * </pre>
+       *
+       * <code>bytes message = 1;</code>
+       */
+      public com.google.protobuf.ByteString getMessage() {
+        return message_;
+      }
+      /**
+       * <pre>
+       *消息内容
+       * </pre>
+       *
+       * <code>bytes message = 1;</code>
+       */
+      public Builder setMessage(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        message_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息内容
+       * </pre>
+       *
+       * <code>bytes message = 1;</code>
+       */
+      public Builder clearMessage() {
+        
+        message_ = getDefaultInstance().getMessage();
+        onChanged();
+        return this;
+      }
+
+      private int type_ ;
+      /**
+       * <pre>
+       *0个人 全服广播1 全渠道广播2 全工会广播3
+       * </pre>
+       *
+       * <code>int32 type = 2;</code>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <pre>
+       *0个人 全服广播1 全渠道广播2 全工会广播3
+       * </pre>
+       *
+       * <code>int32 type = 2;</code>
+       */
+      public Builder setType(int value) {
+        
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *0个人 全服广播1 全渠道广播2 全工会广播3
+       * </pre>
+       *
+       * <code>int32 type = 2;</code>
+       */
+      public Builder clearType() {
+        
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int clientId_ ;
+      /**
+       * <code>int32 clientId = 3;</code>
+       */
+      public int getClientId() {
+        return clientId_;
+      }
+      /**
+       * <code>int32 clientId = 3;</code>
+       */
+      public Builder setClientId(int value) {
+        
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 clientId = 3;</code>
+       */
+      public Builder clearClientId() {
+        
+        clientId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int channel_ ;
+      /**
+       * <code>int32 channel = 4;</code>
+       */
+      public int getChannel() {
+        return channel_;
+      }
+      /**
+       * <code>int32 channel = 4;</code>
+       */
+      public Builder setChannel(int value) {
+        
+        channel_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 channel = 4;</code>
+       */
+      public Builder clearChannel() {
+        
+        channel_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int club_ ;
+      /**
+       * <code>int32 club = 5;</code>
+       */
+      public int getClub() {
+        return club_;
+      }
+      /**
+       * <code>int32 club = 5;</code>
+       */
+      public Builder setClub(int value) {
+        
+        club_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 club = 5;</code>
+       */
+      public Builder clearClub() {
+        
+        club_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.BroadCast)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.BroadCast)
+    private static final proto.GateProto.BroadCast DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GateProto.BroadCast();
+    }
+
+    public static proto.GateProto.BroadCast getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BroadCast>
+        PARSER = new com.google.protobuf.AbstractParser<BroadCast>() {
+      public BroadCast parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new BroadCast(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<BroadCast> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BroadCast> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GateProto.BroadCast getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_BroadCast_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_BroadCast_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -23,7 +771,10 @@ public final class GateProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\ngate.proto\022\005protoB\013B\tGateProtob\006proto3"
+      "\n\ngate.proto\022\005proto\"[\n\tBroadCast\022\017\n\007mess" +
+      "age\030\001 \001(\014\022\014\n\004type\030\002 \001(\005\022\020\n\010clientId\030\003 \001(" +
+      "\005\022\017\n\007channel\030\004 \001(\005\022\014\n\004club\030\005 \001(\005B\013B\tGate" +
+      "Protob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -37,6 +788,12 @@ public final class GateProto {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_proto_BroadCast_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_proto_BroadCast_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_BroadCast_descriptor,
+        new java.lang.String[] { "Message", "Type", "ClientId", "Channel", "Club", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

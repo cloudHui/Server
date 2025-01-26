@@ -2304,13 +2304,12 @@ public final class HallProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nhall.proto\022\005proto\032\013model.proto\":\n\010ReqL" +
-      "ogin\022\014\n\004cert\030\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006" +
-      "avatar\030\003 \001(\014\":\n\010AckLogin\022\014\n\004cert\030\001 \001(\014\022\016" +
-      "\n\006userId\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\"\r\n\013ReqR" +
-      "oomList\"9\n\013AckRoomList\022\016\n\006roomId\030\001 \001(\005\022\014" +
-      "\n\004rule\030\002 \001(\014\022\014\n\004open\030\003 \001(\010B\013B\tHallProtob" +
-      "\006proto3"
+      "\n\nhall.proto\022\005proto\":\n\010ReqLogin\022\014\n\004cert\030" +
+      "\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006avatar\030\003 \001(\014\"" +
+      ":\n\010AckLogin\022\014\n\004cert\030\001 \001(\014\022\016\n\006userId\030\002 \001(" +
+      "\005\022\020\n\010nickName\030\003 \001(\014\"\r\n\013ReqRoomList\"9\n\013Ac" +
+      "kRoomList\022\016\n\006roomId\030\001 \001(\005\022\014\n\004rule\030\002 \001(\014\022" +
+      "\014\n\004open\030\003 \001(\010B\013B\tHallProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2323,7 +2322,6 @@ public final class HallProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          proto.ModelProto.getDescriptor(),
         }, assigner);
     internal_static_proto_ReqLogin_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -2349,7 +2347,6 @@ public final class HallProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRoomList_descriptor,
         new java.lang.String[] { "RoomId", "Rule", "Open", });
-    proto.ModelProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

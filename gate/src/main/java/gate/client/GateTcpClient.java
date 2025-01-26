@@ -1,24 +1,23 @@
 package gate.client;
 
-import gate.Gate;
 import msg.MessageId;
-import msg.ServerType;
 import net.client.handler.ClientHandler;
-import net.connect.TCPConnect;
 import net.message.TCPMaker;
-import proto.ModelProto;
-import utils.ServerManager;
 
 
 public class GateTcpClient extends ClientHandler {
 
-	private int roleId = 0;
-	private int gameId = 0;
-	private int hallId = 0;
-	private int roomId = 0;
+	private int roleId;
+	private int gameId;
+	private int hallId;
+	private int roomId;
+
+	//Todo 设置渠道和工会id
+	private int clubId;
+	private int channel;
 
 	public GateTcpClient() {
-		super(ClientProto.PARSER, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
+		super(null, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent(client -> ClientProto.notServerBreak(roleId, gameId, hallId, roomId));
 
@@ -55,5 +54,21 @@ public class GateTcpClient extends ClientHandler {
 
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
+	}
+
+	public int getClubId() {
+		return clubId;
+	}
+
+	public void setClubId(int clubId) {
+		this.clubId = clubId;
+	}
+
+	public int getChannel() {
+		return channel;
+	}
+
+	public void setChannel(int channel) {
+		this.channel = channel;
 	}
 }

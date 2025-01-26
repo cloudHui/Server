@@ -1,11 +1,9 @@
 package gate.client;
 
-import com.google.protobuf.MessageLite;
 import gate.Gate;
 import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
-import net.message.Parser;
 import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
@@ -17,56 +15,28 @@ public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	/**
-	 * 消息转化接口
-	 */
-	public final static Parser PARSER = ClientProto::parserMessage;
-
-	/**
-	 * 消息转化
-	 */
-	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
-		MessageId.GateMsg gateMsg = MessageId.GateMsg.get(id);
-		if (gateMsg != null) {
-			Class<?> className = gateMsg.getClassName();
-			try {
-				return (com.google.protobuf.Message) MessageId.getMessageObject((Class<MessageLite>) className, bytes);
-			} catch (Exception e) {
-				logger.error("[parse message error messageId :{} className:{}]", id, className.getSimpleName());
-			}
-		}
-
-		return null;
-	}
-
-
-	/**
 	 * 转发消息接口
 	 */
-	public final static Transfer TRANSFER = (gateClient, tcpMessage) -> {
-		int msgId = tcpMessage.getMessageId();
-		if (msgId > MessageId.BASE_ID_INDEX) {
-			return transferMessage((GateTcpClient) gateClient, tcpMessage, msgId);
-		}
-		return false;
-	};
+	public final static Transfer TRANSFER = (gateClient, tcpMessage) -> transferMessage((GateTcpClient) gateClient, tcpMessage);
 
 
 	/**
 	 * 消息转发到服务器
 	 */
-	private static boolean transferMessage(GateTcpClient gateClient, TCPMessage tcpMessage, int msgId) {
+	private static boolean transferMessage(GateTcpClient gateClient, TCPMessage tcpMessage) {
+		int msgId = tcpMessage.getMessageId();
 		//奇数消息是发给服务的
-		ServerManager serverManager = Gate.getInstance().getServerManager();
-		tcpMessage.setMapId((int) gateClient.getId());
-		tcpMessage.setClientId(gateClient.getRoleId());
+		ServerManager server = Gate.getInstance().getServerManager();
+		tcpMessage.setMapId(gateClient.getId());
+		tcpMessage.setClientId(gateClient.getId());
 		int clientId;
 		TCPConnect serverClient;
 		if ((msgId & MessageId.GAME_TYPE) != 0) {
 			clientId = gateClient.getGameId();
 			if (clientId != 0) {
-				serverClient = serverManager.getServerClient(ServerType.Game, clientId);
+				serverClient = server.getServerClient(ServerType.Game, clientId);
 			} else {
-				serverClient = serverManager.getServerClient(ServerType.Game);
+				serverClient = server.getServerClient(ServerType.Game);
 				gateClient.setGameId(serverClient.getConnectServer().getServerId());
 			}
 			if (serverClient != null) {
@@ -78,9 +48,9 @@ public class ClientProto {
 		} else if ((msgId & MessageId.HALL_TYPE) != 0) {
 			clientId = gateClient.getHallId();
 			if (clientId != 0) {
-				serverClient = serverManager.getServerClient(ServerType.Hall, clientId);
+				serverClient = server.getServerClient(ServerType.Hall, clientId);
 			} else {
-				serverClient = serverManager.getServerClient(ServerType.Hall);
+				serverClient = server.getServerClient(ServerType.Hall);
 				gateClient.setHallId(serverClient.getConnectServer().getServerId());
 			}
 			if (serverClient != null) {
@@ -92,9 +62,9 @@ public class ClientProto {
 		} else if ((msgId & MessageId.ROOM_TYPE) != 0) {
 			clientId = gateClient.getRoomId();
 			if (clientId != 0) {
-				serverClient = serverManager.getServerClient(ServerType.Room, clientId);
+				serverClient = server.getServerClient(ServerType.Room, clientId);
 			} else {
-				serverClient = serverManager.getServerClient(ServerType.Room);
+				serverClient = server.getServerClient(ServerType.Room);
 				gateClient.setRoomId(serverClient.getConnectServer().getServerId());
 			}
 			if (serverClient != null) {

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.protobuf.Internal;
 import com.google.protobuf.MessageLite;
 import proto.GameProto;
+import proto.GateProto;
 import proto.HallProto;
 import proto.RoomProto;
 
@@ -31,9 +32,12 @@ public interface MessageId {
 
 	int NOT_BREAK = 9;//通知玩家掉线
 
+	int BROAD = 10;//广播
+
 	int BASE_ID_INDEX = 0x1000;
 
 	enum GateMsg {
+		BROAD_CAST(BROAD, GateProto.BroadCast.class),
 		;
 		private final int id;
 

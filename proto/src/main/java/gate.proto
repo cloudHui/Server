@@ -2,3 +2,12 @@ syntax = "proto3";
 option java_outer_classname = "GateProto";
 
 package proto;
+
+
+message BroadCast{
+    bytes message = 1;//消息内容
+    int32 type = 2;//0个人 全服广播1 全渠道广播2 全工会广播3
+    int32 clientId = 3;
+    int32 channel = 4;
+    int32 club = 5;
+}
