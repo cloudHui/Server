@@ -113,7 +113,7 @@ public class ServerManager {
 		connect.sendMessage(MessageId.HEART, manageHeart(connect.getConnectServer().getServerType()), OVER_TIME)
 				.whenComplete((message, e) -> {
 					if (null != e) {
-						logger.error("[ERROR! failed for send HEART  connect {}]", connect, e);
+						logger.error("[ERROR! failed for send HEART  connect {}] {}", connect, e.getMessage());
 					} else {
 						try {
 							ModelProto.AckHeart ack = ((ModelProto.AckHeart) message);
@@ -150,7 +150,7 @@ public class ServerManager {
 				parser,
 				handlers,
 				activeHandle,
-				null);
+				closeHandle);
 		tConnect.setLocalServer(new ServerInfo(localServer.getServerType(), serverId, ipPorts));
 		tConnect.setConnectServer(new ServerInfo(serverType.getServerType(), 0, (ipPort[0] + ":" + ipPort[1])));
 		//助弱要连接的是注册服务 需要设置重连重试和断链重试
@@ -217,9 +217,9 @@ public class ServerManager {
 	 */
 	private final EventHandle activeHandle = handler -> ((TCPConnect) handler)
 			.sendMessage(MessageId.REQ_REGISTER, manageReqRegister(((TCPConnect) handler).getLocalServer()).build(), OVER_TIME)
-			.whenComplete((message, throwable) -> {
-				if (null != throwable) {
-					logger.error("[ERROR! failed send register message to {}]", ((TCPConnect) handler).getConnectServer(), throwable);
+			.whenComplete((message, e) -> {
+				if (null != e) {
+					logger.error("[ERROR! failed send register message to {} {}]", ((TCPConnect) handler).getConnectServer(), e.getMessage());
 				} else {
 					try {
 						ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
@@ -232,4 +232,16 @@ public class ServerManager {
 					}
 				}
 			});
+
+	/**
+	 * 结束关闭处理
+	 */
+	private final EventHandle closeHandle = channelHandler -> {
+		TCPConnect connect = (TCPConnect) channelHandler;
+		ServerType serverType = ServerType.get(connect.getConnectServer().getServerType());
+		if (serverType != null) {
+			removeServerClient(serverType, connect.getConnectServer().getServerId());
+		}
+		logger.error("[closeHandle:{}]", channelHandler.toString());
+	};
 }
