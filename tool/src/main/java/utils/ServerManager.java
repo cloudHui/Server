@@ -1,7 +1,6 @@
 package utils;
 
 import java.net.InetSocketAddress;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,35 +106,10 @@ public class ServerManager {
 		return null;
 	}
 
-
-	/**
-	 * 服务链接成功处理事件
-	 */
-	private final EventHandle activeHandle = handler ->
-			((TCPConnect) handler)
-					.sendMessage(MessageId.REQ_REGISTER, manageReqRegister(((TCPConnect) handler).getLocalServer()).build(), OVER_TIME)
-					.whenComplete((r, e) -> {
-						if (null != e) {
-							logger.error("[ERROR! failed send register message to {}]", ((TCPConnect) handler).getConnectServer(), e);
-						} else {
-							try {
-								ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) r).getServerInfo();
-								((TCPConnect) handler).getConnectServer().setServerId(serverInfo.getServerId());
-								addServerClient(((TCPConnect) handler));
-								logger.info("[receive register message to {} success]", ((TCPConnect) handler).getConnectServer());
-								workerGroup.schedule(() -> sendHeart(((TCPConnect) handler)), 1, TimeUnit.SECONDS);
-							} catch (Exception ex) {
-								ex.printStackTrace();
-							}
-						}
-					});
-
-
 	/**
 	 * 发送心跳
 	 */
 	private void sendHeart(TCPConnect connect) {
-		logger.error("[sendHeart:{}]", new Timestamp(System.currentTimeMillis()));
 		connect.sendMessage(MessageId.HEART, manageHeart(connect.getConnectServer().getServerType()), OVER_TIME)
 				.whenComplete((message, e) -> {
 					if (null != e) {
@@ -144,7 +118,7 @@ public class ServerManager {
 						try {
 							ModelProto.AckHeart ack = ((ModelProto.AckHeart) message);
 							long cost = System.currentTimeMillis() - ack.getReqTime();
-							logger.info("[receive connect:{} HEART_ACK cost:{}ms success]", connect, cost);
+							logger.debug("[receive connect:{} HEART_ACK cost:{}ms success]", connect, cost);
 							workerGroup.schedule(() -> sendHeart(connect), 1, TimeUnit.SECONDS);
 						} catch (Exception ex) {
 							ex.printStackTrace();
@@ -236,4 +210,26 @@ public class ServerManager {
 				.setServerId(localServer.getServerId())
 				.setIpConfig(ByteString.copyFromUtf8(localServer.getIpConfig())));
 	}
+
+
+	/**
+	 * 服务链接成功处理事件
+	 */
+	private final EventHandle activeHandle = handler -> ((TCPConnect) handler)
+			.sendMessage(MessageId.REQ_REGISTER, manageReqRegister(((TCPConnect) handler).getLocalServer()).build(), OVER_TIME)
+			.whenComplete((message, throwable) -> {
+				if (null != throwable) {
+					logger.error("[ERROR! failed send register message to {}]", ((TCPConnect) handler).getConnectServer(), throwable);
+				} else {
+					try {
+						ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
+						((TCPConnect) handler).getConnectServer().setServerId(serverInfo.getServerId());
+						addServerClient(((TCPConnect) handler));
+						logger.info("[receive register message to {} success]", ((TCPConnect) handler).getConnectServer());
+						workerGroup.schedule(() -> sendHeart(((TCPConnect) handler)), 1, TimeUnit.SECONDS);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			});
 }

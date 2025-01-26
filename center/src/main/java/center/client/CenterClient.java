@@ -32,22 +32,6 @@ public class CenterClient extends ClientHandler {
 			}
 			ServerClientManager manager = Center.getInstance().getServerManager();
 			manager.removeServerClient(serverType, serverInfo.getServerId());
-
-			switch (serverType) {
-				case Game:
-					noticeBreak(manager, serverInfo, ServerType.Gate);
-					noticeBreak(manager, serverInfo, ServerType.Room);
-					break;
-				case Room:
-					noticeBreak(manager, serverInfo, ServerType.Gate);
-					noticeBreak(manager, serverInfo, ServerType.Hall);
-					break;
-				case Hall:
-					noticeBreak(manager, serverInfo, ServerType.Gate);
-					break;
-				default:
-					break;
-			}
 		});
 
 		setSafe((msgId) -> true);
@@ -60,23 +44,5 @@ public class CenterClient extends ClientHandler {
 
 	public void setServerInfo(ModelProto.ServerInfo serverInfo) {
 		this.serverInfo = serverInfo;
-	}
-
-	/**
-	 * 通知服务关闭
-	 *
-	 * @param serverInfo 断链上来的服务信息
-	 * @param serverType 要通知的服务
-	 */
-	private void noticeBreak(ServerClientManager manager, ModelProto.ServerInfo serverInfo, ServerType serverType) {
-		List<ClientHandler> typeServer = manager.getAllTypeServer(serverType);
-		if (!typeServer.isEmpty()) {
-			for (ClientHandler gate : typeServer) {
-				ModelProto.NotServerBreak.Builder change = ModelProto.NotServerBreak.newBuilder();
-				change.addServers(serverInfo);
-				gate.sendMessage(MessageId.BREAK_NOTICE, change.build());
-			}
-			LOGGER.error("[center server:{} info:{} break]", serverType, serverInfo.toString());
-		}
 	}
 }
