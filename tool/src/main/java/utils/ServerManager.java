@@ -215,23 +215,25 @@ public class ServerManager {
 	/**
 	 * 服务链接成功处理事件
 	 */
-	private final EventHandle activeHandle = handler -> ((TCPConnect) handler)
-			.sendMessage(MessageId.REQ_REGISTER, manageReqRegister(((TCPConnect) handler).getLocalServer()).build(), OVER_TIME)
-			.whenComplete((message, e) -> {
-				if (null != e) {
-					logger.error("[ERROR! failed send register message to {} {}]", ((TCPConnect) handler).getConnectServer(), e.getMessage());
-				} else {
-					try {
-						ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
-						((TCPConnect) handler).getConnectServer().setServerId(serverInfo.getServerId());
-						addServerClient(((TCPConnect) handler));
-						logger.info("[receive register message to {} success]", ((TCPConnect) handler).getConnectServer());
-						workerGroup.schedule(() -> sendHeart(((TCPConnect) handler)), 1, TimeUnit.SECONDS);
-					} catch (Exception ex) {
-						ex.printStackTrace();
+	private final EventHandle activeHandle = channelHandler -> {
+		TCPConnect handler = (TCPConnect) channelHandler;
+		handler.sendMessage(MessageId.REQ_REGISTER, manageReqRegister(handler.getLocalServer()).build(), OVER_TIME)
+				.whenComplete((message, e) -> {
+					if (null != e) {
+						logger.error("[ERROR! failed send register message to {} {}]", handler.getConnectServer(), e.getMessage());
+					} else {
+						try {
+							ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
+							handler.getConnectServer().setServerId(serverInfo.getServerId());
+							addServerClient(handler);
+							logger.info("[receive register message to {} success]", handler.getConnectServer());
+							workerGroup.schedule(() -> sendHeart(handler), 1, TimeUnit.SECONDS);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 					}
-				}
-			});
+				});
+	};
 
 	/**
 	 * 结束关闭处理
@@ -242,6 +244,6 @@ public class ServerManager {
 		if (serverType != null) {
 			removeServerClient(serverType, connect.getConnectServer().getServerId());
 		}
-		logger.error("[closeHandle:{}]", channelHandler.toString());
+		logger.error("[closeHandle:{}]", connect.getConnectServer());
 	};
 }
