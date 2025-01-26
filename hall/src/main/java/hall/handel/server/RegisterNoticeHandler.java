@@ -23,9 +23,10 @@ public class RegisterNoticeHandler implements Handler {
 	public boolean handler(Sender sender, int aLong, Message registerInfo, int mapId, long sequence) {
 		ModelProto.NotRegisterInfo req = (ModelProto.NotRegisterInfo) registerInfo;
 
-		return Hall.getInstance().getServerManager().connectToSever(req.getServersList(),
-				Hall.getInstance().getServerId(), Hall.getInstance().getInnerIp() + "：" + Hall.getInstance().getPort(),
+		Hall.getInstance().getServerManager().connectToSever(req.getServersList(),
+				Hall.getInstance().getServerId(), Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Room);
+		return true;
 	}
 }

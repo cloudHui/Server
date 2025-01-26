@@ -12,7 +12,6 @@ import proto.ModelProto;
 import room.handel.AckServerInfoHandel;
 import room.handel.RegisterNoticeHandler;
 import room.handel.ServerBreakNoticeHandler;
-import utils.handel.HeartAckHandler;
 
 public class ConnectProcessor {
 	public final static Parser PARSER = (id, bytes) -> {
@@ -37,7 +36,6 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageId.HEART_ACK, HeartAckHandler.getInstance());
 		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
 		handlers.put(MessageId.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
 		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());

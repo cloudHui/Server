@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
 import proto.ModelProto;
-import utils.handel.HeartAckHandler;
 
 public class ConnectProcessor {
 
@@ -50,7 +49,6 @@ public class ConnectProcessor {
 	static {
 		handlers = new HashMap<>();
 		handlers.put(MessageId.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
-		handlers.put(MessageId.HEART_ACK, HeartAckHandler.getInstance());
 		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
 		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
 	}

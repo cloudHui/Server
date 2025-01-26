@@ -1,8 +1,9 @@
 package robot;
 
+import java.net.InetSocketAddress;
+
 import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageId;
-import msg.ServerType;
 import net.connect.TCPConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
-import utils.ServerClientManager;
 import utils.ServerManager;
 
 public class Robot {
@@ -23,25 +23,11 @@ public class Robot {
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
-
-	public ServerClientManager serverClientManager = new ServerClientManager();
-
-
 	private ServerManager serverManager;
-
-
-	public ServerManager getServerManager() {
-		return serverManager;
-	}
-
-	public void setServerManager(ServerManager serverManager) {
-		this.serverManager = serverManager;
-	}
 
 	public static Robot getInstance() {
 		return instance;
 	}
-
 
 	private Robot() {
 		executorPool = new ExecutorPool("Game");
@@ -66,26 +52,18 @@ public class Robot {
 		String[] ipPort = new String[2];
 		ipPort[0] = "127.0.0.1";
 		ipPort[1] = "5600";
-		TCPConnect connect = serverManager.connectSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
-				0);
-		serverManager.addServerClient(ServerType.Gate, connect, (int) connect.getServerId());
-		checkConnect();
-		LOGGER.info("[robot server is start!!!]");
-	}
 
-	/**
-	 * 检测是否链接上 gate
-	 */
-	private void checkConnect() {
-		registerTimer(3000, 1000, -1, gate -> {
-			TCPConnect serverClient = serverManager.getServerClient(ServerType.Gate);
-			if (serverClient != null) {
-				HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
-				serverClient.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build());
-				return true;
-			}
-			return false;
-		}, this);
+		TCPConnect tcpConnection = new TCPConnect(new NioEventLoopGroup(1),
+				new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])),
+				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
+				channelHandler -> {
+					TCPConnect tcpConnect = (TCPConnect) channelHandler;
+					serverManager.addServerClient(tcpConnect);
+					HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
+					tcpConnect.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build());
+				}, null);
+		tcpConnection.connect();
+		LOGGER.info("[robot server is start!!!]");
 	}
 
 	public static void main(String[] args) {

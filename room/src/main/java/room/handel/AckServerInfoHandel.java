@@ -22,10 +22,11 @@ public class AckServerInfoHandel implements Handler {
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
 		ModelProto.AckServerInfo ack = (ModelProto.AckServerInfo) msg;
-		return Room.getInstance().getServerManager().connectToSever(ack.getServersList(),
+		Room.getInstance().getServerManager().connectToSever(ack.getServersList(),
 				Room.getInstance().getServerId(),
-				Room.getInstance().getInnerIp() + "：" + Room.getInstance().getPort(),
+				Room.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Room);
+		return true;
 	}
 }

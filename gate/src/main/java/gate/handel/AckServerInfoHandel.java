@@ -20,13 +20,14 @@ public class AckServerInfoHandel implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message ackServerInfo, int mapId,long sequence) {
+	public boolean handler(Sender sender, int aLong, Message ackServerInfo, int mapId, long sequence) {
 
 		ModelProto.AckServerInfo req = (ModelProto.AckServerInfo) ackServerInfo;
-		return Gate.getInstance().getServerManager().connectToSever(req.getServersList(),
+		Gate.getInstance().getServerManager().connectToSever(req.getServersList(),
 				Gate.getInstance().getServerId(),
 				Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate);
+		return true;
 	}
 }

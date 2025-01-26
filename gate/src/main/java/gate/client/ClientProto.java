@@ -38,17 +38,6 @@ public class ClientProto {
 		return null;
 	}
 
-	//private final static Map<Integer, Handler> handlers;
-
-	//static {
-	//	handlers = new HashMap<>();
-	//}
-
-	///**
-	// * 消息处理接口
-	// */
-	//public final static Handlers HANDLERS = handlers::get;
-
 
 	/**
 	 * 转发消息接口
@@ -78,7 +67,7 @@ public class ClientProto {
 				serverClient = serverManager.getServerClient(ServerType.Game, clientId);
 			} else {
 				serverClient = serverManager.getServerClient(ServerType.Game);
-				gateClient.setGameId((int) serverClient.getServerId());
+				gateClient.setGameId(serverClient.getConnectServer().getServerId());
 			}
 			if (serverClient != null) {
 				serverClient.sendMessage(tcpMessage);
@@ -92,7 +81,7 @@ public class ClientProto {
 				serverClient = serverManager.getServerClient(ServerType.Hall, clientId);
 			} else {
 				serverClient = serverManager.getServerClient(ServerType.Hall);
-				gateClient.setHallId((int) serverClient.getServerId());
+				gateClient.setHallId(serverClient.getConnectServer().getServerId());
 			}
 			if (serverClient != null) {
 				serverClient.sendMessage(tcpMessage);
@@ -106,7 +95,7 @@ public class ClientProto {
 				serverClient = serverManager.getServerClient(ServerType.Room, clientId);
 			} else {
 				serverClient = serverManager.getServerClient(ServerType.Room);
-				gateClient.setRoomId((int) serverClient.getServerId());
+				gateClient.setRoomId(serverClient.getConnectServer().getServerId());
 			}
 			if (serverClient != null) {
 				serverClient.sendMessage(tcpMessage);

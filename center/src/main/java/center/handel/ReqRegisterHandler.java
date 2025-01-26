@@ -85,7 +85,7 @@ public class ReqRegisterHandler implements Handler {
 				change.addServers(serverInfo);
 				client.sendMessage(MessageId.REGISTER_NOTICE, change.build());
 			}
-			LOGGER.error("[center server:{} info:{} reqRegister]", serverType, serverInfo.toString());
+			LOGGER.error("[center send to server:{} info:{} reqRegister]", serverType, serverInfo.toString());
 		}
 	}
 

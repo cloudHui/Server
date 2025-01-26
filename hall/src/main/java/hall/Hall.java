@@ -99,11 +99,6 @@ public class Hall {
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
-		ServerConfiguration configuration = cfgMgr.getServers().get("hall");
-		if (null == configuration || !configuration.hasHostString()) {
-			LOGGER.error("ERROR! failed for can not find server config");
-			return;
-		}
 
 		serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Hall);
 		setServerId(cfgMgr.getInt("id", 0));

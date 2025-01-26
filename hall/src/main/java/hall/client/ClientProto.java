@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hall.handel.ReqLoginHandler;
-import hall.handel.server.AckServerInfoHandel;
 import hall.handel.server.NotBreakHandler;
 import hall.handel.server.ReqRegisterHandler;
 import msg.MessageId;
