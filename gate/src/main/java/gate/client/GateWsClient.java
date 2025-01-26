@@ -13,7 +13,7 @@ public class GateWsClient extends WsClientHandler {
 	private int roomId = 0;
 
 	public GateWsClient() {
-		super(ClientProto.PARSER, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
+		super(null, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent(client -> ClientProto.notServerBreak(userId, gameId, hallId, roomId));
 

@@ -44,6 +44,15 @@ public final class HallProto {
      * <code>bytes avatar = 3;</code>
      */
     com.google.protobuf.ByteString getAvatar();
+
+    /**
+     * <pre>
+     *渠道号
+     * </pre>
+     *
+     * <code>int32 channel = 4;</code>
+     */
+    int getChannel();
   }
   /**
    * <pre>
@@ -65,6 +74,7 @@ public final class HallProto {
       cert_ = com.google.protobuf.ByteString.EMPTY;
       nickName_ = com.google.protobuf.ByteString.EMPTY;
       avatar_ = com.google.protobuf.ByteString.EMPTY;
+      channel_ = 0;
     }
 
     @java.lang.Override
@@ -108,6 +118,11 @@ public final class HallProto {
             case 26: {
 
               avatar_ = input.readBytes();
+              break;
+            }
+            case 32: {
+
+              channel_ = input.readInt32();
               break;
             }
           }
@@ -173,6 +188,19 @@ public final class HallProto {
       return avatar_;
     }
 
+    public static final int CHANNEL_FIELD_NUMBER = 4;
+    private int channel_;
+    /**
+     * <pre>
+     *渠道号
+     * </pre>
+     *
+     * <code>int32 channel = 4;</code>
+     */
+    public int getChannel() {
+      return channel_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -194,6 +222,9 @@ public final class HallProto {
       if (!avatar_.isEmpty()) {
         output.writeBytes(3, avatar_);
       }
+      if (channel_ != 0) {
+        output.writeInt32(4, channel_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -213,6 +244,10 @@ public final class HallProto {
       if (!avatar_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, avatar_);
+      }
+      if (channel_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, channel_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -236,6 +271,8 @@ public final class HallProto {
           .equals(other.getNickName());
       result = result && getAvatar()
           .equals(other.getAvatar());
+      result = result && (getChannel()
+          == other.getChannel());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -253,6 +290,8 @@ public final class HallProto {
       hash = (53 * hash) + getNickName().hashCode();
       hash = (37 * hash) + AVATAR_FIELD_NUMBER;
       hash = (53 * hash) + getAvatar().hashCode();
+      hash = (37 * hash) + CHANNEL_FIELD_NUMBER;
+      hash = (53 * hash) + getChannel();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -392,6 +431,8 @@ public final class HallProto {
 
         avatar_ = com.google.protobuf.ByteString.EMPTY;
 
+        channel_ = 0;
+
         return this;
       }
 
@@ -417,6 +458,7 @@ public final class HallProto {
         result.cert_ = cert_;
         result.nickName_ = nickName_;
         result.avatar_ = avatar_;
+        result.channel_ = channel_;
         onBuilt();
         return result;
       }
@@ -466,6 +508,9 @@ public final class HallProto {
         }
         if (other.getAvatar() != com.google.protobuf.ByteString.EMPTY) {
           setAvatar(other.getAvatar());
+        }
+        if (other.getChannel() != 0) {
+          setChannel(other.getChannel());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -616,6 +661,44 @@ public final class HallProto {
         onChanged();
         return this;
       }
+
+      private int channel_ ;
+      /**
+       * <pre>
+       *渠道号
+       * </pre>
+       *
+       * <code>int32 channel = 4;</code>
+       */
+      public int getChannel() {
+        return channel_;
+      }
+      /**
+       * <pre>
+       *渠道号
+       * </pre>
+       *
+       * <code>int32 channel = 4;</code>
+       */
+      public Builder setChannel(int value) {
+        
+        channel_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *渠道号
+       * </pre>
+       *
+       * <code>int32 channel = 4;</code>
+       */
+      public Builder clearChannel() {
+        
+        channel_ = 0;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
@@ -695,6 +778,24 @@ public final class HallProto {
      * <code>bytes nickName = 3;</code>
      */
     com.google.protobuf.ByteString getNickName();
+
+    /**
+     * <pre>
+     *渠道号
+     * </pre>
+     *
+     * <code>int32 channel = 4;</code>
+     */
+    int getChannel();
+
+    /**
+     * <pre>
+     *工会
+     * </pre>
+     *
+     * <code>int32 club = 5;</code>
+     */
+    int getClub();
   }
   /**
    * Protobuf type {@code proto.AckLogin}
@@ -712,6 +813,8 @@ public final class HallProto {
       cert_ = com.google.protobuf.ByteString.EMPTY;
       userId_ = 0;
       nickName_ = com.google.protobuf.ByteString.EMPTY;
+      channel_ = 0;
+      club_ = 0;
     }
 
     @java.lang.Override
@@ -755,6 +858,16 @@ public final class HallProto {
             case 26: {
 
               nickName_ = input.readBytes();
+              break;
+            }
+            case 32: {
+
+              channel_ = input.readInt32();
+              break;
+            }
+            case 40: {
+
+              club_ = input.readInt32();
               break;
             }
           }
@@ -820,6 +933,32 @@ public final class HallProto {
       return nickName_;
     }
 
+    public static final int CHANNEL_FIELD_NUMBER = 4;
+    private int channel_;
+    /**
+     * <pre>
+     *渠道号
+     * </pre>
+     *
+     * <code>int32 channel = 4;</code>
+     */
+    public int getChannel() {
+      return channel_;
+    }
+
+    public static final int CLUB_FIELD_NUMBER = 5;
+    private int club_;
+    /**
+     * <pre>
+     *工会
+     * </pre>
+     *
+     * <code>int32 club = 5;</code>
+     */
+    public int getClub() {
+      return club_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -841,6 +980,12 @@ public final class HallProto {
       if (!nickName_.isEmpty()) {
         output.writeBytes(3, nickName_);
       }
+      if (channel_ != 0) {
+        output.writeInt32(4, channel_);
+      }
+      if (club_ != 0) {
+        output.writeInt32(5, club_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -860,6 +1005,14 @@ public final class HallProto {
       if (!nickName_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, nickName_);
+      }
+      if (channel_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, channel_);
+      }
+      if (club_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, club_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -883,6 +1036,10 @@ public final class HallProto {
           == other.getUserId());
       result = result && getNickName()
           .equals(other.getNickName());
+      result = result && (getChannel()
+          == other.getChannel());
+      result = result && (getClub()
+          == other.getClub());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -900,6 +1057,10 @@ public final class HallProto {
       hash = (53 * hash) + getUserId();
       hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
       hash = (53 * hash) + getNickName().hashCode();
+      hash = (37 * hash) + CHANNEL_FIELD_NUMBER;
+      hash = (53 * hash) + getChannel();
+      hash = (37 * hash) + CLUB_FIELD_NUMBER;
+      hash = (53 * hash) + getClub();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1035,6 +1196,10 @@ public final class HallProto {
 
         nickName_ = com.google.protobuf.ByteString.EMPTY;
 
+        channel_ = 0;
+
+        club_ = 0;
+
         return this;
       }
 
@@ -1060,6 +1225,8 @@ public final class HallProto {
         result.cert_ = cert_;
         result.userId_ = userId_;
         result.nickName_ = nickName_;
+        result.channel_ = channel_;
+        result.club_ = club_;
         onBuilt();
         return result;
       }
@@ -1109,6 +1276,12 @@ public final class HallProto {
         }
         if (other.getNickName() != com.google.protobuf.ByteString.EMPTY) {
           setNickName(other.getNickName());
+        }
+        if (other.getChannel() != 0) {
+          setChannel(other.getChannel());
+        }
+        if (other.getClub() != 0) {
+          setClub(other.getClub());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1253,6 +1426,82 @@ public final class HallProto {
       public Builder clearNickName() {
         
         nickName_ = getDefaultInstance().getNickName();
+        onChanged();
+        return this;
+      }
+
+      private int channel_ ;
+      /**
+       * <pre>
+       *渠道号
+       * </pre>
+       *
+       * <code>int32 channel = 4;</code>
+       */
+      public int getChannel() {
+        return channel_;
+      }
+      /**
+       * <pre>
+       *渠道号
+       * </pre>
+       *
+       * <code>int32 channel = 4;</code>
+       */
+      public Builder setChannel(int value) {
+        
+        channel_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *渠道号
+       * </pre>
+       *
+       * <code>int32 channel = 4;</code>
+       */
+      public Builder clearChannel() {
+        
+        channel_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int club_ ;
+      /**
+       * <pre>
+       *工会
+       * </pre>
+       *
+       * <code>int32 club = 5;</code>
+       */
+      public int getClub() {
+        return club_;
+      }
+      /**
+       * <pre>
+       *工会
+       * </pre>
+       *
+       * <code>int32 club = 5;</code>
+       */
+      public Builder setClub(int value) {
+        
+        club_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *工会
+       * </pre>
+       *
+       * <code>int32 club = 5;</code>
+       */
+      public Builder clearClub() {
+        
+        club_ = 0;
         onChanged();
         return this;
       }
@@ -2304,12 +2553,14 @@ public final class HallProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nhall.proto\022\005proto\":\n\010ReqLogin\022\014\n\004cert\030" +
-      "\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006avatar\030\003 \001(\014\"" +
-      ":\n\010AckLogin\022\014\n\004cert\030\001 \001(\014\022\016\n\006userId\030\002 \001(" +
-      "\005\022\020\n\010nickName\030\003 \001(\014\"\r\n\013ReqRoomList\"9\n\013Ac" +
-      "kRoomList\022\016\n\006roomId\030\001 \001(\005\022\014\n\004rule\030\002 \001(\014\022" +
-      "\014\n\004open\030\003 \001(\010B\013B\tHallProtob\006proto3"
+      "\n\nhall.proto\022\005proto\"K\n\010ReqLogin\022\014\n\004cert\030" +
+      "\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006avatar\030\003 \001(\014\022" +
+      "\017\n\007channel\030\004 \001(\005\"Y\n\010AckLogin\022\014\n\004cert\030\001 \001" +
+      "(\014\022\016\n\006userId\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\017\n\007" +
+      "channel\030\004 \001(\005\022\014\n\004club\030\005 \001(\005\"\r\n\013ReqRoomLi" +
+      "st\"9\n\013AckRoomList\022\016\n\006roomId\030\001 \001(\005\022\014\n\004rul" +
+      "e\030\002 \001(\014\022\014\n\004open\030\003 \001(\010B\013B\tHallProtob\006prot" +
+      "o3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2328,13 +2579,13 @@ public final class HallProto {
     internal_static_proto_ReqLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqLogin_descriptor,
-        new java.lang.String[] { "Cert", "NickName", "Avatar", });
+        new java.lang.String[] { "Cert", "NickName", "Avatar", "Channel", });
     internal_static_proto_AckLogin_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_proto_AckLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckLogin_descriptor,
-        new java.lang.String[] { "Cert", "UserId", "NickName", });
+        new java.lang.String[] { "Cert", "UserId", "NickName", "Channel", "Club", });
     internal_static_proto_ReqRoomList_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_ReqRoomList_fieldAccessorTable = new

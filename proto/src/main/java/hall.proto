@@ -8,12 +8,15 @@ message ReqLogin {
     bytes cert = 1; //证书
     bytes nickName = 2; //昵称
     bytes avatar = 3; //头像信息
+    int32 channel = 4;//渠道号
 }
 
 message AckLogin {
     bytes cert = 1;//证书
     int32 userId = 2;//用户id
     bytes nickName = 3;//昵称
+    int32 channel = 4;//渠道号
+    int32 club = 5;//工会
 }
 
 //请求玩法列表

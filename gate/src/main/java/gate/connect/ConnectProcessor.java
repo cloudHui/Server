@@ -13,7 +13,6 @@ import net.client.handler.ClientHandler;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
-import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,30 +66,20 @@ public class ConnectProcessor {
 	public final static Transfer TRANSFER = (tcpConnect, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
 		if (msgId > MessageId.BASE_ID_INDEX) {
-			int userId = 0;
-			if (msgId == MessageId.HallMsg.ACK_LOGIN.getId()) {
-				HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
-				userId = ack.getUserId();
+			GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(tcpMessage.getClientId());
+			if (null != gateClient) {
+				if (msgId == MessageId.HallMsg.ACK_LOGIN.getId()) {
+					HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
+					gateClient.setRoleId(ack.getUserId());
+					gateClient.setClubId(ack.getClub());
+					gateClient.setChannel(ack.getChannel());
+				}
+				//直接转发给客户端的
+				gateClient.sendMessage(tcpMessage);
+				return true;
 			}
-			//直接转发给客户端的
-			return transferMsg(tcpMessage.getClientId(), tcpMessage, userId);
+			logger.error("[ERROR! failed for transfer message(clientId:{} message id:{})]", tcpMessage.getClientId(), tcpMessage.getMessageId());
 		}
 		return false;
 	};
-
-	/**
-	 * 找到客户端链接 并转发消息
-	 */
-	public static boolean transferMsg(int clientId, TCPMessage msg, int userId) {
-		GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(clientId);
-		if (null != gateClient) {
-			if (userId != 0) {
-				gateClient.setRoleId(userId);
-			}
-			gateClient.sendMessage(msg);
-			return true;
-		}
-		logger.error("[ERROR! failed for transfer message(clientId:{} message id:{})]", clientId, msg.getMessageId());
-		return false;
-	}
 }
