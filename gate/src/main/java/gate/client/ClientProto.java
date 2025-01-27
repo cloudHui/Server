@@ -12,7 +12,7 @@ import proto.ModelProto;
 import utils.ServerManager;
 
 public class ClientProto {
-	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(ClientProto.class);
 
 	/**
 	 * 转发消息接口
@@ -25,57 +25,70 @@ public class ClientProto {
 	 */
 	private static boolean transferMessage(GateTcpClient gateClient, TCPMessage tcpMessage) {
 		int msgId = tcpMessage.getMessageId();
-		//奇数消息是发给服务的
-		ServerManager server = Gate.getInstance().getServerManager();
+
 		tcpMessage.setMapId(gateClient.getId());
 		tcpMessage.setClientId(gateClient.getId());
-		int clientId;
+
+		TCPConnect serverClient = getTransServerClient(msgId, gateClient);
+		if (serverClient != null) {
+			serverClient.sendMessage(tcpMessage, 3).whenComplete((message, throwable) -> {
+				if (null != throwable) {
+					LOGGER.error("[ERROR! failed send transferMessage message to {} {}]", serverClient.getConnectServer(), throwable.getMessage());
+				} else {
+					try {
+						//Todo 解决消息转发超时处理和正确转发处理
+					} catch (Exception exception) {
+						exception.printStackTrace();
+					}
+				}
+			});
+			return true;
+		}
+		LOGGER.error("[error msg transferMessage to server msgId:{}]", msgId);
+		return false;
+	}
+
+
+	/**
+	 * 获取转发服务的链接
+	 */
+	private static TCPConnect getTransServerClient(int msgId, GateTcpClient gateClient) {
+		ServerType serverType = MessageId.getServerTypeByMessageId(msgId);
+		if (serverType == null) {
+			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", msgId);
+			return null;
+		}
+		int clientId = 0;
 		TCPConnect serverClient;
-		if ((msgId & MessageId.GAME_TYPE) != 0) {
-			clientId = gateClient.getGameId();
-			if (clientId != 0) {
-				serverClient = server.getServerClient(ServerType.Game, clientId);
-			} else {
-				serverClient = server.getServerClient(ServerType.Game);
-				gateClient.setGameId(serverClient.getConnectServer().getServerId());
-			}
-			if (serverClient != null) {
-				serverClient.sendMessage(tcpMessage);
-				return true;
-			} else {
-				logger.error("[transform game msg error clientId :{} can‘t find game server]", clientId);
-			}
-		} else if ((msgId & MessageId.HALL_TYPE) != 0) {
-			clientId = gateClient.getHallId();
-			if (clientId != 0) {
-				serverClient = server.getServerClient(ServerType.Hall, clientId);
-			} else {
-				serverClient = server.getServerClient(ServerType.Hall);
-				gateClient.setHallId(serverClient.getConnectServer().getServerId());
-			}
-			if (serverClient != null) {
-				serverClient.sendMessage(tcpMessage);
-				return true;
-			} else {
-				logger.error("[transform hall msg error clientId :{} can‘t find hall server]", clientId);
-			}
-		} else if ((msgId & MessageId.ROOM_TYPE) != 0) {
-			clientId = gateClient.getRoomId();
-			if (clientId != 0) {
-				serverClient = server.getServerClient(ServerType.Room, clientId);
-			} else {
-				serverClient = server.getServerClient(ServerType.Room);
-				gateClient.setRoomId(serverClient.getConnectServer().getServerId());
-			}
-			if (serverClient != null) {
-				serverClient.sendMessage(tcpMessage);
-				return true;
-			} else {
-				logger.error("[transform room msg error clientId :{} can‘t find room server]", clientId);
+		ServerManager server = Gate.getInstance().getServerManager();
+		switch (serverType) {
+			case Game:
+				clientId = gateClient.getGameId();
+				break;
+			case Hall:
+				clientId = gateClient.getHallId();
+				break;
+			case Room:
+				clientId = gateClient.getRoomId();
+				break;
+		}
+		if (clientId != 0) {
+			serverClient = server.getServerClient(serverType, clientId);
+		} else {
+			serverClient = server.getServerClient(serverType);
+			switch (serverType) {
+				case Game:
+					gateClient.setGameId(serverClient.getConnectServer().getServerId());
+					break;
+				case Hall:
+					gateClient.setHallId(serverClient.getConnectServer().getServerId());
+					break;
+				case Room:
+					gateClient.setRoomId(serverClient.getConnectServer().getServerId());
+					break;
 			}
 		}
-		logger.error("[error msg transferMessage to server msgId:{}]", msgId);
-		return false;
+		return serverClient;
 	}
 
 

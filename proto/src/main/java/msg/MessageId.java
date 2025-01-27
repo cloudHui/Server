@@ -196,4 +196,18 @@ public interface MessageId {
 			return defaultInstance.getParserForType().parseFrom(bytes);
 		}
 	}
+
+	/**
+	 * 通过消息id获取要转发的服务类型
+	 */
+	static ServerType getServerTypeByMessageId(int msgId) {
+		if ((msgId & MessageId.GAME_TYPE) != 0) {
+			return ServerType.Game;
+		} else if ((msgId & MessageId.HALL_TYPE) != 0) {
+			return ServerType.Hall;
+		} else if ((msgId & MessageId.ROOM_TYPE) != 0) {
+			return ServerType.Room;
+		}
+		return null;
+	}
 }
