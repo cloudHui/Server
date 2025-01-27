@@ -32,8 +32,7 @@ public class ReqRegisterHandler implements Handler {
 
 		client.setServerInfo(serverInfo);
 
-
-		Room.getInstance().serverClientManager.addServerClient(serverType, client, serverInfo.getServerId());
+		Room.getInstance().getServerClientManager().addServerClient(serverType, client, serverInfo.getServerId());
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(Room.getInstance().getServerInfo());

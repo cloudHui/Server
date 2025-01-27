@@ -39,8 +39,7 @@ public class Room {
 	 */
 	private ModelProto.ServerInfo.Builder serverInfo;
 
-	public ServerClientManager serverClientManager = new ServerClientManager();
-
+	private ServerClientManager serverClientManager = new ServerClientManager();
 
 	private ServerManager serverManager;
 
@@ -74,6 +73,11 @@ public class Room {
 
 	public static Room getInstance() {
 		return instance;
+	}
+
+
+	public ServerClientManager getServerClientManager() {
+		return serverClientManager;
 	}
 
 	private Room() {

@@ -8,13 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class UserManager {
 
-	private static UserManager userManager = new UserManager();
+	private static final UserManager userManager = new UserManager();
 
 	public static UserManager getInstance() {
 		return userManager;
 	}
 
-	private Map<Integer, UserMap> users;
+	private final Map<Integer, UserMap> users;
 
 	public UserManager() {
 		this.users = new ConcurrentHashMap<>();

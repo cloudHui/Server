@@ -23,7 +23,7 @@ public class RoomClient extends ClientHandler {
 
 			ServerType serverType = ServerType.get(serverInfo.getServerType());
 			if (serverType != null) {
-				Room.getInstance().serverClientManager.removeServerClient(serverType, serverInfo.getServerId());
+				Room.getInstance().getServerClientManager().removeServerClient(serverType, serverInfo.getServerId());
 			}
 		});
 	}
