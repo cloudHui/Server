@@ -6,7 +6,6 @@ import java.util.Map;
 import com.google.protobuf.Internal;
 import com.google.protobuf.MessageLite;
 import proto.GameProto;
-import proto.GateProto;
 import proto.HallProto;
 import proto.RoomProto;
 
@@ -36,42 +35,42 @@ public interface MessageId {
 
 	int BASE_ID_INDEX = 0x1000;
 
-	enum GateMsg {
-		BROAD_CAST(BROAD, GateProto.BroadCast.class),
-		;
-		private final int id;
-
-		private final Class<?> className;
-
-		private static final Map<Integer, GateMsg> es = new HashMap<>();
-
-		static {
-			for (GateMsg msg : values()) {
-				es.put(msg.getId(), msg);
-			}
-		}
-
-		GateMsg(int id, Class<?> className) {
-			this.id = id;
-			this.className = className;
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public Class<?> getClassName() {
-			return className;
-		}
-
-		private static Map<Integer, GateMsg> getEs() {
-			return es;
-		}
-
-		public static GateMsg get(int msgId) {
-			return getEs().get(msgId);
-		}
-	}
+	//enum GateMsg {
+	//	BROAD_CAST(BROAD, GateProto.BroadCast.class),
+	//	;
+	//	private final int id;
+	//
+	//	private final Class<?> className;
+	//
+	//	private static final Map<Integer, GateMsg> es = new HashMap<>();
+	//
+	//	static {
+	//		for (GateMsg msg : values()) {
+	//			es.put(msg.getId(), msg);
+	//		}
+	//	}
+	//
+	//	GateMsg(int id, Class<?> className) {
+	//		this.id = id;
+	//		this.className = className;
+	//	}
+	//
+	//	public int getId() {
+	//		return id;
+	//	}
+	//
+	//	public Class<?> getClassName() {
+	//		return className;
+	//	}
+	//
+	//	private static Map<Integer, GateMsg> getEs() {
+	//		return es;
+	//	}
+	//
+	//	public static GateMsg get(int msgId) {
+	//		return getEs().get(msgId);
+	//	}
+	//}
 
 	enum GameMsg {
 		REQ_ENTER_TABLE(GAME_TYPE | 1, GameProto.ReqEnterTable.class),
@@ -79,7 +78,7 @@ public interface MessageId {
 		;
 		private final int id;
 
-		private final Class<?> className;
+		private final Class<? extends MessageLite> className;
 
 		private static final Map<Integer, GameMsg> es = new HashMap<>();
 
@@ -89,7 +88,7 @@ public interface MessageId {
 			}
 		}
 
-		GameMsg(int id, Class<?> className) {
+		GameMsg(int id, Class<? extends MessageLite> className) {
 			this.id = id;
 			this.className = className;
 		}
@@ -98,7 +97,7 @@ public interface MessageId {
 			return id;
 		}
 
-		public Class<?> getClassName() {
+		public Class<? extends MessageLite> getClassName() {
 			return className;
 		}
 
@@ -114,10 +113,12 @@ public interface MessageId {
 	enum HallMsg {
 		REQ_LOGIN(HALL_TYPE | 1, HallProto.ReqLogin.class),
 		ACK_LOGIN(HALL_TYPE | 2, HallProto.AckLogin.class),
+		REQ_JOIN_CLUB(HALL_TYPE | 3, HallProto.ReqJoinClub.class),
+		ACK_JOIN_CLUB(HALL_TYPE | 4, HallProto.AckJoinClub.class),
 		;
 		private final int id;
 
-		private final Class<?> className;
+		private final Class<? extends MessageLite> className;
 
 		private static final Map<Integer, HallMsg> es = new HashMap<>();
 
@@ -127,7 +128,7 @@ public interface MessageId {
 			}
 		}
 
-		HallMsg(int id, Class<?> className) {
+		HallMsg(int id, Class<? extends MessageLite> className) {
 			this.id = id;
 			this.className = className;
 		}
@@ -136,7 +137,7 @@ public interface MessageId {
 			return id;
 		}
 
-		public Class<?> getClassName() {
+		public Class<? extends MessageLite> getClassName() {
 			return className;
 		}
 
@@ -155,7 +156,7 @@ public interface MessageId {
 		;
 		private final int id;
 
-		private final Class<?> className;
+		private final Class<? extends MessageLite> className;
 
 		private static final Map<Integer, RoomMsg> es = new HashMap<>();
 
@@ -165,7 +166,7 @@ public interface MessageId {
 			}
 		}
 
-		RoomMsg(int id, Class<?> className) {
+		RoomMsg(int id, Class<? extends MessageLite> className) {
 			this.id = id;
 			this.className = className;
 		}
@@ -174,7 +175,7 @@ public interface MessageId {
 			return id;
 		}
 
-		public Class<?> getClassName() {
+		public Class<? extends MessageLite> getClassName() {
 			return className;
 		}
 

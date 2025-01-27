@@ -50,7 +50,7 @@ public class Game {
 
 	private ServerManager serverManager;
 
-	private final SvnManager svnManager = new SvnManager();
+	private SvnManager svnManager;
 
 	private TableManager tableManager;
 
@@ -170,6 +170,7 @@ public class Game {
 	 */
 	private void initSvn() {
 		registerTimer(3000, 60000, -1, game -> {
+			svnManager = new SvnManager();
 			svnManager.jarUpdate();
 			boolean update = svnManager.checkJarVersionUpdate();
 			if (update) {

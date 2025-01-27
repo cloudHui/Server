@@ -2524,6 +2524,2734 @@ public final class HallProto {
 
   }
 
+  public interface ReqJoinClubOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.ReqJoinClub)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 clubId = 1;</code>
+     */
+    int getClubId();
+  }
+  /**
+   * Protobuf type {@code proto.ReqJoinClub}
+   */
+  public  static final class ReqJoinClub extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.ReqJoinClub)
+      ReqJoinClubOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ReqJoinClub.newBuilder() to construct.
+    private ReqJoinClub(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ReqJoinClub() {
+      clubId_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ReqJoinClub(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              clubId_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.HallProto.internal_static_proto_ReqJoinClub_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.HallProto.internal_static_proto_ReqJoinClub_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.HallProto.ReqJoinClub.class, proto.HallProto.ReqJoinClub.Builder.class);
+    }
+
+    public static final int CLUBID_FIELD_NUMBER = 1;
+    private int clubId_;
+    /**
+     * <code>int32 clubId = 1;</code>
+     */
+    public int getClubId() {
+      return clubId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (clubId_ != 0) {
+        output.writeInt32(1, clubId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (clubId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, clubId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.HallProto.ReqJoinClub)) {
+        return super.equals(obj);
+      }
+      proto.HallProto.ReqJoinClub other = (proto.HallProto.ReqJoinClub) obj;
+
+      boolean result = true;
+      result = result && (getClubId()
+          == other.getClubId());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CLUBID_FIELD_NUMBER;
+      hash = (53 * hash) + getClubId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.ReqJoinClub parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.ReqJoinClub parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.ReqJoinClub parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.HallProto.ReqJoinClub prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.ReqJoinClub}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.ReqJoinClub)
+        proto.HallProto.ReqJoinClubOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.HallProto.internal_static_proto_ReqJoinClub_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.HallProto.internal_static_proto_ReqJoinClub_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.HallProto.ReqJoinClub.class, proto.HallProto.ReqJoinClub.Builder.class);
+      }
+
+      // Construct using proto.HallProto.ReqJoinClub.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        clubId_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.HallProto.internal_static_proto_ReqJoinClub_descriptor;
+      }
+
+      public proto.HallProto.ReqJoinClub getDefaultInstanceForType() {
+        return proto.HallProto.ReqJoinClub.getDefaultInstance();
+      }
+
+      public proto.HallProto.ReqJoinClub build() {
+        proto.HallProto.ReqJoinClub result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.HallProto.ReqJoinClub buildPartial() {
+        proto.HallProto.ReqJoinClub result = new proto.HallProto.ReqJoinClub(this);
+        result.clubId_ = clubId_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.HallProto.ReqJoinClub) {
+          return mergeFrom((proto.HallProto.ReqJoinClub)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.HallProto.ReqJoinClub other) {
+        if (other == proto.HallProto.ReqJoinClub.getDefaultInstance()) return this;
+        if (other.getClubId() != 0) {
+          setClubId(other.getClubId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.HallProto.ReqJoinClub parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.HallProto.ReqJoinClub) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int clubId_ ;
+      /**
+       * <code>int32 clubId = 1;</code>
+       */
+      public int getClubId() {
+        return clubId_;
+      }
+      /**
+       * <code>int32 clubId = 1;</code>
+       */
+      public Builder setClubId(int value) {
+        
+        clubId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 clubId = 1;</code>
+       */
+      public Builder clearClubId() {
+        
+        clubId_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.ReqJoinClub)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.ReqJoinClub)
+    private static final proto.HallProto.ReqJoinClub DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.HallProto.ReqJoinClub();
+    }
+
+    public static proto.HallProto.ReqJoinClub getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ReqJoinClub>
+        PARSER = new com.google.protobuf.AbstractParser<ReqJoinClub>() {
+      public ReqJoinClub parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new ReqJoinClub(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ReqJoinClub> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ReqJoinClub> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.HallProto.ReqJoinClub getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AckJoinClubOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.AckJoinClub)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.proto.Club joinClub = 1;</code>
+     */
+    boolean hasJoinClub();
+    /**
+     * <code>.proto.Club joinClub = 1;</code>
+     */
+    proto.HallProto.Club getJoinClub();
+    /**
+     * <code>.proto.Club joinClub = 1;</code>
+     */
+    proto.HallProto.ClubOrBuilder getJoinClubOrBuilder();
+  }
+  /**
+   * Protobuf type {@code proto.AckJoinClub}
+   */
+  public  static final class AckJoinClub extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.AckJoinClub)
+      AckJoinClubOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use AckJoinClub.newBuilder() to construct.
+    private AckJoinClub(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AckJoinClub() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AckJoinClub(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              proto.HallProto.Club.Builder subBuilder = null;
+              if (joinClub_ != null) {
+                subBuilder = joinClub_.toBuilder();
+              }
+              joinClub_ = input.readMessage(proto.HallProto.Club.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(joinClub_);
+                joinClub_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.HallProto.internal_static_proto_AckJoinClub_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.HallProto.internal_static_proto_AckJoinClub_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.HallProto.AckJoinClub.class, proto.HallProto.AckJoinClub.Builder.class);
+    }
+
+    public static final int JOINCLUB_FIELD_NUMBER = 1;
+    private proto.HallProto.Club joinClub_;
+    /**
+     * <code>.proto.Club joinClub = 1;</code>
+     */
+    public boolean hasJoinClub() {
+      return joinClub_ != null;
+    }
+    /**
+     * <code>.proto.Club joinClub = 1;</code>
+     */
+    public proto.HallProto.Club getJoinClub() {
+      return joinClub_ == null ? proto.HallProto.Club.getDefaultInstance() : joinClub_;
+    }
+    /**
+     * <code>.proto.Club joinClub = 1;</code>
+     */
+    public proto.HallProto.ClubOrBuilder getJoinClubOrBuilder() {
+      return getJoinClub();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (joinClub_ != null) {
+        output.writeMessage(1, getJoinClub());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (joinClub_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getJoinClub());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.HallProto.AckJoinClub)) {
+        return super.equals(obj);
+      }
+      proto.HallProto.AckJoinClub other = (proto.HallProto.AckJoinClub) obj;
+
+      boolean result = true;
+      result = result && (hasJoinClub() == other.hasJoinClub());
+      if (hasJoinClub()) {
+        result = result && getJoinClub()
+            .equals(other.getJoinClub());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasJoinClub()) {
+        hash = (37 * hash) + JOINCLUB_FIELD_NUMBER;
+        hash = (53 * hash) + getJoinClub().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.HallProto.AckJoinClub parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.AckJoinClub parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.AckJoinClub parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.AckJoinClub parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.HallProto.AckJoinClub prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.AckJoinClub}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.AckJoinClub)
+        proto.HallProto.AckJoinClubOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.HallProto.internal_static_proto_AckJoinClub_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.HallProto.internal_static_proto_AckJoinClub_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.HallProto.AckJoinClub.class, proto.HallProto.AckJoinClub.Builder.class);
+      }
+
+      // Construct using proto.HallProto.AckJoinClub.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (joinClubBuilder_ == null) {
+          joinClub_ = null;
+        } else {
+          joinClub_ = null;
+          joinClubBuilder_ = null;
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.HallProto.internal_static_proto_AckJoinClub_descriptor;
+      }
+
+      public proto.HallProto.AckJoinClub getDefaultInstanceForType() {
+        return proto.HallProto.AckJoinClub.getDefaultInstance();
+      }
+
+      public proto.HallProto.AckJoinClub build() {
+        proto.HallProto.AckJoinClub result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.HallProto.AckJoinClub buildPartial() {
+        proto.HallProto.AckJoinClub result = new proto.HallProto.AckJoinClub(this);
+        if (joinClubBuilder_ == null) {
+          result.joinClub_ = joinClub_;
+        } else {
+          result.joinClub_ = joinClubBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.HallProto.AckJoinClub) {
+          return mergeFrom((proto.HallProto.AckJoinClub)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.HallProto.AckJoinClub other) {
+        if (other == proto.HallProto.AckJoinClub.getDefaultInstance()) return this;
+        if (other.hasJoinClub()) {
+          mergeJoinClub(other.getJoinClub());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.HallProto.AckJoinClub parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.HallProto.AckJoinClub) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private proto.HallProto.Club joinClub_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.HallProto.Club, proto.HallProto.Club.Builder, proto.HallProto.ClubOrBuilder> joinClubBuilder_;
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public boolean hasJoinClub() {
+        return joinClubBuilder_ != null || joinClub_ != null;
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public proto.HallProto.Club getJoinClub() {
+        if (joinClubBuilder_ == null) {
+          return joinClub_ == null ? proto.HallProto.Club.getDefaultInstance() : joinClub_;
+        } else {
+          return joinClubBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public Builder setJoinClub(proto.HallProto.Club value) {
+        if (joinClubBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          joinClub_ = value;
+          onChanged();
+        } else {
+          joinClubBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public Builder setJoinClub(
+          proto.HallProto.Club.Builder builderForValue) {
+        if (joinClubBuilder_ == null) {
+          joinClub_ = builderForValue.build();
+          onChanged();
+        } else {
+          joinClubBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public Builder mergeJoinClub(proto.HallProto.Club value) {
+        if (joinClubBuilder_ == null) {
+          if (joinClub_ != null) {
+            joinClub_ =
+              proto.HallProto.Club.newBuilder(joinClub_).mergeFrom(value).buildPartial();
+          } else {
+            joinClub_ = value;
+          }
+          onChanged();
+        } else {
+          joinClubBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public Builder clearJoinClub() {
+        if (joinClubBuilder_ == null) {
+          joinClub_ = null;
+          onChanged();
+        } else {
+          joinClub_ = null;
+          joinClubBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public proto.HallProto.Club.Builder getJoinClubBuilder() {
+        
+        onChanged();
+        return getJoinClubFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      public proto.HallProto.ClubOrBuilder getJoinClubOrBuilder() {
+        if (joinClubBuilder_ != null) {
+          return joinClubBuilder_.getMessageOrBuilder();
+        } else {
+          return joinClub_ == null ?
+              proto.HallProto.Club.getDefaultInstance() : joinClub_;
+        }
+      }
+      /**
+       * <code>.proto.Club joinClub = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.HallProto.Club, proto.HallProto.Club.Builder, proto.HallProto.ClubOrBuilder> 
+          getJoinClubFieldBuilder() {
+        if (joinClubBuilder_ == null) {
+          joinClubBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.HallProto.Club, proto.HallProto.Club.Builder, proto.HallProto.ClubOrBuilder>(
+                  getJoinClub(),
+                  getParentForChildren(),
+                  isClean());
+          joinClub_ = null;
+        }
+        return joinClubBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.AckJoinClub)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.AckJoinClub)
+    private static final proto.HallProto.AckJoinClub DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.HallProto.AckJoinClub();
+    }
+
+    public static proto.HallProto.AckJoinClub getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AckJoinClub>
+        PARSER = new com.google.protobuf.AbstractParser<AckJoinClub>() {
+      public AckJoinClub parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new AckJoinClub(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AckJoinClub> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AckJoinClub> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.HallProto.AckJoinClub getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ClubOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.Club)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 clubId = 1;</code>
+     */
+    int getClubId();
+
+    /**
+     * <pre>
+     *头像信息
+     * </pre>
+     *
+     * <code>bytes avatar = 2;</code>
+     */
+    com.google.protobuf.ByteString getAvatar();
+
+    /**
+     * <pre>
+     *名称
+     * </pre>
+     *
+     * <code>bytes name = 3;</code>
+     */
+    com.google.protobuf.ByteString getName();
+
+    /**
+     * <pre>
+     *宣言
+     * </pre>
+     *
+     * <code>bytes des = 4;</code>
+     */
+    com.google.protobuf.ByteString getDes();
+
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    java.util.List<proto.HallProto.ClubMember> 
+        getMembersList();
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    proto.HallProto.ClubMember getMembers(int index);
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    int getMembersCount();
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    java.util.List<? extends proto.HallProto.ClubMemberOrBuilder> 
+        getMembersOrBuilderList();
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    proto.HallProto.ClubMemberOrBuilder getMembersOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code proto.Club}
+   */
+  public  static final class Club extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.Club)
+      ClubOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Club.newBuilder() to construct.
+    private Club(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Club() {
+      clubId_ = 0;
+      avatar_ = com.google.protobuf.ByteString.EMPTY;
+      name_ = com.google.protobuf.ByteString.EMPTY;
+      des_ = com.google.protobuf.ByteString.EMPTY;
+      members_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Club(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              clubId_ = input.readInt32();
+              break;
+            }
+            case 18: {
+
+              avatar_ = input.readBytes();
+              break;
+            }
+            case 26: {
+
+              name_ = input.readBytes();
+              break;
+            }
+            case 34: {
+
+              des_ = input.readBytes();
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                members_ = new java.util.ArrayList<proto.HallProto.ClubMember>();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              members_.add(
+                  input.readMessage(proto.HallProto.ClubMember.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+          members_ = java.util.Collections.unmodifiableList(members_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.HallProto.internal_static_proto_Club_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.HallProto.internal_static_proto_Club_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.HallProto.Club.class, proto.HallProto.Club.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int CLUBID_FIELD_NUMBER = 1;
+    private int clubId_;
+    /**
+     * <code>int32 clubId = 1;</code>
+     */
+    public int getClubId() {
+      return clubId_;
+    }
+
+    public static final int AVATAR_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString avatar_;
+    /**
+     * <pre>
+     *头像信息
+     * </pre>
+     *
+     * <code>bytes avatar = 2;</code>
+     */
+    public com.google.protobuf.ByteString getAvatar() {
+      return avatar_;
+    }
+
+    public static final int NAME_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString name_;
+    /**
+     * <pre>
+     *名称
+     * </pre>
+     *
+     * <code>bytes name = 3;</code>
+     */
+    public com.google.protobuf.ByteString getName() {
+      return name_;
+    }
+
+    public static final int DES_FIELD_NUMBER = 4;
+    private com.google.protobuf.ByteString des_;
+    /**
+     * <pre>
+     *宣言
+     * </pre>
+     *
+     * <code>bytes des = 4;</code>
+     */
+    public com.google.protobuf.ByteString getDes() {
+      return des_;
+    }
+
+    public static final int MEMBERS_FIELD_NUMBER = 5;
+    private java.util.List<proto.HallProto.ClubMember> members_;
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    public java.util.List<proto.HallProto.ClubMember> getMembersList() {
+      return members_;
+    }
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    public java.util.List<? extends proto.HallProto.ClubMemberOrBuilder> 
+        getMembersOrBuilderList() {
+      return members_;
+    }
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    public int getMembersCount() {
+      return members_.size();
+    }
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    public proto.HallProto.ClubMember getMembers(int index) {
+      return members_.get(index);
+    }
+    /**
+     * <pre>
+     *成员
+     * </pre>
+     *
+     * <code>repeated .proto.ClubMember members = 5;</code>
+     */
+    public proto.HallProto.ClubMemberOrBuilder getMembersOrBuilder(
+        int index) {
+      return members_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (clubId_ != 0) {
+        output.writeInt32(1, clubId_);
+      }
+      if (!avatar_.isEmpty()) {
+        output.writeBytes(2, avatar_);
+      }
+      if (!name_.isEmpty()) {
+        output.writeBytes(3, name_);
+      }
+      if (!des_.isEmpty()) {
+        output.writeBytes(4, des_);
+      }
+      for (int i = 0; i < members_.size(); i++) {
+        output.writeMessage(5, members_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (clubId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, clubId_);
+      }
+      if (!avatar_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, avatar_);
+      }
+      if (!name_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, name_);
+      }
+      if (!des_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, des_);
+      }
+      for (int i = 0; i < members_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, members_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.HallProto.Club)) {
+        return super.equals(obj);
+      }
+      proto.HallProto.Club other = (proto.HallProto.Club) obj;
+
+      boolean result = true;
+      result = result && (getClubId()
+          == other.getClubId());
+      result = result && getAvatar()
+          .equals(other.getAvatar());
+      result = result && getName()
+          .equals(other.getName());
+      result = result && getDes()
+          .equals(other.getDes());
+      result = result && getMembersList()
+          .equals(other.getMembersList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CLUBID_FIELD_NUMBER;
+      hash = (53 * hash) + getClubId();
+      hash = (37 * hash) + AVATAR_FIELD_NUMBER;
+      hash = (53 * hash) + getAvatar().hashCode();
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
+      hash = (37 * hash) + DES_FIELD_NUMBER;
+      hash = (53 * hash) + getDes().hashCode();
+      if (getMembersCount() > 0) {
+        hash = (37 * hash) + MEMBERS_FIELD_NUMBER;
+        hash = (53 * hash) + getMembersList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.HallProto.Club parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.Club parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.Club parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.Club parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.Club parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.Club parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.Club parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.Club parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.Club parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.Club parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.Club parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.Club parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.HallProto.Club prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.Club}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.Club)
+        proto.HallProto.ClubOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.HallProto.internal_static_proto_Club_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.HallProto.internal_static_proto_Club_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.HallProto.Club.class, proto.HallProto.Club.Builder.class);
+      }
+
+      // Construct using proto.HallProto.Club.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getMembersFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        clubId_ = 0;
+
+        avatar_ = com.google.protobuf.ByteString.EMPTY;
+
+        name_ = com.google.protobuf.ByteString.EMPTY;
+
+        des_ = com.google.protobuf.ByteString.EMPTY;
+
+        if (membersBuilder_ == null) {
+          members_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000010);
+        } else {
+          membersBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.HallProto.internal_static_proto_Club_descriptor;
+      }
+
+      public proto.HallProto.Club getDefaultInstanceForType() {
+        return proto.HallProto.Club.getDefaultInstance();
+      }
+
+      public proto.HallProto.Club build() {
+        proto.HallProto.Club result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.HallProto.Club buildPartial() {
+        proto.HallProto.Club result = new proto.HallProto.Club(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.clubId_ = clubId_;
+        result.avatar_ = avatar_;
+        result.name_ = name_;
+        result.des_ = des_;
+        if (membersBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010)) {
+            members_ = java.util.Collections.unmodifiableList(members_);
+            bitField0_ = (bitField0_ & ~0x00000010);
+          }
+          result.members_ = members_;
+        } else {
+          result.members_ = membersBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.HallProto.Club) {
+          return mergeFrom((proto.HallProto.Club)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.HallProto.Club other) {
+        if (other == proto.HallProto.Club.getDefaultInstance()) return this;
+        if (other.getClubId() != 0) {
+          setClubId(other.getClubId());
+        }
+        if (other.getAvatar() != com.google.protobuf.ByteString.EMPTY) {
+          setAvatar(other.getAvatar());
+        }
+        if (other.getName() != com.google.protobuf.ByteString.EMPTY) {
+          setName(other.getName());
+        }
+        if (other.getDes() != com.google.protobuf.ByteString.EMPTY) {
+          setDes(other.getDes());
+        }
+        if (membersBuilder_ == null) {
+          if (!other.members_.isEmpty()) {
+            if (members_.isEmpty()) {
+              members_ = other.members_;
+              bitField0_ = (bitField0_ & ~0x00000010);
+            } else {
+              ensureMembersIsMutable();
+              members_.addAll(other.members_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.members_.isEmpty()) {
+            if (membersBuilder_.isEmpty()) {
+              membersBuilder_.dispose();
+              membersBuilder_ = null;
+              members_ = other.members_;
+              bitField0_ = (bitField0_ & ~0x00000010);
+              membersBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getMembersFieldBuilder() : null;
+            } else {
+              membersBuilder_.addAllMessages(other.members_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.HallProto.Club parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.HallProto.Club) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int clubId_ ;
+      /**
+       * <code>int32 clubId = 1;</code>
+       */
+      public int getClubId() {
+        return clubId_;
+      }
+      /**
+       * <code>int32 clubId = 1;</code>
+       */
+      public Builder setClubId(int value) {
+        
+        clubId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 clubId = 1;</code>
+       */
+      public Builder clearClubId() {
+        
+        clubId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString avatar_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       *头像信息
+       * </pre>
+       *
+       * <code>bytes avatar = 2;</code>
+       */
+      public com.google.protobuf.ByteString getAvatar() {
+        return avatar_;
+      }
+      /**
+       * <pre>
+       *头像信息
+       * </pre>
+       *
+       * <code>bytes avatar = 2;</code>
+       */
+      public Builder setAvatar(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        avatar_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *头像信息
+       * </pre>
+       *
+       * <code>bytes avatar = 2;</code>
+       */
+      public Builder clearAvatar() {
+        
+        avatar_ = getDefaultInstance().getAvatar();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString name_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       *名称
+       * </pre>
+       *
+       * <code>bytes name = 3;</code>
+       */
+      public com.google.protobuf.ByteString getName() {
+        return name_;
+      }
+      /**
+       * <pre>
+       *名称
+       * </pre>
+       *
+       * <code>bytes name = 3;</code>
+       */
+      public Builder setName(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *名称
+       * </pre>
+       *
+       * <code>bytes name = 3;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString des_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       *宣言
+       * </pre>
+       *
+       * <code>bytes des = 4;</code>
+       */
+      public com.google.protobuf.ByteString getDes() {
+        return des_;
+      }
+      /**
+       * <pre>
+       *宣言
+       * </pre>
+       *
+       * <code>bytes des = 4;</code>
+       */
+      public Builder setDes(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        des_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *宣言
+       * </pre>
+       *
+       * <code>bytes des = 4;</code>
+       */
+      public Builder clearDes() {
+        
+        des_ = getDefaultInstance().getDes();
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.HallProto.ClubMember> members_ =
+        java.util.Collections.emptyList();
+      private void ensureMembersIsMutable() {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+          members_ = new java.util.ArrayList<proto.HallProto.ClubMember>(members_);
+          bitField0_ |= 0x00000010;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.HallProto.ClubMember, proto.HallProto.ClubMember.Builder, proto.HallProto.ClubMemberOrBuilder> membersBuilder_;
+
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public java.util.List<proto.HallProto.ClubMember> getMembersList() {
+        if (membersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(members_);
+        } else {
+          return membersBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public int getMembersCount() {
+        if (membersBuilder_ == null) {
+          return members_.size();
+        } else {
+          return membersBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public proto.HallProto.ClubMember getMembers(int index) {
+        if (membersBuilder_ == null) {
+          return members_.get(index);
+        } else {
+          return membersBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder setMembers(
+          int index, proto.HallProto.ClubMember value) {
+        if (membersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMembersIsMutable();
+          members_.set(index, value);
+          onChanged();
+        } else {
+          membersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder setMembers(
+          int index, proto.HallProto.ClubMember.Builder builderForValue) {
+        if (membersBuilder_ == null) {
+          ensureMembersIsMutable();
+          members_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          membersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder addMembers(proto.HallProto.ClubMember value) {
+        if (membersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMembersIsMutable();
+          members_.add(value);
+          onChanged();
+        } else {
+          membersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder addMembers(
+          int index, proto.HallProto.ClubMember value) {
+        if (membersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMembersIsMutable();
+          members_.add(index, value);
+          onChanged();
+        } else {
+          membersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder addMembers(
+          proto.HallProto.ClubMember.Builder builderForValue) {
+        if (membersBuilder_ == null) {
+          ensureMembersIsMutable();
+          members_.add(builderForValue.build());
+          onChanged();
+        } else {
+          membersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder addMembers(
+          int index, proto.HallProto.ClubMember.Builder builderForValue) {
+        if (membersBuilder_ == null) {
+          ensureMembersIsMutable();
+          members_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          membersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder addAllMembers(
+          java.lang.Iterable<? extends proto.HallProto.ClubMember> values) {
+        if (membersBuilder_ == null) {
+          ensureMembersIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, members_);
+          onChanged();
+        } else {
+          membersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder clearMembers() {
+        if (membersBuilder_ == null) {
+          members_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000010);
+          onChanged();
+        } else {
+          membersBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public Builder removeMembers(int index) {
+        if (membersBuilder_ == null) {
+          ensureMembersIsMutable();
+          members_.remove(index);
+          onChanged();
+        } else {
+          membersBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public proto.HallProto.ClubMember.Builder getMembersBuilder(
+          int index) {
+        return getMembersFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public proto.HallProto.ClubMemberOrBuilder getMembersOrBuilder(
+          int index) {
+        if (membersBuilder_ == null) {
+          return members_.get(index);  } else {
+          return membersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public java.util.List<? extends proto.HallProto.ClubMemberOrBuilder> 
+           getMembersOrBuilderList() {
+        if (membersBuilder_ != null) {
+          return membersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(members_);
+        }
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public proto.HallProto.ClubMember.Builder addMembersBuilder() {
+        return getMembersFieldBuilder().addBuilder(
+            proto.HallProto.ClubMember.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public proto.HallProto.ClubMember.Builder addMembersBuilder(
+          int index) {
+        return getMembersFieldBuilder().addBuilder(
+            index, proto.HallProto.ClubMember.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *成员
+       * </pre>
+       *
+       * <code>repeated .proto.ClubMember members = 5;</code>
+       */
+      public java.util.List<proto.HallProto.ClubMember.Builder> 
+           getMembersBuilderList() {
+        return getMembersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.HallProto.ClubMember, proto.HallProto.ClubMember.Builder, proto.HallProto.ClubMemberOrBuilder> 
+          getMembersFieldBuilder() {
+        if (membersBuilder_ == null) {
+          membersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.HallProto.ClubMember, proto.HallProto.ClubMember.Builder, proto.HallProto.ClubMemberOrBuilder>(
+                  members_,
+                  ((bitField0_ & 0x00000010) == 0x00000010),
+                  getParentForChildren(),
+                  isClean());
+          members_ = null;
+        }
+        return membersBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.Club)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.Club)
+    private static final proto.HallProto.Club DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.HallProto.Club();
+    }
+
+    public static proto.HallProto.Club getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Club>
+        PARSER = new com.google.protobuf.AbstractParser<Club>() {
+      public Club parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Club(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Club> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Club> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.HallProto.Club getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ClubMemberOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.ClubMember)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 roleId = 1;</code>
+     */
+    int getRoleId();
+
+    /**
+     * <code>int32 position = 2;</code>
+     */
+    int getPosition();
+  }
+  /**
+   * Protobuf type {@code proto.ClubMember}
+   */
+  public  static final class ClubMember extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.ClubMember)
+      ClubMemberOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ClubMember.newBuilder() to construct.
+    private ClubMember(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ClubMember() {
+      roleId_ = 0;
+      position_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ClubMember(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              roleId_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              position_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.HallProto.internal_static_proto_ClubMember_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.HallProto.internal_static_proto_ClubMember_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.HallProto.ClubMember.class, proto.HallProto.ClubMember.Builder.class);
+    }
+
+    public static final int ROLEID_FIELD_NUMBER = 1;
+    private int roleId_;
+    /**
+     * <code>int32 roleId = 1;</code>
+     */
+    public int getRoleId() {
+      return roleId_;
+    }
+
+    public static final int POSITION_FIELD_NUMBER = 2;
+    private int position_;
+    /**
+     * <code>int32 position = 2;</code>
+     */
+    public int getPosition() {
+      return position_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (roleId_ != 0) {
+        output.writeInt32(1, roleId_);
+      }
+      if (position_ != 0) {
+        output.writeInt32(2, position_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (roleId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, roleId_);
+      }
+      if (position_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, position_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.HallProto.ClubMember)) {
+        return super.equals(obj);
+      }
+      proto.HallProto.ClubMember other = (proto.HallProto.ClubMember) obj;
+
+      boolean result = true;
+      result = result && (getRoleId()
+          == other.getRoleId());
+      result = result && (getPosition()
+          == other.getPosition());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoleId();
+      hash = (37 * hash) + POSITION_FIELD_NUMBER;
+      hash = (53 * hash) + getPosition();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.HallProto.ClubMember parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.ClubMember parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.ClubMember parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.ClubMember parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.ClubMember parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.HallProto.ClubMember parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.HallProto.ClubMember parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.ClubMember parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.ClubMember parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.ClubMember parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.HallProto.ClubMember parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.HallProto.ClubMember parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.HallProto.ClubMember prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.ClubMember}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.ClubMember)
+        proto.HallProto.ClubMemberOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.HallProto.internal_static_proto_ClubMember_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.HallProto.internal_static_proto_ClubMember_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.HallProto.ClubMember.class, proto.HallProto.ClubMember.Builder.class);
+      }
+
+      // Construct using proto.HallProto.ClubMember.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        roleId_ = 0;
+
+        position_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.HallProto.internal_static_proto_ClubMember_descriptor;
+      }
+
+      public proto.HallProto.ClubMember getDefaultInstanceForType() {
+        return proto.HallProto.ClubMember.getDefaultInstance();
+      }
+
+      public proto.HallProto.ClubMember build() {
+        proto.HallProto.ClubMember result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.HallProto.ClubMember buildPartial() {
+        proto.HallProto.ClubMember result = new proto.HallProto.ClubMember(this);
+        result.roleId_ = roleId_;
+        result.position_ = position_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.HallProto.ClubMember) {
+          return mergeFrom((proto.HallProto.ClubMember)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.HallProto.ClubMember other) {
+        if (other == proto.HallProto.ClubMember.getDefaultInstance()) return this;
+        if (other.getRoleId() != 0) {
+          setRoleId(other.getRoleId());
+        }
+        if (other.getPosition() != 0) {
+          setPosition(other.getPosition());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.HallProto.ClubMember parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.HallProto.ClubMember) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int roleId_ ;
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public int getRoleId() {
+        return roleId_;
+      }
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public Builder setRoleId(int value) {
+        
+        roleId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public Builder clearRoleId() {
+        
+        roleId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int position_ ;
+      /**
+       * <code>int32 position = 2;</code>
+       */
+      public int getPosition() {
+        return position_;
+      }
+      /**
+       * <code>int32 position = 2;</code>
+       */
+      public Builder setPosition(int value) {
+        
+        position_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 position = 2;</code>
+       */
+      public Builder clearPosition() {
+        
+        position_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.ClubMember)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.ClubMember)
+    private static final proto.HallProto.ClubMember DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.HallProto.ClubMember();
+    }
+
+    public static proto.HallProto.ClubMember getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ClubMember>
+        PARSER = new com.google.protobuf.AbstractParser<ClubMember>() {
+      public ClubMember parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new ClubMember(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ClubMember> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ClubMember> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.HallProto.ClubMember getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ReqLogin_descriptor;
   private static final 
@@ -2544,6 +5272,26 @@ public final class HallProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckRoomList_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_ReqJoinClub_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_ReqJoinClub_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_AckJoinClub_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_AckJoinClub_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_Club_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_Club_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_ClubMember_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_ClubMember_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2559,8 +5307,13 @@ public final class HallProto {
       "(\014\022\016\n\006userId\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\017\n\007" +
       "channel\030\004 \001(\005\022\014\n\004club\030\005 \001(\005\"\r\n\013ReqRoomLi" +
       "st\"9\n\013AckRoomList\022\016\n\006roomId\030\001 \001(\005\022\014\n\004rul" +
-      "e\030\002 \001(\014\022\014\n\004open\030\003 \001(\010B\013B\tHallProtob\006prot" +
-      "o3"
+      "e\030\002 \001(\014\022\014\n\004open\030\003 \001(\010\"\035\n\013ReqJoinClub\022\016\n\006" +
+      "clubId\030\001 \001(\005\",\n\013AckJoinClub\022\035\n\010joinClub\030" +
+      "\001 \001(\0132\013.proto.Club\"e\n\004Club\022\016\n\006clubId\030\001 \001" +
+      "(\005\022\016\n\006avatar\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\013\n\003des\030",
+      "\004 \001(\014\022\"\n\007members\030\005 \003(\0132\021.proto.ClubMembe" +
+      "r\".\n\nClubMember\022\016\n\006roleId\030\001 \001(\005\022\020\n\010posit" +
+      "ion\030\002 \001(\005B\013B\tHallProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2598,6 +5351,30 @@ public final class HallProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRoomList_descriptor,
         new java.lang.String[] { "RoomId", "Rule", "Open", });
+    internal_static_proto_ReqJoinClub_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_proto_ReqJoinClub_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_ReqJoinClub_descriptor,
+        new java.lang.String[] { "ClubId", });
+    internal_static_proto_AckJoinClub_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_proto_AckJoinClub_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_AckJoinClub_descriptor,
+        new java.lang.String[] { "JoinClub", });
+    internal_static_proto_Club_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_proto_Club_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_Club_descriptor,
+        new java.lang.String[] { "ClubId", "Avatar", "Name", "Des", "Members", });
+    internal_static_proto_ClubMember_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_proto_ClubMember_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_ClubMember_descriptor,
+        new java.lang.String[] { "RoleId", "Position", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

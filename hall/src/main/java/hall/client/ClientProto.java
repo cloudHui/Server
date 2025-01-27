@@ -3,6 +3,9 @@ package hall.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
+import hall.handel.ReqJoinClubHandler;
 import hall.handel.ReqLoginHandler;
 import hall.handel.server.NotBreakHandler;
 import hall.handel.server.ReqRegisterHandler;
@@ -36,12 +39,12 @@ public class ClientProto {
 	/**
 	 * 消息转化
 	 */
-	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
+	private static Message parserMessage(int id, byte[] bytes) {
 		MessageId.HallMsg hallMsg = MessageId.HallMsg.get(id);
 		if (hallMsg != null) {
-			Class className = hallMsg.getClassName();
+			Class<? extends MessageLite> className = hallMsg.getClassName();
 			try {
-				return (com.google.protobuf.Message) MessageId.getMessageObject(className, bytes);
+				return (Message) MessageId.getMessageObject((Class<MessageLite>) className, bytes);
 			} catch (Exception e) {
 				logger.error("[parse message error messageId :{} className:{}]", id, className.getSimpleName());
 			}
@@ -58,6 +61,7 @@ public class ClientProto {
 		handlers.put(MessageId.REQ_REGISTER, ReqRegisterHandler.getInstance());
 		handlers.put(MessageId.NOT_BREAK, NotBreakHandler.getInstance());
 		handlers.put(MessageId.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
+		handlers.put(MessageId.HallMsg.REQ_JOIN_CLUB.getId(), ReqJoinClubHandler.getInstance());
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

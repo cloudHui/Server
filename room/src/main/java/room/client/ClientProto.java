@@ -3,6 +3,8 @@ package room.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
 import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -36,12 +38,12 @@ public class ClientProto {
 	/**
 	 * 消息转化
 	 */
-	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
+	private static Message parserMessage(int id, byte[] bytes) {
 		MessageId.RoomMsg roomMsg = MessageId.RoomMsg.get(id);
 		if (roomMsg != null) {
-			Class className = roomMsg.getClassName();
+			Class<? extends MessageLite> className = roomMsg.getClassName();
 			try {
-				return (com.google.protobuf.Message) MessageId.getMessageObject(className, bytes);
+				return (Message) MessageId.getMessageObject((Class<MessageLite>) className, bytes);
 			} catch (Exception e) {
 				logger.error("[parse message error messageId :{} className:{}]", id, className.getSimpleName());
 			}

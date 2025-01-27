@@ -12,7 +12,6 @@ public class GateTcpClient extends ClientHandler {
 	private int hallId;
 	private int roomId;
 
-	//Todo 设置渠道和工会id
 	private int clubId;
 	private int channel;
 

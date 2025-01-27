@@ -3,6 +3,8 @@ package game.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
 import game.handel.client.ReqEnterTableHandler;
 import game.handel.server.NotBreakHandler;
 import game.handel.server.ReqRegisterHandler;
@@ -53,12 +55,12 @@ public class ClientProto {
 	/**
 	 * 消息转化
 	 */
-	private static com.google.protobuf.Message parserMessage(int id, byte[] bytes) {
+	private static Message parserMessage(int id, byte[] bytes) {
 		MessageId.GameMsg gameMsg = MessageId.GameMsg.get(id);
 		if (gameMsg != null) {
-			Class className = gameMsg.getClassName();
+			Class<? extends MessageLite> className = gameMsg.getClassName();
 			try {
-				return (com.google.protobuf.Message) MessageId.getMessageObject(className, bytes);
+				return (Message) MessageId.getMessageObject((Class<MessageLite>) className, bytes);
 			} catch (Exception e) {
 				logger.error("[parse message error messageId :{} className:{}]", id, className.getSimpleName());
 			}

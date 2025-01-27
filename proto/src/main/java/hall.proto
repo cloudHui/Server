@@ -28,3 +28,22 @@ message AckRoomList {
     bytes rule = 2;
     bool open = 3;
 }
+
+message ReqJoinClub{
+    int32 clubId = 1;
+}
+
+message AckJoinClub{
+    Club joinClub = 1;
+}
+message Club{
+    int32 clubId = 1;
+    bytes avatar = 2; //头像信息
+    bytes name = 3; //名称
+    bytes des = 4; //宣言
+    repeated ClubMember members = 5;//成员
+}
+message ClubMember{
+    int32 roleId = 1;
+    int32 position = 2;
+}
