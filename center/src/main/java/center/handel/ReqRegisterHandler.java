@@ -4,7 +4,6 @@ import java.util.List;
 
 import center.Center;
 import center.client.CenterClient;
-import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import msg.MessageId;
 import msg.ServerType;

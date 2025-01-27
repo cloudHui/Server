@@ -213,7 +213,8 @@ public class ServerManager {
 
 
 	/**
-	 * 服务链接成功处理事件
+	 * 服务链接成功
+	 * 注册服务消息和注册成功 固定延时间隔发送心跳
 	 */
 	private final EventHandle activeHandle = channelHandler -> {
 		TCPConnect handler = (TCPConnect) channelHandler;
@@ -236,7 +237,7 @@ public class ServerManager {
 	};
 
 	/**
-	 * 结束关闭处理
+	 * 结束关闭处理断开链接
 	 */
 	private final EventHandle closeHandle = channelHandler -> {
 		TCPConnect connect = (TCPConnect) channelHandler;

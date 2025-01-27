@@ -5,12 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.google.protobuf.ByteString;
 import msg.ServerType;
 import net.client.handler.ClientHandler;
-import proto.ModelProto;
-import utils.config.ConfigurationManager;
-import utils.utils.IpUtil;
 import utils.utils.RandomUtils;
 
 /**
