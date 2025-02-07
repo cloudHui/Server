@@ -29,19 +29,10 @@ public class ClientProto {
 		tcpMessage.setMapId(gateClient.getId());
 		tcpMessage.setClientId(gateClient.getId());
 
-		TCPConnect serverClient = getTransServerClient(msgId, gateClient);
-		if (serverClient != null) {
-			serverClient.sendMessage(tcpMessage, 3).whenComplete((message, throwable) -> {
-				if (null != throwable) {
-					LOGGER.error("[ERROR! failed send transferMessage message to {} {}]", serverClient.getConnectServer(), throwable.getMessage());
-				} else {
-					try {
-						//Todo 解决消息转发超时处理和正确转发处理
-					} catch (Exception exception) {
-						exception.printStackTrace();
-					}
-				}
-			});
+		TCPConnect connect = getTransServerClient(msgId, gateClient);
+		if (connect != null) {
+			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) -> LOGGER.info("[send transferMessage message to {} {} success:{}]",
+					connect.getConnectServer(), msgId, throwable == null ? true : throwable.getMessage()));
 			return true;
 		}
 		LOGGER.error("[error msg transferMessage to server msgId:{}]", msgId);
