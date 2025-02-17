@@ -21,8 +21,6 @@ import threadtutil.timer.Timer;
 import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
-import utils.config.ServerConfiguration;
-import utils.utils.IpUtil;
 
 public class Hall {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Hall.class);

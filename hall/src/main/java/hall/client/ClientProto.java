@@ -5,10 +5,10 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import hall.handel.ReqJoinClubHandler;
-import hall.handel.ReqLoginHandler;
-import hall.handel.server.NotBreakHandler;
-import hall.handel.server.ReqRegisterHandler;
+import hall.handle.ReqJoinClubHandler;
+import hall.handle.ReqLoginHandler;
+import hall.handle.server.NotBreakHandler;
+import hall.handle.server.ReqRegisterHandler;
 import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;

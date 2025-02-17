@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import game.handel.client.ReqEnterTableHandler;
-import game.handel.server.NotBreakHandler;
-import game.handel.server.ReqRegisterHandler;
+import game.handle.client.ReqEnterTableHandler;
+import game.handle.server.NotBreakHandler;
+import game.handle.server.ReqRegisterHandler;
 import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;

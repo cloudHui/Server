@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import gate.client.GateTcpClient;
-import gate.handel.AckServerInfoHandel;
-import gate.handel.BroadCastHandler;
-import gate.handel.RegisterNoticeHandler;
-import gate.handel.ServerBreakNoticeHandler;
+import gate.handle.AckServerInfoHandel;
+import gate.handle.BroadCastHandler;
+import gate.handle.RegisterNoticeHandler;
+import gate.handle.ServerBreakNoticeHandler;
 import msg.MessageId;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;

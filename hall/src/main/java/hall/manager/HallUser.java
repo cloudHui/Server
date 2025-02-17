@@ -1,10 +1,6 @@
 package hall.manager;
 
-import model.User;
-import model.UserData;
-import model.UserInfo;
-
-public class HallUser extends User {
+public class HallUser {
 
 	private UserInfo userInfo;
 

@@ -3,9 +3,9 @@ package hall.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import hall.handel.server.AckServerInfoHandel;
-import hall.handel.server.RegisterNoticeHandler;
-import hall.handel.server.ServerBreakNoticeHandler;
+import hall.handle.server.AckServerInfoHandel;
+import hall.handle.server.RegisterNoticeHandler;
+import hall.handle.server.ServerBreakNoticeHandler;
 import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;

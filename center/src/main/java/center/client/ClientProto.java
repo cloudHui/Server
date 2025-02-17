@@ -3,8 +3,8 @@ package center.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import center.handel.ReqRegisterHandler;
-import center.handel.ReqServerInfoHandler;
+import center.handle.ReqRegisterHandler;
+import center.handle.ReqServerInfoHandler;
 import msg.MessageId;
 import net.handler.Handler;
 import net.handler.Handlers;

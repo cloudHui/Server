@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "--//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="db.dao.UserDao">
+<mapper namespace="hall.db.dao.UserDao">
 
-    <resultMap id="UserInfo" type="db.entity.UserInfos">
+    <resultMap id="UserInfo" type="hall.db.entity.UserInfos">
 
     </resultMap>
 
-    <select id="queryUserInfo" parameterType="Integer" resultMap="UserInfo">
-        select * from role_info where role_id == #{userId}
+    <select id="queryUserInfo" resultMap="UserInfo">
+        select *
+        from role_info
+        where role_id == #{userId}
     </select>
 
-    <select id="insertUserInfo" parameterType="String" resultMap="UserInfo">
-        select * from role_info where plant == #{plant}
+    <select id="insertUserInfo" resultMap="UserInfo">
+        select *
+        from role_info
+        where plant == #{plant}
     </select>
 </mapper>
