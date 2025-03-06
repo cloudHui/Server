@@ -22,6 +22,7 @@ import io.netty.util.CharsetUtil;
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
 public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
+
 	private static final String WEBSOCKET_PATH = "";
 	private WebSocketServerHandshaker handShaker;
 
@@ -43,20 +44,16 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 
 	private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
 		//要求Upgrade为websocket，过滤掉get/Post
-		if (!req.decoderResult().isSuccess()
-				|| (!"websocket".equals(req.headers().get("Upgrade")))) {
+		if (!req.decoderResult().isSuccess() || (!"websocket".equals(req.headers().get("Upgrade")))) {
 			//若不是websocket方式，则创建BAD_REQUEST的req，返回给客户端
-			sendHttpResponse(ctx, req, new DefaultFullHttpResponse(
-					HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
+			sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
 			return;
 		}
 
-		WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
-				"ws://localhost:9502/websocket", null, false);
+		WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("ws://localhost:9502/websocket", null, false);
 		handShaker = wsFactory.newHandshaker(req);
 		if (handShaker == null) {
-			WebSocketServerHandshakerFactory
-					.sendUnsupportedVersionResponse(ctx.channel());
+			WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
 		} else {
 			handShaker.handshake(ctx.channel(), req);
 		}

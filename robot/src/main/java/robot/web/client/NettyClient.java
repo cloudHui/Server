@@ -37,10 +37,7 @@ public class NettyClient {
 			// Connect with V13 (RFC 6455 aka HyBi-17). You can change it to V08 or V00.
 			// If you change it to V00, ping is not supported and remember to change
 			// HttpResponseDecoder to WebSocketHttpResponseDecoder in the pipeline.
-			final MyWebSocketClientHandler handler =
-					new MyWebSocketClientHandler(
-							WebSocketClientHandshakerFactory.newHandshaker(uri,
-									WebSocketVersion.V13, null, false, customHeaders));
+			final MyWebSocketClientHandler handler = new MyWebSocketClientHandler(WebSocketClientHandshakerFactory.newHandshaker(uri, WebSocketVersion.V13, null, false, customHeaders));
 			b.group(group);
 			b.channel(NioSocketChannel.class);
 			b.handler(new ChannelInitializer() {
