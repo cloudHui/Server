@@ -3,6 +3,7 @@ package gate.client;
 import msg.MessageId;
 import net.client.handler.WsClientHandler;
 import net.message.TCPMaker;
+import net.message.TCPMessage;
 
 
 public class GateWsClient extends WsClientHandler {
@@ -14,6 +15,8 @@ public class GateWsClient extends WsClientHandler {
 
 	public GateWsClient() {
 		super(null, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
+		TCPMessage tcpMessage = new TCPMessage(1, new byte[5], 0);
+		sendMessage(tcpMessage);
 
 		setCloseEvent(client -> ClientProto.notServerBreak(userId, gameId, hallId, roomId));
 

@@ -5,12 +5,10 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
 import msg.MessageId;
 import msg.ServerType;
 import net.connect.TCPConnect;
-import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
@@ -31,6 +29,7 @@ public class Gate {
 	private final Timer timer;
 
 	private int port;
+	private int wsPort;
 	private String ip;
 	private int serverId;
 	private String innerIp;
@@ -114,7 +113,7 @@ public class Gate {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 
 		setPort(cfgMgr.getInt("port", 0));
-
+		wsPort = cfgMgr.getInt("wsGate", 0);
 		setIp(IpUtil.getOutIp());
 
 		setServerId(cfgMgr.getInt("id", 0));
@@ -124,15 +123,17 @@ public class Gate {
 		setInnerIp(IpUtil.getLocalIP());
 
 		List<SocketAddress> addresses = new ArrayList<>();
-		addresses.add(new InetSocketAddress(getInnerIp(), getPort()));
-		new ServerService(90, GateTcpClient.class).start(addresses);
+		//addresses.add(new InetSocketAddress(getInnerIp(), getPort()));
+		//new ServerService(90, GateTcpClient.class).start(addresses);
+
+		addresses.add(new InetSocketAddress(getInnerIp(), wsPort));
 		setServerManager(new ServerManager());
-		//new GateWsService().start(cfgMgr.getServers().get("wsGate").getHostList());
+		new GateWsService().start(addresses);
 		//向注册中心注册
-		registerToCenter();
+		//registerToCenter();
 
 		//获取其他服务
-		getAllOtherServer();
+		//getAllOtherServer();
 
 		logger.info("[gate server is start!!!]");
 	}

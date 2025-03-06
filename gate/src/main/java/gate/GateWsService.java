@@ -19,7 +19,7 @@ public class GateWsService extends WSService {
 	}
 
 	public GateWsService(EventLoopGroup eventLoopGroup, int idleTime) {
-		super(eventLoopGroup, "webSocket", idleTime, GateWsClient.class);
+		super(eventLoopGroup, "websocket", idleTime, GateWsClient.class);
 	}
 
 
