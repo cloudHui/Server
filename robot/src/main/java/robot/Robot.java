@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import io.netty.channel.nio.NioEventLoopGroup;
 import msg.MessageId;
 import net.connect.TCPConnect;
+import net.connect.WSTCPConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
@@ -50,20 +51,35 @@ public class Robot {
 	private void start() {
 		serverManager = new ServerManager();
 		String[] ipPort = new String[2];
-		ipPort[0] = "127.0.0.1";
+		ipPort[0] = "172.20.16.119";
 		ipPort[1] = "5600";
+		//tcpConnect(ipPort);
+		wsConnect(ipPort);
+		LOGGER.info("[robot server is start!!!]");
+	}
 
+	private void tcpConnect(String[] ipPort) {
 		TCPConnect tcpConnection = new TCPConnect(new NioEventLoopGroup(1),
 				new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
 				channelHandler -> {
 					TCPConnect tcpConnect = (TCPConnect) channelHandler;
-					serverManager.addServerClient(tcpConnect);
 					HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
 					tcpConnect.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build());
 				}, null);
 		tcpConnection.connect();
-		LOGGER.info("[robot server is start!!!]");
+	}
+
+	private void wsConnect(String[] ipPort) {
+		WSTCPConnect wstcpConnect = new WSTCPConnect(new NioEventLoopGroup(1),
+				new InetSocketAddress(ipPort[0], 5601),
+				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
+				channelHandler -> {
+					WSTCPConnect handler = (WSTCPConnect) channelHandler;
+					HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
+					handler.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build());
+				});
+		wstcpConnect.connect();
 	}
 
 	public static void main(String[] args) {

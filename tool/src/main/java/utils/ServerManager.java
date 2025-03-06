@@ -16,6 +16,7 @@ import msg.ServerType;
 import net.client.event.EventHandle;
 import net.connect.ServerInfo;
 import net.connect.TCPConnect;
+import net.connect.handle.ConnectHandler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
@@ -35,7 +36,7 @@ public class ServerManager {
 	/**
 	 * 链接类型 链接服务id  链接
 	 */
-	private final Map<ServerType, Map<Integer, TCPConnect>> serverMap;
+	private final Map<ServerType, Map<Integer, ConnectHandler>> serverMap;
 
 	private final EventLoopGroup workerGroup = new NioEventLoopGroup(1);
 
@@ -50,10 +51,10 @@ public class ServerManager {
 	 *
 	 * @param client 链接
 	 */
-	public synchronized void addServerClient(TCPConnect client) {
+	public synchronized void addServerClient(ConnectHandler client) {
 		ServerInfo connectServer = client.getConnectServer();
 		ServerType serverType = ServerType.get(connectServer.getServerType());
-		Map<Integer, TCPConnect> connectMap = serverMap.get(serverType);
+		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
 		if (connectMap == null) {
 			connectMap = new ConcurrentHashMap<>();
 			serverMap.put(serverType, connectMap);
@@ -67,8 +68,8 @@ public class ServerManager {
 	 * @param serverType 服务类型
 	 * @param serverId   链接id
 	 */
-	public synchronized TCPConnect getServerClient(ServerType serverType, int serverId) {
-		Map<Integer, TCPConnect> connectMap = serverMap.get(serverType);
+	public synchronized ConnectHandler getServerClient(ServerType serverType, int serverId) {
+		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
 		if (connectMap != null) {
 			return connectMap.get(serverId);
 		}
@@ -82,7 +83,7 @@ public class ServerManager {
 	 * @param serverId   服务id
 	 */
 	public synchronized void removeServerClient(ServerType serverType, int serverId) {
-		Map<Integer, TCPConnect> connectMap = serverMap.get(serverType);
+		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
 		if (connectMap != null) {
 			connectMap.remove(serverId);
 			if (connectMap.isEmpty()) {
@@ -96,8 +97,8 @@ public class ServerManager {
 	 *
 	 * @param serverType 服务类型
 	 */
-	public synchronized TCPConnect getServerClient(ServerType serverType) {
-		Map<Integer, TCPConnect> connectMap = serverMap.get(serverType);
+	public synchronized ConnectHandler getServerClient(ServerType serverType) {
+		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
 		if (connectMap != null && !connectMap.isEmpty()) {
 			List<Integer> list = new ArrayList<>(connectMap.keySet());
 			int serverId = list.get(RandomUtils.randomRange(list.size()));

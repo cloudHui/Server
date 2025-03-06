@@ -9,7 +9,7 @@ import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
 import msg.MessageId;
 import msg.ServerType;
-import net.connect.TCPConnect;
+import net.connect.handle.ConnectHandler;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +128,7 @@ public class Hall {
 	 */
 	private void getRoomServer() {
 		registerTimer(3000, 1000, -1, gate -> {
-			TCPConnect serverClient = serverManager.getServerClient(ServerType.Center);
+			ConnectHandler serverClient = serverManager.getServerClient(ServerType.Center);
 			if (serverClient != null) {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Room.getServerType());

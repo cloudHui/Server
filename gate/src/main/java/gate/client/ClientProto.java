@@ -3,7 +3,7 @@ package gate.client;
 import gate.Gate;
 import msg.MessageId;
 import msg.ServerType;
-import net.connect.TCPConnect;
+import net.connect.handle.ConnectHandler;
 import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class ClientProto {
 		tcpMessage.setMapId(gateClient.getId());
 		tcpMessage.setClientId(gateClient.getId());
 
-		TCPConnect connect = getTransServerClient(msgId, gateClient);
+		ConnectHandler connect = getTransServerClient(msgId, gateClient);
 		if (connect != null) {
 			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) -> LOGGER.info("[send transferMessage message to {} {} success:{}]",
 					connect.getConnectServer(), msgId, throwable == null ? true : throwable.getMessage()));
@@ -43,14 +43,14 @@ public class ClientProto {
 	/**
 	 * 获取转发服务的链接
 	 */
-	private static TCPConnect getTransServerClient(int msgId, GateTcpClient gateClient) {
+	private static ConnectHandler getTransServerClient(int msgId, GateTcpClient gateClient) {
 		ServerType serverType = MessageId.getServerTypeByMessageId(msgId);
 		if (serverType == null) {
 			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", msgId);
 			return null;
 		}
 		int clientId = 0;
-		TCPConnect serverClient;
+		ConnectHandler serverClient;
 		ServerManager server = Gate.getInstance().getServerManager();
 		switch (serverType) {
 			case Game:
@@ -93,7 +93,7 @@ public class ClientProto {
 		if (serverManager == null) {
 			return;
 		}
-		TCPConnect serverClient = serverManager.getServerClient(ServerType.Game, gameId);
+		ConnectHandler serverClient = serverManager.getServerClient(ServerType.Game, gameId);
 		if (serverClient != null) {
 			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
 		}

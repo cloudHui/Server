@@ -8,7 +8,7 @@ import java.util.List;
 import gate.connect.ConnectProcessor;
 import msg.MessageId;
 import msg.ServerType;
-import net.connect.TCPConnect;
+import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
@@ -155,7 +155,7 @@ public class Gate {
 	 */
 	private void getAllOtherServer() {
 		registerTimer(3000, 1000, -1, gate -> {
-			TCPConnect serverClient = serverManager.getServerClient(ServerType.Center);
+			ConnectHandler serverClient = serverManager.getServerClient(ServerType.Center);
 			if (serverClient != null) {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
