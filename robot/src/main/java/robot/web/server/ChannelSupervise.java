@@ -1,4 +1,4 @@
-package robot.web;
+package robot.web.server;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;

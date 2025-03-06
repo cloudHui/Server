@@ -1,4 +1,4 @@
-package robot.web;
+package robot.web.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
