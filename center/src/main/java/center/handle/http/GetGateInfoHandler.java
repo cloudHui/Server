@@ -34,9 +34,6 @@ public class GetGateInfoHandler implements Handler<String> {
 	}
 
 	public boolean handler(Linker linker, String path, String function, String req) {
-		if (req == null) {
-			return false;
-		}
 		long start = System.currentTimeMillis();
 		Response ack = new Response();
 		CenterClient serverClient = (CenterClient) Center.getInstance().getServerManager().getServerClient(ServerType.Gate);
