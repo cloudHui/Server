@@ -5,10 +5,12 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
 import msg.MessageId;
 import msg.ServerType;
 import net.connect.handle.ConnectHandler;
+import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
@@ -123,9 +125,9 @@ public class Gate {
 		setInnerIp(IpUtil.getLocalIP());
 
 		List<SocketAddress> addresses = new ArrayList<>();
-		//addresses.add(new InetSocketAddress(getInnerIp(), getPort()));
-		//new ServerService(90, GateTcpClient.class).start(addresses);
-
+		addresses.add(new InetSocketAddress(getInnerIp(), getPort()));
+		new ServerService(90, GateTcpClient.class).start(addresses);
+		addresses.clear();
 		addresses.add(new InetSocketAddress(getInnerIp(), wsPort));
 		setServerManager(new ServerManager());
 		new GateWsService().start(addresses);
@@ -135,7 +137,7 @@ public class Gate {
 		//获取其他服务
 		//getAllOtherServer();
 
-		logger.info("[gate server is start!!!]");
+		logger.info("[gate server {}:{} is start!!!]", getInnerIp(), getPort());
 	}
 
 	/**

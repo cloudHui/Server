@@ -5,7 +5,6 @@ import center.client.CenterClient;
 import http.Linker;
 import http.handler.Handler;
 import msg.ServerType;
-import msg.http.req.GetGateInfoRequest;
 import msg.http.res.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import utils.utils.JsonUtils;
 /**
  * 处理查询 gate 信息
  */
-public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
+public class GetGateInfoHandler implements Handler<String> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GetGateInfoHandler.class);
 	private static final GetGateInfoHandler instance = new GetGateInfoHandler();
@@ -30,11 +29,11 @@ public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 		return "getGate";
 	}
 
-	public GetGateInfoRequest parser(String msg) {
-		return JsonUtils.readValue(msg, GetGateInfoRequest.class);
+	public String parser(String msg) {
+		return msg;
 	}
 
-	public boolean handler(Linker linker, String path, String function, GetGateInfoRequest req) {
+	public boolean handler(Linker linker, String path, String function, String req) {
 		if (req == null) {
 			return false;
 		}
@@ -47,7 +46,7 @@ public class GetGateInfoHandler implements Handler<GetGateInfoRequest> {
 		}
 		linker.sendMessage(ack);
 		start = System.currentTimeMillis() - start;
-		LOGGER.info("[req:{} cost:{}ms]", req.toString(), start);
+		LOGGER.info("[cost:{}ms]", start);
 		return true;
 	}
 }

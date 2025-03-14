@@ -53,9 +53,9 @@ public class Center {
 			String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
 			addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
 			new ServerService(0, CenterClient.class).start(addresses);
-			logger.info("[Center Tcp Server start success]");
+			logger.info("[Center Tcp Server {}:{} start success]", split[0], Integer.parseInt(split[1]));
 			new CenterHttpService().start(new InetSocketAddress(split[0], cfgMgr.getInt("httpPort", 0)));
-			logger.info("[Center http Server start success]");
+			logger.info("[Center http Server {}:{} start success]", split[0], cfgMgr.getInt("httpPort", 0));
 		} catch (Exception e) {
 			logger.error("[Center start error ]", e);
 			System.exit(0);

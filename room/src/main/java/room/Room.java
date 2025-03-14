@@ -119,7 +119,7 @@ public class Room {
 		//向注册中心注册
 		registerToCenter();
 		getGameServer();
-		LOGGER.info("[game server is start!!!]");
+		LOGGER.info("[room server {}:{} is start!!!]", split[0], Integer.parseInt(split[1]));
 	}
 
 	/**

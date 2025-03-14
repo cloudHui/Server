@@ -110,7 +110,7 @@ public class Hall {
 		//向注册中心注册
 		registerToCenter();
 		getRoomServer();
-		LOGGER.info("[game server is start!!!]");
+		LOGGER.info("[hall server {}:{} is start!!!]", split[0], Integer.parseInt(split[1]));
 	}
 
 	/**

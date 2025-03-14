@@ -145,6 +145,7 @@ public class Game {
 		if (cfgMgr.getInt("plant", 0) != 0) {
 			initSvn();
 		}
+		LOGGER.info("[game server {}:{}  is start!!!] ", split[0], Integer.parseInt(split[1]));
 	}
 
 	/**
@@ -201,7 +202,6 @@ public class Game {
 			//dingTalkWaring.sendMsg("我要测试", "17671292550");
 			instance.start();
 			//instance.testLog();
-			LOGGER.info("[game server is start!!!] ");
 		} catch (Exception e) {
 			LOGGER.error("[failed for start game server!]", e);
 		}
