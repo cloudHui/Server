@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import center.handle.http.GetGateInfoHandler;
-import center.handle.http.IndexHandler;
 import http.HttpDecoder;
 import http.handler.Handler;
 
@@ -24,6 +23,5 @@ public class ServerDecoder extends HttpDecoder {
 
 	static {
 		register(GetGateInfoHandler.getInstance());
-		register(IndexHandler.getInstance());
 	}
 }
