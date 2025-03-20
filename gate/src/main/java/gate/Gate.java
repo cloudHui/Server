@@ -20,7 +20,7 @@ import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
-import utils.utils.IpUtil;
+import utils.other.IpUtil;
 
 public class Gate {
 	private final static Logger logger = LoggerFactory.getLogger(Gate.class);
@@ -31,7 +31,6 @@ public class Gate {
 	private final Timer timer;
 
 	private int port;
-	private int wsPort;
 	private String ip;
 	private int serverId;
 	private String innerIp;
@@ -115,7 +114,7 @@ public class Gate {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 
 		setPort(cfgMgr.getInt("port", 0));
-		wsPort = cfgMgr.getInt("wsGate", 0);
+		int wsPort = cfgMgr.getInt("wsGate", 0);
 		setIp(IpUtil.getOutIp());
 
 		setServerId(cfgMgr.getInt("id", 0));

@@ -24,8 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import utils.config.ConfigurationManager;
-import utils.utils.IpUtil;
-import utils.utils.RandomUtils;
+import utils.other.IpUtil;
+import utils.other.RandomUtils;
 
 /**
  * 服务链接管理

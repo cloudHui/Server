@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import msg.ServerType;
 import net.client.handler.ClientHandler;
-import utils.utils.RandomUtils;
+import utils.other.RandomUtils;
 
 /**
  * 服务链接管理

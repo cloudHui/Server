@@ -10,26 +10,21 @@ import game.Game;
 import game.manager.model.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.utils.RandomUtils;
-import utils.utils.TimeUtil;
+import utils.other.TimeUtil;
 
 public class TableManager {
 
 	private final static Logger logger = LoggerFactory.getLogger(TableManager.class);
 
-	/**
-	 * 基础值
-	 */
-	private static final int BASE_ROUND = 10000000;
+	//初始桌子序号
+	private final static int BASE_INDEX = 100000;
 	private final Map<String, Table> tableMap;
 	/**
 	 * 当前初始化桌子号
 	 */
-	private int randomBeginTableIndex = 0;
+	private int currIndex;
 	//桌子号的头
 	private String idHead;
-	//桌子号的尾
-	private String idTail;
 
 	public TableManager() {
 		tableMap = new ConcurrentHashMap<>();
@@ -43,22 +38,6 @@ public class TableManager {
 
 	public void setIdHead(String idHead) {
 		this.idHead = idHead;
-	}
-
-	public String getIdTail() {
-		return idTail;
-	}
-
-	public void setIdTail(String idTail) {
-		this.idTail = idTail;
-	}
-
-	public int getRandomBeginTableIndex() {
-		return randomBeginTableIndex;
-	}
-
-	public void setRandomBeginTableIndex(int randomBeginTableIndex) {
-		this.randomBeginTableIndex = randomBeginTableIndex;
 	}
 
 	public void addTable(Table table) {
@@ -87,25 +66,23 @@ public class TableManager {
 	/**
 	 * 获取桌子号
 	 */
-	public synchronized String getTableId() {
-		if (getRandomBeginTableIndex() == 0) {
-			setRandomBeginTableIndex(RandomUtils.randomRangeObtain(BASE_ROUND, BASE_ROUND * 2));
+	public String getTableId() {
+		synchronized (this) {
+			String tableId = getIdHead() + currIndex++;
+			logger.info("[create new table id:{}]", tableId);
+			return tableId;
 		}
-		setRandomBeginTableIndex(getRandomBeginTableIndex() + 1);
-		String tableId = getIdHead() + getRandomBeginTableIndex() + getIdTail();
-		logger.info("[Create new table id:{}]", tableId);
-		return tableId;
 	}
 
 	/**
 	 * 重置id 头尾拼接字段
 	 */
-	public synchronized void resetTableId() {
-		SimpleDateFormat sp = new SimpleDateFormat("yyMMddHH");
-		String head = sp.format(new Date());
-		setIdHead(head.substring(0, head.length() / 2));
-		setIdTail(head.substring(head.length() / 2));
-		setRandomBeginTableIndex(RandomUtils.randomRangeObtain(BASE_ROUND, BASE_ROUND * 2));
-		logger.info("[resettableId {} baseId:{}]", new Timestamp(System.currentTimeMillis()), getRandomBeginTableIndex());
+	public void resetTableId() {
+		synchronized (this) {
+			SimpleDateFormat sp = new SimpleDateFormat("yyMMddHH");
+			setIdHead(sp.format(new Date()));
+			currIndex = BASE_INDEX;
+			logger.info("[resettableId {} head:{} baseId:{}]", new Timestamp(System.currentTimeMillis()), idHead, currIndex);
+		}
 	}
 }

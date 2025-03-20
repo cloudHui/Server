@@ -9,7 +9,7 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.utils.JsonUtils;
+import utils.other.JsonUtils;
 
 public class ResponseMaker<T> implements HttpResponseMaker<T> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ResponseMaker.class);

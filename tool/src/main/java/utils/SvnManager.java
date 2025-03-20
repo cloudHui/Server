@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.utils.ExecCommand;
-import utils.utils.StringUtils;
+import utils.other.ExecCommand;
+import utils.other.StringUtils;
 
 public class SvnManager {
 

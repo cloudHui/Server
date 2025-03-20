@@ -3,7 +3,8 @@ package hall.manager;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import db.service.UserService;
+import hall.db.service.UserService;
+
 
 /**
  * 玩家管理
@@ -24,15 +25,13 @@ public class UserManager {
 		this.users = new ConcurrentHashMap<>();
 	}
 
-
-
-	public HallUser getUser(int userId) {
+	public User getUser(int userId) {
 		int index = userId / 16;
 		UserMap userMap = users.computeIfAbsent(index, k -> new UserMap());
 		return userMap.getUser(userId);
 	}
 
-	public void addUser(HallUser user) {
+	public void addUser(User user) {
 		int userId = user.getUserId();
 		int index = userId / 16;
 		UserMap userMap = users.computeIfAbsent(index, k -> new UserMap());
