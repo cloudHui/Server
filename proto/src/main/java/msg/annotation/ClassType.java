@@ -15,4 +15,5 @@ public @interface ClassType {
 
 	//绑定的消息类信息
 	Class<?> value();
+	//Todo  是不是要加排除有些服务不需要这些处理类
 }

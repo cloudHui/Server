@@ -15,7 +15,6 @@ import net.message.Parser;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.ModelProto;
 import utils.StringConst;
 
 /**
@@ -27,18 +26,8 @@ public class ClientProto {
 
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
-	public final static Parser PARSER = (id, bytes) -> {
-		switch (id) {
-			case MessageId.REQ_REGISTER:
-				return ModelProto.ReqRegister.parseFrom(bytes);
-			case MessageId.HEART:
-				return ModelProto.ReqHeart.parseFrom(bytes);
-			case MessageId.NOT_BREAK:
-				return ModelProto.NotBreak.parseFrom(bytes);
-			default:
-				return parserMessage(id, bytes);
-		}
-	};
+	public final static Parser PARSER = ClientProto::parserMessage;
+
 	private final static Map<Integer, Handler> HANDLERS = new HashMap<>();
 
 	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
@@ -49,6 +38,7 @@ public class ClientProto {
 		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, HANDLERS);
 
 		HandleTypeRegister.bindTransMap(GameMessageId.class, TRANS_MAP);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP);
 	}
 
 	public final static Handlers GET = HANDLERS::get;

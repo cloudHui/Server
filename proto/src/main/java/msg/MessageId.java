@@ -8,33 +8,39 @@ import com.google.protobuf.MessageLite;
 import msg.annotation.ClassType;
 import proto.GameProto;
 import proto.HallProto;
+import proto.ModelProto;
 import proto.RoomProto;
 
 // BASE_ID_INDEX 以下 的是通用消息
 // 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
 // 客户端回复消息都是 大于 BASE_ID_INDEX
-public interface MessageId {
+public class MessageId {
 
-	int GAME_TYPE = 0x2000;
-	int HALL_TYPE = 0x4000;
-	int ROOM_TYPE = 0x8000;
+	public static final int GAME_TYPE = 0x2000;
+	public static final int HALL_TYPE = 0x4000;
+	public static final int ROOM_TYPE = 0x8000;
 
-	int HEART = 1;//心跳
-	int HEART_ACK = 2;//回复
-	int REQ_REGISTER = 3;//请求注册
-	int ACK_REGISTER = 4;//注册回复
-	int REGISTER_NOTICE = 5;//注册通知
-	int BREAK_NOTICE = 6;//服务掉线通知
+	@ClassType(ModelProto.ReqHeart.class)
+	public static final int HEART = 1;//心跳
+	public static final int HEART_ACK = 2;//回复
+
+	@ClassType(ModelProto.ReqRegister.class)
+	public static final int REQ_REGISTER = 3;//请求注册
+
+	public static final int ACK_REGISTER = 4;//注册回复
+	public static final int REGISTER_NOTICE = 5;//注册通知
+	public static final int BREAK_NOTICE = 6;//服务掉线通知
 
 
-	int REQ_SERVER = 7;//服务信息请
-	int ACK_SERVER = 8;//服务信息回复
+	public static final int REQ_SERVER = 7;//服务信息请
+	public static final int ACK_SERVER = 8;//服务信息回复
 
-	int NOT_BREAK = 9;//通知玩家掉线
+	@ClassType(ModelProto.NotBreak.class)
+	public static final int NOT_BREAK = 9;//通知玩家掉线
 
-	int BROAD = 10;//广播
+	public static final int BROAD = 10;//广播
 
-	int BASE_ID_INDEX = 0x1000;
+	public static final int BASE_ID_INDEX = 0x1000;
 
 	//Hall
 	int REQ_LOGIN_MSG = HALL_TYPE | 1;
@@ -122,7 +128,7 @@ public interface MessageId {
 		}
 	}
 
-	static MessageLite getMessageObject(Class<MessageLite> clazz, byte[] bytes) throws Exception {
+	public static MessageLite getMessageObject(Class<MessageLite> clazz, byte[] bytes) throws Exception {
 		MessageLite defaultInstance = Internal.getDefaultInstance(clazz);
 		if (null == bytes) {
 			return defaultInstance.newBuilderForType().build();
@@ -134,7 +140,7 @@ public interface MessageId {
 	/**
 	 * 通过消息id获取要转发的服务类型
 	 */
-	static ServerType getServerTypeByMessageId(int msgId) {
+	public static ServerType getServerTypeByMessageId(int msgId) {
 		if ((msgId & MessageId.GAME_TYPE) != 0) {
 			return ServerType.Game;
 		} else if ((msgId & MessageId.HALL_TYPE) != 0) {
