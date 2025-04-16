@@ -5,6 +5,7 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.client.ClientProto;
 import game.client.GameClient;
 import game.connect.ConnectProcessor;
 import game.manager.TableManager;
@@ -141,6 +142,7 @@ public class Game {
 		//初始化
 		init();
 
+		ClientProto.init();
 		//初始化代码管理
 		if (cfgMgr.getInt("plant", 0) != 0) {
 			initSvn();

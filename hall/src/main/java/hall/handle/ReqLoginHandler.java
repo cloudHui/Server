@@ -2,6 +2,7 @@ package hall.handle;
 
 import com.google.protobuf.Message;
 import msg.MessageId;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.HallProto;
@@ -9,13 +10,8 @@ import proto.HallProto;
 /**
  * 登录请求
  */
+@ProcessType(MessageId.REQ_LOGIN_MSG)
 public class ReqLoginHandler implements Handler {
-
-	private static final ReqLoginHandler instance = new ReqLoginHandler();
-
-	public static ReqLoginHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {

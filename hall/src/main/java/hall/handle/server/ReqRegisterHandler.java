@@ -5,6 +5,7 @@ import hall.Hall;
 import hall.client.HallClient;
 import msg.MessageId;
 import msg.ServerType;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -12,13 +13,8 @@ import proto.ModelProto;
 /**
  * 注册服务信息请求
  */
+@ProcessType(MessageId.REQ_REGISTER)
 public class ReqRegisterHandler implements Handler {
-
-	private static final ReqRegisterHandler instance = new ReqRegisterHandler();
-
-	public static ReqRegisterHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {

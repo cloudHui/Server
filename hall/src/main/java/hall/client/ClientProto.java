@@ -5,11 +5,9 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import hall.handle.ReqJoinClubHandler;
-import hall.handle.ReqLoginHandler;
-import hall.handle.server.NotBreakHandler;
-import hall.handle.server.ReqRegisterHandler;
+import hall.Hall;
 import msg.MessageId;
+import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
@@ -17,7 +15,7 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
-import utils.handel.HeartHandler;
+import utils.StringConst;
 
 public class ClientProto {
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
@@ -57,11 +55,8 @@ public class ClientProto {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageId.HEART, HeartHandler.getInstance());
-		handlers.put(MessageId.REQ_REGISTER, ReqRegisterHandler.getInstance());
-		handlers.put(MessageId.NOT_BREAK, NotBreakHandler.getInstance());
-		handlers.put(MessageId.HallMsg.REQ_LOGIN.getId(), ReqLoginHandler.getInstance());
-		handlers.put(MessageId.HallMsg.REQ_JOIN_CLUB.getId(), ReqJoinClubHandler.getInstance());
+		HandleTypeRegister.bindProcess(Hall.class, handlers, "client, connect,db");
+		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, handlers);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

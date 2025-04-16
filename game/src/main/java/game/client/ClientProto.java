@@ -5,10 +5,10 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import game.handle.client.ReqEnterTableHandler;
-import game.handle.server.NotBreakHandler;
-import game.handle.server.ReqRegisterHandler;
+import game.Game;
+import game.msg.GameMessageId;
 import msg.MessageId;
+import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
@@ -16,14 +16,17 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
-import utils.handel.HeartHandler;
+import utils.StringConst;
 
 /**
  * 处理gate转发消息处理
  */
 public class ClientProto {
+
 	public final static Transfer TRANSFER = (gameClient, tcpMessage) -> false;
+
 	private final static Logger logger = LoggerFactory.getLogger(ClientProto.class);
+
 	public final static Parser PARSER = (id, bytes) -> {
 		switch (id) {
 			case MessageId.REQ_REGISTER:
@@ -36,33 +39,30 @@ public class ClientProto {
 				return parserMessage(id, bytes);
 		}
 	};
-	private final static Map<Integer, Handler> handlers;
+	private final static Map<Integer, Handler> HANDLERS = new HashMap<>();
 
-	static {
-		handlers = new HashMap<>();
-		handlers.put(MessageId.HEART, HeartHandler.getInstance());
-		handlers.put(MessageId.REQ_REGISTER, ReqRegisterHandler.getInstance());
-		handlers.put(MessageId.NOT_BREAK, NotBreakHandler.getInstance());
+	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
 
-		handlers.put(MessageId.GameMsg.REQ_ENTER_TABLE.getId(), ReqEnterTableHandler.getInstance());
+	public static void init() {
+		HandleTypeRegister.bindProcess(Game.class, HANDLERS, "client");
+		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, HANDLERS);
 
-
+		HandleTypeRegister.bindTransMap(GameMessageId.class, TRANS_MAP);
 	}
 
-	public final static Handlers HANDLERS = handlers::get;
+	public final static Handlers GET = HANDLERS::get;
 
 	/**
 	 * 消息转化
 	 */
 	private static Message parserMessage(int id, byte[] bytes) {
-		MessageId.GameMsg gameMsg = MessageId.GameMsg.get(id);
+		Class<?> gameMsg = TRANS_MAP.get(id);
 		if (gameMsg != null) {
-			Class<? extends MessageLite> className = gameMsg.getClassName();
 			try {
-				return (Message) MessageId.getMessageObject((Class<MessageLite>) className, bytes);
+				return (Message) MessageId.getMessageObject((Class<MessageLite>) gameMsg, bytes);
 			} catch (Exception e) {
-				logger.error("[parse message error messageId :{} className:{}]", id, className.getSimpleName());
+				logger.error("[parse message error messageId :{} className:{}]", id, gameMsg.getSimpleName());
 			}
 		}
 		return null;

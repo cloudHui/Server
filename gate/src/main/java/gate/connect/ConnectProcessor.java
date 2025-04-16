@@ -3,12 +3,10 @@ package gate.connect;
 import java.util.HashMap;
 import java.util.Map;
 
+import gate.Gate;
 import gate.client.GateTcpClient;
-import gate.handle.AckServerInfoHandel;
-import gate.handle.BroadCastHandler;
-import gate.handle.RegisterNoticeHandler;
-import gate.handle.ServerBreakNoticeHandler;
 import msg.MessageId;
+import msg.registor.HandleTypeRegister;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -51,11 +49,7 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageId.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
-		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
-		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
-		handlers.put(MessageId.BROAD, BroadCastHandler.getInstance());
-
+		HandleTypeRegister.bindProcess(Gate.class, handlers, "client,connect");
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

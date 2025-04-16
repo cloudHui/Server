@@ -3,7 +3,7 @@ package room.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.TableModel;
+import room.model.TableModel;
 import utils.other.excel.ExcelUtil;
 
 /**

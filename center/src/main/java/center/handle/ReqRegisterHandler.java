@@ -7,6 +7,7 @@ import center.client.CenterClient;
 import com.google.protobuf.Message;
 import msg.MessageId;
 import msg.ServerType;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -18,15 +19,10 @@ import utils.ServerClientManager;
 /**
  * 注册服务信息请求
  */
+@ProcessType(MessageId.REQ_REGISTER)
 public class ReqRegisterHandler implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandler.class);
-
-	private static final ReqRegisterHandler instance = new ReqRegisterHandler();
-
-	public static ReqRegisterHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqRegister, int mapId, long sequence) {

@@ -12,7 +12,7 @@ public class GameClient extends ClientHandler {
 	private ModelProto.ServerInfo serverInfo;
 
 	public GameClient() {
-		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
+		super(ClientProto.PARSER, ClientProto.GET, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
 		setCloseEvent(client -> {
 			ServerType serverType = ServerType.get(serverInfo.getServerType());

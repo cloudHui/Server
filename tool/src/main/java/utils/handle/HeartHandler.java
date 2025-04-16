@@ -1,8 +1,9 @@
-package utils.handel;
+package utils.handle;
 
 import com.google.protobuf.Message;
 import msg.MessageId;
 import msg.ServerType;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -12,15 +13,10 @@ import proto.ModelProto;
 /**
  * 心跳请求
  */
+@ProcessType(MessageId.HEART)
 public class HeartHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);
-
-	private static final HeartHandler instance = new HeartHandler();
-
-	public static HeartHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqHeart, int mapId, long sequence) {

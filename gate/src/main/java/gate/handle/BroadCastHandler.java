@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.protobuf.Message;
 import gate.client.GateTcpClient;
 import msg.MessageId;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -15,15 +16,10 @@ import proto.GateProto;
 /**
  * 广播
  */
+@ProcessType(MessageId.BROAD)
 public class BroadCastHandler implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BroadCastHandler.class);
-
-	private static final BroadCastHandler instance = new BroadCastHandler();
-
-	public static BroadCastHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message message, int mapId, long sequence) {

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.protobuf.Internal;
 import com.google.protobuf.MessageLite;
+import msg.annotation.ClassType;
 import proto.GameProto;
 import proto.HallProto;
 import proto.RoomProto;
@@ -35,86 +36,16 @@ public interface MessageId {
 
 	int BASE_ID_INDEX = 0x1000;
 
-	//enum GateMsg {
-	//	BROAD_CAST(BROAD, GateProto.BroadCast.class),
-	//	;
-	//	private final int id;
-	//
-	//	private final Class<?> className;
-	//
-	//	private static final Map<Integer, GateMsg> es = new HashMap<>();
-	//
-	//	static {
-	//		for (GateMsg msg : values()) {
-	//			es.put(msg.getId(), msg);
-	//		}
-	//	}
-	//
-	//	GateMsg(int id, Class<?> className) {
-	//		this.id = id;
-	//		this.className = className;
-	//	}
-	//
-	//	public int getId() {
-	//		return id;
-	//	}
-	//
-	//	public Class<?> getClassName() {
-	//		return className;
-	//	}
-	//
-	//	private static Map<Integer, GateMsg> getEs() {
-	//		return es;
-	//	}
-	//
-	//	public static GateMsg get(int msgId) {
-	//		return getEs().get(msgId);
-	//	}
-	//}
-
-	enum GameMsg {
-		REQ_ENTER_TABLE(GAME_TYPE | 1, GameProto.ReqEnterTable.class),
-		ACK_ENTER_TABLE(GAME_TYPE | 2, GameProto.AckEnterTable.class),
-		;
-		private final int id;
-
-		private final Class<? extends MessageLite> className;
-
-		private static final Map<Integer, GameMsg> es = new HashMap<>();
-
-		static {
-			for (GameMsg msg : values()) {
-				es.put(msg.getId(), msg);
-			}
-		}
-
-		GameMsg(int id, Class<? extends MessageLite> className) {
-			this.id = id;
-			this.className = className;
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public Class<? extends MessageLite> getClassName() {
-			return className;
-		}
-
-		private static Map<Integer, GameMsg> getEs() {
-			return es;
-		}
-
-		public static GameMsg get(int msgId) {
-			return getEs().get(msgId);
-		}
-	}
-
+	//Hall
+	int REQ_LOGIN_MSG = HALL_TYPE | 1;
+	int ACK_LOGIN_MSG = HALL_TYPE | 2;
+	int REQ_JOIN_CLUB_MSG = HALL_TYPE | 3;
+	int ACK_JOIN_CLUB_MSG = HALL_TYPE | 4;
 	enum HallMsg {
-		REQ_LOGIN(HALL_TYPE | 1, HallProto.ReqLogin.class),
-		ACK_LOGIN(HALL_TYPE | 2, HallProto.AckLogin.class),
-		REQ_JOIN_CLUB(HALL_TYPE | 3, HallProto.ReqJoinClub.class),
-		ACK_JOIN_CLUB(HALL_TYPE | 4, HallProto.AckJoinClub.class),
+		REQ_LOGIN(REQ_LOGIN_MSG, HallProto.ReqLogin.class),
+		ACK_LOGIN(ACK_LOGIN_MSG, HallProto.AckLogin.class),
+		REQ_JOIN_CLUB(REQ_JOIN_CLUB_MSG, HallProto.ReqJoinClub.class),
+		ACK_JOIN_CLUB(ACK_JOIN_CLUB_MSG, HallProto.AckJoinClub.class),
 		;
 		private final int id;
 
@@ -150,9 +81,12 @@ public interface MessageId {
 		}
 	}
 
+	//Room
+	int REQ_ROOM_LIST_MSG = ROOM_TYPE | 1;
+	int ACK_ROOM_LIST_MSG = ROOM_TYPE | 2;
 	enum RoomMsg {
-		REQ_ROOM_LIST(ROOM_TYPE | 1, RoomProto.ReqGetRoomList.class),
-		ACK_ROOM_LIST(ROOM_TYPE | 2, RoomProto.AckGetRoomList.class),
+		REQ_ROOM_LIST(REQ_ROOM_LIST_MSG, RoomProto.ReqGetRoomList.class),
+		ACK_ROOM_LIST(ACK_ROOM_LIST_MSG, RoomProto.AckGetRoomList.class),
 		;
 		private final int id;
 

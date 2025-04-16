@@ -7,6 +7,7 @@ import center.client.CenterClient;
 import com.google.protobuf.Message;
 import msg.MessageId;
 import msg.ServerType;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -16,13 +17,8 @@ import utils.ServerClientManager;
 /**
  * 获取 服务信息请求
  */
+@ProcessType(MessageId.REQ_SERVER)
 public class ReqServerInfoHandler implements Handler {
-
-	private static final ReqServerInfoHandler instance = new ReqServerInfoHandler();
-
-	public static ReqServerInfoHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqServerInfo, int mapId, long sequence) {
