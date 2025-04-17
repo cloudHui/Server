@@ -58,7 +58,9 @@ public class MessageId {
 			des = "服务信息回复")
 	public static final int ACK_SERVER = 8;
 
-	@ClassType(value = ModelProto.NotBreak.class, messageTrans = { MessageTrans.GameServer, MessageTrans.HallServer, MessageTrans.RoomServer }, des = "通知玩家掉线")
+	@ClassType(value = ModelProto.NotBreak.class,
+			messageTrans = { MessageTrans.GameServer, MessageTrans.HallServer, MessageTrans.RoomServer },
+			des = "通知玩家掉线")
 	public static final int NOT_BREAK = 9;
 
 	@ClassType(value = GateProto.BroadCast.class, messageTrans = { MessageTrans.GateClient }, des = "广播")

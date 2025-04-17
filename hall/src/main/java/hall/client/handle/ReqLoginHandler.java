@@ -1,6 +1,10 @@
 package hall.client.handle;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.google.protobuf.Message;
+import hall.manager.User;
+import hall.manager.UserManager;
 import msg.HallMessageId;
 import msg.annotation.ProcessType;
 import net.client.Sender;
@@ -13,13 +17,19 @@ import proto.HallProto;
 @ProcessType(HallMessageId.REQ_LOGIN_MSG)
 public class ReqLoginHandler implements Handler {
 
+	private final AtomicInteger uid = new AtomicInteger(1);
+
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		HallProto.ReqLogin req = (HallProto.ReqLogin) msg;
-		String avatar = req.getAvatar().toStringUtf8();
-		String cert = req.getCert().toStringUtf8();
+		String nick = req.getNickName().toStringUtf8();
 		HallProto.AckLogin.Builder ack = HallProto.AckLogin.newBuilder();
-		ack.setUserId(1);
+		ack.setUserId(uid.decrementAndGet());
+		User user = UserManager.getInstance().getUser(ack.getUserId());
+		if (user == null) {
+			user = new User(ack.getUserId(), nick);
+			UserManager.getInstance().addUser(user);
+		}
 		sender.sendMessage(clientId, HallMessageId.ACK_LOGIN_MSG, mapId, 0, ack.build(), sequence);
 		return true;
 	}

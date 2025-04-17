@@ -5,19 +5,25 @@ import java.util.Map;
 
 import msg.HallMessageId;
 import msg.RoomMessageId;
+import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
 import proto.HallProto;
 import proto.RoomProto;
-import robot.connect.handel.AckGetRoomListHandler;
-import robot.connect.handel.AckLoginHandler;
 
 /**
  * 与center 消息处理
  */
 public class ConnectProcessor {
+
+	private final static Map<Integer, Handler> MAP = new HashMap<>();
+
+	public static void init() {
+		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, MAP);
+	}
+
 
 	public final static Parser PARSER = (id, bytes) -> {
 		if (id == HallMessageId.ACK_LOGIN_MSG) {
@@ -28,16 +34,7 @@ public class ConnectProcessor {
 		return null;
 	};
 
-	private final static Map<Integer, Handler> handlers;
-
-	static {
-		handlers = new HashMap<>();
-		handlers.put(HallMessageId.ACK_LOGIN_MSG, AckLoginHandler.getInstance());
-		handlers.put(RoomMessageId.ACK_ROOM_LIST_MSG, AckGetRoomListHandler.getInstance());
-
-	}
-
-	public final static Handlers HANDLERS = handlers::get;
+	public final static Handlers HANDLERS = MAP::get;
 
 	/**
 	 * 转发消息接口

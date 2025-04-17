@@ -15,7 +15,7 @@ public enum MessageTrans {
 	HallServer(ServerType.Hall, MessageId.SERVER, "大厅服务器"),
 	HallClient(ServerType.Hall, MessageId.CLIENT, "大厅客户端"),
 
-	RobotServer(ServerType.Robot, MessageId.SERVER, "机器人服务器"),
+	RobotServer(ServerType.Robot, MessageId.CLIENT, "机器人客户端"),
 
 	RoomServer(ServerType.Room, MessageId.SERVER, "房间服务器"),
 	RoomClient(ServerType.Room, MessageId.CLIENT, "房间客户端"),

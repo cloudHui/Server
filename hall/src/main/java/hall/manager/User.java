@@ -4,7 +4,14 @@ public class User {
 
 	private int userId;
 
+	private String nick;
+
 	public User() {
+	}
+
+	public User(int userId, String nick) {
+		this.userId = userId;
+		this.nick = nick;
 	}
 
 	public int getUserId() {
@@ -13,5 +20,13 @@ public class User {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 }

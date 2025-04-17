@@ -22,6 +22,8 @@ message Room{
         int32 creatorId = 2;
         int32 ownerId = 3;
         int64 overTimes = 4;
+        bool full = 5;//是否满了
+        bool watch = 6;//是否能观战
     }
 
 }

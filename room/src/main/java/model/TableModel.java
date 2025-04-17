@@ -1,4 +1,4 @@
-package room.model;
+package model; 
  
  
 public class TableModel {

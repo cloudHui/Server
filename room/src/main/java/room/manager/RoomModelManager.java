@@ -1,9 +1,11 @@
 package room.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import room.model.TableModel;
+import model.TableModel;
 import utils.other.excel.ExcelUtil;
 
 /**
@@ -11,16 +13,19 @@ import utils.other.excel.ExcelUtil;
  */
 public class RoomModelManager {
 
-	private final RoomModelManager instance = new RoomModelManager();
+	private static final RoomModelManager instance = new RoomModelManager();
 
-	public RoomModelManager getInstance() {
+	public static RoomModelManager getInstance() {
 		return instance;
 	}
 
-	public void readTableModel() {
+	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
+
+	public void init() {
+		readTableModel();
 	}
 
-	public static void main(String[] args) {
+	private void readTableModel() {
 		//读取文件生成结构
 		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "room");
 
@@ -28,9 +33,19 @@ public class RoomModelManager {
 		List<Object> prperties = new ArrayList<>();
 		//读取数据
 		ExcelUtil.readExcelJavaValue("TableModel.xlsx", prperties);
-		for (Object object : prperties) {
-			model = (TableModel) object;
-			System.out.println(model.toString());
+		synchronized (tableModelMap) {
+			tableModelMap.clear();
+			for (Object object : prperties) {
+				model = (TableModel) object;
+				tableModelMap.put(model.getId(), model);
+			}
 		}
+	}
+
+	/**
+	 * 获取所有模板
+	 */
+	public List<TableModel> getModels() {
+		return new ArrayList<>(tableModelMap.values());
 	}
 }

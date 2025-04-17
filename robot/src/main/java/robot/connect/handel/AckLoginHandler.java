@@ -1,7 +1,9 @@
 package robot.connect.handel;
 
 import com.google.protobuf.Message;
+import msg.HallMessageId;
 import msg.RoomMessageId;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -12,16 +14,10 @@ import proto.RoomProto;
 /**
  * 登录回复
  */
+@ProcessType(HallMessageId.ACK_LOGIN_MSG)
 public class AckLoginHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckLoginHandler.class);
-
-
-	private static final AckLoginHandler instance = new AckLoginHandler();
-
-	public static AckLoginHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {

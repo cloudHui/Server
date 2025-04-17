@@ -628,6 +628,24 @@ public final class RoomProto {
        * <code>int64 overTimes = 4;</code>
        */
       long getOverTimes();
+
+      /**
+       * <pre>
+       *是否满了
+       * </pre>
+       *
+       * <code>bool full = 5;</code>
+       */
+      boolean getFull();
+
+      /**
+       * <pre>
+       *是否能观战
+       * </pre>
+       *
+       * <code>bool watch = 6;</code>
+       */
+      boolean getWatch();
     }
     /**
      * Protobuf type {@code proto.Room.Table}
@@ -646,6 +664,8 @@ public final class RoomProto {
         creatorId_ = 0;
         ownerId_ = 0;
         overTimes_ = 0L;
+        full_ = false;
+        watch_ = false;
       }
 
       @java.lang.Override
@@ -694,6 +714,16 @@ public final class RoomProto {
               case 32: {
 
                 overTimes_ = input.readInt64();
+                break;
+              }
+              case 40: {
+
+                full_ = input.readBool();
+                break;
+              }
+              case 48: {
+
+                watch_ = input.readBool();
                 break;
               }
             }
@@ -756,6 +786,32 @@ public final class RoomProto {
         return overTimes_;
       }
 
+      public static final int FULL_FIELD_NUMBER = 5;
+      private boolean full_;
+      /**
+       * <pre>
+       *是否满了
+       * </pre>
+       *
+       * <code>bool full = 5;</code>
+       */
+      public boolean getFull() {
+        return full_;
+      }
+
+      public static final int WATCH_FIELD_NUMBER = 6;
+      private boolean watch_;
+      /**
+       * <pre>
+       *是否能观战
+       * </pre>
+       *
+       * <code>bool watch = 6;</code>
+       */
+      public boolean getWatch() {
+        return watch_;
+      }
+
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -779,6 +835,12 @@ public final class RoomProto {
         }
         if (overTimes_ != 0L) {
           output.writeInt64(4, overTimes_);
+        }
+        if (full_ != false) {
+          output.writeBool(5, full_);
+        }
+        if (watch_ != false) {
+          output.writeBool(6, watch_);
         }
         unknownFields.writeTo(output);
       }
@@ -804,6 +866,14 @@ public final class RoomProto {
           size += com.google.protobuf.CodedOutputStream
             .computeInt64Size(4, overTimes_);
         }
+        if (full_ != false) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(5, full_);
+        }
+        if (watch_ != false) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBoolSize(6, watch_);
+        }
         size += unknownFields.getSerializedSize();
         memoizedSize = size;
         return size;
@@ -828,6 +898,10 @@ public final class RoomProto {
             == other.getOwnerId());
         result = result && (getOverTimes()
             == other.getOverTimes());
+        result = result && (getFull()
+            == other.getFull());
+        result = result && (getWatch()
+            == other.getWatch());
         result = result && unknownFields.equals(other.unknownFields);
         return result;
       }
@@ -848,6 +922,12 @@ public final class RoomProto {
         hash = (37 * hash) + OVERTIMES_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
             getOverTimes());
+        hash = (37 * hash) + FULL_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getFull());
+        hash = (37 * hash) + WATCH_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getWatch());
         hash = (29 * hash) + unknownFields.hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -985,6 +1065,10 @@ public final class RoomProto {
 
           overTimes_ = 0L;
 
+          full_ = false;
+
+          watch_ = false;
+
           return this;
         }
 
@@ -1011,6 +1095,8 @@ public final class RoomProto {
           result.creatorId_ = creatorId_;
           result.ownerId_ = ownerId_;
           result.overTimes_ = overTimes_;
+          result.full_ = full_;
+          result.watch_ = watch_;
           onBuilt();
           return result;
         }
@@ -1063,6 +1149,12 @@ public final class RoomProto {
           }
           if (other.getOverTimes() != 0L) {
             setOverTimes(other.getOverTimes());
+          }
+          if (other.getFull() != false) {
+            setFull(other.getFull());
+          }
+          if (other.getWatch() != false) {
+            setWatch(other.getWatch());
           }
           this.mergeUnknownFields(other.unknownFields);
           onChanged();
@@ -1191,6 +1283,82 @@ public final class RoomProto {
         public Builder clearOverTimes() {
           
           overTimes_ = 0L;
+          onChanged();
+          return this;
+        }
+
+        private boolean full_ ;
+        /**
+         * <pre>
+         *是否满了
+         * </pre>
+         *
+         * <code>bool full = 5;</code>
+         */
+        public boolean getFull() {
+          return full_;
+        }
+        /**
+         * <pre>
+         *是否满了
+         * </pre>
+         *
+         * <code>bool full = 5;</code>
+         */
+        public Builder setFull(boolean value) {
+          
+          full_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <pre>
+         *是否满了
+         * </pre>
+         *
+         * <code>bool full = 5;</code>
+         */
+        public Builder clearFull() {
+          
+          full_ = false;
+          onChanged();
+          return this;
+        }
+
+        private boolean watch_ ;
+        /**
+         * <pre>
+         *是否能观战
+         * </pre>
+         *
+         * <code>bool watch = 6;</code>
+         */
+        public boolean getWatch() {
+          return watch_;
+        }
+        /**
+         * <pre>
+         *是否能观战
+         * </pre>
+         *
+         * <code>bool watch = 6;</code>
+         */
+        public Builder setWatch(boolean value) {
+          
+          watch_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <pre>
+         *是否能观战
+         * </pre>
+         *
+         * <code>bool watch = 6;</code>
+         */
+        public Builder clearWatch() {
+          
+          watch_ = false;
           onChanged();
           return this;
         }
@@ -4942,18 +5110,19 @@ public final class RoomProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\nroom.proto\022\005proto\032\013model.proto\"\020\n\016ReqG" +
-      "etRoomList\"\323\001\n\004Room\022\016\n\006roomId\030\001 \001(\005\022\021\n\tc" +
+      "etRoomList\"\360\001\n\004Room\022\016\n\006roomId\030\001 \001(\005\022\021\n\tc" +
       "urrCount\030\002 \001(\005\022\021\n\tshowCount\030\003 \001(\005\022\024\n\014con" +
       "figTypeId\030\004 \001(\005\022\013\n\003des\030\005 \001(\014\022!\n\006tables\030\006" +
-      " \003(\0132\021.proto.Room.Table\032O\n\005Table\022\017\n\007tabl" +
+      " \003(\0132\021.proto.Room.Table\032l\n\005Table\022\017\n\007tabl" +
       "eId\030\001 \001(\005\022\021\n\tcreatorId\030\002 \001(\005\022\017\n\007ownerId\030" +
-      "\003 \001(\005\022\021\n\toverTimes\030\004 \001(\003\"P\n\016AckGetRoomLi" +
-      "st\022\035\n\010roomList\030\001 \003(\0132\013.proto.Room\022\037\n\006app" +
-      "end\030\002 \003(\0132\017.proto.KeyValue\" \n\rReqEnterTa" +
-      "ble\022\017\n\007tableId\030\001 \001(\005\"f\n\rAckEnterTable\022\017\n",
-      "\007tableId\030\001 \001(\005\022\036\n\004self\030\002 \001(\0132\020.proto.Tab" +
-      "leRole\022$\n\ntableRoles\030\003 \003(\0132\020.proto.Table" +
-      "RoleB\013B\tRoomProtob\006proto3"
+      "\003 \001(\005\022\021\n\toverTimes\030\004 \001(\003\022\014\n\004full\030\005 \001(\010\022\r" +
+      "\n\005watch\030\006 \001(\010\"P\n\016AckGetRoomList\022\035\n\010roomL" +
+      "ist\030\001 \003(\0132\013.proto.Room\022\037\n\006append\030\002 \003(\0132\017" +
+      ".proto.KeyValue\" \n\rReqEnterTable\022\017\n\007tabl",
+      "eId\030\001 \001(\005\"f\n\rAckEnterTable\022\017\n\007tableId\030\001 " +
+      "\001(\005\022\036\n\004self\030\002 \001(\0132\020.proto.TableRole\022$\n\nt" +
+      "ableRoles\030\003 \003(\0132\020.proto.TableRoleB\013B\tRoo" +
+      "mProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4985,7 +5154,7 @@ public final class RoomProto {
     internal_static_proto_Room_Table_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_Room_Table_descriptor,
-        new java.lang.String[] { "TableId", "CreatorId", "OwnerId", "OverTimes", });
+        new java.lang.String[] { "TableId", "CreatorId", "OwnerId", "OverTimes", "Full", "Watch", });
     internal_static_proto_AckGetRoomList_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_AckGetRoomList_fieldAccessorTable = new

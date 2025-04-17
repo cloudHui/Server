@@ -1,7 +1,9 @@
 package robot;
 
 import java.net.InetSocketAddress;
+import java.util.UUID;
 
+import com.google.protobuf.ByteString;
 import io.netty.channel.nio.NioEventLoopGroup;
 import msg.HallMessageId;
 import net.connect.TCPConnect;
@@ -50,23 +52,22 @@ public class Robot {
 
 	private void start() {
 		serverManager = new ServerManager();
+		ConnectProcessor.init();
 		String[] ipPort = new String[2];
 		ipPort[0] = "172.20.16.119";
 		ipPort[1] = "5600";
-		//tcpConnect(ipPort);
-		wsConnect(ipPort);
+		tcpConnect(ipPort);
+		//wsConnect(ipPort);
 		LOGGER.info("[robot server is start!!!]");
 	}
 
 	private void tcpConnect(String[] ipPort) {
+		String nick = UUID.randomUUID().toString();
 		TCPConnect tcpConnection = new TCPConnect(new NioEventLoopGroup(1),
 				new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
-				channelHandler -> {
-					TCPConnect tcpConnect = (TCPConnect) channelHandler;
-					HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
-					tcpConnect.sendMessage(HallMessageId.REQ_LOGIN_MSG, ack.build());
-				}, null);
+				channelHandler -> ((TCPConnect) channelHandler).sendMessage(HallMessageId.REQ_LOGIN_MSG,
+						HallProto.ReqLogin.newBuilder().setNickName(ByteString.copyFromUtf8(nick)).build()), null);
 		tcpConnection.connect();
 	}
 
