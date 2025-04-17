@@ -11,7 +11,7 @@ import proto.RoomProto;
  * 请求房间列表
  */
 @ProcessType(RoomMessageId.REQ_ROOM_LIST_MSG)
-public class ReqRoomListHandler implements Handler {
+public class ReqRoomListHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import msg.HallMessageId;
+import msg.MessageId;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -19,12 +20,13 @@ public class ClientProto {
 
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
 
-	static {
+	public static void init() {
 		HandleTypeRegister.bindClassProcess(ClientProto.class, handlers);
 
 		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, handlers);
 
 		HandleTypeRegister.bindUniqTransMap(HallMessageId.class, TRANS_MAP);
+		HandleTypeRegister.bindCommonTransMap(ClientProto.class, TRANS_MAP, MessageId.SERVER);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

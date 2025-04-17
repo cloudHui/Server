@@ -11,7 +11,7 @@ import proto.ModelProto;
  * 通知玩家掉线
  */
 @ProcessType(MessageId.NOT_BREAK)
-public class NotBreakHandler implements Handler {
+public class NotBreakHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {

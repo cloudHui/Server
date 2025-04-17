@@ -12,6 +12,7 @@ import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import room.client.ClientProto;
 import room.client.RoomClient;
 import room.connect.ConnectProcessor;
 import threadtutil.thread.ExecutorPool;
@@ -39,7 +40,7 @@ public class Room {
 	 */
 	private ModelProto.ServerInfo.Builder serverInfo;
 
-	private ServerClientManager serverClientManager = new ServerClientManager();
+	private final ServerClientManager serverClientManager = new ServerClientManager();
 
 	private ServerManager serverManager;
 
@@ -116,6 +117,8 @@ public class Room {
 		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
 		new ServerService(0, RoomClient.class).start(addresses);
 		setServerManager(new ServerManager());
+		ClientProto.init();
+		ConnectProcessor.init();
 		//向注册中心注册
 		registerToCenter();
 		getGameServer();

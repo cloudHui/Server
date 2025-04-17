@@ -18,7 +18,7 @@ public class ConnectProcessor {
 
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
 
-	static {
+	public static void init() {
 		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
 
 		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);

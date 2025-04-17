@@ -23,6 +23,7 @@ import utils.other.ClazzUtil;
  * @createDate 2025/4/10 3:27
  */
 public class HandleTypeRegister {
+
 	private static final Logger logger = LoggerFactory.getLogger(HandleTypeRegister.class);
 
 	/**
@@ -42,6 +43,11 @@ public class HandleTypeRegister {
 			e.printStackTrace();
 		}
 		logger.error("{} bindUniqTransMap success bind size:{}", classes.getName(), transMap.size());
+
+		//Todo
+		for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
+			System.out.println(entry.getKey() + "  " + entry.getValue().getName());
+		}
 	}
 
 	/**
@@ -79,6 +85,12 @@ public class HandleTypeRegister {
 			e.printStackTrace();
 		}
 		logger.error("{} bindCommonTransMap success bind size:{}", classes.getName(), transMap.size());
+
+
+		//Todo
+		for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
+			System.out.println(entry.getKey() + "  " + entry.getValue().getName());
+		}
 	}
 
 	/**
@@ -92,6 +104,12 @@ public class HandleTypeRegister {
 			e.printStackTrace();
 		}
 		logger.error("{} bindPackageProcess success bind size:{}", packages, processorMap.size());
+
+
+		//Todo
+		for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
+			System.out.println(entry.getKey() + "  " + entry.getValue().getClass().getName());
+		}
 	}
 
 	/**
@@ -105,6 +123,12 @@ public class HandleTypeRegister {
 			e.printStackTrace();
 		}
 		logger.error("class:{} bindClassProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
+
+
+		//Todo
+		for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
+			System.out.println(entry.getKey() + "  " + entry.getValue().getClass().getName());
+		}
 	}
 
 	/**
@@ -171,7 +195,7 @@ public class HandleTypeRegister {
 			try {
 				return (Message) MessageId.getMessageObject((Class<MessageLite>) aClass, bytes);
 			} catch (Exception e) {
-				logger.error("[parserMessage error messageId :{} className:{}]", id, aClass.getSimpleName(), e);
+				logger.error("[parserMessage Exception messageId :{} className:{}]", id, aClass.getSimpleName(), e);
 			}
 		} else {
 			logger.error("[parserMessage error messageId :{} can not find messageType class]", id);

@@ -11,7 +11,7 @@ import proto.GameProto;
  * 请求加入桌子
  */
 @ProcessType(GameMessageId.REQ_ENTER_TABLE_MSG)
-public class ReqEnterTableHandler implements Handler {
+public class ReqEnterTableHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int roleId, Message msg, int mapId, long sequence) {

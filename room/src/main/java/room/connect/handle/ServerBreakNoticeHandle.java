@@ -18,9 +18,9 @@ import utils.ServerManager;
  * 服务掉线通知
  */
 @ProcessType(MessageId.BREAK_NOTICE)
-public class ServerBreakNoticeHandler implements Handler {
+public class ServerBreakNoticeHandle implements Handler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandle.class);
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message notServerBreak, int mapId, long sequence) {

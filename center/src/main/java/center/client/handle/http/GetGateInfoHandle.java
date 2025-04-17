@@ -13,15 +13,15 @@ import utils.other.JsonUtils;
 /**
  * 处理查询 gate 信息
  */
-public class GetGateInfoHandler implements Handler<String> {
+public class GetGateInfoHandle implements Handler<String> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(GetGateInfoHandler.class);
-	private static final GetGateInfoHandler instance = new GetGateInfoHandler();
+	private static final Logger LOGGER = LoggerFactory.getLogger(GetGateInfoHandle.class);
+	private static final GetGateInfoHandle instance = new GetGateInfoHandle();
 
-	private GetGateInfoHandler() {
+	private GetGateInfoHandle() {
 	}
 
-	public static GetGateInfoHandler getInstance() {
+	public static GetGateInfoHandle getInstance() {
 		return instance;
 	}
 

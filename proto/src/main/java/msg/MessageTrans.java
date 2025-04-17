@@ -9,9 +9,7 @@ import java.util.Arrays;
 public enum MessageTrans {
 	CenterServer(ServerType.Center, new int[] { MessageId.SERVER }, "注册中心服务器"),
 
-	GateServer(ServerType.Gate, new int[] { MessageId.SERVER }, "网关服务器"),
 	GateClient(ServerType.Gate, new int[] { MessageId.CLIENT }, "网关客户端"),
-	GateServerClient(ServerType.Gate, new int[] { MessageId.SERVER, MessageId.CLIENT }, "网关服务器客户端"),
 
 	GameServer(ServerType.Game, new int[] { MessageId.SERVER }, "游戏服务器"),
 	GameClient(ServerType.Game, new int[] { MessageId.CLIENT }, "游戏客户端"),

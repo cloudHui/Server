@@ -1,4 +1,4 @@
-package game.connect.server;
+package game.client.handle;
 
 import com.google.protobuf.Message;
 import msg.MessageId;
@@ -8,10 +8,10 @@ import net.handler.Handler;
 import proto.ModelProto;
 
 /**
- * 通知玩家掉线
+ * gate通知玩家掉线
  */
 @ProcessType(value = MessageId.NOT_BREAK)
-public class NotBreakHandler implements Handler {
+public class NotBreakHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int roleId, Message msg, int mapId, long sequence) {

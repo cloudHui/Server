@@ -130,11 +130,12 @@ public class Gate {
 		addresses.add(new InetSocketAddress(getInnerIp(), wsPort));
 		setServerManager(new ServerManager());
 		new GateWsService().start(addresses);
+		ConnectProcessor.init();
 		//向注册中心注册
-		//registerToCenter();
+		registerToCenter();
 
 		//获取其他服务
-		//getAllOtherServer();
+		getAllOtherServer();
 
 
 		logger.info("[gate server {}:{} is start!!!]", getInnerIp(), getPort());

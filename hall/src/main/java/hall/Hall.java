@@ -5,6 +5,7 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import hall.client.ClientProto;
 import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
 import msg.MessageId;
@@ -107,6 +108,9 @@ public class Hall {
 		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
 		new ServerService(0, HallClient.class).start(addresses);
 		setServerManager(new ServerManager());
+
+		ClientProto.init();
+		ConnectProcessor.init();
 		//向注册中心注册
 		registerToCenter();
 		getRoomServer();

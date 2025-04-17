@@ -14,7 +14,7 @@ import room.connect.ConnectProcessor;
  * 注册信息通知
  */
 @ProcessType(MessageId.ACK_SERVER)
-public class AckServerInfoHandel implements Handler {
+public class AckServerInfoHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {

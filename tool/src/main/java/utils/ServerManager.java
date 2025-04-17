@@ -153,7 +153,7 @@ public class ServerManager {
 				activeHandle,
 				closeHandle);
 		tConnect.setLocalServer(new ServerInfo(localServer.getServerType(), serverId, ipPorts));
-		tConnect.setConnectServer(new ServerInfo(serverType.getServerType(), 0, (ipPort[0] + ":" + ipPort[1])));
+		tConnect.setConnectServer(new ServerInfo(serverType.getServerType(), (ipPort[0] + ":" + ipPort[1])));
 		//助弱要连接的是注册服务 需要设置重连重试和断链重试
 		if (serverType == ServerType.Center) {
 			tConnect.setConRetry(true);
@@ -183,8 +183,8 @@ public class ServerManager {
 			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
 			connectServer = ServerType.get(serverInfo.getServerType());
 			if (connectServer != null) {
-				registerSever(ipConfig, transfer, parser, handlers, connectServer, localServerId, localIpPort, localServer);
 				logger.error("[registerSever server:{} info:{}]", connectServer, serverInfo.toString());
+				registerSever(ipConfig, transfer, parser, handlers, connectServer, localServerId, localIpPort, localServer);
 			}
 		}
 	}
@@ -228,7 +228,7 @@ public class ServerManager {
 							ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
 							handler.getConnectServer().setServerId(serverInfo.getServerId());
 							addServerClient(handler);
-							logger.info("[receive register message to {} success]", handler.getConnectServer());
+							logger.info("[receive ack register message to {} success]", handler.getConnectServer());
 							workerGroup.schedule(() -> sendHeart(handler), 1, TimeUnit.SECONDS);
 						} catch (Exception ex) {
 							ex.printStackTrace();

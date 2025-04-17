@@ -14,7 +14,7 @@ import room.connect.ConnectProcessor;
  * 注册信息通知
  */
 @ProcessType(MessageId.REGISTER_NOTICE)
-public class RegisterNoticeHandler implements Handler {
+public class RegisterNoticeHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message registerInfo, int mapId, long sequence) {

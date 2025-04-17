@@ -3,7 +3,7 @@ package center.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import center.client.handle.http.GetGateInfoHandler;
+import center.client.handle.http.GetGateInfoHandle;
 import http.HttpDecoder;
 import http.handler.Handler;
 
@@ -22,6 +22,6 @@ public class ServerDecoder extends HttpDecoder {
 	}
 
 	static {
-		register(GetGateInfoHandler.getInstance());
+		register(GetGateInfoHandle.getInstance());
 	}
 }

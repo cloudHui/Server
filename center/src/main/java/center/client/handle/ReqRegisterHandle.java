@@ -20,9 +20,9 @@ import utils.ServerClientManager;
  * 注册服务信息请求
  */
 @ProcessType(MessageId.REQ_REGISTER)
-public class ReqRegisterHandler implements Handler {
+public class ReqRegisterHandle implements Handler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandle.class);
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqRegister, int mapId, long sequence) {

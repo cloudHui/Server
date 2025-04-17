@@ -18,7 +18,7 @@ public class ConnectProcessor {
 
 	private final static Map<Integer, Handler> handlers = new HashMap<>();
 
-	static {
+	public static void init() {
 		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
 
 		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);

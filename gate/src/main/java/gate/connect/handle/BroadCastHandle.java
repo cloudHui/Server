@@ -17,9 +17,9 @@ import proto.GateProto;
  * 广播
  */
 @ProcessType(MessageId.BROAD)
-public class BroadCastHandler implements Handler {
+public class BroadCastHandle implements Handler {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BroadCastHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BroadCastHandle.class);
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message message, int mapId, long sequence) {

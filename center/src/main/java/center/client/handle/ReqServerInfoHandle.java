@@ -18,7 +18,7 @@ import utils.ServerClientManager;
  * 获取 服务信息请求
  */
 @ProcessType(MessageId.REQ_SERVER)
-public class ReqServerInfoHandler implements Handler {
+public class ReqServerInfoHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqServerInfo, int mapId, long sequence) {

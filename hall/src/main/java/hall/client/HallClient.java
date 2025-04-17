@@ -9,7 +9,6 @@ import proto.ModelProto;
 
 public class HallClient extends ClientHandler {
 
-
 	private ModelProto.ServerInfo serverInfo;
 
 	public void setServerInfo(ModelProto.ServerInfo serverInfo) {
