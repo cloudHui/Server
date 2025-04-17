@@ -18,12 +18,14 @@ public class AckServerInfoHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
-		ModelProto.AckServerInfo ack = (ModelProto.AckServerInfo) msg;
-		Room.getInstance().getServerManager().connectToSever(ack.getServersList(),
+		//如果不放到另一个线程去链接会导致线程读写阻塞
+		Room.getInstance().execute(() -> Room.getInstance().getServerManager().connectToSever(
+				((ModelProto.AckServerInfo) msg).getServersList(),
 				Room.getInstance().getServerId(),
 				Room.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Room);
+				ConnectProcessor.HANDLERS, ServerType.Room));
+
 		return true;
 	}
 }

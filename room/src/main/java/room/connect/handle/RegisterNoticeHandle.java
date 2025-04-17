@@ -17,13 +17,13 @@ import room.connect.ConnectProcessor;
 public class RegisterNoticeHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message registerInfo, int mapId, long sequence) {
-		ModelProto.NotRegisterInfo req = (ModelProto.NotRegisterInfo) registerInfo;
-
-		Room.getInstance().getServerManager().connectToSever(req.getServersList(),
+	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+		Room.getInstance().execute(()-> Room.getInstance().getServerManager().connectToSever(
+				((ModelProto.NotRegisterInfo) msg).getServersList(),
 				Room.getInstance().getServerId(), Room.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Room);
+				ConnectProcessor.HANDLERS, ServerType.Room));
+
 		return true;
 	}
 }

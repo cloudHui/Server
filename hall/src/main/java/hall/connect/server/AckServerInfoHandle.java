@@ -17,14 +17,13 @@ import proto.ModelProto;
 public class AckServerInfoHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message ackServerInfo, int mapId, long sequence) {
-
-		ModelProto.AckServerInfo req = (ModelProto.AckServerInfo) ackServerInfo;
-		Hall.getInstance().getServerManager().connectToSever(req.getServersList(),
+	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+		Hall.getInstance().execute(() -> Hall.getInstance().getServerManager().connectToSever(
+				((ModelProto.AckServerInfo) msg).getServersList(),
 				Hall.getInstance().getServerId(),
 				Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Hall);
+				ConnectProcessor.HANDLERS, ServerType.Hall));
 		return true;
 	}
 }

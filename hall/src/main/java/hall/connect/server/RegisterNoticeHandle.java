@@ -17,13 +17,12 @@ import proto.ModelProto;
 public class RegisterNoticeHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message registerInfo, int mapId, long sequence) {
-		ModelProto.NotRegisterInfo req = (ModelProto.NotRegisterInfo) registerInfo;
-
-		Hall.getInstance().getServerManager().connectToSever(req.getServersList(),
+	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+		Hall.getInstance().execute(() -> Hall.getInstance().getServerManager().connectToSever(
+				((ModelProto.NotRegisterInfo) msg).getServersList(),
 				Hall.getInstance().getServerId(), Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Hall);
+				ConnectProcessor.HANDLERS, ServerType.Hall));
 		return true;
 	}
 }
