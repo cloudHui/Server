@@ -71,11 +71,8 @@ public class HandleTypeRegister {
 				for (MessageTrans trans : messageTrans) {
 					//这个类包名有当前服务名字的
 					if (packageName.contains(trans.getServerType().name().toLowerCase())) {
-						for (int serverClient : trans.getServerClient()) {
-							if (type == serverClient) {
-								transMap.put((int) field.get(null), annotation.value());
-								break;
-							}
+						if (type == trans.getServerClient()) {
+							transMap.put((int) field.get(null), annotation.value());
 						}
 						break;
 					}

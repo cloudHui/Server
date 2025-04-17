@@ -36,7 +36,7 @@ public class MessageId {
 	public static final int REQ_REGISTER = 3;
 
 	@ClassType(value = ModelProto.AckRegister.class,
-			messageTrans = { MessageTrans.GameClient, MessageTrans.GateClient, MessageTrans.HallServerClient, MessageTrans.RoomClient },
+			messageTrans = { MessageTrans.GameClient, MessageTrans.GateClient, MessageTrans.HallClient, MessageTrans.RoomClient },
 			des = "注册回复")
 	public static final int ACK_REGISTER = 4;
 
