@@ -7,7 +7,6 @@ import gate.Gate;
 import gate.client.GateTcpClient;
 import msg.HallMessageId;
 import msg.MessageId;
-import msg.ServerType;
 import msg.registor.HandleTypeRegister;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -30,7 +29,7 @@ public class ConnectProcessor {
 
 	static {
 		HandleTypeRegister.bindProcess(Gate.class, handlers, "client,connect");
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Gate);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

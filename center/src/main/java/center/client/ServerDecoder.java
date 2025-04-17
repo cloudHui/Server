@@ -3,7 +3,7 @@ package center.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import center.handle.http.GetGateInfoHandler;
+import center.client.handle.http.GetGateInfoHandler;
 import http.HttpDecoder;
 import http.handler.Handler;
 

@@ -1,4 +1,4 @@
-package robot.handel;
+package robot.connect.handel;
 
 import com.google.protobuf.Message;
 import net.client.Sender;

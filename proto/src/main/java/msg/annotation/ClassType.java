@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import msg.MessageTrans;
 import msg.ServerType;
 
 
@@ -21,14 +22,12 @@ public @interface ClassType {
 	Class<?> value();
 
 	/**
-	 * 是否是通用 通用需要下面的服务类型判断
-	 *
-	 * @return 是否通用
-	 */
-	boolean common() default false;
-
-	/**
 	 * 要注册的服务类型
 	 */
-	ServerType[] serverTypes() default {};
+	MessageTrans[] messageTrans() default {};
+
+	/**
+	 * 描述
+	 */
+	String des() default "";
 }

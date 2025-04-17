@@ -1,21 +1,14 @@
 package center.client;
 
-import java.util.List;
-
 import center.Center;
-import msg.MessageId;
 import msg.ServerType;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import utils.ServerClientManager;
 
 
 public class CenterClient extends ClientHandler {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(CenterClient.class);
 
 	private ModelProto.ServerInfo serverInfo;
 

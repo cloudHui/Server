@@ -5,7 +5,6 @@ import java.util.Map;
 
 import center.Center;
 import msg.MessageId;
-import msg.ServerType;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -19,11 +18,13 @@ public class ClientProto {
 
 	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
-	public static void init(){
+	public static void init() {
+		//绑定自带服务器处理
 		HandleTypeRegister.bindProcess(Center.class, MAP, "client");
+		//绑定通用服务器处理
 		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, MAP);
-
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Center);
+		//绑定通用消息转换处理
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.SERVER);
 	}
 
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);

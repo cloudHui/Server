@@ -11,9 +11,9 @@ import proto.GameProto;
  */
 public class GameMessageId {
 
-	@ClassType(value = GameProto.ReqEnterTable.class)
+	@ClassType(value = GameProto.ReqEnterTable.class,des = "请求入桌")
 	public static final int REQ_ENTER_TABLE_MSG = MessageId.GAME_TYPE | 1;
 
-	@ClassType(GameProto.AckEnterTable.class)
+	@ClassType(value = GameProto.AckEnterTable.class,des = "入桌回复")
 	public static final int ACK_ENTER_TABLE_MSG = MessageId.GAME_TYPE | 2;
 }

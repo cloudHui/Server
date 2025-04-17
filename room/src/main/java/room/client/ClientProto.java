@@ -3,8 +3,7 @@ package room.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.MessageId;
-import msg.ServerType;
+import msg.RoomMessageId;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -26,7 +25,7 @@ public class ClientProto {
 		HandleTypeRegister.bindProcess(Room.class, handlers, "client,connect,model,manager");
 		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, handlers);
 
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Room);
+		HandleTypeRegister.bindTransMap(RoomMessageId.class, TRANS_MAP);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

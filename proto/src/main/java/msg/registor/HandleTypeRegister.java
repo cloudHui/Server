@@ -8,7 +8,7 @@ import java.util.Map;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
 import msg.MessageId;
-import msg.ServerType;
+import msg.MessageTrans;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessType;
 import net.handler.Handler;
@@ -25,11 +25,10 @@ import utils.other.ClazzUtil;
 public class HandleTypeRegister {
 	private static final Logger logger = LoggerFactory.getLogger(HandleTypeRegister.class);
 
-
 	/**
-	 * 绑定处理类型与消息类类型
+	 * 绑定处理类型与消息类类型(专用消息)
 	 */
-	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, ServerType serverType) {
+	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap) {
 		try {
 			Field[] fields = classes.getFields();
 			for (Field field : fields) {
@@ -37,20 +36,43 @@ public class HandleTypeRegister {
 				if (annotation == null) {
 					continue;
 				}
-				boolean common = annotation.common();
-				if(common){
-					ServerType[] serverTypes = annotation.serverTypes();
-					if (serverTypes.length == 0) {
-						continue;
-					}
-					for (ServerType server : serverTypes) {
-						if (server.equals(serverType)) {
-							transMap.put((int) field.get(null), annotation.value());
-							break;
+				transMap.put((int) field.get(null), annotation.value());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.error("{} bindTransMap success bind size:{}", classes.getName(), transMap.size());
+	}
+
+	/**
+	 * 绑定处理类型与消息类类型(通用消息处理)
+	 *
+	 * @param type 消息转化类型 MessageId.SERVER MessageId.CLIENT
+	 */
+	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, int type) {
+		try {
+			String packageName = classes.getPackage().getName();
+			Field[] fields = classes.getFields();
+			for (Field field : fields) {
+				ClassType annotation = field.getAnnotation(ClassType.class);
+				if (annotation == null) {
+					continue;
+				}
+				MessageTrans[] messageTrans = annotation.messageTrans();
+				if (messageTrans.length == 0) {
+					continue;
+				}
+				for (MessageTrans trans : messageTrans) {
+					//这个类包名有当前服务名字的
+					if (packageName.contains(trans.getServerType().name())) {
+						for (int serverClient : trans.getServerClient()) {
+							if (type == serverClient) {
+								transMap.put((int) field.get(null), annotation.value());
+								break;
+							}
 						}
+						break;
 					}
-				} else {
-					transMap.put((int) field.get(null), annotation.value());
 				}
 			}
 		} catch (Exception e) {
@@ -73,6 +95,19 @@ public class HandleTypeRegister {
 	}
 
 	/**
+	 * 绑定处理类型与处理器
+	 */
+	public static void bindProcess(Class<?> packageClass, Map<Integer, Handler> processorMap, String except) {
+		try {
+			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, except);
+			doBind(processorMap, classes);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.error("{} bindProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
+	}
+
+	/**
 	 * 绑定
 	 */
 	private static void doBind(Map<Integer, Handler> processorMap, List<Class<?>> classes) {
@@ -92,19 +127,6 @@ public class HandleTypeRegister {
 				logger.error("{} {}", aclass, e.getMessage());
 			}
 		}
-	}
-
-	/**
-	 * 绑定处理类型与处理器
-	 */
-	public static void bindProcess(Class<?> packageClass, Map<Integer, Handler> processorMap, String except) {
-		try {
-			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, except);
-			doBind(processorMap, classes);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		logger.error("{} bindProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
 	}
 
 	/**

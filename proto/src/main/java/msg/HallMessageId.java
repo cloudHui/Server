@@ -11,12 +11,12 @@ import proto.HallProto;
  */
 public class HallMessageId {
 
-	@ClassType(HallProto.ReqLogin.class)
+	@ClassType(value = HallProto.ReqLogin.class, des = "请求登录")
 	public static final int REQ_LOGIN_MSG = MessageId.HALL_TYPE | 1;
-	@ClassType(HallProto.AckLogin.class)
+	@ClassType(value = HallProto.AckLogin.class, des = "登录回复")
 	public static final int ACK_LOGIN_MSG = MessageId.HALL_TYPE | 2;
-	@ClassType(HallProto.ReqJoinClub.class)
+	@ClassType(value = HallProto.ReqJoinClub.class, des = "请求加入工会")
 	public static final int REQ_JOIN_CLUB_MSG = MessageId.HALL_TYPE | 3;
-	@ClassType(HallProto.AckJoinClub.class)
+	@ClassType(value = HallProto.AckJoinClub.class, des = "加入工会回复")
 	public static final int ACK_JOIN_CLUB_MSG = MessageId.HALL_TYPE | 4;
 }

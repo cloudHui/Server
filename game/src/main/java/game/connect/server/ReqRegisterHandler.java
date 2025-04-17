@@ -1,4 +1,4 @@
-package game.handle.server;
+package game.connect.server;
 
 import com.google.protobuf.Message;
 import game.Game;
@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * 注册服务信息请求
  */
-@ProcessType(MessageId.REQ_REGISTER)
+@ProcessType(value = MessageId.REQ_REGISTER)
 public class ReqRegisterHandler implements Handler {
 
 	@Override

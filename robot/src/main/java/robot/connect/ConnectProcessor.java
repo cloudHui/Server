@@ -11,8 +11,8 @@ import net.message.Parser;
 import net.message.Transfer;
 import proto.HallProto;
 import proto.RoomProto;
-import robot.handel.AckGetRoomListHandler;
-import robot.handel.AckLoginHandler;
+import robot.connect.handel.AckGetRoomListHandler;
+import robot.connect.handel.AckLoginHandler;
 
 /**
  * 与center 消息处理

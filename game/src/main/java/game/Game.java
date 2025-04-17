@@ -154,10 +154,11 @@ public class Game {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
+		ConnectProcessor.init();
 		ServerManager serverManager = getServerManager();
 		String[] ipPort = getCenter().split(":");
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				null, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
 				ServerType.Game);
 	}
 

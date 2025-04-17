@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import msg.MessageId;
-import msg.ServerType;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -23,7 +22,7 @@ public class ConnectProcessor {
 	static {
 		HandleTypeRegister.bindProcess(Room.class, handlers, "client,connect,model,manager");
 
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Room);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

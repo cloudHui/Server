@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum ServerType {
+	NONE(-1,"none"),
 	Gate(1, "网关"),
 	Game(2, "游戏"),
 	Hall(3, "大厅"),

@@ -1,4 +1,4 @@
-package game.handle.client;
+package game.client.handle;
 
 import com.google.protobuf.Message;
 import msg.GameMessageId;

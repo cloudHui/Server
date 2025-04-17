@@ -1,4 +1,4 @@
-package game.handle.server;
+package game.connect.server;
 
 import com.google.protobuf.Message;
 import msg.MessageId;
@@ -10,7 +10,7 @@ import proto.ModelProto;
 /**
  * 通知玩家掉线
  */
-@ProcessType(MessageId.NOT_BREAK)
+@ProcessType(value = MessageId.NOT_BREAK)
 public class NotBreakHandler implements Handler {
 
 	@Override

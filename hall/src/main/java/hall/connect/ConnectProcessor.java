@@ -5,7 +5,6 @@ import java.util.Map;
 
 import hall.Hall;
 import msg.MessageId;
-import msg.ServerType;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -21,10 +20,9 @@ public class ConnectProcessor {
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
 
 	static {
-
 		HandleTypeRegister.bindProcess(Hall.class, handlers, "client,connect,db,manager");
 
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Hall);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

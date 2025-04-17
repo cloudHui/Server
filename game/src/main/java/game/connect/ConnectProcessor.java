@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import msg.MessageId;
-import msg.ServerType;
 import msg.registor.HandleTypeRegister;
+import net.handler.Handler;
+import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
 
@@ -15,11 +16,18 @@ import net.message.Transfer;
 public class ConnectProcessor {
 	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
+	private final static Map<Integer, Handler> MAP = new HashMap<>();
+
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
 
-	static {
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Game);
+	public static void init() {
+		//绑定客户端消息处理
+		HandleTypeRegister.bindProcess(ConnectProcessor.class, MAP, "");
+		//绑定通用服务器消息解析处理
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
 	}
+
+	public final static Handlers HANDLERS = MAP::get;
 
 	/**
 	 * 转发消息接口

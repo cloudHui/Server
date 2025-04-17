@@ -11,8 +11,8 @@ import proto.RoomProto;
  */
 public class RoomMessageId {
 
-	@ClassType(RoomProto.ReqGetRoomList.class)
+	@ClassType(value = RoomProto.ReqGetRoomList.class, des = "请求房间列表")
 	public static final int REQ_ROOM_LIST_MSG = MessageId.ROOM_TYPE | 1;
-	@ClassType(RoomProto.AckGetRoomList.class)
+	@ClassType(value = RoomProto.AckGetRoomList.class, des = "房间列表回复")
 	public static final int ACK_ROOM_LIST_MSG = MessageId.ROOM_TYPE | 2;
 }
