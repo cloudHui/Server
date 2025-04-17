@@ -154,11 +154,12 @@ public class ServerManager {
 				closeHandle);
 		tConnect.setLocalServer(new ServerInfo(localServer.getServerType(), serverId, ipPorts));
 		tConnect.setConnectServer(new ServerInfo(serverType.getServerType(), (ipPort[0] + ":" + ipPort[1])));
-		//助弱要连接的是注册服务 需要设置重连重试和断链重试
+		//如果要连接的是注册服务 需要设置重连重试和断链重试
 		if (serverType == ServerType.Center) {
 			tConnect.setConRetry(true);
 			tConnect.setDiRetry(true);
 		}
+		logger.error("[registerSever server:{} info:serverType {} {}]", localServer, serverType, tConnect.getConnectServer());
 		tConnect.connect();
 	}
 
@@ -183,7 +184,6 @@ public class ServerManager {
 			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
 			connectServer = ServerType.get(serverInfo.getServerType());
 			if (connectServer != null) {
-				logger.error("[registerSever server:{} info:{}]", connectServer, serverInfo.toString());
 				registerSever(ipConfig, transfer, parser, handlers, connectServer, localServerId, localIpPort, localServer);
 			}
 		}

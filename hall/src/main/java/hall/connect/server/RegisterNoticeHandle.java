@@ -23,7 +23,7 @@ public class RegisterNoticeHandle implements Handler {
 		Hall.getInstance().getServerManager().connectToSever(req.getServersList(),
 				Hall.getInstance().getServerId(), Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Room);
+				ConnectProcessor.HANDLERS, ServerType.Hall);
 		return true;
 	}
 }
