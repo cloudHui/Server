@@ -1,4 +1,4 @@
-package gate.handle;
+package gate.connect.handle;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package room.handle;
+package hall.connect.server;
 
 import com.google.protobuf.Message;
 import msg.MessageId;
@@ -15,7 +15,7 @@ public class NotBreakHandler implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
-		ModelProto.NotBreak notice = (ModelProto.NotBreak) msg;
+		ModelProto.NotBreak req = (ModelProto.NotBreak) msg;
 		return true;
 	}
 }

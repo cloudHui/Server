@@ -1,8 +1,9 @@
-package room.handle;
+package hall.connect.server;
 
 import java.util.List;
 
 import com.google.protobuf.Message;
+import hall.Hall;
 import msg.MessageId;
 import msg.ServerType;
 import msg.annotation.ProcessType;
@@ -11,7 +12,6 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
-import room.Room;
 import utils.ServerManager;
 
 /**
@@ -29,14 +29,14 @@ public class ServerBreakNoticeHandler implements Handler {
 		if (serverInfos.isEmpty()) {
 			return true;
 		}
-		Room instance = Room.getInstance();
+		Hall instance = Hall.getInstance();
 		ServerManager serverManager = instance.getServerManager();
 		ServerType serverType;
 		for (ModelProto.ServerInfo serverInfo : serverInfos) {
 			serverType = ServerType.get(serverInfo.getServerType());
 			if (serverType != null) {
 				serverManager.removeServerClient(serverType, serverInfo.getServerId());
-				LOGGER.error("[room receive server:{} info:{} break]", serverType, serverInfo.toString());
+				LOGGER.error("[hall receive server:{} info:{} break]", serverType, serverInfo.toString());
 			}
 		}
 		return true;

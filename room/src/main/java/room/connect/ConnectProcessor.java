@@ -9,7 +9,6 @@ import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import room.Room;
 
 public class ConnectProcessor {
 
@@ -20,9 +19,9 @@ public class ConnectProcessor {
 	private final static Map<Integer, Handler> handlers = new HashMap<>();
 
 	static {
-		HandleTypeRegister.bindProcess(Room.class, handlers, "client,connect,model,manager");
+		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
 
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
+		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

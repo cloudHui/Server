@@ -3,7 +3,6 @@ package hall.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import hall.Hall;
 import msg.MessageId;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
@@ -20,9 +19,9 @@ public class ConnectProcessor {
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
 
 	static {
-		HandleTypeRegister.bindProcess(Hall.class, handlers, "client,connect,db,manager");
+		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
 
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
+		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

@@ -1,4 +1,4 @@
-package room.handle;
+package room.client.handle;
 
 import com.google.protobuf.Message;
 import msg.RoomMessageId;

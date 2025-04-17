@@ -28,7 +28,7 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定处理类型与消息类类型(专用消息)
 	 */
-	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap) {
+	public static void bindUniqTransMap(Class<?> classes, Map<Integer, Class<?>> transMap) {
 		try {
 			Field[] fields = classes.getFields();
 			for (Field field : fields) {
@@ -41,7 +41,7 @@ public class HandleTypeRegister {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.error("{} bindTransMap success bind size:{}", classes.getName(), transMap.size());
+		logger.error("{} bindUniqTransMap success bind size:{}", classes.getName(), transMap.size());
 	}
 
 	/**
@@ -49,10 +49,10 @@ public class HandleTypeRegister {
 	 *
 	 * @param type 消息转化类型 MessageId.SERVER MessageId.CLIENT
 	 */
-	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, int type) {
+	public static void bindCommonTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, int type) {
 		try {
 			String packageName = classes.getPackage().getName();
-			Field[] fields = classes.getFields();
+			Field[] fields = MessageId.class.getFields();
 			for (Field field : fields) {
 				ClassType annotation = field.getAnnotation(ClassType.class);
 				if (annotation == null) {
@@ -64,7 +64,7 @@ public class HandleTypeRegister {
 				}
 				for (MessageTrans trans : messageTrans) {
 					//这个类包名有当前服务名字的
-					if (packageName.contains(trans.getServerType().name())) {
+					if (packageName.contains(trans.getServerType().name().toLowerCase())) {
 						for (int serverClient : trans.getServerClient()) {
 							if (type == serverClient) {
 								transMap.put((int) field.get(null), annotation.value());
@@ -78,33 +78,33 @@ public class HandleTypeRegister {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.error("{} bindTransMap success bind size:{}", classes.getName(), transMap.size());
+		logger.error("{} bindCommonTransMap success bind size:{}", classes.getName(), transMap.size());
 	}
 
 	/**
 	 * 绑定处理类型与处理器
 	 */
-	public static void bindProcess(String packages, Map<Integer, Handler> processorMap) {
+	public static void bindPackageProcess(String packages, Map<Integer, Handler> processorMap) {
 		try {
 			List<Class<?>> classes = ClazzUtil.getClasses(packages);
 			doBind(processorMap, classes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.error("{} bindProcess success bind size:{}", packages, processorMap.size());
+		logger.error("{} bindPackageProcess success bind size:{}", packages, processorMap.size());
 	}
 
 	/**
 	 * 绑定处理类型与处理器
 	 */
-	public static void bindProcess(Class<?> packageClass, Map<Integer, Handler> processorMap, String except) {
+	public static void bindClassProcess(Class<?> packageClass, Map<Integer, Handler> processorMap) {
 		try {
-			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, except);
+			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");
 			doBind(processorMap, classes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.error("{} bindProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
+		logger.error("class:{} bindClassProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
 	}
 
 	/**

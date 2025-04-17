@@ -27,14 +27,14 @@ public class ClientProto {
 
 	public static void init() {
 		//绑定专用服务器消息处理
-		HandleTypeRegister.bindProcess(ClientProto.class, HANDLERS, "");
+		HandleTypeRegister.bindClassProcess(ClientProto.class, HANDLERS);
 		//绑定通用服务器消息处理
-		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, HANDLERS);
+		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, HANDLERS);
 
 		//绑定专用服务器消息解析处理
-		HandleTypeRegister.bindTransMap(GameMessageId.class, TRANS_MAP);
+		HandleTypeRegister.bindUniqTransMap(GameMessageId.class, TRANS_MAP);
 		//绑定通用服务器消息解析处理
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.SERVER);
+		HandleTypeRegister.bindCommonTransMap(ClientProto.class, TRANS_MAP, MessageId.SERVER);
 	}
 
 	public final static Handlers GET = HANDLERS::get;

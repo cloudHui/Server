@@ -1,4 +1,4 @@
-package hall.handle.server;
+package hall.connect.server;
 
 import com.google.protobuf.Message;
 import hall.Hall;

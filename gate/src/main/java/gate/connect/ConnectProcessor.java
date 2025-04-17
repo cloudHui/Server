@@ -3,7 +3,6 @@ package gate.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import gate.Gate;
 import gate.client.GateTcpClient;
 import msg.HallMessageId;
 import msg.MessageId;
@@ -28,8 +27,8 @@ public class ConnectProcessor {
 	private final static Map<Integer, Handler> handlers = new HashMap<>();
 
 	static {
-		HandleTypeRegister.bindProcess(Gate.class, handlers, "client,connect");
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
+		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
+		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

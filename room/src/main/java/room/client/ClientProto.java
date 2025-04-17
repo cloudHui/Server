@@ -9,7 +9,6 @@ import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import room.Room;
 import utils.StringConst;
 
 public class ClientProto {
@@ -22,10 +21,10 @@ public class ClientProto {
 
 	static {
 
-		HandleTypeRegister.bindProcess(Room.class, handlers, "client,connect,model,manager");
-		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, handlers);
+		HandleTypeRegister.bindClassProcess(ClientProto.class, handlers);
+		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, handlers);
 
-		HandleTypeRegister.bindTransMap(RoomMessageId.class, TRANS_MAP);
+		HandleTypeRegister.bindUniqTransMap(RoomMessageId.class, TRANS_MAP);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

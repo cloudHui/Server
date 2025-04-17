@@ -1,8 +1,8 @@
-package gate.handle;
+package hall.connect.server;
 
 import com.google.protobuf.Message;
-import gate.Gate;
-import gate.connect.ConnectProcessor;
+import hall.Hall;
+import hall.connect.ConnectProcessor;
 import msg.MessageId;
 import msg.ServerType;
 import msg.annotation.ProcessType;
@@ -20,10 +20,10 @@ public class RegisterNoticeHandler implements Handler {
 	public boolean handler(Sender sender, int aLong, Message registerInfo, int mapId, long sequence) {
 		ModelProto.NotRegisterInfo req = (ModelProto.NotRegisterInfo) registerInfo;
 
-		Gate.getInstance().getServerManager().connectToSever(req.getServersList(), Gate.getInstance().getServerId(),
-				(Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort()),
+		Hall.getInstance().getServerManager().connectToSever(req.getServersList(),
+				Hall.getInstance().getServerId(), Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Gate);
+				ConnectProcessor.HANDLERS, ServerType.Room);
 		return true;
 	}
 }

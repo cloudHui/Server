@@ -1,4 +1,4 @@
-package hall.handle;
+package hall.client.handle;
 
 import com.google.protobuf.Message;
 import msg.HallMessageId;

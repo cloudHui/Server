@@ -22,9 +22,9 @@ public class ConnectProcessor {
 
 	public static void init() {
 		//绑定客户端消息处理
-		HandleTypeRegister.bindProcess(ConnectProcessor.class, MAP, "");
+		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, MAP);
 		//绑定通用服务器消息解析处理
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageId.CLIENT);
+		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);
 	}
 
 	public final static Handlers HANDLERS = MAP::get;
