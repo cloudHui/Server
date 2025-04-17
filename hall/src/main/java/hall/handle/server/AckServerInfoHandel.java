@@ -3,7 +3,9 @@ package hall.handle.server;
 import com.google.protobuf.Message;
 import hall.Hall;
 import hall.connect.ConnectProcessor;
+import msg.MessageId;
 import msg.ServerType;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -11,13 +13,8 @@ import proto.ModelProto;
 /**
  * 注册信息通知
  */
+@ProcessType(MessageId.ACK_SERVER)
 public class AckServerInfoHandel implements Handler {
-
-	private static final AckServerInfoHandel instance = new AckServerInfoHandel();
-
-	public static AckServerInfoHandel getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message ackServerInfo, int mapId, long sequence) {

@@ -3,12 +3,11 @@ package robot.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.MessageId;
-import net.connect.TCPConnect;
+import msg.HallMessageId;
+import msg.RoomMessageId;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
-import net.message.TCPMessage;
 import net.message.Transfer;
 import proto.HallProto;
 import proto.RoomProto;
@@ -19,10 +18,11 @@ import robot.handel.AckLoginHandler;
  * 与center 消息处理
  */
 public class ConnectProcessor {
+
 	public final static Parser PARSER = (id, bytes) -> {
-		if (id == MessageId.HallMsg.ACK_LOGIN.getId()) {
+		if (id == HallMessageId.ACK_LOGIN_MSG) {
 			return HallProto.AckLogin.parseFrom(bytes);
-		} else if (id == MessageId.RoomMsg.ACK_ROOM_LIST.getId()) {
+		} else if (id == RoomMessageId.ACK_ROOM_LIST_MSG) {
 			return RoomProto.AckGetRoomList.parseFrom(bytes);
 		}
 		return null;
@@ -32,8 +32,8 @@ public class ConnectProcessor {
 
 	static {
 		handlers = new HashMap<>();
-		handlers.put(MessageId.HallMsg.ACK_LOGIN.getId(), AckLoginHandler.getInstance());
-		handlers.put(MessageId.RoomMsg.ACK_ROOM_LIST.getId(), AckGetRoomListHandler.getInstance());
+		handlers.put(HallMessageId.ACK_LOGIN_MSG, AckLoginHandler.getInstance());
+		handlers.put(RoomMessageId.ACK_ROOM_LIST_MSG, AckGetRoomListHandler.getInstance());
 
 	}
 

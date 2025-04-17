@@ -1,7 +1,7 @@
 package hall.handle;
 
 import com.google.protobuf.Message;
-import msg.MessageId;
+import msg.HallMessageId;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -10,7 +10,7 @@ import proto.HallProto;
 /**
  * 登录请求
  */
-@ProcessType(MessageId.REQ_LOGIN_MSG)
+@ProcessType(HallMessageId.REQ_LOGIN_MSG)
 public class ReqLoginHandler implements Handler {
 
 	@Override
@@ -20,7 +20,7 @@ public class ReqLoginHandler implements Handler {
 		String cert = req.getCert().toStringUtf8();
 		HallProto.AckLogin.Builder ack = HallProto.AckLogin.newBuilder();
 		ack.setUserId(1);
-		sender.sendMessage(clientId, MessageId.HallMsg.ACK_LOGIN.getId(), mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, HallMessageId.ACK_LOGIN_MSG, mapId, 0, ack.build(), sequence);
 		return true;
 	}
 }

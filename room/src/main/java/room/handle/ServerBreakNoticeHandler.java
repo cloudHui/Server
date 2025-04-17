@@ -1,9 +1,11 @@
-package room.handel;
+package room.handle;
 
 import java.util.List;
 
 import com.google.protobuf.Message;
+import msg.MessageId;
 import msg.ServerType;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -15,15 +17,10 @@ import utils.ServerManager;
 /**
  * 服务掉线通知
  */
+@ProcessType(MessageId.BREAK_NOTICE)
 public class ServerBreakNoticeHandler implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandler.class);
-
-	private static final ServerBreakNoticeHandler instance = new ServerBreakNoticeHandler();
-
-	public static ServerBreakNoticeHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message notServerBreak, int mapId, long sequence) {

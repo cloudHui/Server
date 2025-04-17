@@ -1,7 +1,7 @@
 package robot.handel;
 
 import com.google.protobuf.Message;
-import msg.MessageId;
+import msg.RoomMessageId;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class AckLoginHandler implements Handler {
 		HallProto.AckLogin ack = (HallProto.AckLogin) msg;
 		logger.error("[login ack:{}]", ack.toString());
 		RoomProto.ReqGetRoomList.Builder getRoom = RoomProto.ReqGetRoomList.newBuilder();
-		sender.sendMessage(MessageId.RoomMsg.REQ_ROOM_LIST.getId(), getRoom.build());
+		sender.sendMessage(RoomMessageId.REQ_ROOM_LIST_MSG, getRoom.build());
 		return true;
 	}
 }

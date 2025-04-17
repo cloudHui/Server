@@ -3,42 +3,28 @@ package hall.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import hall.handle.server.AckServerInfoHandel;
-import hall.handle.server.RegisterNoticeHandler;
-import hall.handle.server.ServerBreakNoticeHandler;
+import hall.Hall;
 import msg.MessageId;
+import msg.ServerType;
+import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import proto.ModelProto;
 
 public class ConnectProcessor {
-	public final static Parser PARSER = (id, bytes) -> {
-		switch (id) {
-			case MessageId.HEART_ACK:
-				return ModelProto.AckHeart.parseFrom(bytes);
-			case MessageId.ACK_REGISTER:
-				return ModelProto.AckRegister.parseFrom(bytes);
-			case MessageId.ACK_SERVER:
-				return ModelProto.AckServerInfo.parseFrom(bytes);
-			case MessageId.REGISTER_NOTICE:
-				return ModelProto.NotRegisterInfo.parseFrom(bytes);
-			case MessageId.BREAK_NOTICE:
-				return ModelProto.NotServerBreak.parseFrom(bytes);
-			default: {
-				return null;
-			}
-		}
-	};
 
-	private final static Map<Integer, Handler> handlers;
+	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
+
+	private final static Map<Integer, Handler> handlers = new HashMap<>();
+
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
 
 	static {
-		handlers = new HashMap<>();
-		handlers.put(MessageId.ACK_SERVER, AckServerInfoHandel.getInstance());
-		handlers.put(MessageId.REGISTER_NOTICE, RegisterNoticeHandler.getInstance());
-		handlers.put(MessageId.BREAK_NOTICE, ServerBreakNoticeHandler.getInstance());
+
+		HandleTypeRegister.bindProcess(Hall.class, handlers, "client,connect,db,manager");
+
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Hall);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

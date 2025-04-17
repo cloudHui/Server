@@ -5,7 +5,9 @@ import java.util.Map;
 
 import gate.Gate;
 import gate.client.GateTcpClient;
+import msg.HallMessageId;
 import msg.MessageId;
+import msg.ServerType;
 import msg.registor.HandleTypeRegister;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -14,42 +16,21 @@ import net.message.Parser;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.GateProto;
 import proto.HallProto;
-import proto.ModelProto;
 
 public class ConnectProcessor {
 
 	private final static Logger logger = LoggerFactory.getLogger(ConnectProcessor.class);
 
+	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
-	public final static Parser PARSER = (id, bytes) -> {
-		switch (id) {
-			case MessageId.HEART_ACK:
-				return ModelProto.AckHeart.parseFrom(bytes);
-			case MessageId.REQ_REGISTER:
-				return ModelProto.ReqRegister.parseFrom(bytes);
-			case MessageId.ACK_SERVER:
-				return ModelProto.AckServerInfo.parseFrom(bytes);
-			case MessageId.ACK_REGISTER:
-				return ModelProto.AckRegister.parseFrom(bytes);
-			case MessageId.REGISTER_NOTICE:
-				return ModelProto.NotRegisterInfo.parseFrom(bytes);
-			case MessageId.BREAK_NOTICE:
-				return ModelProto.NotServerBreak.parseFrom(bytes);
-			case MessageId.BROAD:
-				return GateProto.BroadCast.parseFrom(bytes);
-			default: {
-				return null;
-			}
-		}
-	};
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
 
-	private final static Map<Integer, Handler> handlers;
+	private final static Map<Integer, Handler> handlers = new HashMap<>();
 
 	static {
-		handlers = new HashMap<>();
 		HandleTypeRegister.bindProcess(Gate.class, handlers, "client,connect");
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Gate);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
@@ -62,7 +43,7 @@ public class ConnectProcessor {
 		if (msgId > MessageId.BASE_ID_INDEX) {
 			GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(tcpMessage.getClientId());
 			if (null != gateClient) {
-				if (msgId == MessageId.HallMsg.ACK_LOGIN.getId()) {
+				if (msgId == HallMessageId.ACK_LOGIN_MSG) {
 					HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
 					gateClient.setRoleId(ack.getUserId());
 					gateClient.setClubId(ack.getClub());

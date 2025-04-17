@@ -1,25 +1,25 @@
 package game.connect;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import msg.MessageId;
+import msg.ServerType;
+import msg.registor.HandleTypeRegister;
 import net.message.Parser;
 import net.message.Transfer;
-import proto.ModelProto;
-
-import static msg.MessageId.ACK_REGISTER;
-import static msg.MessageId.HEART_ACK;
 
 /**
  * 与center 消息处理
  */
 public class ConnectProcessor {
-	public final static Parser PARSER = (id, bytes) -> {
-		switch (id) {
-			case HEART_ACK:
-				return ModelProto.AckHeart.parseFrom(bytes);
-			case ACK_REGISTER:
-				return ModelProto.AckRegister.parseFrom(bytes);
-		}
-		return null;
-	};
+	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
+
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
+
+	static {
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Game);
+	}
 
 	/**
 	 * 转发消息接口

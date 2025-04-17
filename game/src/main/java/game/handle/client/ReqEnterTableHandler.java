@@ -1,7 +1,7 @@
 package game.handle.client;
 
 import com.google.protobuf.Message;
-import game.msg.GameMessageId;
+import msg.GameMessageId;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;

@@ -5,38 +5,30 @@ import java.util.Map;
 
 import center.Center;
 import msg.MessageId;
+import msg.ServerType;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import proto.ModelProto;
 import utils.StringConst;
 
 public class ClientProto {
 
-	public final static Parser PARSER = (id, bytes) -> {
-		switch (id) {
-			case MessageId.HEART:
-				return ModelProto.ReqHeart.parseFrom(bytes);
-			case MessageId.REQ_REGISTER:
-				return ModelProto.ReqRegister.parseFrom(bytes);
-			case MessageId.REQ_SERVER:
-				return ModelProto.ReqServerInfo.parseFrom(bytes);
-			default:
-				return null;
-		}
-	};
+	private final static Map<Integer, Handler> MAP = new HashMap<>();
 
-	private final static Map<Integer, Handler> handlers;
+	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
-	static {
-		handlers = new HashMap<>();
-		HandleTypeRegister.bindProcess(Center.class, handlers,"client");
-		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, handlers);
+	public static void init(){
+		HandleTypeRegister.bindProcess(Center.class, MAP, "client");
+		HandleTypeRegister.bindProcess(StringConst.HEAR_PACKAGE, MAP);
+
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, ServerType.Center);
 	}
 
-	public final static Handlers HANDLERS = handlers::get;
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
+
+	public final static Handlers HANDLERS = MAP::get;
 
 
 	public final static Transfer TRANSFER = (routerClient, tcpMessage) -> false;

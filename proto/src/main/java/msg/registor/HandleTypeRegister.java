@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.protobuf.Message;
+import com.google.protobuf.MessageLite;
+import msg.MessageId;
+import msg.ServerType;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessType;
 import net.handler.Handler;
@@ -25,12 +29,27 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定处理类型与消息类类型
 	 */
-	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap) {
+	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, ServerType serverType) {
 		try {
 			Field[] fields = classes.getFields();
-			for(Field field: fields){
+			for (Field field : fields) {
 				ClassType annotation = field.getAnnotation(ClassType.class);
-				if(annotation!= null){
+				if (annotation == null) {
+					continue;
+				}
+				boolean common = annotation.common();
+				if(common){
+					ServerType[] serverTypes = annotation.serverTypes();
+					if (serverTypes.length == 0) {
+						continue;
+					}
+					for (ServerType server : serverTypes) {
+						if (server.equals(serverType)) {
+							transMap.put((int) field.get(null), annotation.value());
+							break;
+						}
+					}
+				} else {
 					transMap.put((int) field.get(null), annotation.value());
 				}
 			}
@@ -121,4 +140,18 @@ public class HandleTypeRegister {
 		}
 	}
 
+	/**
+	 * 消息转化
+	 */
+	public static Message parserMessage(int id, byte[] bytes, Map<Integer, Class<?>> TRANS_MAP) {
+		Class<?> aClass = TRANS_MAP.get(id);
+		if (aClass != null) {
+			try {
+				return (Message) MessageId.getMessageObject((Class<MessageLite>) aClass, bytes);
+			} catch (Exception e) {
+				logger.error("[parse message error messageId :{} className:{}]", id, aClass.getSimpleName());
+			}
+		}
+		return null;
+	}
 }

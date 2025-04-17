@@ -3,7 +3,7 @@ package robot;
 import java.net.InetSocketAddress;
 
 import io.netty.channel.nio.NioEventLoopGroup;
-import msg.MessageId;
+import msg.HallMessageId;
 import net.connect.TCPConnect;
 import net.connect.WSTCPConnect;
 import org.slf4j.Logger;
@@ -65,7 +65,7 @@ public class Robot {
 				channelHandler -> {
 					TCPConnect tcpConnect = (TCPConnect) channelHandler;
 					HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
-					tcpConnect.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build());
+					tcpConnect.sendMessage(HallMessageId.REQ_LOGIN_MSG, ack.build());
 				}, null);
 		tcpConnection.connect();
 	}
@@ -77,7 +77,7 @@ public class Robot {
 				channelHandler -> {
 					WSTCPConnect handler = (WSTCPConnect) channelHandler;
 					HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
-					handler.sendMessage(MessageId.HallMsg.REQ_LOGIN.getId(), ack.build());
+					handler.sendMessage(HallMessageId.REQ_LOGIN_MSG, ack.build());
 				});
 		wstcpConnect.connect();
 	}

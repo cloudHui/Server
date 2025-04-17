@@ -1,7 +1,9 @@
-package room.handel;
+package room.handle;
 
 import com.google.protobuf.Message;
+import msg.MessageId;
 import msg.ServerType;
+import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -11,13 +13,8 @@ import room.connect.ConnectProcessor;
 /**
  * 注册信息通知
  */
+@ProcessType(MessageId.REGISTER_NOTICE)
 public class RegisterNoticeHandler implements Handler {
-
-	private static final RegisterNoticeHandler instance = new RegisterNoticeHandler();
-
-	public static RegisterNoticeHandler getInstance() {
-		return instance;
-	}
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message registerInfo, int mapId, long sequence) {

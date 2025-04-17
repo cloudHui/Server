@@ -1,6 +1,6 @@
 package gate.client;
 
-import msg.MessageId;
+import msg.HallMessageId;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 
@@ -20,7 +20,7 @@ public class GateTcpClient extends ClientHandler {
 
 		setCloseEvent(client -> ClientProto.notServerBreak(roleId, gameId, hallId, roomId));
 
-		setSafe((msgId) -> msgId == MessageId.HallMsg.REQ_LOGIN.getId() || roleId != 0);
+		setSafe((msgId) -> msgId == HallMessageId.REQ_LOGIN_MSG || roleId != 0);
 	}
 
 	public int getRoleId() {

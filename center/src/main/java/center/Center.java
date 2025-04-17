@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import center.client.CenterClient;
+import center.client.ClientProto;
 import msg.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -48,6 +49,7 @@ public class Center {
 	private void start() {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		try {
+			ClientProto.init();
 			serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Center);
 			List<SocketAddress> addresses = new ArrayList<>();
 			String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");

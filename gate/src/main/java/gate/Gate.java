@@ -136,6 +136,7 @@ public class Gate {
 		//获取其他服务
 		//getAllOtherServer();
 
+
 		logger.info("[gate server {}:{} is start!!!]", getInnerIp(), getPort());
 	}
 
