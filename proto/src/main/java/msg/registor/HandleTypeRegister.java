@@ -165,14 +165,16 @@ public class HandleTypeRegister {
 	/**
 	 * 消息转化
 	 */
-	public static Message parserMessage(int id, byte[] bytes, Map<Integer, Class<?>> TRANS_MAP) {
-		Class<?> aClass = TRANS_MAP.get(id);
+	public static Message parserMessage(int id, byte[] bytes, Map<Integer, Class<?>> map) {
+		Class<?> aClass = map.get(id);
 		if (aClass != null) {
 			try {
 				return (Message) MessageId.getMessageObject((Class<MessageLite>) aClass, bytes);
 			} catch (Exception e) {
-				logger.error("[parse message error messageId :{} className:{}]", id, aClass.getSimpleName());
+				logger.error("[parserMessage error messageId :{} className:{}]", id, aClass.getSimpleName(), e);
 			}
+		} else {
+			logger.error("[parserMessage error messageId :{} can not find messageType class]", id);
 		}
 		return null;
 	}
