@@ -31,7 +31,8 @@ public class ClientProto {
 
 		ConnectHandler connect = getTransServerClient(msgId, gateClient);
 		if (connect != null) {
-			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) -> LOGGER.info("[send transferMessage message to {} {} success:{}]",
+			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) ->
+					LOGGER.info("[send transferMessage message to {} {} success:{}]",
 					connect.getConnectServer(), msgId, throwable == null ? true : throwable.getMessage()));
 			return true;
 		}
@@ -50,8 +51,8 @@ public class ClientProto {
 			return null;
 		}
 		int clientId = 0;
-		ConnectHandler serverClient;
-		ServerManager server = Gate.getInstance().getServerManager();
+		ConnectHandler server;
+		ServerManager manager = Gate.getInstance().getServerManager();
 		switch (serverType) {
 			case Game:
 				clientId = gateClient.getGameId();
@@ -64,22 +65,22 @@ public class ClientProto {
 				break;
 		}
 		if (clientId != 0) {
-			serverClient = server.getServerClient(serverType, clientId);
+			server = manager.getServerClient(serverType, clientId);
 		} else {
-			serverClient = server.getServerClient(serverType);
+			server = manager.getServerClient(serverType);
 			switch (serverType) {
 				case Game:
-					gateClient.setGameId(serverClient.getConnectServer().getServerId());
+					gateClient.setGameId(server.getConnectServer().getServerId());
 					break;
 				case Hall:
-					gateClient.setHallId(serverClient.getConnectServer().getServerId());
+					gateClient.setHallId(server.getConnectServer().getServerId());
 					break;
 				case Room:
-					gateClient.setRoomId(serverClient.getConnectServer().getServerId());
+					gateClient.setRoomId(server.getConnectServer().getServerId());
 					break;
 			}
 		}
-		return serverClient;
+		return server;
 	}
 
 

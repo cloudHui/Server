@@ -64,11 +64,6 @@ message TableRole {
     bytes avatar = 3;
     bytes nickName = 4;
     int32 score = 6;
-    Hero player = 7;
-    repeated int32 cards = 8;
+    repeated int32 cards = 7;
 }
 
-message Hero {
-    int32 heroId = 1;
-    repeated int32 skills = 2;//能用的技能是1 不能用就是0
-}

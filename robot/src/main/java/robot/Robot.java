@@ -1,22 +1,25 @@
 package robot;
 
-import java.net.InetSocketAddress;
 import java.util.UUID;
 
 import com.google.protobuf.ByteString;
-import io.netty.channel.nio.NioEventLoopGroup;
+import com.google.protobuf.Message;
 import msg.HallMessageId;
-import net.connect.TCPConnect;
-import net.connect.WSTCPConnect;
+import msg.MessageId;
+import msg.ServerType;
+import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
+import proto.ModelProto;
 import robot.connect.ConnectProcessor;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
+import utils.config.ConfigurationManager;
+import utils.other.IpUtil;
 
 public class Robot {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Robot.class);
@@ -28,8 +31,58 @@ public class Robot {
 
 	private ServerManager serverManager;
 
+	private String center;
+	private int port;
+	private String ip;
+	private int serverId;
+	private String innerIp;
+
 	public static Robot getInstance() {
 		return instance;
+	}
+
+	public String getCenter() {
+		return center;
+	}
+
+	public void setCenter(String center) {
+		this.center = center;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(int serverId) {
+		this.serverId = serverId;
+	}
+
+	public String getInnerIp() {
+		return innerIp;
+	}
+
+	public void setInnerIp(String innerIp) {
+		this.innerIp = innerIp;
+	}
+
+	public ServerManager getServerManager() {
+		return serverManager;
 	}
 
 	private Robot() {
@@ -53,34 +106,78 @@ public class Robot {
 	private void start() {
 		serverManager = new ServerManager();
 		ConnectProcessor.init();
-		String[] ipPort = new String[2];
-		ipPort[0] = "172.20.16.119";
-		ipPort[1] = "5600";
-		tcpConnect(ipPort);
-		//wsConnect(ipPort);
+		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
+		setPort(cfgMgr.getInt("port", 0));
+		setIp(IpUtil.getOutIp());
+
+		setServerId(cfgMgr.getInt("id", 0));
+
+		setCenter(cfgMgr.getProperty("center"));
+
+		setInnerIp(IpUtil.getLocalIP());
+
+		//向注册中心注册
+		registerToCenter();
+
+		//获取其他服务
+		getAllOtherServer();
+
+		login();
 		LOGGER.info("[robot server is start!!!]");
 	}
 
-	private void tcpConnect(String[] ipPort) {
-		String nick = UUID.randomUUID().toString();
-		TCPConnect tcpConnection = new TCPConnect(new NioEventLoopGroup(1),
-				new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])),
-				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
-				channelHandler -> ((TCPConnect) channelHandler).sendMessage(HallMessageId.REQ_LOGIN_MSG,
-						HallProto.ReqLogin.newBuilder().setNickName(ByteString.copyFromUtf8(nick)).build()), null);
-		tcpConnection.connect();
+	/**
+	 * 向注册中心注册
+	 */
+	private void registerToCenter() {
+		String[] ipPort = getCenter().split(":");
+		int plant = ConfigurationManager.getInstance().getInt("plant", 0);
+		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(),
+				plant == 2 ? getIp() + ":" + getPort() : getInnerIp() + ":" + getPort(),
+				ServerType.Gate);
 	}
 
-	private void wsConnect(String[] ipPort) {
-		WSTCPConnect wstcpConnect = new WSTCPConnect(new NioEventLoopGroup(1),
-				new InetSocketAddress(ipPort[0], 5601),
-				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
-				channelHandler -> {
-					WSTCPConnect handler = (WSTCPConnect) channelHandler;
-					HallProto.ReqLogin.Builder ack = HallProto.ReqLogin.newBuilder();
-					handler.sendMessage(HallMessageId.REQ_LOGIN_MSG, ack.build());
-				});
-		wstcpConnect.connect();
+	/**
+	 * 获取其他除注册中心以外的所有服务端口ip
+	 */
+	private void getAllOtherServer() {
+		registerTimer(3000, 1000, -1, robot -> {
+			ConnectHandler serverClient = serverManager.getServerClient(ServerType.Center);
+			if (serverClient != null) {
+				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
+				req.addServerType(ServerType.Game.getServerType());
+				req.addServerType(ServerType.Hall.getServerType());
+				req.addServerType(ServerType.Room.getServerType());
+				serverClient.sendMessage(MessageId.REQ_SERVER, req.build());
+				return true;
+			}
+			return false;
+		}, this);
+	}
+
+	/**
+	 * 发送消息
+	 */
+	public void getClientSendMessage(ServerType serverType, int msgId, Message message) {
+		registerTimer(3000, 1000, -1, gate -> {
+			ConnectHandler serverClient = Robot.getInstance().getServerManager().getServerClient(serverType);
+			if (serverClient != null) {
+				serverClient.sendMessage(msgId, message);
+				return true;
+			}
+			return false;
+		}, this);
+
+
+	}
+
+	/**
+	 * 模拟登录
+	 */
+	private void login() {
+		getClientSendMessage(ServerType.Hall, HallMessageId.REQ_LOGIN_MSG,
+				HallProto.ReqLogin.newBuilder().setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString())).build());
 	}
 
 	public static void main(String[] args) {

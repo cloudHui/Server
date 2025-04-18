@@ -38,7 +38,7 @@ public class ConnectProcessor {
 	 */
 	public final static Transfer TRANSFER = (tcpConnect, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if (msgId > MessageId.BASE_ID_INDEX) {
+		if (msgId > MessageId.BASE_ID_INDEX && (msgId & 1) == 0) {
 			GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(tcpMessage.getClientId());
 			if (null != gateClient) {
 				if (msgId == HallMessageId.ACK_LOGIN_MSG) {

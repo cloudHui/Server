@@ -9,7 +9,6 @@ import room.Room;
 
 public class RoomClient extends ClientHandler {
 
-
 	private ModelProto.ServerInfo serverInfo;
 
 	public void setServerInfo(ModelProto.ServerInfo serverInfo) {

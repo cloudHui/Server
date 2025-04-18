@@ -48,4 +48,11 @@ public class RoomModelManager {
 	public List<TableModel> getModels() {
 		return new ArrayList<>(tableModelMap.values());
 	}
+
+	/**
+	 * 通过模板id 获取模板
+	 */
+	public TableModel getTableModel(int model) {
+		return tableModelMap.get(model);
+	}
 }
