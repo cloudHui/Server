@@ -27,7 +27,7 @@ public class ReqLoginHandler implements Handler {
 		ack.setUserId(uid.decrementAndGet());
 		User user = UserManager.getInstance().getUser(ack.getUserId());
 		if (user == null) {
-			user = new User(ack.getUserId(), nick);
+			user = new User(ack.getUserId(), nick, clientId);
 			UserManager.getInstance().addUser(user);
 		}
 		sender.sendMessage(clientId, HallMessageId.ACK_LOGIN_MSG, mapId, 0, ack.build(), sequence);

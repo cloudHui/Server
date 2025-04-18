@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.protobuf.Message;
 import model.TableModel;
+import msg.MessageId;
 import msg.RoomMessageId;
 import msg.annotation.ProcessType;
 import net.client.Sender;
@@ -29,7 +30,7 @@ public class ReqRoomListHandle implements Handler {
 				ack.addRoomList(room);
 			}
 		}
-		sender.sendMessage(RoomMessageId.ACK_ROOM_LIST_MSG, ack.build(), mapId, sequence);
+		sender.sendMessage(clientId, RoomMessageId.ACK_ROOM_LIST_MSG, mapId, 0, ack.build(), sequence);
 		return true;
 	}
 }

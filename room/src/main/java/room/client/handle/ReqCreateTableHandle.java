@@ -9,7 +9,6 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.RoomProto;
-import room.Room;
 import room.manager.RoomModelManager;
 
 /**
@@ -30,8 +29,7 @@ public class ReqCreateTableHandle implements Handler {
 			LOGGER.error("");
 			return true;
 		}
-
-		sender.sendMessage(RoomMessageId.ACK_ROOM_LIST_MSG, req, mapId, sequence);
+		sender.sendMessage(clientId, RoomMessageId.ACK_ROOM_LIST_MSG, mapId, 0, req, sequence);
 		return true;
 	}
 }

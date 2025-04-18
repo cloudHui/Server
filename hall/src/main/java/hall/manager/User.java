@@ -6,20 +6,19 @@ public class User {
 
 	private String nick;
 
+	private long clientId;
+
 	public User() {
 	}
 
-	public User(int userId, String nick) {
+	public User(int userId, String nick, long clientId) {
 		this.userId = userId;
 		this.nick = nick;
+		this.clientId = clientId;
 	}
 
 	public int getUserId() {
 		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 
 	public String getNick() {
@@ -28,5 +27,9 @@ public class User {
 
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+
+	public long getClientId() {
+		return clientId;
 	}
 }

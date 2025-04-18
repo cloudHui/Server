@@ -2,6 +2,7 @@ package game.client.handle;
 
 import com.google.protobuf.Message;
 import msg.GameMessageId;
+import msg.MessageId;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -14,11 +15,11 @@ import proto.GameProto;
 public class ReqEnterTableHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int roleId, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		GameProto.ReqEnterTable req = (GameProto.ReqEnterTable) msg;
 		GameProto.AckEnterTable.Builder ack = GameProto.AckEnterTable.newBuilder();
 		ack.setTableId(1);
-		sender.sendMessage(GameMessageId.ACK_ENTER_TABLE_MSG, ack.build(), mapId, sequence);
+		sender.sendMessage(clientId, GameMessageId.ACK_ENTER_TABLE_MSG, mapId, 0, ack.build(), sequence);
 		return true;
 	}
 }

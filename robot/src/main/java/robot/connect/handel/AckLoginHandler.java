@@ -6,7 +6,6 @@ import msg.RoomMessageId;
 import msg.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
-import net.connect.handle.ConnectHandler;
 import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

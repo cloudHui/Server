@@ -38,7 +38,7 @@ public class BroadCastHandle implements Handler {
 	 * 处理广播消息
 	 */
 	private void doBroad(Broad broad, GateProto.BroadCast broadCast) {
-		Map<Integer, ClientHandler> allClient;
+		Map<Integer, Sender> allClient;
 		GateTcpClient tcpClient;
 		switch (broad) {
 			case PERSON:
@@ -51,13 +51,13 @@ public class BroadCastHandle implements Handler {
 				break;
 			case ALL:
 				allClient = ClientHandler.getAllClient();
-				for (Map.Entry<Integer, ClientHandler> entry : allClient.entrySet()) {
+				for (Map.Entry<Integer, Sender> entry : allClient.entrySet()) {
 					entry.getValue().sendMessage(MessageId.BROAD, broadCast);
 				}
 				break;
 			case CHANNEL:
 				allClient = ClientHandler.getAllClient();
-				for (Map.Entry<Integer, ClientHandler> entry : allClient.entrySet()) {
+				for (Map.Entry<Integer, Sender> entry : allClient.entrySet()) {
 					try {
 						tcpClient = (GateTcpClient) entry.getValue();
 						if (tcpClient.getChannel() == broadCast.getChannel()) {
@@ -70,7 +70,7 @@ public class BroadCastHandle implements Handler {
 				break;
 			case CLUB:
 				allClient = ClientHandler.getAllClient();
-				for (Map.Entry<Integer, ClientHandler> entry : allClient.entrySet()) {
+				for (Map.Entry<Integer, Sender> entry : allClient.entrySet()) {
 					try {
 						tcpClient = (GateTcpClient) entry.getValue();
 						if (tcpClient.getClubId() == broadCast.getClub()) {

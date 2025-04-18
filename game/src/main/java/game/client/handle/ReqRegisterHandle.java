@@ -3,6 +3,7 @@ package game.client.handle;
 import com.google.protobuf.Message;
 import game.Game;
 import game.client.GameClient;
+import msg.GameMessageId;
 import msg.MessageId;
 import msg.ServerType;
 import msg.annotation.ProcessType;
@@ -17,7 +18,7 @@ import proto.ModelProto;
 public class ReqRegisterHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int roleId, Message reqRegister, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message reqRegister, int mapId, long sequence) {
 		ModelProto.ReqRegister req = (ModelProto.ReqRegister) reqRegister;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
@@ -34,7 +35,7 @@ public class ReqRegisterHandle implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(Game.getInstance().getServerInfo());
-		sender.sendMessage(MessageId.ACK_REGISTER, ackRegister.build(), sequence);
+		sender.sendMessage(clientId, MessageId.ACK_REGISTER, mapId, 0, ackRegister.build(), sequence);
 		return true;
 	}
 }
