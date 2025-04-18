@@ -160,7 +160,7 @@ public class Robot {
 	 * 发送消息
 	 */
 	public void getClientSendMessage(ServerType serverType, int msgId, Message message) {
-		registerTimer(3000, 1000, -1, gate -> {
+		registerTimer(0, 1000, -1, gate -> {
 			ConnectHandler serverClient = Robot.getInstance().getServerManager().getServerClient(serverType);
 			if (serverClient != null) {
 				serverClient.sendMessage(msgId, message);
@@ -168,16 +168,14 @@ public class Robot {
 			}
 			return false;
 		}, this);
-
-
 	}
 
 	/**
 	 * 模拟登录
 	 */
 	private void login() {
-		getClientSendMessage(ServerType.Hall, HallMessageId.REQ_LOGIN_MSG,
-				HallProto.ReqLogin.newBuilder().setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString())).build());
+		HallProto.ReqLogin build = HallProto.ReqLogin.newBuilder().setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString())).build();
+		getClientSendMessage(ServerType.Hall, HallMessageId.REQ_LOGIN_MSG, build);
 	}
 
 	public static void main(String[] args) {

@@ -47,12 +47,4 @@ public class ConnectProcessor {
 	 * 转发消息接口
 	 */
 	public final static Transfer TRANSFER = (tcpConnect, tcpMessage) -> false;
-
-
-	public static void getClientSendMessage(ServerType serverType, int msgId, Message message){
-		ConnectHandler serverClient = Robot.getInstance().getServerManager().getServerClient(serverType);
-		if (serverClient != null) {
-			serverClient.sendMessage(msgId, message);
-		}
-	}
 }
