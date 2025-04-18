@@ -17,7 +17,7 @@ import proto.ModelProto;
 public class AckServerInfoHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		Gate.getInstance().execute(() -> Gate.getInstance().getServerManager().connectToSever(
 				((ModelProto.AckServerInfo) msg).getServersList(),
 				Gate.getInstance().getServerId(),

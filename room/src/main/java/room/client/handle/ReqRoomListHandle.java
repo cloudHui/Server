@@ -18,7 +18,7 @@ import room.manager.RoomModelManager;
 public class ReqRoomListHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		RoomProto.AckGetRoomList.Builder ack = RoomProto.AckGetRoomList.newBuilder();
 		List<TableModel> models = RoomModelManager.getInstance().getModels();
 		if (!models.isEmpty()) {

@@ -21,7 +21,7 @@ public class ReqCreateTableHandle implements Handler {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ReqCreateTableHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		RoomProto.ReqCreateTable req = (RoomProto.ReqCreateTable) msg;
 		int configTypeId = req.getConfigTypeId();
 
@@ -31,7 +31,7 @@ public class ReqCreateTableHandle implements Handler {
 			return true;
 		}
 
-		sender.sendMessage(RoomMessageId.ACK_ROOM_LIST_MSG, ack.build(), mapId, sequence);
+		sender.sendMessage(RoomMessageId.ACK_ROOM_LIST_MSG, req, mapId, sequence);
 		return true;
 	}
 }

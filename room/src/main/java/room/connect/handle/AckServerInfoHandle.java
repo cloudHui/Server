@@ -17,7 +17,7 @@ import room.connect.ConnectProcessor;
 public class AckServerInfoHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		//如果不放到另一个线程去链接会导致线程读写阻塞
 		Room.getInstance().execute(() -> Room.getInstance().getServerManager().connectToSever(
 				((ModelProto.AckServerInfo) msg).getServersList(),

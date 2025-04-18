@@ -14,7 +14,7 @@ import proto.ModelProto;
 public class NotBreakHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		ModelProto.NotBreak notice = (ModelProto.NotBreak) msg;
 		return true;
 	}

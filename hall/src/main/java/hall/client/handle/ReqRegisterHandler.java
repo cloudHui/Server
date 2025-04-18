@@ -17,7 +17,7 @@ import proto.ModelProto;
 public class ReqRegisterHandler implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 
 		ModelProto.ReqRegister req = (ModelProto.ReqRegister) msg;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
@@ -34,7 +34,7 @@ public class ReqRegisterHandler implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(Hall.getInstance().getServerInfo());
-		sender.sendMessage(Math.toIntExact(aLong), MessageId.ACK_REGISTER, ackRegister.build(),  sequence);
+		sender.sendMessage(Math.toIntExact(clientId), MessageId.ACK_REGISTER, ackRegister.build(),  sequence);
 		return true;
 	}
 }
