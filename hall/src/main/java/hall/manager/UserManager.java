@@ -17,24 +17,29 @@ public class UserManager {
 		return userManager;
 	}
 
-	private final Map<Integer, UserMap> users;
+	private static final int MAX_SIZE = 4096;
+	private final Map<Integer, User> users;
+
+	private final Map<Integer, User> clientUser;
 
 	private final UserService service = new UserService();
 
 	public UserManager() {
-		this.users = new ConcurrentHashMap<>();
+		users = new ConcurrentHashMap<>(MAX_SIZE);
+		clientUser = new ConcurrentHashMap<>(MAX_SIZE);
 	}
 
 	public User getUser(int userId) {
-		int index = userId / 16;
-		UserMap userMap = users.computeIfAbsent(index, k -> new UserMap());
-		return userMap.getUser(userId);
+		return users.get(userId);
+	}
+
+	public void removeUser(int userId) {
+		User remove = users.remove(userId);
+		clientUser.remove(remove.getClientId());
 	}
 
 	public void addUser(User user) {
-		int userId = user.getUserId();
-		int index = userId / 16;
-		UserMap userMap = users.computeIfAbsent(index, k -> new UserMap());
-		userMap.addUser(user);
+		users.put(user.getUserId(), user);
+		clientUser.put(user.getClientId(), user);
 	}
 }

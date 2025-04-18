@@ -6,12 +6,12 @@ public class User {
 
 	private String nick;
 
-	private long clientId;
+	private int clientId;
 
 	public User() {
 	}
 
-	public User(int userId, String nick, long clientId) {
+	public User(int userId, String nick, int clientId) {
 		this.userId = userId;
 		this.nick = nick;
 		this.clientId = clientId;
@@ -29,7 +29,7 @@ public class User {
 		this.nick = nick;
 	}
 
-	public long getClientId() {
+	public int getClientId() {
 		return clientId;
 	}
 }
