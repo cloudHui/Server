@@ -111,7 +111,7 @@ public class ServerManager {
 	 * 发送心跳
 	 */
 	private void sendHeart(TCPConnect connect) {
-		connect.sendMessage(MessageId.HEART, manageHeart(connect.getConnectServer().getServerType()), OVER_TIME)
+		connect.sendMessage(manageHeart(connect.getConnectServer().getServerType()), MessageId.HEART, OVER_TIME)
 				.whenComplete((message, e) -> {
 					if (null != e) {
 						logger.error("[ERROR! failed for send HEART  connect {}] {}", connect, e.getMessage());
@@ -219,7 +219,7 @@ public class ServerManager {
 	 */
 	private final EventHandle activeHandle = channelHandler -> {
 		TCPConnect handler = (TCPConnect) channelHandler;
-		handler.sendMessage(MessageId.REQ_REGISTER, manageReqRegister(handler.getLocalServer()).build(), OVER_TIME)
+		handler.sendMessage(manageReqRegister(handler.getLocalServer()).build(), MessageId.REQ_REGISTER, OVER_TIME)
 				.whenComplete((message, e) -> {
 					if (null != e) {
 						logger.error("[ERROR! failed send register message to {} {}]", handler.getConnectServer(), e.getMessage());

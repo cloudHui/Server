@@ -52,7 +52,8 @@ public class BroadCastHandle implements Handler {
 			case ALL:
 				allClient = ClientHandler.getAllClient();
 				for (Map.Entry<Integer, Sender> entry : allClient.entrySet()) {
-					entry.getValue().sendMessage(MessageId.BROAD, broadCast);
+					tcpClient = (GateTcpClient) entry.getValue();
+					tcpClient.sendMessage(MessageId.BROAD, broadCast);
 				}
 				break;
 			case CHANNEL:
