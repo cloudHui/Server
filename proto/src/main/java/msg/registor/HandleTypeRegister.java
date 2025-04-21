@@ -28,6 +28,9 @@ public class HandleTypeRegister {
 
 	/**
 	 * 绑定处理类型与消息类类型(专用消息)
+	 *
+	 * @param classes  要绑定的消息类
+	 * @param transMap 消息id和消息类的绑定map
 	 */
 	public static void bindUniqTransMap(Class<?> classes, Map<Integer, Class<?>> transMap) {
 		try {
@@ -53,7 +56,8 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定处理类型与消息类类型(通用消息处理)
 	 *
-	 * @param type 消息转化类型 MessageId.SERVER MessageId.CLIENT
+	 * @param classes MessageId 这个通用消息类
+	 * @param type    消息转化类型 MessageId.SERVER MessageId.CLIENT
 	 */
 	public static void bindCommonTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, int type) {
 		try {
@@ -92,6 +96,8 @@ public class HandleTypeRegister {
 
 	/**
 	 * 绑定处理类型与处理器
+	 *
+	 * @param packages 包名 这个包下面处理器和消息注解绑定关系读取
 	 */
 	public static void bindPackageProcess(String packages, Map<Integer, Handler> processorMap) {
 		try {
@@ -111,6 +117,8 @@ public class HandleTypeRegister {
 
 	/**
 	 * 绑定处理类型与处理器
+	 *
+	 * @param packageClass 类名 这个类下面处理器和消息注解绑定关系读取
 	 */
 	public static void bindClassProcess(Class<?> packageClass, Map<Integer, Handler> processorMap) {
 		try {
