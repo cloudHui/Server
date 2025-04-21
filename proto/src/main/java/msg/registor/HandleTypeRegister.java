@@ -33,19 +33,25 @@ public class HandleTypeRegister {
 	 * @param transMap 消息id和消息类的绑定map
 	 */
 	public static void bindUniqTransMap(Class<?> classes, Map<Integer, Class<?>> transMap) {
-		try {
-			Field[] fields = classes.getFields();
-			for (Field field : fields) {
-				ClassType annotation = field.getAnnotation(ClassType.class);
-				if (annotation == null) {
-					continue;
-				}
-				transMap.put((int) field.get(null), annotation.value());
+		Object object = null;
+		Field[] fields = classes.getFields();
+		for (Field field : fields) {
+			ClassType annotation = field.getAnnotation(ClassType.class);
+			if (annotation == null) {
+				continue;
 			}
-		} catch (Exception e) {
-			logger.error("bindUniqTransMap error {} ", classes.getName(), e);
+			try {
+				object = field.get(null);
+				transMap.put((int) field.get(null), annotation.value());
+			} catch (Exception e) {
+				Object[] values = new Object[] {
+						classes.getSimpleName(), object != null ? object.getClass() : null, object
+				};
+				logger.error("bindUniqTransMap error {}", values, e);
+			}
+
 		}
-		logger.error("{} bindUniqTransMap success bind size:{}", classes.getName(), transMap.size());
+		logger.error("{} bindUniqTransMap success bind size:{}", classes.getSimpleName(), transMap.size());
 
 		//Todo
 		for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
@@ -60,32 +66,39 @@ public class HandleTypeRegister {
 	 * @param type    消息转化类型 MessageId.SERVER MessageId.CLIENT
 	 */
 	public static void bindCommonTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, int type) {
-		try {
-			String packageName = classes.getPackage().getName();
-			Field[] fields = MessageId.class.getFields();
-			for (Field field : fields) {
-				ClassType annotation = field.getAnnotation(ClassType.class);
-				if (annotation == null) {
-					continue;
-				}
-				MessageTrans[] messageTrans = annotation.messageTrans();
-				if (messageTrans.length == 0) {
-					continue;
-				}
-				for (MessageTrans trans : messageTrans) {
-					//这个类包名有当前服务名字的
-					if (packageName.contains(trans.getServerType().name().toLowerCase())) {
-						if (type == trans.getServerClient()) {
-							transMap.put((int) field.get(null), annotation.value());
+
+		String packageName = classes.getPackage().getName();
+		Field[] fields = MessageId.class.getFields();
+		Object object = null;
+		for (Field field : fields) {
+			ClassType annotation = field.getAnnotation(ClassType.class);
+			if (annotation == null) {
+				continue;
+			}
+			MessageTrans[] messageTrans = annotation.messageTrans();
+			if (messageTrans.length == 0) {
+				continue;
+			}
+			for (MessageTrans trans : messageTrans) {
+				//这个类包名有当前服务名字的
+				if (packageName.contains(trans.getServerType().name().toLowerCase())) {
+					if (type == trans.getServerClient()) {
+						try {
+							object = field.get(null);
+							transMap.put((int) object, annotation.value());
+						} catch (Exception e) {
+							Object[] values = new Object[] {
+									classes.getSimpleName(), object != null ? object.getClass() : null, object
+							};
+							logger.error("bindCommonTransMap error {}", values, e);
 						}
-						break;
 					}
+					break;
 				}
 			}
-		} catch (Exception e) {
-			logger.error("bindCommonTransMap error {} ", classes.getName(), e);
 		}
-		logger.error("{} bindCommonTransMap success bind size:{}", classes.getName(), transMap.size());
+
+		logger.error("{} bindCommonTransMap success bind size:{}", classes.getSimpleName(), transMap.size());
 
 
 		//Todo
@@ -162,18 +175,18 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定消息和处理器
 	 *
-	 * @param processorMap    绑定关系map
-	 * @param classProcessMap 实例化存储map 方式多次实例化
+	 * @param pMap      绑定关系map
+	 * @param classPMap 实例化存储map 方式多次实例化
 	 */
-	private static void putProcess(int processId, Class<?> aclass, Map<Integer, Handler> processorMap, Map<Class<?>, Handler> classProcessMap) {
-		if (processorMap.containsKey(processId)) {
+	private static void putProcess(int processId, Class<?> aclass, Map<Integer, Handler> pMap, Map<Class<?>, Handler> classPMap) {
+		if (pMap.containsKey(processId)) {
 			try {
 				throw new Exception("init " + aclass + " same processId " + processId);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		Handler iProcessor = classProcessMap.computeIfAbsent(aclass, k -> {
+		Handler iProcessor = classPMap.computeIfAbsent(aclass, k -> {
 			try {
 				return (Handler) aclass.getConstructor().newInstance();
 			} catch (Exception e) {
@@ -182,7 +195,7 @@ public class HandleTypeRegister {
 			return null;
 		});
 		if (iProcessor != null) {
-			processorMap.put(processId, iProcessor);
+			pMap.put(processId, iProcessor);
 		} else {
 			try {
 				throw new Exception("init " + aclass + " newInstance fail " + processId);
