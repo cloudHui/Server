@@ -43,7 +43,7 @@ public class HandleTypeRegister {
 				transMap.put((int) field.get(null), annotation.value());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("bindUniqTransMap error {} ", classes.getName(), e);
 		}
 		logger.error("{} bindUniqTransMap success bind size:{}", classes.getName(), transMap.size());
 
@@ -83,7 +83,7 @@ public class HandleTypeRegister {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("bindCommonTransMap error {} ", classes.getName(), e);
 		}
 		logger.error("{} bindCommonTransMap success bind size:{}", classes.getName(), transMap.size());
 
@@ -104,7 +104,7 @@ public class HandleTypeRegister {
 			List<Class<?>> classes = ClazzUtil.getClasses(packages);
 			doBind(processorMap, classes);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("bindPackageProcess error {} ", packages, e);
 		}
 		logger.error("{} bindPackageProcess success bind size:{}", packages, processorMap.size());
 
@@ -125,6 +125,7 @@ public class HandleTypeRegister {
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");
 			doBind(processorMap, classes);
 		} catch (Exception e) {
+			logger.error("bindClassProcess error {} ", packageClass.getName(), e);
 			e.printStackTrace();
 		}
 		logger.error("class:{} bindClassProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
