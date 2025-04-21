@@ -50,7 +50,7 @@ public class MessageId {
 			des = "服务掉线通知")
 	public static final int BREAK_NOTICE = 6;
 
-	@ClassType(value = ModelProto.ReqServerInfo.class, messageTrans = { MessageTrans.CenterServer }, des = "服务信息请")
+	@ClassType(value = ModelProto.ReqServerInfo.class, messageTrans = { MessageTrans.CenterServer }, des = "服务信息请求")
 	public static final int REQ_SERVER = 7;
 
 	@ClassType(value = ModelProto.AckServerInfo.class,
