@@ -26,7 +26,7 @@ public class ConnectProcessor {
 
 
 	public final static Parser PARSER = (id, bytes) -> {
-		switch (id){
+		switch (id) {
 			case HallMessageId.ACK_LOGIN_MSG:
 				return HallProto.AckLogin.parseFrom(bytes);
 			case RoomMessageId.ACK_ROOM_LIST_MSG:
