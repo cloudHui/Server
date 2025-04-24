@@ -9,6 +9,4 @@ package utils;
 public class StringConst {
 
 	public static final String HEAR_PACKAGE = "utils.handle";
-
-	public static final String MESSAGE_PACKAGE = "utils.handle";
 }
