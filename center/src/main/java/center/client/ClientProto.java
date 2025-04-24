@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import msg.MessageId;
+import msg.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -23,7 +24,7 @@ public class ClientProto {
 		//绑定通用服务器处理
 		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, MAP);
 		//绑定通用消息转换处理
-		HandleTypeRegister.bindCommonTransMap(ClientProto.class, TRANS_MAP, MessageId.SERVER);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.CenterServer);
 	}
 
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);

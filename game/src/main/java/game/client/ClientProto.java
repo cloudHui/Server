@@ -5,6 +5,7 @@ import java.util.Map;
 
 import msg.GameMessageId;
 import msg.MessageId;
+import msg.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -31,10 +32,10 @@ public class ClientProto {
 		//绑定通用服务器消息处理
 		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, HANDLERS);
 
-		//绑定专用服务器消息解析处理
-		HandleTypeRegister.bindUniqTransMap(GameMessageId.class, TRANS_MAP);
-		//绑定通用服务器消息解析处理
-		HandleTypeRegister.bindCommonTransMap(ClientProto.class, TRANS_MAP, MessageId.SERVER);
+		//绑定game服务器消息解析处理
+		HandleTypeRegister.bindTransMap(GameMessageId.class, TRANS_MAP, MessageTrans.GameServer);
+		//绑定message服务器消息解析处理
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.GameServer);
 	}
 
 	public final static Handlers GET = HANDLERS::get;

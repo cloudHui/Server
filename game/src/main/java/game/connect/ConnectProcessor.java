@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import msg.MessageId;
+import msg.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -24,7 +25,7 @@ public class ConnectProcessor {
 		//绑定客户端消息处理
 		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, MAP);
 		//绑定通用服务器消息解析处理
-		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.GameClient);
 	}
 
 	public final static Handlers HANDLERS = MAP::get;

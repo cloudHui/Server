@@ -13,7 +13,13 @@ import proto.ModelProto;
  */
 public class MessageId {
 
+	/**
+	 * 服务端
+	 */
 	public static final int SERVER = 1;
+	/**
+	 * 客户端
+	 */
 	public static final int CLIENT = 2;
 
 	public static final int GAME_TYPE = 0x2000;

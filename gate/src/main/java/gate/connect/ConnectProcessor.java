@@ -6,6 +6,7 @@ import java.util.Map;
 import gate.client.GateTcpClient;
 import msg.HallMessageId;
 import msg.MessageId;
+import msg.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -28,7 +29,7 @@ public class ConnectProcessor {
 
 	public static void init() {
 		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
-		HandleTypeRegister.bindCommonTransMap(ConnectProcessor.class, TRANS_MAP, MessageId.CLIENT);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.GateClient);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

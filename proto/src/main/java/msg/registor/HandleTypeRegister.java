@@ -27,48 +27,13 @@ public class HandleTypeRegister {
 	private static final Logger logger = LoggerFactory.getLogger(HandleTypeRegister.class);
 
 	/**
-	 * 绑定处理类型与消息类类型(专用消息)
-	 *
-	 * @param classes  要绑定的消息类
-	 * @param transMap 消息id和消息类的绑定map
-	 */
-	public static void bindUniqTransMap(Class<?> classes, Map<Integer, Class<?>> transMap) {
-		Object object = null;
-		Field[] fields = classes.getFields();
-		for (Field field : fields) {
-			ClassType annotation = field.getAnnotation(ClassType.class);
-			if (annotation == null) {
-				continue;
-			}
-			try {
-				object = field.get(null);
-				transMap.put((int) field.get(null), annotation.value());
-			} catch (Exception e) {
-				Object[] values = new Object[] {
-						classes.getSimpleName(), object != null ? object.getClass() : null, object
-				};
-				logger.error("bindUniqTransMap error {}", values, e);
-			}
-
-		}
-		logger.error("{} bindUniqTransMap success bind size:{}", classes.getSimpleName(), transMap.size());
-
-		//Todo
-		for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
-			System.out.println(entry.getKey() + "  " + entry.getValue().getName());
-		}
-	}
-
-	/**
 	 * 绑定处理类型与消息类类型(通用消息处理)
 	 *
-	 * @param classes MessageId 这个通用消息类
-	 * @param type    消息转化类型 MessageId.SERVER MessageId.CLIENT
+	 * @param classes  消息常量类
+	 * @param messageT 消息转化类型
 	 */
-	public static void bindCommonTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, int type) {
-
-		String packageName = classes.getPackage().getName();
-		Field[] fields = MessageId.class.getFields();
+	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, MessageTrans messageT) {
+		Field[] fields = classes.getFields();
 		Object object = null;
 		for (Field field : fields) {
 			ClassType annotation = field.getAnnotation(ClassType.class);
@@ -80,18 +45,16 @@ public class HandleTypeRegister {
 				continue;
 			}
 			for (MessageTrans trans : messageTrans) {
-				//这个类包名有当前服务名字的
-				if (packageName.contains(trans.getServerType().name().toLowerCase())) {
-					if (type == trans.getServerClient()) {
-						try {
-							object = field.get(null);
-							transMap.put((int) object, annotation.value());
-						} catch (Exception e) {
-							Object[] values = new Object[] {
-									classes.getSimpleName(), object != null ? object.getClass() : null, object
-							};
-							logger.error("bindCommonTransMap error {}", values, e);
-						}
+				//是否有这个服务类型
+				if (messageT.equals(trans)) {
+					try {
+						object = field.get(null);
+						transMap.put((int) object, annotation.value());
+					} catch (Exception e) {
+						Object[] values = new Object[] {
+								classes.getSimpleName(), object != null ? object.getClass() : null, object
+						};
+						logger.error("bindCommonTransMap error {}", values, e);
 					}
 					break;
 				}

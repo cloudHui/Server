@@ -5,6 +5,7 @@ import java.util.Map;
 
 import msg.HallMessageId;
 import msg.MessageId;
+import msg.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -25,8 +26,8 @@ public class ClientProto {
 
 		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, handlers);
 
-		HandleTypeRegister.bindUniqTransMap(HallMessageId.class, TRANS_MAP);
-		HandleTypeRegister.bindCommonTransMap(ClientProto.class, TRANS_MAP, MessageId.SERVER);
+		HandleTypeRegister.bindTransMap(HallMessageId.class, TRANS_MAP, MessageTrans.HallServer);
+		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.HallServer);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
