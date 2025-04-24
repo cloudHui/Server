@@ -66,7 +66,7 @@ public class HandleTypeRegister {
 
 		//Todo
 		for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
-			System.out.println(entry.getKey() + "  " + entry.getValue().getName());
+			System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getName());
 		}
 	}
 
@@ -87,7 +87,7 @@ public class HandleTypeRegister {
 
 		//Todo
 		for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
-			System.out.println(entry.getKey() + "  " + entry.getValue().getClass().getName());
+			System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getClass().getName());
 		}
 	}
 
@@ -109,7 +109,7 @@ public class HandleTypeRegister {
 
 		//Todo
 		for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
-			System.out.println(entry.getKey() + "  " + entry.getValue().getClass().getName());
+			System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getClass().getName());
 		}
 	}
 
