@@ -1,7 +1,7 @@
 @echo off
 chcp 65001
 set if2_java_path=..\Server\build
-
+set if2_bat_path=..\Server
 ::github
 set github=D:\code\git\ServerJar
 
@@ -29,6 +29,7 @@ Xcopy %if2_java_path%\center\lib %to_path%\center\lib /s /e /y /i
 
 Xcopy %if2_java_path%\center\Center.jar %to_path%\center /y
 
+Xcopy %if2_bat_path%\center\bat\ %to_path%\center /y
 
 ::game
 echo copy game
@@ -41,6 +42,8 @@ Xcopy %if2_java_path%\game\lib %to_path%\game\lib /s /e /y /i
 
 Xcopy %if2_java_path%\game\Game.jar %to_path%\game /y
 
+Xcopy %if2_bat_path%\game\bat\ %to_path%\game /y
+
 ::gate
 echo copy gate
 
@@ -51,6 +54,8 @@ rd /s/q %to_path%\gate\lib
 Xcopy %if2_java_path%\gate\lib %to_path%\gate\lib /s /e /y /i
 
 Xcopy %if2_java_path%\gate\Gate.jar %to_path%\gate /y
+
+Xcopy %if2_bat_path%\gate\bat\ %to_path%\gate /y
 
 ::hall
 echo copy hall
@@ -63,6 +68,8 @@ Xcopy %if2_java_path%\hall\lib %to_path%\hall\lib /s /e /y /i
 
 Xcopy %if2_java_path%\hall\Hall.jar %to_path%\hall /y
 
+Xcopy %if2_bat_path%\hall\bat\ %to_path%\hall /y
+
 ::room
 echo copy room
 
@@ -73,6 +80,8 @@ rd /s/q %to_path%\room\lib
 Xcopy %if2_java_path%\room\lib %to_path%\room\lib /s /e /y /i
 
 Xcopy %if2_java_path%\room\Room.jar %to_path%\Room /y
+
+Xcopy %if2_bat_path%\room\bat\ %to_path%\hall /y
 
 echo 成功处理所有配置文件
 pause

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
     <property name="APPName" value="hall"/>
-    <!--<property name="LOGGER_ROOT" value="../logs"/>-->
-    <property name="LOGGER_ROOT" value="./logs"/>
-    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss}[%t]%-5level %logger{36}.%M %m%n" />
+    <property name="LOGGER_ROOT" value="../logs"/>
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}[%t]%-5level %logger{36}.%M %m%n" />
     <contextName>${APPName}</contextName>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF8">
-<!--            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger - %msg%n</pattern>-->
             <pattern>${PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -19,7 +17,7 @@
 
     <appender name="AllLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOGGER_ROOT}/${APPName}%d{/yyyy-MM-dd}-%i.log</fileNamePattern>
+            <fileNamePattern>${LOGGER_ROOT}/${APPName}/%d{yyyy-MM-dd}-%i.log</fileNamePattern>
             <maxHistory>90</maxHistory>
             <timeBasedNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>20MB</maxFileSize>
@@ -27,7 +25,6 @@
         </rollingPolicy>
 
         <encoder charset="UTF8">
-<!--            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger - %msg%n</pattern>-->
             <pattern>${PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">

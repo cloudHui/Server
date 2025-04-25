@@ -42,8 +42,7 @@
                     </archive>
                     <finalName>Room</finalName>
                     <excludes>
-                        <exclude>*.properties</exclude>
-                        <exclude>logback.xml</exclude>
+                        <exclude>xml/TableModel.xlsx</exclude>
                     </excludes>
                     <outputDirectory>
                         ${session.executionRootDirectory}/build/room
@@ -81,11 +80,11 @@
                         <configuration>
                             <!-- 资源文件输出目录 -->
                             <outputDirectory>
-                                ${session.executionRootDirectory}/build/room/resources
+                                ${session.executionRootDirectory}/build/room/resources/xml
                             </outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/resources</directory>
+                                    <directory>src/main/resources/xml</directory>
                                 </resource>
                             </resources>
                         </configuration>

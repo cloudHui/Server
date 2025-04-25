@@ -44,11 +44,6 @@
                         </manifest>
                     </archive>
                     <finalName>Hall</finalName>
-                    <excludes>
-                        <exclude>*.properties</exclude>
-                        <exclude>*.xml</exclude>
-                        <exclude>mapper/*</exclude>
-                    </excludes>
                     <outputDirectory>
                         ${session.executionRootDirectory}/build/hall
                     </outputDirectory>
@@ -68,30 +63,6 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/hall/lib
                             </outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- 拷贝resources文件夹到target下面的resources目录下-->
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <!-- 资源文件输出目录 -->
-                            <outputDirectory>
-                                ${session.executionRootDirectory}/build/hall/resources
-                            </outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/resources</directory>
-                                </resource>
-                            </resources>
                         </configuration>
                     </execution>
                 </executions>

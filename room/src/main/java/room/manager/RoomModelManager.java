@@ -22,13 +22,13 @@ public class RoomModelManager {
 	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
 
 	public void init() {
+		//读取文件生成结构
+		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "room");
+
 		readTableModel();
 	}
 
 	private void readTableModel() {
-		//读取文件生成结构
-		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "room");
-
 		TableModel model;
 		List<Object> prperties = new ArrayList<>();
 		//读取数据

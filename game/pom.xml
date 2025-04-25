@@ -41,10 +41,6 @@
                         </manifest>
                     </archive>
                     <finalName>Game</finalName>
-                    <excludes>
-                        <exclude>*.properties</exclude>
-                        <exclude>logback.xml</exclude>
-                    </excludes>
                     <outputDirectory>
                         ${session.executionRootDirectory}/build/game
                     </outputDirectory>
@@ -64,30 +60,6 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/game/lib
                             </outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- 拷贝resources文件夹到target下面的resources目录下-->
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <!-- 资源文件输出目录 -->
-                            <outputDirectory>
-                                ${session.executionRootDirectory}/build/game/resources
-                            </outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/resources</directory>
-                                </resource>
-                            </resources>
                         </configuration>
                     </execution>
                 </executions>
