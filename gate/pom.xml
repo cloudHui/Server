@@ -68,7 +68,7 @@
                         <configuration>
                             <!-- 资源文件输出目录 -->
                             <outputDirectory>
-                                ${session.executionRootDirectory}/build/robot/resources
+                                ${session.executionRootDirectory}/build/gate/resources
                             </outputDirectory>
                             <resources>
                                 <resource>
