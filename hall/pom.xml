@@ -46,7 +46,8 @@
                     <finalName>Hall</finalName>
                     <excludes>
                         <exclude>*.properties</exclude>
-                        <exclude>logback.xml</exclude>
+                        <exclude>*.xml</exclude>
+                        <exclude>mapper/*</exclude>
                     </excludes>
                     <outputDirectory>
                         ${session.executionRootDirectory}/build/hall
