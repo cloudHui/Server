@@ -81,7 +81,7 @@ Xcopy %if2_java_path%\room\lib %to_path%\room\lib /s /e /y /i
 
 Xcopy %if2_java_path%\room\Room.jar %to_path%\Room /y
 
-Xcopy %if2_bat_path%\room\bat\ %to_path%\hall /y
+Xcopy %if2_bat_path%\room\bat\ %to_path%\room /y
 
 echo 成功处理所有配置文件
 pause
