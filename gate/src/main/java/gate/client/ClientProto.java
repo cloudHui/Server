@@ -1,8 +1,8 @@
 package gate.client;
 
 import gate.Gate;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import net.connect.handle.ConnectHandler;
 import net.message.TCPMessage;
 import net.message.Transfer;
@@ -45,7 +45,7 @@ public class ClientProto {
 	 * 获取转发服务的链接
 	 */
 	private static ConnectHandler getTransServerClient(int msgId, GateTcpClient gateClient) {
-		ServerType serverType = MessageId.getServerTypeByMessageId(msgId);
+		ServerType serverType = CMsg.getServerTypeByMessageId(msgId);
 		if (serverType == null) {
 			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", msgId);
 			return null;
@@ -96,15 +96,15 @@ public class ClientProto {
 		}
 		ConnectHandler serverClient = serverManager.getServerClient(ServerType.Game, gameId);
 		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
+			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
 		}
 		serverClient = serverManager.getServerClient(ServerType.Hall, hallId);
 		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
+			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
 		}
 		serverClient = serverManager.getServerClient(ServerType.Room, roomId);
 		if (serverClient != null) {
-			serverClient.sendMessage(MessageId.NOT_BREAK, not.build());
+			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
 		}
 	}
 }
