@@ -7006,28 +7006,15 @@ public final class ModelProto {
     int getScore();
 
     /**
-     * <code>.proto.Hero player = 7;</code>
-     */
-    boolean hasPlayer();
-    /**
-     * <code>.proto.Hero player = 7;</code>
-     */
-    proto.ModelProto.Hero getPlayer();
-    /**
-     * <code>.proto.Hero player = 7;</code>
-     */
-    proto.ModelProto.HeroOrBuilder getPlayerOrBuilder();
-
-    /**
-     * <code>repeated int32 cards = 8;</code>
+     * <code>repeated int32 cards = 7;</code>
      */
     java.util.List<java.lang.Integer> getCardsList();
     /**
-     * <code>repeated int32 cards = 8;</code>
+     * <code>repeated int32 cards = 7;</code>
      */
     int getCardsCount();
     /**
-     * <code>repeated int32 cards = 8;</code>
+     * <code>repeated int32 cards = 7;</code>
      */
     int getCards(int index);
   }
@@ -7105,33 +7092,20 @@ public final class ModelProto {
               score_ = input.readInt32();
               break;
             }
-            case 58: {
-              proto.ModelProto.Hero.Builder subBuilder = null;
-              if (player_ != null) {
-                subBuilder = player_.toBuilder();
-              }
-              player_ = input.readMessage(proto.ModelProto.Hero.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(player_);
-                player_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            case 64: {
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+            case 56: {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
                 cards_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000040;
+                mutable_bitField0_ |= 0x00000020;
               }
               cards_.add(input.readInt32());
               break;
             }
-            case 66: {
+            case 58: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040) && input.getBytesUntilLimit() > 0) {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020) && input.getBytesUntilLimit() > 0) {
                 cards_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000040;
+                mutable_bitField0_ |= 0x00000020;
               }
               while (input.getBytesUntilLimit() > 0) {
                 cards_.add(input.readInt32());
@@ -7147,7 +7121,7 @@ public final class ModelProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
           cards_ = java.util.Collections.unmodifiableList(cards_);
         }
         this.unknownFields = unknownFields.build();
@@ -7212,44 +7186,23 @@ public final class ModelProto {
       return score_;
     }
 
-    public static final int PLAYER_FIELD_NUMBER = 7;
-    private proto.ModelProto.Hero player_;
-    /**
-     * <code>.proto.Hero player = 7;</code>
-     */
-    public boolean hasPlayer() {
-      return player_ != null;
-    }
-    /**
-     * <code>.proto.Hero player = 7;</code>
-     */
-    public proto.ModelProto.Hero getPlayer() {
-      return player_ == null ? proto.ModelProto.Hero.getDefaultInstance() : player_;
-    }
-    /**
-     * <code>.proto.Hero player = 7;</code>
-     */
-    public proto.ModelProto.HeroOrBuilder getPlayerOrBuilder() {
-      return getPlayer();
-    }
-
-    public static final int CARDS_FIELD_NUMBER = 8;
+    public static final int CARDS_FIELD_NUMBER = 7;
     private java.util.List<java.lang.Integer> cards_;
     /**
-     * <code>repeated int32 cards = 8;</code>
+     * <code>repeated int32 cards = 7;</code>
      */
     public java.util.List<java.lang.Integer>
         getCardsList() {
       return cards_;
     }
     /**
-     * <code>repeated int32 cards = 8;</code>
+     * <code>repeated int32 cards = 7;</code>
      */
     public int getCardsCount() {
       return cards_.size();
     }
     /**
-     * <code>repeated int32 cards = 8;</code>
+     * <code>repeated int32 cards = 7;</code>
      */
     public int getCards(int index) {
       return cards_.get(index);
@@ -7284,11 +7237,8 @@ public final class ModelProto {
       if (score_ != 0) {
         output.writeInt32(6, score_);
       }
-      if (player_ != null) {
-        output.writeMessage(7, getPlayer());
-      }
       if (getCardsList().size() > 0) {
-        output.writeUInt32NoTag(66);
+        output.writeUInt32NoTag(58);
         output.writeUInt32NoTag(cardsMemoizedSerializedSize);
       }
       for (int i = 0; i < cards_.size(); i++) {
@@ -7321,10 +7271,6 @@ public final class ModelProto {
       if (score_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(6, score_);
-      }
-      if (player_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getPlayer());
       }
       {
         int dataSize = 0;
@@ -7366,11 +7312,6 @@ public final class ModelProto {
           .equals(other.getNickName());
       result = result && (getScore()
           == other.getScore());
-      result = result && (hasPlayer() == other.hasPlayer());
-      if (hasPlayer()) {
-        result = result && getPlayer()
-            .equals(other.getPlayer());
-      }
       result = result && getCardsList()
           .equals(other.getCardsList());
       result = result && unknownFields.equals(other.unknownFields);
@@ -7394,10 +7335,6 @@ public final class ModelProto {
       hash = (53 * hash) + getNickName().hashCode();
       hash = (37 * hash) + SCORE_FIELD_NUMBER;
       hash = (53 * hash) + getScore();
-      if (hasPlayer()) {
-        hash = (37 * hash) + PLAYER_FIELD_NUMBER;
-        hash = (53 * hash) + getPlayer().hashCode();
-      }
       if (getCardsCount() > 0) {
         hash = (37 * hash) + CARDS_FIELD_NUMBER;
         hash = (53 * hash) + getCardsList().hashCode();
@@ -7541,14 +7478,8 @@ public final class ModelProto {
 
         score_ = 0;
 
-        if (playerBuilder_ == null) {
-          player_ = null;
-        } else {
-          player_ = null;
-          playerBuilder_ = null;
-        }
         cards_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -7578,14 +7509,9 @@ public final class ModelProto {
         result.avatar_ = avatar_;
         result.nickName_ = nickName_;
         result.score_ = score_;
-        if (playerBuilder_ == null) {
-          result.player_ = player_;
-        } else {
-          result.player_ = playerBuilder_.build();
-        }
-        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
           cards_ = java.util.Collections.unmodifiableList(cards_);
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000020);
         }
         result.cards_ = cards_;
         result.bitField0_ = to_bitField0_;
@@ -7645,13 +7571,10 @@ public final class ModelProto {
         if (other.getScore() != 0) {
           setScore(other.getScore());
         }
-        if (other.hasPlayer()) {
-          mergePlayer(other.getPlayer());
-        }
         if (!other.cards_.isEmpty()) {
           if (cards_.isEmpty()) {
             cards_ = other.cards_;
-            bitField0_ = (bitField0_ & ~0x00000040);
+            bitField0_ = (bitField0_ & ~0x00000020);
           } else {
             ensureCardsIsMutable();
             cards_.addAll(other.cards_);
@@ -7822,151 +7745,34 @@ public final class ModelProto {
         return this;
       }
 
-      private proto.ModelProto.Hero player_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.ModelProto.Hero, proto.ModelProto.Hero.Builder, proto.ModelProto.HeroOrBuilder> playerBuilder_;
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public boolean hasPlayer() {
-        return playerBuilder_ != null || player_ != null;
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public proto.ModelProto.Hero getPlayer() {
-        if (playerBuilder_ == null) {
-          return player_ == null ? proto.ModelProto.Hero.getDefaultInstance() : player_;
-        } else {
-          return playerBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public Builder setPlayer(proto.ModelProto.Hero value) {
-        if (playerBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          player_ = value;
-          onChanged();
-        } else {
-          playerBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public Builder setPlayer(
-          proto.ModelProto.Hero.Builder builderForValue) {
-        if (playerBuilder_ == null) {
-          player_ = builderForValue.build();
-          onChanged();
-        } else {
-          playerBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public Builder mergePlayer(proto.ModelProto.Hero value) {
-        if (playerBuilder_ == null) {
-          if (player_ != null) {
-            player_ =
-              proto.ModelProto.Hero.newBuilder(player_).mergeFrom(value).buildPartial();
-          } else {
-            player_ = value;
-          }
-          onChanged();
-        } else {
-          playerBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public Builder clearPlayer() {
-        if (playerBuilder_ == null) {
-          player_ = null;
-          onChanged();
-        } else {
-          player_ = null;
-          playerBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public proto.ModelProto.Hero.Builder getPlayerBuilder() {
-        
-        onChanged();
-        return getPlayerFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      public proto.ModelProto.HeroOrBuilder getPlayerOrBuilder() {
-        if (playerBuilder_ != null) {
-          return playerBuilder_.getMessageOrBuilder();
-        } else {
-          return player_ == null ?
-              proto.ModelProto.Hero.getDefaultInstance() : player_;
-        }
-      }
-      /**
-       * <code>.proto.Hero player = 7;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.ModelProto.Hero, proto.ModelProto.Hero.Builder, proto.ModelProto.HeroOrBuilder> 
-          getPlayerFieldBuilder() {
-        if (playerBuilder_ == null) {
-          playerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.ModelProto.Hero, proto.ModelProto.Hero.Builder, proto.ModelProto.HeroOrBuilder>(
-                  getPlayer(),
-                  getParentForChildren(),
-                  isClean());
-          player_ = null;
-        }
-        return playerBuilder_;
-      }
-
       private java.util.List<java.lang.Integer> cards_ = java.util.Collections.emptyList();
       private void ensureCardsIsMutable() {
-        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
           cards_ = new java.util.ArrayList<java.lang.Integer>(cards_);
-          bitField0_ |= 0x00000040;
+          bitField0_ |= 0x00000020;
          }
       }
       /**
-       * <code>repeated int32 cards = 8;</code>
+       * <code>repeated int32 cards = 7;</code>
        */
       public java.util.List<java.lang.Integer>
           getCardsList() {
         return java.util.Collections.unmodifiableList(cards_);
       }
       /**
-       * <code>repeated int32 cards = 8;</code>
+       * <code>repeated int32 cards = 7;</code>
        */
       public int getCardsCount() {
         return cards_.size();
       }
       /**
-       * <code>repeated int32 cards = 8;</code>
+       * <code>repeated int32 cards = 7;</code>
        */
       public int getCards(int index) {
         return cards_.get(index);
       }
       /**
-       * <code>repeated int32 cards = 8;</code>
+       * <code>repeated int32 cards = 7;</code>
        */
       public Builder setCards(
           int index, int value) {
@@ -7976,7 +7782,7 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>repeated int32 cards = 8;</code>
+       * <code>repeated int32 cards = 7;</code>
        */
       public Builder addCards(int value) {
         ensureCardsIsMutable();
@@ -7985,7 +7791,7 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>repeated int32 cards = 8;</code>
+       * <code>repeated int32 cards = 7;</code>
        */
       public Builder addAllCards(
           java.lang.Iterable<? extends java.lang.Integer> values) {
@@ -7996,11 +7802,11 @@ public final class ModelProto {
         return this;
       }
       /**
-       * <code>repeated int32 cards = 8;</code>
+       * <code>repeated int32 cards = 7;</code>
        */
       public Builder clearCards() {
         cards_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000020);
         onChanged();
         return this;
       }
@@ -8048,683 +7854,6 @@ public final class ModelProto {
     }
 
     public proto.ModelProto.TableRole getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface HeroOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.Hero)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 heroId = 1;</code>
-     */
-    int getHeroId();
-
-    /**
-     * <pre>
-     *能用的技能是1 不能用就是0
-     * </pre>
-     *
-     * <code>repeated int32 skills = 2;</code>
-     */
-    java.util.List<java.lang.Integer> getSkillsList();
-    /**
-     * <pre>
-     *能用的技能是1 不能用就是0
-     * </pre>
-     *
-     * <code>repeated int32 skills = 2;</code>
-     */
-    int getSkillsCount();
-    /**
-     * <pre>
-     *能用的技能是1 不能用就是0
-     * </pre>
-     *
-     * <code>repeated int32 skills = 2;</code>
-     */
-    int getSkills(int index);
-  }
-  /**
-   * Protobuf type {@code proto.Hero}
-   */
-  public  static final class Hero extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.Hero)
-      HeroOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use Hero.newBuilder() to construct.
-    private Hero(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private Hero() {
-      heroId_ = 0;
-      skills_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private Hero(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              heroId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                skills_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              skills_.add(input.readInt32());
-              break;
-            }
-            case 18: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
-                skills_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              while (input.getBytesUntilLimit() > 0) {
-                skills_.add(input.readInt32());
-              }
-              input.popLimit(limit);
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          skills_ = java.util.Collections.unmodifiableList(skills_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_Hero_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_Hero_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.Hero.class, proto.ModelProto.Hero.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int HEROID_FIELD_NUMBER = 1;
-    private int heroId_;
-    /**
-     * <code>int32 heroId = 1;</code>
-     */
-    public int getHeroId() {
-      return heroId_;
-    }
-
-    public static final int SKILLS_FIELD_NUMBER = 2;
-    private java.util.List<java.lang.Integer> skills_;
-    /**
-     * <pre>
-     *能用的技能是1 不能用就是0
-     * </pre>
-     *
-     * <code>repeated int32 skills = 2;</code>
-     */
-    public java.util.List<java.lang.Integer>
-        getSkillsList() {
-      return skills_;
-    }
-    /**
-     * <pre>
-     *能用的技能是1 不能用就是0
-     * </pre>
-     *
-     * <code>repeated int32 skills = 2;</code>
-     */
-    public int getSkillsCount() {
-      return skills_.size();
-    }
-    /**
-     * <pre>
-     *能用的技能是1 不能用就是0
-     * </pre>
-     *
-     * <code>repeated int32 skills = 2;</code>
-     */
-    public int getSkills(int index) {
-      return skills_.get(index);
-    }
-    private int skillsMemoizedSerializedSize = -1;
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (heroId_ != 0) {
-        output.writeInt32(1, heroId_);
-      }
-      if (getSkillsList().size() > 0) {
-        output.writeUInt32NoTag(18);
-        output.writeUInt32NoTag(skillsMemoizedSerializedSize);
-      }
-      for (int i = 0; i < skills_.size(); i++) {
-        output.writeInt32NoTag(skills_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (heroId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, heroId_);
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < skills_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(skills_.get(i));
-        }
-        size += dataSize;
-        if (!getSkillsList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        skillsMemoizedSerializedSize = dataSize;
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.Hero)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.Hero other = (proto.ModelProto.Hero) obj;
-
-      boolean result = true;
-      result = result && (getHeroId()
-          == other.getHeroId());
-      result = result && getSkillsList()
-          .equals(other.getSkillsList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + HEROID_FIELD_NUMBER;
-      hash = (53 * hash) + getHeroId();
-      if (getSkillsCount() > 0) {
-        hash = (37 * hash) + SKILLS_FIELD_NUMBER;
-        hash = (53 * hash) + getSkillsList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.Hero parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.Hero parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.Hero parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.Hero parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.Hero parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.Hero parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.Hero parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.Hero parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.Hero parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.Hero parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.Hero parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.Hero parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.Hero prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.Hero}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.Hero)
-        proto.ModelProto.HeroOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_Hero_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_Hero_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.Hero.class, proto.ModelProto.Hero.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.Hero.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        heroId_ = 0;
-
-        skills_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_Hero_descriptor;
-      }
-
-      public proto.ModelProto.Hero getDefaultInstanceForType() {
-        return proto.ModelProto.Hero.getDefaultInstance();
-      }
-
-      public proto.ModelProto.Hero build() {
-        proto.ModelProto.Hero result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.Hero buildPartial() {
-        proto.ModelProto.Hero result = new proto.ModelProto.Hero(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        result.heroId_ = heroId_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          skills_ = java.util.Collections.unmodifiableList(skills_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.skills_ = skills_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.Hero) {
-          return mergeFrom((proto.ModelProto.Hero)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.Hero other) {
-        if (other == proto.ModelProto.Hero.getDefaultInstance()) return this;
-        if (other.getHeroId() != 0) {
-          setHeroId(other.getHeroId());
-        }
-        if (!other.skills_.isEmpty()) {
-          if (skills_.isEmpty()) {
-            skills_ = other.skills_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureSkillsIsMutable();
-            skills_.addAll(other.skills_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.Hero parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.Hero) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private int heroId_ ;
-      /**
-       * <code>int32 heroId = 1;</code>
-       */
-      public int getHeroId() {
-        return heroId_;
-      }
-      /**
-       * <code>int32 heroId = 1;</code>
-       */
-      public Builder setHeroId(int value) {
-        
-        heroId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 heroId = 1;</code>
-       */
-      public Builder clearHeroId() {
-        
-        heroId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<java.lang.Integer> skills_ = java.util.Collections.emptyList();
-      private void ensureSkillsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          skills_ = new java.util.ArrayList<java.lang.Integer>(skills_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-      /**
-       * <pre>
-       *能用的技能是1 不能用就是0
-       * </pre>
-       *
-       * <code>repeated int32 skills = 2;</code>
-       */
-      public java.util.List<java.lang.Integer>
-          getSkillsList() {
-        return java.util.Collections.unmodifiableList(skills_);
-      }
-      /**
-       * <pre>
-       *能用的技能是1 不能用就是0
-       * </pre>
-       *
-       * <code>repeated int32 skills = 2;</code>
-       */
-      public int getSkillsCount() {
-        return skills_.size();
-      }
-      /**
-       * <pre>
-       *能用的技能是1 不能用就是0
-       * </pre>
-       *
-       * <code>repeated int32 skills = 2;</code>
-       */
-      public int getSkills(int index) {
-        return skills_.get(index);
-      }
-      /**
-       * <pre>
-       *能用的技能是1 不能用就是0
-       * </pre>
-       *
-       * <code>repeated int32 skills = 2;</code>
-       */
-      public Builder setSkills(
-          int index, int value) {
-        ensureSkillsIsMutable();
-        skills_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *能用的技能是1 不能用就是0
-       * </pre>
-       *
-       * <code>repeated int32 skills = 2;</code>
-       */
-      public Builder addSkills(int value) {
-        ensureSkillsIsMutable();
-        skills_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *能用的技能是1 不能用就是0
-       * </pre>
-       *
-       * <code>repeated int32 skills = 2;</code>
-       */
-      public Builder addAllSkills(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureSkillsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, skills_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *能用的技能是1 不能用就是0
-       * </pre>
-       *
-       * <code>repeated int32 skills = 2;</code>
-       */
-      public Builder clearSkills() {
-        skills_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.Hero)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.Hero)
-    private static final proto.ModelProto.Hero DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.Hero();
-    }
-
-    public static proto.ModelProto.Hero getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<Hero>
-        PARSER = new com.google.protobuf.AbstractParser<Hero>() {
-      public Hero parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Hero(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<Hero> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Hero> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.Hero getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -8790,11 +7919,6 @@ public final class ModelProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_TableRole_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_Hero_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_Hero_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -8819,12 +7943,10 @@ public final class ModelProto {
       "(\005\"3\n\rAckServerInfo\022\"\n\007servers\030\001 \003(\0132\021.p" +
       "roto.ServerInfo\"4\n\016NotServerBreak\022\"\n\007ser" +
       "vers\030\001 \003(\0132\021.proto.ServerInfo\"\032\n\010NotBrea" +
-      "k\022\016\n\006userId\030\001 \001(\005\"\212\001\n\tTableRole\022\016\n\006roleI" +
-      "d\030\001 \001(\005\022\020\n\010position\030\002 \001(\005\022\016\n\006avatar\030\003 \001(" +
-      "\014\022\020\n\010nickName\030\004 \001(\014\022\r\n\005score\030\006 \001(\005\022\033\n\006pl" +
-      "ayer\030\007 \001(\0132\013.proto.Hero\022\r\n\005cards\030\010 \003(\005\"&" +
-      "\n\004Hero\022\016\n\006heroId\030\001 \001(\005\022\016\n\006skills\030\002 \003(\005B\014",
-      "B\nModelProtob\006proto3"
+      "k\022\016\n\006userId\030\001 \001(\005\"m\n\tTableRole\022\016\n\006roleId" +
+      "\030\001 \001(\005\022\020\n\010position\030\002 \001(\005\022\016\n\006avatar\030\003 \001(\014" +
+      "\022\020\n\010nickName\030\004 \001(\014\022\r\n\005score\030\006 \001(\005\022\r\n\005car" +
+      "ds\030\007 \003(\005B\014B\nModelProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -8909,13 +8031,7 @@ public final class ModelProto {
     internal_static_proto_TableRole_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_TableRole_descriptor,
-        new java.lang.String[] { "RoleId", "Position", "Avatar", "NickName", "Score", "Player", "Cards", });
-    internal_static_proto_Hero_descriptor =
-      getDescriptor().getMessageTypes().get(12);
-    internal_static_proto_Hero_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_Hero_descriptor,
-        new java.lang.String[] { "HeroId", "Skills", });
+        new java.lang.String[] { "RoleId", "Position", "Avatar", "NickName", "Score", "Cards", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

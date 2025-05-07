@@ -18,7 +18,7 @@ public class RMsg {
 	@ClassType(value = RoomProto.AckGetRoomList.class, messageTrans = { MessageTrans.RobotClient }, des = "房间列表回复")
 	public static final int ACK_ROOM_LIST_MSG = CMsg.ROOM_TYPE | 2;
 
-	@ClassType(value = RoomProto.ReqGetRoomList.class, messageTrans = { MessageTrans.RoomServer }, des = "请求创建桌子")
-	public static final int REQ_CREATE_TABLE_MSG = CMsg.ROOM_TYPE | 3;
+	@ClassType(value = RoomProto.ReqCreateRoomTable.class, messageTrans = { MessageTrans.RoomServer }, des = "请求创建桌子")
+	public static final int REQ_CREATE_ROOM_TABLE_MSG = CMsg.ROOM_TYPE | 3;
 
 }

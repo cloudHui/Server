@@ -3600,8 +3600,8 @@ public final class RoomProto {
 
   }
 
-  public interface ReqCreateTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqCreateTable)
+  public interface ReqCreateRoomTableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.ReqCreateRoomTable)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3609,7 +3609,7 @@ public final class RoomProto {
      *房间类型
      * </pre>
      *
-     * <code>int32 configTypeId = 4;</code>
+     * <code>int32 configTypeId = 1;</code>
      */
     int getConfigTypeId();
   }
@@ -3618,18 +3618,18 @@ public final class RoomProto {
    *请求创建桌子
    * </pre>
    *
-   * Protobuf type {@code proto.ReqCreateTable}
+   * Protobuf type {@code proto.ReqCreateRoomTable}
    */
-  public  static final class ReqCreateTable extends
+  public  static final class ReqCreateRoomTable extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqCreateTable)
-      ReqCreateTableOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.ReqCreateRoomTable)
+      ReqCreateRoomTableOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ReqCreateTable.newBuilder() to construct.
-    private ReqCreateTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use ReqCreateRoomTable.newBuilder() to construct.
+    private ReqCreateRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ReqCreateTable() {
+    private ReqCreateRoomTable() {
       configTypeId_ = 0;
     }
 
@@ -3638,7 +3638,7 @@ public final class RoomProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqCreateTable(
+    private ReqCreateRoomTable(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3661,7 +3661,7 @@ public final class RoomProto {
               }
               break;
             }
-            case 32: {
+            case 8: {
 
               configTypeId_ = input.readInt32();
               break;
@@ -3680,24 +3680,24 @@ public final class RoomProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.RoomProto.internal_static_proto_ReqCreateTable_descriptor;
+      return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_ReqCreateTable_fieldAccessorTable
+      return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.RoomProto.ReqCreateTable.class, proto.RoomProto.ReqCreateTable.Builder.class);
+              proto.RoomProto.ReqCreateRoomTable.class, proto.RoomProto.ReqCreateRoomTable.Builder.class);
     }
 
-    public static final int CONFIGTYPEID_FIELD_NUMBER = 4;
+    public static final int CONFIGTYPEID_FIELD_NUMBER = 1;
     private int configTypeId_;
     /**
      * <pre>
      *房间类型
      * </pre>
      *
-     * <code>int32 configTypeId = 4;</code>
+     * <code>int32 configTypeId = 1;</code>
      */
     public int getConfigTypeId() {
       return configTypeId_;
@@ -3716,7 +3716,7 @@ public final class RoomProto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (configTypeId_ != 0) {
-        output.writeInt32(4, configTypeId_);
+        output.writeInt32(1, configTypeId_);
       }
       unknownFields.writeTo(output);
     }
@@ -3728,7 +3728,7 @@ public final class RoomProto {
       size = 0;
       if (configTypeId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, configTypeId_);
+          .computeInt32Size(1, configTypeId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3740,10 +3740,10 @@ public final class RoomProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.RoomProto.ReqCreateTable)) {
+      if (!(obj instanceof proto.RoomProto.ReqCreateRoomTable)) {
         return super.equals(obj);
       }
-      proto.RoomProto.ReqCreateTable other = (proto.RoomProto.ReqCreateTable) obj;
+      proto.RoomProto.ReqCreateRoomTable other = (proto.RoomProto.ReqCreateRoomTable) obj;
 
       boolean result = true;
       result = result && (getConfigTypeId()
@@ -3766,69 +3766,69 @@ public final class RoomProto {
       return hash;
     }
 
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(byte[] data)
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(java.io.InputStream input)
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateTable parseDelimitedFrom(java.io.InputStream input)
+    public static proto.RoomProto.ReqCreateRoomTable parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.ReqCreateTable parseDelimitedFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.ReqCreateTable parseFrom(
+    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3840,7 +3840,7 @@ public final class RoomProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.RoomProto.ReqCreateTable prototype) {
+    public static Builder newBuilder(proto.RoomProto.ReqCreateRoomTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -3859,25 +3859,25 @@ public final class RoomProto {
      *请求创建桌子
      * </pre>
      *
-     * Protobuf type {@code proto.ReqCreateTable}
+     * Protobuf type {@code proto.ReqCreateRoomTable}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqCreateTable)
-        proto.RoomProto.ReqCreateTableOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.ReqCreateRoomTable)
+        proto.RoomProto.ReqCreateRoomTableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.RoomProto.internal_static_proto_ReqCreateTable_descriptor;
+        return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_ReqCreateTable_fieldAccessorTable
+        return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.RoomProto.ReqCreateTable.class, proto.RoomProto.ReqCreateTable.Builder.class);
+                proto.RoomProto.ReqCreateRoomTable.class, proto.RoomProto.ReqCreateRoomTable.Builder.class);
       }
 
-      // Construct using proto.RoomProto.ReqCreateTable.newBuilder()
+      // Construct using proto.RoomProto.ReqCreateRoomTable.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3901,23 +3901,23 @@ public final class RoomProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_ReqCreateTable_descriptor;
+        return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_descriptor;
       }
 
-      public proto.RoomProto.ReqCreateTable getDefaultInstanceForType() {
-        return proto.RoomProto.ReqCreateTable.getDefaultInstance();
+      public proto.RoomProto.ReqCreateRoomTable getDefaultInstanceForType() {
+        return proto.RoomProto.ReqCreateRoomTable.getDefaultInstance();
       }
 
-      public proto.RoomProto.ReqCreateTable build() {
-        proto.RoomProto.ReqCreateTable result = buildPartial();
+      public proto.RoomProto.ReqCreateRoomTable build() {
+        proto.RoomProto.ReqCreateRoomTable result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.RoomProto.ReqCreateTable buildPartial() {
-        proto.RoomProto.ReqCreateTable result = new proto.RoomProto.ReqCreateTable(this);
+      public proto.RoomProto.ReqCreateRoomTable buildPartial() {
+        proto.RoomProto.ReqCreateRoomTable result = new proto.RoomProto.ReqCreateRoomTable(this);
         result.configTypeId_ = configTypeId_;
         onBuilt();
         return result;
@@ -3950,16 +3950,16 @@ public final class RoomProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.ReqCreateTable) {
-          return mergeFrom((proto.RoomProto.ReqCreateTable)other);
+        if (other instanceof proto.RoomProto.ReqCreateRoomTable) {
+          return mergeFrom((proto.RoomProto.ReqCreateRoomTable)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.RoomProto.ReqCreateTable other) {
-        if (other == proto.RoomProto.ReqCreateTable.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.RoomProto.ReqCreateRoomTable other) {
+        if (other == proto.RoomProto.ReqCreateRoomTable.getDefaultInstance()) return this;
         if (other.getConfigTypeId() != 0) {
           setConfigTypeId(other.getConfigTypeId());
         }
@@ -3976,11 +3976,11 @@ public final class RoomProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.RoomProto.ReqCreateTable parsedMessage = null;
+        proto.RoomProto.ReqCreateRoomTable parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.ReqCreateTable) e.getUnfinishedMessage();
+          parsedMessage = (proto.RoomProto.ReqCreateRoomTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -3996,7 +3996,7 @@ public final class RoomProto {
        *房间类型
        * </pre>
        *
-       * <code>int32 configTypeId = 4;</code>
+       * <code>int32 configTypeId = 1;</code>
        */
       public int getConfigTypeId() {
         return configTypeId_;
@@ -4006,7 +4006,7 @@ public final class RoomProto {
        *房间类型
        * </pre>
        *
-       * <code>int32 configTypeId = 4;</code>
+       * <code>int32 configTypeId = 1;</code>
        */
       public Builder setConfigTypeId(int value) {
         
@@ -4019,7 +4019,7 @@ public final class RoomProto {
        *房间类型
        * </pre>
        *
-       * <code>int32 configTypeId = 4;</code>
+       * <code>int32 configTypeId = 1;</code>
        */
       public Builder clearConfigTypeId() {
         
@@ -4038,39 +4038,39 @@ public final class RoomProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.ReqCreateTable)
+      // @@protoc_insertion_point(builder_scope:proto.ReqCreateRoomTable)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.ReqCreateTable)
-    private static final proto.RoomProto.ReqCreateTable DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.ReqCreateRoomTable)
+    private static final proto.RoomProto.ReqCreateRoomTable DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.RoomProto.ReqCreateTable();
+      DEFAULT_INSTANCE = new proto.RoomProto.ReqCreateRoomTable();
     }
 
-    public static proto.RoomProto.ReqCreateTable getDefaultInstance() {
+    public static proto.RoomProto.ReqCreateRoomTable getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ReqCreateTable>
-        PARSER = new com.google.protobuf.AbstractParser<ReqCreateTable>() {
-      public ReqCreateTable parsePartialFrom(
+    private static final com.google.protobuf.Parser<ReqCreateRoomTable>
+        PARSER = new com.google.protobuf.AbstractParser<ReqCreateRoomTable>() {
+      public ReqCreateRoomTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqCreateTable(input, extensionRegistry);
+          return new ReqCreateRoomTable(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<ReqCreateTable> parser() {
+    public static com.google.protobuf.Parser<ReqCreateRoomTable> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ReqCreateTable> getParserForType() {
+    public com.google.protobuf.Parser<ReqCreateRoomTable> getParserForType() {
       return PARSER;
     }
 
-    public proto.RoomProto.ReqCreateTable getDefaultInstanceForType() {
+    public proto.RoomProto.ReqCreateRoomTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5567,10 +5567,10 @@ public final class RoomProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckGetRoomList_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqCreateTable_descriptor;
+    internal_static_proto_ReqCreateRoomTable_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqCreateTable_fieldAccessorTable;
+      internal_static_proto_ReqCreateRoomTable_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ReqEnterTable_descriptor;
   private static final 
@@ -5599,12 +5599,12 @@ public final class RoomProto {
       "\003 \001(\005\022\021\n\toverTimes\030\004 \001(\003\022\014\n\004full\030\005 \001(\010\022\r" +
       "\n\005watch\030\006 \001(\010\"P\n\016AckGetRoomList\022\035\n\010roomL" +
       "ist\030\001 \003(\0132\013.proto.Room\022\037\n\006append\030\002 \003(\0132\017" +
-      ".proto.KeyValue\"&\n\016ReqCreateTable\022\024\n\014con",
-      "figTypeId\030\004 \001(\005\" \n\rReqEnterTable\022\017\n\007tabl" +
-      "eId\030\001 \001(\005\"f\n\rAckEnterTable\022\017\n\007tableId\030\001 " +
-      "\001(\005\022\036\n\004self\030\002 \001(\0132\020.proto.TableRole\022$\n\nt" +
-      "ableRoles\030\003 \003(\0132\020.proto.TableRoleB\013B\tRoo" +
-      "mProtob\006proto3"
+      ".proto.KeyValue\"*\n\022ReqCreateRoomTable\022\024\n",
+      "\014configTypeId\030\001 \001(\005\" \n\rReqEnterTable\022\017\n\007" +
+      "tableId\030\001 \001(\005\"f\n\rAckEnterTable\022\017\n\007tableI" +
+      "d\030\001 \001(\005\022\036\n\004self\030\002 \001(\0132\020.proto.TableRole\022" +
+      "$\n\ntableRoles\030\003 \003(\0132\020.proto.TableRoleB\013B" +
+      "\tRoomProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5643,11 +5643,11 @@ public final class RoomProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckGetRoomList_descriptor,
         new java.lang.String[] { "RoomList", "Append", });
-    internal_static_proto_ReqCreateTable_descriptor =
+    internal_static_proto_ReqCreateRoomTable_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_proto_ReqCreateTable_fieldAccessorTable = new
+    internal_static_proto_ReqCreateRoomTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqCreateTable_descriptor,
+        internal_static_proto_ReqCreateRoomTable_descriptor,
         new java.lang.String[] { "ConfigTypeId", });
     internal_static_proto_ReqEnterTable_descriptor =
       getDescriptor().getMessageTypes().get(4);

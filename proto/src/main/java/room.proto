@@ -34,10 +34,9 @@ message AckGetRoomList {
 }
 
 //请求创建桌子
-message ReqCreateTable {
-    int32 configTypeId = 4;//房间类型
+message ReqCreateRoomTable {
+    int32 configTypeId = 1;//房间类型
 }
-
 
 //请求入桌分配位置
 message ReqEnterTable {

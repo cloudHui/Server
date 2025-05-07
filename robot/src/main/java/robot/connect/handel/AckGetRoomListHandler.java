@@ -25,9 +25,9 @@ public class AckGetRoomListHandler implements Handler {
 		RoomProto.AckGetRoomList rooms = (RoomProto.AckGetRoomList) ack;
 		if (rooms.getRoomListCount() > 0) {
 			RoomProto.Room room = rooms.getRoomList(0);
-			RoomProto.ReqCreateTable.Builder createTable = RoomProto.ReqCreateTable.newBuilder();
+			RoomProto.ReqCreateRoomTable.Builder createTable = RoomProto.ReqCreateRoomTable.newBuilder();
 			createTable.setConfigTypeId(room.getConfigTypeId());
-			Robot.getInstance().getClientSendMessage(ServerType.Room, RMsg.REQ_CREATE_TABLE_MSG, createTable.build());
+			Robot.getInstance().getClientSendMessage(ServerType.Room, RMsg.REQ_CREATE_ROOM_TABLE_MSG, createTable.build());
 		}
 		return true;
 	}

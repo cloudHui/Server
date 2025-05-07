@@ -14,14 +14,14 @@ import room.manager.RoomModelManager;
 /**
  * 请求创建桌子
  */
-@ProcessType(RMsg.REQ_CREATE_TABLE_MSG)
+@ProcessType(RMsg.REQ_CREATE_ROOM_TABLE_MSG)
 public class ReqCreateTableHandle implements Handler {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ReqCreateTableHandle.class);
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
-		RoomProto.ReqCreateTable req = (RoomProto.ReqCreateTable) msg;
+		RoomProto.ReqCreateRoomTable req = (RoomProto.ReqCreateRoomTable) msg;
 		int configTypeId = req.getConfigTypeId();
 
 		TableModel tableModel = RoomModelManager.getInstance().getTableModel(configTypeId);
