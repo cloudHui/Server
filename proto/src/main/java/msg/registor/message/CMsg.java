@@ -75,27 +75,4 @@ public class CMsg {
 	public static final int BROAD = 10;
 
 	public static final int BASE_ID_INDEX = 0x1000;
-
-	public static MessageLite getMessageObject(Class<MessageLite> clazz, byte[] bytes) throws Exception {
-		MessageLite defaultInstance = Internal.getDefaultInstance(clazz);
-		if (null == bytes) {
-			return defaultInstance.newBuilderForType().build();
-		} else {
-			return defaultInstance.getParserForType().parseFrom(bytes);
-		}
-	}
-
-	/**
-	 * 通过消息id获取要转发的服务类型
-	 */
-	public static ServerType getServerTypeByMessageId(int msgId) {
-		if ((msgId & CMsg.GAME_TYPE) != 0) {
-			return ServerType.Game;
-		} else if ((msgId & CMsg.HALL_TYPE) != 0) {
-			return ServerType.Hall;
-		} else if ((msgId & CMsg.ROOM_TYPE) != 0) {
-			return ServerType.Room;
-		}
-		return null;
-	}
 }

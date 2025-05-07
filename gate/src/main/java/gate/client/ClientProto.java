@@ -45,7 +45,7 @@ public class ClientProto {
 	 * 获取转发服务的链接
 	 */
 	private static ConnectHandler getTransServerClient(int msgId, GateTcpClient gateClient) {
-		ServerType serverType = CMsg.getServerTypeByMessageId(msgId);
+		ServerType serverType = getServerTypeByMessageId(msgId);
 		if (serverType == null) {
 			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", msgId);
 			return null;
@@ -83,6 +83,19 @@ public class ClientProto {
 		return server;
 	}
 
+	/**
+	 * 通过消息id获取要转发的服务类型
+	 */
+	public static ServerType getServerTypeByMessageId(int msgId) {
+		if ((msgId & CMsg.GAME_TYPE) != 0) {
+			return ServerType.Game;
+		} else if ((msgId & CMsg.HALL_TYPE) != 0) {
+			return ServerType.Hall;
+		} else if ((msgId & CMsg.ROOM_TYPE) != 0) {
+			return ServerType.Room;
+		}
+		return null;
+	}
 
 	/**
 	 * 通知服务器玩家离线

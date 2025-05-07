@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.protobuf.Internal;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
 import msg.registor.message.CMsg;
@@ -175,7 +176,7 @@ public class HandleTypeRegister {
 		Class<?> aClass = map.get(id);
 		if (aClass != null) {
 			try {
-				return (Message) CMsg.getMessageObject((Class<MessageLite>) aClass, bytes);
+				return (Message) getMessageObject((Class<MessageLite>) aClass, bytes);
 			} catch (Exception e) {
 				logger.error("[parserMessage Exception messageId :{} className:{}]", id, aClass.getSimpleName(), e);
 			}
@@ -183,5 +184,14 @@ public class HandleTypeRegister {
 			logger.error("[parserMessage error messageId :{} can not find messageType class]", id);
 		}
 		return null;
+	}
+
+	private static MessageLite getMessageObject(Class<MessageLite> clazz, byte[] bytes) throws Exception {
+		MessageLite defaultInstance = Internal.getDefaultInstance(clazz);
+		if (null == bytes) {
+			return defaultInstance.newBuilderForType().build();
+		} else {
+			return defaultInstance.getParserForType().parseFrom(bytes);
+		}
 	}
 }
