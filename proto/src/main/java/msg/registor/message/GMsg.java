@@ -1,9 +1,8 @@
 package msg.registor.message;
 
-import msg.registor.enums.MessageTrans;
 import msg.annotation.ClassType;
+import msg.registor.enums.MessageTrans;
 import proto.GameProto;
-import proto.RoomProto;
 
 /**
  * @author admin
@@ -22,6 +21,6 @@ public class GMsg {
 	@ClassType(value = GameProto.ReqCreateTable.class, messageTrans = { MessageTrans.GameServer }, des = "请求创建桌子")
 	public static final int REQ_CREATE_TABLE_MSG = CMsg.GAME_TYPE | 3;
 
-	@ClassType(value = GameProto.AckCreateTable.class, messageTrans = { MessageTrans.GameServer }, des = "创建桌子")
+	@ClassType(value = GameProto.AckCreateTable.class, messageTrans = { MessageTrans.RobotClient, MessageTrans.RoomClient }, des = "创建桌子回复")
 	public static final int ACK_CREATE_TABLE_MSG = CMsg.GAME_TYPE | 4;
 }
