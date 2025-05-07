@@ -1,10 +1,7 @@
 package msg.registor.message;
 
-import com.google.protobuf.Internal;
-import com.google.protobuf.MessageLite;
-import msg.registor.enums.MessageTrans;
-import msg.registor.enums.ServerType;
 import msg.annotation.ClassType;
+import msg.registor.enums.MessageTrans;
 import proto.GateProto;
 import proto.ModelProto;
 

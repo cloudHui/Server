@@ -3,6 +3,7 @@ package msg.registor.message;
 import msg.registor.enums.MessageTrans;
 import msg.annotation.ClassType;
 import proto.GameProto;
+import proto.RoomProto;
 
 /**
  * @author admin
@@ -17,4 +18,10 @@ public class GMsg {
 
 	@ClassType(value = GameProto.AckEnterTable.class, messageTrans = { MessageTrans.RobotClient }, des = "入桌回复")
 	public static final int ACK_ENTER_TABLE_MSG = CMsg.GAME_TYPE | 2;
+
+	@ClassType(value = GameProto.ReqCreateTable.class, messageTrans = { MessageTrans.GameServer }, des = "请求创建桌子")
+	public static final int REQ_CREATE_TABLE_MSG = CMsg.GAME_TYPE | 3;
+
+	@ClassType(value = GameProto.AckCreateTable.class, messageTrans = { MessageTrans.GameServer }, des = "创建桌子")
+	public static final int ACK_CREATE_TABLE_MSG = CMsg.GAME_TYPE | 4;
 }
