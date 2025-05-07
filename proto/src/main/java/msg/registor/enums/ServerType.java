@@ -1,4 +1,4 @@
-package msg;
+package msg.registor.enums;
 
 import java.util.HashMap;
 import java.util.Map;

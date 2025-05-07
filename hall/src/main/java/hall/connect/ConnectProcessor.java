@@ -3,8 +3,8 @@ package hall.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.MessageId;
-import msg.MessageTrans;
+import msg.registor.message.CMsg;
+import msg.registor.enums.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -22,7 +22,7 @@ public class ConnectProcessor {
 	public static void init() {
 		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
 
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.HallClient);
+		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.HallClient);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;

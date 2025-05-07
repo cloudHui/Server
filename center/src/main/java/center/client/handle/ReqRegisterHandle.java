@@ -5,8 +5,8 @@ import java.util.List;
 import center.Center;
 import center.client.CenterClient;
 import com.google.protobuf.Message;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
@@ -19,7 +19,7 @@ import utils.ServerClientManager;
 /**
  * 注册服务信息请求
  */
-@ProcessType(MessageId.REQ_REGISTER)
+@ProcessType(CMsg.REQ_REGISTER)
 public class ReqRegisterHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandle.class);
@@ -46,7 +46,7 @@ public class ReqRegisterHandle implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(Center.getInstance().getServerInfo());
-		sender.sendMessage(clientId, MessageId.ACK_REGISTER, mapId, 0, ackRegister.build(), sequence);
+		sender.sendMessage(clientId, CMsg.ACK_REGISTER, mapId, 0, ackRegister.build(), sequence);
 		switch (serverType) {
 			case Game:
 				noticeConnect(manager, serverInfo, ServerType.Gate);
@@ -78,7 +78,7 @@ public class ReqRegisterHandle implements Handler {
 			for (ClientHandler client : typeServer) {
 				ModelProto.NotRegisterInfo.Builder change = ModelProto.NotRegisterInfo.newBuilder();
 				change.addServers(serverInfo);
-				client.sendMessage(MessageId.REGISTER_NOTICE, change.build());
+				client.sendMessage(CMsg.REGISTER_NOTICE, change.build());
 			}
 			LOGGER.error("[center send to server:{} info:{} reqRegister]", serverType, serverInfo.toString());
 		}

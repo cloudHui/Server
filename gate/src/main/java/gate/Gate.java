@@ -7,8 +7,8 @@ import java.util.List;
 
 import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import net.connect.handle.ConnectHandler;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -164,7 +164,7 @@ public class Gate {
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
 				req.addServerType(ServerType.Room.getServerType());
-				serverClient.sendMessage(MessageId.REQ_SERVER, req.build());
+				serverClient.sendMessage(CMsg.REQ_SERVER, req.build());
 				return true;
 			}
 			return false;

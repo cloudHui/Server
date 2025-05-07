@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import gate.client.GateTcpClient;
-import msg.MessageId;
+import msg.registor.message.CMsg;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
@@ -16,7 +16,7 @@ import proto.GateProto;
 /**
  * 广播
  */
-@ProcessType(MessageId.BROAD)
+@ProcessType(CMsg.BROAD)
 public class BroadCastHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BroadCastHandle.class);
@@ -44,7 +44,7 @@ public class BroadCastHandle implements Handler {
 			case PERSON:
 				ClientHandler client = ClientHandler.getClient(broadCast.getClientId());
 				if (client != null) {
-					client.sendMessage(MessageId.BROAD, broadCast);
+					client.sendMessage(CMsg.BROAD, broadCast);
 				} else {
 					LOGGER.error("[BroadCast:{} error no client]", broadCast.toString());
 				}
@@ -53,7 +53,7 @@ public class BroadCastHandle implements Handler {
 				allClient = ClientHandler.getAllClient();
 				for (Map.Entry<Integer, Sender> entry : allClient.entrySet()) {
 					tcpClient = (GateTcpClient) entry.getValue();
-					tcpClient.sendMessage(MessageId.BROAD, broadCast);
+					tcpClient.sendMessage(CMsg.BROAD, broadCast);
 				}
 				break;
 			case CHANNEL:
@@ -62,7 +62,7 @@ public class BroadCastHandle implements Handler {
 					try {
 						tcpClient = (GateTcpClient) entry.getValue();
 						if (tcpClient.getChannel() == broadCast.getChannel()) {
-							tcpClient.sendMessage(MessageId.BROAD, broadCast);
+							tcpClient.sendMessage(CMsg.BROAD, broadCast);
 						}
 					} catch (Exception e) {
 						LOGGER.error("[BroadCast:{} Channel error:{} ]", broadCast.toString(), e.getMessage());
@@ -75,7 +75,7 @@ public class BroadCastHandle implements Handler {
 					try {
 						tcpClient = (GateTcpClient) entry.getValue();
 						if (tcpClient.getClubId() == broadCast.getClub()) {
-							tcpClient.sendMessage(MessageId.BROAD, broadCast);
+							tcpClient.sendMessage(CMsg.BROAD, broadCast);
 						}
 					} catch (Exception e) {
 						LOGGER.error("[BroadCast:{} Club  error:{} ]", broadCast.toString(), e.getMessage());

@@ -4,9 +4,9 @@ import java.util.UUID;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
-import msg.HallMessageId;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.HMsg;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,7 +149,7 @@ public class Robot {
 				req.addServerType(ServerType.Game.getServerType());
 				req.addServerType(ServerType.Hall.getServerType());
 				req.addServerType(ServerType.Room.getServerType());
-				serverClient.sendMessage(MessageId.REQ_SERVER, req.build());
+				serverClient.sendMessage(CMsg.REQ_SERVER, req.build());
 				return true;
 			}
 			return false;
@@ -175,7 +175,7 @@ public class Robot {
 	 */
 	private void login() {
 		HallProto.ReqLogin build = HallProto.ReqLogin.newBuilder().setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString())).build();
-		getClientSendMessage(ServerType.Hall, HallMessageId.REQ_LOGIN_MSG, build);
+		getClientSendMessage(ServerType.Hall, HMsg.REQ_LOGIN_MSG, build);
 	}
 
 	public static void main(String[] args) {

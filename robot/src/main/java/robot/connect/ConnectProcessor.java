@@ -3,10 +3,10 @@ package robot.connect;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.GameMessageId;
-import msg.HallMessageId;
-import msg.MessageTrans;
-import msg.RoomMessageId;
+import msg.registor.message.GMsg;
+import msg.registor.message.HMsg;
+import msg.registor.enums.MessageTrans;
+import msg.registor.message.RMsg;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -25,9 +25,9 @@ public class ConnectProcessor {
 	public static void init() {
 		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, MAP);
 
-		HandleTypeRegister.bindTransMap(HallMessageId.class, TRANS_MAP, MessageTrans.RobotClient);
-		HandleTypeRegister.bindTransMap(RoomMessageId.class, TRANS_MAP, MessageTrans.RobotClient);
-		HandleTypeRegister.bindTransMap(GameMessageId.class, TRANS_MAP, MessageTrans.RobotClient);
+		HandleTypeRegister.bindTransMap(HMsg.class, TRANS_MAP, MessageTrans.RobotClient);
+		HandleTypeRegister.bindTransMap(RMsg.class, TRANS_MAP, MessageTrans.RobotClient);
+		HandleTypeRegister.bindTransMap(GMsg.class, TRANS_MAP, MessageTrans.RobotClient);
 	}
 
 

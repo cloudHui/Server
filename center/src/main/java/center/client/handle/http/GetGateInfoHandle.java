@@ -4,7 +4,7 @@ import center.Center;
 import center.client.CenterClient;
 import http.Linker;
 import http.handler.Handler;
-import msg.ServerType;
+import msg.registor.enums.ServerType;
 import msg.http.res.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

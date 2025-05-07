@@ -7,7 +7,7 @@ import java.util.List;
 
 import center.client.CenterClient;
 import center.client.ClientProto;
-import msg.ServerType;
+import msg.registor.enums.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

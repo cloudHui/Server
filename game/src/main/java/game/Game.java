@@ -9,7 +9,7 @@ import game.client.ClientProto;
 import game.client.GameClient;
 import game.connect.ConnectProcessor;
 import game.manager.TableManager;
-import msg.ServerType;
+import msg.registor.enums.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

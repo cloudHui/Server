@@ -1,8 +1,8 @@
 package utils.handle;
 
 import com.google.protobuf.Message;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * 心跳请求
  */
-@ProcessType(MessageId.HEART)
+@ProcessType(CMsg.HEART)
 public class HeartHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);
@@ -26,7 +26,7 @@ public class HeartHandler implements Handler {
 		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
 		ack.setReqTime(now);
 		ack.setRetryTime(req.getRetryTime());
-		sender.sendMessage(clientId, MessageId.HEART_ACK, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, CMsg.HEART_ACK, mapId, 0, ack.build(), sequence);
 		logger.debug("[server:{}, heart req cost:{}ms]", ServerType.get(serverType), now - req.getReqTime());
 		return true;
 	}

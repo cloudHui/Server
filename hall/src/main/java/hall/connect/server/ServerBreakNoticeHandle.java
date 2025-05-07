@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.google.protobuf.Message;
 import hall.Hall;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -17,7 +17,7 @@ import utils.ServerManager;
 /**
  * 服务掉线通知
  */
-@ProcessType(MessageId.BREAK_NOTICE)
+@ProcessType(CMsg.BREAK_NOTICE)
 public class ServerBreakNoticeHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandle.class);

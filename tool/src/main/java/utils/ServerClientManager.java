@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import msg.ServerType;
+import msg.registor.enums.ServerType;
 import net.client.handler.ClientHandler;
 import utils.other.RandomUtils;
 

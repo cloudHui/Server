@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.google.protobuf.Message;
 import hall.manager.User;
 import hall.manager.UserManager;
-import msg.HallMessageId;
+import msg.registor.message.HMsg;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -14,7 +14,7 @@ import proto.HallProto;
 /**
  * 登录请求
  */
-@ProcessType(HallMessageId.REQ_LOGIN_MSG)
+@ProcessType(HMsg.REQ_LOGIN_MSG)
 public class ReqLoginHandler implements Handler {
 
 	private final AtomicInteger uid = new AtomicInteger(1);
@@ -30,7 +30,7 @@ public class ReqLoginHandler implements Handler {
 			user = new User(ack.getUserId(), nick, clientId);
 			UserManager.getInstance().addUser(user);
 		}
-		sender.sendMessage(clientId, HallMessageId.ACK_LOGIN_MSG, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, HMsg.ACK_LOGIN_MSG, mapId, 0, ack.build(), sequence);
 		return true;
 	}
 }

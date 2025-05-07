@@ -3,8 +3,8 @@ package gate.connect.handle;
 import com.google.protobuf.Message;
 import gate.Gate;
 import gate.connect.ConnectProcessor;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * 注册信息通知
  */
-@ProcessType(MessageId.ACK_SERVER)
+@ProcessType(CMsg.ACK_SERVER)
 public class AckServerInfoHandle implements Handler {
 
 	@Override

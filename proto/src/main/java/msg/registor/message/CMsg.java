@@ -1,7 +1,9 @@
-package msg;
+package msg.registor.message;
 
 import com.google.protobuf.Internal;
 import com.google.protobuf.MessageLite;
+import msg.registor.enums.MessageTrans;
+import msg.registor.enums.ServerType;
 import msg.annotation.ClassType;
 import proto.GateProto;
 import proto.ModelProto;
@@ -11,7 +13,7 @@ import proto.ModelProto;
  * 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
  * 客户端回复消息都是 大于 BASE_ID_INDEX
  */
-public class MessageId {
+public class CMsg {
 
 	/**
 	 * 服务端
@@ -87,11 +89,11 @@ public class MessageId {
 	 * 通过消息id获取要转发的服务类型
 	 */
 	public static ServerType getServerTypeByMessageId(int msgId) {
-		if ((msgId & MessageId.GAME_TYPE) != 0) {
+		if ((msgId & CMsg.GAME_TYPE) != 0) {
 			return ServerType.Game;
-		} else if ((msgId & MessageId.HALL_TYPE) != 0) {
+		} else if ((msgId & CMsg.HALL_TYPE) != 0) {
 			return ServerType.Hall;
-		} else if ((msgId & MessageId.ROOM_TYPE) != 0) {
+		} else if ((msgId & CMsg.ROOM_TYPE) != 0) {
 			return ServerType.Room;
 		}
 		return null;

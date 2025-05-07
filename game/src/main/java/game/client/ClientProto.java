@@ -3,9 +3,9 @@ package game.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.GameMessageId;
-import msg.MessageId;
-import msg.MessageTrans;
+import msg.registor.message.GMsg;
+import msg.registor.message.CMsg;
+import msg.registor.enums.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.handler.Handler;
 import net.handler.Handlers;
@@ -33,9 +33,9 @@ public class ClientProto {
 		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, HANDLERS);
 
 		//绑定game服务器消息解析处理
-		HandleTypeRegister.bindTransMap(GameMessageId.class, TRANS_MAP, MessageTrans.GameServer);
+		HandleTypeRegister.bindTransMap(GMsg.class, TRANS_MAP, MessageTrans.GameServer);
 		//绑定message服务器消息解析处理
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.GameServer);
+		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.GameServer);
 	}
 
 	public final static Handlers GET = HANDLERS::get;

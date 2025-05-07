@@ -7,8 +7,8 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import msg.MessageId;
-import msg.MessageTrans;
+import msg.registor.message.CMsg;
+import msg.registor.enums.MessageTrans;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessType;
 import net.handler.Handler;
@@ -175,7 +175,7 @@ public class HandleTypeRegister {
 		Class<?> aClass = map.get(id);
 		if (aClass != null) {
 			try {
-				return (Message) MessageId.getMessageObject((Class<MessageLite>) aClass, bytes);
+				return (Message) CMsg.getMessageObject((Class<MessageLite>) aClass, bytes);
 			} catch (Exception e) {
 				logger.error("[parserMessage Exception messageId :{} className:{}]", id, aClass.getSimpleName(), e);
 			}

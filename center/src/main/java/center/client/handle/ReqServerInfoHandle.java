@@ -5,8 +5,8 @@ import java.util.List;
 import center.Center;
 import center.client.CenterClient;
 import com.google.protobuf.Message;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
@@ -17,7 +17,7 @@ import utils.ServerClientManager;
 /**
  * 获取 服务信息请求
  */
-@ProcessType(MessageId.REQ_SERVER)
+@ProcessType(CMsg.REQ_SERVER)
 public class ReqServerInfoHandle implements Handler {
 
 	@Override
@@ -41,7 +41,7 @@ public class ReqServerInfoHandle implements Handler {
 				}
 			}
 		}
-		sender.sendMessage(clientId, MessageId.ACK_SERVER, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, CMsg.ACK_SERVER, mapId, 0, ack.build(), sequence);
 		return true;
 	}
 }

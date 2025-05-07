@@ -5,8 +5,8 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import net.connect.handle.ConnectHandler;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -146,7 +146,7 @@ public class Room {
 			if (serverClient != null) {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
 				req.addServerType(ServerType.Game.getServerType());
-				serverClient.sendMessage(MessageId.REQ_SERVER, req.build());
+				serverClient.sendMessage(CMsg.REQ_SERVER, req.build());
 				return true;
 			}
 			return false;

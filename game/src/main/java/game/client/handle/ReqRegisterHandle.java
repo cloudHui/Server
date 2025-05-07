@@ -3,9 +3,8 @@ package game.client.handle;
 import com.google.protobuf.Message;
 import game.Game;
 import game.client.GameClient;
-import msg.GameMessageId;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -14,7 +13,7 @@ import proto.ModelProto;
 /**
  * gate注册服务信息请求
  */
-@ProcessType(value = MessageId.REQ_REGISTER)
+@ProcessType(value = CMsg.REQ_REGISTER)
 public class ReqRegisterHandle implements Handler {
 
 	@Override
@@ -35,7 +34,7 @@ public class ReqRegisterHandle implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(Game.getInstance().getServerInfo());
-		sender.sendMessage(clientId, MessageId.ACK_REGISTER, mapId, 0, ackRegister.build(), sequence);
+		sender.sendMessage(clientId, CMsg.ACK_REGISTER, mapId, 0, ackRegister.build(), sequence);
 		return true;
 	}
 }

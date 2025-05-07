@@ -1,8 +1,8 @@
 package robot.connect.handel;
 
 import com.google.protobuf.Message;
-import msg.RoomMessageId;
-import msg.ServerType;
+import msg.registor.message.RMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -14,7 +14,7 @@ import robot.Robot;
 /**
  * 获取房间回复
  */
-@ProcessType(RoomMessageId.ACK_ROOM_LIST_MSG)
+@ProcessType(RMsg.ACK_ROOM_LIST_MSG)
 public class AckGetRoomListHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckGetRoomListHandler.class);
@@ -27,7 +27,7 @@ public class AckGetRoomListHandler implements Handler {
 			RoomProto.Room room = rooms.getRoomList(0);
 			RoomProto.ReqCreateTable.Builder createTable = RoomProto.ReqCreateTable.newBuilder();
 			createTable.setConfigTypeId(room.getConfigTypeId());
-			Robot.getInstance().getClientSendMessage(ServerType.Room, RoomMessageId.REQ_CREATE_TABLE_MSG, createTable.build());
+			Robot.getInstance().getClientSendMessage(ServerType.Room, RMsg.REQ_CREATE_TABLE_MSG, createTable.build());
 		}
 		return true;
 	}

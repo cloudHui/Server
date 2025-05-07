@@ -1,24 +1,26 @@
-package msg;
+package msg.registor.enums;
 
+
+import msg.registor.message.CMsg;
 
 /**
  * 消息注册转化类型
  */
 public enum MessageTrans {
-	CenterServer(ServerType.Center, MessageId.SERVER, "注册中心服务器"),
+	CenterServer(ServerType.Center, CMsg.SERVER, "注册中心服务器"),
 
-	GateClient(ServerType.Gate, MessageId.CLIENT, "网关客户端"),
+	GateClient(ServerType.Gate, CMsg.CLIENT, "网关客户端"),
 
-	GameServer(ServerType.Game, MessageId.SERVER, "游戏服务器"),
-	GameClient(ServerType.Game, MessageId.CLIENT, "游戏客户端"),
+	GameServer(ServerType.Game, CMsg.SERVER, "游戏服务器"),
+	GameClient(ServerType.Game, CMsg.CLIENT, "游戏客户端"),
 
-	HallServer(ServerType.Hall, MessageId.SERVER, "大厅服务器"),
-	HallClient(ServerType.Hall, MessageId.CLIENT, "大厅客户端"),
+	HallServer(ServerType.Hall, CMsg.SERVER, "大厅服务器"),
+	HallClient(ServerType.Hall, CMsg.CLIENT, "大厅客户端"),
 
-	RobotClient(ServerType.Robot, MessageId.CLIENT, "机器人客户端"),
+	RobotClient(ServerType.Robot, CMsg.CLIENT, "机器人客户端"),
 
-	RoomServer(ServerType.Room, MessageId.SERVER, "房间服务器"),
-	RoomClient(ServerType.Room, MessageId.CLIENT, "房间客户端"),
+	RoomServer(ServerType.Room, CMsg.SERVER, "房间服务器"),
+	RoomClient(ServerType.Room, CMsg.CLIENT, "房间客户端"),
 	;
 
 	MessageTrans(ServerType serverType, int serverClient, String desc) {

@@ -1,6 +1,6 @@
 package gate.client;
 
-import msg.HallMessageId;
+import msg.registor.message.HMsg;
 import net.client.handler.WsClientHandler;
 import net.message.TCPMaker;
 
@@ -19,7 +19,7 @@ public class GateWsClient extends WsClientHandler {
 
 		setCloseEvent(client -> ClientProto.notServerBreak(userId, gameId, hallId, roomId));
 
-		setSafe((msgId) -> msgId == HallMessageId.REQ_LOGIN_MSG || userId != 0);
+		setSafe((msgId) -> msgId == HMsg.REQ_LOGIN_MSG || userId != 0);
 	}
 
 	public int getUserId() {

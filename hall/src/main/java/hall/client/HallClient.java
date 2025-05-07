@@ -1,7 +1,7 @@
 package hall.client;
 
 import hall.Hall;
-import msg.ServerType;
+import msg.registor.enums.ServerType;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import proto.ModelProto;

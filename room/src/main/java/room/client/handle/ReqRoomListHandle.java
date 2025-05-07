@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.google.protobuf.Message;
 import model.TableModel;
-import msg.MessageId;
-import msg.RoomMessageId;
+import msg.registor.message.RMsg;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -15,7 +14,7 @@ import room.manager.RoomModelManager;
 /**
  * 请求房间列表
  */
-@ProcessType(RoomMessageId.REQ_ROOM_LIST_MSG)
+@ProcessType(RMsg.REQ_ROOM_LIST_MSG)
 public class ReqRoomListHandle implements Handler {
 
 	@Override
@@ -30,7 +29,7 @@ public class ReqRoomListHandle implements Handler {
 				ack.addRoomList(room);
 			}
 		}
-		sender.sendMessage(clientId, RoomMessageId.ACK_ROOM_LIST_MSG, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, 0, ack.build(), sequence);
 		return true;
 	}
 }

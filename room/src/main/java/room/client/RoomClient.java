@@ -1,6 +1,6 @@
 package room.client;
 
-import msg.ServerType;
+import msg.registor.enums.ServerType;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import proto.ModelProto;

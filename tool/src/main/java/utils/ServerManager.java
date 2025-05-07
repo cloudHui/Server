@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import net.client.event.EventHandle;
 import net.connect.ServerInfo;
 import net.connect.TCPConnect;
@@ -111,7 +111,7 @@ public class ServerManager {
 	 * 发送心跳
 	 */
 	private void sendHeart(TCPConnect connect) {
-		connect.sendMessage(manageHeart(connect.getConnectServer().getServerType()), MessageId.HEART, OVER_TIME)
+		connect.sendMessage(manageHeart(connect.getConnectServer().getServerType()), CMsg.HEART, OVER_TIME)
 				.whenComplete((message, e) -> {
 					if (null != e) {
 						logger.error("[ERROR! failed for send HEART  connect {}] {}", connect, e.getMessage());
@@ -219,7 +219,7 @@ public class ServerManager {
 	 */
 	private final EventHandle activeHandle = channelHandler -> {
 		TCPConnect handler = (TCPConnect) channelHandler;
-		handler.sendMessage(manageReqRegister(handler.getLocalServer()).build(), MessageId.REQ_REGISTER, OVER_TIME)
+		handler.sendMessage(manageReqRegister(handler.getLocalServer()).build(), CMsg.REQ_REGISTER, OVER_TIME)
 				.whenComplete((message, e) -> {
 					if (null != e) {
 						logger.error("[ERROR! failed send register message to {} {}]", handler.getConnectServer(), e.getMessage());

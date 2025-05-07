@@ -1,9 +1,9 @@
 package robot.connect.handel;
 
 import com.google.protobuf.Message;
-import msg.HallMessageId;
-import msg.RoomMessageId;
-import msg.ServerType;
+import msg.registor.message.HMsg;
+import msg.registor.message.RMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -16,7 +16,7 @@ import robot.Robot;
 /**
  * 登录回复
  */
-@ProcessType(HallMessageId.ACK_LOGIN_MSG)
+@ProcessType(HMsg.ACK_LOGIN_MSG)
 public class AckLoginHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckLoginHandler.class);
@@ -27,7 +27,7 @@ public class AckLoginHandler implements Handler {
 		logger.error("[login ack:{}]", ack.toString());
 		RoomProto.ReqGetRoomList.Builder builder = RoomProto.ReqGetRoomList.newBuilder();
 
-		Robot.getInstance().getClientSendMessage(ServerType.Room, RoomMessageId.REQ_ROOM_LIST_MSG, builder.build());
+		Robot.getInstance().getClientSendMessage(ServerType.Room, RMsg.REQ_ROOM_LIST_MSG, builder.build());
 		return true;
 	}
 }

@@ -3,8 +3,8 @@ package hall.client.handle;
 import com.google.protobuf.Message;
 import hall.Hall;
 import hall.client.HallClient;
-import msg.MessageId;
-import msg.ServerType;
+import msg.registor.message.CMsg;
+import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * 注册服务信息请求
  */
-@ProcessType(MessageId.REQ_REGISTER)
+@ProcessType(CMsg.REQ_REGISTER)
 public class ReqRegisterHandler implements Handler {
 
 	@Override
@@ -34,7 +34,7 @@ public class ReqRegisterHandler implements Handler {
 
 		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
 		ackRegister.setServerInfo(Hall.getInstance().getServerInfo());
-		sender.sendMessage(clientId, MessageId.ACK_REGISTER, mapId, 0, ackRegister.build(), sequence);
+		sender.sendMessage(clientId, CMsg.ACK_REGISTER, mapId, 0, ackRegister.build(), sequence);
 		return true;
 	}
 }

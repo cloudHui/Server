@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import gate.client.GateTcpClient;
-import msg.HallMessageId;
-import msg.MessageId;
-import msg.MessageTrans;
+import msg.registor.message.HMsg;
+import msg.registor.message.CMsg;
+import msg.registor.enums.MessageTrans;
 import msg.registor.HandleTypeRegister;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -29,7 +29,7 @@ public class ConnectProcessor {
 
 	public static void init() {
 		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
-		HandleTypeRegister.bindTransMap(MessageId.class, TRANS_MAP, MessageTrans.GateClient);
+		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.GateClient);
 	}
 
 	public final static Handlers HANDLERS = handlers::get;
@@ -39,10 +39,10 @@ public class ConnectProcessor {
 	 */
 	public final static Transfer TRANSFER = (tcpConnect, tcpMessage) -> {
 		int msgId = tcpMessage.getMessageId();
-		if (msgId > MessageId.BASE_ID_INDEX && (msgId & 1) == 0) {
+		if (msgId > CMsg.BASE_ID_INDEX && (msgId & 1) == 0) {
 			GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(tcpMessage.getClientId());
 			if (null != gateClient) {
-				if (msgId == HallMessageId.ACK_LOGIN_MSG) {
+				if (msgId == HMsg.ACK_LOGIN_MSG) {
 					HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
 					gateClient.setRoleId(ack.getUserId());
 					gateClient.setClubId(ack.getClub());

@@ -2,7 +2,7 @@ package room.client.handle;
 
 import com.google.protobuf.Message;
 import model.TableModel;
-import msg.RoomMessageId;
+import msg.registor.message.RMsg;
 import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
@@ -14,7 +14,7 @@ import room.manager.RoomModelManager;
 /**
  * 请求创建桌子
  */
-@ProcessType(RoomMessageId.REQ_CREATE_TABLE_MSG)
+@ProcessType(RMsg.REQ_CREATE_TABLE_MSG)
 public class ReqCreateTableHandle implements Handler {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ReqCreateTableHandle.class);
@@ -29,7 +29,7 @@ public class ReqCreateTableHandle implements Handler {
 			LOGGER.error("");
 			return true;
 		}
-		sender.sendMessage(clientId, RoomMessageId.ACK_ROOM_LIST_MSG, mapId, 0, req, sequence);
+		sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, 0, req, sequence);
 		return true;
 	}
 }

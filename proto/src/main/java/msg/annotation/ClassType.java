@@ -5,8 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import msg.MessageTrans;
-import msg.ServerType;
+import msg.registor.enums.MessageTrans;
 
 
 /**
