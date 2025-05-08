@@ -18,9 +18,9 @@ import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
+import utils.GitJarManager;
 import utils.ServerClientManager;
 import utils.ServerManager;
-import utils.SvnManager;
 import utils.config.ConfigurationManager;
 
 public class Game {
@@ -51,9 +51,9 @@ public class Game {
 
 	private ServerManager serverManager;
 
-	private SvnManager svnManager;
-
 	private TableManager tableManager;
+
+	private GitJarManager gitJar;
 
 	public int getServerId() {
 		return serverId;
@@ -145,7 +145,7 @@ public class Game {
 		ClientProto.init();
 		//初始化代码管理
 		if (cfgMgr.getInt("plant", 0) != 0) {
-			initSvn();
+			initJar();
 		}
 		LOGGER.info("[game server {}:{}  is start!!!] ", split[0], Integer.parseInt(split[1]));
 	}
@@ -170,15 +170,14 @@ public class Game {
 	}
 
 	/**
-	 * 初始化svn 代码管理
+	 * 初始化Jar 代码管理
 	 */
-	private void initSvn() {
-		registerTimer(3000, 60000, -1, game -> {
-			svnManager = new SvnManager();
-			svnManager.jarUpdate();
-			boolean update = svnManager.checkJarVersionUpdate();
+	private void initJar() {
+		registerTimer(3 * 1000, 60 * 1000, -1, game -> {
+			gitJar = new GitJarManager();
+			boolean update = gitJar.checkJarUpdate();
 			if (update) {
-				svnManager.callBat();
+				gitJar.callBat();
 				System.exit(0);
 			}
 			return false;
@@ -200,11 +199,10 @@ public class Game {
 
 	public static void main(String[] args) {
 		try {
-			//System.setProperty("file.encoding", "UTF-8");
-			//DingTalkWaring dingTalkWaring = new DingTalkWaring();
-			//dingTalkWaring.sendMsg("我要测试", "17671292550");
+			//String gitCommands = "git log -1 --pretty=format:\"%H\"";
+			//List<String> exeCommands = ExecCommand.exeCommand(gitCommands);
+			//System.out.println(exeCommands);
 			instance.start();
-			//instance.testLog();
 		} catch (Exception e) {
 			LOGGER.error("[failed for start game server!]", e);
 		}
