@@ -175,11 +175,8 @@ public class Game {
 	private void initJar() {
 		gitJar = new GitJarManager();
 		registerTimer(3 * 1000, 60 * 1000, -1, game -> {
-			boolean update = gitJar.checkJarUpdate();
-			if (update) {
-				gitJar.callBat();
-				System.exit(0);
-			}
+			LOGGER.error("initJar checkJarUpdate");
+			gitJar.checkJarUpdate();
 			return false;
 		}, this);
 	}
@@ -199,8 +196,8 @@ public class Game {
 
 	public static void main(String[] args) {
 		try {
-			instance.start();
-			//instance.initJar();
+			//instance.start();
+			instance.initJar();
 		} catch (Exception e) {
 			LOGGER.error("[failed for start game server!]", e);
 		}
