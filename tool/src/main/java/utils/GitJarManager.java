@@ -41,7 +41,7 @@ public class GitJarManager {
 	 * 版本是否更新
 	 */
 	public void checkJarUpdate() {
-		logger.error("checkJarUpdate:{} ", USER_DIR);
+		logger.error("checkJarUpdate:{} REV: {}", USER_DIR, REV);
 		if (REV == null || REV.length() <= 0) {
 			logger.error("REV == null || REV.length() <= 0");
 			return;
@@ -58,13 +58,21 @@ public class GitJarManager {
 			return;
 		}
 		REV = exeCommands.get(0);
+		//检测更新或者重启
+		checkUpRestart();
+	}
 
+	/**
+	 * 检测更新或者重启
+	 */
+	private void checkUpRestart() {
 		//获取新的jar 目录下的文件
 		Map<File, Long> newMap = new HashMap<>();
 		DirectoryScanner.listFiles(USER_DIR, newMap);
 		//比较数量不一致直接更新
 		if (newMap.size() != fileMap.size()) {
 			fileMap = newMap;
+			logger.error("checkUpRestart restart: {}", REV);
 			callBat();
 			System.exit(0);
 		} else {
@@ -75,6 +83,7 @@ public class GitJarManager {
 					if (entry.getKey().getName().contains(".xlsx")) {
 						xlsxChange = true;
 					} else if (entry.getKey().getName().contains(".jar")) {
+						logger.error("checkUpRestart restart: {}", REV);
 						callBat();
 						System.exit(0);
 					}
@@ -82,6 +91,7 @@ public class GitJarManager {
 			}
 
 			if (xlsxChange) {
+				logger.error("checkUpRestart update: {}", REV);
 				callBat();
 			}
 		}
