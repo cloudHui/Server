@@ -173,8 +173,8 @@ public class Game {
 	 * 初始化Jar 代码管理
 	 */
 	private void initJar() {
+		gitJar = new GitJarManager();
 		registerTimer(3 * 1000, 60 * 1000, -1, game -> {
-			gitJar = new GitJarManager();
 			boolean update = gitJar.checkJarUpdate();
 			if (update) {
 				gitJar.callBat();
@@ -199,10 +199,8 @@ public class Game {
 
 	public static void main(String[] args) {
 		try {
-			//String gitCommands = "git log -1 --pretty=format:\"%H\"";
-			//List<String> exeCommands = ExecCommand.exeCommand(gitCommands);
-			//System.out.println(exeCommands);
 			instance.start();
+			//instance.initJar();
 		} catch (Exception e) {
 			LOGGER.error("[failed for start game server!]", e);
 		}
