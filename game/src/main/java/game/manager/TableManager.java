@@ -67,7 +67,7 @@ public class TableManager {
 	 * 获取桌子号
 	 */
 	public String getTableId() {
-		synchronized (this) {
+		synchronized (TableManager.class) {
 			String tableId = getIdHead() + currIndex++;
 			logger.info("[create new table id:{}]", tableId);
 			return tableId;
@@ -78,7 +78,7 @@ public class TableManager {
 	 * 重置id 头尾拼接字段
 	 */
 	public void resetTableId() {
-		synchronized (this) {
+		synchronized (TableManager.class) {
 			SimpleDateFormat sp = new SimpleDateFormat("yyMMddHH");
 			setIdHead(sp.format(new Date()));
 			currIndex = BASE_INDEX;
