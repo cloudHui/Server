@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,10 @@ public class GitJarManager {
 
 	private static final String USER_DIR = System.getProperty("user.dir");
 
-	private Map<File, Long> fileMap;
+	/**
+	 * 文件名 和文件修改时间
+	 */
+	private Map<String, Long> fileMap;
 
 	public GitJarManager() {
 		fileMap = new HashMap<>();
@@ -67,7 +69,7 @@ public class GitJarManager {
 	 */
 	private void checkUpRestart() {
 		//获取新的jar 目录下的文件
-		Map<File, Long> newMap = new HashMap<>();
+		Map<String, Long> newMap = new HashMap<>();
 		DirectoryScanner.listFiles(USER_DIR, newMap);
 		//比较数量不一致直接更新
 		if (newMap.size() != fileMap.size()) {
@@ -78,11 +80,11 @@ public class GitJarManager {
 		} else {
 			//数量一致 看是否只有配置更新了 配置更新值只更新配置 否则重启服务
 			boolean xlsxChange = false;
-			for (Map.Entry<File, Long> entry : newMap.entrySet()) {
+			for (Map.Entry<String, Long> entry : newMap.entrySet()) {
 				if (!fileMap.get(entry.getKey()).equals(entry.getValue())) {
-					if (entry.getKey().getName().contains(".xlsx")) {
+					if (entry.getKey().contains(".xlsx")) {
 						xlsxChange = true;
-					} else if (entry.getKey().getName().contains(".jar")) {
+					} else if (entry.getKey().contains(".jar")) {
 						logger.error("checkUpRestart restart: {}", REV);
 						callBat();
 						System.exit(0);
