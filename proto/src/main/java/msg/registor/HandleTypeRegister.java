@@ -94,12 +94,6 @@ public class HandleTypeRegister {
 			logger.error("bindPackageProcess error {} ", packages, e);
 		}
 		logger.error("{} bindPackageProcess success bind size:{}", packages, processorMap.size());
-
-
-		//Todo
-		for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
-			System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getClass().getName());
-		}
 	}
 
 	/**
@@ -116,12 +110,11 @@ public class HandleTypeRegister {
 			e.printStackTrace();
 		}
 		logger.error("class:{} bindClassProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
-
-
-		//Todo
-		for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
-			System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getClass().getName());
-		}
+		//
+		//
+		//for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
+		//	System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getClass().getName());
+		//}
 	}
 
 	/**
