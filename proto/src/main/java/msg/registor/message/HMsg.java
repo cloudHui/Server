@@ -1,7 +1,7 @@
 package msg.registor.message;
 
-import msg.registor.enums.MessageTrans;
 import msg.annotation.ClassType;
+import msg.registor.enums.MessageTrans;
 import proto.HallProto;
 
 /**
@@ -21,6 +21,6 @@ public class HMsg {
 	@ClassType(value = HallProto.ReqJoinClub.class, messageTrans = { MessageTrans.HallServer }, des = "请求加入工会")
 	public static final int REQ_JOIN_CLUB_MSG = CMsg.HALL_TYPE | 3;
 
-	@ClassType(value = HallProto.AckJoinClub.class, des = "加入工会回复")
+	@ClassType(value = HallProto.AckJoinClub.class, messageTrans = { MessageTrans.RobotClient }, des = "加入工会回复")
 	public static final int ACK_JOIN_CLUB_MSG = CMsg.HALL_TYPE | 4;
 }
