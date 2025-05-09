@@ -7,15 +7,14 @@ import java.util.List;
 
 import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
-import msg.registor.message.CMsg;
 import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.connect.handle.ConnectHandler;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
-import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
@@ -82,10 +81,6 @@ public class Gate {
 		return serverManager;
 	}
 
-	public void setServerManager(ServerManager serverManager) {
-		this.serverManager = serverManager;
-	}
-
 	public static Gate getInstance() {
 		return instance;
 	}
@@ -104,9 +99,9 @@ public class Gate {
 		executorPool.execute(r);
 	}
 
-	public void serialExecute(Task t) {
-		executorPool.serialExecute(t);
-	}
+	//public void serialExecute(Task t) {
+	//	executorPool.serialExecute(t);
+	//}
 
 
 	private void start() {
@@ -128,7 +123,7 @@ public class Gate {
 		new ServerService(90, GateTcpClient.class).start(addresses);
 		addresses.clear();
 		addresses.add(new InetSocketAddress(getInnerIp(), wsPort));
-		setServerManager(new ServerManager());
+		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 		new GateWsService().start(addresses);
 		ConnectProcessor.init();
 		//向注册中心注册

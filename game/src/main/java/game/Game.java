@@ -18,7 +18,6 @@ import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
-import utils.GitJarManager;
 import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
@@ -52,8 +51,6 @@ public class Game {
 	private ServerManager serverManager;
 
 	private TableManager tableManager;
-
-	private GitJarManager gitJar;
 
 	public int getServerId() {
 		return serverId;
@@ -90,7 +87,6 @@ public class Game {
 	public ModelProto.ServerInfo.Builder getServerInfo() {
 		return serverInfo;
 	}
-
 
 	public static Game getInstance() {
 		return instance;
@@ -135,7 +131,7 @@ public class Game {
 		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
 		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
 		new ServerService(0, GameClient.class).start(addresses);
-		serverManager = new ServerManager();
+		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 		//向注册中心注册
 		registerToCenter();
 
@@ -143,10 +139,6 @@ public class Game {
 		init();
 
 		ClientProto.init();
-		//初始化代码管理
-		if (cfgMgr.getInt("plant", 0) != 0) {
-			initJar();
-		}
 		LOGGER.info("[game server {}:{}  is start!!!] ", split[0], Integer.parseInt(split[1]));
 	}
 
@@ -169,35 +161,9 @@ public class Game {
 		tableManager = new TableManager();
 	}
 
-	/**
-	 * 初始化Jar 代码管理
-	 */
-	private void initJar() {
-		gitJar = new GitJarManager();
-		registerTimer(3 * 1000, 60 * 1000, -1, game -> {
-			LOGGER.error("initJar checkJarUpdate");
-			gitJar.checkJarUpdate();
-			return false;
-		}, this);
-	}
-
-	/**
-	 * 测试日志
-	 */
-	private void testLog() {
-		LOGGER.info("in testlog");
-		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
-		LOGGER.info(cfgMgr.getServers().toString());
-		registerTimer(1, 30000, -1, game -> {
-			LOGGER.info("game server 测试日志");
-			return false;
-		}, this);
-	}
-
 	public static void main(String[] args) {
 		try {
-			//instance.start();
-			instance.initJar();
+			instance.start();
 		} catch (Exception e) {
 			LOGGER.error("[failed for start game server!]", e);
 		}

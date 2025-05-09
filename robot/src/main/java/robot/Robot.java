@@ -104,9 +104,9 @@ public class Robot {
 
 
 	private void start() {
-		serverManager = new ServerManager();
-		ConnectProcessor.init();
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
+		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
+		ConnectProcessor.init();
 		setPort(cfgMgr.getInt("port", 0));
 		setIp(IpUtil.getOutIp());
 

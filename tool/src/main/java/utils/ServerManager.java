@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 import com.google.protobuf.ByteString;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import msg.registor.message.CMsg;
 import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.event.EventHandle;
 import net.connect.ServerInfo;
 import net.connect.TCPConnect;
@@ -23,6 +23,7 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import threadtutil.timer.Timer;
 import utils.config.ConfigurationManager;
 import utils.other.IpUtil;
 import utils.other.RandomUtils;
@@ -42,8 +43,28 @@ public class ServerManager {
 
 	private final static int OVER_TIME = 3;//超时时间S
 
-	public ServerManager() {
+	private final Timer timer;
+
+	private GitJarManager gitJar;
+
+	public ServerManager(Timer timer, boolean initJar) {
 		serverMap = new HashMap<>();
+		this.timer = timer;
+		if (initJar) {
+			initJar();
+		}
+	}
+
+	/**
+	 * 初始化Jar 代码管理
+	 */
+	private void initJar() {
+		gitJar = new GitJarManager();
+		timer.register(3 * 1000, 60 * 1000, -1, game -> {
+			logger.error("initJar checkJarUpdate");
+			gitJar.checkJarUpdate();
+			return false;
+		}, this);
 	}
 
 	/**

@@ -8,15 +8,14 @@ import java.util.List;
 import hall.client.ClientProto;
 import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
-import msg.registor.message.CMsg;
 import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.connect.handle.ConnectHandler;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
-import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerClientManager;
@@ -65,10 +64,6 @@ public class Hall {
 		return serverManager;
 	}
 
-	public void setServerManager(ServerManager serverManager) {
-		this.serverManager = serverManager;
-	}
-
 	public static Hall getInstance() {
 		return instance;
 	}
@@ -90,10 +85,9 @@ public class Hall {
 		executorPool.execute(r);
 	}
 
-	public void serialExecute(Task t) {
-		executorPool.serialExecute(t);
-	}
-
+	//public void serialExecute(Task t) {
+	//	executorPool.serialExecute(t);
+	//}
 
 	private void start() {
 
@@ -107,7 +101,7 @@ public class Hall {
 		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
 		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
 		new ServerService(0, HallClient.class).start(addresses);
-		setServerManager(new ServerManager());
+		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 
 		ClientProto.init();
 		ConnectProcessor.init();

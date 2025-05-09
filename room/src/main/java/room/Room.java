@@ -5,8 +5,8 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import msg.registor.message.CMsg;
 import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.connect.handle.ConnectHandler;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -17,7 +17,6 @@ import room.client.RoomClient;
 import room.connect.ConnectProcessor;
 import room.manager.RoomModelManager;
 import threadtutil.thread.ExecutorPool;
-import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.GitJarManager;
@@ -68,10 +67,6 @@ public class Room {
 		return serverManager;
 	}
 
-	public void setServerManager(ServerManager serverManager) {
-		this.serverManager = serverManager;
-	}
-
 	public ModelProto.ServerInfo.Builder getServerInfo() {
 		return serverInfo;
 	}
@@ -98,9 +93,9 @@ public class Room {
 		executorPool.execute(r);
 	}
 
-	public void serialExecute(Task t) {
-		executorPool.serialExecute(t);
-	}
+	//public void serialExecute(Task t) {
+	//	executorPool.serialExecute(t);
+	//}
 
 
 	private void start() {
@@ -120,7 +115,7 @@ public class Room {
 		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
 		addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));
 		new ServerService(0, RoomClient.class).start(addresses);
-		setServerManager(new ServerManager());
+		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 		ClientProto.init();
 		ConnectProcessor.init();
 		//向注册中心注册
