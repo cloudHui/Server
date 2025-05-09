@@ -3,14 +3,13 @@ package center.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.registor.message.CMsg;
-import msg.registor.enums.MessageTrans;
 import msg.registor.HandleTypeRegister;
+import msg.registor.enums.MessageTrans;
+import msg.registor.message.CMsg;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import utils.StringConst;
 
 public class ClientProto {
 
@@ -22,7 +21,7 @@ public class ClientProto {
 		//绑定自带服务器处理
 		HandleTypeRegister.bindClassProcess(ClientProto.class, MAP);
 		//绑定通用服务器处理
-		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, MAP);
+		HandleTypeRegister.bindPackageProcess(MAP);
 		//绑定通用消息转换处理
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.CenterServer);
 	}

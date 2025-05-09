@@ -3,15 +3,14 @@ package game.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.registor.message.GMsg;
-import msg.registor.message.CMsg;
-import msg.registor.enums.MessageTrans;
 import msg.registor.HandleTypeRegister;
+import msg.registor.enums.MessageTrans;
+import msg.registor.message.CMsg;
+import msg.registor.message.GMsg;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import utils.StringConst;
 
 /**
  * 处理gate转发消息处理
@@ -30,7 +29,7 @@ public class ClientProto {
 		//绑定专用服务器消息处理
 		HandleTypeRegister.bindClassProcess(ClientProto.class, HANDLERS);
 		//绑定通用服务器消息处理
-		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, HANDLERS);
+		HandleTypeRegister.bindPackageProcess(HANDLERS);
 
 		//绑定game服务器消息解析处理
 		HandleTypeRegister.bindTransMap(GMsg.class, TRANS_MAP, MessageTrans.GameServer);

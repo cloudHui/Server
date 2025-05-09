@@ -8,10 +8,9 @@ import java.util.Map;
 import com.google.protobuf.Internal;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import msg.registor.message.CMsg;
-import msg.registor.enums.MessageTrans;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.MessageTrans;
 import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +23,8 @@ import utils.other.ClazzUtil;
  * @createDate 2025/4/10 3:27
  */
 public class HandleTypeRegister {
+
+	private static final String HEAR_PACKAGE = "utils.handle";
 
 	private static final Logger logger = LoggerFactory.getLogger(HandleTypeRegister.class);
 
@@ -69,6 +70,15 @@ public class HandleTypeRegister {
 		for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
 			System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getName());
 		}
+	}
+
+
+	/**
+	 * 绑定处理类型与处理器
+	 * 有默认处理包 通用的心跳处理包
+	 */
+	public static void bindPackageProcess(Map<Integer, Handler> processorMap) {
+		bindPackageProcess(HEAR_PACKAGE, processorMap);
 	}
 
 	/**

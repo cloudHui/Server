@@ -3,15 +3,14 @@ package room.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import msg.registor.message.CMsg;
-import msg.registor.enums.MessageTrans;
-import msg.registor.message.RMsg;
 import msg.registor.HandleTypeRegister;
+import msg.registor.enums.MessageTrans;
+import msg.registor.message.CMsg;
+import msg.registor.message.RMsg;
 import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import utils.StringConst;
 
 public class ClientProto {
 
@@ -24,7 +23,7 @@ public class ClientProto {
 	public static void init() {
 
 		HandleTypeRegister.bindClassProcess(ClientProto.class, handlers);
-		HandleTypeRegister.bindPackageProcess(StringConst.HEAR_PACKAGE, handlers);
+		HandleTypeRegister.bindPackageProcess(handlers);
 
 		HandleTypeRegister.bindTransMap(RMsg.class, TRANS_MAP, MessageTrans.RoomServer);
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.RoomServer);
