@@ -19,7 +19,6 @@ import room.manager.RoomModelManager;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
-import utils.GitJarManager;
 import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
@@ -35,8 +34,6 @@ public class Room {
 
 	private int serverId;
 	private String center;
-
-	private GitJarManager gitJar;
 
 	/**
 	 * 本服务信息
@@ -122,10 +119,6 @@ public class Room {
 		registerToCenter();
 		getGameServer();
 		RoomModelManager.getInstance().init();
-		//初始化代码管理
-		if (cfgMgr.getInt("plant", 0) != 0) {
-			initJar();
-		}
 		LOGGER.info("[room server {}:{} is start!!!]", split[0], Integer.parseInt(split[1]));
 	}
 
@@ -155,18 +148,6 @@ public class Room {
 		}, this);
 	}
 
-
-	/**
-	 * 初始化Jar 代码管理
-	 */
-	private void initJar() {
-		gitJar = new GitJarManager();
-		registerTimer(3 * 1000, 60 * 1000, -1, room -> {
-			LOGGER.error("initJar checkJarUpdate");
-			gitJar.checkJarUpdate();
-			return false;
-		}, this);
-	}
 
 	public static void main(String[] args) {
 		try {
