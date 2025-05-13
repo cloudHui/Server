@@ -34,7 +34,6 @@ public class GetGateInfoHandle implements Handler<String> {
 	}
 
 	public boolean handler(Linker linker, String path, String function, String req) {
-		long start = System.currentTimeMillis();
 		Response ack = new Response();
 		CenterClient serverClient = (CenterClient) Center.getInstance().getServerManager().getServerClient(ServerType.Gate);
 		if (serverClient != null) {
@@ -42,8 +41,6 @@ public class GetGateInfoHandle implements Handler<String> {
 			ack.setMsg(JsonUtils.writeValue(serverClient.getServerInfo()));
 		}
 		linker.sendMessage(ack);
-		start = System.currentTimeMillis() - start;
-		LOGGER.info("[cost:{}ms]", start);
 		return true;
 	}
 }
