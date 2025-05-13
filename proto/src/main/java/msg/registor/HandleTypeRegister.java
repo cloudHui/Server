@@ -65,11 +65,11 @@ public class HandleTypeRegister {
 
 		logger.error("{} bindCommonTransMap success bind size:{}", classes.getSimpleName(), transMap.size());
 
-
-		//Todo
-		for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
-			System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getName());
-		}
+		//
+		////Todo
+		//for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
+		//	System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getName());
+		//}
 	}
 
 
