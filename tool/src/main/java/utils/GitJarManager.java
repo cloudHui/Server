@@ -15,6 +15,9 @@ public class GitJarManager {
 
 	private static final String GIT_COMMAND = "git log -1 --pretty=format:\"%H\"";
 
+	//获取远端最新版本
+	private static final String GIT_REMOTE = "git ls-remote origin main";
+
 	/**
 	 * git更新版本
 	 */
@@ -37,6 +40,22 @@ public class GitJarManager {
 		}
 		REV = exeCommands.get(0);
 		logger.error("[fileMap:{} curr git head:{}]", fileMap.size(), REV);
+	}
+
+
+	/**
+	 * 获取最新的版本号
+	 */
+	private String getGitNewestVersion() {
+		List<String> list = ExecCommand.exeCommand(GIT_REMOTE);
+		if (list.isEmpty()) {
+			try {
+				throw new Exception("getGitNewestVersion message null " + GIT_REMOTE);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list.get(0).split("refs")[0].trim();
 	}
 
 	/**
