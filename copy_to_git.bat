@@ -3,7 +3,7 @@ chcp 65001
 set if2_java_path=..\Server\build
 set if2_bat_path=..\Server
 ::github
-set github=D:\code\git\ServerJar
+set github=D:\code\ServerJar
 
 echo ============================================================
 echo 使用注意
