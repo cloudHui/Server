@@ -20,23 +20,23 @@ echo copy to %to_path%
 
 ::center
 echo copy center
-call :process_svn_changes "center" "Center" "%to_path%"
+call :process_git_changes "center" "Center" "%to_path%"
 
 ::game
 echo copy game
-call :process_svn_changes "game" "Game" "%to_path%"
+call :process_git_changes "game" "Game" "%to_path%"
 
 ::gate
 echo copy gate
-call :process_svn_changes "gate" "Gate" "%to_path%"
+call :process_git_changes "gate" "Gate" "%to_path%"
 
 ::hall
 echo copy hall
-call :process_svn_changes "hall" "Hall" "%to_path%"
+call :process_git_changes "hall" "Hall" "%to_path%"
 
 ::room
 echo copy room
-call :process_svn_changes "room" "Room" "%to_path%"
+call :process_git_changes "room" "Room" "%to_path%"
 
 echo 成功复制所有配置文件
 
@@ -71,7 +71,7 @@ echo 没有需要提交的更改。
 
 
 :: 删除原来的并复制
-:process_svn_changes
+:process_git_changes
 set "REPO_PATH=%~1"
 set "BIG_REPO_PATH=%~2"
 set "to_path=%~3"
@@ -84,9 +84,8 @@ Xcopy %if2_java_path%\%REPO_PATH%\lib %to_path%\%REPO_PATH%\lib /s /e /y /i
 Xcopy %if2_java_path%\%REPO_PATH%\%BIG_REPO_PATH%.jar %to_path%\%BIG_REPO_PATH% /y
 
 Xcopy %if2_bat_path%\%REPO_PATH%\bat\ %to_path%\%REPO_PATH% /y
-echo 成功提交所有新增删除和变化文件到svn
-
 goto :eof
 
+echo 成功提交所有新增删除和变化文件到git
 echo 成功提交所有文件
 pause
