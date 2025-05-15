@@ -20,68 +20,23 @@ echo copy to %to_path%
 
 ::center
 echo copy center
-
-rd /s/q %to_path%\center\resources
-Xcopy %if2_java_path%\center\resources %to_path%\center\resources /s /e /y /i
-
-rd /s/q %to_path%\center\lib
-Xcopy %if2_java_path%\center\lib %to_path%\center\lib /s /e /y /i
-
-Xcopy %if2_java_path%\center\Center.jar %to_path%\center /y
-
-Xcopy %if2_bat_path%\center\bat\ %to_path%\center /y
+call :process_svn_changes "center" "Center" "%to_path%"
 
 ::game
 echo copy game
-
-rd /s/q %to_path%\game\resources
-Xcopy %if2_java_path%\game\resources %to_path%\game\resources /s /e /y /i
-
-rd /s/q %to_path%\game\lib
-Xcopy %if2_java_path%\game\lib %to_path%\game\lib /s /e /y /i
-
-Xcopy %if2_java_path%\game\Game.jar %to_path%\game /y
-
-Xcopy %if2_bat_path%\game\bat\ %to_path%\game /y
+call :process_svn_changes "game" "Game" "%to_path%"
 
 ::gate
 echo copy gate
-
-rd /s/q %to_path%\gate\resources
-Xcopy %if2_java_path%\gate\resources %to_path%\gate\resources /s /e /y /i
-
-rd /s/q %to_path%\gate\lib
-Xcopy %if2_java_path%\gate\lib %to_path%\gate\lib /s /e /y /i
-
-Xcopy %if2_java_path%\gate\Gate.jar %to_path%\gate /y
-
-Xcopy %if2_bat_path%\gate\bat\ %to_path%\gate /y
+call :process_svn_changes "gate" "Gate" "%to_path%"
 
 ::hall
 echo copy hall
-
-rd /s/q %to_path%\hall\resources
-Xcopy %if2_java_path%\hall\resources %to_path%\hall\resources /s /e /y /i
-
-rd /s/q %to_path%\hall\lib
-Xcopy %if2_java_path%\hall\lib %to_path%\hall\lib /s /e /y /i
-
-Xcopy %if2_java_path%\hall\Hall.jar %to_path%\hall /y
-
-Xcopy %if2_bat_path%\hall\bat\ %to_path%\hall /y
+call :process_svn_changes "hall" "Hall" "%to_path%"
 
 ::room
 echo copy room
-
-rd /s/q %to_path%\room\resources
-Xcopy %if2_java_path%\room\resources %to_path%\room\resources /s /e /y /i
-
-rd /s/q %to_path%\room\lib
-Xcopy %if2_java_path%\room\lib %to_path%\room\lib /s /e /y /i
-
-Xcopy %if2_java_path%\room\Room.jar %to_path%\Room /y
-
-Xcopy %if2_bat_path%\room\bat\ %to_path%\room /y
+call :process_svn_changes "room" "Room" "%to_path%"
 
 echo 成功复制所有配置文件
 
@@ -113,6 +68,25 @@ for /f %%i in ('git status --porcelain') do (
 echo 没有需要提交的更改。
 
 :end
+
+
+:: 删除原来的并复制
+:process_svn_changes
+set "REPO_PATH=%~1"
+set "BIG_REPO_PATH=%~2"
+set "to_path=%~3"
+rd /s/q %to_path%\%REPO_PATH%\resources
+Xcopy %if2_java_path%\%REPO_PATH%\resources %to_path%\%REPO_PATH%\resources /s /e /y /i
+
+rd /s/q %to_path%\%REPO_PATH%\lib
+Xcopy %if2_java_path%\%REPO_PATH%\lib %to_path%\%REPO_PATH%\lib /s /e /y /i
+
+Xcopy %if2_java_path%\%REPO_PATH%\%BIG_REPO_PATH%.jar %to_path%\%BIG_REPO_PATH% /y
+
+Xcopy %if2_bat_path%\%REPO_PATH%\bat\ %to_path%\%REPO_PATH% /y
+echo 成功提交所有新增删除和变化文件到svn
+
+goto :eof
 
 echo 成功提交所有文件
 pause
