@@ -5,14 +5,13 @@ echo ============================================================
 echo 欢迎使用一键更新先拉取git 源码 在打包 再更新git jar 包再从 build复制到jar 再提交
 echo ============================================================
 pause
-set if2_java_path=D:\code\Server\build
-set if2_bat_path=D:\code\Server
-::github
-set github=D:\code\ServerJar
+set if2_java_path="D:\code\Server\build"
+set if2_bat_path="D:\code\Server"
+rem github
+set github="D:\code\ServerJar"
 call gitPull.bat %if2_bat_path%
 call mvnInstall.bat
 call gitPull.bat %github%
-
 echo 完成源码仓库拉取和打包以及 服务包仓库的代码拉取
 pause
 
@@ -26,9 +25,9 @@ set /p choice= please choice:
 if %choice%==1 (
 	set to_path=%github%
 )
-
+echo "choice %choice%  to_path %to_path% github %github%"
 echo copy to %to_path%
-
+pause
 ::center
 echo copy center
 call :process_git_changes "center" "Center" "%to_path%"
@@ -95,6 +94,7 @@ Xcopy %if2_java_path%\%REPO_PATH%\lib %to_path%\%REPO_PATH%\lib /s /e /y /i
 Xcopy %if2_java_path%\%REPO_PATH%\%BIG_REPO_PATH%.jar %to_path%\%BIG_REPO_PATH% /y
 
 Xcopy %if2_bat_path%\%REPO_PATH%\bat\ %to_path%\%REPO_PATH% /y
+pause
 goto :eof
 
 echo 成功提交所有新增删除和变化文件到git

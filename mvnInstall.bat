@@ -1,6 +1,6 @@
 @echo off
 chcp 65001
-set if2_bat_path=D:\code\Server
-cd  %if2_bat_path%
+set install=D:\code\Server
+cd  %install%
 mvn clean compile package install
 goto :eof

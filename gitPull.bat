@@ -1,6 +1,6 @@
 @echo off
 chcp 65001
-set github=%~1
-cd  %github%
+set pull=%~1
+cd  %pull%
 git pull
 goto :eof
