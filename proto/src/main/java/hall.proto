@@ -3,6 +3,8 @@ option java_outer_classname = "HallProto";
 
 package proto;
 
+import "model.proto";
+
 //请求登录
 message ReqLogin {
     bytes cert = 1; //证书
@@ -25,8 +27,7 @@ message ReqRoomList{
 
 message AckRoomList {
     int32 roomId = 1;
-    bytes rule = 2;
-    bool open = 3;
+    KeyValueInt rule = 2;
 }
 
 message ReqJoinClub{

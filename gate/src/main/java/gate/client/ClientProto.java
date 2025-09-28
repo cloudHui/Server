@@ -1,8 +1,11 @@
 package gate.client;
 
+import com.google.protobuf.ByteString;
 import gate.Gate;
-import msg.registor.message.CMsg;
+import io.netty.channel.ChannelHandler;
 import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
+import net.client.handler.ClientHandler;
 import net.connect.handle.ConnectHandler;
 import net.message.TCPMessage;
 import net.message.Transfer;
@@ -33,7 +36,7 @@ public class ClientProto {
 		if (connect != null) {
 			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) ->
 					LOGGER.info("[send transferMessage message to {} {} success:{}]",
-					connect.getConnectServer(), msgId, throwable == null ? true : throwable.getMessage()));
+							connect.getConnectServer(), msgId, throwable == null ? true : throwable.getMessage()));
 			return true;
 		}
 		LOGGER.error("[error msg transferMessage to server msgId:{}]", msgId);
@@ -100,7 +103,7 @@ public class ClientProto {
 	/**
 	 * 通知服务器玩家离线
 	 */
-	protected static void notServerBreak(int userId, int gameId, int hallId, int roomId) {
+	protected static void notServerBreak(int userId, int gameId, int hallId, int roomId, ChannelHandler handler) {
 		ModelProto.NotBreak.Builder not = ModelProto.NotBreak.newBuilder();
 		not.setUserId(userId);
 		ServerManager serverManager = Gate.getInstance().getServerManager();
@@ -117,6 +120,14 @@ public class ClientProto {
 		}
 		serverClient = serverManager.getServerClient(ServerType.Room, roomId);
 		if (serverClient != null) {
+			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
+		}
+
+		serverClient = serverManager.getServerClient(ServerType.Center);
+		if (serverClient != null) {
+			if (handler instanceof GateTcpClient) {
+				not.setCert(ByteString.copyFromUtf8(ClientHandler.getRemoteIP((ClientHandler) handler).getHostString()));
+			}
 			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
 		}
 	}

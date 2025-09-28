@@ -2,14 +2,11 @@ package hall.manager;
 
 public class User {
 
-	private int userId;
+	private final int userId;
 
 	private String nick;
 
 	private int clientId;
-
-	public User() {
-	}
 
 	public User(int userId, String nick, int clientId) {
 		this.userId = userId;
@@ -31,5 +28,9 @@ public class User {
 
 	public int getClientId() {
 		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
 	}
 }

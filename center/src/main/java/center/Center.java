@@ -7,6 +7,7 @@ import java.util.List;
 
 import center.client.CenterClient;
 import center.client.ClientProto;
+import center.client.ServerDecoder;
 import msg.registor.enums.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ public class Center {
 	}
 
 	private void start() {
+		ServerDecoder.init();
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		try {
 			ClientProto.init();

@@ -18,28 +18,23 @@ public class UserManager {
 	}
 
 	private static final int MAX_SIZE = 4096;
-	private final Map<Integer, User> users;
-
-	private final Map<Integer, User> clientUser;
+	private final Map<String, User> users;
 
 	private final UserService service = new UserService();
 
 	public UserManager() {
 		users = new ConcurrentHashMap<>(MAX_SIZE);
-		clientUser = new ConcurrentHashMap<>(MAX_SIZE);
 	}
 
-	public User getUser(int userId) {
-		return users.get(userId);
+	public User getUser(String cert) {
+		return users.get(cert);
 	}
 
-	public void removeUser(int userId) {
+	public void removeUser(String userId) {
 		User remove = users.remove(userId);
-		clientUser.remove(remove.getClientId());
 	}
 
 	public void addUser(User user) {
-		users.put(user.getUserId(), user);
-		clientUser.put(user.getClientId(), user);
+		users.put(user.getCert(), user);
 	}
 }

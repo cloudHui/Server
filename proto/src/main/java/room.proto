@@ -11,26 +11,12 @@ message ReqGetRoomList {
 
 message Room{
     int32 roomId = 1;
-    int32 currCount = 2;//当前玩家数量
-    int32 showCount = 3;//当前玩家数量
-    int32 configTypeId = 4;//房间类型
-    bytes des = 5;//描述
-    repeated Table tables = 6;//桌子
-
-    message Table{
-        int32 tableId = 1;
-        int32 creatorId = 2;
-        int32 ownerId = 3;
-        int64 overTimes = 4;
-        bool full = 5;//是否满了
-        bool watch = 6;//是否能观战
-    }
-
+    int32 configTypeId = 2;//房间类型
+    repeated RoomTableInfo tables = 4;//桌子
 }
 
 message AckGetRoomList {
     repeated Room roomList = 1;
-    repeated KeyValue append = 2;
 }
 
 //请求创建桌子
@@ -45,6 +31,6 @@ message ReqEnterTable {
 
 message AckEnterTable {
     int32 tableId = 1;
-    TableRole self = 2;
-    repeated TableRole tableRoles = 3;
+    TableInfo info = 2;
+
 }

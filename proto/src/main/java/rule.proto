@@ -1,0 +1,10 @@
+syntax = "proto3";
+option java_outer_classname = "RoleProto";
+
+package proto;
+
+//规则
+enum Rule{
+    type = 0;//类型(1 斗地主 )
+    num = 1;//人数
+}

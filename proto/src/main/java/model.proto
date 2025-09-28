@@ -8,6 +8,11 @@ message KeyValue {
     bytes value = 2;
 }
 
+message KeyValueInt {
+    int32 key = 1;
+    int32 value = 2;
+}
+
 //心跳
 message ReqHeart {
     int32 serverType = 1;
@@ -56,6 +61,27 @@ message NotServerBreak {
 //通知玩家掉线
 message NotBreak {
     int32 userId = 1;//用户id
+    bytes cert = 2;
+}
+
+
+message TableInfo{
+    int32 tableId = 1;
+    int32 landlord = 2;
+    repeated TableRole tableRoles = 3;
+}
+
+message RoomTableInfo{
+    int32 tableId = 1;
+    int32 creatorId = 2;
+    int32 ownerId = 3;
+    repeated RoomTableRole tableRoles = 4;
+}
+
+message RoomTableRole {
+    int32 roleId = 1;
+    bytes avatar = 3;
+    bytes nickName = 4;
 }
 
 message TableRole {
@@ -63,7 +89,6 @@ message TableRole {
     int32 position = 2;
     bytes avatar = 3;
     bytes nickName = 4;
-    int32 score = 6;
-    repeated int32 cards = 7;
+    repeated int32 cards = 5;
 }
 

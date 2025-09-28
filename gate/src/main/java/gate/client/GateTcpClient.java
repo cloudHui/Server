@@ -18,13 +18,9 @@ public class GateTcpClient extends ClientHandler {
 	public GateTcpClient() {
 		super(null, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent(client -> ClientProto.notServerBreak(roleId, gameId, hallId, roomId));
+		setCloseEvent(client -> ClientProto.notServerBreak(roleId, gameId, hallId, roomId, client));
 
 		setSafe((msgId) -> msgId == HMsg.REQ_LOGIN_MSG || roleId != 0);
-	}
-
-	public int getRoleId() {
-		return roleId;
 	}
 
 	public void setRoleId(int roleId) {

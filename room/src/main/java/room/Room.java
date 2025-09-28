@@ -15,7 +15,7 @@ import proto.ModelProto;
 import room.client.ClientProto;
 import room.client.RoomClient;
 import room.connect.ConnectProcessor;
-import room.manager.RoomModelManager;
+import room.manager.RoomManager;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
@@ -118,7 +118,7 @@ public class Room {
 		//向注册中心注册
 		registerToCenter();
 		getGameServer();
-		RoomModelManager.getInstance().init();
+		RoomManager.getInstance().init();
 		LOGGER.info("[room server {}:{} is start!!!]", split[0], Integer.parseInt(split[1]));
 	}
 

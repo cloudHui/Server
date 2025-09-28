@@ -11,11 +11,11 @@ spring:
 
 logging:
   file:
-    name: ./logs/app.log
+    name: ./logs/sp/app.log
   logback:
     rollingpolicy:
       max-file-size: 30MB
-      file-name-pattern: ./logs/archived/app-%d{yyyy-MM-dd-HH}.%i.log.gz
+      file-name-pattern: ./logs/sp/archived/app-%d{yyyy-MM-dd-HH}.%i.log.gz
       max-history: 720
       total-size-cap: 20GB
   pattern:

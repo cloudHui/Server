@@ -2,14 +2,14 @@ package room.client.handle;
 
 import com.google.protobuf.Message;
 import model.TableModel;
-import msg.registor.message.RMsg;
 import msg.annotation.ProcessType;
+import msg.registor.message.RMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.RoomProto;
-import room.manager.RoomModelManager;
+import room.manager.RoomManager;
 
 /**
  * 请求创建桌子
@@ -24,9 +24,9 @@ public class ReqCreateTableHandle implements Handler {
 		RoomProto.ReqCreateRoomTable req = (RoomProto.ReqCreateRoomTable) msg;
 		int configTypeId = req.getConfigTypeId();
 
-		TableModel tableModel = RoomModelManager.getInstance().getTableModel(configTypeId);
+		TableModel tableModel = RoomManager.getInstance().getTableModel(configTypeId);
 		if (tableModel == null) {
-			LOGGER.error("");
+			LOGGER.error("configTypeId:{} null", configTypeId);
 			return true;
 		}
 		sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, 0, req, sequence);

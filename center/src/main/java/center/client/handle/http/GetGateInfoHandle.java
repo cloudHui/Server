@@ -14,15 +14,8 @@ import utils.other.JsonUtils;
  * 处理查询 gate 信息
  */
 public class GetGateInfoHandle implements Handler<String> {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(GetGateInfoHandle.class);
-	private static final GetGateInfoHandle instance = new GetGateInfoHandle();
-
-	private GetGateInfoHandle() {
-	}
-
-	public static GetGateInfoHandle getInstance() {
-		return instance;
-	}
 
 	public String path() {
 		return "getGate";

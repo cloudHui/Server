@@ -1956,14 +1956,17 @@ public final class HallProto {
     int getRoomId();
 
     /**
-     * <code>bytes rule = 2;</code>
+     * <code>.proto.KeyValueInt rule = 2;</code>
      */
-    com.google.protobuf.ByteString getRule();
-
+    boolean hasRule();
     /**
-     * <code>bool open = 3;</code>
+     * <code>.proto.KeyValueInt rule = 2;</code>
      */
-    boolean getOpen();
+    proto.ModelProto.KeyValueInt getRule();
+    /**
+     * <code>.proto.KeyValueInt rule = 2;</code>
+     */
+    proto.ModelProto.KeyValueIntOrBuilder getRuleOrBuilder();
   }
   /**
    * Protobuf type {@code proto.AckRoomList}
@@ -1979,8 +1982,6 @@ public final class HallProto {
     }
     private AckRoomList() {
       roomId_ = 0;
-      rule_ = com.google.protobuf.ByteString.EMPTY;
-      open_ = false;
     }
 
     @java.lang.Override
@@ -2017,13 +2018,16 @@ public final class HallProto {
               break;
             }
             case 18: {
+              proto.ModelProto.KeyValueInt.Builder subBuilder = null;
+              if (rule_ != null) {
+                subBuilder = rule_.toBuilder();
+              }
+              rule_ = input.readMessage(proto.ModelProto.KeyValueInt.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(rule_);
+                rule_ = subBuilder.buildPartial();
+              }
 
-              rule_ = input.readBytes();
-              break;
-            }
-            case 24: {
-
-              open_ = input.readBool();
               break;
             }
           }
@@ -2060,21 +2064,24 @@ public final class HallProto {
     }
 
     public static final int RULE_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString rule_;
+    private proto.ModelProto.KeyValueInt rule_;
     /**
-     * <code>bytes rule = 2;</code>
+     * <code>.proto.KeyValueInt rule = 2;</code>
      */
-    public com.google.protobuf.ByteString getRule() {
-      return rule_;
+    public boolean hasRule() {
+      return rule_ != null;
     }
-
-    public static final int OPEN_FIELD_NUMBER = 3;
-    private boolean open_;
     /**
-     * <code>bool open = 3;</code>
+     * <code>.proto.KeyValueInt rule = 2;</code>
      */
-    public boolean getOpen() {
-      return open_;
+    public proto.ModelProto.KeyValueInt getRule() {
+      return rule_ == null ? proto.ModelProto.KeyValueInt.getDefaultInstance() : rule_;
+    }
+    /**
+     * <code>.proto.KeyValueInt rule = 2;</code>
+     */
+    public proto.ModelProto.KeyValueIntOrBuilder getRuleOrBuilder() {
+      return getRule();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2092,11 +2099,8 @@ public final class HallProto {
       if (roomId_ != 0) {
         output.writeInt32(1, roomId_);
       }
-      if (!rule_.isEmpty()) {
-        output.writeBytes(2, rule_);
-      }
-      if (open_ != false) {
-        output.writeBool(3, open_);
+      if (rule_ != null) {
+        output.writeMessage(2, getRule());
       }
       unknownFields.writeTo(output);
     }
@@ -2110,13 +2114,9 @@ public final class HallProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, roomId_);
       }
-      if (!rule_.isEmpty()) {
+      if (rule_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, rule_);
-      }
-      if (open_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, open_);
+          .computeMessageSize(2, getRule());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2136,10 +2136,11 @@ public final class HallProto {
       boolean result = true;
       result = result && (getRoomId()
           == other.getRoomId());
-      result = result && getRule()
-          .equals(other.getRule());
-      result = result && (getOpen()
-          == other.getOpen());
+      result = result && (hasRule() == other.hasRule());
+      if (hasRule()) {
+        result = result && getRule()
+            .equals(other.getRule());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2153,11 +2154,10 @@ public final class HallProto {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ROOMID_FIELD_NUMBER;
       hash = (53 * hash) + getRoomId();
-      hash = (37 * hash) + RULE_FIELD_NUMBER;
-      hash = (53 * hash) + getRule().hashCode();
-      hash = (37 * hash) + OPEN_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getOpen());
+      if (hasRule()) {
+        hash = (37 * hash) + RULE_FIELD_NUMBER;
+        hash = (53 * hash) + getRule().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2289,10 +2289,12 @@ public final class HallProto {
         super.clear();
         roomId_ = 0;
 
-        rule_ = com.google.protobuf.ByteString.EMPTY;
-
-        open_ = false;
-
+        if (ruleBuilder_ == null) {
+          rule_ = null;
+        } else {
+          rule_ = null;
+          ruleBuilder_ = null;
+        }
         return this;
       }
 
@@ -2316,8 +2318,11 @@ public final class HallProto {
       public proto.HallProto.AckRoomList buildPartial() {
         proto.HallProto.AckRoomList result = new proto.HallProto.AckRoomList(this);
         result.roomId_ = roomId_;
-        result.rule_ = rule_;
-        result.open_ = open_;
+        if (ruleBuilder_ == null) {
+          result.rule_ = rule_;
+        } else {
+          result.rule_ = ruleBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -2362,11 +2367,8 @@ public final class HallProto {
         if (other.getRoomId() != 0) {
           setRoomId(other.getRoomId());
         }
-        if (other.getRule() != com.google.protobuf.ByteString.EMPTY) {
-          setRule(other.getRule());
-        }
-        if (other.getOpen() != false) {
-          setOpen(other.getOpen());
+        if (other.hasRule()) {
+          mergeRule(other.getRule());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2421,59 +2423,121 @@ public final class HallProto {
         return this;
       }
 
-      private com.google.protobuf.ByteString rule_ = com.google.protobuf.ByteString.EMPTY;
+      private proto.ModelProto.KeyValueInt rule_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.ModelProto.KeyValueInt, proto.ModelProto.KeyValueInt.Builder, proto.ModelProto.KeyValueIntOrBuilder> ruleBuilder_;
       /**
-       * <code>bytes rule = 2;</code>
+       * <code>.proto.KeyValueInt rule = 2;</code>
        */
-      public com.google.protobuf.ByteString getRule() {
-        return rule_;
+      public boolean hasRule() {
+        return ruleBuilder_ != null || rule_ != null;
       }
       /**
-       * <code>bytes rule = 2;</code>
+       * <code>.proto.KeyValueInt rule = 2;</code>
        */
-      public Builder setRule(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        rule_ = value;
-        onChanged();
+      public proto.ModelProto.KeyValueInt getRule() {
+        if (ruleBuilder_ == null) {
+          return rule_ == null ? proto.ModelProto.KeyValueInt.getDefaultInstance() : rule_;
+        } else {
+          return ruleBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.proto.KeyValueInt rule = 2;</code>
+       */
+      public Builder setRule(proto.ModelProto.KeyValueInt value) {
+        if (ruleBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          rule_ = value;
+          onChanged();
+        } else {
+          ruleBuilder_.setMessage(value);
+        }
+
         return this;
       }
       /**
-       * <code>bytes rule = 2;</code>
+       * <code>.proto.KeyValueInt rule = 2;</code>
+       */
+      public Builder setRule(
+          proto.ModelProto.KeyValueInt.Builder builderForValue) {
+        if (ruleBuilder_ == null) {
+          rule_ = builderForValue.build();
+          onChanged();
+        } else {
+          ruleBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.KeyValueInt rule = 2;</code>
+       */
+      public Builder mergeRule(proto.ModelProto.KeyValueInt value) {
+        if (ruleBuilder_ == null) {
+          if (rule_ != null) {
+            rule_ =
+              proto.ModelProto.KeyValueInt.newBuilder(rule_).mergeFrom(value).buildPartial();
+          } else {
+            rule_ = value;
+          }
+          onChanged();
+        } else {
+          ruleBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.KeyValueInt rule = 2;</code>
        */
       public Builder clearRule() {
-        
-        rule_ = getDefaultInstance().getRule();
-        onChanged();
-        return this;
-      }
+        if (ruleBuilder_ == null) {
+          rule_ = null;
+          onChanged();
+        } else {
+          rule_ = null;
+          ruleBuilder_ = null;
+        }
 
-      private boolean open_ ;
-      /**
-       * <code>bool open = 3;</code>
-       */
-      public boolean getOpen() {
-        return open_;
-      }
-      /**
-       * <code>bool open = 3;</code>
-       */
-      public Builder setOpen(boolean value) {
-        
-        open_ = value;
-        onChanged();
         return this;
       }
       /**
-       * <code>bool open = 3;</code>
+       * <code>.proto.KeyValueInt rule = 2;</code>
        */
-      public Builder clearOpen() {
+      public proto.ModelProto.KeyValueInt.Builder getRuleBuilder() {
         
-        open_ = false;
         onChanged();
-        return this;
+        return getRuleFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.proto.KeyValueInt rule = 2;</code>
+       */
+      public proto.ModelProto.KeyValueIntOrBuilder getRuleOrBuilder() {
+        if (ruleBuilder_ != null) {
+          return ruleBuilder_.getMessageOrBuilder();
+        } else {
+          return rule_ == null ?
+              proto.ModelProto.KeyValueInt.getDefaultInstance() : rule_;
+        }
+      }
+      /**
+       * <code>.proto.KeyValueInt rule = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.ModelProto.KeyValueInt, proto.ModelProto.KeyValueInt.Builder, proto.ModelProto.KeyValueIntOrBuilder> 
+          getRuleFieldBuilder() {
+        if (ruleBuilder_ == null) {
+          ruleBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.ModelProto.KeyValueInt, proto.ModelProto.KeyValueInt.Builder, proto.ModelProto.KeyValueIntOrBuilder>(
+                  getRule(),
+                  getParentForChildren(),
+                  isClean());
+          rule_ = null;
+        }
+        return ruleBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -5301,19 +5365,20 @@ public final class HallProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nhall.proto\022\005proto\"K\n\010ReqLogin\022\014\n\004cert\030" +
-      "\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006avatar\030\003 \001(\014\022" +
-      "\017\n\007channel\030\004 \001(\005\"Y\n\010AckLogin\022\014\n\004cert\030\001 \001" +
-      "(\014\022\016\n\006userId\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\017\n\007" +
-      "channel\030\004 \001(\005\022\014\n\004club\030\005 \001(\005\"\r\n\013ReqRoomLi" +
-      "st\"9\n\013AckRoomList\022\016\n\006roomId\030\001 \001(\005\022\014\n\004rul" +
-      "e\030\002 \001(\014\022\014\n\004open\030\003 \001(\010\"\035\n\013ReqJoinClub\022\016\n\006" +
-      "clubId\030\001 \001(\005\",\n\013AckJoinClub\022\035\n\010joinClub\030" +
-      "\001 \001(\0132\013.proto.Club\"e\n\004Club\022\016\n\006clubId\030\001 \001" +
-      "(\005\022\016\n\006avatar\030\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\013\n\003des\030",
-      "\004 \001(\014\022\"\n\007members\030\005 \003(\0132\021.proto.ClubMembe" +
-      "r\".\n\nClubMember\022\016\n\006roleId\030\001 \001(\005\022\020\n\010posit" +
-      "ion\030\002 \001(\005B\013B\tHallProtob\006proto3"
+      "\n\nhall.proto\022\005proto\032\013model.proto\"K\n\010ReqL" +
+      "ogin\022\014\n\004cert\030\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006" +
+      "avatar\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\"Y\n\010AckLogi" +
+      "n\022\014\n\004cert\030\001 \001(\014\022\016\n\006userId\030\002 \001(\005\022\020\n\010nickN" +
+      "ame\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\022\014\n\004club\030\005 \001(\005" +
+      "\"\r\n\013ReqRoomList\"?\n\013AckRoomList\022\016\n\006roomId" +
+      "\030\001 \001(\005\022 \n\004rule\030\002 \001(\0132\022.proto.KeyValueInt" +
+      "\"\035\n\013ReqJoinClub\022\016\n\006clubId\030\001 \001(\005\",\n\013AckJo" +
+      "inClub\022\035\n\010joinClub\030\001 \001(\0132\013.proto.Club\"e\n" +
+      "\004Club\022\016\n\006clubId\030\001 \001(\005\022\016\n\006avatar\030\002 \001(\014\022\014\n",
+      "\004name\030\003 \001(\014\022\013\n\003des\030\004 \001(\014\022\"\n\007members\030\005 \003(" +
+      "\0132\021.proto.ClubMember\".\n\nClubMember\022\016\n\006ro" +
+      "leId\030\001 \001(\005\022\020\n\010position\030\002 \001(\005B\013B\tHallProt" +
+      "ob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5326,6 +5391,7 @@ public final class HallProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          proto.ModelProto.getDescriptor(),
         }, assigner);
     internal_static_proto_ReqLogin_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -5350,7 +5416,7 @@ public final class HallProto {
     internal_static_proto_AckRoomList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRoomList_descriptor,
-        new java.lang.String[] { "RoomId", "Rule", "Open", });
+        new java.lang.String[] { "RoomId", "Rule", });
     internal_static_proto_ReqJoinClub_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_proto_ReqJoinClub_fieldAccessorTable = new
@@ -5375,6 +5441,7 @@ public final class HallProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ClubMember_descriptor,
         new java.lang.String[] { "RoleId", "Position", });
+    proto.ModelProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

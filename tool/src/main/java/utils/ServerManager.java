@@ -114,7 +114,7 @@ public class ServerManager {
 	}
 
 	/**
-	 * 获取随机类型服务链接
+	 * 获取类型服务链接 随机或者唯一
 	 *
 	 * @param serverType 服务类型
 	 */

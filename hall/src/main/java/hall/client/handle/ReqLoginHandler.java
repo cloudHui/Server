@@ -2,11 +2,12 @@ package hall.client.handle;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import hall.manager.User;
 import hall.manager.UserManager;
-import msg.registor.message.HMsg;
 import msg.annotation.ProcessType;
+import msg.registor.message.HMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.HallProto;
@@ -23,14 +24,21 @@ public class ReqLoginHandler implements Handler {
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		HallProto.ReqLogin req = (HallProto.ReqLogin) msg;
 		String nick = req.getNickName().toStringUtf8();
-		HallProto.AckLogin.Builder ack = HallProto.AckLogin.newBuilder();
-		ack.setUserId(uid.decrementAndGet());
-		User user = UserManager.getInstance().getUser(ack.getUserId());
+		String cert = req.getCert().toStringUtf8();
+		User user = UserManager.getInstance().getUser(cert);
 		if (user == null) {
-			user = new User(ack.getUserId(), nick, clientId);
+			user = new User(uid.incrementAndGet(), nick, clientId);
 			UserManager.getInstance().addUser(user);
+		} else {
+			user.setClientId(clientId);
+			user.setNick(nick);
 		}
-		sender.sendMessage(clientId, HMsg.ACK_LOGIN_MSG, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, HMsg.ACK_LOGIN_MSG, mapId, 0,
+				HallProto.AckLogin.newBuilder()
+						.setCert(req.getCert())
+						.setUserId(user.getUserId())
+						.setNickName(ByteString.copyFromUtf8(nick))
+						.build(), sequence);
 		return true;
 	}
 }
