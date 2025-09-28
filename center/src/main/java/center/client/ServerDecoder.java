@@ -27,7 +27,7 @@ public class ServerDecoder extends HttpDecoder {
 		handlers.put(handler.path(), handler);
 	}
 
-	public static void init() {
+	 static  {
 		Class<ServerDecoder> packageClass = ServerDecoder.class;
 		try {
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");

@@ -4928,6 +4928,531 @@ public final class ModelProto {
 
   }
 
+  public interface NotRegisterClientOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.NotRegisterClient)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bytes cert = 1;</code>
+     */
+    com.google.protobuf.ByteString getCert();
+
+    /**
+     * <code>bytes gate = 2;</code>
+     */
+    com.google.protobuf.ByteString getGate();
+  }
+  /**
+   * <pre>
+   *client链接通知
+   * </pre>
+   *
+   * Protobuf type {@code proto.NotRegisterClient}
+   */
+  public  static final class NotRegisterClient extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.NotRegisterClient)
+      NotRegisterClientOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use NotRegisterClient.newBuilder() to construct.
+    private NotRegisterClient(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private NotRegisterClient() {
+      cert_ = com.google.protobuf.ByteString.EMPTY;
+      gate_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private NotRegisterClient(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+
+              cert_ = input.readBytes();
+              break;
+            }
+            case 18: {
+
+              gate_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ModelProto.internal_static_proto_NotRegisterClient_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ModelProto.internal_static_proto_NotRegisterClient_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ModelProto.NotRegisterClient.class, proto.ModelProto.NotRegisterClient.Builder.class);
+    }
+
+    public static final int CERT_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString cert_;
+    /**
+     * <code>bytes cert = 1;</code>
+     */
+    public com.google.protobuf.ByteString getCert() {
+      return cert_;
+    }
+
+    public static final int GATE_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString gate_;
+    /**
+     * <code>bytes gate = 2;</code>
+     */
+    public com.google.protobuf.ByteString getGate() {
+      return gate_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!cert_.isEmpty()) {
+        output.writeBytes(1, cert_);
+      }
+      if (!gate_.isEmpty()) {
+        output.writeBytes(2, gate_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!cert_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, cert_);
+      }
+      if (!gate_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, gate_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ModelProto.NotRegisterClient)) {
+        return super.equals(obj);
+      }
+      proto.ModelProto.NotRegisterClient other = (proto.ModelProto.NotRegisterClient) obj;
+
+      boolean result = true;
+      result = result && getCert()
+          .equals(other.getCert());
+      result = result && getGate()
+          .equals(other.getGate());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CERT_FIELD_NUMBER;
+      hash = (53 * hash) + getCert().hashCode();
+      hash = (37 * hash) + GATE_FIELD_NUMBER;
+      hash = (53 * hash) + getGate().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.NotRegisterClient parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.NotRegisterClient parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.NotRegisterClient parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ModelProto.NotRegisterClient prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *client链接通知
+     * </pre>
+     *
+     * Protobuf type {@code proto.NotRegisterClient}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.NotRegisterClient)
+        proto.ModelProto.NotRegisterClientOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ModelProto.internal_static_proto_NotRegisterClient_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ModelProto.internal_static_proto_NotRegisterClient_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ModelProto.NotRegisterClient.class, proto.ModelProto.NotRegisterClient.Builder.class);
+      }
+
+      // Construct using proto.ModelProto.NotRegisterClient.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        cert_ = com.google.protobuf.ByteString.EMPTY;
+
+        gate_ = com.google.protobuf.ByteString.EMPTY;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ModelProto.internal_static_proto_NotRegisterClient_descriptor;
+      }
+
+      public proto.ModelProto.NotRegisterClient getDefaultInstanceForType() {
+        return proto.ModelProto.NotRegisterClient.getDefaultInstance();
+      }
+
+      public proto.ModelProto.NotRegisterClient build() {
+        proto.ModelProto.NotRegisterClient result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.ModelProto.NotRegisterClient buildPartial() {
+        proto.ModelProto.NotRegisterClient result = new proto.ModelProto.NotRegisterClient(this);
+        result.cert_ = cert_;
+        result.gate_ = gate_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ModelProto.NotRegisterClient) {
+          return mergeFrom((proto.ModelProto.NotRegisterClient)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ModelProto.NotRegisterClient other) {
+        if (other == proto.ModelProto.NotRegisterClient.getDefaultInstance()) return this;
+        if (other.getCert() != com.google.protobuf.ByteString.EMPTY) {
+          setCert(other.getCert());
+        }
+        if (other.getGate() != com.google.protobuf.ByteString.EMPTY) {
+          setGate(other.getGate());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.ModelProto.NotRegisterClient parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.ModelProto.NotRegisterClient) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private com.google.protobuf.ByteString cert_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes cert = 1;</code>
+       */
+      public com.google.protobuf.ByteString getCert() {
+        return cert_;
+      }
+      /**
+       * <code>bytes cert = 1;</code>
+       */
+      public Builder setCert(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        cert_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes cert = 1;</code>
+       */
+      public Builder clearCert() {
+        
+        cert_ = getDefaultInstance().getCert();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString gate_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes gate = 2;</code>
+       */
+      public com.google.protobuf.ByteString getGate() {
+        return gate_;
+      }
+      /**
+       * <code>bytes gate = 2;</code>
+       */
+      public Builder setGate(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        gate_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes gate = 2;</code>
+       */
+      public Builder clearGate() {
+        
+        gate_ = getDefaultInstance().getGate();
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.NotRegisterClient)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.NotRegisterClient)
+    private static final proto.ModelProto.NotRegisterClient DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ModelProto.NotRegisterClient();
+    }
+
+    public static proto.ModelProto.NotRegisterClient getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<NotRegisterClient>
+        PARSER = new com.google.protobuf.AbstractParser<NotRegisterClient>() {
+      public NotRegisterClient parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new NotRegisterClient(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<NotRegisterClient> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NotRegisterClient> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.ModelProto.NotRegisterClient getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface ReqServerInfoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:proto.ReqServerInfo)
       com.google.protobuf.MessageOrBuilder {
@@ -10823,6 +11348,11 @@ public final class ModelProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_NotRegisterInfo_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_NotRegisterClient_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_NotRegisterClient_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ReqServerInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -10883,21 +11413,22 @@ public final class ModelProto {
       "2\021.proto.ServerInfo\"4\n\013AckRegister\022%\n\nse",
       "rverInfo\030\001 \001(\0132\021.proto.ServerInfo\"5\n\017Not" +
       "RegisterInfo\022\"\n\007servers\030\001 \003(\0132\021.proto.Se" +
-      "rverInfo\"#\n\rReqServerInfo\022\022\n\nserverType\030" +
-      "\001 \003(\005\"3\n\rAckServerInfo\022\"\n\007servers\030\001 \003(\0132" +
-      "\021.proto.ServerInfo\"4\n\016NotServerBreak\022\"\n\007" +
-      "servers\030\001 \003(\0132\021.proto.ServerInfo\"(\n\010NotB" +
-      "reak\022\016\n\006userId\030\001 \001(\005\022\014\n\004cert\030\002 \001(\014\"T\n\tTa" +
-      "bleInfo\022\017\n\007tableId\030\001 \001(\005\022\020\n\010landlord\030\002 \001" +
-      "(\005\022$\n\ntableRoles\030\003 \003(\0132\020.proto.TableRole" +
-      "\"n\n\rRoomTableInfo\022\017\n\007tableId\030\001 \001(\005\022\021\n\tcr",
-      "eatorId\030\002 \001(\005\022\017\n\007ownerId\030\003 \001(\005\022(\n\ntableR" +
-      "oles\030\004 \003(\0132\024.proto.RoomTableRole\"A\n\rRoom" +
-      "TableRole\022\016\n\006roleId\030\001 \001(\005\022\016\n\006avatar\030\003 \001(" +
-      "\014\022\020\n\010nickName\030\004 \001(\014\"^\n\tTableRole\022\016\n\006role" +
-      "Id\030\001 \001(\005\022\020\n\010position\030\002 \001(\005\022\016\n\006avatar\030\003 \001" +
-      "(\014\022\020\n\010nickName\030\004 \001(\014\022\r\n\005cards\030\005 \003(\005B\014B\nM" +
-      "odelProtob\006proto3"
+      "rverInfo\"/\n\021NotRegisterClient\022\014\n\004cert\030\001 " +
+      "\001(\014\022\014\n\004gate\030\002 \001(\014\"#\n\rReqServerInfo\022\022\n\nse" +
+      "rverType\030\001 \003(\005\"3\n\rAckServerInfo\022\"\n\007serve" +
+      "rs\030\001 \003(\0132\021.proto.ServerInfo\"4\n\016NotServer" +
+      "Break\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInf" +
+      "o\"(\n\010NotBreak\022\016\n\006userId\030\001 \001(\005\022\014\n\004cert\030\002 " +
+      "\001(\014\"T\n\tTableInfo\022\017\n\007tableId\030\001 \001(\005\022\020\n\010lan" +
+      "dlord\030\002 \001(\005\022$\n\ntableRoles\030\003 \003(\0132\020.proto.",
+      "TableRole\"n\n\rRoomTableInfo\022\017\n\007tableId\030\001 " +
+      "\001(\005\022\021\n\tcreatorId\030\002 \001(\005\022\017\n\007ownerId\030\003 \001(\005\022" +
+      "(\n\ntableRoles\030\004 \003(\0132\024.proto.RoomTableRol" +
+      "e\"A\n\rRoomTableRole\022\016\n\006roleId\030\001 \001(\005\022\016\n\006av" +
+      "atar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\"^\n\tTableRol" +
+      "e\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030\002 \001(\005\022\016\n\006a" +
+      "vatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022\r\n\005cards\030\005" +
+      " \003(\005B\014B\nModelProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -10959,50 +11490,56 @@ public final class ModelProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotRegisterInfo_descriptor,
         new java.lang.String[] { "Servers", });
-    internal_static_proto_ReqServerInfo_descriptor =
+    internal_static_proto_NotRegisterClient_descriptor =
       getDescriptor().getMessageTypes().get(8);
+    internal_static_proto_NotRegisterClient_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_NotRegisterClient_descriptor,
+        new java.lang.String[] { "Cert", "Gate", });
+    internal_static_proto_ReqServerInfo_descriptor =
+      getDescriptor().getMessageTypes().get(9);
     internal_static_proto_ReqServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqServerInfo_descriptor,
         new java.lang.String[] { "ServerType", });
     internal_static_proto_AckServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_proto_AckServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckServerInfo_descriptor,
         new java.lang.String[] { "Servers", });
     internal_static_proto_NotServerBreak_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_proto_NotServerBreak_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotServerBreak_descriptor,
         new java.lang.String[] { "Servers", });
     internal_static_proto_NotBreak_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_proto_NotBreak_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotBreak_descriptor,
         new java.lang.String[] { "UserId", "Cert", });
     internal_static_proto_TableInfo_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_proto_TableInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_TableInfo_descriptor,
         new java.lang.String[] { "TableId", "Landlord", "TableRoles", });
     internal_static_proto_RoomTableInfo_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_proto_RoomTableInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_RoomTableInfo_descriptor,
         new java.lang.String[] { "TableId", "CreatorId", "OwnerId", "TableRoles", });
     internal_static_proto_RoomTableRole_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_proto_RoomTableRole_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_RoomTableRole_descriptor,
         new java.lang.String[] { "RoleId", "Avatar", "NickName", });
     internal_static_proto_TableRole_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_proto_TableRole_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_TableRole_descriptor,

@@ -45,6 +45,12 @@ message NotRegisterInfo {
     repeated ServerInfo servers = 1;
 }
 
+//client链接通知
+message NotRegisterClient {
+    bytes cert = 1;
+    bytes gate = 2;
+}
+
 //获取服务信息
 message ReqServerInfo {
     repeated int32 serverType = 1;

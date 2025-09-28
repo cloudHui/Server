@@ -48,7 +48,6 @@ public class Center {
 	}
 
 	private void start() {
-		ServerDecoder.init();
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		try {
 			ClientProto.init();

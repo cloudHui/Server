@@ -33,7 +33,7 @@ public class GetGateInfoHandle implements Handler<String> {
 			ack.setMsg(JsonUtils.writeValue(serverClient.getServerInfo()));
 		}
 		linker.sendMessage(ack);
-		LOGGER.info("remote {}", linker.remoteIp());
+		LOGGER.info("{} remote {}", path(), linker.remoteIp());
 		return true;
 	}
 }

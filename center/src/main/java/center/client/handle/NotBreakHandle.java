@@ -1,7 +1,6 @@
 package center.client.handle;
 
 import annotation.ProcessType;
-import center.client.handle.http.DistributeGateHandle;
 import com.google.protobuf.Message;
 import msg.registor.message.CMsg;
 import net.client.Sender;
@@ -17,7 +16,7 @@ public class NotBreakHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		ModelProto.NotBreak req = (ModelProto.NotBreak) msg;
-		DistributeGateHandle.clientDisconnect(req.getCert().toStringUtf8());
+		NotClientLinkHandle.clientDisconnect(req.getCert().toStringUtf8());
 		return true;
 	}
 }
