@@ -32,7 +32,7 @@ public class GetGateInfoHandle implements Handler<String> {
 		return msg;
 	}
 
-	public boolean handler(Linker linker, String req, String ip) {
+	public boolean handler(Linker linker, String req) {
 		Response ack = new Response();
 		CenterClient serverClient = (CenterClient) Center.getInstance().getServerManager().getServerClient(ServerType.Gate);
 		if (serverClient != null) {
@@ -40,7 +40,7 @@ public class GetGateInfoHandle implements Handler<String> {
 			ack.setMsg(JsonUtils.writeValue(serverClient.getServerInfo()));
 		}
 		linker.sendMessage(ack);
-		LOGGER.info("remote {}", ip);
+		LOGGER.info("remote {}", linker.remoteIp());
 		return true;
 	}
 }

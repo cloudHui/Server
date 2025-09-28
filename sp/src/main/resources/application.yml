@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: center
+  
+# Logging configuration
+
+logging:
+  file:
+    name: ./logs/app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 30MB
+      file-name-pattern: ./logs/archived/app-%d{yyyy-MM-dd-HH}.%i.log.gz
+      max-history: 720
+      total-size-cap: 20GB
+  pattern:
+    file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    center: INFO

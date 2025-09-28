@@ -15,22 +15,22 @@ public class WebsocketServer {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		int port = 5601; // 843 flash policy port
 
-		MySocketServer s = null;
+		MySocketServer socketServer = null;
 		try {
-			s = new MySocketServer(port);
-			s.start();
-			System.out.println("ChatServer started on port: " + s.getPort());
+			socketServer = new MySocketServer(port);
+			socketServer.start();
+			System.out.println("ChatServer started on port: " + socketServer.getPort());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 
-		if (s != null) {
+		if (socketServer != null) {
 			BufferedReader sysin = new BufferedReader(new InputStreamReader(System.in));
 			while (true) {
 				String in = sysin.readLine();
-				s.broadcast(in);
+				socketServer.broadcast(in);
 				if (in.equals("exit")) {
-					s.stop(1000);
+					socketServer.stop(1000);
 					break;
 				}
 			}

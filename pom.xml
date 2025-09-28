@@ -17,6 +17,7 @@
         <module>tool</module>
         <module>robot</module>
         <module>room</module>
+        <module>sp</module>
     </modules>
 
     <dependencies>
