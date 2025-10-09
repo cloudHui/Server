@@ -23,7 +23,7 @@ public class ConnectProcessor {
 
 	public static void init() {
 		//绑定客户端消息处理
-		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, MAP);
+		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, MAP, TRANS_MAP);
 		//绑定通用服务器消息解析处理
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.GameClient);
 	}

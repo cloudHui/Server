@@ -11,7 +11,7 @@ import room.manager.RoomManager;
 /**
  * 请求房间列表
  */
-@ProcessType(RMsg.REQ_ROOM_LIST_MSG)
+@ProcessType(value = RMsg.REQ_ROOM_LIST_MSG, trans = RoomProto.AckGetRoomList.class)
 public class ReqRoomListHandle implements Handler {
 
 	@Override

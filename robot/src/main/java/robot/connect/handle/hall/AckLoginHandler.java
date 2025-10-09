@@ -1,10 +1,10 @@
 package robot.connect.handle.hall;
 
 import com.google.protobuf.Message;
+import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
 import msg.registor.message.HMsg;
 import msg.registor.message.RMsg;
-import msg.registor.enums.ServerType;
-import msg.annotation.ProcessType;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ import robot.Robot;
 /**
  * 登录回复
  */
-@ProcessType(HMsg.ACK_LOGIN_MSG)
+@ProcessType(value = HMsg.ACK_LOGIN_MSG, trans = HallProto.AckLogin.class)
 public class AckLoginHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckLoginHandler.class);

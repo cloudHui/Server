@@ -22,8 +22,8 @@ public class ClientProto {
 
 	public static void init() {
 
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, handlers);
-		HandleTypeRegister.bindDefaultPackageProcess(handlers);
+		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, handlers, TRANS_MAP);
+		HandleTypeRegister.bindDefaultPackageProcess(handlers, TRANS_MAP);
 
 		HandleTypeRegister.bindTransMap(RMsg.class, TRANS_MAP, MessageTrans.RoomServer);
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.RoomServer);

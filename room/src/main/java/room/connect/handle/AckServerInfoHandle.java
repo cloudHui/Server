@@ -13,7 +13,7 @@ import room.connect.ConnectProcessor;
 /**
  * 注册信息通知
  */
-@ProcessType(CMsg.ACK_SERVER)
+@ProcessType(value = CMsg.ACK_SERVER, trans = ModelProto.AckServerInfo.class)
 public class AckServerInfoHandle implements Handler {
 
 	@Override

@@ -19,7 +19,7 @@ import utils.ServerClientManager;
 /**
  * 注册服务信息请求
  */
-@ProcessType(CMsg.REQ_REGISTER)
+@ProcessType(value = CMsg.REQ_REGISTER, trans = ModelProto.ReqRegister.class)
 public class ReqRegisterHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReqRegisterHandle.class);

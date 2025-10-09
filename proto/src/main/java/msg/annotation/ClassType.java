@@ -11,6 +11,7 @@ import msg.registor.enums.MessageTrans;
 /**
  * 消息类消息id绑定
  */
+@Deprecated
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface ClassType {

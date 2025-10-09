@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * 心跳请求
  */
-@ProcessType(CMsg.HEART)
+@ProcessType(value = CMsg.HEART, trans = ModelProto.ReqHeart.class)
 public class HeartHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);

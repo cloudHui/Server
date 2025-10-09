@@ -46,6 +46,7 @@ public class HandleTypeRegister {
 	 * @param transMap        目标转换映射表
 	 * @param targetTransType 目标转换类型
 	 */
+	@Deprecated
 	public static void bindTransMap(Class<?> constantClass, Map<Integer, Class<?>> transMap, MessageTrans targetTransType) {
 		int bindCount = 0;
 
@@ -80,8 +81,8 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定默认包下的处理器
 	 */
-	public static void bindDefaultPackageProcess(Map<Integer, Handler> processorMap) {
-		bindPackageProcess(DEFAULT_HANDLE_PACKAGE, processorMap);
+	public static void bindDefaultPackageProcess(Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
+		bindPackageProcess(DEFAULT_HANDLE_PACKAGE, processorMap, transMap);
 	}
 
 	/**
@@ -90,10 +91,10 @@ public class HandleTypeRegister {
 	 * @param packageName  扫描的包路径
 	 * @param processorMap 处理器映射表
 	 */
-	public static void bindPackageProcess(String packageName, Map<Integer, Handler> processorMap) {
+	public static void bindPackageProcess(String packageName, Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
 		try {
 			List<Class<?>> classes = ClazzUtil.getClasses(packageName);
-			doBindProcessors(classes, processorMap);
+			doBindProcessors(classes, processorMap, transMap);
 			logger.info(BIND_SUCCESS_TEMPLATE, packageName, processorMap.size());
 		} catch (Exception e) {
 			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
@@ -103,11 +104,11 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定指定类所在包下的处理器
 	 */
-	public static void bindClassPackageProcess(Class<?> packageClass, Map<Integer, Handler> processorMap) {
+	public static void bindClassPackageProcess(Class<?> packageClass, Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
 		String packageName = packageClass.getPackage().getName();
 		try {
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");
-			doBindProcessors(classes, processorMap);
+			doBindProcessors(classes, processorMap, transMap);
 			logger.info("Package:{} bind success, size:{}", packageName, processorMap.size());
 		} catch (Exception e) {
 			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
@@ -151,7 +152,7 @@ public class HandleTypeRegister {
 	/**
 	 * 执行处理器绑定逻辑
 	 */
-	private static void doBindProcessors(List<Class<?>> classes, Map<Integer, Handler> processorMap) {
+	private static void doBindProcessors(List<Class<?>> classes, Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
 		for (Class<?> clazz : classes) {
 			if (!Handler.class.isAssignableFrom(clazz)) {
 				continue;
@@ -159,7 +160,7 @@ public class HandleTypeRegister {
 
 			ProcessType processType = clazz.getAnnotation(ProcessType.class);
 			if (processType != null) {
-				registerProcessor(processType.value(), clazz, processorMap);
+				registerProcessor(processType, clazz, processorMap, transMap);
 			}
 		}
 	}
@@ -218,8 +219,10 @@ public class HandleTypeRegister {
 	/**
 	 * 注册处理器实例
 	 */
-	private static void registerProcessor(int processId, Class<?> handlerClass,
-										  Map<Integer, Handler> processorMap) {
+	private static void registerProcessor(ProcessType processType, Class<?> handlerClass, Map<Integer, Handler> processorMap,
+										  Map<Integer, Class<?>> transMap) {
+		int processId = processType.value();
+		Class<?> trans = processType.trans();
 		// 重复ID检查
 		if (processorMap.containsKey(processId)) {
 			logger.error("Duplicate process ID: {} for handler: {}", processId, handlerClass.getName());
@@ -233,7 +236,8 @@ public class HandleTypeRegister {
 
 		if (processor != null) {
 			processorMap.put(processId, processor);
-			logger.debug("Registered processor: {} -> {}", processId, handlerClass.getSimpleName());
+			transMap.put(processId, trans);
+			logger.debug("Registered processor: {} -> {} trans:{}", processId, handlerClass.getSimpleName(), trans.getSimpleName());
 		} else {
 			logger.error("Failed to create handler instance: {}", handlerClass.getName());
 		}

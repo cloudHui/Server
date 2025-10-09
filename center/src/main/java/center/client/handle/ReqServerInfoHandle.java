@@ -17,7 +17,7 @@ import utils.ServerClientManager;
 /**
  * 获取 服务信息请求
  */
-@ProcessType(CMsg.REQ_SERVER)
+@ProcessType(value = CMsg.REQ_SERVER,trans = ModelProto.ReqServerInfo.class)
 public class ReqServerInfoHandle implements Handler {
 
 	@Override

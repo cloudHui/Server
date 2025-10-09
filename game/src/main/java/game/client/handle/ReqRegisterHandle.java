@@ -3,9 +3,9 @@ package game.client.handle;
 import com.google.protobuf.Message;
 import game.Game;
 import game.client.GameClient;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * gate注册服务信息请求
  */
-@ProcessType(value = CMsg.REQ_REGISTER)
+@ProcessType(value = CMsg.REQ_REGISTER, trans = ModelProto.ReqRegister.class)
 public class ReqRegisterHandle implements Handler {
 
 	@Override

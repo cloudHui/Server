@@ -16,7 +16,7 @@ import proto.GateProto;
 /**
  * 广播
  */
-@ProcessType(CMsg.BROAD)
+@ProcessType(value = CMsg.BROAD,trans = GateProto.BroadCast.class)
 public class BroadCastHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BroadCastHandle.class);

@@ -24,7 +24,7 @@ public class ConnectProcessor {
 	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
 	public static void init() {
-		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, MAP);
+		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, MAP, TRANS_MAP);
 
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.RobotClient);
 		HandleTypeRegister.bindTransMap(HMsg.class, TRANS_MAP, MessageTrans.RobotClient);

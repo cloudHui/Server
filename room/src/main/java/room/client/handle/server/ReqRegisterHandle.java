@@ -1,9 +1,9 @@
 package room.client.handle.server;
 
 import com.google.protobuf.Message;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -13,7 +13,7 @@ import room.client.RoomClient;
 /**
  * 注册服务信息请求
  */
-@ProcessType(CMsg.REQ_REGISTER)
+@ProcessType(value = CMsg.REQ_REGISTER, trans = ModelProto.ReqRegister.class)
 public class ReqRegisterHandle implements Handler {
 
 	@Override

@@ -21,9 +21,9 @@ public class ClientProto {
 	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parseMessage(id, bytes, TRANS_MAP);
 
 	public static void init() {
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, handlers);
+		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, handlers, TRANS_MAP);
 
-		HandleTypeRegister.bindDefaultPackageProcess(handlers);
+		HandleTypeRegister.bindDefaultPackageProcess(handlers, TRANS_MAP);
 
 		HandleTypeRegister.bindTransMap(HMsg.class, TRANS_MAP, MessageTrans.HallServer);
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.HallServer);

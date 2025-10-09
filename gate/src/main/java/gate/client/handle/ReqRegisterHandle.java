@@ -11,7 +11,7 @@ import proto.ModelProto;
 /**
  * 机器人注册服务信息请求
  */
-@ProcessType(value = CMsg.REQ_REGISTER)
+@ProcessType(value = CMsg.REQ_REGISTER, trans = ModelProto.ReqRegister.class)
 public class ReqRegisterHandle implements Handler {
 
 	@Override

@@ -1,8 +1,8 @@
 package game.client.handle;
 
 import com.google.protobuf.Message;
-import msg.registor.message.GMsg;
 import msg.annotation.ProcessType;
+import msg.registor.message.GMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.GameProto;
@@ -10,7 +10,7 @@ import proto.GameProto;
 /**
  * 请求加入桌子
  */
-@ProcessType(GMsg.REQ_ENTER_TABLE_MSG)
+@ProcessType(value = GMsg.REQ_ENTER_TABLE_MSG, trans = GameProto.ReqEnterTable.class)
 public class ReqEnterTableHandle implements Handler {
 
 	@Override

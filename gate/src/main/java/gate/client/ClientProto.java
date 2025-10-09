@@ -42,9 +42,9 @@ public class ClientProto {
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.GateServer);
 
 		//绑定专用服务器消息处理
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, HANDLER_MAP);
+		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, HANDLER_MAP, TRANS_MAP);
 		//绑定通用服务器消息处理
-		HandleTypeRegister.bindDefaultPackageProcess(HANDLER_MAP);
+		HandleTypeRegister.bindDefaultPackageProcess(HANDLER_MAP, TRANS_MAP);
 	}
 
 	/**

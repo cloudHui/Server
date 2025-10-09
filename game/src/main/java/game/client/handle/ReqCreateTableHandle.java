@@ -10,7 +10,7 @@ import proto.GameProto;
 /**
  * 请求创建桌子
  */
-@ProcessType(GMsg.REQ_CREATE_TABLE_MSG)
+@ProcessType(value = GMsg.REQ_CREATE_TABLE_MSG, trans = GameProto.ReqCreateTable.class)
 public class ReqCreateTableHandle implements Handler {
 
 	@Override

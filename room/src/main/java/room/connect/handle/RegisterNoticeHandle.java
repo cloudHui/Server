@@ -13,7 +13,7 @@ import room.connect.ConnectProcessor;
 /**
  * 注册信息通知
  */
-@ProcessType(CMsg.REGISTER_NOTICE)
+@ProcessType(value = CMsg.REGISTER_NOTICE, trans = ModelProto.NotRegisterInfo.class)
 public class RegisterNoticeHandle implements Handler {
 
 	@Override

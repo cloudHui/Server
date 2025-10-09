@@ -14,7 +14,7 @@ import room.manager.RoomManager;
 /**
  * 请求创建桌子
  */
-@ProcessType(RMsg.REQ_CREATE_ROOM_TABLE_MSG)
+@ProcessType(value = RMsg.REQ_CREATE_ROOM_TABLE_MSG, trans = RoomProto.ReqCreateRoomTable.class)
 public class ReqCreateTableHandle implements Handler {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ReqCreateTableHandle.class);

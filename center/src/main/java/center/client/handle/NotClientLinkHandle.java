@@ -12,7 +12,7 @@ import proto.ModelProto;
 /**
  * gate通知玩家链接
  */
-@ProcessType(value = CMsg.NOT_LINK)
+@ProcessType(value = CMsg.NOT_LINK, trans = ModelProto.NotRegisterClient.class)
 public class NotClientLinkHandle implements Handler {
 
 	private static final ConcurrentHashMap<String, String> clientToGate = new ConcurrentHashMap<>();

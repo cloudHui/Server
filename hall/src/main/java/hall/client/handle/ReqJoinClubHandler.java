@@ -1,8 +1,8 @@
 package hall.client.handle;
 
 import com.google.protobuf.Message;
-import msg.registor.message.HMsg;
 import msg.annotation.ProcessType;
+import msg.registor.message.HMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.HallProto;
@@ -10,7 +10,7 @@ import proto.HallProto;
 /**
  * 加入工会请求
  */
-@ProcessType(HMsg.REQ_JOIN_CLUB_MSG)
+@ProcessType(value = HMsg.REQ_JOIN_CLUB_MSG, trans = HallProto.ReqJoinClub.class)
 public class ReqJoinClubHandler implements Handler {
 
 	@Override

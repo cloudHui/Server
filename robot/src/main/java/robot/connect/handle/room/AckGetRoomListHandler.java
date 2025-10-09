@@ -1,9 +1,9 @@
 package robot.connect.handle.room;
 
 import com.google.protobuf.Message;
-import msg.registor.message.RMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.RMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import robot.Robot;
 /**
  * 获取房间回复
  */
-@ProcessType(RMsg.ACK_ROOM_LIST_MSG)
+@ProcessType(value = RMsg.ACK_ROOM_LIST_MSG, trans = RoomProto.AckGetRoomList.class)
 public class AckGetRoomListHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckGetRoomListHandler.class);

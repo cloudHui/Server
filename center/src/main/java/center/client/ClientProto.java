@@ -19,9 +19,9 @@ public class ClientProto {
 
 	public static void init() {
 		//绑定自带服务器处理
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, MAP);
+		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, MAP, TRANS_MAP);
 		//绑定通用服务器处理
-		HandleTypeRegister.bindDefaultPackageProcess(MAP);
+		HandleTypeRegister.bindDefaultPackageProcess(MAP, TRANS_MAP);
 		//绑定通用消息转换处理
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.CenterServer);
 	}
