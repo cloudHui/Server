@@ -34,12 +34,13 @@ public class ClientProto {
 
 		ConnectHandler connect = getTransServerClient(msgId, gateClient);
 		if (connect != null) {
+			long send = System.currentTimeMillis();
 			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) ->
-					LOGGER.info("[send transferMessage message to {} {} success:{}]",
-							connect.getConnectServer(), msgId, throwable == null ? true : throwable.getMessage()));
+					LOGGER.info("[send transferMessage message: {} to {} back res success:{} cost:{}ms]",
+							Integer.toHexString(msgId), connect.getConnectServer(), throwable == null ? true : throwable.getMessage(), System.currentTimeMillis() - send));
 			return true;
 		}
-		LOGGER.error("[error msg transferMessage to server msgId:{}]", msgId);
+		LOGGER.error("[error msg transferMessage to server msgId:{}]", Integer.toHexString(msgId));
 		return false;
 	}
 
@@ -50,7 +51,7 @@ public class ClientProto {
 	private static ConnectHandler getTransServerClient(int msgId, GateTcpClient gateClient) {
 		ServerType serverType = getServerTypeByMessageId(msgId);
 		if (serverType == null) {
-			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", msgId);
+			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", Integer.toHexString(msgId));
 			return null;
 		}
 		int clientId = 0;
