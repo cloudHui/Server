@@ -3,6 +3,7 @@ package robot.connect;
 import java.util.HashMap;
 import java.util.Map;
 
+import msg.registor.message.CMsg;
 import msg.registor.message.GMsg;
 import msg.registor.message.HMsg;
 import msg.registor.enums.MessageTrans;
@@ -23,8 +24,9 @@ public class ConnectProcessor {
 	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
 	public static void init() {
-		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, MAP);
+		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, MAP);
 
+		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.RobotClient);
 		HandleTypeRegister.bindTransMap(HMsg.class, TRANS_MAP, MessageTrans.RobotClient);
 		HandleTypeRegister.bindTransMap(RMsg.class, TRANS_MAP, MessageTrans.RobotClient);
 		HandleTypeRegister.bindTransMap(GMsg.class, TRANS_MAP, MessageTrans.RobotClient);
@@ -34,7 +36,7 @@ public class ConnectProcessor {
 	/**
 	 * 消息转换  bytes to Message(MessageLite)
 	 */
-	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parseMessage(id, bytes, TRANS_MAP);
 
 	/**
 	 * 消息处理器获取

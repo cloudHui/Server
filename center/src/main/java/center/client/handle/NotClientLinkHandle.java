@@ -2,8 +2,8 @@ package center.client.handle;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import annotation.ProcessType;
 import com.google.protobuf.Message;
+import msg.annotation.ProcessType;
 import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
@@ -12,7 +12,7 @@ import proto.ModelProto;
 /**
  * gate通知玩家链接
  */
-@ProcessType(value = CMsg.NOT_BREAK)
+@ProcessType(value = CMsg.NOT_LINK)
 public class NotClientLinkHandle implements Handler {
 
 	private static final ConcurrentHashMap<String, String> clientToGate = new ConcurrentHashMap<>();

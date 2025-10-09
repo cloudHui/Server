@@ -180,7 +180,7 @@ public class ServerManager {
 			tConnect.setConRetry(true);
 			tConnect.setDiRetry(true);
 		}
-		logger.error("[registerSever server:{} info:serverType {} {}]", localServer, serverType, tConnect.getConnectServer());
+		logger.error("[registerSever server:{} info:serverType {} connect:{}]", localServer, serverType, tConnect.getConnectServer());
 		tConnect.connect();
 	}
 

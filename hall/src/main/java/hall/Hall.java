@@ -73,7 +73,7 @@ public class Hall {
 	}
 
 	private Hall() {
-		executorPool = new ExecutorPool("Game");
+		executorPool = new ExecutorPool("Hall");
 		timer = new Timer().setRunners(executorPool);
 	}
 

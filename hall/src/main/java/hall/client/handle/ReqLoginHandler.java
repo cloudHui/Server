@@ -27,7 +27,7 @@ public class ReqLoginHandler implements Handler {
 		String cert = req.getCert().toStringUtf8();
 		User user = UserManager.getInstance().getUser(cert);
 		if (user == null) {
-			user = new User(uid.incrementAndGet(), nick, clientId);
+			user = new User(uid.incrementAndGet(), nick, clientId, cert);
 			UserManager.getInstance().addUser(user);
 		} else {
 			user.setClientId(clientId);

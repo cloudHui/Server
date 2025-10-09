@@ -78,7 +78,7 @@ public class Room {
 	}
 
 	private Room() {
-		executorPool = new ExecutorPool("Game");
+		executorPool = new ExecutorPool("Room");
 		timer = new Timer().setRunners(executorPool);
 	}
 

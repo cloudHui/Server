@@ -1,9 +1,9 @@
 package utils.handle;
 
 import com.google.protobuf.Message;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;

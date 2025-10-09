@@ -1,7 +1,7 @@
 package center.client.handle;
 
-import annotation.ProcessType;
 import com.google.protobuf.Message;
+import msg.annotation.ProcessType;
 import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;

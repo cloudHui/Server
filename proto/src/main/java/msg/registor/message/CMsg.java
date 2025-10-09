@@ -26,22 +26,26 @@ public class CMsg {
 	public static final int ROOM_TYPE = 0x8000;
 
 	@ClassType(value = ModelProto.ReqHeart.class,
-			messageTrans = { MessageTrans.GameServer, MessageTrans.CenterServer, MessageTrans.RoomServer, MessageTrans.HallServer },
+			messageTrans = { MessageTrans.GameServer, MessageTrans.CenterServer, MessageTrans.RoomServer, MessageTrans.HallServer
+					, MessageTrans.GateServer },
 			des = "心跳")
 	public static final int HEART = 1;
 
 	@ClassType(value = ModelProto.AckHeart.class,
-			messageTrans = { MessageTrans.GameClient, MessageTrans.GateClient, MessageTrans.HallClient, MessageTrans.RoomClient },
+			messageTrans = { MessageTrans.GameClient, MessageTrans.GateClient, MessageTrans.HallClient, MessageTrans.RoomClient
+					, MessageTrans.RobotClient },
 			des = "心跳回复")
 	public static final int HEART_ACK = 2;
 
 	@ClassType(value = ModelProto.ReqRegister.class,
-			messageTrans = { MessageTrans.GameServer, MessageTrans.CenterServer, MessageTrans.HallServer, MessageTrans.RoomServer },
+			messageTrans = { MessageTrans.GameServer, MessageTrans.CenterServer, MessageTrans.HallServer, MessageTrans.RoomServer
+					, MessageTrans.GateServer },
 			des = "请求注册")
 	public static final int REQ_REGISTER = 3;
 
 	@ClassType(value = ModelProto.AckRegister.class,
-			messageTrans = { MessageTrans.GameClient, MessageTrans.GateClient, MessageTrans.HallClient, MessageTrans.RoomClient },
+			messageTrans = { MessageTrans.GameClient, MessageTrans.GateClient, MessageTrans.HallClient, MessageTrans.RoomClient
+					, MessageTrans.RobotClient },
 			des = "注册回复")
 	public static final int ACK_REGISTER = 4;
 
@@ -59,7 +63,7 @@ public class CMsg {
 	public static final int REQ_SERVER = 7;
 
 	@ClassType(value = ModelProto.AckServerInfo.class,
-			messageTrans = { MessageTrans.GateClient, MessageTrans.HallClient, MessageTrans.RoomClient },
+			messageTrans = { MessageTrans.GateClient, MessageTrans.HallClient, MessageTrans.RoomClient, MessageTrans.RobotClient },
 			des = "服务信息回复")
 	public static final int ACK_SERVER = 8;
 

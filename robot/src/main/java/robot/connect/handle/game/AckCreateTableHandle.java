@@ -1,4 +1,4 @@
-package robot.connect.handel.game;
+package robot.connect.handle.game;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessType;

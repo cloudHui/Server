@@ -18,12 +18,12 @@ public class ClientProto {
 
 	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
-	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parseMessage(id, bytes, TRANS_MAP);
 
 	public static void init() {
-		HandleTypeRegister.bindClassProcess(ClientProto.class, handlers);
+		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, handlers);
 
-		HandleTypeRegister.bindPackageProcess(handlers);
+		HandleTypeRegister.bindDefaultPackageProcess(handlers);
 
 		HandleTypeRegister.bindTransMap(HMsg.class, TRANS_MAP, MessageTrans.HallServer);
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.HallServer);

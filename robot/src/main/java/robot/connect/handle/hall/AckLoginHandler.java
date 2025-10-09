@@ -1,4 +1,4 @@
-package robot.connect.handel.hall;
+package robot.connect.handle.hall;
 
 import com.google.protobuf.Message;
 import msg.registor.message.HMsg;

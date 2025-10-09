@@ -16,12 +16,12 @@ public class ConnectProcessor {
 
 	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
 
-	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parseMessage(id, bytes, TRANS_MAP);
 
 	private final static Map<Integer, Handler> handlers = new HashMap<>();
 
 	public static void init() {
-		HandleTypeRegister.bindClassProcess(ConnectProcessor.class, handlers);
+		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, handlers);
 
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.RoomClient);
 		HandleTypeRegister.bindTransMap(GMsg.class, TRANS_MAP, MessageTrans.RoomClient);

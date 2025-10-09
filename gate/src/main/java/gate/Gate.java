@@ -5,6 +5,7 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import gate.client.ClientProto;
 import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
 import msg.registor.enums.ServerType;
@@ -30,7 +31,6 @@ public class Gate {
 	private final Timer timer;
 
 	private int port;
-	private String ip;
 	private int serverId;
 	private String innerIp;
 	private String center;
@@ -43,14 +43,6 @@ public class Gate {
 
 	public void setPort(int port) {
 		this.port = port;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
 	}
 
 	public int getServerId() {
@@ -110,7 +102,6 @@ public class Gate {
 
 		setPort(cfgMgr.getInt("port", 0));
 		int wsPort = cfgMgr.getInt("wsGate", 0);
-		setIp(IpUtil.getOutIp());
 
 		setServerId(cfgMgr.getInt("id", 0));
 
@@ -126,6 +117,7 @@ public class Gate {
 		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 		new GateWsService().start(addresses);
 		ConnectProcessor.init();
+		ClientProto.init();
 		//向注册中心注册
 		registerToCenter();
 
@@ -141,10 +133,9 @@ public class Gate {
 	 */
 	private void registerToCenter() {
 		String[] ipPort = getCenter().split(":");
-		int plant = ConfigurationManager.getInstance().getInt("plant", 0);
 		serverManager.registerSever(ipPort, null, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(),
-				plant == 2 ? getIp() + ":" + getPort() : getInnerIp() + ":" + getPort(),
+				getInnerIp() + ":" + getPort(),
 				ServerType.Gate);
 	}
 

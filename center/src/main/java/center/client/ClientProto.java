@@ -19,17 +19,16 @@ public class ClientProto {
 
 	public static void init() {
 		//绑定自带服务器处理
-		HandleTypeRegister.bindClassProcess(ClientProto.class, MAP);
+		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, MAP);
 		//绑定通用服务器处理
-		HandleTypeRegister.bindPackageProcess(MAP);
+		HandleTypeRegister.bindDefaultPackageProcess(MAP);
 		//绑定通用消息转换处理
 		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.CenterServer);
 	}
 
-	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parserMessage(id, bytes, TRANS_MAP);
+	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parseMessage(id, bytes, TRANS_MAP);
 
 	public final static Handlers HANDLERS = MAP::get;
-
 
 	public final static Transfer TRANSFER = (routerClient, tcpMessage) -> false;
 }

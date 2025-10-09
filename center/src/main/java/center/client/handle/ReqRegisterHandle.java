@@ -5,9 +5,9 @@ import java.util.List;
 import center.Center;
 import center.client.CenterClient;
 import com.google.protobuf.Message;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -80,7 +80,8 @@ public class ReqRegisterHandle implements Handler {
 				change.addServers(serverInfo);
 				client.sendMessage(CMsg.REGISTER_NOTICE, change.build());
 			}
-			LOGGER.error("[center send to server:{} info:{} reqRegister]", serverType, serverInfo.toString());
+			LOGGER.error("[reqRegister center send to server:{} info:{}]", serverType,
+					serverInfo.getServerType() + " " + serverInfo.getServerId() + " " + serverInfo.getIpConfig().toStringUtf8());
 		}
 	}
 

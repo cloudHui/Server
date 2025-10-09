@@ -1,14 +1,18 @@
 package msg.registor;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.protobuf.Internal;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
 import msg.annotation.ClassType;
+import msg.annotation.ProcessClass;
+import msg.annotation.ProcessClassMethod;
 import msg.annotation.ProcessType;
 import msg.registor.enums.MessageTrans;
 import net.handler.Handler;
@@ -17,184 +21,319 @@ import org.slf4j.LoggerFactory;
 import utils.other.ClazzUtil;
 
 /**
- * @author admin
- * @className MessageRegister
- * @description 处理类型注册绑定
- * @createDate 2025/4/10 3:27
+ * @className HandleTypeRegister
+ * @description 统一注册中心 - 负责消息处理器、类型转换和工厂方法的动态绑定与注册管理
+ * @createDate 2025/04/10 03:27
  */
 public class HandleTypeRegister {
 
-	private static final String HEAR_PACKAGE = "utils.handle";
-
 	private static final Logger logger = LoggerFactory.getLogger(HandleTypeRegister.class);
 
+	// 配置常量
+	private static final String DEFAULT_HANDLE_PACKAGE = "utils.handle";
+	private static final String BIND_SUCCESS_TEMPLATE = "{} bind success, size: {}";
+	private static final String BIND_ERROR_TEMPLATE = "{} bind error";
+
+	// 全局处理器实例缓存 (避免重复实例化)
+	private static final Map<Class<?>, Object> GLOBAL_HANDLER_CACHE = new ConcurrentHashMap<>();
+
+	// ==================== 消息类型转换相关方法 ====================
+
 	/**
-	 * 绑定处理类型与消息类类型(通用消息处理)
+	 * 绑定消息类型转换映射
 	 *
-	 * @param classes  消息常量类
-	 * @param messageT 消息转化类型
+	 * @param constantClass   消息常量类
+	 * @param transMap        目标转换映射表
+	 * @param targetTransType 目标转换类型
 	 */
-	public static void bindTransMap(Class<?> classes, Map<Integer, Class<?>> transMap, MessageTrans messageT) {
-		Field[] fields = classes.getFields();
-		Object object = null;
-		for (Field field : fields) {
+	public static void bindTransMap(Class<?> constantClass, Map<Integer, Class<?>> transMap, MessageTrans targetTransType) {
+		int bindCount = 0;
+
+		for (Field field : constantClass.getFields()) {
 			ClassType annotation = field.getAnnotation(ClassType.class);
 			if (annotation == null) {
 				continue;
 			}
-			MessageTrans[] messageTrans = annotation.messageTrans();
-			if (messageTrans.length == 0) {
-				continue;
-			}
-			for (MessageTrans trans : messageTrans) {
-				//是否有这个服务类型
-				if (messageT.equals(trans)) {
+
+			for (MessageTrans trans : annotation.messageTrans()) {
+				if (targetTransType.equals(trans)) {
 					try {
-						object = field.get(null);
-						transMap.put((int) object, annotation.value());
+						Object fieldValue = field.get(null);
+						if (fieldValue instanceof Integer) {
+							transMap.put((Integer) fieldValue, annotation.value());
+							bindCount++;
+						}
 					} catch (Exception e) {
-						Object[] values = new Object[] {
-								classes.getSimpleName(), object != null ? object.getClass() : null, object
-						};
-						logger.error("bindCommonTransMap error {}", values, e);
+						logger.error("Bind field failed: {}.{}",
+								constantClass.getSimpleName(), field.getName(), e);
 					}
 					break;
 				}
 			}
 		}
 
-		logger.error("{} bindCommonTransMap success bind size:{}", classes.getSimpleName(), transMap.size());
-
-		//
-		////Todo
-		//for (Map.Entry<Integer, Class<?>> entry : transMap.entrySet()) {
-		//	System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getName());
-		//}
+		logger.info(BIND_SUCCESS_TEMPLATE, constantClass.getSimpleName(), bindCount);
 	}
 
+	// ==================== 处理器绑定相关方法 ====================
 
 	/**
-	 * 绑定处理类型与处理器
-	 * 有默认处理包 通用的心跳处理包
+	 * 绑定默认包下的处理器
 	 */
-	public static void bindPackageProcess(Map<Integer, Handler> processorMap) {
-		bindPackageProcess(HEAR_PACKAGE, processorMap);
+	public static void bindDefaultPackageProcess(Map<Integer, Handler> processorMap) {
+		bindPackageProcess(DEFAULT_HANDLE_PACKAGE, processorMap);
 	}
 
 	/**
-	 * 绑定处理类型与处理器
+	 * 绑定指定包下的处理器
 	 *
-	 * @param packages 包名 这个包下面处理器和消息注解绑定关系读取
+	 * @param packageName  扫描的包路径
+	 * @param processorMap 处理器映射表
 	 */
-	public static void bindPackageProcess(String packages, Map<Integer, Handler> processorMap) {
+	public static void bindPackageProcess(String packageName, Map<Integer, Handler> processorMap) {
 		try {
-			List<Class<?>> classes = ClazzUtil.getClasses(packages);
-			doBind(processorMap, classes);
+			List<Class<?>> classes = ClazzUtil.getClasses(packageName);
+			doBindProcessors(classes, processorMap);
+			logger.info(BIND_SUCCESS_TEMPLATE, packageName, processorMap.size());
 		} catch (Exception e) {
-			logger.error("bindPackageProcess error {} ", packages, e);
+			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
 		}
-		logger.error("{} bindPackageProcess success bind size:{}", packages, processorMap.size());
 	}
 
 	/**
-	 * 绑定处理类型与处理器
-	 *
-	 * @param packageClass 类名 这个类下面处理器和消息注解绑定关系读取
+	 * 绑定指定类所在包下的处理器
 	 */
-	public static void bindClassProcess(Class<?> packageClass, Map<Integer, Handler> processorMap) {
+	public static void bindClassPackageProcess(Class<?> packageClass, Map<Integer, Handler> processorMap) {
+		String packageName = packageClass.getPackage().getName();
 		try {
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");
-			doBind(processorMap, classes);
+			doBindProcessors(classes, processorMap);
+			logger.info("Package:{} bind success, size:{}", packageName, processorMap.size());
 		} catch (Exception e) {
-			logger.error("bindClassProcess error {} ", packageClass.getName(), e);
-			e.printStackTrace();
+			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
 		}
-		logger.error("class:{} bindClassProcess success bind size:{}", packageClass.getPackage().getName(), processorMap.size());
-		//
-		//
-		//for (Map.Entry<Integer, Handler> entry : processorMap.entrySet()) {
-		//	System.out.println(String.format("%6d", entry.getKey()) + "  " + entry.getValue().getClass().getName());
-		//}
 	}
 
 	/**
-	 * 绑定
+	 * 通用绑定方法 - 扫描包内所有处理器
 	 */
-	private static void doBind(Map<Integer, Handler> processorMap, List<Class<?>> classes) {
-		Map<Class<?>, Handler> classProcessMap = new HashMap<>();
-		for (Class<?> aclass : classes) {
-			try {
-				if (!Handler.class.isAssignableFrom(aclass)) {
+	public static void bindAllProcessorInPackage(Class<?> packageClass, Map<Integer, Class<?>> processorMap) {
+		bindProcessors(packageClass, processorMap, null);
+	}
+
+	/**
+	 * 通用绑定方法 - 带包过滤条件
+	 */
+	public static void bindAllProcessorWithExceptPackage(Class<?> packageClass, Map<Integer, Class<?>> processorMap, String except) {
+		bindProcessors(packageClass, processorMap, except);
+	}
+
+	// ==================== 工厂方法相关方法 ====================
+
+	/**
+	 * 初始化处理工厂
+	 */
+	public static <T> void initFactory(Class<?> factoryClass, Map<Integer, T> handles) {
+		bindProcessors(factoryClass, handles, null);
+	}
+
+	/**
+	 * 初始化类处理工厂
+	 */
+	public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles,
+											Map<Class<?>, Map<Class<?>, Method>> classMethodMap,
+											Class<?> managerClass) {
+		bindClassProcessors(factoryClass, handles, classMethodMap, managerClass);
+	}
+
+	// ==================== 核心绑定逻辑 ====================
+
+	/**
+	 * 执行处理器绑定逻辑
+	 */
+	private static void doBindProcessors(List<Class<?>> classes, Map<Integer, Handler> processorMap) {
+		for (Class<?> clazz : classes) {
+			if (!Handler.class.isAssignableFrom(clazz)) {
+				continue;
+			}
+
+			ProcessType processType = clazz.getAnnotation(ProcessType.class);
+			if (processType != null) {
+				registerProcessor(processType.value(), clazz, processorMap);
+			}
+		}
+	}
+
+	/**
+	 * 通用绑定方法 - 处理ProcessType注解
+	 */
+	private static <T> void bindProcessors(Class<?> packageClass, Map<Integer, T> processorMap, String filter) {
+		try {
+			List<Class<?>> classes = ClazzUtil.getClasses(packageClass, filter != null ? filter : "");
+			Map<Class<?>, T> classProcessMap = new HashMap<>();
+
+			for (Class<?> aclass : classes) {
+				ProcessType processesType = aclass.getAnnotation(ProcessType.class);
+				if (processesType == null) {
 					continue;
 				}
-				ProcessType processesType = aclass.getAnnotation(ProcessType.class);
-				if (processesType != null) {
-					putProcess(processesType.value(), aclass, processorMap, classProcessMap);
-				} else {
-					logger.error("{} no Annotation ProcessType", aclass);
+				putHandle(processesType.value(), aclass, processorMap, classProcessMap);
+			}
+
+			logger.info("{} bind success, size:{}", packageClass.getPackage().getName(), processorMap.size());
+		} catch (Exception e) {
+			logger.error("{} bind processors error", packageClass.getPackage().getName(), e);
+		}
+	}
+
+	/**
+	 * 通用绑定方法 - 处理ProcessClass注解
+	 */
+	private static <T> void bindClassProcessors(Class<?> packageClass, Map<Class<?>, T> processorMap,
+												Map<Class<?>, Map<Class<?>, Method>> classMethodMap,
+												Class<?> managerClass) {
+		try {
+			List<Class<?>> classes = ClazzUtil.getClasses(packageClass, "");
+			Map<Class<?>, T> classProcessMap = new HashMap<>();
+
+			for (Class<?> aclass : classes) {
+				ProcessClass processesType = aclass.getAnnotation(ProcessClass.class);
+				if (processesType == null) {
+					continue;
 				}
-			} catch (Exception e) {
-				logger.error("{} {}", aclass, e.getMessage());
+
+				Class<?> value = processesType.value();
+				putHandle(value, aclass, processorMap, classProcessMap);
+				managerFunctionMap(aclass, managerClass, classMethodMap);
 			}
+
+			logger.info("{} bind success, size:{}", packageClass.getPackage().getName(), processorMap.size());
+		} catch (Exception e) {
+			logger.error("{} bind processors error", packageClass.getPackage().getName(), e);
+		}
+	}
+
+	// ==================== 注册器核心方法 ====================
+
+	/**
+	 * 注册处理器实例
+	 */
+	private static void registerProcessor(int processId, Class<?> handlerClass,
+										  Map<Integer, Handler> processorMap) {
+		// 重复ID检查
+		if (processorMap.containsKey(processId)) {
+			logger.error("Duplicate process ID: {} for handler: {}", processId, handlerClass.getName());
+			throw new IllegalStateException(String.format(
+					"Duplicate process ID %d for handler %s", processId, handlerClass.getName()));
+		}
+
+		// 获取或创建处理器实例
+		Handler processor = (Handler) GLOBAL_HANDLER_CACHE.computeIfAbsent(handlerClass,
+				key -> createHandlerInstance(processId, handlerClass));
+
+		if (processor != null) {
+			processorMap.put(processId, processor);
+			logger.debug("Registered processor: {} -> {}", processId, handlerClass.getSimpleName());
+		} else {
+			logger.error("Failed to create handler instance: {}", handlerClass.getName());
 		}
 	}
 
 	/**
-	 * 绑定消息和处理器
-	 *
-	 * @param pMap      绑定关系map
-	 * @param classPMap 实例化存储map 方式多次实例化
+	 * 处理器绑定核心方法
 	 */
-	private static void putProcess(int processId, Class<?> aclass, Map<Integer, Handler> pMap, Map<Class<?>, Handler> classPMap) {
-		if (pMap.containsKey(processId)) {
-			try {
-				throw new Exception("init " + aclass + " same processId " + processId);
-			} catch (Exception e) {
-				e.printStackTrace();
+	private static <K, T> void putHandle(K key, Class<?> aclass, Map<K, T> handles,
+										 Map<Class<?>, T> classProcessMap) {
+		T handler = handles.get(key);
+		if (handler != null) {
+			logger.error("putHandle same key:{} old:{} new:{} ", key, handler.getClass(), aclass);
+		}
+
+		handler = classProcessMap.computeIfAbsent(aclass, k -> newInstance(key, aclass));
+
+		if (handler != null) {
+			handles.put(key, handler);
+		}
+	}
+
+	/**
+	 * 管理函数方法存储
+	 */
+	private static void managerFunctionMap(Class<?> aClass, Class<?> managerClass,
+										   Map<Class<?>, Map<Class<?>, Method>> classMethodMap) {
+		Method[] declaredMethods = aClass.getDeclaredMethods();
+		for (Method method : declaredMethods) {
+			ProcessClassMethod annotation = method.getAnnotation(ProcessClassMethod.class);
+			if (annotation != null) {
+				if (managerClass.isAssignableFrom(annotation.value())) {
+					classMethodMap.computeIfAbsent(aClass, k -> new HashMap<>())
+							.put(annotation.value(), method);
+				}
 			}
 		}
-		Handler iProcessor = classPMap.computeIfAbsent(aclass, k -> {
-			try {
-				return (Handler) aclass.getConstructor().newInstance();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	}
+
+	// ==================== 实例创建方法 ====================
+
+	/**
+	 * 创建处理器实例
+	 */
+	private static Handler createHandlerInstance(int processId, Class<?> handlerClass) {
+		try {
+			return (Handler) handlerClass.getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			logger.error("Create handler instance failed: {} for process ID: {}",
+					handlerClass.getName(), processId, e);
 			return null;
-		});
-		if (iProcessor != null) {
-			pMap.put(processId, iProcessor);
-		} else {
-			try {
-				throw new Exception("init " + aclass + " newInstance fail " + processId);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 	}
 
 	/**
-	 * 消息转化
+	 * 创建通用实例
 	 */
-	public static Message parserMessage(int id, byte[] bytes, Map<Integer, Class<?>> map) {
-		Class<?> aClass = map.get(id);
-		if (aClass != null) {
-			try {
-				return (Message) getMessageObject((Class<MessageLite>) aClass, bytes);
-			} catch (Exception e) {
-				logger.error("[parserMessage Exception messageId :{} className:{}]", id, aClass.getSimpleName(), e);
-			}
-		} else {
-			logger.error("[parserMessage error messageId :{} can not find messageType class]", id);
+	private static <T> T newInstance(Object key, Class<?> aclass) {
+		try {
+			return (T) aclass.getConstructor().newInstance();
+		} catch (Exception e) {
+			logger.error("init {} newInstance fail for key {} ", aclass, key, e);
 		}
 		return null;
 	}
 
-	private static MessageLite getMessageObject(Class<MessageLite> clazz, byte[] bytes) throws Exception {
-		MessageLite defaultInstance = Internal.getDefaultInstance(clazz);
-		if (null == bytes) {
-			return defaultInstance.newBuilderForType().build();
-		} else {
-			return defaultInstance.getParserForType().parseFrom(bytes);
+	// ==================== 消息解析方法 ====================
+
+	/**
+	 * 解析消息字节数据为Protocol Buffer消息对象
+	 *
+	 * @param messageId 消息ID
+	 * @param bytes     消息字节数据
+	 * @param typeMap   消息类型映射表
+	 * @return 解析后的消息对象，解析失败返回null
+	 */
+	public static Message parseMessage(int messageId, byte[] bytes, Map<Integer, Class<?>> typeMap) {
+		Class<?> messageClass = typeMap.get(messageId);
+		if (messageClass == null) {
+			logger.warn("Unknown message ID: {}", messageId);
+			return null;
 		}
+
+		try {
+			return (Message) parseMessageData((Class<MessageLite>) messageClass, bytes);
+		} catch (Exception e) {
+			logger.error("Parse message failed, ID: {}, Class: {}",
+					messageId, messageClass.getSimpleName(), e);
+			return null;
+		}
+	}
+
+	/**
+	 * 使用Protocol Buffer解析消息数据
+	 */
+	private static MessageLite parseMessageData(Class<MessageLite> messageClass, byte[] bytes) throws Exception {
+		MessageLite defaultInstance = Internal.getDefaultInstance(messageClass);
+		if (bytes == null || bytes.length == 0) {
+			return defaultInstance.newBuilderForType().build();
+		}
+		return defaultInstance.getParserForType().parseFrom(bytes);
 	}
 }

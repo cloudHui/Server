@@ -8,10 +8,17 @@ public class User {
 
 	private int clientId;
 
-	public User(int userId, String nick, int clientId) {
+	private final String cert;
+
+	public User(int userId, String nick, int clientId, String cert) {
 		this.userId = userId;
 		this.nick = nick;
 		this.clientId = clientId;
+		this.cert = cert;
+	}
+
+	public String getCert() {
+		return cert;
 	}
 
 	public int getUserId() {

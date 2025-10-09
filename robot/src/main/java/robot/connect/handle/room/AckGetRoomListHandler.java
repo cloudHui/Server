@@ -1,4 +1,4 @@
-package robot.connect.handel.room;
+package robot.connect.handle.room;
 
 import com.google.protobuf.Message;
 import msg.registor.message.RMsg;

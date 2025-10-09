@@ -1,20 +1,15 @@
 package robot;
 
-import java.util.UUID;
-
-import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
-import msg.registor.message.HMsg;
-import msg.registor.message.CMsg;
 import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.HallProto;
 import proto.ModelProto;
 import robot.connect.ConnectProcessor;
+import robot.connect.handle.RobotHandleManager;
 import threadtutil.thread.ExecutorPool;
-import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
@@ -25,7 +20,6 @@ public class Robot {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Robot.class);
 
 	private final static Robot instance = new Robot();
-
 	private final ExecutorPool executorPool;
 	private final Timer timer;
 
@@ -33,7 +27,6 @@ public class Robot {
 
 	private String center;
 	private int port;
-	private String ip;
 	private int serverId;
 	private String innerIp;
 
@@ -55,14 +48,6 @@ public class Robot {
 
 	public void setPort(int port) {
 		this.port = port;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
 	}
 
 	public int getServerId() {
@@ -90,25 +75,20 @@ public class Robot {
 		timer = new Timer().setRunners(executorPool);
 	}
 
-	public <T> void registerTimer(int delay, int interval, int count, Runner<T> runner, T param) {
-		timer.register(delay, interval, count, runner, param);
-	}
-
 	public void execute(Runnable r) {
 		executorPool.execute(r);
 	}
 
-	public void serialExecute(Task t) {
-		executorPool.serialExecute(t);
+	public <T> void registerTimer(int delay, int interval, int count, Runner<T> runner, T param) {
+		timer.register(delay, interval, count, runner, param);
 	}
 
-
 	private void start() {
+		RobotHandleManager.init();
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 		ConnectProcessor.init();
 		setPort(cfgMgr.getInt("port", 0));
-		setIp(IpUtil.getOutIp());
 
 		setServerId(cfgMgr.getInt("id", 0));
 
@@ -120,9 +100,8 @@ public class Robot {
 		registerToCenter();
 
 		//获取其他服务
-		getAllOtherServer();
+		getGateServer();
 
-		login();
 		LOGGER.info("[robot server is start!!!]");
 	}
 
@@ -131,25 +110,22 @@ public class Robot {
 	 */
 	private void registerToCenter() {
 		String[] ipPort = getCenter().split(":");
-		int plant = ConfigurationManager.getInstance().getInt("plant", 0);
 		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(),
-				plant == 2 ? getIp() + ":" + getPort() : getInnerIp() + ":" + getPort(),
-				ServerType.Gate);
+				getInnerIp() + ":" + getPort(),
+				ServerType.Robot);
 	}
 
 	/**
-	 * 获取其他除注册中心以外的所有服务端口ip
+	 * 获取gate
 	 */
-	private void getAllOtherServer() {
+	private void getGateServer() {
 		registerTimer(3000, 1000, -1, robot -> {
 			ConnectHandler serverClient = serverManager.getServerClient(ServerType.Center);
 			if (serverClient != null) {
 				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
-				req.addServerType(ServerType.Game.getServerType());
-				req.addServerType(ServerType.Hall.getServerType());
-				req.addServerType(ServerType.Room.getServerType());
-				serverClient.sendMessage(CMsg.REQ_SERVER, req.build());
+				req.addServerType(ServerType.Gate.getServerType());
+				RobotHandleManager.sendMsg(serverClient, req.build(), CMsg.REQ_SERVER);
 				return true;
 			}
 			return false;
@@ -163,19 +139,11 @@ public class Robot {
 		registerTimer(0, 1000, -1, gate -> {
 			ConnectHandler serverClient = Robot.getInstance().getServerManager().getServerClient(serverType);
 			if (serverClient != null) {
-				serverClient.sendMessage(msgId, message);
+				RobotHandleManager.sendMsg(serverClient, message, msgId);
 				return true;
 			}
 			return false;
 		}, this);
-	}
-
-	/**
-	 * 模拟登录
-	 */
-	private void login() {
-		HallProto.ReqLogin build = HallProto.ReqLogin.newBuilder().setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString())).build();
-		getClientSendMessage(ServerType.Hall, HMsg.REQ_LOGIN_MSG, build);
 	}
 
 	public static void main(String[] args) {

@@ -10,6 +10,7 @@ public enum MessageTrans {
 	CenterServer(ServerType.Center, CMsg.SERVER, "注册中心服务器"),
 
 	GateClient(ServerType.Gate, CMsg.CLIENT, "网关客户端"),
+	GateServer(ServerType.Gate, CMsg.SERVER, "网关服务器"),
 
 	GameServer(ServerType.Game, CMsg.SERVER, "游戏服务器"),
 	GameClient(ServerType.Game, CMsg.CLIENT, "游戏客户端"),
