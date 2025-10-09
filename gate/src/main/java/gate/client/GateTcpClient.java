@@ -23,6 +23,10 @@ public class GateTcpClient extends ClientHandler {
 		setSafe((msgId) -> msgId == HMsg.REQ_LOGIN_MSG || roleId != 0);
 	}
 
+	public int getRoleId() {
+		return roleId;
+	}
+
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}

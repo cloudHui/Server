@@ -22,7 +22,7 @@ public class AckServerInfoHandle implements Handler {
 				((ModelProto.AckServerInfo) msg).getServersList(),
 				Gate.getInstance().getServerId(),
 				Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort(),
-				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				null, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate));
 		return true;
 	}

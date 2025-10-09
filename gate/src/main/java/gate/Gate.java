@@ -142,7 +142,7 @@ public class Gate {
 	private void registerToCenter() {
 		String[] ipPort = getCenter().split(":");
 		int plant = ConfigurationManager.getInstance().getInt("plant", 0);
-		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+		serverManager.registerSever(ipPort, null, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(),
 				plant == 2 ? getIp() + ":" + getPort() : getInnerIp() + ":" + getPort(),
 				ServerType.Gate);

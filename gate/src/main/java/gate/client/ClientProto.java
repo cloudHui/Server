@@ -5,12 +5,15 @@ import gate.Gate;
 import io.netty.channel.ChannelHandler;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
+import msg.registor.message.HMsg;
 import net.client.handler.ClientHandler;
+import net.client.handler.WsClientHandler;
 import net.connect.handle.ConnectHandler;
 import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.HallProto;
 import proto.ModelProto;
 import utils.ServerManager;
 
@@ -35,13 +38,46 @@ public class ClientProto {
 		ConnectHandler connect = getTransServerClient(msgId, gateClient);
 		if (connect != null) {
 			long send = System.currentTimeMillis();
-			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) ->
-					LOGGER.info("[send transferMessage message: {} to {} back res success:{} cost:{}ms]",
-							Integer.toHexString(msgId), connect.getConnectServer(), throwable == null ? true : throwable.getMessage(), System.currentTimeMillis() - send));
-			return true;
+			connect.sendMessage(tcpMessage, 3).whenComplete((message, throwable) -> {
+				LOGGER.info("[send transferMessage message: {} to {} back res success:{} cost:{}ms]",
+						Integer.toHexString(msgId), connect.getConnectServer(),
+						throwable == null ? true : throwable.getMessage(), System.currentTimeMillis() - send);
+				transResToClient((TCPMessage) message);
+			});
 		}
 		LOGGER.error("[error msg transferMessage to server msgId:{}]", Integer.toHexString(msgId));
 		return false;
+	}
+
+	/**
+	 * 服务器返回消息到客户端
+	 */
+	private static void transResToClient(TCPMessage tcpMessage) {
+		int msgId = tcpMessage.getMessageId();
+		int clientId = tcpMessage.getClientId();
+		if (msgId > CMsg.BASE_ID_INDEX && (msgId & 1) == 0) {
+			GateTcpClient gateClient = (GateTcpClient) ClientHandler.getClient(clientId);
+			if (null != gateClient) {
+				if (msgId == HMsg.ACK_LOGIN_MSG) {
+					try {
+						HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
+						gateClient.setRoleId(ack.getUserId());
+						gateClient.setClubId(ack.getClub());
+						gateClient.setChannel(ack.getChannel());
+						notCenterLink(ClientHandler.getRemoteIP(gateClient).getHostString());
+					} catch (Exception e) {
+						LOGGER.error("AckLogin parse error msgId:{} userId:{}", Integer.toHexString(msgId), gateClient.getRoleId());
+					}
+				}
+				//直接转发给客户端的
+				gateClient.sendMessage(tcpMessage);
+				LOGGER.debug("transResToClient success msgId:{} userId:{}", Integer.toHexString(msgId), gateClient.getRoleId());
+				return;
+			}
+			LOGGER.error("[ERROR! failed transResToClient gateClient null (clientId:{} msgId:{})]", clientId, Integer.toHexString(msgId));
+			return;
+		}
+		LOGGER.error("[ERROR! failed transResToClient  (clientId:{} msgId id:{} error )]", clientId, Integer.toHexString(msgId));
 	}
 
 
@@ -54,9 +90,15 @@ public class ClientProto {
 			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", Integer.toHexString(msgId));
 			return null;
 		}
-		int clientId = 0;
-		ConnectHandler server;
 		ServerManager manager = Gate.getInstance().getServerManager();
+		return getConnectHandler(getClientId(serverType, gateClient), serverType, manager, gateClient);
+	}
+
+	/**
+	 * 获取服务id
+	 */
+	private static int getClientId(ServerType serverType, GateTcpClient gateClient) {
+		int clientId = 0;
 		switch (serverType) {
 			case Game:
 				clientId = gateClient.getGameId();
@@ -68,29 +110,36 @@ public class ClientProto {
 				clientId = gateClient.getRoomId();
 				break;
 		}
+		return clientId;
+	}
+
+	/**
+	 * 获取服务器链接
+	 */
+	private static ConnectHandler getConnectHandler(int clientId, ServerType serverType, ServerManager manager, GateTcpClient gateClient) {
 		if (clientId != 0) {
-			server = manager.getServerClient(serverType, clientId);
+			return manager.getServerClient(serverType, clientId);
 		} else {
-			server = manager.getServerClient(serverType);
+			ConnectHandler connectHandler = manager.getServerClient(serverType);
 			switch (serverType) {
 				case Game:
-					gateClient.setGameId(server.getConnectServer().getServerId());
+					gateClient.setGameId(connectHandler.getConnectServer().getServerId());
 					break;
 				case Hall:
-					gateClient.setHallId(server.getConnectServer().getServerId());
+					gateClient.setHallId(connectHandler.getConnectServer().getServerId());
 					break;
 				case Room:
-					gateClient.setRoomId(server.getConnectServer().getServerId());
+					gateClient.setRoomId(connectHandler.getConnectServer().getServerId());
 					break;
 			}
+			return connectHandler;
 		}
-		return server;
 	}
 
 	/**
 	 * 通过消息id获取要转发的服务类型
 	 */
-	public static ServerType getServerTypeByMessageId(int msgId) {
+	private static ServerType getServerTypeByMessageId(int msgId) {
 		if ((msgId & CMsg.GAME_TYPE) != 0) {
 			return ServerType.Game;
 		} else if ((msgId & CMsg.HALL_TYPE) != 0) {
@@ -111,25 +160,44 @@ public class ClientProto {
 		if (serverManager == null) {
 			return;
 		}
-		ConnectHandler serverClient = serverManager.getServerClient(ServerType.Game, gameId);
-		if (serverClient != null) {
-			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
-		}
-		serverClient = serverManager.getServerClient(ServerType.Hall, hallId);
-		if (serverClient != null) {
-			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
-		}
-		serverClient = serverManager.getServerClient(ServerType.Room, roomId);
-		if (serverClient != null) {
-			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
-		}
 
-		serverClient = serverManager.getServerClient(ServerType.Center);
+		sendNotBreak(ServerType.Game, gameId, not.build());
+		sendNotBreak(ServerType.Hall, hallId, not.build());
+		sendNotBreak(ServerType.Room, roomId, not.build());
+		ConnectHandler serverClient = Gate.getInstance().getServerManager().getServerClient(ServerType.Center);
 		if (serverClient != null) {
-			if (handler instanceof GateTcpClient) {
-				not.setCert(ByteString.copyFromUtf8(ClientHandler.getRemoteIP((ClientHandler) handler).getHostString()));
+			if (handler instanceof ClientHandler) {
+				not.setCert(ByteString.copyFromUtf8(ClientHandler.getRemoteIP((ClientHandler) handler).getHostName()));
+			} else if (handler instanceof WsClientHandler) {
+				not.setCert(ByteString.copyFromUtf8(WsClientHandler.getRemoteIP((WsClientHandler) handler).getHostName()));
 			}
 			serverClient.sendMessage(CMsg.NOT_BREAK, not.build());
+		}
+	}
+
+	/**
+	 * 通知服务器玩家掉线掉线
+	 */
+	private static void sendNotBreak(ServerType serverType, int clientId, ModelProto.NotBreak not) {
+		ServerManager serverManager = Gate.getInstance().getServerManager();
+		if (serverManager == null) {
+			return;
+		}
+		ConnectHandler serverClient = serverManager.getServerClient(serverType, clientId);
+		if (serverClient != null) {
+			serverClient.sendMessage(CMsg.NOT_BREAK, not);
+		}
+	}
+
+	/**
+	 * 通知中心玩家登录成功
+	 */
+	private static void notCenterLink(String cert) {
+		ModelProto.NotRegisterClient.Builder not = ModelProto.NotRegisterClient.newBuilder();
+		not.setCert(ByteString.copyFromUtf8(cert));
+		ConnectHandler serverClient = Gate.getInstance().getServerManager().getServerClient(ServerType.Center);
+		if (serverClient != null) {
+			serverClient.sendMessage(CMsg.NOT_LINK, not.build());
 		}
 	}
 }

@@ -64,12 +64,17 @@ public class CMsg {
 	public static final int ACK_SERVER = 8;
 
 	@ClassType(value = ModelProto.NotBreak.class,
-			messageTrans = { MessageTrans.GameServer, MessageTrans.HallServer, MessageTrans.RoomServer },
+			messageTrans = { MessageTrans.GameServer, MessageTrans.HallServer, MessageTrans.RoomServer, MessageTrans.CenterServer },
 			des = "通知玩家掉线")
 	public static final int NOT_BREAK = 9;
 
+	@ClassType(value = ModelProto.NotBreak.class,
+			messageTrans = MessageTrans.CenterServer,
+			des = "通知中心玩家登录")
+	public static final int NOT_LINK = 10;
+
 	@ClassType(value = GateProto.BroadCast.class, messageTrans = { MessageTrans.GateClient }, des = "广播")
-	public static final int BROAD = 10;
+	public static final int BROAD = 11;
 
 	public static final int BASE_ID_INDEX = 0x1000;
 }

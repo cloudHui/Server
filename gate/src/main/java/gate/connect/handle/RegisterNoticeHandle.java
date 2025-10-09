@@ -3,9 +3,9 @@ package gate.connect.handle;
 import com.google.protobuf.Message;
 import gate.Gate;
 import gate.connect.ConnectProcessor;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -21,7 +21,7 @@ public class RegisterNoticeHandle implements Handler {
 		Gate.getInstance().execute(() -> Gate.getInstance().getServerManager().connectToSever(
 				((ModelProto.NotRegisterInfo) registerInfo).getServersList(), Gate.getInstance().getServerId(),
 				(Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort()),
-				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+				null, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate));
 		return true;
 	}
