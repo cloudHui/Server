@@ -3,6 +3,7 @@ package robot.connect.handle.hall;
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
 import msg.registor.message.RMsg;
+import net.connect.handle.ConnectHandler;
 import proto.HallProto;
 import proto.RoomProto;
 import robot.Robot;
@@ -15,12 +16,12 @@ import robot.connect.handle.RobotHandle;
 public class AckLoginHandler implements RobotHandle {
 
 	@Override
-	public void handle(Message message) {
+	public void handle(Message message, ConnectHandler serverClient) {
 		if (message instanceof HallProto.AckLogin) {
 			HallProto.AckLogin ack = (HallProto.AckLogin) message;
 			LOGGER.error("AckLogin:{}", ack.toString());
 			RoomProto.ReqGetRoomList.Builder builder = RoomProto.ReqGetRoomList.newBuilder();
-			Robot.getInstance().getClientSendMessage(RMsg.REQ_ROOM_LIST_MSG, builder.build());
+			Robot.getInstance().getClientSendMessage(RMsg.REQ_ROOM_LIST_MSG, builder.build(), serverClient);
 		}
 	}
 }

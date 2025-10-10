@@ -40,8 +40,8 @@ public class NotClientLinkHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
-		ModelProto.NotRegisterClient req = (ModelProto.NotRegisterClient) msg;
-		addClientLink(req.getCert().toStringUtf8(), req.getGate().toStringUtf8());
+		ModelProto.NotRegisterClient notBreak = (ModelProto.NotRegisterClient) msg;
+		addClientLink(notBreak.getCert().toStringUtf8(), notBreak.getGate().toStringUtf8());
 		return true;
 	}
 }

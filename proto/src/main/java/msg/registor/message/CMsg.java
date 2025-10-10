@@ -44,7 +44,7 @@ public class CMsg {
 	@ClassField(value = ModelProto.NotBreak.class, des = "通知玩家掉线")
 	public static final int NOT_BREAK = 9;
 
-	@ClassField(value = ModelProto.NotBreak.class, des = "通知中心玩家登录")
+	@ClassField(value = ModelProto.NotRegisterClient.class, des = "通知中心玩家登录")
 	public static final int NOT_LINK = 10;
 
 	@ClassField(value = GateProto.BroadCast.class, des = "广播")

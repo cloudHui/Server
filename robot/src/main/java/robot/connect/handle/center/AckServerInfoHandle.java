@@ -6,7 +6,11 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import msg.registor.message.HMsg;
+import msg.registor.message.RMsg;
+import net.connect.TCPConnect;
+import net.connect.handle.ConnectHandler;
 import proto.HallProto;
 import proto.ModelProto;
 import robot.Robot;
@@ -20,23 +24,31 @@ import robot.connect.handle.RobotHandle;
 public class AckServerInfoHandle implements RobotHandle {
 
 	@Override
-	public void handle(Message message) {
+	public void handle(Message message, ConnectHandler serverClient) {
 		if (message instanceof ModelProto.AckServerInfo) {
 			ModelProto.AckServerInfo ack = (ModelProto.AckServerInfo) message;
-			LOGGER.error("handle:{}", ack.getServers(0).getServerType() +
-					" " + ack.getServers(0).getServerId() +
-					" " + ack.getServers(0).getIpConfig().toStringUtf8());
-			Robot.getInstance().execute(() -> Robot.getInstance().getServerManager().connectToSever(
-					ack.getServersList(),
-					Robot.getInstance().getServerId(),
-					Robot.getInstance().getInnerIp() + ":" + Robot.getInstance().getPort(),
-					ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-					ConnectProcessor.HANDLERS, ServerType.Robot));
-
-			Robot.getInstance().getClientSendMessage(ServerType.Hall, HMsg.REQ_LOGIN_MSG, HallProto.ReqLogin.newBuilder()
-					.setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString()))
-					.setCert(ByteString.copyFromUtf8(Robot.getInstance().getInnerIp()))
-					.build());
+			if (ack.getServersCount() > 0) {
+				LOGGER.error("handle:{}", ack.getServers(0).getServerType() +
+						" " + ack.getServers(0).getServerId() +
+						" " + ack.getServers(0).getIpConfig().toStringUtf8());
+				Robot.getInstance().execute(() -> Robot.getInstance().getServerManager().connectToSingleServer(
+						ack.getServersList().get(0),
+						Robot.getInstance().getServerId(),
+						Robot.getInstance().getInnerIp() + ":" + Robot.getInstance().getPort(),
+						ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+						ConnectProcessor.HANDLERS, ServerType.Robot, new TCPConnect.CallParam(HMsg.REQ_LOGIN_MSG, HallProto.ReqLogin.newBuilder()
+								.setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString()))
+								.setCert(ByteString.copyFromUtf8(Robot.getInstance().getInnerIp()))
+								.build(), Robot.getInstance()::getClientSendMessage)));
+			} else {
+				//加入五秒重试机制
+				Robot.getInstance().registerTimer(5000, 1000, 1, robot -> {
+					robot.getClientSendMessage(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
+							.addServerType(ServerType.Gate.getServerType())
+							.build(), serverClient);
+					return true;
+				}, Robot.getInstance());
+			}
 		}
 	}
 }

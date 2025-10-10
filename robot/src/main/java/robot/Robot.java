@@ -11,12 +11,13 @@ import proto.ModelProto;
 import robot.connect.ConnectProcessor;
 import robot.connect.handle.RobotHandleManager;
 import threadtutil.thread.ExecutorPool;
+import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.other.IpUtil;
 
-public class Robot {
+public class Robot{
 	private final static Logger LOGGER = LoggerFactory.getLogger(Robot.class);
 
 	private final static Robot instance = new Robot();
@@ -84,6 +85,10 @@ public class Robot {
 		executorPool.execute(r);
 	}
 
+	public <T> void registerTimer(long delay, long interval, int count, Runner<T> runner, T param) {
+		timer.register(delay, interval, count, runner, param);
+	}
+
 	private void start() {
 		RobotHandleManager.init();
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
@@ -112,18 +117,19 @@ public class Robot {
 				getInnerIp() + ":" + getPort(),
 				ServerType.Robot, new TCPConnect.CallParam(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
 						.addServerType(ServerType.Gate.getServerType())
-						.build()));
+						.build(), this::getClientSendMessage));
 	}
 
 	/**
 	 * 发送消息
 	 */
-	public void getClientSendMessage(int msgId, Message message) {
-		execute(() -> {
-			ConnectHandler serverClient = Robot.getInstance().getServerManager().getServerClient(ServerType.Gate);
+	public void getClientSendMessage(int msgId, Message message, ConnectHandler serverClient) {
+		try {
 			if (serverClient != null) {
 				RobotHandleManager.sendMsg(serverClient, message, msgId);
 			}
-		});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

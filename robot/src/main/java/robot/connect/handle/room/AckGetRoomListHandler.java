@@ -3,6 +3,7 @@ package robot.connect.handle.room;
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
 import msg.registor.message.RMsg;
+import net.connect.handle.ConnectHandler;
 import proto.RoomProto;
 import robot.Robot;
 import robot.connect.handle.RobotHandle;
@@ -14,7 +15,7 @@ import robot.connect.handle.RobotHandle;
 public class AckGetRoomListHandler implements RobotHandle {
 
 	@Override
-	public void handle(Message message) {
+	public void handle(Message message, ConnectHandler serverClient) {
 		if (message instanceof RoomProto.AckGetRoomList) {
 			RoomProto.AckGetRoomList rooms = (RoomProto.AckGetRoomList) message;
 			LOGGER.error("AckGetRoomList:{}", rooms.toString());
@@ -22,7 +23,7 @@ public class AckGetRoomListHandler implements RobotHandle {
 				RoomProto.Room room = rooms.getRoomList(0);
 				RoomProto.ReqCreateRoomTable.Builder createTable = RoomProto.ReqCreateRoomTable.newBuilder();
 				createTable.setConfigTypeId(room.getConfigTypeId());
-				Robot.getInstance().getClientSendMessage(RMsg.REQ_CREATE_ROOM_TABLE_MSG, createTable.build());
+				Robot.getInstance().getClientSendMessage(RMsg.REQ_CREATE_ROOM_TABLE_MSG, createTable.build(), serverClient);
 			}
 		}
 	}

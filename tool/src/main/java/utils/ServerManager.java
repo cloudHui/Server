@@ -307,7 +307,11 @@ public class ServerManager {
 		TCPConnect.CallParam callback = handler.getCallParam();
 		if (callback != null) {
 			try {
-				handler.sendMessage(callback.messageId, callback.message);
+				if (callback.callback != null) {
+					callback.callback.handle(callback.messageId, callback.message, handler);
+				} else {
+					handler.sendMessage(callback.messageId, callback.message);
+				}
 			} catch (Exception e) {
 				logger.error("执行注册成功回调异常", e);
 			}
