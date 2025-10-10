@@ -31,7 +31,9 @@ public class RobotHandleManager {
 		long start = System.currentTimeMillis();
 		serverClient.sendMessage(req, msgId, 3).whenComplete((msg, throwable) -> {
 			try {
-				LOGGER.info("msg:{} back result:{}", Integer.toHexString(msgId), throwable == null ? "success" : throwable.getMessage());
+				LOGGER.info("msg:{} back result:{}",
+						Integer.toHexString(HandleTypeRegister.parseMessageId(msg.getClass())),
+						throwable == null ? "success" : throwable.getMessage());
 				if (throwable == null) {
 					RobotHandle robotHandle = handleMap.get(msg.getClass());
 					if (robotHandle == null) {
@@ -40,7 +42,9 @@ public class RobotHandleManager {
 					}
 
 					robotHandle.handle(msg, serverClient);
-					LOGGER.info("handle:{} msg:{} cost:{}ms", msg.getClass().getSimpleName(), msgId, (System.currentTimeMillis() - start));
+					LOGGER.info("handle:{} msg:{} cost:{}ms", msg.getClass().getSimpleName(),
+							Integer.toHexString(HandleTypeRegister.parseMessageId(msg.getClass())),
+							(System.currentTimeMillis() - start));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

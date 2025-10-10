@@ -38,6 +38,7 @@ public class HandleTypeRegister {
 	private static final Map<Class<?>, Object> GLOBAL_HANDLER_CACHE = new ConcurrentHashMap<>();
 
 	private static final Map<Integer, Class<?>> TRANS_MAP = new ConcurrentHashMap<>();
+	private static final Map<Class<?>, Integer> MSG_TRANS_MAP = new ConcurrentHashMap<>();
 	// ==================== 消息类型转换相关方法 ====================
 
 	static {
@@ -73,6 +74,8 @@ public class HandleTypeRegister {
 				Object fieldValue = field.get(null);
 				if (fieldValue instanceof Integer) {
 					TRANS_MAP.put((Integer) fieldValue, annotation.value());
+					MSG_TRANS_MAP.put(annotation.value(), (Integer) fieldValue);
+
 					bindCount++;
 				}
 			} catch (Exception e) {
@@ -328,6 +331,13 @@ public class HandleTypeRegister {
 					messageId, messageClass.getSimpleName(), e);
 			return null;
 		}
+	}
+
+	/**
+	 * 通过对象获取消息id
+	 */
+	public static int parseMessageId(Class<?> aClass) {
+		return MSG_TRANS_MAP.getOrDefault(aClass, 0);
 	}
 
 	/**
