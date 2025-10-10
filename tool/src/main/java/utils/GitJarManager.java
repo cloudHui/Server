@@ -17,14 +17,11 @@ public class GitJarManager {
 
 	//获取远端最新版本
 	private static final String GIT_REMOTE = "git ls-remote origin main";
-
+	private static final String USER_DIR = System.getProperty("user.dir");
 	/**
 	 * git更新版本
 	 */
 	private String REV = "";
-
-	private static final String USER_DIR = System.getProperty("user.dir");
-
 	/**
 	 * 文件名 和文件修改时间
 	 */

@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * 注册信息通知
  */
-@ProcessType(value = CMsg.REGISTER_NOTICE, trans = ModelProto.NotRegisterInfo.class)
+@ProcessType(CMsg.REGISTER_NOTICE)
 public class RegisterNoticeHandle implements Handler {
 
 	@Override

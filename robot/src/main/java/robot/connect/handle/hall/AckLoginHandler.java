@@ -16,7 +16,7 @@ import robot.Robot;
 /**
  * 登录回复
  */
-@ProcessType(value = HMsg.ACK_LOGIN_MSG, trans = HallProto.AckLogin.class)
+@ProcessType(HMsg.ACK_LOGIN_MSG)
 public class AckLoginHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckLoginHandler.class);

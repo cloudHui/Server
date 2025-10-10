@@ -20,9 +20,4 @@ public @interface ProcessType {
 	 * @return 类型值
 	 */
 	int value() default 0;
-
-	/**
-	 * 转换类型
-	 */
-	Class<?> trans();
 }

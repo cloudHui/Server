@@ -30,8 +30,22 @@ public class Robot {
 	private int serverId;
 	private String innerIp;
 
+	private Robot() {
+		executorPool = new ExecutorPool("Robot");
+		timer = new Timer().setRunners(executorPool);
+	}
+
 	public static Robot getInstance() {
 		return instance;
+	}
+
+	public static void main(String[] args) {
+		try {
+			instance.start();
+		} catch (Exception e) {
+			LOGGER.error("[failed for start robot server!]", e);
+			System.exit(0);
+		}
 	}
 
 	public String getCenter() {
@@ -68,11 +82,6 @@ public class Robot {
 
 	public ServerManager getServerManager() {
 		return serverManager;
-	}
-
-	private Robot() {
-		executorPool = new ExecutorPool("Robot");
-		timer = new Timer().setRunners(executorPool);
 	}
 
 	public void execute(Runnable r) {
@@ -144,14 +153,5 @@ public class Robot {
 			}
 			return false;
 		}, this);
-	}
-
-	public static void main(String[] args) {
-		try {
-			instance.start();
-		} catch (Exception e) {
-			LOGGER.error("[failed for start robot server!]", e);
-			System.exit(0);
-		}
 	}
 }

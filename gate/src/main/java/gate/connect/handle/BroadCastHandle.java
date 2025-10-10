@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.google.protobuf.Message;
 import gate.client.GateTcpClient;
-import msg.registor.message.CMsg;
 import msg.annotation.ProcessType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -16,7 +16,7 @@ import proto.GateProto;
 /**
  * 广播
  */
-@ProcessType(value = CMsg.BROAD,trans = GateProto.BroadCast.class)
+@ProcessType(CMsg.BROAD)
 public class BroadCastHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BroadCastHandle.class);

@@ -5,9 +5,9 @@ import java.util.List;
 import center.Center;
 import center.client.CenterClient;
 import com.google.protobuf.Message;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.handler.Handler;
@@ -17,7 +17,7 @@ import utils.ServerClientManager;
 /**
  * 获取 服务信息请求
  */
-@ProcessType(value = CMsg.REQ_SERVER,trans = ModelProto.ReqServerInfo.class)
+@ProcessType(CMsg.REQ_SERVER)
 public class ReqServerInfoHandle implements Handler {
 
 	@Override

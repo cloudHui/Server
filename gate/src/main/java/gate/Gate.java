@@ -37,6 +37,23 @@ public class Gate {
 
 	private ServerManager serverManager;
 
+	private Gate() {
+		executorPool = new ExecutorPool("Gate");
+		timer = new Timer().setRunners(executorPool);
+	}
+
+	public static Gate getInstance() {
+		return instance;
+	}
+
+	public static void main(String[] args) {
+		try {
+			instance.start();
+		} catch (Exception e) {
+			logger.error("[failed for start gate server!]", e);
+		}
+	}
+
 	public int getPort() {
 		return port;
 	}
@@ -73,28 +90,17 @@ public class Gate {
 		return serverManager;
 	}
 
-	public static Gate getInstance() {
-		return instance;
-	}
-
-
-	private Gate() {
-		executorPool = new ExecutorPool("Gate");
-		timer = new Timer().setRunners(executorPool);
-	}
-
 	public <T> void registerTimer(int delay, int interval, int count, Runner<T> runner, T param) {
 		timer.register(delay, interval, count, runner, param);
-	}
-
-	public void execute(Runnable r) {
-		executorPool.execute(r);
 	}
 
 	//public void serialExecute(Task t) {
 	//	executorPool.serialExecute(t);
 	//}
 
+	public void execute(Runnable r) {
+		executorPool.execute(r);
+	}
 
 	private void start() {
 
@@ -155,14 +161,5 @@ public class Gate {
 			}
 			return false;
 		}, this);
-	}
-
-
-	public static void main(String[] args) {
-		try {
-			instance.start();
-		} catch (Exception e) {
-			logger.error("[failed for start gate server!]", e);
-		}
 	}
 }

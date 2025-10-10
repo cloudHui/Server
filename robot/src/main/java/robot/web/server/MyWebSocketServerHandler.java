@@ -26,6 +26,25 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 	private static final String WEBSOCKET_PATH = "";
 	private WebSocketServerHandshaker handShaker;
 
+	private static void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, DefaultFullHttpResponse res) {
+		// 返回应答给客户端
+		if (res.status().code() != 200) {
+			ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(), CharsetUtil.UTF_8);
+			res.content().writeBytes(buf);
+			buf.release();
+		}
+
+		ChannelFuture f = ctx.channel().writeAndFlush(res);
+		// 如果是非Keep-Alive，关闭连接
+		if (!isKeepAlive(req) || res.status().code() != 200) {
+			f.addListener(ChannelFutureListener.CLOSE);
+		}
+	}
+
+	private static String getWebSocketLocation(FullHttpRequest req) {
+		return "ws://" + req.headers().get("HOST") + WEBSOCKET_PATH;
+	}
+
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
 		if (msg instanceof FullHttpRequest) {
@@ -107,30 +126,10 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 		//}
 	}
 
-	private static void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, DefaultFullHttpResponse res) {
-		// 返回应答给客户端 
-		if (res.status().code() != 200) {
-			ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(), CharsetUtil.UTF_8);
-			res.content().writeBytes(buf);
-			buf.release();
-		}
-
-		ChannelFuture f = ctx.channel().writeAndFlush(res);
-		// 如果是非Keep-Alive，关闭连接
-		if (!isKeepAlive(req) || res.status().code() != 200) {
-			f.addListener(ChannelFutureListener.CLOSE);
-		}
-	}
-
-
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		cause.printStackTrace();
 		ctx.close();
-	}
-
-	private static String getWebSocketLocation(FullHttpRequest req) {
-		return "ws://" + req.headers().get("HOST") + WEBSOCKET_PATH;
 	}
 
 	/**

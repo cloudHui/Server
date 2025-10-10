@@ -13,15 +13,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RequestMapping("/up")
 public class ServerInfoController {
 
-	@GetMapping("/ip")
-	public String ip() {
-		return getIp();
-	}
-
 	public static String getIp() {
 		RequestAttributes attrs = RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = ((ServletRequestAttributes) attrs).getRequest();
 		return request.getRemoteHost();
+	}
+
+	@GetMapping("/ip")
+	public String ip() {
+		return getIp();
 	}
 
 }

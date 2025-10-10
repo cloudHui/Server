@@ -16,14 +16,12 @@ import utils.other.excel.ExcelUtil;
 public class RoomManager {
 
 	private static final RoomManager instance = new RoomManager();
+	private final ConcurrentHashMap<Integer, TableModel> tableModelMap = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<Integer, ConcurrentHashMap<String, RoomTable>> roomTables = new ConcurrentHashMap<>();
 
 	public static RoomManager getInstance() {
 		return instance;
 	}
-
-	private final ConcurrentHashMap<Integer, TableModel> tableModelMap = new ConcurrentHashMap<>();
-
-	private final ConcurrentHashMap<Integer, ConcurrentHashMap<String, RoomTable>> roomTables = new ConcurrentHashMap<>();
 
 	public void init() {
 		//读取文件生成结构

@@ -13,7 +13,7 @@ import room.client.RoomClient;
 /**
  * 注册服务信息请求
  */
-@ProcessType(value = CMsg.REQ_REGISTER, trans = ModelProto.ReqRegister.class)
+@ProcessType(CMsg.REQ_REGISTER)
 public class ReqRegisterHandle implements Handler {
 
 	@Override

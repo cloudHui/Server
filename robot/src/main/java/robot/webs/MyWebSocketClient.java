@@ -12,6 +12,10 @@ public class MyWebSocketClient extends WebSocketClient {
 		super(serverUri);
 	}
 
+	public static void main(String[] args) throws URISyntaxException {
+		MyWebSocketClient client = new MyWebSocketClient(new URI("ws://172.20.16.119:5601/ws"));
+		client.connect();
+	}
 
 	@Override
 	public void onOpen(ServerHandshake handShakeData) {
@@ -32,10 +36,5 @@ public class MyWebSocketClient extends WebSocketClient {
 	@Override
 	public void onError(Exception ex) {
 		ex.printStackTrace();
-	}
-
-	public static void main(String[] args) throws URISyntaxException {
-		MyWebSocketClient client = new MyWebSocketClient(new URI("ws://172.20.16.119:5601/ws"));
-		client.connect();
 	}
 }

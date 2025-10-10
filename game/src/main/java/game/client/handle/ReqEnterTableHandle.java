@@ -10,7 +10,7 @@ import proto.GameProto;
 /**
  * 请求加入桌子
  */
-@ProcessType(value = GMsg.REQ_ENTER_TABLE_MSG, trans = GameProto.ReqEnterTable.class)
+@ProcessType(GMsg.REQ_ENTER_TABLE_MSG)
 public class ReqEnterTableHandle implements Handler {
 
 	@Override

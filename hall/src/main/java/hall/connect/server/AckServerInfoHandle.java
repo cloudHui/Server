@@ -13,7 +13,7 @@ import proto.ModelProto;
 /**
  * 注册信息通知
  */
-@ProcessType(value = CMsg.ACK_SERVER, trans = ModelProto.AckServerInfo.class)
+@ProcessType(CMsg.ACK_SERVER)
 public class AckServerInfoHandle implements Handler {
 
 	@Override

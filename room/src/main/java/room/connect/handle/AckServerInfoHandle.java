@@ -1,9 +1,9 @@
 package room.connect.handle;
 
 import com.google.protobuf.Message;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -13,7 +13,7 @@ import room.connect.ConnectProcessor;
 /**
  * 注册信息通知
  */
-@ProcessType(value = CMsg.ACK_SERVER, trans = ModelProto.AckServerInfo.class)
+@ProcessType(CMsg.ACK_SERVER)
 public class AckServerInfoHandle implements Handler {
 
 	@Override

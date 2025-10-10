@@ -12,18 +12,10 @@ import proto.ModelProto;
 /**
  * gate通知玩家链接
  */
-@ProcessType(value = CMsg.NOT_LINK, trans = ModelProto.NotRegisterClient.class)
+@ProcessType(CMsg.NOT_LINK)
 public class NotClientLinkHandle implements Handler {
 
 	private static final ConcurrentHashMap<String, String> clientToGate = new ConcurrentHashMap<>();
-
-	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
-		ModelProto.NotRegisterClient req = (ModelProto.NotRegisterClient) msg;
-		addClientLink(req.getCert().toStringUtf8(), req.getGate().toStringUtf8());
-		return true;
-	}
-
 
 	/**
 	 * 客户端断线
@@ -44,5 +36,12 @@ public class NotClientLinkHandle implements Handler {
 	 */
 	public static String getLinkGate(String cert) {
 		return clientToGate.get(cert);
+	}
+
+	@Override
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
+		ModelProto.NotRegisterClient req = (ModelProto.NotRegisterClient) msg;
+		addClientLink(req.getCert().toStringUtf8(), req.getGate().toStringUtf8());
+		return true;
 	}
 }

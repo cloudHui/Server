@@ -14,7 +14,7 @@ import robot.Robot;
 /**
  * 获取房间回复
  */
-@ProcessType(value = RMsg.ACK_ROOM_LIST_MSG, trans = RoomProto.AckGetRoomList.class)
+@ProcessType(RMsg.ACK_ROOM_LIST_MSG)
 public class AckGetRoomListHandler implements Handler {
 
 	private final static Logger logger = LoggerFactory.getLogger(AckGetRoomListHandler.class);

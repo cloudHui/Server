@@ -1,8 +1,8 @@
 package game.client.handle;
 
 import com.google.protobuf.Message;
-import msg.registor.message.CMsg;
 import msg.annotation.ProcessType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
@@ -10,7 +10,7 @@ import proto.ModelProto;
 /**
  * gate通知玩家掉线
  */
-@ProcessType(value = CMsg.NOT_BREAK,trans = ModelProto.NotBreak.class)
+@ProcessType(CMsg.NOT_BREAK)
 public class NotBreakHandle implements Handler {
 
 	@Override

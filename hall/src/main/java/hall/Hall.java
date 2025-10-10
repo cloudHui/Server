@@ -29,20 +29,31 @@ public class Hall {
 
 	private final ExecutorPool executorPool;
 	private final Timer timer;
-
+	public ServerClientManager serverClientManager = new ServerClientManager();
 	private int serverId;
 	private String center;
-
 	/**
 	 * 本服务信息
 	 */
 	private ModelProto.ServerInfo.Builder serverInfo;
-
-
-	public ServerClientManager serverClientManager = new ServerClientManager();
-
-
 	private ServerManager serverManager;
+
+	private Hall() {
+		executorPool = new ExecutorPool("Hall");
+		timer = new Timer().setRunners(executorPool);
+	}
+
+	public static Hall getInstance() {
+		return instance;
+	}
+
+	public static void main(String[] args) {
+		try {
+			instance.start();
+		} catch (Exception e) {
+			LOGGER.error("[failed for start game server!]", e);
+		}
+	}
 
 	public int getServerId() {
 		return serverId;
@@ -64,30 +75,21 @@ public class Hall {
 		return serverManager;
 	}
 
-	public static Hall getInstance() {
-		return instance;
-	}
-
 	public ModelProto.ServerInfo.Builder getServerInfo() {
 		return serverInfo;
-	}
-
-	private Hall() {
-		executorPool = new ExecutorPool("Hall");
-		timer = new Timer().setRunners(executorPool);
 	}
 
 	public <T> void registerTimer(int delay, int interval, int count, Runner<T> runner, T param) {
 		timer.register(delay, interval, count, runner, param);
 	}
 
-	public void execute(Runnable r) {
-		executorPool.execute(r);
-	}
-
 	//public void serialExecute(Task t) {
 	//	executorPool.serialExecute(t);
 	//}
+
+	public void execute(Runnable r) {
+		executorPool.execute(r);
+	}
 
 	private void start() {
 
@@ -135,13 +137,5 @@ public class Hall {
 			}
 			return false;
 		}, this);
-	}
-
-	public static void main(String[] args) {
-		try {
-			instance.start();
-		} catch (Exception e) {
-			LOGGER.error("[failed for start game server!]", e);
-		}
 	}
 }

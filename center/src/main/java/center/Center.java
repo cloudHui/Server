@@ -7,7 +7,6 @@ import java.util.List;
 
 import center.client.CenterClient;
 import center.client.ClientProto;
-import center.client.ServerDecoder;
 import msg.registor.enums.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -28,10 +27,6 @@ public class Center {
 	 */
 	private ModelProto.ServerInfo.Builder serverInfo;
 
-	public ServerClientManager getServerManager() {
-		return serverManager;
-	}
-
 	private Center() {
 	}
 
@@ -39,12 +34,16 @@ public class Center {
 		return instance;
 	}
 
-	public ModelProto.ServerInfo.Builder getServerInfo() {
-		return serverInfo;
-	}
-
 	public static void main(String[] args) {
 		instance.start();
+	}
+
+	public ServerClientManager getServerManager() {
+		return serverManager;
+	}
+
+	public ModelProto.ServerInfo.Builder getServerInfo() {
+		return serverInfo;
 	}
 
 	private void start() {

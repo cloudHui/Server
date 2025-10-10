@@ -10,7 +10,7 @@ import proto.ModelProto;
 /**
  * gate通知玩家掉线
  */
-@ProcessType(value = CMsg.NOT_BREAK, trans = ModelProto.NotBreak.class)
+@ProcessType(CMsg.NOT_BREAK)
 public class NotBreakHandle implements Handler {
 
 	@Override

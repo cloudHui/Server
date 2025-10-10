@@ -6,7 +6,7 @@ server:
 spring:
   application:
     name: center
-  
+
 # Logging configuration
 
 logging:

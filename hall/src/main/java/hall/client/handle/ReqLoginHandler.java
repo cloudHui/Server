@@ -15,7 +15,7 @@ import proto.HallProto;
 /**
  * 登录请求
  */
-@ProcessType(value = HMsg.REQ_LOGIN_MSG, trans = HallProto.ReqLogin.class)
+@ProcessType(HMsg.REQ_LOGIN_MSG)
 public class ReqLoginHandler implements Handler {
 
 	private final AtomicInteger uid = new AtomicInteger(1);

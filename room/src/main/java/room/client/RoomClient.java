@@ -11,10 +11,6 @@ public class RoomClient extends ClientHandler {
 
 	private ModelProto.ServerInfo serverInfo;
 
-	public void setServerInfo(ModelProto.ServerInfo serverInfo) {
-		this.serverInfo = serverInfo;
-	}
-
 	public RoomClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
@@ -25,5 +21,9 @@ public class RoomClient extends ClientHandler {
 				Room.getInstance().getServerClientManager().removeServerClient(serverType, serverInfo.getServerId());
 			}
 		});
+	}
+
+	public void setServerInfo(ModelProto.ServerInfo serverInfo) {
+		this.serverInfo = serverInfo;
 	}
 }

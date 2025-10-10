@@ -11,10 +11,6 @@ public class HallClient extends ClientHandler {
 
 	private ModelProto.ServerInfo serverInfo;
 
-	public void setServerInfo(ModelProto.ServerInfo serverInfo) {
-		this.serverInfo = serverInfo;
-	}
-
 	public HallClient() {
 		super(ClientProto.PARSER, ClientProto.HANDLERS, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
@@ -25,5 +21,9 @@ public class HallClient extends ClientHandler {
 				Hall.getInstance().serverClientManager.removeServerClient(serverType, serverInfo.getServerId());
 			}
 		});
+	}
+
+	public void setServerInfo(ModelProto.ServerInfo serverInfo) {
+		this.serverInfo = serverInfo;
 	}
 }

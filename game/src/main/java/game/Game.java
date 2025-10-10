@@ -27,30 +27,39 @@ public class Game {
 
 	private static final Game instance;
 
-	private ExecutorPool executorPool;
-	private Timer timer;
-
-	private int serverId;
-	private String center;
-
-	/**
-	 * 本服务信息
-	 */
-	private ModelProto.ServerInfo.Builder serverInfo;
-
-
 	static {
 		instance = new Game();
 		instance.executorPool = new ExecutorPool("Game");
 		instance.timer = new Timer().setRunners(instance.executorPool);
 	}
 
-
 	private final ServerClientManager serverClientManager = new ServerClientManager();
-
+	private ExecutorPool executorPool;
+	private Timer timer;
+	private int serverId;
+	private String center;
+	/**
+	 * 本服务信息
+	 */
+	private ModelProto.ServerInfo.Builder serverInfo;
 	private ServerManager serverManager;
 
 	private TableManager tableManager;
+
+	private Game() {
+	}
+
+	public static Game getInstance() {
+		return instance;
+	}
+
+	public static void main(String[] args) {
+		try {
+			instance.start();
+		} catch (Exception e) {
+			LOGGER.error("[failed for start game server!]", e);
+		}
+	}
 
 	public int getServerId() {
 		return serverId;
@@ -88,13 +97,6 @@ public class Game {
 		return serverInfo;
 	}
 
-	public static Game getInstance() {
-		return instance;
-	}
-
-	private Game() {
-	}
-
 	public <T> void registerTimer(long delay, long interval, int count, Runner<T> runner, T param) {
 		timer.register(delay, interval, count, runner, param);
 	}
@@ -116,7 +118,6 @@ public class Game {
 	public void serialExecute(Task t) {
 		executorPool.serialExecute(t);
 	}
-
 
 	private void start() {
 
@@ -159,13 +160,5 @@ public class Game {
 	 */
 	private void init() {
 		tableManager = new TableManager();
-	}
-
-	public static void main(String[] args) {
-		try {
-			instance.start();
-		} catch (Exception e) {
-			LOGGER.error("[failed for start game server!]", e);
-		}
 	}
 }

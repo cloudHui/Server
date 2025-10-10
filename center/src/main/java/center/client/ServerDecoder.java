@@ -16,18 +16,7 @@ public class ServerDecoder extends HttpDecoder {
 
 	private static final Map<String, Handler<?>> handlers = new HashMap<>();
 
-	public ServerDecoder() {
-	}
-
-	public Handler<?> getHandler(String path) {
-		return handlers.get(path);
-	}
-
-	private static void register(Handler<?> handler) {
-		handlers.put(handler.path(), handler);
-	}
-
-	 static  {
+	static {
 		Class<ServerDecoder> packageClass = ServerDecoder.class;
 		try {
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");
@@ -40,5 +29,16 @@ public class ServerDecoder extends HttpDecoder {
 			logger.error("HttpDecoder init error {} ", packageClass.getName(), e);
 			e.printStackTrace();
 		}
+	}
+
+	public ServerDecoder() {
+	}
+
+	private static void register(Handler<?> handler) {
+		handlers.put(handler.path(), handler);
+	}
+
+	public Handler<?> getHandler(String path) {
+		return handlers.get(path);
 	}
 }

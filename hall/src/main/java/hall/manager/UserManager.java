@@ -12,18 +12,16 @@ import hall.db.service.UserService;
 public class UserManager {
 
 	private static final UserManager userManager = new UserManager();
-
-	public static UserManager getInstance() {
-		return userManager;
-	}
-
 	private static final int MAX_SIZE = 4096;
 	private final Map<String, User> users;
-
 	private final UserService service = new UserService();
 
 	public UserManager() {
 		users = new ConcurrentHashMap<>(MAX_SIZE);
+	}
+
+	public static UserManager getInstance() {
+		return userManager;
 	}
 
 	public User getUser(String cert) {

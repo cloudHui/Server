@@ -10,7 +10,7 @@ import proto.HallProto;
 /**
  * 加入工会请求
  */
-@ProcessType(value = HMsg.REQ_JOIN_CLUB_MSG, trans = HallProto.ReqJoinClub.class)
+@ProcessType(HMsg.REQ_JOIN_CLUB_MSG)
 public class ReqJoinClubHandler implements Handler {
 
 	@Override

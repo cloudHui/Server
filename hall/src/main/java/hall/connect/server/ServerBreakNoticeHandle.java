@@ -17,7 +17,7 @@ import utils.ServerManager;
 /**
  * 服务掉线通知
  */
-@ProcessType(value = CMsg.BREAK_NOTICE, trans = ModelProto.NotServerBreak.class)
+@ProcessType(CMsg.BREAK_NOTICE)
 public class ServerBreakNoticeHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandle.class);

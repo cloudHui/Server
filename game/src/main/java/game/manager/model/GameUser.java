@@ -4,15 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GameUser {
-	private int userId;
-
-	private boolean onLine;
-
-	private boolean sit;
-
-	private long diamond;
-
 	private final Set<String> tableIds = new HashSet<>();
+	private int userId;
+	private boolean onLine;
+	private boolean sit;
+	private long diamond;
 
 	public int getUserId() {
 		return userId;

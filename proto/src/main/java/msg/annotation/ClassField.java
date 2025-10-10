@@ -7,9 +7,19 @@ import java.lang.annotation.Target;
 
 
 /**
- * 消息转换类标识
+ * 消息类消息id绑定
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface ClassType {
+@Target(ElementType.FIELD)
+public @interface ClassField {
+
+	/**
+	 * 绑定的消息类信息
+	 */
+	Class<?> value();
+
+	/**
+	 * 描述
+	 */
+	String des() default "";
 }

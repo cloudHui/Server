@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.google.protobuf.Message;
 import gate.Gate;
-import msg.registor.message.CMsg;
-import msg.registor.enums.ServerType;
 import msg.annotation.ProcessType;
+import msg.registor.enums.ServerType;
+import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import utils.ServerManager;
 /**
  * 服务掉线通知
  */
-@ProcessType(value = CMsg.BREAK_NOTICE, trans = ModelProto.NotServerBreak.class)
+@ProcessType(CMsg.BREAK_NOTICE)
 public class ServerBreakNoticeHandle implements Handler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandle.class);

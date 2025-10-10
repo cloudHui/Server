@@ -7,7 +7,6 @@ import com.google.protobuf.ByteString;
 import gate.Gate;
 import io.netty.channel.ChannelHandler;
 import msg.registor.HandleTypeRegister;
-import msg.registor.enums.MessageTrans;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
 import msg.registor.message.HMsg;
@@ -27,24 +26,19 @@ import utils.ServerManager;
 
 public class ClientProto {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ClientProto.class);
-	private final static Map<Integer, Class<?>> TRANS_MAP = new HashMap<>();
-	private final static Map<Integer, Handler> HANDLER_MAP = new HashMap<>();
 	/**
 	 * 转发消息接口
 	 */
 	public final static Transfer TRANSFER = (gateClient, tcpMessage) -> transferMessage((GateTcpClient) gateClient, tcpMessage);
-
-	public final static Parser PARSER = (id, bytes) -> HandleTypeRegister.parseMessage(id, bytes, TRANS_MAP);
-
+	public final static Parser PARSER = HandleTypeRegister::parseMessage;
+	private final static Map<Integer, Handler> HANDLER_MAP = new HashMap<>();
 	public final static Handlers HANDLERS = HANDLER_MAP::get;
 
 	public static void init() {
-		HandleTypeRegister.bindTransMap(CMsg.class, TRANS_MAP, MessageTrans.GateServer);
-
 		//绑定专用服务器消息处理
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, HANDLER_MAP, TRANS_MAP);
+		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, HANDLER_MAP);
 		//绑定通用服务器消息处理
-		HandleTypeRegister.bindDefaultPackageProcess(HANDLER_MAP, TRANS_MAP);
+		HandleTypeRegister.bindDefaultPackageProcess(HANDLER_MAP);
 	}
 
 	/**

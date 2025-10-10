@@ -10,7 +10,7 @@ import proto.GameProto;
 /**
  * 创建桌子回复
  */
-@ProcessType(value = GMsg.ACK_CREATE_TABLE_MSG, trans = GameProto.AckCreateTable.class)
+@ProcessType(GMsg.ACK_CREATE_TABLE_MSG)
 public class AckCreateTableHandle implements Handler {
 
 	@Override

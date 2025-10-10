@@ -10,11 +10,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.google.protobuf.Internal;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
+import msg.annotation.ClassField;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessClass;
 import msg.annotation.ProcessClassMethod;
 import msg.annotation.ProcessType;
-import msg.registor.enums.MessageTrans;
 import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,40 +37,50 @@ public class HandleTypeRegister {
 	// 全局处理器实例缓存 (避免重复实例化)
 	private static final Map<Class<?>, Object> GLOBAL_HANDLER_CACHE = new ConcurrentHashMap<>();
 
+	private static final Map<Integer, Class<?>> TRANS_MAP = new ConcurrentHashMap<>();
 	// ==================== 消息类型转换相关方法 ====================
+
+	static {
+		try {
+			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(HandleTypeRegister.class, "");
+			for (Class<?> clazz : classes) {
+				int oldSize = TRANS_MAP.size();
+				ClassType processType = clazz.getAnnotation(ClassType.class);
+				if (processType != null) {
+					bindTransMap(clazz);
+				}
+				logger.info("init message id bind class:{} bind success, size:{}", clazz, TRANS_MAP.size() - oldSize);
+			}
+			logger.info("init message id bind total size:{}", TRANS_MAP.size());
+		} catch (Exception e) {
+			logger.error("init message id bind class", e);
+		}
+	}
+
 
 	/**
 	 * 绑定消息类型转换映射
 	 *
-	 * @param constantClass   消息常量类
-	 * @param transMap        目标转换映射表
-	 * @param targetTransType 目标转换类型
+	 * @param constantClass 消息常量类
 	 */
-	@Deprecated
-	public static void bindTransMap(Class<?> constantClass, Map<Integer, Class<?>> transMap, MessageTrans targetTransType) {
+	private static void bindTransMap(Class<?> constantClass) {
 		int bindCount = 0;
 
 		for (Field field : constantClass.getFields()) {
-			ClassType annotation = field.getAnnotation(ClassType.class);
+			ClassField annotation = field.getAnnotation(ClassField.class);
 			if (annotation == null) {
 				continue;
 			}
-
-			for (MessageTrans trans : annotation.messageTrans()) {
-				if (targetTransType.equals(trans)) {
-					try {
-						Object fieldValue = field.get(null);
-						if (fieldValue instanceof Integer) {
-							transMap.put((Integer) fieldValue, annotation.value());
-							bindCount++;
-						}
-					} catch (Exception e) {
-						logger.error("Bind field failed: {}.{}",
-								constantClass.getSimpleName(), field.getName(), e);
-					}
-					break;
+			try {
+				Object fieldValue = field.get(null);
+				if (fieldValue instanceof Integer) {
+					TRANS_MAP.put((Integer) fieldValue, annotation.value());
+					bindCount++;
 				}
+			} catch (Exception e) {
+				logger.error("Bind field failed: {}.{}", constantClass.getSimpleName(), field.getName(), e);
 			}
+			break;
 		}
 
 		logger.info(BIND_SUCCESS_TEMPLATE, constantClass.getSimpleName(), bindCount);
@@ -81,8 +91,8 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定默认包下的处理器
 	 */
-	public static void bindDefaultPackageProcess(Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
-		bindPackageProcess(DEFAULT_HANDLE_PACKAGE, processorMap, transMap);
+	public static void bindDefaultPackageProcess(Map<Integer, Handler> processorMap) {
+		bindPackageProcess(DEFAULT_HANDLE_PACKAGE, processorMap);
 	}
 
 	/**
@@ -91,10 +101,10 @@ public class HandleTypeRegister {
 	 * @param packageName  扫描的包路径
 	 * @param processorMap 处理器映射表
 	 */
-	public static void bindPackageProcess(String packageName, Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
+	public static void bindPackageProcess(String packageName, Map<Integer, Handler> processorMap) {
 		try {
 			List<Class<?>> classes = ClazzUtil.getClasses(packageName);
-			doBindProcessors(classes, processorMap, transMap);
+			doBindProcessors(classes, processorMap);
 			logger.info(BIND_SUCCESS_TEMPLATE, packageName, processorMap.size());
 		} catch (Exception e) {
 			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
@@ -104,11 +114,11 @@ public class HandleTypeRegister {
 	/**
 	 * 绑定指定类所在包下的处理器
 	 */
-	public static void bindClassPackageProcess(Class<?> packageClass, Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
+	public static void bindClassPackageProcess(Class<?> packageClass, Map<Integer, Handler> processorMap) {
 		String packageName = packageClass.getPackage().getName();
 		try {
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");
-			doBindProcessors(classes, processorMap, transMap);
+			doBindProcessors(classes, processorMap);
 			logger.info("Package:{} bind success, size:{}", packageName, processorMap.size());
 		} catch (Exception e) {
 			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
@@ -152,7 +162,7 @@ public class HandleTypeRegister {
 	/**
 	 * 执行处理器绑定逻辑
 	 */
-	private static void doBindProcessors(List<Class<?>> classes, Map<Integer, Handler> processorMap, Map<Integer, Class<?>> transMap) {
+	private static void doBindProcessors(List<Class<?>> classes, Map<Integer, Handler> processorMap) {
 		for (Class<?> clazz : classes) {
 			if (!Handler.class.isAssignableFrom(clazz)) {
 				continue;
@@ -160,7 +170,7 @@ public class HandleTypeRegister {
 
 			ProcessType processType = clazz.getAnnotation(ProcessType.class);
 			if (processType != null) {
-				registerProcessor(processType, clazz, processorMap, transMap);
+				registerProcessor(processType, clazz, processorMap);
 			}
 		}
 	}
@@ -219,25 +229,20 @@ public class HandleTypeRegister {
 	/**
 	 * 注册处理器实例
 	 */
-	private static void registerProcessor(ProcessType processType, Class<?> handlerClass, Map<Integer, Handler> processorMap,
-										  Map<Integer, Class<?>> transMap) {
+	private static void registerProcessor(ProcessType processType, Class<?> handlerClass, Map<Integer, Handler> processorMap) {
 		int processId = processType.value();
-		Class<?> trans = processType.trans();
 		// 重复ID检查
 		if (processorMap.containsKey(processId)) {
 			logger.error("Duplicate process ID: {} for handler: {}", processId, handlerClass.getName());
-			throw new IllegalStateException(String.format(
-					"Duplicate process ID %d for handler %s", processId, handlerClass.getName()));
+			throw new IllegalStateException(String.format("Duplicate process ID %d for handler %s", processId, handlerClass.getName()));
 		}
 
 		// 获取或创建处理器实例
-		Handler processor = (Handler) GLOBAL_HANDLER_CACHE.computeIfAbsent(handlerClass,
-				key -> createHandlerInstance(processId, handlerClass));
+		Handler processor = (Handler) GLOBAL_HANDLER_CACHE.computeIfAbsent(handlerClass, key -> createHandlerInstance(processId, handlerClass));
 
 		if (processor != null) {
 			processorMap.put(processId, processor);
-			transMap.put(processId, trans);
-			logger.debug("Registered processor: {} -> {} trans:{}", processId, handlerClass.getSimpleName(), trans.getSimpleName());
+			logger.debug("Registered processor: {} -> {} ", processId, handlerClass.getSimpleName());
 		} else {
 			logger.error("Failed to create handler instance: {}", handlerClass.getName());
 		}
@@ -270,8 +275,7 @@ public class HandleTypeRegister {
 			ProcessClassMethod annotation = method.getAnnotation(ProcessClassMethod.class);
 			if (annotation != null) {
 				if (managerClass.isAssignableFrom(annotation.value())) {
-					classMethodMap.computeIfAbsent(aClass, k -> new HashMap<>())
-							.put(annotation.value(), method);
+					classMethodMap.computeIfAbsent(aClass, k -> new HashMap<>()).put(annotation.value(), method);
 				}
 			}
 		}
@@ -311,13 +315,12 @@ public class HandleTypeRegister {
 	 *
 	 * @param messageId 消息ID
 	 * @param bytes     消息字节数据
-	 * @param typeMap   消息类型映射表
 	 * @return 解析后的消息对象，解析失败返回null
 	 */
-	public static Message parseMessage(int messageId, byte[] bytes, Map<Integer, Class<?>> typeMap) {
-		Class<?> messageClass = typeMap.get(messageId);
+	public static Message parseMessage(int messageId, byte[] bytes) {
+		Class<?> messageClass = TRANS_MAP.get(messageId);
 		if (messageClass == null) {
-			logger.warn("Unknown message ID: {}", messageId);
+			logger.error("Unknown message ID: {}", messageId);
 			return null;
 		}
 

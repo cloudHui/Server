@@ -3,12 +3,9 @@ package hall.manager;
 public class User {
 
 	private final int userId;
-
-	private String nick;
-
-	private int clientId;
-
 	private final String cert;
+	private String nick;
+	private int clientId;
 
 	public User(int userId, String nick, int clientId, String cert) {
 		this.userId = userId;
