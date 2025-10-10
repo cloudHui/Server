@@ -1,5 +1,5 @@
 syntax = "proto3";
-option java_outer_classname = "RoleProto";
+option java_outer_classname = "RuleProto";
 
 package proto;
 

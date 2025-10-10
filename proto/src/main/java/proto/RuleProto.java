@@ -3,8 +3,8 @@
 
 package proto;
 
-public final class RoleProto {
-  private RoleProto() {}
+public final class RuleProto {
+  private RuleProto() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -106,7 +106,7 @@ public final class RoleProto {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return proto.RoleProto.getDescriptor().getEnumTypes().get(0);
+      return proto.RuleProto.getDescriptor().getEnumTypes().get(0);
     }
 
     private static final Rule[] VALUES = values();
@@ -142,7 +142,7 @@ public final class RoleProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\nrule.proto\022\005proto*\031\n\004Rule\022\010\n\004type\020\000\022\007\n" +
-      "\003num\020\001B\013B\tRoleProtob\006proto3"
+      "\003num\020\001B\013B\tRuleProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
