@@ -29,22 +29,19 @@ import utils.other.IpUtil;
 import utils.other.RandomUtils;
 
 /**
- * 服务链接管理
+ * 服务连接管理器 - 负责管理与其他服务的TCP连接
  */
 public class ServerManager {
 	private final static Logger logger = LoggerFactory.getLogger(ServerManager.class);
+	private static final int OVER_TIME = 3; // 超时时间(秒)
+	private static final int HEARTBEAT_DELAY = 1; // 心跳延迟(秒)
+	private static final int JAR_CHECK_DELAY = 3; // Jar检查延迟(秒)
+	private static final int JAR_CHECK_INTERVAL = 60; // Jar检查间隔(秒)
 
-	/**
-	 * 链接类型 链接服务id  链接
-	 */
+	// 连接存储: 服务类型 -> [服务ID -> 连接处理器]
 	private final Map<ServerType, Map<Integer, ConnectHandler>> serverMap;
-
 	private final EventLoopGroup workerGroup = new NioEventLoopGroup(1);
-
-	private final static int OVER_TIME = 3;//超时时间S
-
 	private final Timer timer;
-
 	private GitJarManager gitJar;
 
 	public ServerManager(Timer timer, boolean initJar) {
@@ -55,53 +52,44 @@ public class ServerManager {
 		}
 	}
 
+	// ==================== Jar管理 ====================
+
 	/**
-	 * 初始化Jar 代码管理
+	 * 初始化Jar代码管理
 	 */
 	private void initJar() {
 		gitJar = new GitJarManager();
-		timer.register(3 * 1000, 60 * 1000, -1, game -> {
-			logger.error("initJar checkJarUpdate");
+		timer.register(JAR_CHECK_DELAY * 1000, JAR_CHECK_INTERVAL * 1000, -1, game -> {
+			logger.debug("检查Jar包更新");
 			gitJar.checkJarUpdate();
 			return false;
 		}, this);
 	}
 
+	// ==================== 连接管理 ====================
+
 	/**
-	 * 添加服务链接
-	 *
-	 * @param client 链接
+	 * 添加服务连接
 	 */
 	public synchronized void addServerClient(ConnectHandler client) {
 		ServerInfo connectServer = client.getConnectServer();
 		ServerType serverType = ServerType.get(connectServer.getServerType());
-		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
-		if (connectMap == null) {
-			connectMap = new ConcurrentHashMap<>();
-			serverMap.put(serverType, connectMap);
-		}
+
+		Map<Integer, ConnectHandler> connectMap = serverMap.computeIfAbsent(serverType,
+				k -> new ConcurrentHashMap<>());
 		connectMap.put(connectServer.getServerId(), client);
 	}
 
 	/**
-	 * 获取指定服务id 类型的服务链接
-	 *
-	 * @param serverType 服务类型
-	 * @param serverId   链接id
+	 * 获取指定服务连接
 	 */
 	public synchronized ConnectHandler getServerClient(ServerType serverType, int serverId) {
 		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
-		if (connectMap != null) {
-			return connectMap.get(serverId);
-		}
-		return null;
+		return connectMap != null ? connectMap.get(serverId) : null;
 	}
 
 	/**
-	 * 移除服务链接
-	 *
-	 * @param serverType 服务类型
-	 * @param serverId   服务id
+	 * 移除服务连接
 	 */
 	public synchronized void removeServerClient(ServerType serverType, int serverId) {
 		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
@@ -114,159 +102,229 @@ public class ServerManager {
 	}
 
 	/**
-	 * 获取类型服务链接 随机或者唯一
-	 *
-	 * @param serverType 服务类型
+	 * 随机获取指定类型的服务连接
 	 */
 	public synchronized ConnectHandler getServerClient(ServerType serverType) {
 		Map<Integer, ConnectHandler> connectMap = serverMap.get(serverType);
 		if (connectMap != null && !connectMap.isEmpty()) {
-			List<Integer> list = new ArrayList<>(connectMap.keySet());
-			int serverId = list.get(RandomUtils.randomRange(list.size()));
-			return connectMap.get(serverId);
+			List<Integer> serverIds = new ArrayList<>(connectMap.keySet());
+			int randomServerId = serverIds.get(RandomUtils.randomRange(serverIds.size()));
+			return connectMap.get(randomServerId);
 		}
 		return null;
 	}
 
+	// ==================== 心跳管理 ====================
+
 	/**
-	 * 发送心跳
+	 * 发送心跳消息
 	 */
 	private void sendHeart(TCPConnect connect) {
-		connect.sendMessage(manageHeart(connect.getConnectServer().getServerType()), CMsg.HEART, OVER_TIME)
-				.whenComplete((message, e) -> {
-					if (null != e) {
-						logger.error("[ERROR! failed for send HEART  connect {}] {}", connect, e.getMessage());
+		connect.sendMessage(buildHeartMessage(connect.getConnectServer().getServerType()),
+				CMsg.HEART, OVER_TIME)
+				.whenComplete((message, error) -> {
+					if (error != null) {
+						logger.error("[发送心跳失败 {}] {}", connect, error.getMessage());
 					} else {
-						try {
-							ModelProto.AckHeart ack = ((ModelProto.AckHeart) message);
-							long cost = System.currentTimeMillis() - ack.getReqTime();
-							logger.debug("[receive connect:{} HEART_ACK cost:{}ms success]", connect, cost);
-							workerGroup.schedule(() -> sendHeart(connect), 1, TimeUnit.SECONDS);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
+						handleHeartbeatResponse(connect, message);
 					}
 				});
 	}
 
+	/**
+	 * 处理心跳响应
+	 */
+	private void handleHeartbeatResponse(TCPConnect connect, Object message) {
+		try {
+			ModelProto.AckHeart ack = (ModelProto.AckHeart) message;
+			long costTime = System.currentTimeMillis() - ack.getReqTime();
+			logger.debug("[收到心跳应答 {} 耗时:{}ms]", connect, costTime);
+
+			// 安排下一次心跳
+			workerGroup.schedule(() -> sendHeart(connect), HEARTBEAT_DELAY, TimeUnit.SECONDS);
+		} catch (Exception ex) {
+			logger.error("处理心跳响应异常", ex);
+		}
+	}
 
 	/**
-	 * 组织心跳消息
+	 * 构建心跳消息
 	 */
-	private ModelProto.ReqHeart manageHeart(int serverType) {
+	private ModelProto.ReqHeart buildHeartMessage(int serverType) {
 		return ModelProto.ReqHeart.newBuilder()
 				.setReqTime(System.currentTimeMillis())
-				.setServerType(serverType).build();
+				.setServerType(serverType)
+				.build();
+	}
+
+	// ==================== 服务注册与连接 ====================
+
+	/**
+	 * 注册服务(不带处理的 game 专用)
+	 */
+	public void registerSever(String[] ipPort, Parser parser, ServerType serverType, int serverId, String ipPorts, ServerType localServer) {
+		registerSever(ipPort, null, parser, null, serverType, serverId, ipPorts, localServer, null);
 	}
 
 	/**
-	 * 注册服务
-	 *
-	 * @param serverType  要链接的服务类型
-	 * @param localServer 本地服务类型
+	 * 统一注册服务方法
 	 */
-	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType serverType, int serverId, String ipPorts, ServerType localServer) {
-		TCPConnect tConnect = new TCPConnect(workerGroup,
+	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType serverType,
+							  int serverId, String ipPorts, ServerType localServer, TCPConnect.CallParam callParam) {
+		TCPConnect tcpConnect = new TCPConnect(workerGroup,
 				new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])),
-				transfer,
-				parser,
-				handlers,
-				activeHandle,
-				closeHandle);
-		tConnect.setLocalServer(new ServerInfo(localServer.getServerType(), serverId, ipPorts));
-		tConnect.setConnectServer(new ServerInfo(serverType.getServerType(), (ipPort[0] + ":" + ipPort[1])));
-		//如果要连接的是注册服务 需要设置重连重试和断链重试
-		if (serverType == ServerType.Center) {
-			tConnect.setConRetry(true);
-			tConnect.setDiRetry(true);
+				transfer, parser, handlers, activeHandle, closeHandle);
+
+		// 设置回调参数
+		if (callParam != null) {
+			tcpConnect.setCallParam(callParam);
 		}
-		logger.error("[registerSever server:{} info:serverType {} connect:{}]", localServer, serverType, tConnect.getConnectServer());
-		tConnect.connect();
+
+		tcpConnect.setLocalServer(new ServerInfo(localServer.getServerType(), serverId, ipPorts));
+		tcpConnect.setConnectServer(new ServerInfo(serverType.getServerType(), ipPort[0] + ":" + ipPort[1]));
+
+		// 如果是连接中心服务器，启用重连机制
+		if (serverType == ServerType.Center) {
+			tcpConnect.setConRetry(true);
+			tcpConnect.setDiRetry(true);
+		}
+
+		tcpConnect.connect();
 	}
 
 	/**
-	 * 注册链接到服务
-	 *
-	 * @param serverInfos   需要注册连接的服务信息集合
-	 * @param localServerId 本地服务id
-	 * @param localIpPort   本地服务端口
-	 * @param transfer      转发器
-	 * @param parser        转码器
-	 * @param handlers      处理器
-	 * @param localServer   本地服务类型
+	 * 连接到多个服务
 	 */
-	public void connectToSever(List<ModelProto.ServerInfo> serverInfos, int localServerId, String localIpPort, Transfer transfer, Parser parser, Handlers handlers, ServerType localServer) {
+	public void connectToSever(List<ModelProto.ServerInfo> serverInfos, int localServerId, String localIpPort, Transfer transfer,
+							   Parser parser, Handlers handlers, ServerType localServer) {
 		if (serverInfos == null || serverInfos.isEmpty()) {
+			logger.warn("没有需要连接的服务信息");
 			return;
 		}
-		String[] ipConfig;
-		ServerType connectServer;
+
 		for (ModelProto.ServerInfo serverInfo : serverInfos) {
-			ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
-			connectServer = ServerType.get(serverInfo.getServerType());
-			if (connectServer != null) {
-				registerSever(ipConfig, transfer, parser, handlers, connectServer, localServerId, localIpPort, localServer);
-			}
+			connectToSingleServer(serverInfo, localServerId, localIpPort, transfer, parser, handlers, localServer);
 		}
 	}
 
 	/**
-	 * 组织服务信息
+	 * 连接到单个服务
 	 */
-	public static ModelProto.ServerInfo.Builder manageServerInfo(ConfigurationManager cfgMgr, ServerType serverType) {
-		ModelProto.ServerInfo.Builder serverInfo = ModelProto.ServerInfo.newBuilder();
-		serverInfo.setServerId(cfgMgr.getInt("id", 0));
-		serverInfo.setServerType(serverType.getServerType());
-		serverInfo.setIpConfig(ByteString.copyFromUtf8(IpUtil.getLocalIP() + ":" + cfgMgr.getInt("port", 0)));
-		return serverInfo;
+	private void connectToSingleServer(ModelProto.ServerInfo serverInfo, int localServerId, String localIpPort, Transfer transfer,
+									   Parser parser, Handlers handlers, ServerType localServer) {
+		String[] ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
+		ServerType connectServer = ServerType.get(serverInfo.getServerType());
+
+		if (connectServer != null) {
+			registerSever(ipConfig, transfer, parser, handlers, connectServer,
+					localServerId, localIpPort, localServer, null);
+		} else {
+			logger.warn("未知的服务类型: {}", serverInfo.getServerType());
+		}
 	}
 
 	/**
-	 * 组织注册消息
-	 *
-	 * @param localServer 本地服务
+	 * 连接到单个服务
 	 */
-	private ModelProto.ReqRegister.Builder manageReqRegister(ServerInfo localServer) {
-		return ModelProto.ReqRegister.newBuilder().setServerInfo(ModelProto.ServerInfo.newBuilder()
-				.setServerType(localServer.getServerType())
-				.setServerId(localServer.getServerId())
-				.setIpConfig(ByteString.copyFromUtf8(localServer.getIpConfig())));
+	public void connectToSingleServer(ModelProto.ServerInfo serverInfo, int localServerId, String localIpPort, Transfer transfer,
+									  Parser parser, Handlers handlers, ServerType localServer, TCPConnect.CallParam callParam) {
+		String[] ipConfig = serverInfo.getIpConfig().toStringUtf8().split(":");
+		ServerType connectServer = ServerType.get(serverInfo.getServerType());
+
+		if (connectServer != null) {
+			registerSever(ipConfig, transfer, parser, handlers, connectServer,
+					localServerId, localIpPort, localServer, callParam);
+		} else {
+			logger.warn("未知的服务类型: {}", serverInfo.getServerType());
+		}
 	}
 
+	// ==================== 消息构建工具方法 ====================
 
 	/**
-	 * 服务链接成功
-	 * 注册服务消息和注册成功 固定延时间隔发送心跳
+	 * 构建服务信息
+	 */
+	public static ModelProto.ServerInfo.Builder buildServerInfo(ConfigurationManager cfgMgr,
+																ServerType serverType) {
+		return ModelProto.ServerInfo.newBuilder()
+				.setServerId(cfgMgr.getInt("id", 0))
+				.setServerType(serverType.getServerType())
+				.setIpConfig(ByteString.copyFromUtf8(
+						IpUtil.getLocalIP() + ":" + cfgMgr.getInt("port", 0)));
+	}
+
+	/**
+	 * 构建注册请求消息
+	 */
+	private ModelProto.ReqRegister.Builder buildRegisterMessage(ServerInfo localServer) {
+		return ModelProto.ReqRegister.newBuilder()
+				.setServerInfo(ModelProto.ServerInfo.newBuilder()
+						.setServerType(localServer.getServerType())
+						.setServerId(localServer.getServerId())
+						.setIpConfig(ByteString.copyFromUtf8(localServer.getIpConfig())));
+	}
+
+	// ==================== 事件处理器 ====================
+
+	/**
+	 * 连接激活事件处理器 - 发送注册消息
 	 */
 	private final EventHandle activeHandle = channelHandler -> {
 		TCPConnect handler = (TCPConnect) channelHandler;
-		handler.sendMessage(manageReqRegister(handler.getLocalServer()).build(), CMsg.REQ_REGISTER, OVER_TIME)
-				.whenComplete((message, e) -> {
-					if (null != e) {
-						logger.error("[ERROR! failed send register message to {} {}]", handler.getConnectServer(), e.getMessage());
+		handler.sendMessage(buildRegisterMessage(handler.getLocalServer()).build(),
+				CMsg.REQ_REGISTER, OVER_TIME)
+				.whenComplete((message, error) -> {
+					if (error != null) {
+						logger.error("[注册消息发送失败 {}] {}", handler.getConnectServer(), error.getMessage());
 					} else {
-						try {
-							ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
-							handler.getConnectServer().setServerId(serverInfo.getServerId());
-							addServerClient(handler);
-							logger.info("[receive ack register message to {} success]", handler.getConnectServer());
-							workerGroup.schedule(() -> sendHeart(handler), 1, TimeUnit.SECONDS);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
+						handleRegisterResponse(handler, message);
+						executeRegisterCallback(handler);
 					}
 				});
 	};
 
 	/**
-	 * 结束关闭处理断开链接
+	 * 处理注册响应
+	 */
+	private void handleRegisterResponse(TCPConnect handler, Object message) {
+		try {
+			ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
+			handler.getConnectServer().setServerId(serverInfo.getServerId());
+			addServerClient(handler);
+			logger.info("[注册成功 {}]", handler.getConnectServer());
+
+			// 开始发送心跳
+			workerGroup.schedule(() -> sendHeart(handler), HEARTBEAT_DELAY, TimeUnit.SECONDS);
+		} catch (Exception ex) {
+			logger.error("处理注册响应异常", ex);
+		}
+	}
+
+	/**
+	 * 执行注册成功回调
+	 */
+	private void executeRegisterCallback(TCPConnect handler) {
+		TCPConnect.CallParam callback = handler.getCallParam();
+		if (callback != null) {
+			try {
+				handler.sendMessage(callback.messageId, callback.message);
+			} catch (Exception e) {
+				logger.error("执行注册成功回调异常", e);
+			}
+		}
+	}
+
+	/**
+	 * 连接关闭事件处理器
 	 */
 	private final EventHandle closeHandle = channelHandler -> {
 		TCPConnect connect = (TCPConnect) channelHandler;
 		ServerType serverType = ServerType.get(connect.getConnectServer().getServerType());
+
 		if (serverType != null) {
 			removeServerClient(serverType, connect.getConnectServer().getServerId());
 		}
-		logger.error("[closeHandle:{}]", connect.getConnectServer());
+
+		logger.error("[连接关闭: {}]", connect.getConnectServer());
 	};
 }

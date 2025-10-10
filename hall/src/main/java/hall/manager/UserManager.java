@@ -14,8 +14,7 @@ public class UserManager {
 	private static final UserManager userManager = new UserManager();
 	private static final int MAX_SIZE = 4096;
 	private final Map<String, User> users;
-	private final UserService service = new UserService();
-
+	//private final UserService service = new UserService();
 	public UserManager() {
 		users = new ConcurrentHashMap<>(MAX_SIZE);
 	}

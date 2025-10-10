@@ -10,13 +10,12 @@ import gate.client.GateTcpClient;
 import gate.connect.ConnectProcessor;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
-import net.connect.handle.ConnectHandler;
+import net.connect.TCPConnect;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
-import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
@@ -78,10 +77,6 @@ public class Gate {
 		this.innerIp = innerIp;
 	}
 
-	public String getCenter() {
-		return center;
-	}
-
 	public void setCenter(String center) {
 		this.center = center;
 	}
@@ -89,14 +84,6 @@ public class Gate {
 	public ServerManager getServerManager() {
 		return serverManager;
 	}
-
-	public <T> void registerTimer(int delay, int interval, int count, Runner<T> runner, T param) {
-		timer.register(delay, interval, count, runner, param);
-	}
-
-	//public void serialExecute(Task t) {
-	//	executorPool.serialExecute(t);
-	//}
 
 	public void execute(Runnable r) {
 		executorPool.execute(r);
@@ -122,14 +109,9 @@ public class Gate {
 		addresses.add(new InetSocketAddress(getInnerIp(), wsPort));
 		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 		new GateWsService().start(addresses);
-		ConnectProcessor.init();
-		ClientProto.init();
+
 		//向注册中心注册
 		registerToCenter();
-
-		//获取其他服务
-		getAllOtherServer();
-
 
 		logger.info("[gate server {}:{} is start!!!]", getInnerIp(), getPort());
 	}
@@ -138,28 +120,15 @@ public class Gate {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
-		String[] ipPort = getCenter().split(":");
-		serverManager.registerSever(ipPort, null, ConnectProcessor.PARSER,
+		ConnectProcessor.init();
+		ClientProto.init();
+		serverManager.registerSever(center.split(":"), null, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(),
 				getInnerIp() + ":" + getPort(),
-				ServerType.Gate);
-	}
-
-	/**
-	 * 获取其他除注册中心意外的所有服务端口ip
-	 */
-	private void getAllOtherServer() {
-		registerTimer(3000, 1000, -1, gate -> {
-			ConnectHandler serverClient = serverManager.getServerClient(ServerType.Center);
-			if (serverClient != null) {
-				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
-				req.addServerType(ServerType.Game.getServerType());
-				req.addServerType(ServerType.Hall.getServerType());
-				req.addServerType(ServerType.Room.getServerType());
-				serverClient.sendMessage(CMsg.REQ_SERVER, req.build());
-				return true;
-			}
-			return false;
-		}, this);
+				ServerType.Gate, new TCPConnect.CallParam(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
+						.addServerType(ServerType.Game.getServerType())
+						.addServerType(ServerType.Hall.getServerType())
+						.addServerType(ServerType.Room.getServerType())
+						.build()));
 	}
 }

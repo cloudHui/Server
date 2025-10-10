@@ -1,34 +1,29 @@
 package robot.connect.handle.room;
 
 import com.google.protobuf.Message;
-import msg.annotation.ProcessType;
-import msg.registor.enums.ServerType;
+import msg.annotation.ProcessClass;
 import msg.registor.message.RMsg;
-import net.client.Sender;
-import net.handler.Handler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import proto.RoomProto;
 import robot.Robot;
+import robot.connect.handle.RobotHandle;
 
 /**
  * 获取房间回复
  */
-@ProcessType(RMsg.ACK_ROOM_LIST_MSG)
-public class AckGetRoomListHandler implements Handler {
-
-	private final static Logger logger = LoggerFactory.getLogger(AckGetRoomListHandler.class);
+@ProcessClass(RoomProto.AckGetRoomList.class)
+public class AckGetRoomListHandler implements RobotHandle {
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message ack, int mapId, long sequence) {
-		logger.error("[get room ack:{}]", ack.toString());
-		RoomProto.AckGetRoomList rooms = (RoomProto.AckGetRoomList) ack;
-		if (rooms.getRoomListCount() > 0) {
-			RoomProto.Room room = rooms.getRoomList(0);
-			RoomProto.ReqCreateRoomTable.Builder createTable = RoomProto.ReqCreateRoomTable.newBuilder();
-			createTable.setConfigTypeId(room.getConfigTypeId());
-			Robot.getInstance().getClientSendMessage(ServerType.Room, RMsg.REQ_CREATE_ROOM_TABLE_MSG, createTable.build());
+	public void handle(Message message) {
+		if (message instanceof RoomProto.AckGetRoomList) {
+			RoomProto.AckGetRoomList rooms = (RoomProto.AckGetRoomList) message;
+			LOGGER.error("AckGetRoomList:{}", rooms.toString());
+			if (rooms.getRoomListCount() > 0) {
+				RoomProto.Room room = rooms.getRoomList(0);
+				RoomProto.ReqCreateRoomTable.Builder createTable = RoomProto.ReqCreateRoomTable.newBuilder();
+				createTable.setConfigTypeId(room.getConfigTypeId());
+				Robot.getInstance().getClientSendMessage(RMsg.REQ_CREATE_ROOM_TABLE_MSG, createTable.build());
+			}
 		}
-		return true;
 	}
 }

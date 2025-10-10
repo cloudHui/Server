@@ -1,4 +1,4 @@
-package hall.connect.server;
+package hall.client.handle.server;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessType;

@@ -10,13 +10,12 @@ import hall.client.HallClient;
 import hall.connect.ConnectProcessor;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
-import net.connect.handle.ConnectHandler;
+import net.connect.TCPConnect;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
-import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerClientManager;
 import utils.ServerManager;
@@ -63,10 +62,6 @@ public class Hall {
 		this.serverId = serverId;
 	}
 
-	public String getCenter() {
-		return center;
-	}
-
 	public void setCenter(String center) {
 		this.center = center;
 	}
@@ -79,14 +74,6 @@ public class Hall {
 		return serverInfo;
 	}
 
-	public <T> void registerTimer(int delay, int interval, int count, Runner<T> runner, T param) {
-		timer.register(delay, interval, count, runner, param);
-	}
-
-	//public void serialExecute(Task t) {
-	//	executorPool.serialExecute(t);
-	//}
-
 	public void execute(Runnable r) {
 		executorPool.execute(r);
 	}
@@ -95,7 +82,7 @@ public class Hall {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 
-		serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Hall);
+		serverInfo = ServerManager.buildServerInfo(cfgMgr, ServerType.Hall);
 		setServerId(cfgMgr.getInt("id", 0));
 
 		setCenter(cfgMgr.getProperty("center"));
@@ -105,11 +92,8 @@ public class Hall {
 		new ServerService(0, HallClient.class).start(addresses);
 		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 
-		ClientProto.init();
-		ConnectProcessor.init();
 		//向注册中心注册
 		registerToCenter();
-		getRoomServer();
 		LOGGER.info("[hall server {}:{} is start!!!]", split[0], Integer.parseInt(split[1]));
 	}
 
@@ -117,25 +101,12 @@ public class Hall {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
-		String[] ipPort = getCenter().split(":");
-		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+		ClientProto.init();
+		ConnectProcessor.init();
+		serverManager.registerSever(center.split(":"), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
-				ServerType.Hall);
-	}
-
-	/**
-	 * 获取其他除注册中心意外的游戏服务端口ip
-	 */
-	private void getRoomServer() {
-		registerTimer(3000, 1000, -1, gate -> {
-			ConnectHandler serverClient = serverManager.getServerClient(ServerType.Center);
-			if (serverClient != null) {
-				ModelProto.ReqServerInfo.Builder req = ModelProto.ReqServerInfo.newBuilder();
-				req.addServerType(ServerType.Room.getServerType());
-				serverClient.sendMessage(CMsg.REQ_SERVER, req.build());
-				return true;
-			}
-			return false;
-		}, this);
+				ServerType.Hall, new TCPConnect.CallParam(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
+						.addServerType(ServerType.Room.getServerType())
+						.build()));
 	}
 }

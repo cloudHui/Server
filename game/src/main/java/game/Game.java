@@ -7,8 +7,8 @@ import java.util.List;
 
 import game.client.ClientProto;
 import game.client.GameClient;
-import game.connect.ConnectProcessor;
 import game.manager.TableManager;
+import msg.registor.HandleTypeRegister;
 import msg.registor.enums.ServerType;
 import net.service.ServerService;
 import org.slf4j.Logger;
@@ -69,10 +69,6 @@ public class Game {
 		this.serverId = serverId;
 	}
 
-	public String getCenter() {
-		return center;
-	}
-
 	public void setCenter(String center) {
 		this.center = center;
 	}
@@ -123,7 +119,7 @@ public class Game {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 
-		serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Game);
+		serverInfo = ServerManager.buildServerInfo(cfgMgr, ServerType.Game);
 
 		setCenter(cfgMgr.getProperty("center"));
 
@@ -139,7 +135,6 @@ public class Game {
 		//初始化
 		init();
 
-		ClientProto.init();
 		LOGGER.info("[game server {}:{}  is start!!!] ", split[0], Integer.parseInt(split[1]));
 	}
 
@@ -147,12 +142,10 @@ public class Game {
 	 * 向注册中心注册
 	 */
 	private void registerToCenter() {
-		ConnectProcessor.init();
+		ClientProto.init();
 		ServerManager serverManager = getServerManager();
-		String[] ipPort = getCenter().split(":");
-		serverManager.registerSever(ipPort, ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
-				ServerType.Game);
+		serverManager.registerSever(center.split(":"), HandleTypeRegister::parseMessage,
+				ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(), ServerType.Game);
 	}
 
 	/**

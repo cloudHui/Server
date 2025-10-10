@@ -44,12 +44,10 @@ public class HandleTypeRegister {
 		try {
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(HandleTypeRegister.class, "");
 			for (Class<?> clazz : classes) {
-				int oldSize = TRANS_MAP.size();
 				ClassType processType = clazz.getAnnotation(ClassType.class);
 				if (processType != null) {
 					bindTransMap(clazz);
 				}
-				logger.info("init message id bind class:{} bind success, size:{}", clazz, TRANS_MAP.size() - oldSize);
 			}
 			logger.info("init message id bind total size:{}", TRANS_MAP.size());
 		} catch (Exception e) {
@@ -80,7 +78,6 @@ public class HandleTypeRegister {
 			} catch (Exception e) {
 				logger.error("Bind field failed: {}.{}", constantClass.getSimpleName(), field.getName(), e);
 			}
-			break;
 		}
 
 		logger.info(BIND_SUCCESS_TEMPLATE, constantClass.getSimpleName(), bindCount);

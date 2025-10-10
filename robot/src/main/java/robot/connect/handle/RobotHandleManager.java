@@ -26,19 +26,31 @@ public class RobotHandleManager {
 	/**
 	 * 处理
 	 */
-	public static void handle(Message message) {
+	public static void handle(Message message, int msgId) {
 		RobotHandle robotHandle = handleMap.get(message.getClass());
 		if (robotHandle == null) {
 			LOGGER.error("handle error un find handle:{}", message.getClass().getSimpleName());
 			return;
 		}
+		long now = System.currentTimeMillis();
 		robotHandle.handle(message);
+		LOGGER.info("handle:{} msg:{} cost:{}ms", message.getClass().getSimpleName(), msgId, (System.currentTimeMillis() - now));
 	}
 
 	/**
 	 * 发送消息
 	 */
 	public static void sendMsg(ConnectHandler serverClient, Message req, int msgId) {
-		serverClient.sendMessage(req, msgId, 3).whenComplete((msg, e) -> handle(msg));
+		LOGGER.info("sendMsg:{}", req.getClass().getSimpleName());
+		serverClient.sendMessage(req, msgId, 3).whenComplete((msg, throwable) -> {
+			try {
+				LOGGER.info("msg:{} back error:{}", Integer.toHexString(msgId), throwable);
+				if (throwable == null) {
+					handle(msg, msgId);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 }

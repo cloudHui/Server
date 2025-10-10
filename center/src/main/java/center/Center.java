@@ -50,7 +50,7 @@ public class Center {
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		try {
 			ClientProto.init();
-			serverInfo = ServerManager.manageServerInfo(cfgMgr, ServerType.Center);
+			serverInfo = ServerManager.buildServerInfo(cfgMgr, ServerType.Center);
 			List<SocketAddress> addresses = new ArrayList<>();
 			String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
 			addresses.add(new InetSocketAddress(split[0], Integer.parseInt(split[1])));

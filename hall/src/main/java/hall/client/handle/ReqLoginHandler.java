@@ -25,20 +25,24 @@ public class ReqLoginHandler implements Handler {
 		HallProto.ReqLogin req = (HallProto.ReqLogin) msg;
 		String nick = req.getNickName().toStringUtf8();
 		String cert = req.getCert().toStringUtf8();
-		User user = UserManager.getInstance().getUser(cert);
-		if (user == null) {
-			user = new User(uid.incrementAndGet(), nick, clientId, cert);
-			UserManager.getInstance().addUser(user);
-		} else {
-			user.setClientId(clientId);
-			user.setNick(nick);
+		try {
+			User user = UserManager.getInstance().getUser(cert);
+			if (user == null) {
+				user = new User(uid.incrementAndGet(), nick, clientId, cert);
+				UserManager.getInstance().addUser(user);
+			} else {
+				user.setClientId(clientId);
+				user.setNick(nick);
+			}
+			sender.sendMessage(clientId, HMsg.ACK_LOGIN_MSG, mapId, 0,
+					HallProto.AckLogin.newBuilder()
+							.setCert(req.getCert())
+							.setUserId(user.getUserId())
+							.setNickName(ByteString.copyFromUtf8(nick))
+							.build(), sequence);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		sender.sendMessage(clientId, HMsg.ACK_LOGIN_MSG, mapId, 0,
-				HallProto.AckLogin.newBuilder()
-						.setCert(req.getCert())
-						.setUserId(user.getUserId())
-						.setNickName(ByteString.copyFromUtf8(nick))
-						.build(), sequence);
 		return true;
 	}
 }
