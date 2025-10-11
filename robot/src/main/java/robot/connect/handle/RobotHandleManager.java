@@ -20,7 +20,7 @@ public class RobotHandleManager {
 	private static final Map<Class<?>, RobotHandle> handleMap = new HashMap<>();
 
 	public static void init() {
-		HandleTypeRegister.initClassFactory(RobotHandleManager.class, handleMap, null, null);
+		HandleTypeRegister.initClassFactory(RobotHandleManager.class, handleMap);
 	}
 
 	/**

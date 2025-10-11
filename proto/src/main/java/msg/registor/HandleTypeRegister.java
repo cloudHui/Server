@@ -1,7 +1,7 @@
 package msg.registor;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+//import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import com.google.protobuf.MessageLite;
 import msg.annotation.ClassField;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessClass;
-import msg.annotation.ProcessClassMethod;
+//import msg.annotation.ProcessClassMethod;
 import msg.annotation.ProcessType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,13 +126,11 @@ public class HandleTypeRegister {
 	/**
 	 * 初始化类处理工厂
 	 *
-	 * @param factoryClass   要扫描的目录中的类
-	 * @param handles        处理器存储集合
-	 * @param classMethodMap 类方法绑定集合(有 @ProcessClassMethod注解的方法)
-	 * @param managerClass   @ProcessClassMethod注解上的父类
-	 * @param <T>            动态处理器类
+	 * @param factoryClass 要扫描的目录中的类
+	 * @param handles      处理器存储集合
+	 * @param <T>          动态处理器类
 	 */
-	public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles, Map<Class<?>, Map<Class<?>, Method>> classMethodMap, Class<?> managerClass) {
+	public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles) {
 		try {
 			List<Class<?>> classes = ClazzUtil.getClasses(factoryClass, "");
 			Map<Class<?>, T> classProcessMap = new HashMap<>();
@@ -145,7 +143,6 @@ public class HandleTypeRegister {
 
 				Class<?> value = processesType.value();
 				putHandle(value, aclass, handles, classProcessMap);
-				managerFunctionMap(aclass, managerClass, classMethodMap);
 			}
 
 			logger.info("{} bind success, size:{}", factoryClass.getPackage().getName(), handles.size());
@@ -153,6 +150,37 @@ public class HandleTypeRegister {
 			logger.error("{} bind processors error", factoryClass.getPackage().getName(), e);
 		}
 	}
+
+	///**
+	// * 初始化类处理工厂
+	// *
+	// * @param factoryClass   要扫描的目录中的类
+	// * @param handles        处理器存储集合
+	// * @param classMethodMap 类方法绑定集合(有 @ProcessClassMethod注解的方法)
+	// * @param managerClass   @ProcessClassMethod注解上的父类
+	// * @param <T>            动态处理器类
+	// */
+	//public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles, Map<Class<?>, Map<Class<?>, Method>> classMethodMap, Class<?> managerClass) {
+	//	try {
+	//		List<Class<?>> classes = ClazzUtil.getClasses(factoryClass, "");
+	//		Map<Class<?>, T> classProcessMap = new HashMap<>();
+	//
+	//		for (Class<?> aclass : classes) {
+	//			ProcessClass processesType = aclass.getAnnotation(ProcessClass.class);
+	//			if (processesType == null) {
+	//				continue;
+	//			}
+	//
+	//			Class<?> value = processesType.value();
+	//			putHandle(value, aclass, handles, classProcessMap);
+	//			managerFunctionMap(aclass, managerClass, classMethodMap);
+	//		}
+	//
+	//		logger.info("{} bind success, size:{}", factoryClass.getPackage().getName(), handles.size());
+	//	} catch (Exception e) {
+	//		logger.error("{} bind processors error", factoryClass.getPackage().getName(), e);
+	//	}
+	//}
 
 	/**
 	 * 处理器绑定核心方法
@@ -170,20 +198,20 @@ public class HandleTypeRegister {
 		}
 	}
 
-	/**
-	 * 管理函数方法存储
-	 */
-	private static void managerFunctionMap(Class<?> aClass, Class<?> managerClass, Map<Class<?>, Map<Class<?>, Method>> classMethodMap) {
-		Method[] declaredMethods = aClass.getDeclaredMethods();
-		for (Method method : declaredMethods) {
-			ProcessClassMethod annotation = method.getAnnotation(ProcessClassMethod.class);
-			if (annotation != null) {
-				if (managerClass.isAssignableFrom(annotation.value())) {
-					classMethodMap.computeIfAbsent(aClass, k -> new HashMap<>()).put(annotation.value(), method);
-				}
-			}
-		}
-	}
+	///**
+	// * 管理函数方法存储
+	// */
+	//private static void managerFunctionMap(Class<?> aClass, Class<?> managerClass, Map<Class<?>, Map<Class<?>, Method>> classMethodMap) {
+	//	Method[] declaredMethods = aClass.getDeclaredMethods();
+	//	for (Method method : declaredMethods) {
+	//		ProcessClassMethod annotation = method.getAnnotation(ProcessClassMethod.class);
+	//		if (annotation != null) {
+	//			if (managerClass.isAssignableFrom(annotation.value())) {
+	//				classMethodMap.computeIfAbsent(aClass, k -> new HashMap<>()).put(annotation.value(), method);
+	//			}
+	//		}
+	//	}
+	//}
 
 	// ==================== 实例创建方法 ====================
 
