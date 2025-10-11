@@ -8,6 +8,9 @@ public class TableModel {
 
     //类型(1麻将2斗地主)
     private int type;
+
+    //人数
+    private int num;
  
     // Getters and Setters
     public int getId() {
@@ -26,12 +29,21 @@ public class TableModel {
         this.type = type;
     }
 
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
  
     @Override
     public String toString() {
         return "TableModel{"+
                 "     id="+id+ 
                 "     type="+type+ 
+                "     num="+num+ 
                 '}';
     }
 

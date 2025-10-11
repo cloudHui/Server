@@ -24,22 +24,16 @@ public class RoomManager {
 	}
 
 	public void init() {
-		//读取文件生成结构
-		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "room");
-
-		readTableModel();
-	}
-
-	private void readTableModel() {
 		TableModel model;
-		List<Object> prperties = new ArrayList<>();
+		List<Object> properties = new ArrayList<>();
 		//读取数据
-		ExcelUtil.readExcelJavaValue("TableModel.xlsx", prperties);
+		ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties);
 		synchronized (tableModelMap) {
 			tableModelMap.clear();
-			for (Object object : prperties) {
+			for (Object object : properties) {
 				model = (TableModel) object;
 				tableModelMap.put(model.getId(), model);
+				roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
 			}
 		}
 	}
@@ -52,9 +46,10 @@ public class RoomManager {
 		ConcurrentHashMap<String, RoomTable> value;
 		for (Map.Entry<Integer, ConcurrentHashMap<String, RoomTable>> roomTable : roomTables.entrySet()) {
 			room = RoomProto.Room.newBuilder();
-			room.setConfigTypeId(roomTable.getKey());
+			room.setRoomId(roomTable.getKey());
 			value = roomTable.getValue();
-
+			if (value != null && !value.isEmpty()) {
+			}
 			ack.addRoomList(room);
 		}
 	}

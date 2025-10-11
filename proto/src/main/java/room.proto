@@ -3,16 +3,13 @@ option java_outer_classname = "RoomProto";
 
 package proto;
 
-import "model.proto";
-
 //请求room 列表
 message ReqGetRoomList {
 }
 
 message Room{
     int32 roomId = 1;
-    int32 configTypeId = 2;//房间类型
-    repeated RoomTableInfo tables = 4;//桌子
+    repeated RoomTableInfo tables = 2;//桌子
 }
 
 message AckGetRoomList {
@@ -21,7 +18,7 @@ message AckGetRoomList {
 
 //请求创建桌子
 message ReqCreateRoomTable {
-    int32 configTypeId = 1;//房间类型
+    int32 configTypeId = 1;//房间规则
 }
 
 //请求入桌分配位置
@@ -32,5 +29,32 @@ message ReqEnterTable {
 message AckEnterTable {
     int32 tableId = 1;
     TableInfo info = 2;
+}
 
+message TableInfo{
+    int32 tableId = 1;
+    int32 landlord = 2;
+    repeated TableRole tableRoles = 3;
+}
+
+message RoomTableInfo{
+    int32 tableId = 1;
+    int32 creatorId = 2;
+    int32 ownerId = 3;
+    int32 stat = 4;//等待中  已开始
+    repeated RoomTableRole tableRoles = 5;
+}
+
+message RoomTableRole {
+    int32 roleId = 1;
+    bytes avatar = 3;
+    bytes nickName = 4;
+}
+
+message TableRole {
+    int32 roleId = 1;
+    int32 position = 2;
+    bytes avatar = 3;
+    bytes nickName = 4;
+    repeated int32 cards = 5;
 }
