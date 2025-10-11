@@ -3671,9 +3671,9 @@ public final class RoomProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 tableId = 1;</code>
+     * <code>bytes tableId = 1;</code>
      */
-    int getTableId();
+    com.google.protobuf.ByteString getTableId();
 
     /**
      * <code>int32 landlord = 2;</code>
@@ -3717,7 +3717,7 @@ public final class RoomProto {
       super(builder);
     }
     private TableInfo() {
-      tableId_ = 0;
+      tableId_ = com.google.protobuf.ByteString.EMPTY;
       landlord_ = 0;
       tableRoles_ = java.util.Collections.emptyList();
     }
@@ -3750,9 +3750,9 @@ public final class RoomProto {
               }
               break;
             }
-            case 8: {
+            case 10: {
 
-              tableId_ = input.readInt32();
+              tableId_ = input.readBytes();
               break;
             }
             case 16: {
@@ -3798,11 +3798,11 @@ public final class RoomProto {
 
     private int bitField0_;
     public static final int TABLEID_FIELD_NUMBER = 1;
-    private int tableId_;
+    private com.google.protobuf.ByteString tableId_;
     /**
-     * <code>int32 tableId = 1;</code>
+     * <code>bytes tableId = 1;</code>
      */
-    public int getTableId() {
+    public com.google.protobuf.ByteString getTableId() {
       return tableId_;
     }
 
@@ -3862,8 +3862,8 @@ public final class RoomProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (tableId_ != 0) {
-        output.writeInt32(1, tableId_);
+      if (!tableId_.isEmpty()) {
+        output.writeBytes(1, tableId_);
       }
       if (landlord_ != 0) {
         output.writeInt32(2, landlord_);
@@ -3879,9 +3879,9 @@ public final class RoomProto {
       if (size != -1) return size;
 
       size = 0;
-      if (tableId_ != 0) {
+      if (!tableId_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, tableId_);
+          .computeBytesSize(1, tableId_);
       }
       if (landlord_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -3907,8 +3907,8 @@ public final class RoomProto {
       proto.RoomProto.TableInfo other = (proto.RoomProto.TableInfo) obj;
 
       boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
+      result = result && getTableId()
+          .equals(other.getTableId());
       result = result && (getLandlord()
           == other.getLandlord());
       result = result && getTableRolesList()
@@ -3925,7 +3925,7 @@ public final class RoomProto {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId();
+      hash = (53 * hash) + getTableId().hashCode();
       hash = (37 * hash) + LANDLORD_FIELD_NUMBER;
       hash = (53 * hash) + getLandlord();
       if (getTableRolesCount() > 0) {
@@ -4062,7 +4062,7 @@ public final class RoomProto {
       }
       public Builder clear() {
         super.clear();
-        tableId_ = 0;
+        tableId_ = com.google.protobuf.ByteString.EMPTY;
 
         landlord_ = 0;
 
@@ -4149,7 +4149,7 @@ public final class RoomProto {
 
       public Builder mergeFrom(proto.RoomProto.TableInfo other) {
         if (other == proto.RoomProto.TableInfo.getDefaultInstance()) return this;
-        if (other.getTableId() != 0) {
+        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
           setTableId(other.getTableId());
         }
         if (other.getLandlord() != 0) {
@@ -4209,28 +4209,31 @@ public final class RoomProto {
       }
       private int bitField0_;
 
-      private int tableId_ ;
+      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>int32 tableId = 1;</code>
+       * <code>bytes tableId = 1;</code>
        */
-      public int getTableId() {
+      public com.google.protobuf.ByteString getTableId() {
         return tableId_;
       }
       /**
-       * <code>int32 tableId = 1;</code>
+       * <code>bytes tableId = 1;</code>
        */
-      public Builder setTableId(int value) {
-        
+      public Builder setTableId(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
         tableId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 tableId = 1;</code>
+       * <code>bytes tableId = 1;</code>
        */
       public Builder clearTableId() {
         
-        tableId_ = 0;
+        tableId_ = getDefaultInstance().getTableId();
         onChanged();
         return this;
       }
@@ -7045,7 +7048,7 @@ public final class RoomProto {
       "nterTable\022\017\n\007tableId\030\001 \001(\005\"@\n\rAckEnterTa" +
       "ble\022\017\n\007tableId\030\001 \001(\005\022\036\n\004info\030\002 \001(\0132\020.pro" +
       "to.TableInfo\"T\n\tTableInfo\022\017\n\007tableId\030\001 \001" +
-      "(\005\022\020\n\010landlord\030\002 \001(\005\022$\n\ntableRoles\030\003 \003(\013" +
+      "(\014\022\020\n\010landlord\030\002 \001(\005\022$\n\ntableRoles\030\003 \003(\013" +
       "2\020.proto.TableRole\"|\n\rRoomTableInfo\022\017\n\007t",
       "ableId\030\001 \001(\005\022\021\n\tcreatorId\030\002 \001(\005\022\017\n\007owner" +
       "Id\030\003 \001(\005\022\014\n\004stat\030\004 \001(\005\022(\n\ntableRoles\030\005 \003" +

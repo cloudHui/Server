@@ -32,7 +32,7 @@ message AckEnterTable {
 }
 
 message TableInfo{
-    int32 tableId = 1;
+    bytes tableId = 1;
     int32 landlord = 2;
     repeated TableRole tableRoles = 3;
 }
