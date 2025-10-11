@@ -15,7 +15,6 @@ import msg.annotation.ClassType;
 import msg.annotation.ProcessClass;
 import msg.annotation.ProcessClassMethod;
 import msg.annotation.ProcessType;
-import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.other.ClazzUtil;
@@ -32,10 +31,6 @@ public class HandleTypeRegister {
 	// 配置常量
 	private static final String DEFAULT_HANDLE_PACKAGE = "utils.handle";
 	private static final String BIND_SUCCESS_TEMPLATE = "{} bind success, size: {}";
-	private static final String BIND_ERROR_TEMPLATE = "{} bind error";
-
-	// 全局处理器实例缓存 (避免重复实例化)
-	private static final Map<Class<?>, Object> GLOBAL_HANDLER_CACHE = new ConcurrentHashMap<>();
 
 	private static final Map<Integer, Class<?>> TRANS_MAP = new ConcurrentHashMap<>();
 	private static final Map<Class<?>, Integer> MSG_TRANS_MAP = new ConcurrentHashMap<>();
@@ -88,99 +83,30 @@ public class HandleTypeRegister {
 
 	// ==================== 处理器绑定相关方法 ====================
 
-	/**
-	 * 绑定默认包下的处理器
-	 */
-	public static void bindDefaultPackageProcess(Map<Integer, Handler> processorMap) {
-		bindPackageProcess(DEFAULT_HANDLE_PACKAGE, processorMap);
-	}
-
-	/**
-	 * 绑定指定包下的处理器
-	 *
-	 * @param packageName  扫描的包路径
-	 * @param processorMap 处理器映射表
-	 */
-	public static void bindPackageProcess(String packageName, Map<Integer, Handler> processorMap) {
-		try {
-			List<Class<?>> classes = ClazzUtil.getClasses(packageName);
-			doBindProcessors(classes, processorMap);
-			logger.info(BIND_SUCCESS_TEMPLATE, packageName, processorMap.size());
-		} catch (Exception e) {
-			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
-		}
-	}
-
-	/**
-	 * 绑定指定类所在包下的处理器
-	 */
-	public static void bindClassPackageProcess(Class<?> packageClass, Map<Integer, Handler> processorMap) {
-		String packageName = packageClass.getPackage().getName();
-		try {
-			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(packageClass, "");
-			doBindProcessors(classes, processorMap);
-			logger.info("Package:{} bind success, size:{}", packageName, processorMap.size());
-		} catch (Exception e) {
-			logger.error(BIND_ERROR_TEMPLATE, packageName, e);
-		}
-	}
-
-	/**
-	 * 通用绑定方法 - 扫描包内所有处理器
-	 */
-	public static void bindAllProcessorInPackage(Class<?> packageClass, Map<Integer, Class<?>> processorMap) {
-		bindProcessors(packageClass, processorMap, null);
-	}
-
-	/**
-	 * 通用绑定方法 - 带包过滤条件
-	 */
-	public static void bindAllProcessorWithExceptPackage(Class<?> packageClass, Map<Integer, Class<?>> processorMap, String except) {
-		bindProcessors(packageClass, processorMap, except);
-	}
 
 	// ==================== 工厂方法相关方法 ====================
 
 	/**
 	 * 初始化处理工厂
 	 */
-	public static <T> void initFactory(Class<?> factoryClass, Map<Integer, T> handles) {
-		bindProcessors(factoryClass, handles, null);
+	public static <T> void initFactory(Map<Integer, T> handles) {
+		initFactory(DEFAULT_HANDLE_PACKAGE, handles);
 	}
 
 	/**
-	 * 初始化类处理工厂
+	 * 初始化处理工厂
 	 */
-	public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles,
-											Map<Class<?>, Map<Class<?>, Method>> classMethodMap,
-											Class<?> managerClass) {
-		bindClassProcessors(factoryClass, handles, classMethodMap, managerClass);
-	}
-
-	// ==================== 核心绑定逻辑 ====================
-
-	/**
-	 * 执行处理器绑定逻辑
-	 */
-	private static void doBindProcessors(List<Class<?>> classes, Map<Integer, Handler> processorMap) {
-		for (Class<?> clazz : classes) {
-			if (!Handler.class.isAssignableFrom(clazz)) {
-				continue;
-			}
-
-			ProcessType processType = clazz.getAnnotation(ProcessType.class);
-			if (processType != null) {
-				registerProcessor(processType, clazz, processorMap);
-			}
-		}
+	public static <T> void initFactory(Class<?> packageClass, Map<Integer, T> handles) {
+		String packageName = packageClass.getPackage().getName();
+		initFactory(packageName, handles);
 	}
 
 	/**
-	 * 通用绑定方法 - 处理ProcessType注解
+	 * 通用的初始化处理工厂方法
 	 */
-	private static <T> void bindProcessors(Class<?> packageClass, Map<Integer, T> processorMap, String filter) {
+	private static <T> void initFactory(String packageName, Map<Integer, T> handles) {
 		try {
-			List<Class<?>> classes = ClazzUtil.getClasses(packageClass, filter != null ? filter : "");
+			List<Class<?>> classes = ClazzUtil.getClasses(packageName);
 			Map<Class<?>, T> classProcessMap = new HashMap<>();
 
 			for (Class<?> aclass : classes) {
@@ -188,23 +114,27 @@ public class HandleTypeRegister {
 				if (processesType == null) {
 					continue;
 				}
-				putHandle(processesType.value(), aclass, processorMap, classProcessMap);
+				putHandle(processesType.value(), aclass, handles, classProcessMap);
 			}
 
-			logger.info("{} bind success, size:{}", packageClass.getPackage().getName(), processorMap.size());
+			logger.info("{} bind success, size:{}", packageName, handles.size());
 		} catch (Exception e) {
-			logger.error("{} bind processors error", packageClass.getPackage().getName(), e);
+			logger.error("{} bind processors error", packageName, e);
 		}
 	}
 
 	/**
-	 * 通用绑定方法 - 处理ProcessClass注解
+	 * 初始化类处理工厂
+	 *
+	 * @param factoryClass   要扫描的目录中的类
+	 * @param handles        处理器存储集合
+	 * @param classMethodMap 类方法绑定集合(有 @ProcessClassMethod注解的方法)
+	 * @param managerClass   @ProcessClassMethod注解上的父类
+	 * @param <T>            动态处理器类
 	 */
-	private static <T> void bindClassProcessors(Class<?> packageClass, Map<Class<?>, T> processorMap,
-												Map<Class<?>, Map<Class<?>, Method>> classMethodMap,
-												Class<?> managerClass) {
+	public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles, Map<Class<?>, Map<Class<?>, Method>> classMethodMap, Class<?> managerClass) {
 		try {
-			List<Class<?>> classes = ClazzUtil.getClasses(packageClass, "");
+			List<Class<?>> classes = ClazzUtil.getClasses(factoryClass, "");
 			Map<Class<?>, T> classProcessMap = new HashMap<>();
 
 			for (Class<?> aclass : classes) {
@@ -214,45 +144,20 @@ public class HandleTypeRegister {
 				}
 
 				Class<?> value = processesType.value();
-				putHandle(value, aclass, processorMap, classProcessMap);
+				putHandle(value, aclass, handles, classProcessMap);
 				managerFunctionMap(aclass, managerClass, classMethodMap);
 			}
 
-			logger.info("{} bind success, size:{}", packageClass.getPackage().getName(), processorMap.size());
+			logger.info("{} bind success, size:{}", factoryClass.getPackage().getName(), handles.size());
 		} catch (Exception e) {
-			logger.error("{} bind processors error", packageClass.getPackage().getName(), e);
-		}
-	}
-
-	// ==================== 注册器核心方法 ====================
-
-	/**
-	 * 注册处理器实例
-	 */
-	private static void registerProcessor(ProcessType processType, Class<?> handlerClass, Map<Integer, Handler> processorMap) {
-		int processId = processType.value();
-		// 重复ID检查
-		if (processorMap.containsKey(processId)) {
-			logger.error("Duplicate process ID: {} for handler: {}", processId, handlerClass.getName());
-			throw new IllegalStateException(String.format("Duplicate process ID %d for handler %s", processId, handlerClass.getName()));
-		}
-
-		// 获取或创建处理器实例
-		Handler processor = (Handler) GLOBAL_HANDLER_CACHE.computeIfAbsent(handlerClass, key -> createHandlerInstance(processId, handlerClass));
-
-		if (processor != null) {
-			processorMap.put(processId, processor);
-			logger.debug("Registered processor: {} -> {} ", processId, handlerClass.getSimpleName());
-		} else {
-			logger.error("Failed to create handler instance: {}", handlerClass.getName());
+			logger.error("{} bind processors error", factoryClass.getPackage().getName(), e);
 		}
 	}
 
 	/**
 	 * 处理器绑定核心方法
 	 */
-	private static <K, T> void putHandle(K key, Class<?> aclass, Map<K, T> handles,
-										 Map<Class<?>, T> classProcessMap) {
+	private static <K, T> void putHandle(K key, Class<?> aclass, Map<K, T> handles, Map<Class<?>, T> classProcessMap) {
 		T handler = handles.get(key);
 		if (handler != null) {
 			logger.error("putHandle same key:{} old:{} new:{} ", key, handler.getClass(), aclass);
@@ -268,8 +173,7 @@ public class HandleTypeRegister {
 	/**
 	 * 管理函数方法存储
 	 */
-	private static void managerFunctionMap(Class<?> aClass, Class<?> managerClass,
-										   Map<Class<?>, Map<Class<?>, Method>> classMethodMap) {
+	private static void managerFunctionMap(Class<?> aClass, Class<?> managerClass, Map<Class<?>, Map<Class<?>, Method>> classMethodMap) {
 		Method[] declaredMethods = aClass.getDeclaredMethods();
 		for (Method method : declaredMethods) {
 			ProcessClassMethod annotation = method.getAnnotation(ProcessClassMethod.class);
@@ -282,19 +186,6 @@ public class HandleTypeRegister {
 	}
 
 	// ==================== 实例创建方法 ====================
-
-	/**
-	 * 创建处理器实例
-	 */
-	private static Handler createHandlerInstance(int processId, Class<?> handlerClass) {
-		try {
-			return (Handler) handlerClass.getDeclaredConstructor().newInstance();
-		} catch (Exception e) {
-			logger.error("Create handler instance failed: {} for process ID: {}",
-					handlerClass.getName(), processId, e);
-			return null;
-		}
-	}
 
 	/**
 	 * 创建通用实例

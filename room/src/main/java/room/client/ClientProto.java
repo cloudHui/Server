@@ -17,7 +17,7 @@ public class ClientProto {
 	public final static Handlers HANDLERS = handlers::get;
 
 	public static void init() {
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, handlers);
-		HandleTypeRegister.bindDefaultPackageProcess(handlers);
+		HandleTypeRegister.initFactory(ClientProto.class, handlers);
+		HandleTypeRegister.initFactory(handlers);
 	}
 }

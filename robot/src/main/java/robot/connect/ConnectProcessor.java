@@ -29,6 +29,6 @@ public class ConnectProcessor {
 	public final static Parser PARSER = HandleTypeRegister::parseMessage;
 
 	public static void init() {
-		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, MAP);
+		HandleTypeRegister.initFactory(ConnectProcessor.class, MAP);
 	}
 }

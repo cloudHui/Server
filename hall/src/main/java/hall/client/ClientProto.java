@@ -17,8 +17,8 @@ public class ClientProto {
 	public final static Parser PARSER = HandleTypeRegister::parseMessage;
 
 	public static void init() {
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, handlers);
+		HandleTypeRegister.initFactory(ClientProto.class, handlers);
 
-		HandleTypeRegister.bindDefaultPackageProcess(handlers);
+		HandleTypeRegister.initFactory(handlers);
 	}
 }

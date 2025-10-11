@@ -21,8 +21,8 @@ public class ClientProto {
 
 	public static void init() {
 		//绑定专用服务器消息处理
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, HANDLER_MAP);
+		HandleTypeRegister.initFactory(ClientProto.class, HANDLER_MAP);
 		//绑定通用服务器消息处理
-		HandleTypeRegister.bindDefaultPackageProcess(HANDLER_MAP);
+		HandleTypeRegister.initFactory(HANDLER_MAP);
 	}
 }

@@ -16,5 +16,5 @@ public @interface ProcessClass {
 	/**
 	 * 处理类型
 	 */
-	Class<?> value();
+	Class<?> value() default Void.class;
 }

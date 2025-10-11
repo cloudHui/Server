@@ -20,7 +20,7 @@ public class ConnectProcessor {
 	public final static Handlers HANDLERS = handlers::get;
 
 	public static void init() {
-		HandleTypeRegister.bindClassPackageProcess(ConnectProcessor.class, handlers);
+		HandleTypeRegister.initFactory(ConnectProcessor.class, handlers);
 	}
 
 }

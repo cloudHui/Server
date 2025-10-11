@@ -18,8 +18,8 @@ public class ClientProto {
 
 	public static void init() {
 		//绑定自带服务器处理
-		HandleTypeRegister.bindClassPackageProcess(ClientProto.class, MAP);
+		HandleTypeRegister.initFactory(ClientProto.class, MAP);
 		//绑定通用服务器处理
-		HandleTypeRegister.bindDefaultPackageProcess(MAP);
+		HandleTypeRegister.initFactory(MAP);
 	}
 }
