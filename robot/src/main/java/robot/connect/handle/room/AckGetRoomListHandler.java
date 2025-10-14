@@ -21,9 +21,9 @@ public class AckGetRoomListHandler implements RobotHandle {
 			LOGGER.error("AckGetRoomList:{}", rooms.toString());
 			if (rooms.getRoomListCount() > 0) {
 				RoomProto.Room room = rooms.getRoomList(0);
-				RoomProto.ReqCreateRoomTable.Builder createTable = RoomProto.ReqCreateRoomTable.newBuilder();
-				createTable.setConfigTypeId(room.getConfigTypeId());
-				Robot.getInstance().getClientSendMessage(RMsg.REQ_CREATE_ROOM_TABLE_MSG, createTable.build(), serverClient);
+				RoomProto.ReqJoinRoomTable.Builder createTable = RoomProto.ReqJoinRoomTable.newBuilder();
+				createTable.setRoomId(room.getRoomId());
+				Robot.getInstance().getClientSendMessage(RMsg.REQ_JOIN_ROOM_TABLE_MSG, createTable.build(), serverClient);
 			}
 		}
 	}

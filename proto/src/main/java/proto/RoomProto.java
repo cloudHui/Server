@@ -422,7 +422,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    java.util.List<proto.RoomProto.RoomTableInfo> 
+    java.util.List<proto.ServerProto.RoomTableInfo> 
         getTablesList();
     /**
      * <pre>
@@ -431,7 +431,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    proto.RoomProto.RoomTableInfo getTables(int index);
+    proto.ServerProto.RoomTableInfo getTables(int index);
     /**
      * <pre>
      *桌子
@@ -447,7 +447,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    java.util.List<? extends proto.RoomProto.RoomTableInfoOrBuilder> 
+    java.util.List<? extends proto.ServerProto.RoomTableInfoOrBuilder> 
         getTablesOrBuilderList();
     /**
      * <pre>
@@ -456,7 +456,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    proto.RoomProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+    proto.ServerProto.RoomTableInfoOrBuilder getTablesOrBuilder(
         int index);
   }
   /**
@@ -511,11 +511,11 @@ public final class RoomProto {
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                tables_ = new java.util.ArrayList<proto.RoomProto.RoomTableInfo>();
+                tables_ = new java.util.ArrayList<proto.ServerProto.RoomTableInfo>();
                 mutable_bitField0_ |= 0x00000002;
               }
               tables_.add(
-                  input.readMessage(proto.RoomProto.RoomTableInfo.parser(), extensionRegistry));
+                  input.readMessage(proto.ServerProto.RoomTableInfo.parser(), extensionRegistry));
               break;
             }
           }
@@ -556,7 +556,7 @@ public final class RoomProto {
     }
 
     public static final int TABLES_FIELD_NUMBER = 2;
-    private java.util.List<proto.RoomProto.RoomTableInfo> tables_;
+    private java.util.List<proto.ServerProto.RoomTableInfo> tables_;
     /**
      * <pre>
      *桌子
@@ -564,7 +564,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public java.util.List<proto.RoomProto.RoomTableInfo> getTablesList() {
+    public java.util.List<proto.ServerProto.RoomTableInfo> getTablesList() {
       return tables_;
     }
     /**
@@ -574,7 +574,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public java.util.List<? extends proto.RoomProto.RoomTableInfoOrBuilder> 
+    public java.util.List<? extends proto.ServerProto.RoomTableInfoOrBuilder> 
         getTablesOrBuilderList() {
       return tables_;
     }
@@ -595,7 +595,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public proto.RoomProto.RoomTableInfo getTables(int index) {
+    public proto.ServerProto.RoomTableInfo getTables(int index) {
       return tables_.get(index);
     }
     /**
@@ -605,7 +605,7 @@ public final class RoomProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public proto.RoomProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+    public proto.ServerProto.RoomTableInfoOrBuilder getTablesOrBuilder(
         int index) {
       return tables_.get(index);
     }
@@ -978,17 +978,17 @@ public final class RoomProto {
         return this;
       }
 
-      private java.util.List<proto.RoomProto.RoomTableInfo> tables_ =
+      private java.util.List<proto.ServerProto.RoomTableInfo> tables_ =
         java.util.Collections.emptyList();
       private void ensureTablesIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          tables_ = new java.util.ArrayList<proto.RoomProto.RoomTableInfo>(tables_);
+          tables_ = new java.util.ArrayList<proto.ServerProto.RoomTableInfo>(tables_);
           bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.RoomProto.RoomTableInfo, proto.RoomProto.RoomTableInfo.Builder, proto.RoomProto.RoomTableInfoOrBuilder> tablesBuilder_;
+          proto.ServerProto.RoomTableInfo, proto.ServerProto.RoomTableInfo.Builder, proto.ServerProto.RoomTableInfoOrBuilder> tablesBuilder_;
 
       /**
        * <pre>
@@ -997,7 +997,7 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public java.util.List<proto.RoomProto.RoomTableInfo> getTablesList() {
+      public java.util.List<proto.ServerProto.RoomTableInfo> getTablesList() {
         if (tablesBuilder_ == null) {
           return java.util.Collections.unmodifiableList(tables_);
         } else {
@@ -1025,7 +1025,7 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public proto.RoomProto.RoomTableInfo getTables(int index) {
+      public proto.ServerProto.RoomTableInfo getTables(int index) {
         if (tablesBuilder_ == null) {
           return tables_.get(index);
         } else {
@@ -1040,7 +1040,7 @@ public final class RoomProto {
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
       public Builder setTables(
-          int index, proto.RoomProto.RoomTableInfo value) {
+          int index, proto.ServerProto.RoomTableInfo value) {
         if (tablesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1061,7 +1061,7 @@ public final class RoomProto {
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
       public Builder setTables(
-          int index, proto.RoomProto.RoomTableInfo.Builder builderForValue) {
+          int index, proto.ServerProto.RoomTableInfo.Builder builderForValue) {
         if (tablesBuilder_ == null) {
           ensureTablesIsMutable();
           tables_.set(index, builderForValue.build());
@@ -1078,7 +1078,7 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public Builder addTables(proto.RoomProto.RoomTableInfo value) {
+      public Builder addTables(proto.ServerProto.RoomTableInfo value) {
         if (tablesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1099,7 +1099,7 @@ public final class RoomProto {
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
       public Builder addTables(
-          int index, proto.RoomProto.RoomTableInfo value) {
+          int index, proto.ServerProto.RoomTableInfo value) {
         if (tablesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1120,7 +1120,7 @@ public final class RoomProto {
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
       public Builder addTables(
-          proto.RoomProto.RoomTableInfo.Builder builderForValue) {
+          proto.ServerProto.RoomTableInfo.Builder builderForValue) {
         if (tablesBuilder_ == null) {
           ensureTablesIsMutable();
           tables_.add(builderForValue.build());
@@ -1138,7 +1138,7 @@ public final class RoomProto {
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
       public Builder addTables(
-          int index, proto.RoomProto.RoomTableInfo.Builder builderForValue) {
+          int index, proto.ServerProto.RoomTableInfo.Builder builderForValue) {
         if (tablesBuilder_ == null) {
           ensureTablesIsMutable();
           tables_.add(index, builderForValue.build());
@@ -1156,7 +1156,7 @@ public final class RoomProto {
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
       public Builder addAllTables(
-          java.lang.Iterable<? extends proto.RoomProto.RoomTableInfo> values) {
+          java.lang.Iterable<? extends proto.ServerProto.RoomTableInfo> values) {
         if (tablesBuilder_ == null) {
           ensureTablesIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1208,7 +1208,7 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public proto.RoomProto.RoomTableInfo.Builder getTablesBuilder(
+      public proto.ServerProto.RoomTableInfo.Builder getTablesBuilder(
           int index) {
         return getTablesFieldBuilder().getBuilder(index);
       }
@@ -1219,7 +1219,7 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public proto.RoomProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+      public proto.ServerProto.RoomTableInfoOrBuilder getTablesOrBuilder(
           int index) {
         if (tablesBuilder_ == null) {
           return tables_.get(index);  } else {
@@ -1233,7 +1233,7 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public java.util.List<? extends proto.RoomProto.RoomTableInfoOrBuilder> 
+      public java.util.List<? extends proto.ServerProto.RoomTableInfoOrBuilder> 
            getTablesOrBuilderList() {
         if (tablesBuilder_ != null) {
           return tablesBuilder_.getMessageOrBuilderList();
@@ -1248,9 +1248,9 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public proto.RoomProto.RoomTableInfo.Builder addTablesBuilder() {
+      public proto.ServerProto.RoomTableInfo.Builder addTablesBuilder() {
         return getTablesFieldBuilder().addBuilder(
-            proto.RoomProto.RoomTableInfo.getDefaultInstance());
+            proto.ServerProto.RoomTableInfo.getDefaultInstance());
       }
       /**
        * <pre>
@@ -1259,10 +1259,10 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public proto.RoomProto.RoomTableInfo.Builder addTablesBuilder(
+      public proto.ServerProto.RoomTableInfo.Builder addTablesBuilder(
           int index) {
         return getTablesFieldBuilder().addBuilder(
-            index, proto.RoomProto.RoomTableInfo.getDefaultInstance());
+            index, proto.ServerProto.RoomTableInfo.getDefaultInstance());
       }
       /**
        * <pre>
@@ -1271,16 +1271,16 @@ public final class RoomProto {
        *
        * <code>repeated .proto.RoomTableInfo tables = 2;</code>
        */
-      public java.util.List<proto.RoomProto.RoomTableInfo.Builder> 
+      public java.util.List<proto.ServerProto.RoomTableInfo.Builder> 
            getTablesBuilderList() {
         return getTablesFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.RoomProto.RoomTableInfo, proto.RoomProto.RoomTableInfo.Builder, proto.RoomProto.RoomTableInfoOrBuilder> 
+          proto.ServerProto.RoomTableInfo, proto.ServerProto.RoomTableInfo.Builder, proto.ServerProto.RoomTableInfoOrBuilder> 
           getTablesFieldBuilder() {
         if (tablesBuilder_ == null) {
           tablesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.RoomProto.RoomTableInfo, proto.RoomProto.RoomTableInfo.Builder, proto.RoomProto.RoomTableInfoOrBuilder>(
+              proto.ServerProto.RoomTableInfo, proto.ServerProto.RoomTableInfo.Builder, proto.ServerProto.RoomTableInfoOrBuilder>(
                   tables_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
@@ -2092,37 +2092,33 @@ public final class RoomProto {
 
   }
 
-  public interface ReqCreateRoomTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqCreateRoomTable)
+  public interface ReqJoinRoomTableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.ReqJoinRoomTable)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *房间规则
-     * </pre>
-     *
-     * <code>int32 configTypeId = 1;</code>
+     * <code>int32 roomId = 1;</code>
      */
-    int getConfigTypeId();
+    int getRoomId();
   }
   /**
    * <pre>
-   *请求创建桌子
+   *请求加入房间
    * </pre>
    *
-   * Protobuf type {@code proto.ReqCreateRoomTable}
+   * Protobuf type {@code proto.ReqJoinRoomTable}
    */
-  public  static final class ReqCreateRoomTable extends
+  public  static final class ReqJoinRoomTable extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqCreateRoomTable)
-      ReqCreateRoomTableOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.ReqJoinRoomTable)
+      ReqJoinRoomTableOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ReqCreateRoomTable.newBuilder() to construct.
-    private ReqCreateRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use ReqJoinRoomTable.newBuilder() to construct.
+    private ReqJoinRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ReqCreateRoomTable() {
-      configTypeId_ = 0;
+    private ReqJoinRoomTable() {
+      roomId_ = 0;
     }
 
     @java.lang.Override
@@ -2130,7 +2126,7 @@ public final class RoomProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqCreateRoomTable(
+    private ReqJoinRoomTable(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2155,7 +2151,7 @@ public final class RoomProto {
             }
             case 8: {
 
-              configTypeId_ = input.readInt32();
+              roomId_ = input.readInt32();
               break;
             }
           }
@@ -2172,27 +2168,23 @@ public final class RoomProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_descriptor;
+      return proto.RoomProto.internal_static_proto_ReqJoinRoomTable_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_fieldAccessorTable
+      return proto.RoomProto.internal_static_proto_ReqJoinRoomTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.RoomProto.ReqCreateRoomTable.class, proto.RoomProto.ReqCreateRoomTable.Builder.class);
+              proto.RoomProto.ReqJoinRoomTable.class, proto.RoomProto.ReqJoinRoomTable.Builder.class);
     }
 
-    public static final int CONFIGTYPEID_FIELD_NUMBER = 1;
-    private int configTypeId_;
+    public static final int ROOMID_FIELD_NUMBER = 1;
+    private int roomId_;
     /**
-     * <pre>
-     *房间规则
-     * </pre>
-     *
-     * <code>int32 configTypeId = 1;</code>
+     * <code>int32 roomId = 1;</code>
      */
-    public int getConfigTypeId() {
-      return configTypeId_;
+    public int getRoomId() {
+      return roomId_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2207,8 +2199,8 @@ public final class RoomProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (configTypeId_ != 0) {
-        output.writeInt32(1, configTypeId_);
+      if (roomId_ != 0) {
+        output.writeInt32(1, roomId_);
       }
       unknownFields.writeTo(output);
     }
@@ -2218,9 +2210,9 @@ public final class RoomProto {
       if (size != -1) return size;
 
       size = 0;
-      if (configTypeId_ != 0) {
+      if (roomId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, configTypeId_);
+          .computeInt32Size(1, roomId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2232,14 +2224,14 @@ public final class RoomProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.RoomProto.ReqCreateRoomTable)) {
+      if (!(obj instanceof proto.RoomProto.ReqJoinRoomTable)) {
         return super.equals(obj);
       }
-      proto.RoomProto.ReqCreateRoomTable other = (proto.RoomProto.ReqCreateRoomTable) obj;
+      proto.RoomProto.ReqJoinRoomTable other = (proto.RoomProto.ReqJoinRoomTable) obj;
 
       boolean result = true;
-      result = result && (getConfigTypeId()
-          == other.getConfigTypeId());
+      result = result && (getRoomId()
+          == other.getRoomId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2251,76 +2243,76 @@ public final class RoomProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + CONFIGTYPEID_FIELD_NUMBER;
-      hash = (53 * hash) + getConfigTypeId();
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(byte[] data)
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(java.io.InputStream input)
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseDelimitedFrom(java.io.InputStream input)
+    public static proto.RoomProto.ReqJoinRoomTable parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseDelimitedFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.ReqCreateRoomTable parseFrom(
+    public static proto.RoomProto.ReqJoinRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2332,7 +2324,7 @@ public final class RoomProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.RoomProto.ReqCreateRoomTable prototype) {
+    public static Builder newBuilder(proto.RoomProto.ReqJoinRoomTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -2348,28 +2340,28 @@ public final class RoomProto {
     }
     /**
      * <pre>
-     *请求创建桌子
+     *请求加入房间
      * </pre>
      *
-     * Protobuf type {@code proto.ReqCreateRoomTable}
+     * Protobuf type {@code proto.ReqJoinRoomTable}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqCreateRoomTable)
-        proto.RoomProto.ReqCreateRoomTableOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.ReqJoinRoomTable)
+        proto.RoomProto.ReqJoinRoomTableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_descriptor;
+        return proto.RoomProto.internal_static_proto_ReqJoinRoomTable_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_fieldAccessorTable
+        return proto.RoomProto.internal_static_proto_ReqJoinRoomTable_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.RoomProto.ReqCreateRoomTable.class, proto.RoomProto.ReqCreateRoomTable.Builder.class);
+                proto.RoomProto.ReqJoinRoomTable.class, proto.RoomProto.ReqJoinRoomTable.Builder.class);
       }
 
-      // Construct using proto.RoomProto.ReqCreateRoomTable.newBuilder()
+      // Construct using proto.RoomProto.ReqJoinRoomTable.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2386,31 +2378,31 @@ public final class RoomProto {
       }
       public Builder clear() {
         super.clear();
-        configTypeId_ = 0;
+        roomId_ = 0;
 
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_ReqCreateRoomTable_descriptor;
+        return proto.RoomProto.internal_static_proto_ReqJoinRoomTable_descriptor;
       }
 
-      public proto.RoomProto.ReqCreateRoomTable getDefaultInstanceForType() {
-        return proto.RoomProto.ReqCreateRoomTable.getDefaultInstance();
+      public proto.RoomProto.ReqJoinRoomTable getDefaultInstanceForType() {
+        return proto.RoomProto.ReqJoinRoomTable.getDefaultInstance();
       }
 
-      public proto.RoomProto.ReqCreateRoomTable build() {
-        proto.RoomProto.ReqCreateRoomTable result = buildPartial();
+      public proto.RoomProto.ReqJoinRoomTable build() {
+        proto.RoomProto.ReqJoinRoomTable result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.RoomProto.ReqCreateRoomTable buildPartial() {
-        proto.RoomProto.ReqCreateRoomTable result = new proto.RoomProto.ReqCreateRoomTable(this);
-        result.configTypeId_ = configTypeId_;
+      public proto.RoomProto.ReqJoinRoomTable buildPartial() {
+        proto.RoomProto.ReqJoinRoomTable result = new proto.RoomProto.ReqJoinRoomTable(this);
+        result.roomId_ = roomId_;
         onBuilt();
         return result;
       }
@@ -2442,18 +2434,18 @@ public final class RoomProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.ReqCreateRoomTable) {
-          return mergeFrom((proto.RoomProto.ReqCreateRoomTable)other);
+        if (other instanceof proto.RoomProto.ReqJoinRoomTable) {
+          return mergeFrom((proto.RoomProto.ReqJoinRoomTable)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.RoomProto.ReqCreateRoomTable other) {
-        if (other == proto.RoomProto.ReqCreateRoomTable.getDefaultInstance()) return this;
-        if (other.getConfigTypeId() != 0) {
-          setConfigTypeId(other.getConfigTypeId());
+      public Builder mergeFrom(proto.RoomProto.ReqJoinRoomTable other) {
+        if (other == proto.RoomProto.ReqJoinRoomTable.getDefaultInstance()) return this;
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2468,11 +2460,11 @@ public final class RoomProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.RoomProto.ReqCreateRoomTable parsedMessage = null;
+        proto.RoomProto.ReqJoinRoomTable parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.ReqCreateRoomTable) e.getUnfinishedMessage();
+          parsedMessage = (proto.RoomProto.ReqJoinRoomTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2482,40 +2474,28 @@ public final class RoomProto {
         return this;
       }
 
-      private int configTypeId_ ;
+      private int roomId_ ;
       /**
-       * <pre>
-       *房间规则
-       * </pre>
-       *
-       * <code>int32 configTypeId = 1;</code>
+       * <code>int32 roomId = 1;</code>
        */
-      public int getConfigTypeId() {
-        return configTypeId_;
+      public int getRoomId() {
+        return roomId_;
       }
       /**
-       * <pre>
-       *房间规则
-       * </pre>
-       *
-       * <code>int32 configTypeId = 1;</code>
+       * <code>int32 roomId = 1;</code>
        */
-      public Builder setConfigTypeId(int value) {
+      public Builder setRoomId(int value) {
         
-        configTypeId_ = value;
+        roomId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <pre>
-       *房间规则
-       * </pre>
-       *
-       * <code>int32 configTypeId = 1;</code>
+       * <code>int32 roomId = 1;</code>
        */
-      public Builder clearConfigTypeId() {
+      public Builder clearRoomId() {
         
-        configTypeId_ = 0;
+        roomId_ = 0;
         onChanged();
         return this;
       }
@@ -2530,1196 +2510,71 @@ public final class RoomProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.ReqCreateRoomTable)
+      // @@protoc_insertion_point(builder_scope:proto.ReqJoinRoomTable)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.ReqCreateRoomTable)
-    private static final proto.RoomProto.ReqCreateRoomTable DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.ReqJoinRoomTable)
+    private static final proto.RoomProto.ReqJoinRoomTable DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.RoomProto.ReqCreateRoomTable();
+      DEFAULT_INSTANCE = new proto.RoomProto.ReqJoinRoomTable();
     }
 
-    public static proto.RoomProto.ReqCreateRoomTable getDefaultInstance() {
+    public static proto.RoomProto.ReqJoinRoomTable getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ReqCreateRoomTable>
-        PARSER = new com.google.protobuf.AbstractParser<ReqCreateRoomTable>() {
-      public ReqCreateRoomTable parsePartialFrom(
+    private static final com.google.protobuf.Parser<ReqJoinRoomTable>
+        PARSER = new com.google.protobuf.AbstractParser<ReqJoinRoomTable>() {
+      public ReqJoinRoomTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqCreateRoomTable(input, extensionRegistry);
+          return new ReqJoinRoomTable(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<ReqCreateRoomTable> parser() {
+    public static com.google.protobuf.Parser<ReqJoinRoomTable> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ReqCreateRoomTable> getParserForType() {
+    public com.google.protobuf.Parser<ReqJoinRoomTable> getParserForType() {
       return PARSER;
     }
 
-    public proto.RoomProto.ReqCreateRoomTable getDefaultInstanceForType() {
+    public proto.RoomProto.ReqJoinRoomTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface ReqEnterTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqEnterTable)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    int getTableId();
-  }
-  /**
-   * <pre>
-   *请求入桌分配位置
-   * </pre>
-   *
-   * Protobuf type {@code proto.ReqEnterTable}
-   */
-  public  static final class ReqEnterTable extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqEnterTable)
-      ReqEnterTableOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use ReqEnterTable.newBuilder() to construct.
-    private ReqEnterTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private ReqEnterTable() {
-      tableId_ = 0;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private ReqEnterTable(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              tableId_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RoomProto.internal_static_proto_ReqEnterTable_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_ReqEnterTable_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RoomProto.ReqEnterTable.class, proto.RoomProto.ReqEnterTable.Builder.class);
-    }
-
-    public static final int TABLEID_FIELD_NUMBER = 1;
-    private int tableId_;
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    public int getTableId() {
-      return tableId_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (tableId_ != 0) {
-        output.writeInt32(1, tableId_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (tableId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, tableId_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RoomProto.ReqEnterTable)) {
-        return super.equals(obj);
-      }
-      proto.RoomProto.ReqEnterTable other = (proto.RoomProto.ReqEnterTable) obj;
-
-      boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.ReqEnterTable parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.ReqEnterTable parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.ReqEnterTable parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RoomProto.ReqEnterTable prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *请求入桌分配位置
-     * </pre>
-     *
-     * Protobuf type {@code proto.ReqEnterTable}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqEnterTable)
-        proto.RoomProto.ReqEnterTableOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RoomProto.internal_static_proto_ReqEnterTable_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_ReqEnterTable_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RoomProto.ReqEnterTable.class, proto.RoomProto.ReqEnterTable.Builder.class);
-      }
-
-      // Construct using proto.RoomProto.ReqEnterTable.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        tableId_ = 0;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_ReqEnterTable_descriptor;
-      }
-
-      public proto.RoomProto.ReqEnterTable getDefaultInstanceForType() {
-        return proto.RoomProto.ReqEnterTable.getDefaultInstance();
-      }
-
-      public proto.RoomProto.ReqEnterTable build() {
-        proto.RoomProto.ReqEnterTable result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.RoomProto.ReqEnterTable buildPartial() {
-        proto.RoomProto.ReqEnterTable result = new proto.RoomProto.ReqEnterTable(this);
-        result.tableId_ = tableId_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.ReqEnterTable) {
-          return mergeFrom((proto.RoomProto.ReqEnterTable)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RoomProto.ReqEnterTable other) {
-        if (other == proto.RoomProto.ReqEnterTable.getDefaultInstance()) return this;
-        if (other.getTableId() != 0) {
-          setTableId(other.getTableId());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RoomProto.ReqEnterTable parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.ReqEnterTable) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int tableId_ ;
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public int getTableId() {
-        return tableId_;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder setTableId(int value) {
-        
-        tableId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder clearTableId() {
-        
-        tableId_ = 0;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.ReqEnterTable)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.ReqEnterTable)
-    private static final proto.RoomProto.ReqEnterTable DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RoomProto.ReqEnterTable();
-    }
-
-    public static proto.RoomProto.ReqEnterTable getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ReqEnterTable>
-        PARSER = new com.google.protobuf.AbstractParser<ReqEnterTable>() {
-      public ReqEnterTable parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqEnterTable(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ReqEnterTable> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ReqEnterTable> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.RoomProto.ReqEnterTable getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface AckEnterTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckEnterTable)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    int getTableId();
-
-    /**
-     * <code>.proto.TableInfo info = 2;</code>
-     */
-    boolean hasInfo();
-    /**
-     * <code>.proto.TableInfo info = 2;</code>
-     */
-    proto.RoomProto.TableInfo getInfo();
-    /**
-     * <code>.proto.TableInfo info = 2;</code>
-     */
-    proto.RoomProto.TableInfoOrBuilder getInfoOrBuilder();
-  }
-  /**
-   * Protobuf type {@code proto.AckEnterTable}
-   */
-  public  static final class AckEnterTable extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckEnterTable)
-      AckEnterTableOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use AckEnterTable.newBuilder() to construct.
-    private AckEnterTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private AckEnterTable() {
-      tableId_ = 0;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private AckEnterTable(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              tableId_ = input.readInt32();
-              break;
-            }
-            case 18: {
-              proto.RoomProto.TableInfo.Builder subBuilder = null;
-              if (info_ != null) {
-                subBuilder = info_.toBuilder();
-              }
-              info_ = input.readMessage(proto.RoomProto.TableInfo.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(info_);
-                info_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RoomProto.internal_static_proto_AckEnterTable_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_AckEnterTable_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RoomProto.AckEnterTable.class, proto.RoomProto.AckEnterTable.Builder.class);
-    }
-
-    public static final int TABLEID_FIELD_NUMBER = 1;
-    private int tableId_;
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    public int getTableId() {
-      return tableId_;
-    }
-
-    public static final int INFO_FIELD_NUMBER = 2;
-    private proto.RoomProto.TableInfo info_;
-    /**
-     * <code>.proto.TableInfo info = 2;</code>
-     */
-    public boolean hasInfo() {
-      return info_ != null;
-    }
-    /**
-     * <code>.proto.TableInfo info = 2;</code>
-     */
-    public proto.RoomProto.TableInfo getInfo() {
-      return info_ == null ? proto.RoomProto.TableInfo.getDefaultInstance() : info_;
-    }
-    /**
-     * <code>.proto.TableInfo info = 2;</code>
-     */
-    public proto.RoomProto.TableInfoOrBuilder getInfoOrBuilder() {
-      return getInfo();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (tableId_ != 0) {
-        output.writeInt32(1, tableId_);
-      }
-      if (info_ != null) {
-        output.writeMessage(2, getInfo());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (tableId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, tableId_);
-      }
-      if (info_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getInfo());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RoomProto.AckEnterTable)) {
-        return super.equals(obj);
-      }
-      proto.RoomProto.AckEnterTable other = (proto.RoomProto.AckEnterTable) obj;
-
-      boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
-      result = result && (hasInfo() == other.hasInfo());
-      if (hasInfo()) {
-        result = result && getInfo()
-            .equals(other.getInfo());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId();
-      if (hasInfo()) {
-        hash = (37 * hash) + INFO_FIELD_NUMBER;
-        hash = (53 * hash) + getInfo().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.AckEnterTable parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.AckEnterTable parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.AckEnterTable parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RoomProto.AckEnterTable prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.AckEnterTable}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckEnterTable)
-        proto.RoomProto.AckEnterTableOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RoomProto.internal_static_proto_AckEnterTable_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_AckEnterTable_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RoomProto.AckEnterTable.class, proto.RoomProto.AckEnterTable.Builder.class);
-      }
-
-      // Construct using proto.RoomProto.AckEnterTable.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        tableId_ = 0;
-
-        if (infoBuilder_ == null) {
-          info_ = null;
-        } else {
-          info_ = null;
-          infoBuilder_ = null;
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_AckEnterTable_descriptor;
-      }
-
-      public proto.RoomProto.AckEnterTable getDefaultInstanceForType() {
-        return proto.RoomProto.AckEnterTable.getDefaultInstance();
-      }
-
-      public proto.RoomProto.AckEnterTable build() {
-        proto.RoomProto.AckEnterTable result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.RoomProto.AckEnterTable buildPartial() {
-        proto.RoomProto.AckEnterTable result = new proto.RoomProto.AckEnterTable(this);
-        result.tableId_ = tableId_;
-        if (infoBuilder_ == null) {
-          result.info_ = info_;
-        } else {
-          result.info_ = infoBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.AckEnterTable) {
-          return mergeFrom((proto.RoomProto.AckEnterTable)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RoomProto.AckEnterTable other) {
-        if (other == proto.RoomProto.AckEnterTable.getDefaultInstance()) return this;
-        if (other.getTableId() != 0) {
-          setTableId(other.getTableId());
-        }
-        if (other.hasInfo()) {
-          mergeInfo(other.getInfo());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RoomProto.AckEnterTable parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.AckEnterTable) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int tableId_ ;
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public int getTableId() {
-        return tableId_;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder setTableId(int value) {
-        
-        tableId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder clearTableId() {
-        
-        tableId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private proto.RoomProto.TableInfo info_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RoomProto.TableInfo, proto.RoomProto.TableInfo.Builder, proto.RoomProto.TableInfoOrBuilder> infoBuilder_;
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public boolean hasInfo() {
-        return infoBuilder_ != null || info_ != null;
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public proto.RoomProto.TableInfo getInfo() {
-        if (infoBuilder_ == null) {
-          return info_ == null ? proto.RoomProto.TableInfo.getDefaultInstance() : info_;
-        } else {
-          return infoBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public Builder setInfo(proto.RoomProto.TableInfo value) {
-        if (infoBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          info_ = value;
-          onChanged();
-        } else {
-          infoBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public Builder setInfo(
-          proto.RoomProto.TableInfo.Builder builderForValue) {
-        if (infoBuilder_ == null) {
-          info_ = builderForValue.build();
-          onChanged();
-        } else {
-          infoBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public Builder mergeInfo(proto.RoomProto.TableInfo value) {
-        if (infoBuilder_ == null) {
-          if (info_ != null) {
-            info_ =
-              proto.RoomProto.TableInfo.newBuilder(info_).mergeFrom(value).buildPartial();
-          } else {
-            info_ = value;
-          }
-          onChanged();
-        } else {
-          infoBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public Builder clearInfo() {
-        if (infoBuilder_ == null) {
-          info_ = null;
-          onChanged();
-        } else {
-          info_ = null;
-          infoBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public proto.RoomProto.TableInfo.Builder getInfoBuilder() {
-        
-        onChanged();
-        return getInfoFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      public proto.RoomProto.TableInfoOrBuilder getInfoOrBuilder() {
-        if (infoBuilder_ != null) {
-          return infoBuilder_.getMessageOrBuilder();
-        } else {
-          return info_ == null ?
-              proto.RoomProto.TableInfo.getDefaultInstance() : info_;
-        }
-      }
-      /**
-       * <code>.proto.TableInfo info = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.RoomProto.TableInfo, proto.RoomProto.TableInfo.Builder, proto.RoomProto.TableInfoOrBuilder> 
-          getInfoFieldBuilder() {
-        if (infoBuilder_ == null) {
-          infoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.RoomProto.TableInfo, proto.RoomProto.TableInfo.Builder, proto.RoomProto.TableInfoOrBuilder>(
-                  getInfo(),
-                  getParentForChildren(),
-                  isClean());
-          info_ = null;
-        }
-        return infoBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.AckEnterTable)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.AckEnterTable)
-    private static final proto.RoomProto.AckEnterTable DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RoomProto.AckEnterTable();
-    }
-
-    public static proto.RoomProto.AckEnterTable getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<AckEnterTable>
-        PARSER = new com.google.protobuf.AbstractParser<AckEnterTable>() {
-      public AckEnterTable parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckEnterTable(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AckEnterTable> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AckEnterTable> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.RoomProto.AckEnterTable getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface TableInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.TableInfo)
+  public interface AckJoinRoomTableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.AckJoinRoomTable)
       com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>bytes tableId = 1;</code>
      */
     com.google.protobuf.ByteString getTableId();
-
-    /**
-     * <code>int32 landlord = 2;</code>
-     */
-    int getLandlord();
-
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    java.util.List<proto.RoomProto.TableRole> 
-        getTableRolesList();
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    proto.RoomProto.TableRole getTableRoles(int index);
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    int getTableRolesCount();
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    java.util.List<? extends proto.RoomProto.TableRoleOrBuilder> 
-        getTableRolesOrBuilderList();
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    proto.RoomProto.TableRoleOrBuilder getTableRolesOrBuilder(
-        int index);
   }
   /**
-   * Protobuf type {@code proto.TableInfo}
+   * <pre>
+   *加入房间回复
+   * </pre>
+   *
+   * Protobuf type {@code proto.AckJoinRoomTable}
    */
-  public  static final class TableInfo extends
+  public  static final class AckJoinRoomTable extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.TableInfo)
-      TableInfoOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.AckJoinRoomTable)
+      AckJoinRoomTableOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use TableInfo.newBuilder() to construct.
-    private TableInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use AckJoinRoomTable.newBuilder() to construct.
+    private AckJoinRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private TableInfo() {
+    private AckJoinRoomTable() {
       tableId_ = com.google.protobuf.ByteString.EMPTY;
-      landlord_ = 0;
-      tableRoles_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -3727,7 +2582,7 @@ public final class RoomProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private TableInfo(
+    private AckJoinRoomTable(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3755,20 +2610,6 @@ public final class RoomProto {
               tableId_ = input.readBytes();
               break;
             }
-            case 16: {
-
-              landlord_ = input.readInt32();
-              break;
-            }
-            case 26: {
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                tableRoles_ = new java.util.ArrayList<proto.RoomProto.TableRole>();
-                mutable_bitField0_ |= 0x00000004;
-              }
-              tableRoles_.add(
-                  input.readMessage(proto.RoomProto.TableRole.parser(), extensionRegistry));
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -3777,26 +2618,22 @@ public final class RoomProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
-        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.RoomProto.internal_static_proto_TableInfo_descriptor;
+      return proto.RoomProto.internal_static_proto_AckJoinRoomTable_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_TableInfo_fieldAccessorTable
+      return proto.RoomProto.internal_static_proto_AckJoinRoomTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.RoomProto.TableInfo.class, proto.RoomProto.TableInfo.Builder.class);
+              proto.RoomProto.AckJoinRoomTable.class, proto.RoomProto.AckJoinRoomTable.Builder.class);
     }
 
-    private int bitField0_;
     public static final int TABLEID_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString tableId_;
     /**
@@ -3804,50 +2641,6 @@ public final class RoomProto {
      */
     public com.google.protobuf.ByteString getTableId() {
       return tableId_;
-    }
-
-    public static final int LANDLORD_FIELD_NUMBER = 2;
-    private int landlord_;
-    /**
-     * <code>int32 landlord = 2;</code>
-     */
-    public int getLandlord() {
-      return landlord_;
-    }
-
-    public static final int TABLEROLES_FIELD_NUMBER = 3;
-    private java.util.List<proto.RoomProto.TableRole> tableRoles_;
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    public java.util.List<proto.RoomProto.TableRole> getTableRolesList() {
-      return tableRoles_;
-    }
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    public java.util.List<? extends proto.RoomProto.TableRoleOrBuilder> 
-        getTableRolesOrBuilderList() {
-      return tableRoles_;
-    }
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    public int getTableRolesCount() {
-      return tableRoles_.size();
-    }
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    public proto.RoomProto.TableRole getTableRoles(int index) {
-      return tableRoles_.get(index);
-    }
-    /**
-     * <code>repeated .proto.TableRole tableRoles = 3;</code>
-     */
-    public proto.RoomProto.TableRoleOrBuilder getTableRolesOrBuilder(
-        int index) {
-      return tableRoles_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -3865,12 +2658,6 @@ public final class RoomProto {
       if (!tableId_.isEmpty()) {
         output.writeBytes(1, tableId_);
       }
-      if (landlord_ != 0) {
-        output.writeInt32(2, landlord_);
-      }
-      for (int i = 0; i < tableRoles_.size(); i++) {
-        output.writeMessage(3, tableRoles_.get(i));
-      }
       unknownFields.writeTo(output);
     }
 
@@ -3883,14 +2670,6 @@ public final class RoomProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, tableId_);
       }
-      if (landlord_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, landlord_);
-      }
-      for (int i = 0; i < tableRoles_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, tableRoles_.get(i));
-      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -3901,18 +2680,14 @@ public final class RoomProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.RoomProto.TableInfo)) {
+      if (!(obj instanceof proto.RoomProto.AckJoinRoomTable)) {
         return super.equals(obj);
       }
-      proto.RoomProto.TableInfo other = (proto.RoomProto.TableInfo) obj;
+      proto.RoomProto.AckJoinRoomTable other = (proto.RoomProto.AckJoinRoomTable) obj;
 
       boolean result = true;
       result = result && getTableId()
           .equals(other.getTableId());
-      result = result && (getLandlord()
-          == other.getLandlord());
-      result = result && getTableRolesList()
-          .equals(other.getTableRolesList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -3926,80 +2701,74 @@ public final class RoomProto {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
       hash = (53 * hash) + getTableId().hashCode();
-      hash = (37 * hash) + LANDLORD_FIELD_NUMBER;
-      hash = (53 * hash) + getLandlord();
-      if (getTableRolesCount() > 0) {
-        hash = (37 * hash) + TABLEROLES_FIELD_NUMBER;
-        hash = (53 * hash) + getTableRolesList().hashCode();
-      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.TableInfo parseFrom(byte[] data)
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.RoomProto.TableInfo parseFrom(java.io.InputStream input)
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RoomProto.TableInfo parseDelimitedFrom(java.io.InputStream input)
+    public static proto.RoomProto.AckJoinRoomTable parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.TableInfo parseDelimitedFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.RoomProto.TableInfo parseFrom(
+    public static proto.RoomProto.AckJoinRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4011,7 +2780,7 @@ public final class RoomProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.RoomProto.TableInfo prototype) {
+    public static Builder newBuilder(proto.RoomProto.AckJoinRoomTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -4026,25 +2795,29 @@ public final class RoomProto {
       return builder;
     }
     /**
-     * Protobuf type {@code proto.TableInfo}
+     * <pre>
+     *加入房间回复
+     * </pre>
+     *
+     * Protobuf type {@code proto.AckJoinRoomTable}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.TableInfo)
-        proto.RoomProto.TableInfoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.AckJoinRoomTable)
+        proto.RoomProto.AckJoinRoomTableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.RoomProto.internal_static_proto_TableInfo_descriptor;
+        return proto.RoomProto.internal_static_proto_AckJoinRoomTable_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_TableInfo_fieldAccessorTable
+        return proto.RoomProto.internal_static_proto_AckJoinRoomTable_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.RoomProto.TableInfo.class, proto.RoomProto.TableInfo.Builder.class);
+                proto.RoomProto.AckJoinRoomTable.class, proto.RoomProto.AckJoinRoomTable.Builder.class);
       }
 
-      // Construct using proto.RoomProto.TableInfo.newBuilder()
+      // Construct using proto.RoomProto.AckJoinRoomTable.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4057,57 +2830,35 @@ public final class RoomProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getTableRolesFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
         tableId_ = com.google.protobuf.ByteString.EMPTY;
 
-        landlord_ = 0;
-
-        if (tableRolesBuilder_ == null) {
-          tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-        } else {
-          tableRolesBuilder_.clear();
-        }
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_TableInfo_descriptor;
+        return proto.RoomProto.internal_static_proto_AckJoinRoomTable_descriptor;
       }
 
-      public proto.RoomProto.TableInfo getDefaultInstanceForType() {
-        return proto.RoomProto.TableInfo.getDefaultInstance();
+      public proto.RoomProto.AckJoinRoomTable getDefaultInstanceForType() {
+        return proto.RoomProto.AckJoinRoomTable.getDefaultInstance();
       }
 
-      public proto.RoomProto.TableInfo build() {
-        proto.RoomProto.TableInfo result = buildPartial();
+      public proto.RoomProto.AckJoinRoomTable build() {
+        proto.RoomProto.AckJoinRoomTable result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.RoomProto.TableInfo buildPartial() {
-        proto.RoomProto.TableInfo result = new proto.RoomProto.TableInfo(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
+      public proto.RoomProto.AckJoinRoomTable buildPartial() {
+        proto.RoomProto.AckJoinRoomTable result = new proto.RoomProto.AckJoinRoomTable(this);
         result.tableId_ = tableId_;
-        result.landlord_ = landlord_;
-        if (tableRolesBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
-            bitField0_ = (bitField0_ & ~0x00000004);
-          }
-          result.tableRoles_ = tableRoles_;
-        } else {
-          result.tableRoles_ = tableRolesBuilder_.build();
-        }
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -4139,47 +2890,18 @@ public final class RoomProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.TableInfo) {
-          return mergeFrom((proto.RoomProto.TableInfo)other);
+        if (other instanceof proto.RoomProto.AckJoinRoomTable) {
+          return mergeFrom((proto.RoomProto.AckJoinRoomTable)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.RoomProto.TableInfo other) {
-        if (other == proto.RoomProto.TableInfo.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.RoomProto.AckJoinRoomTable other) {
+        if (other == proto.RoomProto.AckJoinRoomTable.getDefaultInstance()) return this;
         if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
           setTableId(other.getTableId());
-        }
-        if (other.getLandlord() != 0) {
-          setLandlord(other.getLandlord());
-        }
-        if (tableRolesBuilder_ == null) {
-          if (!other.tableRoles_.isEmpty()) {
-            if (tableRoles_.isEmpty()) {
-              tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-            } else {
-              ensureTableRolesIsMutable();
-              tableRoles_.addAll(other.tableRoles_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.tableRoles_.isEmpty()) {
-            if (tableRolesBuilder_.isEmpty()) {
-              tableRolesBuilder_.dispose();
-              tableRolesBuilder_ = null;
-              tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-              tableRolesBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getTableRolesFieldBuilder() : null;
-            } else {
-              tableRolesBuilder_.addAllMessages(other.tableRoles_);
-            }
-          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4194,11 +2916,11 @@ public final class RoomProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.RoomProto.TableInfo parsedMessage = null;
+        proto.RoomProto.AckJoinRoomTable parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.TableInfo) e.getUnfinishedMessage();
+          parsedMessage = (proto.RoomProto.AckJoinRoomTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4207,7 +2929,6 @@ public final class RoomProto {
         }
         return this;
       }
-      private int bitField0_;
 
       private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
       /**
@@ -4237,272 +2958,6 @@ public final class RoomProto {
         onChanged();
         return this;
       }
-
-      private int landlord_ ;
-      /**
-       * <code>int32 landlord = 2;</code>
-       */
-      public int getLandlord() {
-        return landlord_;
-      }
-      /**
-       * <code>int32 landlord = 2;</code>
-       */
-      public Builder setLandlord(int value) {
-        
-        landlord_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 landlord = 2;</code>
-       */
-      public Builder clearLandlord() {
-        
-        landlord_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<proto.RoomProto.TableRole> tableRoles_ =
-        java.util.Collections.emptyList();
-      private void ensureTableRolesIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          tableRoles_ = new java.util.ArrayList<proto.RoomProto.TableRole>(tableRoles_);
-          bitField0_ |= 0x00000004;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.RoomProto.TableRole, proto.RoomProto.TableRole.Builder, proto.RoomProto.TableRoleOrBuilder> tableRolesBuilder_;
-
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public java.util.List<proto.RoomProto.TableRole> getTableRolesList() {
-        if (tableRolesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(tableRoles_);
-        } else {
-          return tableRolesBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public int getTableRolesCount() {
-        if (tableRolesBuilder_ == null) {
-          return tableRoles_.size();
-        } else {
-          return tableRolesBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public proto.RoomProto.TableRole getTableRoles(int index) {
-        if (tableRolesBuilder_ == null) {
-          return tableRoles_.get(index);
-        } else {
-          return tableRolesBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder setTableRoles(
-          int index, proto.RoomProto.TableRole value) {
-        if (tableRolesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTableRolesIsMutable();
-          tableRoles_.set(index, value);
-          onChanged();
-        } else {
-          tableRolesBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder setTableRoles(
-          int index, proto.RoomProto.TableRole.Builder builderForValue) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          tableRolesBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder addTableRoles(proto.RoomProto.TableRole value) {
-        if (tableRolesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTableRolesIsMutable();
-          tableRoles_.add(value);
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder addTableRoles(
-          int index, proto.RoomProto.TableRole value) {
-        if (tableRolesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTableRolesIsMutable();
-          tableRoles_.add(index, value);
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder addTableRoles(
-          proto.RoomProto.TableRole.Builder builderForValue) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.add(builderForValue.build());
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder addTableRoles(
-          int index, proto.RoomProto.TableRole.Builder builderForValue) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder addAllTableRoles(
-          java.lang.Iterable<? extends proto.RoomProto.TableRole> values) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, tableRoles_);
-          onChanged();
-        } else {
-          tableRolesBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder clearTableRoles() {
-        if (tableRolesBuilder_ == null) {
-          tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-          onChanged();
-        } else {
-          tableRolesBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public Builder removeTableRoles(int index) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.remove(index);
-          onChanged();
-        } else {
-          tableRolesBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public proto.RoomProto.TableRole.Builder getTableRolesBuilder(
-          int index) {
-        return getTableRolesFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public proto.RoomProto.TableRoleOrBuilder getTableRolesOrBuilder(
-          int index) {
-        if (tableRolesBuilder_ == null) {
-          return tableRoles_.get(index);  } else {
-          return tableRolesBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public java.util.List<? extends proto.RoomProto.TableRoleOrBuilder> 
-           getTableRolesOrBuilderList() {
-        if (tableRolesBuilder_ != null) {
-          return tableRolesBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(tableRoles_);
-        }
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public proto.RoomProto.TableRole.Builder addTableRolesBuilder() {
-        return getTableRolesFieldBuilder().addBuilder(
-            proto.RoomProto.TableRole.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public proto.RoomProto.TableRole.Builder addTableRolesBuilder(
-          int index) {
-        return getTableRolesFieldBuilder().addBuilder(
-            index, proto.RoomProto.TableRole.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.TableRole tableRoles = 3;</code>
-       */
-      public java.util.List<proto.RoomProto.TableRole.Builder> 
-           getTableRolesBuilderList() {
-        return getTableRolesFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.RoomProto.TableRole, proto.RoomProto.TableRole.Builder, proto.RoomProto.TableRoleOrBuilder> 
-          getTableRolesFieldBuilder() {
-        if (tableRolesBuilder_ == null) {
-          tableRolesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.RoomProto.TableRole, proto.RoomProto.TableRole.Builder, proto.RoomProto.TableRoleOrBuilder>(
-                  tableRoles_,
-                  ((bitField0_ & 0x00000004) == 0x00000004),
-                  getParentForChildren(),
-                  isClean());
-          tableRoles_ = null;
-        }
-        return tableRolesBuilder_;
-      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
@@ -4514,2468 +2969,39 @@ public final class RoomProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.TableInfo)
+      // @@protoc_insertion_point(builder_scope:proto.AckJoinRoomTable)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.TableInfo)
-    private static final proto.RoomProto.TableInfo DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.AckJoinRoomTable)
+    private static final proto.RoomProto.AckJoinRoomTable DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.RoomProto.TableInfo();
+      DEFAULT_INSTANCE = new proto.RoomProto.AckJoinRoomTable();
     }
 
-    public static proto.RoomProto.TableInfo getDefaultInstance() {
+    public static proto.RoomProto.AckJoinRoomTable getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<TableInfo>
-        PARSER = new com.google.protobuf.AbstractParser<TableInfo>() {
-      public TableInfo parsePartialFrom(
+    private static final com.google.protobuf.Parser<AckJoinRoomTable>
+        PARSER = new com.google.protobuf.AbstractParser<AckJoinRoomTable>() {
+      public AckJoinRoomTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new TableInfo(input, extensionRegistry);
+          return new AckJoinRoomTable(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<TableInfo> parser() {
+    public static com.google.protobuf.Parser<AckJoinRoomTable> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<TableInfo> getParserForType() {
+    public com.google.protobuf.Parser<AckJoinRoomTable> getParserForType() {
       return PARSER;
     }
 
-    public proto.RoomProto.TableInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface RoomTableInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.RoomTableInfo)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    int getTableId();
-
-    /**
-     * <code>int32 creatorId = 2;</code>
-     */
-    int getCreatorId();
-
-    /**
-     * <code>int32 ownerId = 3;</code>
-     */
-    int getOwnerId();
-
-    /**
-     * <pre>
-     *等待中  已开始
-     * </pre>
-     *
-     * <code>int32 stat = 4;</code>
-     */
-    int getStat();
-
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    java.util.List<proto.RoomProto.RoomTableRole> 
-        getTableRolesList();
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    proto.RoomProto.RoomTableRole getTableRoles(int index);
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    int getTableRolesCount();
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    java.util.List<? extends proto.RoomProto.RoomTableRoleOrBuilder> 
-        getTableRolesOrBuilderList();
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    proto.RoomProto.RoomTableRoleOrBuilder getTableRolesOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code proto.RoomTableInfo}
-   */
-  public  static final class RoomTableInfo extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.RoomTableInfo)
-      RoomTableInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use RoomTableInfo.newBuilder() to construct.
-    private RoomTableInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private RoomTableInfo() {
-      tableId_ = 0;
-      creatorId_ = 0;
-      ownerId_ = 0;
-      stat_ = 0;
-      tableRoles_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private RoomTableInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              tableId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              creatorId_ = input.readInt32();
-              break;
-            }
-            case 24: {
-
-              ownerId_ = input.readInt32();
-              break;
-            }
-            case 32: {
-
-              stat_ = input.readInt32();
-              break;
-            }
-            case 42: {
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-                tableRoles_ = new java.util.ArrayList<proto.RoomProto.RoomTableRole>();
-                mutable_bitField0_ |= 0x00000010;
-              }
-              tableRoles_.add(
-                  input.readMessage(proto.RoomProto.RoomTableRole.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-          tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RoomProto.internal_static_proto_RoomTableInfo_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_RoomTableInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RoomProto.RoomTableInfo.class, proto.RoomProto.RoomTableInfo.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int TABLEID_FIELD_NUMBER = 1;
-    private int tableId_;
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    public int getTableId() {
-      return tableId_;
-    }
-
-    public static final int CREATORID_FIELD_NUMBER = 2;
-    private int creatorId_;
-    /**
-     * <code>int32 creatorId = 2;</code>
-     */
-    public int getCreatorId() {
-      return creatorId_;
-    }
-
-    public static final int OWNERID_FIELD_NUMBER = 3;
-    private int ownerId_;
-    /**
-     * <code>int32 ownerId = 3;</code>
-     */
-    public int getOwnerId() {
-      return ownerId_;
-    }
-
-    public static final int STAT_FIELD_NUMBER = 4;
-    private int stat_;
-    /**
-     * <pre>
-     *等待中  已开始
-     * </pre>
-     *
-     * <code>int32 stat = 4;</code>
-     */
-    public int getStat() {
-      return stat_;
-    }
-
-    public static final int TABLEROLES_FIELD_NUMBER = 5;
-    private java.util.List<proto.RoomProto.RoomTableRole> tableRoles_;
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    public java.util.List<proto.RoomProto.RoomTableRole> getTableRolesList() {
-      return tableRoles_;
-    }
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    public java.util.List<? extends proto.RoomProto.RoomTableRoleOrBuilder> 
-        getTableRolesOrBuilderList() {
-      return tableRoles_;
-    }
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    public int getTableRolesCount() {
-      return tableRoles_.size();
-    }
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    public proto.RoomProto.RoomTableRole getTableRoles(int index) {
-      return tableRoles_.get(index);
-    }
-    /**
-     * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-     */
-    public proto.RoomProto.RoomTableRoleOrBuilder getTableRolesOrBuilder(
-        int index) {
-      return tableRoles_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (tableId_ != 0) {
-        output.writeInt32(1, tableId_);
-      }
-      if (creatorId_ != 0) {
-        output.writeInt32(2, creatorId_);
-      }
-      if (ownerId_ != 0) {
-        output.writeInt32(3, ownerId_);
-      }
-      if (stat_ != 0) {
-        output.writeInt32(4, stat_);
-      }
-      for (int i = 0; i < tableRoles_.size(); i++) {
-        output.writeMessage(5, tableRoles_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (tableId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, tableId_);
-      }
-      if (creatorId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, creatorId_);
-      }
-      if (ownerId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, ownerId_);
-      }
-      if (stat_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, stat_);
-      }
-      for (int i = 0; i < tableRoles_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, tableRoles_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RoomProto.RoomTableInfo)) {
-        return super.equals(obj);
-      }
-      proto.RoomProto.RoomTableInfo other = (proto.RoomProto.RoomTableInfo) obj;
-
-      boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
-      result = result && (getCreatorId()
-          == other.getCreatorId());
-      result = result && (getOwnerId()
-          == other.getOwnerId());
-      result = result && (getStat()
-          == other.getStat());
-      result = result && getTableRolesList()
-          .equals(other.getTableRolesList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId();
-      hash = (37 * hash) + CREATORID_FIELD_NUMBER;
-      hash = (53 * hash) + getCreatorId();
-      hash = (37 * hash) + OWNERID_FIELD_NUMBER;
-      hash = (53 * hash) + getOwnerId();
-      hash = (37 * hash) + STAT_FIELD_NUMBER;
-      hash = (53 * hash) + getStat();
-      if (getTableRolesCount() > 0) {
-        hash = (37 * hash) + TABLEROLES_FIELD_NUMBER;
-        hash = (53 * hash) + getTableRolesList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableInfo parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.RoomTableInfo parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.RoomTableInfo parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RoomProto.RoomTableInfo prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.RoomTableInfo}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.RoomTableInfo)
-        proto.RoomProto.RoomTableInfoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RoomProto.internal_static_proto_RoomTableInfo_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_RoomTableInfo_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RoomProto.RoomTableInfo.class, proto.RoomProto.RoomTableInfo.Builder.class);
-      }
-
-      // Construct using proto.RoomProto.RoomTableInfo.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getTableRolesFieldBuilder();
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        tableId_ = 0;
-
-        creatorId_ = 0;
-
-        ownerId_ = 0;
-
-        stat_ = 0;
-
-        if (tableRolesBuilder_ == null) {
-          tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000010);
-        } else {
-          tableRolesBuilder_.clear();
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_RoomTableInfo_descriptor;
-      }
-
-      public proto.RoomProto.RoomTableInfo getDefaultInstanceForType() {
-        return proto.RoomProto.RoomTableInfo.getDefaultInstance();
-      }
-
-      public proto.RoomProto.RoomTableInfo build() {
-        proto.RoomProto.RoomTableInfo result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.RoomProto.RoomTableInfo buildPartial() {
-        proto.RoomProto.RoomTableInfo result = new proto.RoomProto.RoomTableInfo(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        result.tableId_ = tableId_;
-        result.creatorId_ = creatorId_;
-        result.ownerId_ = ownerId_;
-        result.stat_ = stat_;
-        if (tableRolesBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010)) {
-            tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
-            bitField0_ = (bitField0_ & ~0x00000010);
-          }
-          result.tableRoles_ = tableRoles_;
-        } else {
-          result.tableRoles_ = tableRolesBuilder_.build();
-        }
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.RoomTableInfo) {
-          return mergeFrom((proto.RoomProto.RoomTableInfo)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RoomProto.RoomTableInfo other) {
-        if (other == proto.RoomProto.RoomTableInfo.getDefaultInstance()) return this;
-        if (other.getTableId() != 0) {
-          setTableId(other.getTableId());
-        }
-        if (other.getCreatorId() != 0) {
-          setCreatorId(other.getCreatorId());
-        }
-        if (other.getOwnerId() != 0) {
-          setOwnerId(other.getOwnerId());
-        }
-        if (other.getStat() != 0) {
-          setStat(other.getStat());
-        }
-        if (tableRolesBuilder_ == null) {
-          if (!other.tableRoles_.isEmpty()) {
-            if (tableRoles_.isEmpty()) {
-              tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000010);
-            } else {
-              ensureTableRolesIsMutable();
-              tableRoles_.addAll(other.tableRoles_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.tableRoles_.isEmpty()) {
-            if (tableRolesBuilder_.isEmpty()) {
-              tableRolesBuilder_.dispose();
-              tableRolesBuilder_ = null;
-              tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000010);
-              tableRolesBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getTableRolesFieldBuilder() : null;
-            } else {
-              tableRolesBuilder_.addAllMessages(other.tableRoles_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RoomProto.RoomTableInfo parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.RoomTableInfo) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private int tableId_ ;
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public int getTableId() {
-        return tableId_;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder setTableId(int value) {
-        
-        tableId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder clearTableId() {
-        
-        tableId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int creatorId_ ;
-      /**
-       * <code>int32 creatorId = 2;</code>
-       */
-      public int getCreatorId() {
-        return creatorId_;
-      }
-      /**
-       * <code>int32 creatorId = 2;</code>
-       */
-      public Builder setCreatorId(int value) {
-        
-        creatorId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 creatorId = 2;</code>
-       */
-      public Builder clearCreatorId() {
-        
-        creatorId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int ownerId_ ;
-      /**
-       * <code>int32 ownerId = 3;</code>
-       */
-      public int getOwnerId() {
-        return ownerId_;
-      }
-      /**
-       * <code>int32 ownerId = 3;</code>
-       */
-      public Builder setOwnerId(int value) {
-        
-        ownerId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 ownerId = 3;</code>
-       */
-      public Builder clearOwnerId() {
-        
-        ownerId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int stat_ ;
-      /**
-       * <pre>
-       *等待中  已开始
-       * </pre>
-       *
-       * <code>int32 stat = 4;</code>
-       */
-      public int getStat() {
-        return stat_;
-      }
-      /**
-       * <pre>
-       *等待中  已开始
-       * </pre>
-       *
-       * <code>int32 stat = 4;</code>
-       */
-      public Builder setStat(int value) {
-        
-        stat_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *等待中  已开始
-       * </pre>
-       *
-       * <code>int32 stat = 4;</code>
-       */
-      public Builder clearStat() {
-        
-        stat_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<proto.RoomProto.RoomTableRole> tableRoles_ =
-        java.util.Collections.emptyList();
-      private void ensureTableRolesIsMutable() {
-        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
-          tableRoles_ = new java.util.ArrayList<proto.RoomProto.RoomTableRole>(tableRoles_);
-          bitField0_ |= 0x00000010;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.RoomProto.RoomTableRole, proto.RoomProto.RoomTableRole.Builder, proto.RoomProto.RoomTableRoleOrBuilder> tableRolesBuilder_;
-
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public java.util.List<proto.RoomProto.RoomTableRole> getTableRolesList() {
-        if (tableRolesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(tableRoles_);
-        } else {
-          return tableRolesBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public int getTableRolesCount() {
-        if (tableRolesBuilder_ == null) {
-          return tableRoles_.size();
-        } else {
-          return tableRolesBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public proto.RoomProto.RoomTableRole getTableRoles(int index) {
-        if (tableRolesBuilder_ == null) {
-          return tableRoles_.get(index);
-        } else {
-          return tableRolesBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder setTableRoles(
-          int index, proto.RoomProto.RoomTableRole value) {
-        if (tableRolesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTableRolesIsMutable();
-          tableRoles_.set(index, value);
-          onChanged();
-        } else {
-          tableRolesBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder setTableRoles(
-          int index, proto.RoomProto.RoomTableRole.Builder builderForValue) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          tableRolesBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder addTableRoles(proto.RoomProto.RoomTableRole value) {
-        if (tableRolesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTableRolesIsMutable();
-          tableRoles_.add(value);
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder addTableRoles(
-          int index, proto.RoomProto.RoomTableRole value) {
-        if (tableRolesBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTableRolesIsMutable();
-          tableRoles_.add(index, value);
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder addTableRoles(
-          proto.RoomProto.RoomTableRole.Builder builderForValue) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.add(builderForValue.build());
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder addTableRoles(
-          int index, proto.RoomProto.RoomTableRole.Builder builderForValue) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          tableRolesBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder addAllTableRoles(
-          java.lang.Iterable<? extends proto.RoomProto.RoomTableRole> values) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, tableRoles_);
-          onChanged();
-        } else {
-          tableRolesBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder clearTableRoles() {
-        if (tableRolesBuilder_ == null) {
-          tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000010);
-          onChanged();
-        } else {
-          tableRolesBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public Builder removeTableRoles(int index) {
-        if (tableRolesBuilder_ == null) {
-          ensureTableRolesIsMutable();
-          tableRoles_.remove(index);
-          onChanged();
-        } else {
-          tableRolesBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public proto.RoomProto.RoomTableRole.Builder getTableRolesBuilder(
-          int index) {
-        return getTableRolesFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public proto.RoomProto.RoomTableRoleOrBuilder getTableRolesOrBuilder(
-          int index) {
-        if (tableRolesBuilder_ == null) {
-          return tableRoles_.get(index);  } else {
-          return tableRolesBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public java.util.List<? extends proto.RoomProto.RoomTableRoleOrBuilder> 
-           getTableRolesOrBuilderList() {
-        if (tableRolesBuilder_ != null) {
-          return tableRolesBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(tableRoles_);
-        }
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public proto.RoomProto.RoomTableRole.Builder addTableRolesBuilder() {
-        return getTableRolesFieldBuilder().addBuilder(
-            proto.RoomProto.RoomTableRole.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public proto.RoomProto.RoomTableRole.Builder addTableRolesBuilder(
-          int index) {
-        return getTableRolesFieldBuilder().addBuilder(
-            index, proto.RoomProto.RoomTableRole.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.RoomTableRole tableRoles = 5;</code>
-       */
-      public java.util.List<proto.RoomProto.RoomTableRole.Builder> 
-           getTableRolesBuilderList() {
-        return getTableRolesFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.RoomProto.RoomTableRole, proto.RoomProto.RoomTableRole.Builder, proto.RoomProto.RoomTableRoleOrBuilder> 
-          getTableRolesFieldBuilder() {
-        if (tableRolesBuilder_ == null) {
-          tableRolesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.RoomProto.RoomTableRole, proto.RoomProto.RoomTableRole.Builder, proto.RoomProto.RoomTableRoleOrBuilder>(
-                  tableRoles_,
-                  ((bitField0_ & 0x00000010) == 0x00000010),
-                  getParentForChildren(),
-                  isClean());
-          tableRoles_ = null;
-        }
-        return tableRolesBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.RoomTableInfo)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.RoomTableInfo)
-    private static final proto.RoomProto.RoomTableInfo DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RoomProto.RoomTableInfo();
-    }
-
-    public static proto.RoomProto.RoomTableInfo getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<RoomTableInfo>
-        PARSER = new com.google.protobuf.AbstractParser<RoomTableInfo>() {
-      public RoomTableInfo parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new RoomTableInfo(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RoomTableInfo> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RoomTableInfo> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.RoomProto.RoomTableInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface RoomTableRoleOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.RoomTableRole)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    int getRoleId();
-
-    /**
-     * <code>bytes avatar = 3;</code>
-     */
-    com.google.protobuf.ByteString getAvatar();
-
-    /**
-     * <code>bytes nickName = 4;</code>
-     */
-    com.google.protobuf.ByteString getNickName();
-  }
-  /**
-   * Protobuf type {@code proto.RoomTableRole}
-   */
-  public  static final class RoomTableRole extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.RoomTableRole)
-      RoomTableRoleOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use RoomTableRole.newBuilder() to construct.
-    private RoomTableRole(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private RoomTableRole() {
-      roleId_ = 0;
-      avatar_ = com.google.protobuf.ByteString.EMPTY;
-      nickName_ = com.google.protobuf.ByteString.EMPTY;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private RoomTableRole(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roleId_ = input.readInt32();
-              break;
-            }
-            case 26: {
-
-              avatar_ = input.readBytes();
-              break;
-            }
-            case 34: {
-
-              nickName_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RoomProto.internal_static_proto_RoomTableRole_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_RoomTableRole_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RoomProto.RoomTableRole.class, proto.RoomProto.RoomTableRole.Builder.class);
-    }
-
-    public static final int ROLEID_FIELD_NUMBER = 1;
-    private int roleId_;
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    public int getRoleId() {
-      return roleId_;
-    }
-
-    public static final int AVATAR_FIELD_NUMBER = 3;
-    private com.google.protobuf.ByteString avatar_;
-    /**
-     * <code>bytes avatar = 3;</code>
-     */
-    public com.google.protobuf.ByteString getAvatar() {
-      return avatar_;
-    }
-
-    public static final int NICKNAME_FIELD_NUMBER = 4;
-    private com.google.protobuf.ByteString nickName_;
-    /**
-     * <code>bytes nickName = 4;</code>
-     */
-    public com.google.protobuf.ByteString getNickName() {
-      return nickName_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (roleId_ != 0) {
-        output.writeInt32(1, roleId_);
-      }
-      if (!avatar_.isEmpty()) {
-        output.writeBytes(3, avatar_);
-      }
-      if (!nickName_.isEmpty()) {
-        output.writeBytes(4, nickName_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (roleId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, roleId_);
-      }
-      if (!avatar_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, avatar_);
-      }
-      if (!nickName_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(4, nickName_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RoomProto.RoomTableRole)) {
-        return super.equals(obj);
-      }
-      proto.RoomProto.RoomTableRole other = (proto.RoomProto.RoomTableRole) obj;
-
-      boolean result = true;
-      result = result && (getRoleId()
-          == other.getRoleId());
-      result = result && getAvatar()
-          .equals(other.getAvatar());
-      result = result && getNickName()
-          .equals(other.getNickName());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getRoleId();
-      hash = (37 * hash) + AVATAR_FIELD_NUMBER;
-      hash = (53 * hash) + getAvatar().hashCode();
-      hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
-      hash = (53 * hash) + getNickName().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableRole parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.RoomTableRole parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.RoomTableRole parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RoomProto.RoomTableRole prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.RoomTableRole}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.RoomTableRole)
-        proto.RoomProto.RoomTableRoleOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RoomProto.internal_static_proto_RoomTableRole_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_RoomTableRole_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RoomProto.RoomTableRole.class, proto.RoomProto.RoomTableRole.Builder.class);
-      }
-
-      // Construct using proto.RoomProto.RoomTableRole.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        roleId_ = 0;
-
-        avatar_ = com.google.protobuf.ByteString.EMPTY;
-
-        nickName_ = com.google.protobuf.ByteString.EMPTY;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_RoomTableRole_descriptor;
-      }
-
-      public proto.RoomProto.RoomTableRole getDefaultInstanceForType() {
-        return proto.RoomProto.RoomTableRole.getDefaultInstance();
-      }
-
-      public proto.RoomProto.RoomTableRole build() {
-        proto.RoomProto.RoomTableRole result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.RoomProto.RoomTableRole buildPartial() {
-        proto.RoomProto.RoomTableRole result = new proto.RoomProto.RoomTableRole(this);
-        result.roleId_ = roleId_;
-        result.avatar_ = avatar_;
-        result.nickName_ = nickName_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.RoomTableRole) {
-          return mergeFrom((proto.RoomProto.RoomTableRole)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RoomProto.RoomTableRole other) {
-        if (other == proto.RoomProto.RoomTableRole.getDefaultInstance()) return this;
-        if (other.getRoleId() != 0) {
-          setRoleId(other.getRoleId());
-        }
-        if (other.getAvatar() != com.google.protobuf.ByteString.EMPTY) {
-          setAvatar(other.getAvatar());
-        }
-        if (other.getNickName() != com.google.protobuf.ByteString.EMPTY) {
-          setNickName(other.getNickName());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RoomProto.RoomTableRole parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.RoomTableRole) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int roleId_ ;
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public int getRoleId() {
-        return roleId_;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder setRoleId(int value) {
-        
-        roleId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder clearRoleId() {
-        
-        roleId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString avatar_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes avatar = 3;</code>
-       */
-      public com.google.protobuf.ByteString getAvatar() {
-        return avatar_;
-      }
-      /**
-       * <code>bytes avatar = 3;</code>
-       */
-      public Builder setAvatar(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        avatar_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes avatar = 3;</code>
-       */
-      public Builder clearAvatar() {
-        
-        avatar_ = getDefaultInstance().getAvatar();
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString nickName_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes nickName = 4;</code>
-       */
-      public com.google.protobuf.ByteString getNickName() {
-        return nickName_;
-      }
-      /**
-       * <code>bytes nickName = 4;</code>
-       */
-      public Builder setNickName(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        nickName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes nickName = 4;</code>
-       */
-      public Builder clearNickName() {
-        
-        nickName_ = getDefaultInstance().getNickName();
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.RoomTableRole)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.RoomTableRole)
-    private static final proto.RoomProto.RoomTableRole DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RoomProto.RoomTableRole();
-    }
-
-    public static proto.RoomProto.RoomTableRole getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<RoomTableRole>
-        PARSER = new com.google.protobuf.AbstractParser<RoomTableRole>() {
-      public RoomTableRole parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new RoomTableRole(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RoomTableRole> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RoomTableRole> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.RoomProto.RoomTableRole getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface TableRoleOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.TableRole)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    int getRoleId();
-
-    /**
-     * <code>int32 position = 2;</code>
-     */
-    int getPosition();
-
-    /**
-     * <code>bytes avatar = 3;</code>
-     */
-    com.google.protobuf.ByteString getAvatar();
-
-    /**
-     * <code>bytes nickName = 4;</code>
-     */
-    com.google.protobuf.ByteString getNickName();
-
-    /**
-     * <code>repeated int32 cards = 5;</code>
-     */
-    java.util.List<java.lang.Integer> getCardsList();
-    /**
-     * <code>repeated int32 cards = 5;</code>
-     */
-    int getCardsCount();
-    /**
-     * <code>repeated int32 cards = 5;</code>
-     */
-    int getCards(int index);
-  }
-  /**
-   * Protobuf type {@code proto.TableRole}
-   */
-  public  static final class TableRole extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.TableRole)
-      TableRoleOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use TableRole.newBuilder() to construct.
-    private TableRole(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private TableRole() {
-      roleId_ = 0;
-      position_ = 0;
-      avatar_ = com.google.protobuf.ByteString.EMPTY;
-      nickName_ = com.google.protobuf.ByteString.EMPTY;
-      cards_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private TableRole(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roleId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              position_ = input.readInt32();
-              break;
-            }
-            case 26: {
-
-              avatar_ = input.readBytes();
-              break;
-            }
-            case 34: {
-
-              nickName_ = input.readBytes();
-              break;
-            }
-            case 40: {
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-                cards_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000010;
-              }
-              cards_.add(input.readInt32());
-              break;
-            }
-            case 42: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010) && input.getBytesUntilLimit() > 0) {
-                cards_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000010;
-              }
-              while (input.getBytesUntilLimit() > 0) {
-                cards_.add(input.readInt32());
-              }
-              input.popLimit(limit);
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-          cards_ = java.util.Collections.unmodifiableList(cards_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.RoomProto.internal_static_proto_TableRole_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.RoomProto.internal_static_proto_TableRole_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.RoomProto.TableRole.class, proto.RoomProto.TableRole.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int ROLEID_FIELD_NUMBER = 1;
-    private int roleId_;
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    public int getRoleId() {
-      return roleId_;
-    }
-
-    public static final int POSITION_FIELD_NUMBER = 2;
-    private int position_;
-    /**
-     * <code>int32 position = 2;</code>
-     */
-    public int getPosition() {
-      return position_;
-    }
-
-    public static final int AVATAR_FIELD_NUMBER = 3;
-    private com.google.protobuf.ByteString avatar_;
-    /**
-     * <code>bytes avatar = 3;</code>
-     */
-    public com.google.protobuf.ByteString getAvatar() {
-      return avatar_;
-    }
-
-    public static final int NICKNAME_FIELD_NUMBER = 4;
-    private com.google.protobuf.ByteString nickName_;
-    /**
-     * <code>bytes nickName = 4;</code>
-     */
-    public com.google.protobuf.ByteString getNickName() {
-      return nickName_;
-    }
-
-    public static final int CARDS_FIELD_NUMBER = 5;
-    private java.util.List<java.lang.Integer> cards_;
-    /**
-     * <code>repeated int32 cards = 5;</code>
-     */
-    public java.util.List<java.lang.Integer>
-        getCardsList() {
-      return cards_;
-    }
-    /**
-     * <code>repeated int32 cards = 5;</code>
-     */
-    public int getCardsCount() {
-      return cards_.size();
-    }
-    /**
-     * <code>repeated int32 cards = 5;</code>
-     */
-    public int getCards(int index) {
-      return cards_.get(index);
-    }
-    private int cardsMemoizedSerializedSize = -1;
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (roleId_ != 0) {
-        output.writeInt32(1, roleId_);
-      }
-      if (position_ != 0) {
-        output.writeInt32(2, position_);
-      }
-      if (!avatar_.isEmpty()) {
-        output.writeBytes(3, avatar_);
-      }
-      if (!nickName_.isEmpty()) {
-        output.writeBytes(4, nickName_);
-      }
-      if (getCardsList().size() > 0) {
-        output.writeUInt32NoTag(42);
-        output.writeUInt32NoTag(cardsMemoizedSerializedSize);
-      }
-      for (int i = 0; i < cards_.size(); i++) {
-        output.writeInt32NoTag(cards_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (roleId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, roleId_);
-      }
-      if (position_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, position_);
-      }
-      if (!avatar_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, avatar_);
-      }
-      if (!nickName_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(4, nickName_);
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < cards_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(cards_.get(i));
-        }
-        size += dataSize;
-        if (!getCardsList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        cardsMemoizedSerializedSize = dataSize;
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.RoomProto.TableRole)) {
-        return super.equals(obj);
-      }
-      proto.RoomProto.TableRole other = (proto.RoomProto.TableRole) obj;
-
-      boolean result = true;
-      result = result && (getRoleId()
-          == other.getRoleId());
-      result = result && (getPosition()
-          == other.getPosition());
-      result = result && getAvatar()
-          .equals(other.getAvatar());
-      result = result && getNickName()
-          .equals(other.getNickName());
-      result = result && getCardsList()
-          .equals(other.getCardsList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getRoleId();
-      hash = (37 * hash) + POSITION_FIELD_NUMBER;
-      hash = (53 * hash) + getPosition();
-      hash = (37 * hash) + AVATAR_FIELD_NUMBER;
-      hash = (53 * hash) + getAvatar().hashCode();
-      hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
-      hash = (53 * hash) + getNickName().hashCode();
-      if (getCardsCount() > 0) {
-        hash = (37 * hash) + CARDS_FIELD_NUMBER;
-        hash = (53 * hash) + getCardsList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.RoomProto.TableRole parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.TableRole parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.TableRole parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.TableRole parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.TableRole parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.RoomProto.TableRole parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.RoomProto.TableRole parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.TableRole parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.TableRole parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.TableRole parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.RoomProto.TableRole parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.RoomProto.TableRole parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.RoomProto.TableRole prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.TableRole}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.TableRole)
-        proto.RoomProto.TableRoleOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.RoomProto.internal_static_proto_TableRole_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.RoomProto.internal_static_proto_TableRole_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.RoomProto.TableRole.class, proto.RoomProto.TableRole.Builder.class);
-      }
-
-      // Construct using proto.RoomProto.TableRole.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        roleId_ = 0;
-
-        position_ = 0;
-
-        avatar_ = com.google.protobuf.ByteString.EMPTY;
-
-        nickName_ = com.google.protobuf.ByteString.EMPTY;
-
-        cards_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.RoomProto.internal_static_proto_TableRole_descriptor;
-      }
-
-      public proto.RoomProto.TableRole getDefaultInstanceForType() {
-        return proto.RoomProto.TableRole.getDefaultInstance();
-      }
-
-      public proto.RoomProto.TableRole build() {
-        proto.RoomProto.TableRole result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.RoomProto.TableRole buildPartial() {
-        proto.RoomProto.TableRole result = new proto.RoomProto.TableRole(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        result.roleId_ = roleId_;
-        result.position_ = position_;
-        result.avatar_ = avatar_;
-        result.nickName_ = nickName_;
-        if (((bitField0_ & 0x00000010) == 0x00000010)) {
-          cards_ = java.util.Collections.unmodifiableList(cards_);
-          bitField0_ = (bitField0_ & ~0x00000010);
-        }
-        result.cards_ = cards_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.RoomProto.TableRole) {
-          return mergeFrom((proto.RoomProto.TableRole)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.RoomProto.TableRole other) {
-        if (other == proto.RoomProto.TableRole.getDefaultInstance()) return this;
-        if (other.getRoleId() != 0) {
-          setRoleId(other.getRoleId());
-        }
-        if (other.getPosition() != 0) {
-          setPosition(other.getPosition());
-        }
-        if (other.getAvatar() != com.google.protobuf.ByteString.EMPTY) {
-          setAvatar(other.getAvatar());
-        }
-        if (other.getNickName() != com.google.protobuf.ByteString.EMPTY) {
-          setNickName(other.getNickName());
-        }
-        if (!other.cards_.isEmpty()) {
-          if (cards_.isEmpty()) {
-            cards_ = other.cards_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-          } else {
-            ensureCardsIsMutable();
-            cards_.addAll(other.cards_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.RoomProto.TableRole parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.RoomProto.TableRole) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private int roleId_ ;
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public int getRoleId() {
-        return roleId_;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder setRoleId(int value) {
-        
-        roleId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder clearRoleId() {
-        
-        roleId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int position_ ;
-      /**
-       * <code>int32 position = 2;</code>
-       */
-      public int getPosition() {
-        return position_;
-      }
-      /**
-       * <code>int32 position = 2;</code>
-       */
-      public Builder setPosition(int value) {
-        
-        position_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 position = 2;</code>
-       */
-      public Builder clearPosition() {
-        
-        position_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString avatar_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes avatar = 3;</code>
-       */
-      public com.google.protobuf.ByteString getAvatar() {
-        return avatar_;
-      }
-      /**
-       * <code>bytes avatar = 3;</code>
-       */
-      public Builder setAvatar(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        avatar_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes avatar = 3;</code>
-       */
-      public Builder clearAvatar() {
-        
-        avatar_ = getDefaultInstance().getAvatar();
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString nickName_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes nickName = 4;</code>
-       */
-      public com.google.protobuf.ByteString getNickName() {
-        return nickName_;
-      }
-      /**
-       * <code>bytes nickName = 4;</code>
-       */
-      public Builder setNickName(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        nickName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes nickName = 4;</code>
-       */
-      public Builder clearNickName() {
-        
-        nickName_ = getDefaultInstance().getNickName();
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<java.lang.Integer> cards_ = java.util.Collections.emptyList();
-      private void ensureCardsIsMutable() {
-        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
-          cards_ = new java.util.ArrayList<java.lang.Integer>(cards_);
-          bitField0_ |= 0x00000010;
-         }
-      }
-      /**
-       * <code>repeated int32 cards = 5;</code>
-       */
-      public java.util.List<java.lang.Integer>
-          getCardsList() {
-        return java.util.Collections.unmodifiableList(cards_);
-      }
-      /**
-       * <code>repeated int32 cards = 5;</code>
-       */
-      public int getCardsCount() {
-        return cards_.size();
-      }
-      /**
-       * <code>repeated int32 cards = 5;</code>
-       */
-      public int getCards(int index) {
-        return cards_.get(index);
-      }
-      /**
-       * <code>repeated int32 cards = 5;</code>
-       */
-      public Builder setCards(
-          int index, int value) {
-        ensureCardsIsMutable();
-        cards_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 cards = 5;</code>
-       */
-      public Builder addCards(int value) {
-        ensureCardsIsMutable();
-        cards_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 cards = 5;</code>
-       */
-      public Builder addAllCards(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureCardsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, cards_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 cards = 5;</code>
-       */
-      public Builder clearCards() {
-        cards_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.TableRole)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.TableRole)
-    private static final proto.RoomProto.TableRole DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.RoomProto.TableRole();
-    }
-
-    public static proto.RoomProto.TableRole getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<TableRole>
-        PARSER = new com.google.protobuf.AbstractParser<TableRole>() {
-      public TableRole parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new TableRole(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<TableRole> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<TableRole> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.RoomProto.TableRole getDefaultInstanceForType() {
+    public proto.RoomProto.AckJoinRoomTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -6997,40 +3023,15 @@ public final class RoomProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckGetRoomList_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqCreateRoomTable_descriptor;
+    internal_static_proto_ReqJoinRoomTable_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqCreateRoomTable_fieldAccessorTable;
+      internal_static_proto_ReqJoinRoomTable_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqEnterTable_descriptor;
+    internal_static_proto_AckJoinRoomTable_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqEnterTable_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckEnterTable_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckEnterTable_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_TableInfo_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_TableInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_RoomTableInfo_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_RoomTableInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_RoomTableRole_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_RoomTableRole_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_TableRole_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_TableRole_fieldAccessorTable;
+      internal_static_proto_AckJoinRoomTable_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -7040,24 +3041,13 @@ public final class RoomProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nroom.proto\022\005proto\"\020\n\016ReqGetRoomList\"<\n" +
-      "\004Room\022\016\n\006roomId\030\001 \001(\005\022$\n\006tables\030\002 \003(\0132\024." +
-      "proto.RoomTableInfo\"/\n\016AckGetRoomList\022\035\n" +
-      "\010roomList\030\001 \003(\0132\013.proto.Room\"*\n\022ReqCreat" +
-      "eRoomTable\022\024\n\014configTypeId\030\001 \001(\005\" \n\rReqE" +
-      "nterTable\022\017\n\007tableId\030\001 \001(\005\"@\n\rAckEnterTa" +
-      "ble\022\017\n\007tableId\030\001 \001(\005\022\036\n\004info\030\002 \001(\0132\020.pro" +
-      "to.TableInfo\"T\n\tTableInfo\022\017\n\007tableId\030\001 \001" +
-      "(\014\022\020\n\010landlord\030\002 \001(\005\022$\n\ntableRoles\030\003 \003(\013" +
-      "2\020.proto.TableRole\"|\n\rRoomTableInfo\022\017\n\007t",
-      "ableId\030\001 \001(\005\022\021\n\tcreatorId\030\002 \001(\005\022\017\n\007owner" +
-      "Id\030\003 \001(\005\022\014\n\004stat\030\004 \001(\005\022(\n\ntableRoles\030\005 \003" +
-      "(\0132\024.proto.RoomTableRole\"A\n\rRoomTableRol" +
-      "e\022\016\n\006roleId\030\001 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nic" +
-      "kName\030\004 \001(\014\"^\n\tTableRole\022\016\n\006roleId\030\001 \001(\005" +
-      "\022\020\n\010position\030\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010ni" +
-      "ckName\030\004 \001(\014\022\r\n\005cards\030\005 \003(\005B\013B\tRoomProto" +
-      "b\006proto3"
+      "\n\nroom.proto\022\005proto\032\014server.proto\"\020\n\016Req" +
+      "GetRoomList\"<\n\004Room\022\016\n\006roomId\030\001 \001(\005\022$\n\006t" +
+      "ables\030\002 \003(\0132\024.proto.RoomTableInfo\"/\n\016Ack" +
+      "GetRoomList\022\035\n\010roomList\030\001 \003(\0132\013.proto.Ro" +
+      "om\"\"\n\020ReqJoinRoomTable\022\016\n\006roomId\030\001 \001(\005\"#" +
+      "\n\020AckJoinRoomTable\022\017\n\007tableId\030\001 \001(\014B\013B\tR" +
+      "oomProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -7070,6 +3060,7 @@ public final class RoomProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          proto.ServerProto.getDescriptor(),
         }, assigner);
     internal_static_proto_ReqGetRoomList_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -7089,48 +3080,19 @@ public final class RoomProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckGetRoomList_descriptor,
         new java.lang.String[] { "RoomList", });
-    internal_static_proto_ReqCreateRoomTable_descriptor =
+    internal_static_proto_ReqJoinRoomTable_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_proto_ReqCreateRoomTable_fieldAccessorTable = new
+    internal_static_proto_ReqJoinRoomTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqCreateRoomTable_descriptor,
-        new java.lang.String[] { "ConfigTypeId", });
-    internal_static_proto_ReqEnterTable_descriptor =
+        internal_static_proto_ReqJoinRoomTable_descriptor,
+        new java.lang.String[] { "RoomId", });
+    internal_static_proto_AckJoinRoomTable_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_proto_ReqEnterTable_fieldAccessorTable = new
+    internal_static_proto_AckJoinRoomTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqEnterTable_descriptor,
+        internal_static_proto_AckJoinRoomTable_descriptor,
         new java.lang.String[] { "TableId", });
-    internal_static_proto_AckEnterTable_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_proto_AckEnterTable_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckEnterTable_descriptor,
-        new java.lang.String[] { "TableId", "Info", });
-    internal_static_proto_TableInfo_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_proto_TableInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_TableInfo_descriptor,
-        new java.lang.String[] { "TableId", "Landlord", "TableRoles", });
-    internal_static_proto_RoomTableInfo_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_proto_RoomTableInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_RoomTableInfo_descriptor,
-        new java.lang.String[] { "TableId", "CreatorId", "OwnerId", "Stat", "TableRoles", });
-    internal_static_proto_RoomTableRole_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_proto_RoomTableRole_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_RoomTableRole_descriptor,
-        new java.lang.String[] { "RoleId", "Avatar", "NickName", });
-    internal_static_proto_TableRole_descriptor =
-      getDescriptor().getMessageTypes().get(9);
-    internal_static_proto_TableRole_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_TableRole_descriptor,
-        new java.lang.String[] { "RoleId", "Position", "Avatar", "NickName", "Cards", });
+    proto.ServerProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

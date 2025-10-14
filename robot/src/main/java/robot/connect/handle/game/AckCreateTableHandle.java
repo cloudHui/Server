@@ -2,20 +2,20 @@ package robot.connect.handle.game;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessType;
-import msg.registor.message.GMsg;
+import msg.registor.message.SMsg;
 import net.client.Sender;
 import net.handler.Handler;
-import proto.GameProto;
+import proto.ServerProto;
 
 /**
  * 创建桌子回复
  */
-@ProcessType(GMsg.ACK_CREATE_TABLE_MSG)
+@ProcessType(SMsg.ACK_CREATE_TABLE_MSG)
 public class AckCreateTableHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
-		GameProto.AckCreateTable ack = (GameProto.AckCreateTable) msg;
+		ServerProto.AckCreateGameTable ack = (ServerProto.AckCreateGameTable) msg;
 
 		return true;
 	}

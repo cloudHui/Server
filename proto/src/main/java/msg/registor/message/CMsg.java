@@ -16,6 +16,7 @@ public class CMsg {
 	public static final int GAME_TYPE = 0x2000;
 	public static final int HALL_TYPE = 0x4000;
 	public static final int ROOM_TYPE = 0x8000;
+	public static final int SERVER_TYPE = 0x16000;
 
 	@ClassField(value = ModelProto.ReqHeart.class, des = "心跳")
 	public static final int HEART = 1;

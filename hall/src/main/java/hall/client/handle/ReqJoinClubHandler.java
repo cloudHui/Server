@@ -17,7 +17,7 @@ public class ReqJoinClubHandler implements Handler {
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		HallProto.ReqJoinClub req = (HallProto.ReqJoinClub) msg;
 		HallProto.AckJoinClub.Builder ack = HallProto.AckJoinClub.newBuilder();
-		sender.sendMessage(clientId, HMsg.ACK_JOIN_CLUB_MSG, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, HMsg.ACK_JOIN_CLUB_MSG, mapId, ack.build(), sequence);
 		return true;
 	}
 }

@@ -34,7 +34,7 @@ public class ReqLoginHandler implements Handler {
 				user.setClientId(clientId);
 				user.setNick(nick);
 			}
-			sender.sendMessage(clientId, HMsg.ACK_LOGIN_MSG, mapId, 0,
+			sender.sendMessage(clientId, HMsg.ACK_LOGIN_MSG, mapId,
 					HallProto.AckLogin.newBuilder()
 							.setCert(req.getCert())
 							.setUserId(user.getUserId())

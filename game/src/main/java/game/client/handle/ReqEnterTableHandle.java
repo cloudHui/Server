@@ -17,8 +17,7 @@ public class ReqEnterTableHandle implements Handler {
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		GameProto.ReqEnterTable req = (GameProto.ReqEnterTable) msg;
 		GameProto.AckEnterTable.Builder ack = GameProto.AckEnterTable.newBuilder();
-		ack.setTableId(1);
-		sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, mapId, ack.build(), sequence);
 		return true;
 	}
 }

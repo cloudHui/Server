@@ -1,0 +1,32 @@
+syntax = "proto3";
+option java_outer_classname = "ServerProto";
+
+package proto;
+
+//请求创建game房间
+message ReqCreateGameTable {
+    int32 roomId = 1;
+    RoomTableRole roomRole = 2;//这个玩家是要加入房间的(后面有只创建的需求再说)
+}
+
+//创建game房间回复
+message AckCreateGameTable {
+    int32 roomId = 1;
+    RoomTableInfo tables = 2;//桌子
+}
+
+//room桌子
+message RoomTableInfo{
+    bytes tableId = 1;
+    int32 creatorId = 2;
+    int32 ownerId = 3;
+    int32 stat = 4;//等待中  已开始
+    repeated RoomTableRole tableRoles = 5;
+}
+
+//room桌子玩家
+message RoomTableRole {
+    int32 roleId = 1;
+    bytes avatar = 3;
+    bytes nickName = 4;
+}

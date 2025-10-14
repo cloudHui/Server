@@ -8,6 +8,7 @@ import msg.registor.HandleTypeRegister;
 import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import robot.connect.ConnectProcessor;
 
 /**
  * @author admin
@@ -29,23 +30,25 @@ public class RobotHandleManager {
 	public static void sendMsg(ConnectHandler serverClient, Message req, int msgId) {
 		LOGGER.info("sendMsg:{}", req.getClass().getSimpleName());
 		long start = System.currentTimeMillis();
-		serverClient.sendMessage(req, msgId, 3).whenComplete((msg, throwable) -> {
+		serverClient.sendMessageBackTcp(req, msgId, 3).whenComplete((msg, throwable) -> {
 			try {
-				LOGGER.info("msg:{} back result:{}",
-						Integer.toHexString(HandleTypeRegister.parseMessageId(msg.getClass())),
-						throwable == null ? "success" : throwable.getMessage());
-				if (throwable == null) {
-					RobotHandle robotHandle = handleMap.get(msg.getClass());
-					if (robotHandle == null) {
-						LOGGER.error("sendMsg error un find handle:{}", msg.getClass().getSimpleName());
-						return;
-					}
-
-					robotHandle.handle(msg, serverClient);
-					LOGGER.info("handle:{} msg:{} cost:{}ms", msg.getClass().getSimpleName(),
-							Integer.toHexString(HandleTypeRegister.parseMessageId(msg.getClass())),
-							(System.currentTimeMillis() - start));
+				if (throwable != null) {
+					LOGGER.info("msg:{} back throwable:{}", Integer.toHexString(msg.getMessageId()), throwable.getMessage());
+					return;
 				}
+				if (msg.getResult() != 0) {
+					LOGGER.info("msg:{} result:{} error", Integer.toHexString(msg.getMessageId()), msg.getResult());
+					return;
+				}
+				Message parser = ConnectProcessor.PARSER.parser(msgId, msg.getMessage());
+				RobotHandle robotHandle = handleMap.get(parser.getClass());
+				if (robotHandle == null) {
+					LOGGER.error("sendMsg error un find handle:{}", parser.getClass().getSimpleName());
+					return;
+				}
+				robotHandle.handle(parser, serverClient);
+				LOGGER.info("handle:{} msg:{} cost:{}ms", parser.getClass().getSimpleName(),
+						Integer.toHexString(msg.getMessageId()), (System.currentTimeMillis() - start));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

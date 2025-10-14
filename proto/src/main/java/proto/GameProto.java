@@ -14,37 +14,45 @@ public final class GameProto {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface ReqCreateTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqCreateTable)
+  public interface ReqEnterTableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.ReqEnterTable)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *房间类型
-     * </pre>
-     *
-     * <code>int32 configTypeId = 1;</code>
+     * <code>bytes tableId = 1;</code>
      */
-    int getConfigTypeId();
+    com.google.protobuf.ByteString getTableId();
+
+    /**
+     * <code>bytes head = 2;</code>
+     */
+    com.google.protobuf.ByteString getHead();
+
+    /**
+     * <code>bytes nick = 3;</code>
+     */
+    com.google.protobuf.ByteString getNick();
   }
   /**
    * <pre>
-   *请求创建桌子
+   *请求加入桌子
    * </pre>
    *
-   * Protobuf type {@code proto.ReqCreateTable}
+   * Protobuf type {@code proto.ReqEnterTable}
    */
-  public  static final class ReqCreateTable extends
+  public  static final class ReqEnterTable extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqCreateTable)
-      ReqCreateTableOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.ReqEnterTable)
+      ReqEnterTableOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ReqCreateTable.newBuilder() to construct.
-    private ReqCreateTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use ReqEnterTable.newBuilder() to construct.
+    private ReqEnterTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ReqCreateTable() {
-      configTypeId_ = 0;
+    private ReqEnterTable() {
+      tableId_ = com.google.protobuf.ByteString.EMPTY;
+      head_ = com.google.protobuf.ByteString.EMPTY;
+      nick_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -52,7 +60,7 @@ public final class GameProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqCreateTable(
+    private ReqEnterTable(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -75,9 +83,19 @@ public final class GameProto {
               }
               break;
             }
-            case 8: {
+            case 10: {
 
-              configTypeId_ = input.readInt32();
+              tableId_ = input.readBytes();
+              break;
+            }
+            case 18: {
+
+              head_ = input.readBytes();
+              break;
+            }
+            case 26: {
+
+              nick_ = input.readBytes();
               break;
             }
           }
@@ -94,27 +112,41 @@ public final class GameProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.GameProto.internal_static_proto_ReqCreateTable_descriptor;
+      return proto.GameProto.internal_static_proto_ReqEnterTable_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.GameProto.internal_static_proto_ReqCreateTable_fieldAccessorTable
+      return proto.GameProto.internal_static_proto_ReqEnterTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.GameProto.ReqCreateTable.class, proto.GameProto.ReqCreateTable.Builder.class);
+              proto.GameProto.ReqEnterTable.class, proto.GameProto.ReqEnterTable.Builder.class);
     }
 
-    public static final int CONFIGTYPEID_FIELD_NUMBER = 1;
-    private int configTypeId_;
+    public static final int TABLEID_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString tableId_;
     /**
-     * <pre>
-     *房间类型
-     * </pre>
-     *
-     * <code>int32 configTypeId = 1;</code>
+     * <code>bytes tableId = 1;</code>
      */
-    public int getConfigTypeId() {
-      return configTypeId_;
+    public com.google.protobuf.ByteString getTableId() {
+      return tableId_;
+    }
+
+    public static final int HEAD_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString head_;
+    /**
+     * <code>bytes head = 2;</code>
+     */
+    public com.google.protobuf.ByteString getHead() {
+      return head_;
+    }
+
+    public static final int NICK_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString nick_;
+    /**
+     * <code>bytes nick = 3;</code>
+     */
+    public com.google.protobuf.ByteString getNick() {
+      return nick_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -129,8 +161,14 @@ public final class GameProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (configTypeId_ != 0) {
-        output.writeInt32(1, configTypeId_);
+      if (!tableId_.isEmpty()) {
+        output.writeBytes(1, tableId_);
+      }
+      if (!head_.isEmpty()) {
+        output.writeBytes(2, head_);
+      }
+      if (!nick_.isEmpty()) {
+        output.writeBytes(3, nick_);
       }
       unknownFields.writeTo(output);
     }
@@ -140,9 +178,17 @@ public final class GameProto {
       if (size != -1) return size;
 
       size = 0;
-      if (configTypeId_ != 0) {
+      if (!tableId_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, configTypeId_);
+          .computeBytesSize(1, tableId_);
+      }
+      if (!head_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, head_);
+      }
+      if (!nick_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, nick_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -154,14 +200,18 @@ public final class GameProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.GameProto.ReqCreateTable)) {
+      if (!(obj instanceof proto.GameProto.ReqEnterTable)) {
         return super.equals(obj);
       }
-      proto.GameProto.ReqCreateTable other = (proto.GameProto.ReqCreateTable) obj;
+      proto.GameProto.ReqEnterTable other = (proto.GameProto.ReqEnterTable) obj;
 
       boolean result = true;
-      result = result && (getConfigTypeId()
-          == other.getConfigTypeId());
+      result = result && getTableId()
+          .equals(other.getTableId());
+      result = result && getHead()
+          .equals(other.getHead());
+      result = result && getNick()
+          .equals(other.getNick());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -173,76 +223,80 @@ public final class GameProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + CONFIGTYPEID_FIELD_NUMBER;
-      hash = (53 * hash) + getConfigTypeId();
+      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
+      hash = (53 * hash) + getTableId().hashCode();
+      hash = (37 * hash) + HEAD_FIELD_NUMBER;
+      hash = (53 * hash) + getHead().hashCode();
+      hash = (37 * hash) + NICK_FIELD_NUMBER;
+      hash = (53 * hash) + getNick().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(byte[] data)
+    public static proto.GameProto.ReqEnterTable parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(java.io.InputStream input)
+    public static proto.GameProto.ReqEnterTable parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.ReqCreateTable parseDelimitedFrom(java.io.InputStream input)
+    public static proto.GameProto.ReqEnterTable parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.GameProto.ReqCreateTable parseDelimitedFrom(
+    public static proto.GameProto.ReqEnterTable parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.ReqCreateTable parseFrom(
+    public static proto.GameProto.ReqEnterTable parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -254,7 +308,7 @@ public final class GameProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.GameProto.ReqCreateTable prototype) {
+    public static Builder newBuilder(proto.GameProto.ReqEnterTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -270,28 +324,28 @@ public final class GameProto {
     }
     /**
      * <pre>
-     *请求创建桌子
+     *请求加入桌子
      * </pre>
      *
-     * Protobuf type {@code proto.ReqCreateTable}
+     * Protobuf type {@code proto.ReqEnterTable}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqCreateTable)
-        proto.GameProto.ReqCreateTableOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.ReqEnterTable)
+        proto.GameProto.ReqEnterTableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.GameProto.internal_static_proto_ReqCreateTable_descriptor;
+        return proto.GameProto.internal_static_proto_ReqEnterTable_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.GameProto.internal_static_proto_ReqCreateTable_fieldAccessorTable
+        return proto.GameProto.internal_static_proto_ReqEnterTable_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.GameProto.ReqCreateTable.class, proto.GameProto.ReqCreateTable.Builder.class);
+                proto.GameProto.ReqEnterTable.class, proto.GameProto.ReqEnterTable.Builder.class);
       }
 
-      // Construct using proto.GameProto.ReqCreateTable.newBuilder()
+      // Construct using proto.GameProto.ReqEnterTable.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -308,31 +362,37 @@ public final class GameProto {
       }
       public Builder clear() {
         super.clear();
-        configTypeId_ = 0;
+        tableId_ = com.google.protobuf.ByteString.EMPTY;
+
+        head_ = com.google.protobuf.ByteString.EMPTY;
+
+        nick_ = com.google.protobuf.ByteString.EMPTY;
 
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.GameProto.internal_static_proto_ReqCreateTable_descriptor;
+        return proto.GameProto.internal_static_proto_ReqEnterTable_descriptor;
       }
 
-      public proto.GameProto.ReqCreateTable getDefaultInstanceForType() {
-        return proto.GameProto.ReqCreateTable.getDefaultInstance();
+      public proto.GameProto.ReqEnterTable getDefaultInstanceForType() {
+        return proto.GameProto.ReqEnterTable.getDefaultInstance();
       }
 
-      public proto.GameProto.ReqCreateTable build() {
-        proto.GameProto.ReqCreateTable result = buildPartial();
+      public proto.GameProto.ReqEnterTable build() {
+        proto.GameProto.ReqEnterTable result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.GameProto.ReqCreateTable buildPartial() {
-        proto.GameProto.ReqCreateTable result = new proto.GameProto.ReqCreateTable(this);
-        result.configTypeId_ = configTypeId_;
+      public proto.GameProto.ReqEnterTable buildPartial() {
+        proto.GameProto.ReqEnterTable result = new proto.GameProto.ReqEnterTable(this);
+        result.tableId_ = tableId_;
+        result.head_ = head_;
+        result.nick_ = nick_;
         onBuilt();
         return result;
       }
@@ -364,18 +424,24 @@ public final class GameProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.GameProto.ReqCreateTable) {
-          return mergeFrom((proto.GameProto.ReqCreateTable)other);
+        if (other instanceof proto.GameProto.ReqEnterTable) {
+          return mergeFrom((proto.GameProto.ReqEnterTable)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.GameProto.ReqCreateTable other) {
-        if (other == proto.GameProto.ReqCreateTable.getDefaultInstance()) return this;
-        if (other.getConfigTypeId() != 0) {
-          setConfigTypeId(other.getConfigTypeId());
+      public Builder mergeFrom(proto.GameProto.ReqEnterTable other) {
+        if (other == proto.GameProto.ReqEnterTable.getDefaultInstance()) return this;
+        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
+          setTableId(other.getTableId());
+        }
+        if (other.getHead() != com.google.protobuf.ByteString.EMPTY) {
+          setHead(other.getHead());
+        }
+        if (other.getNick() != com.google.protobuf.ByteString.EMPTY) {
+          setNick(other.getNick());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -390,11 +456,11 @@ public final class GameProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.GameProto.ReqCreateTable parsedMessage = null;
+        proto.GameProto.ReqEnterTable parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.GameProto.ReqCreateTable) e.getUnfinishedMessage();
+          parsedMessage = (proto.GameProto.ReqEnterTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -404,40 +470,89 @@ public final class GameProto {
         return this;
       }
 
-      private int configTypeId_ ;
+      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <pre>
-       *房间类型
-       * </pre>
-       *
-       * <code>int32 configTypeId = 1;</code>
+       * <code>bytes tableId = 1;</code>
        */
-      public int getConfigTypeId() {
-        return configTypeId_;
+      public com.google.protobuf.ByteString getTableId() {
+        return tableId_;
       }
       /**
-       * <pre>
-       *房间类型
-       * </pre>
-       *
-       * <code>int32 configTypeId = 1;</code>
+       * <code>bytes tableId = 1;</code>
        */
-      public Builder setConfigTypeId(int value) {
-        
-        configTypeId_ = value;
+      public Builder setTableId(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        tableId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <pre>
-       *房间类型
-       * </pre>
-       *
-       * <code>int32 configTypeId = 1;</code>
+       * <code>bytes tableId = 1;</code>
        */
-      public Builder clearConfigTypeId() {
+      public Builder clearTableId() {
         
-        configTypeId_ = 0;
+        tableId_ = getDefaultInstance().getTableId();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString head_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes head = 2;</code>
+       */
+      public com.google.protobuf.ByteString getHead() {
+        return head_;
+      }
+      /**
+       * <code>bytes head = 2;</code>
+       */
+      public Builder setHead(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        head_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes head = 2;</code>
+       */
+      public Builder clearHead() {
+        
+        head_ = getDefaultInstance().getHead();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString nick_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes nick = 3;</code>
+       */
+      public com.google.protobuf.ByteString getNick() {
+        return nick_;
+      }
+      /**
+       * <code>bytes nick = 3;</code>
+       */
+      public Builder setNick(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nick_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes nick = 3;</code>
+       */
+      public Builder clearNick() {
+        
+        nick_ = getDefaultInstance().getNick();
         onChanged();
         return this;
       }
@@ -452,91 +567,102 @@ public final class GameProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.ReqCreateTable)
+      // @@protoc_insertion_point(builder_scope:proto.ReqEnterTable)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.ReqCreateTable)
-    private static final proto.GameProto.ReqCreateTable DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.ReqEnterTable)
+    private static final proto.GameProto.ReqEnterTable DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.GameProto.ReqCreateTable();
+      DEFAULT_INSTANCE = new proto.GameProto.ReqEnterTable();
     }
 
-    public static proto.GameProto.ReqCreateTable getDefaultInstance() {
+    public static proto.GameProto.ReqEnterTable getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ReqCreateTable>
-        PARSER = new com.google.protobuf.AbstractParser<ReqCreateTable>() {
-      public ReqCreateTable parsePartialFrom(
+    private static final com.google.protobuf.Parser<ReqEnterTable>
+        PARSER = new com.google.protobuf.AbstractParser<ReqEnterTable>() {
+      public ReqEnterTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqCreateTable(input, extensionRegistry);
+          return new ReqEnterTable(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<ReqCreateTable> parser() {
+    public static com.google.protobuf.Parser<ReqEnterTable> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ReqCreateTable> getParserForType() {
+    public com.google.protobuf.Parser<ReqEnterTable> getParserForType() {
       return PARSER;
     }
 
-    public proto.GameProto.ReqCreateTable getDefaultInstanceForType() {
+    public proto.GameProto.ReqEnterTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface AckCreateTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckCreateTable)
+  public interface AckEnterTableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.AckEnterTable)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 tableId = 1;</code>
-     */
-    int getTableId();
-
-    /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     java.util.List<proto.GameProto.Player> 
         getPlayersList();
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     proto.GameProto.Player getPlayers(int index);
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     int getPlayersCount();
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     java.util.List<? extends proto.GameProto.PlayerOrBuilder> 
         getPlayersOrBuilderList();
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     proto.GameProto.PlayerOrBuilder getPlayersOrBuilder(
         int index);
+
+    /**
+     * <code>.proto.TableInfo tableInfo = 2;</code>
+     */
+    boolean hasTableInfo();
+    /**
+     * <code>.proto.TableInfo tableInfo = 2;</code>
+     */
+    proto.GameProto.TableInfo getTableInfo();
+    /**
+     * <code>.proto.TableInfo tableInfo = 2;</code>
+     */
+    proto.GameProto.TableInfoOrBuilder getTableInfoOrBuilder();
   }
   /**
-   * Protobuf type {@code proto.AckCreateTable}
+   * <pre>
+   *加入桌子回复
+   * </pre>
+   *
+   * Protobuf type {@code proto.AckEnterTable}
    */
-  public  static final class AckCreateTable extends
+  public  static final class AckEnterTable extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckCreateTable)
-      AckCreateTableOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.AckEnterTable)
+      AckEnterTableOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use AckCreateTable.newBuilder() to construct.
-    private AckCreateTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use AckEnterTable.newBuilder() to construct.
+    private AckEnterTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private AckCreateTable() {
-      tableId_ = 0;
+    private AckEnterTable() {
       players_ = java.util.Collections.emptyList();
     }
 
@@ -545,7 +671,7 @@ public final class GameProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private AckCreateTable(
+    private AckEnterTable(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -568,18 +694,26 @@ public final class GameProto {
               }
               break;
             }
-            case 8: {
-
-              tableId_ = input.readInt32();
-              break;
-            }
-            case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 players_ = new java.util.ArrayList<proto.GameProto.Player>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000001;
               }
               players_.add(
                   input.readMessage(proto.GameProto.Player.parser(), extensionRegistry));
+              break;
+            }
+            case 18: {
+              proto.GameProto.TableInfo.Builder subBuilder = null;
+              if (tableInfo_ != null) {
+                subBuilder = tableInfo_.toBuilder();
+              }
+              tableInfo_ = input.readMessage(proto.GameProto.TableInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(tableInfo_);
+                tableInfo_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -590,7 +724,7 @@ public final class GameProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           players_ = java.util.Collections.unmodifiableList(players_);
         }
         this.unknownFields = unknownFields.build();
@@ -599,59 +733,71 @@ public final class GameProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.GameProto.internal_static_proto_AckCreateTable_descriptor;
+      return proto.GameProto.internal_static_proto_AckEnterTable_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.GameProto.internal_static_proto_AckCreateTable_fieldAccessorTable
+      return proto.GameProto.internal_static_proto_AckEnterTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.GameProto.AckCreateTable.class, proto.GameProto.AckCreateTable.Builder.class);
+              proto.GameProto.AckEnterTable.class, proto.GameProto.AckEnterTable.Builder.class);
     }
 
     private int bitField0_;
-    public static final int TABLEID_FIELD_NUMBER = 1;
-    private int tableId_;
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    public int getTableId() {
-      return tableId_;
-    }
-
-    public static final int PLAYERS_FIELD_NUMBER = 2;
+    public static final int PLAYERS_FIELD_NUMBER = 1;
     private java.util.List<proto.GameProto.Player> players_;
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     public java.util.List<proto.GameProto.Player> getPlayersList() {
       return players_;
     }
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     public java.util.List<? extends proto.GameProto.PlayerOrBuilder> 
         getPlayersOrBuilderList() {
       return players_;
     }
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     public int getPlayersCount() {
       return players_.size();
     }
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     public proto.GameProto.Player getPlayers(int index) {
       return players_.get(index);
     }
     /**
-     * <code>repeated .proto.Player players = 2;</code>
+     * <code>repeated .proto.Player players = 1;</code>
      */
     public proto.GameProto.PlayerOrBuilder getPlayersOrBuilder(
         int index) {
       return players_.get(index);
+    }
+
+    public static final int TABLEINFO_FIELD_NUMBER = 2;
+    private proto.GameProto.TableInfo tableInfo_;
+    /**
+     * <code>.proto.TableInfo tableInfo = 2;</code>
+     */
+    public boolean hasTableInfo() {
+      return tableInfo_ != null;
+    }
+    /**
+     * <code>.proto.TableInfo tableInfo = 2;</code>
+     */
+    public proto.GameProto.TableInfo getTableInfo() {
+      return tableInfo_ == null ? proto.GameProto.TableInfo.getDefaultInstance() : tableInfo_;
+    }
+    /**
+     * <code>.proto.TableInfo tableInfo = 2;</code>
+     */
+    public proto.GameProto.TableInfoOrBuilder getTableInfoOrBuilder() {
+      return getTableInfo();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -666,11 +812,11 @@ public final class GameProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (tableId_ != 0) {
-        output.writeInt32(1, tableId_);
-      }
       for (int i = 0; i < players_.size(); i++) {
-        output.writeMessage(2, players_.get(i));
+        output.writeMessage(1, players_.get(i));
+      }
+      if (tableInfo_ != null) {
+        output.writeMessage(2, getTableInfo());
       }
       unknownFields.writeTo(output);
     }
@@ -680,13 +826,13 @@ public final class GameProto {
       if (size != -1) return size;
 
       size = 0;
-      if (tableId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, tableId_);
-      }
       for (int i = 0; i < players_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, players_.get(i));
+          .computeMessageSize(1, players_.get(i));
+      }
+      if (tableInfo_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getTableInfo());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -698,16 +844,19 @@ public final class GameProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.GameProto.AckCreateTable)) {
+      if (!(obj instanceof proto.GameProto.AckEnterTable)) {
         return super.equals(obj);
       }
-      proto.GameProto.AckCreateTable other = (proto.GameProto.AckCreateTable) obj;
+      proto.GameProto.AckEnterTable other = (proto.GameProto.AckEnterTable) obj;
 
       boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
       result = result && getPlayersList()
           .equals(other.getPlayersList());
+      result = result && (hasTableInfo() == other.hasTableInfo());
+      if (hasTableInfo()) {
+        result = result && getTableInfo()
+            .equals(other.getTableInfo());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -719,80 +868,82 @@ public final class GameProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId();
       if (getPlayersCount() > 0) {
         hash = (37 * hash) + PLAYERS_FIELD_NUMBER;
         hash = (53 * hash) + getPlayersList().hashCode();
+      }
+      if (hasTableInfo()) {
+        hash = (37 * hash) + TABLEINFO_FIELD_NUMBER;
+        hash = (53 * hash) + getTableInfo().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(byte[] data)
+    public static proto.GameProto.AckEnterTable parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(java.io.InputStream input)
+    public static proto.GameProto.AckEnterTable parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.AckCreateTable parseDelimitedFrom(java.io.InputStream input)
+    public static proto.GameProto.AckEnterTable parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.GameProto.AckCreateTable parseDelimitedFrom(
+    public static proto.GameProto.AckEnterTable parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.AckCreateTable parseFrom(
+    public static proto.GameProto.AckEnterTable parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -804,7 +955,7 @@ public final class GameProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.GameProto.AckCreateTable prototype) {
+    public static Builder newBuilder(proto.GameProto.AckEnterTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -819,25 +970,29 @@ public final class GameProto {
       return builder;
     }
     /**
-     * Protobuf type {@code proto.AckCreateTable}
+     * <pre>
+     *加入桌子回复
+     * </pre>
+     *
+     * Protobuf type {@code proto.AckEnterTable}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckCreateTable)
-        proto.GameProto.AckCreateTableOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.AckEnterTable)
+        proto.GameProto.AckEnterTableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.GameProto.internal_static_proto_AckCreateTable_descriptor;
+        return proto.GameProto.internal_static_proto_AckEnterTable_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.GameProto.internal_static_proto_AckCreateTable_fieldAccessorTable
+        return proto.GameProto.internal_static_proto_AckEnterTable_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.GameProto.AckCreateTable.class, proto.GameProto.AckCreateTable.Builder.class);
+                proto.GameProto.AckEnterTable.class, proto.GameProto.AckEnterTable.Builder.class);
       }
 
-      // Construct using proto.GameProto.AckCreateTable.newBuilder()
+      // Construct using proto.GameProto.AckEnterTable.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -855,47 +1010,55 @@ public final class GameProto {
       }
       public Builder clear() {
         super.clear();
-        tableId_ = 0;
-
         if (playersBuilder_ == null) {
           players_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           playersBuilder_.clear();
+        }
+        if (tableInfoBuilder_ == null) {
+          tableInfo_ = null;
+        } else {
+          tableInfo_ = null;
+          tableInfoBuilder_ = null;
         }
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.GameProto.internal_static_proto_AckCreateTable_descriptor;
+        return proto.GameProto.internal_static_proto_AckEnterTable_descriptor;
       }
 
-      public proto.GameProto.AckCreateTable getDefaultInstanceForType() {
-        return proto.GameProto.AckCreateTable.getDefaultInstance();
+      public proto.GameProto.AckEnterTable getDefaultInstanceForType() {
+        return proto.GameProto.AckEnterTable.getDefaultInstance();
       }
 
-      public proto.GameProto.AckCreateTable build() {
-        proto.GameProto.AckCreateTable result = buildPartial();
+      public proto.GameProto.AckEnterTable build() {
+        proto.GameProto.AckEnterTable result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.GameProto.AckCreateTable buildPartial() {
-        proto.GameProto.AckCreateTable result = new proto.GameProto.AckCreateTable(this);
+      public proto.GameProto.AckEnterTable buildPartial() {
+        proto.GameProto.AckEnterTable result = new proto.GameProto.AckEnterTable(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.tableId_ = tableId_;
         if (playersBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             players_ = java.util.Collections.unmodifiableList(players_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.players_ = players_;
         } else {
           result.players_ = playersBuilder_.build();
+        }
+        if (tableInfoBuilder_ == null) {
+          result.tableInfo_ = tableInfo_;
+        } else {
+          result.tableInfo_ = tableInfoBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -929,24 +1092,21 @@ public final class GameProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.GameProto.AckCreateTable) {
-          return mergeFrom((proto.GameProto.AckCreateTable)other);
+        if (other instanceof proto.GameProto.AckEnterTable) {
+          return mergeFrom((proto.GameProto.AckEnterTable)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.GameProto.AckCreateTable other) {
-        if (other == proto.GameProto.AckCreateTable.getDefaultInstance()) return this;
-        if (other.getTableId() != 0) {
-          setTableId(other.getTableId());
-        }
+      public Builder mergeFrom(proto.GameProto.AckEnterTable other) {
+        if (other == proto.GameProto.AckEnterTable.getDefaultInstance()) return this;
         if (playersBuilder_ == null) {
           if (!other.players_.isEmpty()) {
             if (players_.isEmpty()) {
               players_ = other.players_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensurePlayersIsMutable();
               players_.addAll(other.players_);
@@ -959,7 +1119,7 @@ public final class GameProto {
               playersBuilder_.dispose();
               playersBuilder_ = null;
               players_ = other.players_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
               playersBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getPlayersFieldBuilder() : null;
@@ -967,6 +1127,9 @@ public final class GameProto {
               playersBuilder_.addAllMessages(other.players_);
             }
           }
+        }
+        if (other.hasTableInfo()) {
+          mergeTableInfo(other.getTableInfo());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -981,11 +1144,11 @@ public final class GameProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.GameProto.AckCreateTable parsedMessage = null;
+        proto.GameProto.AckEnterTable parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.GameProto.AckCreateTable) e.getUnfinishedMessage();
+          parsedMessage = (proto.GameProto.AckEnterTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -996,38 +1159,12 @@ public final class GameProto {
       }
       private int bitField0_;
 
-      private int tableId_ ;
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public int getTableId() {
-        return tableId_;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder setTableId(int value) {
-        
-        tableId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder clearTableId() {
-        
-        tableId_ = 0;
-        onChanged();
-        return this;
-      }
-
       private java.util.List<proto.GameProto.Player> players_ =
         java.util.Collections.emptyList();
       private void ensurePlayersIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           players_ = new java.util.ArrayList<proto.GameProto.Player>(players_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -1035,7 +1172,7 @@ public final class GameProto {
           proto.GameProto.Player, proto.GameProto.Player.Builder, proto.GameProto.PlayerOrBuilder> playersBuilder_;
 
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public java.util.List<proto.GameProto.Player> getPlayersList() {
         if (playersBuilder_ == null) {
@@ -1045,7 +1182,7 @@ public final class GameProto {
         }
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public int getPlayersCount() {
         if (playersBuilder_ == null) {
@@ -1055,7 +1192,7 @@ public final class GameProto {
         }
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public proto.GameProto.Player getPlayers(int index) {
         if (playersBuilder_ == null) {
@@ -1065,7 +1202,7 @@ public final class GameProto {
         }
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder setPlayers(
           int index, proto.GameProto.Player value) {
@@ -1082,7 +1219,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder setPlayers(
           int index, proto.GameProto.Player.Builder builderForValue) {
@@ -1096,7 +1233,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder addPlayers(proto.GameProto.Player value) {
         if (playersBuilder_ == null) {
@@ -1112,7 +1249,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder addPlayers(
           int index, proto.GameProto.Player value) {
@@ -1129,7 +1266,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder addPlayers(
           proto.GameProto.Player.Builder builderForValue) {
@@ -1143,7 +1280,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder addPlayers(
           int index, proto.GameProto.Player.Builder builderForValue) {
@@ -1157,7 +1294,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder addAllPlayers(
           java.lang.Iterable<? extends proto.GameProto.Player> values) {
@@ -1172,12 +1309,12 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder clearPlayers() {
         if (playersBuilder_ == null) {
           players_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           playersBuilder_.clear();
@@ -1185,7 +1322,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public Builder removePlayers(int index) {
         if (playersBuilder_ == null) {
@@ -1198,14 +1335,14 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public proto.GameProto.Player.Builder getPlayersBuilder(
           int index) {
         return getPlayersFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public proto.GameProto.PlayerOrBuilder getPlayersOrBuilder(
           int index) {
@@ -1215,7 +1352,7 @@ public final class GameProto {
         }
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public java.util.List<? extends proto.GameProto.PlayerOrBuilder> 
            getPlayersOrBuilderList() {
@@ -1226,14 +1363,14 @@ public final class GameProto {
         }
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public proto.GameProto.Player.Builder addPlayersBuilder() {
         return getPlayersFieldBuilder().addBuilder(
             proto.GameProto.Player.getDefaultInstance());
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public proto.GameProto.Player.Builder addPlayersBuilder(
           int index) {
@@ -1241,7 +1378,7 @@ public final class GameProto {
             index, proto.GameProto.Player.getDefaultInstance());
       }
       /**
-       * <code>repeated .proto.Player players = 2;</code>
+       * <code>repeated .proto.Player players = 1;</code>
        */
       public java.util.List<proto.GameProto.Player.Builder> 
            getPlayersBuilderList() {
@@ -1254,12 +1391,129 @@ public final class GameProto {
           playersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.GameProto.Player, proto.GameProto.Player.Builder, proto.GameProto.PlayerOrBuilder>(
                   players_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           players_ = null;
         }
         return playersBuilder_;
+      }
+
+      private proto.GameProto.TableInfo tableInfo_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.TableInfo, proto.GameProto.TableInfo.Builder, proto.GameProto.TableInfoOrBuilder> tableInfoBuilder_;
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public boolean hasTableInfo() {
+        return tableInfoBuilder_ != null || tableInfo_ != null;
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public proto.GameProto.TableInfo getTableInfo() {
+        if (tableInfoBuilder_ == null) {
+          return tableInfo_ == null ? proto.GameProto.TableInfo.getDefaultInstance() : tableInfo_;
+        } else {
+          return tableInfoBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public Builder setTableInfo(proto.GameProto.TableInfo value) {
+        if (tableInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          tableInfo_ = value;
+          onChanged();
+        } else {
+          tableInfoBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public Builder setTableInfo(
+          proto.GameProto.TableInfo.Builder builderForValue) {
+        if (tableInfoBuilder_ == null) {
+          tableInfo_ = builderForValue.build();
+          onChanged();
+        } else {
+          tableInfoBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public Builder mergeTableInfo(proto.GameProto.TableInfo value) {
+        if (tableInfoBuilder_ == null) {
+          if (tableInfo_ != null) {
+            tableInfo_ =
+              proto.GameProto.TableInfo.newBuilder(tableInfo_).mergeFrom(value).buildPartial();
+          } else {
+            tableInfo_ = value;
+          }
+          onChanged();
+        } else {
+          tableInfoBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public Builder clearTableInfo() {
+        if (tableInfoBuilder_ == null) {
+          tableInfo_ = null;
+          onChanged();
+        } else {
+          tableInfo_ = null;
+          tableInfoBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public proto.GameProto.TableInfo.Builder getTableInfoBuilder() {
+        
+        onChanged();
+        return getTableInfoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      public proto.GameProto.TableInfoOrBuilder getTableInfoOrBuilder() {
+        if (tableInfoBuilder_ != null) {
+          return tableInfoBuilder_.getMessageOrBuilder();
+        } else {
+          return tableInfo_ == null ?
+              proto.GameProto.TableInfo.getDefaultInstance() : tableInfo_;
+        }
+      }
+      /**
+       * <code>.proto.TableInfo tableInfo = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.TableInfo, proto.GameProto.TableInfo.Builder, proto.GameProto.TableInfoOrBuilder> 
+          getTableInfoFieldBuilder() {
+        if (tableInfoBuilder_ == null) {
+          tableInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.GameProto.TableInfo, proto.GameProto.TableInfo.Builder, proto.GameProto.TableInfoOrBuilder>(
+                  getTableInfo(),
+                  getParentForChildren(),
+                  isClean());
+          tableInfo_ = null;
+        }
+        return tableInfoBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1272,39 +1526,39 @@ public final class GameProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.AckCreateTable)
+      // @@protoc_insertion_point(builder_scope:proto.AckEnterTable)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.AckCreateTable)
-    private static final proto.GameProto.AckCreateTable DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.AckEnterTable)
+    private static final proto.GameProto.AckEnterTable DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.GameProto.AckCreateTable();
+      DEFAULT_INSTANCE = new proto.GameProto.AckEnterTable();
     }
 
-    public static proto.GameProto.AckCreateTable getDefaultInstance() {
+    public static proto.GameProto.AckEnterTable getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<AckCreateTable>
-        PARSER = new com.google.protobuf.AbstractParser<AckCreateTable>() {
-      public AckCreateTable parsePartialFrom(
+    private static final com.google.protobuf.Parser<AckEnterTable>
+        PARSER = new com.google.protobuf.AbstractParser<AckEnterTable>() {
+      public AckEnterTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckCreateTable(input, extensionRegistry);
+          return new AckEnterTable(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<AckCreateTable> parser() {
+    public static com.google.protobuf.Parser<AckEnterTable> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<AckCreateTable> getParserForType() {
+    public com.google.protobuf.Parser<AckEnterTable> getParserForType() {
       return PARSER;
     }
 
-    public proto.GameProto.AckCreateTable getDefaultInstanceForType() {
+    public proto.GameProto.AckEnterTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1315,24 +1569,37 @@ public final class GameProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 id = 1;</code>
+     * <code>int32 roleId = 1;</code>
      */
-    int getId();
+    int getRoleId();
 
     /**
-     * <code>bytes head = 2;</code>
+     * <code>int32 position = 2;</code>
      */
-    com.google.protobuf.ByteString getHead();
+    int getPosition();
 
     /**
-     * <code>bytes nick = 3;</code>
+     * <code>bytes avatar = 3;</code>
      */
-    com.google.protobuf.ByteString getNick();
+    com.google.protobuf.ByteString getAvatar();
 
     /**
-     * <code>int32 seat = 4;</code>
+     * <code>bytes nickName = 4;</code>
      */
-    int getSeat();
+    com.google.protobuf.ByteString getNickName();
+
+    /**
+     * <code>repeated int32 cards = 5;</code>
+     */
+    java.util.List<java.lang.Integer> getCardsList();
+    /**
+     * <code>repeated int32 cards = 5;</code>
+     */
+    int getCardsCount();
+    /**
+     * <code>repeated int32 cards = 5;</code>
+     */
+    int getCards(int index);
   }
   /**
    * Protobuf type {@code proto.Player}
@@ -1347,10 +1614,11 @@ public final class GameProto {
       super(builder);
     }
     private Player() {
-      id_ = 0;
-      head_ = com.google.protobuf.ByteString.EMPTY;
-      nick_ = com.google.protobuf.ByteString.EMPTY;
-      seat_ = 0;
+      roleId_ = 0;
+      position_ = 0;
+      avatar_ = com.google.protobuf.ByteString.EMPTY;
+      nickName_ = com.google.protobuf.ByteString.EMPTY;
+      cards_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -1383,22 +1651,43 @@ public final class GameProto {
             }
             case 8: {
 
-              id_ = input.readInt32();
+              roleId_ = input.readInt32();
               break;
             }
-            case 18: {
+            case 16: {
 
-              head_ = input.readBytes();
+              position_ = input.readInt32();
               break;
             }
             case 26: {
 
-              nick_ = input.readBytes();
+              avatar_ = input.readBytes();
               break;
             }
-            case 32: {
+            case 34: {
 
-              seat_ = input.readInt32();
+              nickName_ = input.readBytes();
+              break;
+            }
+            case 40: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                cards_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              cards_.add(input.readInt32());
+              break;
+            }
+            case 42: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010) && input.getBytesUntilLimit() > 0) {
+                cards_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                cards_.add(input.readInt32());
+              }
+              input.popLimit(limit);
               break;
             }
           }
@@ -1409,6 +1698,9 @@ public final class GameProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+          cards_ = java.util.Collections.unmodifiableList(cards_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -1425,41 +1717,65 @@ public final class GameProto {
               proto.GameProto.Player.class, proto.GameProto.Player.Builder.class);
     }
 
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_;
+    private int bitField0_;
+    public static final int ROLEID_FIELD_NUMBER = 1;
+    private int roleId_;
     /**
-     * <code>int32 id = 1;</code>
+     * <code>int32 roleId = 1;</code>
      */
-    public int getId() {
-      return id_;
+    public int getRoleId() {
+      return roleId_;
     }
 
-    public static final int HEAD_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString head_;
+    public static final int POSITION_FIELD_NUMBER = 2;
+    private int position_;
     /**
-     * <code>bytes head = 2;</code>
+     * <code>int32 position = 2;</code>
      */
-    public com.google.protobuf.ByteString getHead() {
-      return head_;
+    public int getPosition() {
+      return position_;
     }
 
-    public static final int NICK_FIELD_NUMBER = 3;
-    private com.google.protobuf.ByteString nick_;
+    public static final int AVATAR_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString avatar_;
     /**
-     * <code>bytes nick = 3;</code>
+     * <code>bytes avatar = 3;</code>
      */
-    public com.google.protobuf.ByteString getNick() {
-      return nick_;
+    public com.google.protobuf.ByteString getAvatar() {
+      return avatar_;
     }
 
-    public static final int SEAT_FIELD_NUMBER = 4;
-    private int seat_;
+    public static final int NICKNAME_FIELD_NUMBER = 4;
+    private com.google.protobuf.ByteString nickName_;
     /**
-     * <code>int32 seat = 4;</code>
+     * <code>bytes nickName = 4;</code>
      */
-    public int getSeat() {
-      return seat_;
+    public com.google.protobuf.ByteString getNickName() {
+      return nickName_;
     }
+
+    public static final int CARDS_FIELD_NUMBER = 5;
+    private java.util.List<java.lang.Integer> cards_;
+    /**
+     * <code>repeated int32 cards = 5;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getCardsList() {
+      return cards_;
+    }
+    /**
+     * <code>repeated int32 cards = 5;</code>
+     */
+    public int getCardsCount() {
+      return cards_.size();
+    }
+    /**
+     * <code>repeated int32 cards = 5;</code>
+     */
+    public int getCards(int index) {
+      return cards_.get(index);
+    }
+    private int cardsMemoizedSerializedSize = -1;
 
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1473,17 +1789,25 @@ public final class GameProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (id_ != 0) {
-        output.writeInt32(1, id_);
+      getSerializedSize();
+      if (roleId_ != 0) {
+        output.writeInt32(1, roleId_);
       }
-      if (!head_.isEmpty()) {
-        output.writeBytes(2, head_);
+      if (position_ != 0) {
+        output.writeInt32(2, position_);
       }
-      if (!nick_.isEmpty()) {
-        output.writeBytes(3, nick_);
+      if (!avatar_.isEmpty()) {
+        output.writeBytes(3, avatar_);
       }
-      if (seat_ != 0) {
-        output.writeInt32(4, seat_);
+      if (!nickName_.isEmpty()) {
+        output.writeBytes(4, nickName_);
+      }
+      if (getCardsList().size() > 0) {
+        output.writeUInt32NoTag(42);
+        output.writeUInt32NoTag(cardsMemoizedSerializedSize);
+      }
+      for (int i = 0; i < cards_.size(); i++) {
+        output.writeInt32NoTag(cards_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -1493,21 +1817,35 @@ public final class GameProto {
       if (size != -1) return size;
 
       size = 0;
-      if (id_ != 0) {
+      if (roleId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, id_);
+          .computeInt32Size(1, roleId_);
       }
-      if (!head_.isEmpty()) {
+      if (position_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, head_);
+          .computeInt32Size(2, position_);
       }
-      if (!nick_.isEmpty()) {
+      if (!avatar_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, nick_);
+          .computeBytesSize(3, avatar_);
       }
-      if (seat_ != 0) {
+      if (!nickName_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, seat_);
+          .computeBytesSize(4, nickName_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < cards_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(cards_.get(i));
+        }
+        size += dataSize;
+        if (!getCardsList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        cardsMemoizedSerializedSize = dataSize;
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1525,14 +1863,16 @@ public final class GameProto {
       proto.GameProto.Player other = (proto.GameProto.Player) obj;
 
       boolean result = true;
-      result = result && (getId()
-          == other.getId());
-      result = result && getHead()
-          .equals(other.getHead());
-      result = result && getNick()
-          .equals(other.getNick());
-      result = result && (getSeat()
-          == other.getSeat());
+      result = result && (getRoleId()
+          == other.getRoleId());
+      result = result && (getPosition()
+          == other.getPosition());
+      result = result && getAvatar()
+          .equals(other.getAvatar());
+      result = result && getNickName()
+          .equals(other.getNickName());
+      result = result && getCardsList()
+          .equals(other.getCardsList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1544,14 +1884,18 @@ public final class GameProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId();
-      hash = (37 * hash) + HEAD_FIELD_NUMBER;
-      hash = (53 * hash) + getHead().hashCode();
-      hash = (37 * hash) + NICK_FIELD_NUMBER;
-      hash = (53 * hash) + getNick().hashCode();
-      hash = (37 * hash) + SEAT_FIELD_NUMBER;
-      hash = (53 * hash) + getSeat();
+      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoleId();
+      hash = (37 * hash) + POSITION_FIELD_NUMBER;
+      hash = (53 * hash) + getPosition();
+      hash = (37 * hash) + AVATAR_FIELD_NUMBER;
+      hash = (53 * hash) + getAvatar().hashCode();
+      hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getNickName().hashCode();
+      if (getCardsCount() > 0) {
+        hash = (37 * hash) + CARDS_FIELD_NUMBER;
+        hash = (53 * hash) + getCardsList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1681,14 +2025,16 @@ public final class GameProto {
       }
       public Builder clear() {
         super.clear();
-        id_ = 0;
+        roleId_ = 0;
 
-        head_ = com.google.protobuf.ByteString.EMPTY;
+        position_ = 0;
 
-        nick_ = com.google.protobuf.ByteString.EMPTY;
+        avatar_ = com.google.protobuf.ByteString.EMPTY;
 
-        seat_ = 0;
+        nickName_ = com.google.protobuf.ByteString.EMPTY;
 
+        cards_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -1711,10 +2057,18 @@ public final class GameProto {
 
       public proto.GameProto.Player buildPartial() {
         proto.GameProto.Player result = new proto.GameProto.Player(this);
-        result.id_ = id_;
-        result.head_ = head_;
-        result.nick_ = nick_;
-        result.seat_ = seat_;
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.roleId_ = roleId_;
+        result.position_ = position_;
+        result.avatar_ = avatar_;
+        result.nickName_ = nickName_;
+        if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          cards_ = java.util.Collections.unmodifiableList(cards_);
+          bitField0_ = (bitField0_ & ~0x00000010);
+        }
+        result.cards_ = cards_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -1756,17 +2110,27 @@ public final class GameProto {
 
       public Builder mergeFrom(proto.GameProto.Player other) {
         if (other == proto.GameProto.Player.getDefaultInstance()) return this;
-        if (other.getId() != 0) {
-          setId(other.getId());
+        if (other.getRoleId() != 0) {
+          setRoleId(other.getRoleId());
         }
-        if (other.getHead() != com.google.protobuf.ByteString.EMPTY) {
-          setHead(other.getHead());
+        if (other.getPosition() != 0) {
+          setPosition(other.getPosition());
         }
-        if (other.getNick() != com.google.protobuf.ByteString.EMPTY) {
-          setNick(other.getNick());
+        if (other.getAvatar() != com.google.protobuf.ByteString.EMPTY) {
+          setAvatar(other.getAvatar());
         }
-        if (other.getSeat() != 0) {
-          setSeat(other.getSeat());
+        if (other.getNickName() != com.google.protobuf.ByteString.EMPTY) {
+          setNickName(other.getNickName());
+        }
+        if (!other.cards_.isEmpty()) {
+          if (cards_.isEmpty()) {
+            cards_ = other.cards_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+          } else {
+            ensureCardsIsMutable();
+            cards_.addAll(other.cards_);
+          }
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1794,113 +2158,180 @@ public final class GameProto {
         }
         return this;
       }
+      private int bitField0_;
 
-      private int id_ ;
+      private int roleId_ ;
       /**
-       * <code>int32 id = 1;</code>
+       * <code>int32 roleId = 1;</code>
        */
-      public int getId() {
-        return id_;
+      public int getRoleId() {
+        return roleId_;
       }
       /**
-       * <code>int32 id = 1;</code>
+       * <code>int32 roleId = 1;</code>
        */
-      public Builder setId(int value) {
+      public Builder setRoleId(int value) {
         
-        id_ = value;
+        roleId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 id = 1;</code>
+       * <code>int32 roleId = 1;</code>
        */
-      public Builder clearId() {
+      public Builder clearRoleId() {
         
-        id_ = 0;
+        roleId_ = 0;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.ByteString head_ = com.google.protobuf.ByteString.EMPTY;
+      private int position_ ;
       /**
-       * <code>bytes head = 2;</code>
+       * <code>int32 position = 2;</code>
        */
-      public com.google.protobuf.ByteString getHead() {
-        return head_;
+      public int getPosition() {
+        return position_;
       }
       /**
-       * <code>bytes head = 2;</code>
+       * <code>int32 position = 2;</code>
        */
-      public Builder setHead(com.google.protobuf.ByteString value) {
+      public Builder setPosition(int value) {
+        
+        position_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 position = 2;</code>
+       */
+      public Builder clearPosition() {
+        
+        position_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString avatar_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes avatar = 3;</code>
+       */
+      public com.google.protobuf.ByteString getAvatar() {
+        return avatar_;
+      }
+      /**
+       * <code>bytes avatar = 3;</code>
+       */
+      public Builder setAvatar(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        head_ = value;
+        avatar_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bytes head = 2;</code>
+       * <code>bytes avatar = 3;</code>
        */
-      public Builder clearHead() {
+      public Builder clearAvatar() {
         
-        head_ = getDefaultInstance().getHead();
+        avatar_ = getDefaultInstance().getAvatar();
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.ByteString nick_ = com.google.protobuf.ByteString.EMPTY;
+      private com.google.protobuf.ByteString nickName_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>bytes nick = 3;</code>
+       * <code>bytes nickName = 4;</code>
        */
-      public com.google.protobuf.ByteString getNick() {
-        return nick_;
+      public com.google.protobuf.ByteString getNickName() {
+        return nickName_;
       }
       /**
-       * <code>bytes nick = 3;</code>
+       * <code>bytes nickName = 4;</code>
        */
-      public Builder setNick(com.google.protobuf.ByteString value) {
+      public Builder setNickName(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        nick_ = value;
+        nickName_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bytes nick = 3;</code>
+       * <code>bytes nickName = 4;</code>
        */
-      public Builder clearNick() {
+      public Builder clearNickName() {
         
-        nick_ = getDefaultInstance().getNick();
+        nickName_ = getDefaultInstance().getNickName();
         onChanged();
         return this;
       }
 
-      private int seat_ ;
-      /**
-       * <code>int32 seat = 4;</code>
-       */
-      public int getSeat() {
-        return seat_;
+      private java.util.List<java.lang.Integer> cards_ = java.util.Collections.emptyList();
+      private void ensureCardsIsMutable() {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+          cards_ = new java.util.ArrayList<java.lang.Integer>(cards_);
+          bitField0_ |= 0x00000010;
+         }
       }
       /**
-       * <code>int32 seat = 4;</code>
+       * <code>repeated int32 cards = 5;</code>
        */
-      public Builder setSeat(int value) {
-        
-        seat_ = value;
+      public java.util.List<java.lang.Integer>
+          getCardsList() {
+        return java.util.Collections.unmodifiableList(cards_);
+      }
+      /**
+       * <code>repeated int32 cards = 5;</code>
+       */
+      public int getCardsCount() {
+        return cards_.size();
+      }
+      /**
+       * <code>repeated int32 cards = 5;</code>
+       */
+      public int getCards(int index) {
+        return cards_.get(index);
+      }
+      /**
+       * <code>repeated int32 cards = 5;</code>
+       */
+      public Builder setCards(
+          int index, int value) {
+        ensureCardsIsMutable();
+        cards_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>int32 seat = 4;</code>
+       * <code>repeated int32 cards = 5;</code>
        */
-      public Builder clearSeat() {
-        
-        seat_ = 0;
+      public Builder addCards(int value) {
+        ensureCardsIsMutable();
+        cards_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 cards = 5;</code>
+       */
+      public Builder addAllCards(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureCardsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, cards_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 cards = 5;</code>
+       */
+      public Builder clearCards() {
+        cards_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000010);
         onChanged();
         return this;
       }
@@ -1953,54 +2384,41 @@ public final class GameProto {
 
   }
 
-  public interface ReqEnterTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqEnterTable)
+  public interface TableInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.TableInfo)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 tableId = 1;</code>
+     * <code>int32 roomId = 1;</code>
      */
-    int getTableId();
+    int getRoomId();
 
     /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
+     * <code>bytes tableId = 2;</code>
      */
-    java.util.List<proto.ModelProto.KeyValue> 
-        getAppendList();
+    com.google.protobuf.ByteString getTableId();
+
     /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
+     * <code>int32 landlord = 3;</code>
      */
-    proto.ModelProto.KeyValue getAppend(int index);
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    int getAppendCount();
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    java.util.List<? extends proto.ModelProto.KeyValueOrBuilder> 
-        getAppendOrBuilderList();
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    proto.ModelProto.KeyValueOrBuilder getAppendOrBuilder(
-        int index);
+    int getLandlord();
   }
   /**
-   * Protobuf type {@code proto.ReqEnterTable}
+   * Protobuf type {@code proto.TableInfo}
    */
-  public  static final class ReqEnterTable extends
+  public  static final class TableInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqEnterTable)
-      ReqEnterTableOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.TableInfo)
+      TableInfoOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ReqEnterTable.newBuilder() to construct.
-    private ReqEnterTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use TableInfo.newBuilder() to construct.
+    private TableInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ReqEnterTable() {
-      tableId_ = 0;
-      append_ = java.util.Collections.emptyList();
+    private TableInfo() {
+      roomId_ = 0;
+      tableId_ = com.google.protobuf.ByteString.EMPTY;
+      landlord_ = 0;
     }
 
     @java.lang.Override
@@ -2008,7 +2426,7 @@ public final class GameProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqEnterTable(
+    private TableInfo(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2033,16 +2451,17 @@ public final class GameProto {
             }
             case 8: {
 
-              tableId_ = input.readInt32();
+              roomId_ = input.readInt32();
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                append_ = new java.util.ArrayList<proto.ModelProto.KeyValue>();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              append_.add(
-                  input.readMessage(proto.ModelProto.KeyValue.parser(), extensionRegistry));
+
+              tableId_ = input.readBytes();
+              break;
+            }
+            case 24: {
+
+              landlord_ = input.readInt32();
               break;
             }
           }
@@ -2053,68 +2472,47 @@ public final class GameProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          append_ = java.util.Collections.unmodifiableList(append_);
-        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.GameProto.internal_static_proto_ReqEnterTable_descriptor;
+      return proto.GameProto.internal_static_proto_TableInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.GameProto.internal_static_proto_ReqEnterTable_fieldAccessorTable
+      return proto.GameProto.internal_static_proto_TableInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.GameProto.ReqEnterTable.class, proto.GameProto.ReqEnterTable.Builder.class);
+              proto.GameProto.TableInfo.class, proto.GameProto.TableInfo.Builder.class);
     }
 
-    private int bitField0_;
-    public static final int TABLEID_FIELD_NUMBER = 1;
-    private int tableId_;
+    public static final int ROOMID_FIELD_NUMBER = 1;
+    private int roomId_;
     /**
-     * <code>int32 tableId = 1;</code>
+     * <code>int32 roomId = 1;</code>
      */
-    public int getTableId() {
+    public int getRoomId() {
+      return roomId_;
+    }
+
+    public static final int TABLEID_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString tableId_;
+    /**
+     * <code>bytes tableId = 2;</code>
+     */
+    public com.google.protobuf.ByteString getTableId() {
       return tableId_;
     }
 
-    public static final int APPEND_FIELD_NUMBER = 2;
-    private java.util.List<proto.ModelProto.KeyValue> append_;
+    public static final int LANDLORD_FIELD_NUMBER = 3;
+    private int landlord_;
     /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
+     * <code>int32 landlord = 3;</code>
      */
-    public java.util.List<proto.ModelProto.KeyValue> getAppendList() {
-      return append_;
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public java.util.List<? extends proto.ModelProto.KeyValueOrBuilder> 
-        getAppendOrBuilderList() {
-      return append_;
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public int getAppendCount() {
-      return append_.size();
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public proto.ModelProto.KeyValue getAppend(int index) {
-      return append_.get(index);
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public proto.ModelProto.KeyValueOrBuilder getAppendOrBuilder(
-        int index) {
-      return append_.get(index);
+    public int getLandlord() {
+      return landlord_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2129,11 +2527,14 @@ public final class GameProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (tableId_ != 0) {
-        output.writeInt32(1, tableId_);
+      if (roomId_ != 0) {
+        output.writeInt32(1, roomId_);
       }
-      for (int i = 0; i < append_.size(); i++) {
-        output.writeMessage(2, append_.get(i));
+      if (!tableId_.isEmpty()) {
+        output.writeBytes(2, tableId_);
+      }
+      if (landlord_ != 0) {
+        output.writeInt32(3, landlord_);
       }
       unknownFields.writeTo(output);
     }
@@ -2143,13 +2544,17 @@ public final class GameProto {
       if (size != -1) return size;
 
       size = 0;
-      if (tableId_ != 0) {
+      if (roomId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, tableId_);
+          .computeInt32Size(1, roomId_);
       }
-      for (int i = 0; i < append_.size(); i++) {
+      if (!tableId_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, append_.get(i));
+          .computeBytesSize(2, tableId_);
+      }
+      if (landlord_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, landlord_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2161,16 +2566,18 @@ public final class GameProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.GameProto.ReqEnterTable)) {
+      if (!(obj instanceof proto.GameProto.TableInfo)) {
         return super.equals(obj);
       }
-      proto.GameProto.ReqEnterTable other = (proto.GameProto.ReqEnterTable) obj;
+      proto.GameProto.TableInfo other = (proto.GameProto.TableInfo) obj;
 
       boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
-      result = result && getAppendList()
-          .equals(other.getAppendList());
+      result = result && (getRoomId()
+          == other.getRoomId());
+      result = result && getTableId()
+          .equals(other.getTableId());
+      result = result && (getLandlord()
+          == other.getLandlord());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2182,80 +2589,80 @@ public final class GameProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId();
-      if (getAppendCount() > 0) {
-        hash = (37 * hash) + APPEND_FIELD_NUMBER;
-        hash = (53 * hash) + getAppendList().hashCode();
-      }
+      hash = (53 * hash) + getTableId().hashCode();
+      hash = (37 * hash) + LANDLORD_FIELD_NUMBER;
+      hash = (53 * hash) + getLandlord();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(byte[] data)
+    public static proto.GameProto.TableInfo parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(java.io.InputStream input)
+    public static proto.GameProto.TableInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.ReqEnterTable parseDelimitedFrom(java.io.InputStream input)
+    public static proto.GameProto.TableInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.GameProto.ReqEnterTable parseDelimitedFrom(
+    public static proto.GameProto.TableInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.ReqEnterTable parseFrom(
+    public static proto.GameProto.TableInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2267,7 +2674,7 @@ public final class GameProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.GameProto.ReqEnterTable prototype) {
+    public static Builder newBuilder(proto.GameProto.TableInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -2282,25 +2689,25 @@ public final class GameProto {
       return builder;
     }
     /**
-     * Protobuf type {@code proto.ReqEnterTable}
+     * Protobuf type {@code proto.TableInfo}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqEnterTable)
-        proto.GameProto.ReqEnterTableOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.TableInfo)
+        proto.GameProto.TableInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.GameProto.internal_static_proto_ReqEnterTable_descriptor;
+        return proto.GameProto.internal_static_proto_TableInfo_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.GameProto.internal_static_proto_ReqEnterTable_fieldAccessorTable
+        return proto.GameProto.internal_static_proto_TableInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.GameProto.ReqEnterTable.class, proto.GameProto.ReqEnterTable.Builder.class);
+                proto.GameProto.TableInfo.class, proto.GameProto.TableInfo.Builder.class);
       }
 
-      // Construct using proto.GameProto.ReqEnterTable.newBuilder()
+      // Construct using proto.GameProto.TableInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2313,54 +2720,41 @@ public final class GameProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getAppendFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        tableId_ = 0;
+        roomId_ = 0;
 
-        if (appendBuilder_ == null) {
-          append_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        } else {
-          appendBuilder_.clear();
-        }
+        tableId_ = com.google.protobuf.ByteString.EMPTY;
+
+        landlord_ = 0;
+
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.GameProto.internal_static_proto_ReqEnterTable_descriptor;
+        return proto.GameProto.internal_static_proto_TableInfo_descriptor;
       }
 
-      public proto.GameProto.ReqEnterTable getDefaultInstanceForType() {
-        return proto.GameProto.ReqEnterTable.getDefaultInstance();
+      public proto.GameProto.TableInfo getDefaultInstanceForType() {
+        return proto.GameProto.TableInfo.getDefaultInstance();
       }
 
-      public proto.GameProto.ReqEnterTable build() {
-        proto.GameProto.ReqEnterTable result = buildPartial();
+      public proto.GameProto.TableInfo build() {
+        proto.GameProto.TableInfo result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.GameProto.ReqEnterTable buildPartial() {
-        proto.GameProto.ReqEnterTable result = new proto.GameProto.ReqEnterTable(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
+      public proto.GameProto.TableInfo buildPartial() {
+        proto.GameProto.TableInfo result = new proto.GameProto.TableInfo(this);
+        result.roomId_ = roomId_;
         result.tableId_ = tableId_;
-        if (appendBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            append_ = java.util.Collections.unmodifiableList(append_);
-            bitField0_ = (bitField0_ & ~0x00000002);
-          }
-          result.append_ = append_;
-        } else {
-          result.append_ = appendBuilder_.build();
-        }
-        result.bitField0_ = to_bitField0_;
+        result.landlord_ = landlord_;
         onBuilt();
         return result;
       }
@@ -2392,44 +2786,24 @@ public final class GameProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.GameProto.ReqEnterTable) {
-          return mergeFrom((proto.GameProto.ReqEnterTable)other);
+        if (other instanceof proto.GameProto.TableInfo) {
+          return mergeFrom((proto.GameProto.TableInfo)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.GameProto.ReqEnterTable other) {
-        if (other == proto.GameProto.ReqEnterTable.getDefaultInstance()) return this;
-        if (other.getTableId() != 0) {
+      public Builder mergeFrom(proto.GameProto.TableInfo other) {
+        if (other == proto.GameProto.TableInfo.getDefaultInstance()) return this;
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
+        }
+        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
           setTableId(other.getTableId());
         }
-        if (appendBuilder_ == null) {
-          if (!other.append_.isEmpty()) {
-            if (append_.isEmpty()) {
-              append_ = other.append_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-            } else {
-              ensureAppendIsMutable();
-              append_.addAll(other.append_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.append_.isEmpty()) {
-            if (appendBuilder_.isEmpty()) {
-              appendBuilder_.dispose();
-              appendBuilder_ = null;
-              append_ = other.append_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-              appendBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getAppendFieldBuilder() : null;
-            } else {
-              appendBuilder_.addAllMessages(other.append_);
-            }
-          }
+        if (other.getLandlord() != 0) {
+          setLandlord(other.getLandlord());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2444,11 +2818,11 @@ public final class GameProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.GameProto.ReqEnterTable parsedMessage = null;
+        proto.GameProto.TableInfo parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.GameProto.ReqEnterTable) e.getUnfinishedMessage();
+          parsedMessage = (proto.GameProto.TableInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2457,272 +2831,86 @@ public final class GameProto {
         }
         return this;
       }
-      private int bitField0_;
 
-      private int tableId_ ;
+      private int roomId_ ;
       /**
-       * <code>int32 tableId = 1;</code>
+       * <code>int32 roomId = 1;</code>
        */
-      public int getTableId() {
+      public int getRoomId() {
+        return roomId_;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder setRoomId(int value) {
+        
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder clearRoomId() {
+        
+        roomId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes tableId = 2;</code>
+       */
+      public com.google.protobuf.ByteString getTableId() {
         return tableId_;
       }
       /**
-       * <code>int32 tableId = 1;</code>
+       * <code>bytes tableId = 2;</code>
        */
-      public Builder setTableId(int value) {
-        
+      public Builder setTableId(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
         tableId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 tableId = 1;</code>
+       * <code>bytes tableId = 2;</code>
        */
       public Builder clearTableId() {
         
-        tableId_ = 0;
+        tableId_ = getDefaultInstance().getTableId();
         onChanged();
         return this;
       }
 
-      private java.util.List<proto.ModelProto.KeyValue> append_ =
-        java.util.Collections.emptyList();
-      private void ensureAppendIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          append_ = new java.util.ArrayList<proto.ModelProto.KeyValue>(append_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.KeyValue, proto.ModelProto.KeyValue.Builder, proto.ModelProto.KeyValueOrBuilder> appendBuilder_;
-
+      private int landlord_ ;
       /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
+       * <code>int32 landlord = 3;</code>
        */
-      public java.util.List<proto.ModelProto.KeyValue> getAppendList() {
-        if (appendBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(append_);
-        } else {
-          return appendBuilder_.getMessageList();
-        }
+      public int getLandlord() {
+        return landlord_;
       }
       /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
+       * <code>int32 landlord = 3;</code>
        */
-      public int getAppendCount() {
-        if (appendBuilder_ == null) {
-          return append_.size();
-        } else {
-          return appendBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue getAppend(int index) {
-        if (appendBuilder_ == null) {
-          return append_.get(index);
-        } else {
-          return appendBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder setAppend(
-          int index, proto.ModelProto.KeyValue value) {
-        if (appendBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureAppendIsMutable();
-          append_.set(index, value);
-          onChanged();
-        } else {
-          appendBuilder_.setMessage(index, value);
-        }
+      public Builder setLandlord(int value) {
+        
+        landlord_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
+       * <code>int32 landlord = 3;</code>
        */
-      public Builder setAppend(
-          int index, proto.ModelProto.KeyValue.Builder builderForValue) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          appendBuilder_.setMessage(index, builderForValue.build());
-        }
+      public Builder clearLandlord() {
+        
+        landlord_ = 0;
+        onChanged();
         return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(proto.ModelProto.KeyValue value) {
-        if (appendBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureAppendIsMutable();
-          append_.add(value);
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(
-          int index, proto.ModelProto.KeyValue value) {
-        if (appendBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureAppendIsMutable();
-          append_.add(index, value);
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(
-          proto.ModelProto.KeyValue.Builder builderForValue) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.add(builderForValue.build());
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(
-          int index, proto.ModelProto.KeyValue.Builder builderForValue) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAllAppend(
-          java.lang.Iterable<? extends proto.ModelProto.KeyValue> values) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, append_);
-          onChanged();
-        } else {
-          appendBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder clearAppend() {
-        if (appendBuilder_ == null) {
-          append_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
-          onChanged();
-        } else {
-          appendBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder removeAppend(int index) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.remove(index);
-          onChanged();
-        } else {
-          appendBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue.Builder getAppendBuilder(
-          int index) {
-        return getAppendFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValueOrBuilder getAppendOrBuilder(
-          int index) {
-        if (appendBuilder_ == null) {
-          return append_.get(index);  } else {
-          return appendBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public java.util.List<? extends proto.ModelProto.KeyValueOrBuilder> 
-           getAppendOrBuilderList() {
-        if (appendBuilder_ != null) {
-          return appendBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(append_);
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue.Builder addAppendBuilder() {
-        return getAppendFieldBuilder().addBuilder(
-            proto.ModelProto.KeyValue.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue.Builder addAppendBuilder(
-          int index) {
-        return getAppendFieldBuilder().addBuilder(
-            index, proto.ModelProto.KeyValue.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public java.util.List<proto.ModelProto.KeyValue.Builder> 
-           getAppendBuilderList() {
-        return getAppendFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.KeyValue, proto.ModelProto.KeyValue.Builder, proto.ModelProto.KeyValueOrBuilder> 
-          getAppendFieldBuilder() {
-        if (appendBuilder_ == null) {
-          appendBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.ModelProto.KeyValue, proto.ModelProto.KeyValue.Builder, proto.ModelProto.KeyValueOrBuilder>(
-                  append_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
-                  getParentForChildren(),
-                  isClean());
-          append_ = null;
-        }
-        return appendBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2735,879 +2923,44 @@ public final class GameProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.ReqEnterTable)
+      // @@protoc_insertion_point(builder_scope:proto.TableInfo)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.ReqEnterTable)
-    private static final proto.GameProto.ReqEnterTable DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.TableInfo)
+    private static final proto.GameProto.TableInfo DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.GameProto.ReqEnterTable();
+      DEFAULT_INSTANCE = new proto.GameProto.TableInfo();
     }
 
-    public static proto.GameProto.ReqEnterTable getDefaultInstance() {
+    public static proto.GameProto.TableInfo getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ReqEnterTable>
-        PARSER = new com.google.protobuf.AbstractParser<ReqEnterTable>() {
-      public ReqEnterTable parsePartialFrom(
+    private static final com.google.protobuf.Parser<TableInfo>
+        PARSER = new com.google.protobuf.AbstractParser<TableInfo>() {
+      public TableInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqEnterTable(input, extensionRegistry);
+          return new TableInfo(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<ReqEnterTable> parser() {
+    public static com.google.protobuf.Parser<TableInfo> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ReqEnterTable> getParserForType() {
+    public com.google.protobuf.Parser<TableInfo> getParserForType() {
       return PARSER;
     }
 
-    public proto.GameProto.ReqEnterTable getDefaultInstanceForType() {
+    public proto.GameProto.TableInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface AckEnterTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckEnterTable)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    int getTableId();
-
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    java.util.List<proto.ModelProto.KeyValue> 
-        getAppendList();
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    proto.ModelProto.KeyValue getAppend(int index);
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    int getAppendCount();
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    java.util.List<? extends proto.ModelProto.KeyValueOrBuilder> 
-        getAppendOrBuilderList();
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    proto.ModelProto.KeyValueOrBuilder getAppendOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code proto.AckEnterTable}
-   */
-  public  static final class AckEnterTable extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckEnterTable)
-      AckEnterTableOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use AckEnterTable.newBuilder() to construct.
-    private AckEnterTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private AckEnterTable() {
-      tableId_ = 0;
-      append_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private AckEnterTable(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              tableId_ = input.readInt32();
-              break;
-            }
-            case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                append_ = new java.util.ArrayList<proto.ModelProto.KeyValue>();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              append_.add(
-                  input.readMessage(proto.ModelProto.KeyValue.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          append_ = java.util.Collections.unmodifiableList(append_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.GameProto.internal_static_proto_AckEnterTable_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.GameProto.internal_static_proto_AckEnterTable_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.GameProto.AckEnterTable.class, proto.GameProto.AckEnterTable.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int TABLEID_FIELD_NUMBER = 1;
-    private int tableId_;
-    /**
-     * <code>int32 tableId = 1;</code>
-     */
-    public int getTableId() {
-      return tableId_;
-    }
-
-    public static final int APPEND_FIELD_NUMBER = 2;
-    private java.util.List<proto.ModelProto.KeyValue> append_;
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public java.util.List<proto.ModelProto.KeyValue> getAppendList() {
-      return append_;
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public java.util.List<? extends proto.ModelProto.KeyValueOrBuilder> 
-        getAppendOrBuilderList() {
-      return append_;
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public int getAppendCount() {
-      return append_.size();
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public proto.ModelProto.KeyValue getAppend(int index) {
-      return append_.get(index);
-    }
-    /**
-     * <code>repeated .proto.KeyValue append = 2;</code>
-     */
-    public proto.ModelProto.KeyValueOrBuilder getAppendOrBuilder(
-        int index) {
-      return append_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (tableId_ != 0) {
-        output.writeInt32(1, tableId_);
-      }
-      for (int i = 0; i < append_.size(); i++) {
-        output.writeMessage(2, append_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (tableId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, tableId_);
-      }
-      for (int i = 0; i < append_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, append_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.GameProto.AckEnterTable)) {
-        return super.equals(obj);
-      }
-      proto.GameProto.AckEnterTable other = (proto.GameProto.AckEnterTable) obj;
-
-      boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
-      result = result && getAppendList()
-          .equals(other.getAppendList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId();
-      if (getAppendCount() > 0) {
-        hash = (37 * hash) + APPEND_FIELD_NUMBER;
-        hash = (53 * hash) + getAppendList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.GameProto.AckEnterTable parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.GameProto.AckEnterTable parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.GameProto.AckEnterTable parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.GameProto.AckEnterTable parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.GameProto.AckEnterTable prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.AckEnterTable}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckEnterTable)
-        proto.GameProto.AckEnterTableOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.GameProto.internal_static_proto_AckEnterTable_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.GameProto.internal_static_proto_AckEnterTable_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.GameProto.AckEnterTable.class, proto.GameProto.AckEnterTable.Builder.class);
-      }
-
-      // Construct using proto.GameProto.AckEnterTable.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getAppendFieldBuilder();
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        tableId_ = 0;
-
-        if (appendBuilder_ == null) {
-          append_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        } else {
-          appendBuilder_.clear();
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.GameProto.internal_static_proto_AckEnterTable_descriptor;
-      }
-
-      public proto.GameProto.AckEnterTable getDefaultInstanceForType() {
-        return proto.GameProto.AckEnterTable.getDefaultInstance();
-      }
-
-      public proto.GameProto.AckEnterTable build() {
-        proto.GameProto.AckEnterTable result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.GameProto.AckEnterTable buildPartial() {
-        proto.GameProto.AckEnterTable result = new proto.GameProto.AckEnterTable(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        result.tableId_ = tableId_;
-        if (appendBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            append_ = java.util.Collections.unmodifiableList(append_);
-            bitField0_ = (bitField0_ & ~0x00000002);
-          }
-          result.append_ = append_;
-        } else {
-          result.append_ = appendBuilder_.build();
-        }
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.GameProto.AckEnterTable) {
-          return mergeFrom((proto.GameProto.AckEnterTable)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.GameProto.AckEnterTable other) {
-        if (other == proto.GameProto.AckEnterTable.getDefaultInstance()) return this;
-        if (other.getTableId() != 0) {
-          setTableId(other.getTableId());
-        }
-        if (appendBuilder_ == null) {
-          if (!other.append_.isEmpty()) {
-            if (append_.isEmpty()) {
-              append_ = other.append_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-            } else {
-              ensureAppendIsMutable();
-              append_.addAll(other.append_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.append_.isEmpty()) {
-            if (appendBuilder_.isEmpty()) {
-              appendBuilder_.dispose();
-              appendBuilder_ = null;
-              append_ = other.append_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-              appendBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getAppendFieldBuilder() : null;
-            } else {
-              appendBuilder_.addAllMessages(other.append_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.GameProto.AckEnterTable parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.GameProto.AckEnterTable) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private int tableId_ ;
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public int getTableId() {
-        return tableId_;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder setTableId(int value) {
-        
-        tableId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 tableId = 1;</code>
-       */
-      public Builder clearTableId() {
-        
-        tableId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<proto.ModelProto.KeyValue> append_ =
-        java.util.Collections.emptyList();
-      private void ensureAppendIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          append_ = new java.util.ArrayList<proto.ModelProto.KeyValue>(append_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.KeyValue, proto.ModelProto.KeyValue.Builder, proto.ModelProto.KeyValueOrBuilder> appendBuilder_;
-
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public java.util.List<proto.ModelProto.KeyValue> getAppendList() {
-        if (appendBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(append_);
-        } else {
-          return appendBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public int getAppendCount() {
-        if (appendBuilder_ == null) {
-          return append_.size();
-        } else {
-          return appendBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue getAppend(int index) {
-        if (appendBuilder_ == null) {
-          return append_.get(index);
-        } else {
-          return appendBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder setAppend(
-          int index, proto.ModelProto.KeyValue value) {
-        if (appendBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureAppendIsMutable();
-          append_.set(index, value);
-          onChanged();
-        } else {
-          appendBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder setAppend(
-          int index, proto.ModelProto.KeyValue.Builder builderForValue) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          appendBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(proto.ModelProto.KeyValue value) {
-        if (appendBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureAppendIsMutable();
-          append_.add(value);
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(
-          int index, proto.ModelProto.KeyValue value) {
-        if (appendBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureAppendIsMutable();
-          append_.add(index, value);
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(
-          proto.ModelProto.KeyValue.Builder builderForValue) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.add(builderForValue.build());
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAppend(
-          int index, proto.ModelProto.KeyValue.Builder builderForValue) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          appendBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder addAllAppend(
-          java.lang.Iterable<? extends proto.ModelProto.KeyValue> values) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, append_);
-          onChanged();
-        } else {
-          appendBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder clearAppend() {
-        if (appendBuilder_ == null) {
-          append_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
-          onChanged();
-        } else {
-          appendBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public Builder removeAppend(int index) {
-        if (appendBuilder_ == null) {
-          ensureAppendIsMutable();
-          append_.remove(index);
-          onChanged();
-        } else {
-          appendBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue.Builder getAppendBuilder(
-          int index) {
-        return getAppendFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValueOrBuilder getAppendOrBuilder(
-          int index) {
-        if (appendBuilder_ == null) {
-          return append_.get(index);  } else {
-          return appendBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public java.util.List<? extends proto.ModelProto.KeyValueOrBuilder> 
-           getAppendOrBuilderList() {
-        if (appendBuilder_ != null) {
-          return appendBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(append_);
-        }
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue.Builder addAppendBuilder() {
-        return getAppendFieldBuilder().addBuilder(
-            proto.ModelProto.KeyValue.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public proto.ModelProto.KeyValue.Builder addAppendBuilder(
-          int index) {
-        return getAppendFieldBuilder().addBuilder(
-            index, proto.ModelProto.KeyValue.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.KeyValue append = 2;</code>
-       */
-      public java.util.List<proto.ModelProto.KeyValue.Builder> 
-           getAppendBuilderList() {
-        return getAppendFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.KeyValue, proto.ModelProto.KeyValue.Builder, proto.ModelProto.KeyValueOrBuilder> 
-          getAppendFieldBuilder() {
-        if (appendBuilder_ == null) {
-          appendBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.ModelProto.KeyValue, proto.ModelProto.KeyValue.Builder, proto.ModelProto.KeyValueOrBuilder>(
-                  append_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
-                  getParentForChildren(),
-                  isClean());
-          append_ = null;
-        }
-        return appendBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.AckEnterTable)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.AckEnterTable)
-    private static final proto.GameProto.AckEnterTable DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.GameProto.AckEnterTable();
-    }
-
-    public static proto.GameProto.AckEnterTable getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<AckEnterTable>
-        PARSER = new com.google.protobuf.AbstractParser<AckEnterTable>() {
-      public AckEnterTable parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckEnterTable(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AckEnterTable> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AckEnterTable> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.GameProto.AckEnterTable getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqCreateTable_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqCreateTable_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckCreateTable_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckCreateTable_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_Player_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_Player_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ReqEnterTable_descriptor;
   private static final 
@@ -3618,6 +2971,16 @@ public final class GameProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckEnterTable_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_Player_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_Player_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_TableInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_TableInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3627,15 +2990,15 @@ public final class GameProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\ngame.proto\022\005proto\032\013model.proto\"&\n\016ReqC" +
-      "reateTable\022\024\n\014configTypeId\030\001 \001(\005\"A\n\016AckC" +
-      "reateTable\022\017\n\007tableId\030\001 \001(\005\022\036\n\007players\030\002" +
-      " \003(\0132\r.proto.Player\">\n\006Player\022\n\n\002id\030\001 \001(" +
-      "\005\022\014\n\004head\030\002 \001(\014\022\014\n\004nick\030\003 \001(\014\022\014\n\004seat\030\004 " +
-      "\001(\005\"A\n\rReqEnterTable\022\017\n\007tableId\030\001 \001(\005\022\037\n" +
-      "\006append\030\002 \003(\0132\017.proto.KeyValue\"A\n\rAckEnt" +
-      "erTable\022\017\n\007tableId\030\001 \001(\005\022\037\n\006append\030\002 \003(\013" +
-      "2\017.proto.KeyValueB\013B\tGameProtob\006proto3"
+      "\n\ngame.proto\022\005proto\"<\n\rReqEnterTable\022\017\n\007" +
+      "tableId\030\001 \001(\014\022\014\n\004head\030\002 \001(\014\022\014\n\004nick\030\003 \001(" +
+      "\014\"T\n\rAckEnterTable\022\036\n\007players\030\001 \003(\0132\r.pr" +
+      "oto.Player\022#\n\ttableInfo\030\002 \001(\0132\020.proto.Ta" +
+      "bleInfo\"[\n\006Player\022\016\n\006roleId\030\001 \001(\005\022\020\n\010pos" +
+      "ition\030\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030" +
+      "\004 \001(\014\022\r\n\005cards\030\005 \003(\005\">\n\tTableInfo\022\016\n\006roo" +
+      "mId\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\014\022\020\n\010landlord\030\003" +
+      " \001(\005B\013B\tGameProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3648,39 +3011,31 @@ public final class GameProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          proto.ModelProto.getDescriptor(),
         }, assigner);
-    internal_static_proto_ReqCreateTable_descriptor =
+    internal_static_proto_ReqEnterTable_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_proto_ReqCreateTable_fieldAccessorTable = new
+    internal_static_proto_ReqEnterTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqCreateTable_descriptor,
-        new java.lang.String[] { "ConfigTypeId", });
-    internal_static_proto_AckCreateTable_descriptor =
+        internal_static_proto_ReqEnterTable_descriptor,
+        new java.lang.String[] { "TableId", "Head", "Nick", });
+    internal_static_proto_AckEnterTable_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_proto_AckCreateTable_fieldAccessorTable = new
+    internal_static_proto_AckEnterTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckCreateTable_descriptor,
-        new java.lang.String[] { "TableId", "Players", });
+        internal_static_proto_AckEnterTable_descriptor,
+        new java.lang.String[] { "Players", "TableInfo", });
     internal_static_proto_Player_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_Player_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_Player_descriptor,
-        new java.lang.String[] { "Id", "Head", "Nick", "Seat", });
-    internal_static_proto_ReqEnterTable_descriptor =
+        new java.lang.String[] { "RoleId", "Position", "Avatar", "NickName", "Cards", });
+    internal_static_proto_TableInfo_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_proto_ReqEnterTable_fieldAccessorTable = new
+    internal_static_proto_TableInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqEnterTable_descriptor,
-        new java.lang.String[] { "TableId", "Append", });
-    internal_static_proto_AckEnterTable_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_proto_AckEnterTable_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckEnterTable_descriptor,
-        new java.lang.String[] { "TableId", "Append", });
-    proto.ModelProto.getDescriptor();
+        internal_static_proto_TableInfo_descriptor,
+        new java.lang.String[] { "RoomId", "TableId", "Landlord", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -18,7 +18,7 @@ public class ReqRoomListHandle implements Handler {
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
 		RoomProto.AckGetRoomList.Builder ack = RoomProto.AckGetRoomList.newBuilder();
 		RoomManager.getInstance().getAllRoomTable(ack);
-		sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, 0, ack.build(), sequence);
+		sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, ack.build(), sequence);
 		return true;
 	}
 }

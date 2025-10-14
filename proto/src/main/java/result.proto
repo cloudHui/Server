@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_outer_classname = "ResultProto";
+
+package proto;
+
+enum Result{
+    SUCCESS = 0;
+    SERVER_NULL = 1;//服务空
+}

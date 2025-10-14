@@ -18,10 +18,4 @@ public class GMsg {
 
 	@ClassField(value = GameProto.AckEnterTable.class, des = "入桌回复")
 	public static final int ACK_ENTER_TABLE_MSG = CMsg.GAME_TYPE | 2;
-
-	@ClassField(value = GameProto.ReqCreateTable.class, des = "请求创建桌子")
-	public static final int REQ_CREATE_TABLE_MSG = CMsg.GAME_TYPE | 3;
-
-	@ClassField(value = GameProto.AckCreateTable.class, des = "创建桌子回复")
-	public static final int ACK_CREATE_TABLE_MSG = CMsg.GAME_TYPE | 4;
 }
