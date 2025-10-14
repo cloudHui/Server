@@ -13,12 +13,12 @@ message ReqHeart {
     int32 serverType = 1;
     int32 serverId = 2;
     int64 reqTime = 3;
-    int32 retryTime = 4;//重试次数
+//    int32 retryTime = 4;//重试次数
 }
 message AckHeart {
     int32 serverId = 1;
     int64 reqTime = 2;
-    int32 retryTime = 3;//重试次数
+//    int32 retryTime = 3;//重试次数
 }
 
 message ServerInfo{

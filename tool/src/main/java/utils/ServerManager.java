@@ -291,7 +291,7 @@ public class ServerManager {
 			ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
 			handler.getConnectServer().setServerId(serverInfo.getServerId());
 			addServerClient(handler);
-			logger.info("[注册成功 {}]", handler.getConnectServer());
+			logger.info("[注册成功:{} {} ]", ServerType.get(handler.getConnectServer().getServerType()), handler.getConnectServer());
 
 			// 开始发送心跳
 			workerGroup.schedule(() -> sendHeart(handler), HEARTBEAT_DELAY, TimeUnit.SECONDS);
