@@ -6,7 +6,7 @@ import net.message.TCPMaker;
 import proto.ModelProto;
 import room.Room;
 
-
+//只有gate过来
 public class RoomClient extends ClientHandler {
 
 	private ModelProto.ServerInfo serverInfo;

@@ -7,7 +7,7 @@ import msg.registor.enums.ServerType;
 import msg.registor.message.RMsg;
 import msg.registor.message.SMsg;
 import net.client.Sender;
-import net.client.handler.ClientHandler;
+import net.connect.handle.ConnectHandler;
 import net.handler.Handler;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
@@ -37,21 +37,28 @@ public class ReqJoinTableHandle implements Handler {
 			return true;
 		}
 
-		ClientHandler game = Room.getInstance().getServerClientManager().getServerClient(ServerType.Game);
+		ConnectHandler game = Room.getInstance().getServerManager().getServerClient(ServerType.Game);
 
 		if (game == null) {
 			sender.sendMessage(TCPMessage.newInstance(ResultProto.Result.SERVER_NULL_VALUE));
 		} else {
 			//向发送创建房间消息
-			game.sendMessage(SMsg.REQ_CREATE_TABLE_MSG, ServerProto.ReqCreateGameTable.newBuilder()
+			game.sendMessage(ServerProto.ReqCreateGameTable.newBuilder()
 					.setRoomId(roomId)
 					.setRoomRole(ServerProto.RoomTableRole.newBuilder()
 							//Todo 加玩家信息
 							//.set
 							.build())
-					.build());
-			//Todo 等game返回再返回给gate gate返给客户端
-			sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, req, sequence);
+					.build(), SMsg.REQ_CREATE_TABLE_MSG, 3)
+					.whenComplete((ack, throwable) -> {
+						if (throwable != null) {
+							LOGGER.error("[向game 发送创建房间失败] {}", throwable.getMessage());
+						} else {
+							sender.sendMessage(clientId, RMsg.ACK_JOIN_ROOM_TABLE_MSG, mapId, RoomProto.AckJoinRoomTable.newBuilder()
+									//Todo 添加房间信息 ack
+									.build(), sequence);
+						}
+					});
 		}
 		return true;
 	}

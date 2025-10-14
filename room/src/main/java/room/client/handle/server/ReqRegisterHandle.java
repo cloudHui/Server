@@ -12,6 +12,7 @@ import room.client.RoomClient;
 
 /**
  * 注册服务信息请求
+ * 只有gate主动连
  */
 @ProcessType(CMsg.REQ_REGISTER)
 public class ReqRegisterHandle implements Handler {
