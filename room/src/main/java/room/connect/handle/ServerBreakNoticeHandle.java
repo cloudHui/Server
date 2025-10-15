@@ -1,4 +1,4 @@
-package room.connect.handle.center;
+package room.connect.handle;
 
 import java.util.List;
 
