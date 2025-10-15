@@ -5,26 +5,53 @@ import msg.annotation.ProcessType;
 import msg.registor.message.SMsg;
 import net.client.Sender;
 import net.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ServerProto;
 import room.manager.User;
 import room.manager.UserManager;
 
 /**
- * 大厅请求房间服务获取玩家已经加入的房间列表
+ * 处理大厅服务器请求获取玩家已加入的房间列表
  */
 @ProcessType(SMsg.REQ_GET_TABLE_MSG)
 public class ReqGetRoomListHandle implements Handler {
+	private static final Logger logger = LoggerFactory.getLogger(ReqGetRoomListHandle.class);
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
-		ServerProto.ReqRoomTable reqRoomTable = (ServerProto.ReqRoomTable) msg;
-		ServerProto.AckRoomTable.Builder ack = ServerProto.AckRoomTable.newBuilder();
-		ack.setRoleId(reqRoomTable.getRoleId());
-		User user = UserManager.getInstance().getUser(reqRoomTable.getRoleId());
-		if (user != null) {
-			ack.addAllTables(user.getAllTables());
+		try {
+			ServerProto.ReqRoomTable request = (ServerProto.ReqRoomTable) msg;
+			int roleId = request.getRoleId();
+
+			logger.debug("处理获取房间列表请求, roleId: {}, clientId: {}", roleId, clientId);
+
+			ServerProto.AckRoomTable response = buildRoomTableResponse(roleId);
+			sender.sendMessage(clientId, SMsg.ACK_GET_TABLE_MSG, mapId, response, sequence);
+
+			logger.info("返回玩家房间列表, roleId: {}, 房间数量: {}", roleId, response.getTablesCount());
+			return true;
+		} catch (Exception e) {
+			logger.error("处理获取房间列表请求失败, clientId: {}", clientId, e);
+			return false;
 		}
-		sender.sendMessage(clientId, SMsg.ACK_GET_TABLE_MSG, mapId, ack.build(), sequence);
-		return true;
+	}
+
+	/**
+	 * 构建房间表响应
+	 */
+	private ServerProto.AckRoomTable buildRoomTableResponse(int roleId) {
+		ServerProto.AckRoomTable.Builder response = ServerProto.AckRoomTable.newBuilder();
+		response.setRoleId(roleId);
+
+		User user = UserManager.getInstance().getUser(roleId);
+		if (user != null) {
+			response.addAllTables(user.getAllTables());
+			logger.debug("找到用户房间信息, roleId: {}, 房间数: {}", roleId, user.getAllTables().size());
+		} else {
+			logger.warn("用户不存在，返回空房间列表, roleId: {}", roleId);
+		}
+
+		return response.build();
 	}
 }
