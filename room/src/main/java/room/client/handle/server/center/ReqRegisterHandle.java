@@ -1,4 +1,4 @@
-package room.client.handle.server;
+package room.client.handle.server.center;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessType;

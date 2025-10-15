@@ -31,6 +31,30 @@ public final class ResultProto {
      * <code>SERVER_NULL = 1;</code>
      */
     SERVER_NULL(1),
+    /**
+     * <pre>
+     *回复超时
+     * </pre>
+     *
+     * <code>TIME_OUT = 2;</code>
+     */
+    TIME_OUT(2),
+    /**
+     * <pre>
+     *服务错误
+     * </pre>
+     *
+     * <code>SERVER_ERROR = 3;</code>
+     */
+    SERVER_ERROR(3),
+    /**
+     * <pre>
+     *桌子配置错误
+     * </pre>
+     *
+     * <code>TABLE_CONFIG_ERROR = 5;</code>
+     */
+    TABLE_CONFIG_ERROR(5),
     UNRECOGNIZED(-1),
     ;
 
@@ -46,6 +70,30 @@ public final class ResultProto {
      * <code>SERVER_NULL = 1;</code>
      */
     public static final int SERVER_NULL_VALUE = 1;
+    /**
+     * <pre>
+     *回复超时
+     * </pre>
+     *
+     * <code>TIME_OUT = 2;</code>
+     */
+    public static final int TIME_OUT_VALUE = 2;
+    /**
+     * <pre>
+     *服务错误
+     * </pre>
+     *
+     * <code>SERVER_ERROR = 3;</code>
+     */
+    public static final int SERVER_ERROR_VALUE = 3;
+    /**
+     * <pre>
+     *桌子配置错误
+     * </pre>
+     *
+     * <code>TABLE_CONFIG_ERROR = 5;</code>
+     */
+    public static final int TABLE_CONFIG_ERROR_VALUE = 5;
 
 
     public final int getNumber() {
@@ -68,6 +116,9 @@ public final class ResultProto {
       switch (value) {
         case 0: return SUCCESS;
         case 1: return SERVER_NULL;
+        case 2: return TIME_OUT;
+        case 3: return SERVER_ERROR;
+        case 5: return TABLE_CONFIG_ERROR;
         default: return null;
       }
     }
@@ -129,9 +180,10 @@ public final class ResultProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014result.proto\022\005proto*&\n\006Result\022\013\n\007SUCCE" +
-      "SS\020\000\022\017\n\013SERVER_NULL\020\001B\rB\013ResultProtob\006pr" +
-      "oto3"
+      "\n\014result.proto\022\005proto*^\n\006Result\022\013\n\007SUCCE" +
+      "SS\020\000\022\017\n\013SERVER_NULL\020\001\022\014\n\010TIME_OUT\020\002\022\020\n\014S" +
+      "ERVER_ERROR\020\003\022\026\n\022TABLE_CONFIG_ERROR\020\005B\rB" +
+      "\013ResultProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -6,4 +6,7 @@ package proto;
 enum Result{
     SUCCESS = 0;
     SERVER_NULL = 1;//服务空
+    TIME_OUT = 2;//回复超时
+    SERVER_ERROR = 3;//服务错误
+    TABLE_CONFIG_ERROR = 5;//桌子配置错误
 }

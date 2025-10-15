@@ -39,7 +39,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 	private boolean sendLoginGetRoomBackRetry(int roleId, List<ServerProto.RoomTableInfo> rooms, int sequence) {
 		ConnectHandler client = Hall.getInstance().getServerManager().getServerClient(ServerType.Gate);
 		if (client == null) {
-			return true;
+			return false;
 		}
 
 		User user = UserManager.getInstance().getUser(roleId);
@@ -53,6 +53,6 @@ public class AckRoomTableHandler implements ConnectHandle {
 						.setNickName(ByteString.copyFromUtf8(user.getNick()))
 						.addAllTables(rooms)
 						.build(), sequence);
-		return false;
+		return true;
 	}
 }

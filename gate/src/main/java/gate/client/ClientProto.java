@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
 import proto.ModelProto;
+import proto.ResultProto;
 import utils.ServerManager;
 
 public class ClientProto {
@@ -58,6 +59,7 @@ public class ClientProto {
 			connect.sendTcpMessage(tcpMessage, 3).whenComplete((message, throwable) -> {
 				if (null != throwable) {
 					LOGGER.error("[ERROR! failed for send {} to:{}]", Integer.toHexString(msgId), connect.getConnectServer(), throwable);
+					client.sendMessage(TCPMessage.newInstance(ResultProto.Result.TIME_OUT_VALUE));
 				} else {
 					try {
 						message.setSequence(sequence);

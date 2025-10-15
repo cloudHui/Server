@@ -23,5 +23,5 @@ public class SMsg {
 	public static final int REQ_GET_TABLE_MSG = CMsg.SERVER_TYPE | 3;
 
 	@ClassField(value = ServerProto.AckRoomTable.class, des = "获取桌子列表回复")
-	public static final int ACK_GET__TABLE_MSG = CMsg.SERVER_TYPE | 4;
+	public static final int ACK_GET_TABLE_MSG = CMsg.SERVER_TYPE | 4;
 }
