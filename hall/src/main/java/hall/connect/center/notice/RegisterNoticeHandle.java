@@ -1,4 +1,4 @@
-package hall.connect.server;
+package hall.connect.center.notice;
 
 import com.google.protobuf.Message;
 import hall.Hall;
@@ -13,15 +13,14 @@ import proto.ModelProto;
 /**
  * 注册信息通知
  */
-@ProcessType(CMsg.ACK_SERVER)
-public class AckServerInfoHandle implements Handler {
+@ProcessType(CMsg.REGISTER_NOTICE)
+public class RegisterNoticeHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message msg, int mapId, long sequence) {
 		Hall.getInstance().execute(() -> Hall.getInstance().getServerManager().connectToSever(
-				((ModelProto.AckServerInfo) msg).getServersList(),
-				Hall.getInstance().getServerId(),
-				Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
+				((ModelProto.NotRegisterInfo) msg).getServersList(),
+				Hall.getInstance().getServerId(), Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Hall));
 		return true;

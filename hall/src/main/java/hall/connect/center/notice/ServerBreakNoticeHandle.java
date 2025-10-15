@@ -1,4 +1,4 @@
-package hall.connect.server;
+package hall.connect.center.notice;
 
 import java.util.List;
 

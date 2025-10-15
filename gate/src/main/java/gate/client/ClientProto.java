@@ -44,15 +44,15 @@ public class ClientProto {
 	/**
 	 * 消息转发到服务器
 	 */
-	private static boolean transferMessage(GateTcpClient gateClient, TCPMessage tcpMessage) {
-		if (tcpMessage.getMessageId() < CMsg.BASE_ID_INDEX) {
+	private static boolean transferMessage(GateTcpClient client, TCPMessage tcpMessage) {
+		int msgId = tcpMessage.getMessageId();
+		if (msgId < CMsg.BASE_ID_INDEX) {
 			return false;
 		}
-		int msgId = tcpMessage.getMessageId();
 		long sequence = tcpMessage.getSequence();
-		tcpMessage.setMapId(gateClient.getId());
-		tcpMessage.setClientId(gateClient.getId());
-		ConnectHandler connect = getTransServerClient(msgId, gateClient);
+		tcpMessage.setMapId(client.getId());
+		setClientId(tcpMessage, client);
+		ConnectHandler connect = getTransServerClient(msgId);
 		if (connect != null) {
 			long start = System.currentTimeMillis();
 			connect.sendTcpMessage(tcpMessage, 3).whenComplete((message, throwable) -> {
@@ -61,7 +61,7 @@ public class ClientProto {
 				} else {
 					try {
 						message.setSequence(sequence);
-						transResToClient(message, start, gateClient);
+						transResToClient(message, start, client);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -74,90 +74,48 @@ public class ClientProto {
 	}
 
 	/**
+	 * 设置链接id 如果是登录使用链接id 否则是玩家id
+	 */
+	private static void setClientId(TCPMessage tcpMessage, GateTcpClient client) {
+		tcpMessage.setClientId((tcpMessage.getMessageId() & HMsg.REQ_LOGIN_MSG) != 0 ? client.getId() : client.getRoleId());
+	}
+
+	/**
 	 * 服务器返回消息到客户端
 	 */
-	private static void transResToClient(TCPMessage tcpMessage, long start, GateTcpClient gateClient) {
+	private static void transResToClient(TCPMessage tcpMessage, long start, GateTcpClient client) {
 		int msgId = tcpMessage.getMessageId();
-		int clientId = tcpMessage.getClientId();
 		if (msgId > CMsg.BASE_ID_INDEX && (msgId & 2) != 0) {
 			if (msgId == HMsg.ACK_LOGIN_MSG) {
 				try {
 					HallProto.AckLogin ack = HallProto.AckLogin.parseFrom(tcpMessage.getMessage());
-					gateClient.setRoleId(ack.getUserId());
-					gateClient.setClubId(ack.getClub());
-					gateClient.setChannel(ack.getChannel());
-					notCenterLink(ClientHandler.getRemoteIP(gateClient).getHostString());
+					client.setRoleId(ack.getUserId());
+					client.setClubId(ack.getClub());
+					client.setChannel(ack.getChannel());
+					notCenterLink(ClientHandler.getRemoteIP(client).getHostString());
 				} catch (Exception e) {
-					LOGGER.error("AckLogin parse error msgId:{} userId:{}", Integer.toHexString(msgId), gateClient.getRoleId());
+					LOGGER.error("AckLogin parse error msgId:{} userId:{}", Integer.toHexString(msgId), client.getRoleId());
 				}
 			}
 			//直接转发给客户端的
-			gateClient.sendMessage(tcpMessage);
-			LOGGER.error("transResToClient success msgId:{} userId:{} cost:{}ms", Integer.toHexString(msgId), gateClient.getRoleId(),
+			client.sendMessage(tcpMessage);
+			LOGGER.error("transResToClient success msgId:{} userId:{} cost:{}ms", Integer.toHexString(msgId), client.getRoleId(),
 					System.currentTimeMillis() - start);
 			return;
 		}
-		LOGGER.error("[transResToClient! failed clientId:{} msgId:{}]", clientId, Integer.toHexString(msgId));
+		LOGGER.error("[transResToClient! failed clientId:{} msgId:{}]", client.getId(), Integer.toHexString(msgId));
 	}
 
 	/**
 	 * 获取转发服务的链接
 	 */
-	private static ConnectHandler getTransServerClient(int msgId, GateTcpClient gateClient) {
+	private static ConnectHandler getTransServerClient(int msgId) {
 		ServerType serverType = getServerTypeByMessageId(msgId);
 		if (serverType == null) {
 			LOGGER.error("[getTransServerClient error no serverType msgId:{}]", Integer.toHexString(msgId));
 			return null;
 		}
-		ServerManager manager = Gate.getInstance().getServerManager();
-		return getConnectHandler(getClientId(serverType, gateClient), serverType, manager, gateClient);
-	}
-
-	/**
-	 * 获取服务id
-	 */
-	private static int getClientId(ServerType serverType, GateTcpClient gateClient) {
-		int clientId = 0;
-		switch (serverType) {
-			case Game:
-				clientId = gateClient.getGameId();
-				break;
-			case Hall:
-				clientId = gateClient.getHallId();
-				break;
-			case Room:
-				clientId = gateClient.getRoomId();
-				break;
-		}
-		return clientId;
-	}
-
-	/**
-	 * 获取服务器链接
-	 */
-	private static ConnectHandler getConnectHandler(int clientId, ServerType serverType, ServerManager manager, GateTcpClient gateClient) {
-		if (clientId != 0) {
-			return manager.getServerClient(serverType, clientId);
-		} else {
-			ConnectHandler connectHandler = manager.getServerClient(serverType);
-			try {
-				switch (serverType) {
-					case Game:
-						gateClient.setGameId(connectHandler.getConnectServer().getServerId());
-						break;
-					case Hall:
-						gateClient.setHallId(connectHandler.getConnectServer().getServerId());
-						break;
-					case Room:
-						gateClient.setRoomId(connectHandler.getConnectServer().getServerId());
-						break;
-				}
-				return connectHandler;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
+		return Gate.getInstance().getServerManager().getServerClient(serverType);
 	}
 
 	/**
@@ -177,7 +135,7 @@ public class ClientProto {
 	/**
 	 * 通知服务器玩家离线
 	 */
-	protected static void notServerBreak(int userId, int gameId, int hallId, int roomId, ChannelHandler handler) {
+	protected static void notServerBreak(int userId, ChannelHandler handler) {
 		ModelProto.NotBreak.Builder not = ModelProto.NotBreak.newBuilder();
 		not.setUserId(userId);
 		ServerManager serverManager = Gate.getInstance().getServerManager();
@@ -185,9 +143,9 @@ public class ClientProto {
 			return;
 		}
 
-		sendNotBreak(ServerType.Game, gameId, not.build());
-		sendNotBreak(ServerType.Hall, hallId, not.build());
-		sendNotBreak(ServerType.Room, roomId, not.build());
+		sendNotBreak(ServerType.Game, not.build());
+		sendNotBreak(ServerType.Hall, not.build());
+		sendNotBreak(ServerType.Room, not.build());
 		ConnectHandler serverClient = Gate.getInstance().getServerManager().getServerClient(ServerType.Center);
 		if (serverClient != null) {
 			if (handler instanceof ClientHandler) {
@@ -202,12 +160,12 @@ public class ClientProto {
 	/**
 	 * 通知服务器玩家掉线掉线
 	 */
-	private static void sendNotBreak(ServerType serverType, int clientId, ModelProto.NotBreak not) {
+	private static void sendNotBreak(ServerType serverType, ModelProto.NotBreak not) {
 		ServerManager serverManager = Gate.getInstance().getServerManager();
 		if (serverManager == null) {
 			return;
 		}
-		ConnectHandler serverClient = serverManager.getServerClient(serverType, clientId);
+		ConnectHandler serverClient = serverManager.getServerClient(serverType);
 		if (serverClient != null) {
 			serverClient.sendMessage(CMsg.NOT_BREAK, not);
 		}

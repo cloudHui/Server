@@ -8,23 +8,23 @@ import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
 import msg.registor.message.HMsg;
-import msg.registor.message.RMsg;
 import net.connect.TCPConnect;
 import net.connect.handle.ConnectHandler;
 import proto.HallProto;
 import proto.ModelProto;
 import robot.Robot;
 import robot.connect.ConnectProcessor;
-import robot.connect.handle.RobotHandle;
+import utils.manager.ConnectHandle;
+import utils.manager.HandleManager;
 
 /**
  * gate信息回复
  */
 @ProcessClass(ModelProto.AckServerInfo.class)
-public class AckServerInfoHandle implements RobotHandle {
+public class AckServerInfoHandle implements ConnectHandle {
 
 	@Override
-	public void handle(Message message, ConnectHandler serverClient) {
+	public void handle(Message message, ConnectHandler serverClient, int sequence) {
 		if (message instanceof ModelProto.AckServerInfo) {
 			ModelProto.AckServerInfo ack = (ModelProto.AckServerInfo) message;
 			if (ack.getServersCount() > 0) {
@@ -39,13 +39,13 @@ public class AckServerInfoHandle implements RobotHandle {
 						ConnectProcessor.HANDLERS, ServerType.Robot, new TCPConnect.CallParam(HMsg.REQ_LOGIN_MSG, HallProto.ReqLogin.newBuilder()
 								.setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString()))
 								.setCert(ByteString.copyFromUtf8(Robot.getInstance().getInnerIp()))
-								.build(), Robot.getInstance()::getClientSendMessage)));
+								.build(), HandleManager::sendMsg, ConnectProcessor.PARSER)));
 			} else {
 				//加入五秒重试机制
 				Robot.getInstance().registerTimer(5000, 1000, 1, robot -> {
-					robot.getClientSendMessage(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
+					HandleManager.sendMsg(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
 							.addServerType(ServerType.Gate.getServerType())
-							.build(), serverClient);
+							.build(), serverClient, ConnectProcessor.PARSER);
 					return true;
 				}, Robot.getInstance());
 			}

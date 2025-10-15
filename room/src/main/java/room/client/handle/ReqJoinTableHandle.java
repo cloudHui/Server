@@ -45,7 +45,7 @@ public class ReqJoinTableHandle implements Handler {
 			//向发送创建房间消息
 			game.sendMessage(ServerProto.ReqCreateGameTable.newBuilder()
 					.setRoomId(roomId)
-					.setRoomRole(ServerProto.RoomTableRole.newBuilder()
+					.setRoomRole(ServerProto.RoomRole.newBuilder()
 							//Todo 加玩家信息
 							//.set
 							.build())

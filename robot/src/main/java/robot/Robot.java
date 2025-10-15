@@ -1,23 +1,21 @@
 package robot;
 
-import com.google.protobuf.Message;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
 import net.connect.TCPConnect;
-import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import robot.connect.ConnectProcessor;
-import robot.connect.handle.RobotHandleManager;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
+import utils.manager.HandleManager;
 import utils.other.IpUtil;
 
-public class Robot{
+public class Robot {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Robot.class);
 
 	private final static Robot instance = new Robot();
@@ -90,7 +88,6 @@ public class Robot{
 	}
 
 	private void start() {
-		RobotHandleManager.init();
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 		serverManager = new ServerManager(timer, cfgMgr.getInt("plant", 0) != 0);
 		setPort(cfgMgr.getInt("port", 0));
@@ -112,24 +109,12 @@ public class Robot{
 	 */
 	private void registerToCenter() {
 		ConnectProcessor.init();
+		HandleManager.init(ConnectProcessor.class);
 		serverManager.registerSever(center.split(":"), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(),
 				getInnerIp() + ":" + getPort(),
 				ServerType.Robot, new TCPConnect.CallParam(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
 						.addServerType(ServerType.Gate.getServerType())
-						.build(), this::getClientSendMessage));
-	}
-
-	/**
-	 * 发送消息
-	 */
-	public void getClientSendMessage(int msgId, Message message, ConnectHandler serverClient) {
-		try {
-			if (serverClient != null) {
-				RobotHandleManager.sendMsg(serverClient, message, msgId);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+						.build(), HandleManager::sendMsg, ConnectProcessor.PARSER));
 	}
 }

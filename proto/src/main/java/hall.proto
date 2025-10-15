@@ -3,6 +3,8 @@ option java_outer_classname = "HallProto";
 
 package proto;
 
+import "server.proto";
+
 //请求登录
 message ReqLogin {
     bytes cert = 1; //证书
@@ -17,6 +19,7 @@ message AckLogin {
     bytes nickName = 3;//昵称
     int32 channel = 4;//渠道号
     int32 club = 5;//工会
+    repeated RoomTableInfo tables = 6;//加入的房间(重连回去的)
 }
 
 message ReqJoinClub{

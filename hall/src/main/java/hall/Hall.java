@@ -16,10 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
+import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
+import utils.manager.HandleManager;
+import utils.other.IpUtil;
 
 public class Hall {
 	private final static Logger LOGGER = LoggerFactory.getLogger(Hall.class);
@@ -31,6 +34,8 @@ public class Hall {
 	public ServerClientManager serverClientManager = new ServerClientManager();
 	private int serverId;
 	private String center;
+	private String innerIp;
+	private int port;
 	/**
 	 * 本服务信息
 	 */
@@ -66,6 +71,22 @@ public class Hall {
 		this.center = center;
 	}
 
+	public String getInnerIp() {
+		return innerIp;
+	}
+
+	public void setInnerIp(String innerIp) {
+		this.innerIp = innerIp;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
 	public ServerManager getServerManager() {
 		return serverManager;
 	}
@@ -78,13 +99,18 @@ public class Hall {
 		executorPool.execute(r);
 	}
 
+	public <T> void registerTimer(long delay, long interval, int count, Runner<T> runner, T param) {
+		timer.register(delay, interval, count, runner, param);
+	}
+
 	private void start() {
 
 		ConfigurationManager cfgMgr = ConfigurationManager.getInstance();
 
 		serverInfo = ServerManager.buildServerInfo(cfgMgr, ServerType.Hall);
 		setServerId(cfgMgr.getInt("id", 0));
-
+		setInnerIp(IpUtil.getLocalIP());
+		setPort(cfgMgr.getInt("port", 0));
 		setCenter(cfgMgr.getProperty("center"));
 		List<SocketAddress> addresses = new ArrayList<>();
 		String[] split = serverInfo.getIpConfig().toStringUtf8().split(":");
@@ -103,10 +129,11 @@ public class Hall {
 	private void registerToCenter() {
 		ClientProto.init();
 		ConnectProcessor.init();
+		HandleManager.init(ConnectProcessor.class);
 		serverManager.registerSever(center.split(":"), ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Center, getServerId(), serverInfo.getIpConfig().toStringUtf8(),
 				ServerType.Hall, new TCPConnect.CallParam(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
 						.addServerType(ServerType.Room.getServerType())
-						.build()));
+						.build(), HandleManager::sendMsg, ConnectProcessor.PARSER));
 	}
 }

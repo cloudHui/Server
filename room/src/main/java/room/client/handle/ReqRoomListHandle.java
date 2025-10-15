@@ -7,6 +7,8 @@ import net.client.Sender;
 import net.handler.Handler;
 import proto.RoomProto;
 import room.manager.RoomManager;
+import room.manager.User;
+import room.manager.UserManager;
 
 /**
  * 请求房间列表
@@ -19,6 +21,7 @@ public class ReqRoomListHandle implements Handler {
 		RoomProto.AckGetRoomList.Builder ack = RoomProto.AckGetRoomList.newBuilder();
 		RoomManager.getInstance().getAllRoomTable(ack);
 		sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, ack.build(), sequence);
+		UserManager.getInstance().addUser(new User(clientId));
 		return true;
 	}
 }

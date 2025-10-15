@@ -1,4 +1,4 @@
-package hall.manager;
+package room.manager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,12 +11,9 @@ public class UserManager {
 
 	private static final UserManager userManager = new UserManager();
 	private static final int MAX_SIZE = 4096;
-	private final Map<String, User> users;
 	private final Map<Integer, User> userIds;
 
-	//private final UserService service = new UserService();
 	public UserManager() {
-		users = new ConcurrentHashMap<>(MAX_SIZE);
 		userIds = new ConcurrentHashMap<>(MAX_SIZE);
 	}
 
@@ -24,21 +21,16 @@ public class UserManager {
 		return userManager;
 	}
 
-	public User getUser(String cert) {
-		return users.get(cert);
+	public User getUser(int id) {
+		return userIds.get(id);
 	}
 
-	public User getUser(int cert) {
-		return userIds.get(cert);
-	}
-
-	public void removeUser(String userId) {
-		User remove = users.remove(userId);
-		userIds.remove(remove.getUserId());
+	public void removeUser(int userId) {
+		User remove = userIds.remove(userId);
+		remove.destroy();
 	}
 
 	public void addUser(User user) {
-		users.put(user.getCert(), user);
 		userIds.put(user.getUserId(), user);
 	}
 }

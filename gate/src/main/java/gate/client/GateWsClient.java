@@ -15,7 +15,7 @@ public class GateWsClient extends WsClientHandler {
 	public GateWsClient() {
 		super(null, null, ClientProto.TRANSFER, TCPMaker.INSTANCE);
 
-		setCloseEvent(client -> ClientProto.notServerBreak(userId, gameId, hallId, roomId, client));
+		setCloseEvent(client -> ClientProto.notServerBreak(userId, client));
 
 		setSafe((msgId) -> msgId == HMsg.REQ_LOGIN_MSG || userId != 0);
 	}

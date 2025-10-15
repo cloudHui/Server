@@ -232,8 +232,7 @@ public class ServerManager {
 		ServerType connectServer = ServerType.get(serverInfo.getServerType());
 
 		if (connectServer != null) {
-			registerSever(ipConfig, transfer, parser, handlers, connectServer,
-					localServerId, localIpPort, localServer, callParam);
+			registerSever(ipConfig, transfer, parser, handlers, connectServer, localServerId, localIpPort, localServer, callParam);
 		} else {
 			logger.warn("未知的服务类型: {}", serverInfo.getServerType());
 		}
@@ -308,7 +307,7 @@ public class ServerManager {
 		if (callback != null) {
 			try {
 				if (callback.callback != null) {
-					callback.callback.handle(callback.messageId, callback.message, handler);
+					callback.callback.handle(callback.messageId, callback.message, handler, callback.parser);
 				} else {
 					handler.sendMessage(callback.messageId, callback.message);
 				}
