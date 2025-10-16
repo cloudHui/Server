@@ -16,9 +16,10 @@ import proto.ResultProto;
 import proto.RoomProto;
 import proto.ServerProto;
 import room.Room;
-import room.manager.RoomManager;
-import room.manager.User;
-import room.manager.UserManager;
+import room.manager.table.TableInfo;
+import room.manager.table.TableManager;
+import room.manager.user.User;
+import room.manager.user.UserManager;
 
 /**
  * 处理玩家请求进入桌子的处理器
@@ -46,28 +47,44 @@ public class ReqJoinTableHandle implements Handler {
 		RoomProto.ReqJoinRoomTable request = (RoomProto.ReqJoinRoomTable) msg;
 		int roomId = request.getRoomId();
 
-		TableModel tableModel = RoomManager.getInstance().getTableModel(roomId);
+		TableModel tableModel = TableManager.getInstance().getTableModel(roomId);
 		if (tableModel == null) {
 			logger.error("房间配置不存在, roomId: {}, 错误码: {}", roomId, ResultProto.Result.TABLE_CONFIG_ERROR_VALUE);
 			sender.sendMessage(TCPMessage.newInstance(ResultProto.Result.TABLE_CONFIG_ERROR_VALUE));
 			return true;
 		}
 
-		// 3. 获取游戏服务器连接
-		ConnectHandler gameServer = Room.getInstance().getServerManager().getServerClient(ServerType.Game);
-		if (gameServer == null) {
-			logger.error("游戏服务器不可用, 错误码: {}", ResultProto.Result.SERVER_NULL_VALUE);
-			sender.sendMessage(TCPMessage.newInstance(ResultProto.Result.SERVER_NULL_VALUE));
-			return true;
-		}
+		boolean join = joinTable(tableModel, user);
+		if (!join) {
+			// 3. 获取游戏服务器连接
+			ConnectHandler gameServer = Room.getInstance().getServerManager().getServerClient(ServerType.Game);
+			if (gameServer == null) {
+				logger.error("游戏服务器不可用, 错误码: {}", ResultProto.Result.SERVER_NULL_VALUE);
+				sender.sendMessage(TCPMessage.newInstance(ResultProto.Result.SERVER_NULL_VALUE));
+				return true;
+			}
 
-		// 4. 执行加入桌子逻辑
-		joinTable(gameServer, roomId, clientId, sender, mapId, sequence);
+			// 4. 执行创建桌子逻辑
+			createTable(gameServer, roomId, clientId, sender, mapId, sequence);
+		}
+		return true;
+	}
+
+
+	/**
+	 * 加入桌子
+	 */
+	private boolean joinTable(TableModel tableModel, User user) {
+		TableInfo canJoinTable = TableManager.getInstance().getCanJoinTable(tableModel.getId());
+		if (canJoinTable == null) {
+			return false;
+		}
+		canJoinTable.joinRole(user);
 		return true;
 	}
 
 	/**
-	 * 执行实际的加入桌子操作
+	 * 执行实际的创建桌子操作
 	 * 向游戏服务器发送创建桌子的请求，并处理响应
 	 *
 	 * @param gameServer 游戏服务器连接处理器
@@ -77,7 +94,7 @@ public class ReqJoinTableHandle implements Handler {
 	 * @param mapId      地图ID
 	 * @param sequence   序列号
 	 */
-	private void joinTable(ConnectHandler gameServer, int roomId, int clientId, Sender sender, int mapId, long sequence) {
+	private void createTable(ConnectHandler gameServer, int roomId, int clientId, Sender sender, int mapId, long sequence) {
 		// 向游戏服务器发送请求并处理响应
 		gameServer.sendMessage(buildCreateTableRequest(roomId, clientId), SMsg.REQ_CREATE_TABLE_MSG, GAME_SERVER_TIMEOUT)
 				.whenComplete((response, error) -> handleCreateTableResponse(response, error, sender, clientId, mapId, sequence));

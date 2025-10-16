@@ -15,7 +15,7 @@ import proto.ModelProto;
 import room.client.ClientProto;
 import room.client.RoomClient;
 import room.connect.ConnectProcessor;
-import room.manager.RoomManager;
+import room.manager.table.TableManager;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Timer;
 import utils.ServerClientManager;
@@ -196,7 +196,7 @@ public class Room {
 	 * 初始化房间管理器
 	 */
 	private void initializeRoomManager() {
-		RoomManager.getInstance().init();
+		TableManager.getInstance().init();
 		logger.info("房间管理器初始化完成");
 	}
 }

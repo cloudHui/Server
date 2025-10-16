@@ -30,12 +30,11 @@ public class AckRoomTableHandler implements ConnectHandle {
 				ServerProto.AckRoomTable roomTable = (ServerProto.AckRoomTable) message;
 				int roleId = roomTable.getRoleId();
 				List<ServerProto.RoomTableInfo> rooms = roomTable.getTablesList();
-
-				logger.info("收到用户房间列表, userId: {}, 房间数量: {}", roleId, rooms.size());
+				logger.debug("收到用户房间列表, userId: {}, 房间数量: {}", roleId, rooms.size());
 
 				//发送登录响应
 				sendLoginResponseWithRetry(roleId, rooms, sequence, serverClient);
-				logger.debug("已调度登录响应发送, userId: {}", roleId);
+				logger.debug("登录响应发送, userId: {}", roleId);
 			}
 		} catch (Exception e) {
 			logger.error("处理房间表响应失败", e);
@@ -53,13 +52,10 @@ public class AckRoomTableHandler implements ConnectHandle {
 				return; // 返回
 			}
 
-			// 构建登录响应
-			HallProto.AckLogin loginResponse = buildLoginResponse(user, rooms);
-
 			// 发送响应到网关服务器
-			serverClient.sendMessage(roleId, HMsg.ACK_LOGIN_MSG, 0, loginResponse, sequence);
+			serverClient.sendMessage(roleId, HMsg.ACK_LOGIN_MSG, 0, buildLoginResponse(user, rooms), sequence);
 
-			logger.info("登录响应发送成功, userId: {}, 房间数量: {}", roleId, rooms.size());
+			logger.debug("登录响应发送成功, userId: {}, 房间数量: {}", roleId, rooms.size());
 
 		} catch (Exception e) {
 			logger.error("发送登录响应失败, userId: {}", roleId, e);

@@ -36,9 +36,10 @@ public class AckServerInfoHandle implements ConnectHandle {
 						Robot.getInstance().getServerId(),
 						Robot.getInstance().getInnerIp() + ":" + Robot.getInstance().getPort(),
 						ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
+						//Todo 这里后面测多个机器人的时候需要改成登录多个机器人
 						ConnectProcessor.HANDLERS, ServerType.Robot, new TCPConnect.CallParam(HMsg.REQ_LOGIN_MSG, HallProto.ReqLogin.newBuilder()
 								.setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString()))
-								.setCert(ByteString.copyFromUtf8(Robot.getInstance().getInnerIp()))
+								.setCert(ByteString.copyFromUtf8(Robot.getId()))
 								.build(), HandleManager::sendMsg, ConnectProcessor.PARSER)));
 			} else {
 				//加入五秒重试机制

@@ -1,4 +1,4 @@
-package room.manager;
+package room.manager.user;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

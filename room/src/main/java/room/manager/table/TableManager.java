@@ -1,13 +1,14 @@
-package room.manager;
+package room.manager.table;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import model.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import model.TableModel;
 import proto.RoomProto;
 import proto.ServerProto;
 import utils.other.excel.ExcelUtil;
@@ -16,14 +17,14 @@ import utils.other.excel.ExcelUtil;
  * 房间模板管理器
  * 负责加载和管理房间配置模板
  */
-public class RoomManager {
-	private static final Logger logger = LoggerFactory.getLogger(RoomManager.class);
-	private static final RoomManager instance = new RoomManager();
+public class TableManager {
+	private static final Logger logger = LoggerFactory.getLogger(TableManager.class);
+	private static final TableManager instance = new TableManager();
 
-	private final ConcurrentHashMap<Integer, TableModel> tableModelMap = new ConcurrentHashMap<>();
-	private final ConcurrentHashMap<Integer, ConcurrentHashMap<String, ServerProto.RoomTableInfo>> roomTables = new ConcurrentHashMap<>();
+	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
+	private final Map<Integer, Map<String, TableInfo>> roomTables = new HashMap<>();
 
-	public static RoomManager getInstance() {
+	public static TableManager getInstance() {
 		return instance;
 	}
 
@@ -31,7 +32,7 @@ public class RoomManager {
 	 * 初始化房间管理器
 	 * 从Excel文件加载房间配置
 	 */
-	public void init() {
+	public synchronized void init() {
 		try {
 			List<Object> properties = new ArrayList<>();
 
@@ -58,19 +59,29 @@ public class RoomManager {
 	}
 
 	/**
+	 * 存房间信息
+	 */
+	public synchronized void putRoomInfo(TableInfo tableInfo) {
+		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
+	}
+
+	/**
 	 * 获取所有展示房间信息
 	 */
-	public void getAllRoomTable(RoomProto.AckGetRoomList.Builder response) {
+	public synchronized void getAllRoomTable(RoomProto.AckGetRoomList.Builder response) {
 		try {
 			int totalRooms = 0;
 
-			for (Map.Entry<Integer, ConcurrentHashMap<String, ServerProto.RoomTableInfo>> roomEntry : roomTables.entrySet()) {
+			for (Map.Entry<Integer, Map<String, TableInfo>> roomEntry : roomTables.entrySet()) {
 				RoomProto.Room.Builder roomBuilder = RoomProto.Room.newBuilder();
 				roomBuilder.setRoomId(roomEntry.getKey());
 
-				ConcurrentHashMap<String, ServerProto.RoomTableInfo> tables = roomEntry.getValue();
+				Map<String, TableInfo> tables = roomEntry.getValue();
 				if (tables != null && !tables.isEmpty()) {
-					roomBuilder.addAllTables(tables.values());
+					for (Map.Entry<String, TableInfo> entry : tables.entrySet()) {
+						roomBuilder.addTables(ServerProto.RoomTableInfo.newBuilder()
+								.build());
+					}
 					totalRooms += tables.size();
 				}
 
@@ -94,6 +105,24 @@ public class RoomManager {
 			logger.warn("房间模板不存在, modelId: {}", modelId);
 		}
 		return model;
+	}
+
+
+	/**
+	 * 获取模板可加入房间
+	 */
+	public synchronized TableInfo getCanJoinTable(int modelId) {
+		Map<String, TableInfo> model = roomTables.get(modelId);
+		if (model == null || model.isEmpty()) {
+			logger.warn("没有可加入房间, modelId: {}", modelId);
+			return null;
+		}
+		for (Map.Entry<String, TableInfo> entry : model.entrySet()) {
+			if (entry.getValue().canJoin()) {
+				return entry.getValue();
+			}
+		}
+		return null;
 	}
 
 	/**

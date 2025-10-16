@@ -8,9 +8,9 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.RoomProto;
-import room.manager.RoomManager;
-import room.manager.User;
-import room.manager.UserManager;
+import room.manager.table.TableManager;
+import room.manager.user.User;
+import room.manager.user.UserManager;
 
 /**
  * 处理房间列表请求
@@ -27,7 +27,7 @@ public class ReqRoomListHandle implements Handler {
 
 			// 构建响应
 			RoomProto.AckGetRoomList.Builder response = RoomProto.AckGetRoomList.newBuilder();
-			RoomManager.getInstance().getAllRoomTable(response);
+			TableManager.getInstance().getAllRoomTable(response);
 
 			// 发送响应
 			sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, response.build(), sequence);

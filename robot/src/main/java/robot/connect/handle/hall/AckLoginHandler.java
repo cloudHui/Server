@@ -21,6 +21,7 @@ public class AckLoginHandler implements ConnectHandle {
 		if (message instanceof HallProto.AckLogin) {
 			HallProto.AckLogin ack = (HallProto.AckLogin) message;
 			LOGGER.error("AckLogin:{}", ack.toString());
+			//Todo 添加区分处理有房间重连 没房间获取房间列表 或者获取房间列表登录完成后直接请求 不管有没有房间 等获取房间列表回来后再看 没有房间就创建房间
 			RoomProto.ReqGetRoomList.Builder builder = RoomProto.ReqGetRoomList.newBuilder();
 			HandleManager.sendMsg(RMsg.REQ_ROOM_LIST_MSG, builder.build(), serverClient, ConnectProcessor.PARSER);
 		}

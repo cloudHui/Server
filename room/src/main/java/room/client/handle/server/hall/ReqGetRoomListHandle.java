@@ -8,8 +8,8 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ServerProto;
-import room.manager.User;
-import room.manager.UserManager;
+import room.manager.user.User;
+import room.manager.user.UserManager;
 
 /**
  * 处理大厅服务器请求获取玩家已加入的房间列表
