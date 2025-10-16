@@ -2,13 +2,13 @@ package hall.connect.room;
 
 import java.util.List;
 
+import hall.manager.UserManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import hall.Hall;
 import hall.manager.User;
-import hall.manager.UserManager;
 import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
 import msg.registor.message.HMsg;

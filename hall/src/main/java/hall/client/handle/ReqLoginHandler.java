@@ -2,8 +2,6 @@ package hall.client.handle;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.google.protobuf.Message;
 import hall.Hall;
 import hall.connect.ConnectProcessor;
@@ -16,6 +14,8 @@ import msg.registor.message.SMsg;
 import net.client.Sender;
 import net.connect.handle.ConnectHandler;
 import net.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.HallProto;
 import proto.ServerProto;
 import utils.manager.HandleManager;
@@ -65,14 +65,12 @@ public class ReqLoginHandler implements Handler {
 			int newUserId = userIdGenerator.incrementAndGet();
 			user = new User(newUserId, nickname, clientId, certificate);
 			UserManager.getInstance().addUser(user);
-			logger.info("新用户注册, userId: {}, nickname: {}, cert: {}",
-					newUserId, nickname, certificate);
+			logger.info("新用户注册, userId: {}, nickname: {}, cert: {}", newUserId, nickname, certificate);
 		} else {
 			// 现有用户更新会话
 			user.setClientId(clientId);
 			user.setNick(nickname);
-			logger.info("用户重新登录, userId: {}, nickname: {}, clientId: {}",
-					user.getUserId(), nickname, clientId);
+			logger.info("用户重新登录, userId: {}, nickname: {}, clientId: {}", user.getUserId(), nickname, clientId);
 		}
 
 		return user;
