@@ -15,7 +15,7 @@ import proto.ModelProto;
 public class ReqRegisterHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message reqRegister, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message reqRegister, int mapId, int sequence) {
 		ModelProto.ReqRegister req = (ModelProto.ReqRegister) reqRegister;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());

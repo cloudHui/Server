@@ -23,9 +23,7 @@ public class ClientProto {
 	/**
 	 * 消息转发接口 - 房间服务器不直接转发消息，返回false
 	 */
-	public static final Transfer TRANSFER = (client, tcpMessage) -> {
-		return false;
-	};
+	public static final Transfer TRANSFER = (client, tcpMessage) -> false;
 
 	public static final Parser PARSER = HandleTypeRegister::parseMessage;
 	private static final Map<Integer, Handler> handlers = new HashMap<>();

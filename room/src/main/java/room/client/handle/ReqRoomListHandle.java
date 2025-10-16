@@ -21,9 +21,9 @@ public class ReqRoomListHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqRoomListHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
 		try {
-			logger.info("处理房间列表请求, clientId: {}", clientId);
+			logger.debug("处理房间列表请求, clientId: {}", clientId);
 
 			// 构建响应
 			RoomProto.AckGetRoomList.Builder response = RoomProto.AckGetRoomList.newBuilder();
@@ -35,7 +35,7 @@ public class ReqRoomListHandle implements Handler {
 			// 创建或更新用户会话
 			createOrUpdateUserSession(clientId);
 
-			logger.info("房间列表请求处理完成, clientId: {}, 房间数量: {}", clientId, response.getRoomListCount());
+			logger.debug("房间列表请求处理完成, clientId: {}, 房间数量: {}", clientId, response.getRoomListCount());
 			return true;
 		} catch (Exception e) {
 			logger.error("处理房间列表请求失败, clientId: {}", clientId, e);

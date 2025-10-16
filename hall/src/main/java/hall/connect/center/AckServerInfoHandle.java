@@ -27,7 +27,7 @@ public class AckServerInfoHandle implements ConnectHandle {
 	private static final int RETRY_COUNT = 1;
 
 	@Override
-	public void handle(Message message, ConnectHandler serverClient, int sequence) {
+	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
 		try {
 			if (message instanceof ModelProto.AckServerInfo) {
 				ModelProto.AckServerInfo response = (ModelProto.AckServerInfo) message;
@@ -35,7 +35,7 @@ public class AckServerInfoHandle implements ConnectHandle {
 				if (response.getServersCount() > 0) {
 					processServerInfo(response);
 				} else {
-					scheduleRetry(serverClient);
+					scheduleRetry(handler);
 				}
 			}
 		} catch (Exception e) {

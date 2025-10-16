@@ -18,7 +18,7 @@ public class ReqJoinClubHandler implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqJoinClubHandler.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
 		try {
 			HallProto.ReqJoinClub request = (HallProto.ReqJoinClub) message;
 

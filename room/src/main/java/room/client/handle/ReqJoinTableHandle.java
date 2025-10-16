@@ -1,7 +1,6 @@
 package room.client.handle;
 
 import com.google.protobuf.ByteString;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import model.TableModel;
 import msg.annotation.ProcessType;
@@ -23,6 +22,7 @@ import room.manager.table.TableInfo;
 import room.manager.table.TableManager;
 import room.manager.user.User;
 import room.manager.user.UserManager;
+import utils.manager.HandleManager;
 
 /**
  * 处理玩家请求进入桌子的处理器
@@ -37,7 +37,7 @@ public class ReqJoinTableHandle implements Handler {
 	private static final int GAME_SERVER_TIMEOUT = 3;
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
 		// 1. 验证用户是否存在
 		User user = UserManager.getInstance().getUser(clientId);
 		if (user == null) {
@@ -68,7 +68,7 @@ public class ReqJoinTableHandle implements Handler {
 				return true;
 			}
 			// 4. 执行创建桌子逻辑
-			createTable(gameServer, roomId, sender, sequence, clientId);
+			createTable(gameServer, roomId, sequence, clientId);
 		}
 		return true;
 	}
@@ -77,7 +77,7 @@ public class ReqJoinTableHandle implements Handler {
 	/**
 	 * 加入桌子
 	 */
-	private boolean joinTable(TableModel tableModel, User user, Sender sender, long sequence) {
+	private boolean joinTable(TableModel tableModel, User user, Sender sender, int sequence) {
 		TableInfo canJoinTable = TableManager.getInstance().getCanJoinTable(tableModel.getId());
 		if (canJoinTable == null) {
 			return false;
@@ -94,38 +94,20 @@ public class ReqJoinTableHandle implements Handler {
 	 *
 	 * @param gameServer 游戏服务器连接处理器
 	 * @param roomId     房间ID
-	 * @param sender     消息发送器
 	 * @param sequence   序列号
+	 * @param userId     用户ID
 	 */
-	private void createTable(ConnectHandler gameServer, int roomId, Sender sender, long sequence, int userId) {
-		// 向游戏服务器发送请求并处理响应
-		gameServer.sendMessageBackTcp(buildCreateTableRequest(roomId, userId), SMsg.REQ_CREATE_TABLE_MSG, GAME_SERVER_TIMEOUT)
-				.whenComplete((response, error) -> {
-					// 处理网络错误
-					if (error != null) {
-						logger.error("向游戏服务器发送创建房间请求失败: {}", error.getMessage());
-						sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.SERVER_ERROR_VALUE));
-						return;
-					}
-
-					if (response.getResult() != ConstProto.Result.SUCCESS_VALUE) {
-						logger.error("游戏服务器返回了错误: {}", response.getResult());
-						sender.sendMessage(TCPMessage.newInstance(response.getResult()));
-						return;
-					}
-					try {
-						Message message = ClientProto.PARSER.parser(response.getMessageId(), response.getMessage());
-						if (!(message instanceof ServerProto.AckCreateGameTable)) {
-							logger.error("游戏服务器返回了错误的响应类型: {}", message != null ? response.getClass().getSimpleName() : "null");
-							sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.SERVER_ERROR_VALUE));
-							return;
-						}
-						//发送加入桌子成功的响应给客户端
-						dealCreateSuccessTableJoin(sender, sequence, (ServerProto.AckCreateGameTable) message, userId);
-					} catch (InvalidProtocolBufferException e) {
-						e.printStackTrace();
-					}
-				});
+	private void createTable(ConnectHandler gameServer, int roomId, long sequence, int userId) {
+		// 使用HandleManager统一发送和处理消息
+		HandleManager.sendMsg(
+				SMsg.REQ_CREATE_TABLE_MSG,
+				buildCreateTableRequest(roomId, userId),
+				gameServer,
+				ClientProto.PARSER,
+				(int) sequence,
+				userId,
+				true
+		);
 	}
 
 	/**
@@ -141,21 +123,9 @@ public class ReqJoinTableHandle implements Handler {
 	}
 
 	/**
-	 * 发送加入桌子成功的响应给客户端
-	 */
-	private void dealCreateSuccessTableJoin(Sender sender, long sequence, ServerProto.AckCreateGameTable ack, int userId) {
-		TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
-		//Todo 校验玩家是否空报错返回
-		tableInfo.joinRole(UserManager.getInstance().getUser(userId));
-		// 处理成功响应
-		sendJoinTableAck(ack.getTables().getTableId().toStringUtf8(), sender, sequence, userId);
-	}
-
-
-	/**
 	 * 发送 玩家加入room桌子回复
 	 */
-	private void sendJoinTableAck(String tableId, Sender sender, long sequence, int userId) {
+	public static void sendJoinTableAck(String tableId, Sender sender, int sequence, int userId) {
 		RoomProto.AckJoinRoomTable response = RoomProto.AckJoinRoomTable.newBuilder()
 				.setTableId(ByteString.copyFromUtf8(tableId))
 				.build();

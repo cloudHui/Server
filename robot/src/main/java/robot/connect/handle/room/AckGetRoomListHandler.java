@@ -16,7 +16,7 @@ import utils.manager.HandleManager;
 public class AckGetRoomListHandler implements ConnectHandle {
 
 	@Override
-	public void handle(Message message, ConnectHandler serverClient, int sequence) {
+	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
 		if (message instanceof RoomProto.AckGetRoomList) {
 			RoomProto.AckGetRoomList rooms = (RoomProto.AckGetRoomList) message;
 			LOGGER.error("AckGetRoomList:{}", rooms.toString());
@@ -24,7 +24,7 @@ public class AckGetRoomListHandler implements ConnectHandle {
 				RoomProto.Room room = rooms.getRoomList(0);
 				RoomProto.ReqJoinRoomTable.Builder createTable = RoomProto.ReqJoinRoomTable.newBuilder();
 				createTable.setRoomId(room.getRoomId());
-				HandleManager.sendMsg(RMsg.REQ_JOIN_ROOM_TABLE_MSG, createTable.build(), serverClient, ConnectProcessor.PARSER);
+				HandleManager.sendMsg(RMsg.REQ_JOIN_ROOM_TABLE_MSG, createTable.build(), handler, ConnectProcessor.PARSER);
 			}
 		}
 	}

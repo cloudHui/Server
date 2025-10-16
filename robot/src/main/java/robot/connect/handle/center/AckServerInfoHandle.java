@@ -24,7 +24,7 @@ import utils.manager.HandleManager;
 public class AckServerInfoHandle implements ConnectHandle {
 
 	@Override
-	public void handle(Message message, ConnectHandler serverClient, int sequence) {
+	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
 		if (message instanceof ModelProto.AckServerInfo) {
 			ModelProto.AckServerInfo ack = (ModelProto.AckServerInfo) message;
 			if (ack.getServersCount() > 0) {
@@ -46,7 +46,7 @@ public class AckServerInfoHandle implements ConnectHandle {
 				Robot.getInstance().registerTimer(5000, 1000, 1, robot -> {
 					HandleManager.sendMsg(CMsg.REQ_SERVER, ModelProto.ReqServerInfo.newBuilder()
 							.addServerType(ServerType.Gate.getServerType())
-							.build(), serverClient, ConnectProcessor.PARSER);
+							.build(), handler, ConnectProcessor.PARSER);
 					return true;
 				}, Robot.getInstance());
 			}

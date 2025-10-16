@@ -75,7 +75,7 @@ public class ClientProto {
 			return false;
 		}
 
-		long sequence = tcpMessage.getSequence();
+		int sequence = tcpMessage.getSequence();
 		tcpMessage.setMapId(client.getId());
 		setClientId(tcpMessage, client);
 
@@ -101,7 +101,7 @@ public class ClientProto {
 	 * 发送消息到后端服务器
 	 */
 	private static boolean sendMessageToServer(ConnectHandler serverConnection,
-											   TCPMessage tcpMessage, long sequence,
+											   TCPMessage tcpMessage, int sequence,
 											   GateTcpClient client) {
 		long startTime = System.currentTimeMillis();
 		int msgId = tcpMessage.getMessageId();
@@ -131,7 +131,7 @@ public class ClientProto {
 	/**
 	 * 处理服务器响应
 	 */
-	private static void handleServerResponse(Object response, long sequence,
+	private static void handleServerResponse(Object response, int sequence,
 											 long startTime, GateTcpClient client, int msgId) {
 		try {
 			TCPMessage responseMessage = (TCPMessage) response;

@@ -21,7 +21,7 @@ public class ReqEnterTableHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqEnterTableHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
 		try {
 			GameProto.ReqEnterTable request = (GameProto.ReqEnterTable) message;
 			String tableId = request.getTableId().toStringUtf8();

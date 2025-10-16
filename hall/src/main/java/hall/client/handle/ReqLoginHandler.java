@@ -32,7 +32,7 @@ public class ReqLoginHandler implements Handler {
 	private final AtomicInteger userIdGenerator = new AtomicInteger(1000);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
 		try {
 			HallProto.ReqLogin request = (HallProto.ReqLogin) message;
 			String nickname = request.getNickName().toStringUtf8();
@@ -79,7 +79,7 @@ public class ReqLoginHandler implements Handler {
 	/**
 	 * 向房间服务器请求用户房间信息
 	 */
-	private void requestUserRoomInfo(User user, long sequence) {
+	private void requestUserRoomInfo(User user, int sequence) {
 		try {
 			ConnectHandler roomServer = Hall.getInstance().getServerManager().getServerClient(ServerType.Room);
 			if (roomServer == null) {
@@ -91,7 +91,7 @@ public class ReqLoginHandler implements Handler {
 					.setRoleId(user.getUserId())
 					.build();
 
-			HandleManager.sendMsg(SMsg.REQ_GET_TABLE_MSG, request, roomServer, ConnectProcessor.PARSER, (int) sequence);
+			HandleManager.sendMsg(SMsg.REQ_GET_TABLE_MSG, request, roomServer, ConnectProcessor.PARSER, sequence, false);
 
 			logger.debug("已向房间服务器请求用户房间信息, userId: {}", user.getUserId());
 		} catch (Exception e) {

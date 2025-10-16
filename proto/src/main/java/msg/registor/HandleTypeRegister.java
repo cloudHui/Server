@@ -1,7 +1,6 @@
 package msg.registor;
 
 import java.lang.reflect.Field;
-//import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import com.google.protobuf.MessageLite;
 import msg.annotation.ClassField;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessClass;
-//import msg.annotation.ProcessClassMethod;
 import msg.annotation.ProcessType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +36,7 @@ public class HandleTypeRegister {
 
 	static {
 		try {
+			long start = System.currentTimeMillis();
 			List<Class<?>> classes = ClazzUtil.getAllClassExceptPackageClass(HandleTypeRegister.class, "");
 			for (Class<?> clazz : classes) {
 				ClassType processType = clazz.getAnnotation(ClassType.class);
@@ -45,7 +44,7 @@ public class HandleTypeRegister {
 					bindTransMap(clazz);
 				}
 			}
-			logger.info("init message id bind total size:{}", TRANS_MAP.size());
+			logger.info("init message id bind total size:{} cost:{}ms", TRANS_MAP.size(), System.currentTimeMillis() - start);
 		} catch (Exception e) {
 			logger.error("init message id bind class", e);
 		}
@@ -58,8 +57,6 @@ public class HandleTypeRegister {
 	 * @param constantClass 消息常量类
 	 */
 	private static void bindTransMap(Class<?> constantClass) {
-		int bindCount = 0;
-
 		for (Field field : constantClass.getFields()) {
 			ClassField annotation = field.getAnnotation(ClassField.class);
 			if (annotation == null) {
@@ -70,15 +67,11 @@ public class HandleTypeRegister {
 				if (fieldValue instanceof Integer) {
 					TRANS_MAP.put((Integer) fieldValue, annotation.value());
 					MSG_TRANS_MAP.put(annotation.value(), (Integer) fieldValue);
-
-					bindCount++;
 				}
 			} catch (Exception e) {
 				logger.error("Bind field failed: {}.{}", constantClass.getSimpleName(), field.getName(), e);
 			}
 		}
-
-		logger.info(BIND_SUCCESS_TEMPLATE, constantClass.getSimpleName(), bindCount);
 	}
 
 	// ==================== 处理器绑定相关方法 ====================
@@ -106,6 +99,7 @@ public class HandleTypeRegister {
 	 */
 	private static <T> void initFactory(String packageName, Map<Integer, T> handles) {
 		try {
+			long start = System.currentTimeMillis();
 			List<Class<?>> classes = ClazzUtil.getClasses(packageName);
 			Map<Class<?>, T> classProcessMap = new HashMap<>();
 
@@ -117,7 +111,8 @@ public class HandleTypeRegister {
 				putHandle(processesType.value(), aclass, handles, classProcessMap);
 			}
 
-			logger.info("{} bind success, size:{}", packageName, handles.size());
+			logger.info("{} bind success, size:{} cost:{}ms", packageName, handles.size(),
+					System.currentTimeMillis() - start);
 		} catch (Exception e) {
 			logger.error("{} bind processors error", packageName, e);
 		}
@@ -132,6 +127,7 @@ public class HandleTypeRegister {
 	 */
 	public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles) {
 		try {
+			long start = System.currentTimeMillis();
 			List<Class<?>> classes = ClazzUtil.getClasses(factoryClass, "");
 			Map<Class<?>, T> classProcessMap = new HashMap<>();
 
@@ -145,7 +141,8 @@ public class HandleTypeRegister {
 				putHandle(value, aclass, handles, classProcessMap);
 			}
 
-			logger.info("{} bind success, size:{}", factoryClass.getPackage().getName(), handles.size());
+			logger.info("{} bind success, size:{} cost:{}ms", factoryClass.getPackage().getName(), handles.size(),
+					System.currentTimeMillis() - start);
 		} catch (Exception e) {
 			logger.error("{} bind processors error", factoryClass.getPackage().getName(), e);
 		}

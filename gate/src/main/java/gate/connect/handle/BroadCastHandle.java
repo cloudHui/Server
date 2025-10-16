@@ -22,7 +22,7 @@ public class BroadCastHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(BroadCastHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
 		try {
 			GateProto.BroadCast broadCast = (GateProto.BroadCast) message;
 			BroadcastType broadcastType = BroadcastType.get(broadCast.getType());

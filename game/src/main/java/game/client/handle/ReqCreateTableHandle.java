@@ -20,7 +20,7 @@ public class ReqCreateTableHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqCreateTableHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
 		try {
 			ServerProto.ReqCreateGameTable request = (ServerProto.ReqCreateGameTable) message;
 			int roomId = request.getRoomId();

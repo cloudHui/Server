@@ -17,7 +17,7 @@ import proto.ModelProto;
 public class RegisterNoticeHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message registerInfo, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message registerInfo, int mapId, int sequence) {
 		Gate.getInstance().execute(() -> Gate.getInstance().getServerManager().connectToSever(
 				((ModelProto.NotRegisterInfo) registerInfo).getServersList(), Gate.getInstance().getServerId(),
 				(Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort()),

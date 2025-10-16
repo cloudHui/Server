@@ -24,7 +24,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 	private static final Logger logger = LoggerFactory.getLogger(AckRoomTableHandler.class);
 
 	@Override
-	public void handle(Message message, ConnectHandler serverClient, int sequence) {
+	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
 		try {
 			if (message instanceof ServerProto.AckRoomTable) {
 				ServerProto.AckRoomTable roomTable = (ServerProto.AckRoomTable) message;
@@ -33,7 +33,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 				logger.debug("收到用户房间列表, userId: {}, 房间数量: {}", roleId, rooms.size());
 
 				//发送登录响应
-				sendLoginResponseWithRetry(roleId, rooms, sequence, serverClient);
+				sendLoginResponseWithRetry(roleId, rooms, sequence, handler);
 				logger.debug("登录响应发送, userId: {}", roleId);
 			}
 		} catch (Exception e) {

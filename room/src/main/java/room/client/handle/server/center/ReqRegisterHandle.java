@@ -21,7 +21,7 @@ public class ReqRegisterHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqRegisterHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, long sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
 		try {
 			ModelProto.ReqRegister request = (ModelProto.ReqRegister) msg;
 			ModelProto.ServerInfo serverInfo = request.getServerInfo();
@@ -58,7 +58,7 @@ public class ReqRegisterHandle implements Handler {
 	/**
 	 * 发送注册响应
 	 */
-	private void sendRegistrationResponse(Sender sender, int clientId, int mapId, long sequence) {
+	private void sendRegistrationResponse(Sender sender, int clientId, int mapId, int sequence) {
 		ModelProto.AckRegister.Builder response = ModelProto.AckRegister.newBuilder();
 		response.setServerInfo(Room.getInstance().getServerInfo().build());
 

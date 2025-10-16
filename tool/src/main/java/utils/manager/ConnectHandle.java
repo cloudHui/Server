@@ -8,5 +8,5 @@ import org.slf4j.LoggerFactory;
 public interface ConnectHandle {
 	Logger LOGGER = LoggerFactory.getLogger(ConnectHandle.class);
 
-	void handle(Message message, ConnectHandler serverClient, int sequence);
+	void handle(Message message, ConnectHandler handler, int sequence, int transId);
 }

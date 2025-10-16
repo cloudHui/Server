@@ -22,6 +22,7 @@ import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
+import utils.manager.HandleManager;
 
 /**
  * 房间服务器主类
@@ -162,7 +163,7 @@ public class Room {
 		try {
 			ClientProto.init();
 			ConnectProcessor.init();
-
+			HandleManager.init(ClientProto.class);
 			String[] centerAddress = center.split(":");
 			if (centerAddress.length != 2) {
 				throw new IllegalArgumentException("中心服务器地址格式错误: " + center);
