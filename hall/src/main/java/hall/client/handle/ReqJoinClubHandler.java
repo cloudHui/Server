@@ -22,8 +22,7 @@ public class ReqJoinClubHandler implements Handler {
 		try {
 			HallProto.ReqJoinClub request = (HallProto.ReqJoinClub) message;
 
-			logger.info("处理加入工会请求, clientId: {}, clubId: {}",
-					clientId, request.getClubId());
+			logger.info("处理加入工会请求, clientId: {}, clubId: {}", clientId, request.getClubId());
 
 			// 构建响应
 			HallProto.AckJoinClub.Builder response = buildJoinClubResponse();

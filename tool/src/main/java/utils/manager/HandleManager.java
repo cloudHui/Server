@@ -32,7 +32,13 @@ public class HandleManager {
 	}
 
 	/**
-	 * 发送消息
+	 * 统一发送proto消息需要自行处理回调的消息
+	 *
+	 * @param msgId        消息id
+	 * @param req          消息体
+	 * @param serverClient 转过过来的链接
+	 * @param parser       回调消息转化器
+	 * @param sequence     序列号回复消息
 	 */
 	public static void sendMsg(int msgId, Message req, ConnectHandler serverClient, Parser parser, int sequence) {
 		LOGGER.info("sendMsg:{}", req.getClass().getSimpleName());

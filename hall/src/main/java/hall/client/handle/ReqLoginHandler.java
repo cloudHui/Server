@@ -91,8 +91,7 @@ public class ReqLoginHandler implements Handler {
 					.setRoleId(user.getUserId())
 					.build();
 
-			HandleManager.sendMsg(SMsg.REQ_GET_TABLE_MSG, request, roomServer,
-					ConnectProcessor.PARSER, (int) sequence);
+			HandleManager.sendMsg(SMsg.REQ_GET_TABLE_MSG, request, roomServer, ConnectProcessor.PARSER, (int) sequence);
 
 			logger.debug("已向房间服务器请求用户房间信息, userId: {}", user.getUserId());
 		} catch (Exception e) {
