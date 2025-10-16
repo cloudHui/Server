@@ -21,9 +21,7 @@ public class ConnectProcessor {
 	/**
 	 * 消息转发接口 - 房间服务器到其他服务器的连接不支持转发
 	 */
-	public static final Transfer TRANSFER = (connect, message) -> {
-		return false;
-	};
+	public static final Transfer TRANSFER = (connect, message) -> false;
 
 	public static final Parser PARSER = HandleTypeRegister::parseMessage;
 	private static final Map<Integer, Handler> handlers = new HashMap<>();
@@ -35,7 +33,7 @@ public class ConnectProcessor {
 	public static void init() {
 		try {
 			HandleTypeRegister.initFactory(ConnectProcessor.class, handlers);
-			logger.info("连接处理器初始化完成，注册处理器数量: {}", handlers.size());
+			logger.debug("连接处理器初始化完成，注册处理器数量: {}", handlers.size());
 		} catch (Exception e) {
 			logger.error("连接处理器初始化失败", e);
 			throw new RuntimeException("ConnectProcessor初始化失败", e);

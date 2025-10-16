@@ -68,7 +68,7 @@ public class ReqJoinTableHandle implements Handler {
 				return true;
 			}
 			// 4. 执行创建桌子逻辑
-			createTable(gameServer, roomId, sender, sequence, user);
+			createTable(gameServer, roomId, sender, sequence, clientId);
 		}
 		return true;
 	}
@@ -97,9 +97,9 @@ public class ReqJoinTableHandle implements Handler {
 	 * @param sender     消息发送器
 	 * @param sequence   序列号
 	 */
-	private void createTable(ConnectHandler gameServer, int roomId, Sender sender, long sequence, User user) {
+	private void createTable(ConnectHandler gameServer, int roomId, Sender sender, long sequence, int userId) {
 		// 向游戏服务器发送请求并处理响应
-		gameServer.sendMessageBackTcp(buildCreateTableRequest(roomId, user.getUserId()), SMsg.REQ_CREATE_TABLE_MSG, GAME_SERVER_TIMEOUT)
+		gameServer.sendMessageBackTcp(buildCreateTableRequest(roomId, userId), SMsg.REQ_CREATE_TABLE_MSG, GAME_SERVER_TIMEOUT)
 				.whenComplete((response, error) -> {
 					// 处理网络错误
 					if (error != null) {
@@ -115,14 +115,13 @@ public class ReqJoinTableHandle implements Handler {
 					}
 					try {
 						Message message = ClientProto.PARSER.parser(response.getMessageId(), response.getMessage());
-						//Todo 应该写成 各个处理器自己处理的前面的错误都是统一的 和tool 的 sendMsg合并一下
 						if (!(message instanceof ServerProto.AckCreateGameTable)) {
 							logger.error("游戏服务器返回了错误的响应类型: {}", message != null ? response.getClass().getSimpleName() : "null");
 							sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.SERVER_ERROR_VALUE));
 							return;
 						}
 						//发送加入桌子成功的响应给客户端
-						dealCreateSuccessTableJoin(sender, sequence, (ServerProto.AckCreateGameTable) message, user);
+						dealCreateSuccessTableJoin(sender, sequence, (ServerProto.AckCreateGameTable) message, userId);
 					} catch (InvalidProtocolBufferException e) {
 						e.printStackTrace();
 					}
@@ -144,11 +143,12 @@ public class ReqJoinTableHandle implements Handler {
 	/**
 	 * 发送加入桌子成功的响应给客户端
 	 */
-	private void dealCreateSuccessTableJoin(Sender sender, long sequence, ServerProto.AckCreateGameTable ack, User user) {
+	private void dealCreateSuccessTableJoin(Sender sender, long sequence, ServerProto.AckCreateGameTable ack, int userId) {
 		TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
-		tableInfo.joinRole(user);
+		//Todo 校验玩家是否空报错返回
+		tableInfo.joinRole(UserManager.getInstance().getUser(userId));
 		// 处理成功响应
-		sendJoinTableAck(ack.getTables().getTableId().toStringUtf8(), sender, sequence, user.getUserId());
+		sendJoinTableAck(ack.getTables().getTableId().toStringUtf8(), sender, sequence, userId);
 	}
 
 

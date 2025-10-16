@@ -36,7 +36,7 @@ public class ReqRegisterHandle implements Handler {
 				return true;
 			}
 
-			logger.info("处理服务注册请求, serverType: {}, serverId: {}, address: {}",
+			logger.debug("处理服务注册请求, serverType: {}, serverId: {}, address: {}",
 					serverType, serverInfo.getServerId(), serverInfo.getIpConfig().toStringUtf8());
 
 			// 处理服务器注册
@@ -76,7 +76,7 @@ public class ReqRegisterHandle implements Handler {
 		newClient.setServerInfo(serverInfo);
 		manager.addServerClient(serverType, newClient, serverId);
 
-		logger.info("服务器注册成功, serverType: {}, serverId: {}", serverType, serverId);
+		logger.debug("服务器注册成功, serverType: {}, serverId: {}", serverType, serverId);
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class ReqRegisterHandle implements Handler {
 				client.sendMessage(CMsg.REGISTER_NOTICE, notification.build());
 				notifiedCount++;
 			} catch (Exception e) {
-				logger.error("通知服务器失败, targetType: {}, serverId: {}",
+				logger.debug("通知服务器失败, targetType: {}, serverId: {}",
 						targetServerType, ((CenterClient) client).getServerInfo().getServerId(), e);
 			}
 		}
