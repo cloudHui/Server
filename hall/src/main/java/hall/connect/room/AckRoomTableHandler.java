@@ -19,15 +19,15 @@ import utils.manager.ConnectHandle;
  * 处理房间服务器返回的用户房间列表
  * 将房间信息返回给网关服务器完成登录流程
  */
-@ProcessClass(ServerProto.AckRoomTable.class)
+@ProcessClass(ServerProto.AckRoleRoomTable.class)
 public class AckRoomTableHandler implements ConnectHandle {
 	private static final Logger logger = LoggerFactory.getLogger(AckRoomTableHandler.class);
 
 	@Override
 	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
 		try {
-			if (message instanceof ServerProto.AckRoomTable) {
-				ServerProto.AckRoomTable roomTable = (ServerProto.AckRoomTable) message;
+			if (message instanceof ServerProto.AckRoleRoomTable) {
+				ServerProto.AckRoleRoomTable roomTable = (ServerProto.AckRoleRoomTable) message;
 				int roleId = roomTable.getRoleId();
 				List<ServerProto.RoomTableInfo> rooms = roomTable.getTablesList();
 				logger.debug("收到用户房间列表, userId: {}, 房间数量: {}", roleId, rooms.size());

@@ -23,6 +23,7 @@ public class TableManager {
 
 	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
 	private final Map<Integer, Map<String, TableInfo>> roomTables = new HashMap<>();
+	private final Map<String, TableInfo> tableInfoMap = new HashMap<>();
 
 	public static TableManager getInstance() {
 		return instance;
@@ -40,6 +41,7 @@ public class TableManager {
 			ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties);
 
 			synchronized (tableModelMap) {
+				//Todo 重新load 以后之前的房间尽量打完删除
 				tableModelMap.clear();
 				roomTables.clear();
 
@@ -72,8 +74,7 @@ public class TableManager {
 				Map<String, TableInfo> tables = roomEntry.getValue();
 				if (tables != null && !tables.isEmpty()) {
 					for (Map.Entry<String, TableInfo> entry : tables.entrySet()) {
-						roomBuilder.addTables(ServerProto.RoomTableInfo.newBuilder()
-								.build());
+						roomBuilder.addTables(entry.getValue().getTableInfo());
 					}
 					totalRooms += tables.size();
 				}
@@ -81,8 +82,7 @@ public class TableManager {
 				response.addRoomList(roomBuilder);
 			}
 
-			logger.debug("返回房间列表，房间类型数: {}, 总房间数: {}",
-					roomTables.size(), totalRooms);
+			logger.debug("返回房间列表，房间类型数: {}, 总房间数: {}", roomTables.size(), totalRooms);
 		} catch (Exception e) {
 			logger.error("获取房间列表失败", e);
 			throw new RuntimeException("获取房间列表失败", e);
@@ -98,6 +98,27 @@ public class TableManager {
 			logger.warn("房间模板不存在, modelId: {}", modelId);
 		}
 		return model;
+	}
+
+	/**
+	 * 通过桌子号取桌子
+	 *
+	 * @param tableId 桌子号
+	 */
+	public TableInfo getTableById(String tableId) {
+		return tableInfoMap.get(tableId);
+	}
+
+	/**
+	 * 删除桌子 通过桌子号
+	 *
+	 * @param tableId 桌子号
+	 */
+	public void removeTable(String tableId) {
+		TableInfo tableInfo = tableInfoMap.remove(tableId);
+		if (tableInfo != null) {
+			roomTables.getOrDefault(tableInfo.getModel().getId(), new HashMap<>()).remove(tableId);
+		}
 	}
 
 	/**
@@ -124,6 +145,7 @@ public class TableManager {
 	public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
 		TableInfo tableInfo = new TableInfo(roomTable.getTableId().toStringUtf8(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
 		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
+		tableInfoMap.put(tableInfo.getTableId(), tableInfo);
 		return tableInfo;
 	}
 }

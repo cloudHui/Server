@@ -3,8 +3,10 @@ package room.manager.table;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.protobuf.ByteString;
 import model.TableModel;
 import proto.ConstProto;
+import proto.ServerProto;
 import room.manager.user.User;
 
 /**
@@ -23,7 +25,10 @@ public class TableInfo {
 
 	private int ownerId;
 
-	private ConstProto.TableState stat = ConstProto.TableState.WAITE;
+	/**
+	 * 桌子状态
+	 */
+	private ConstProto.TableState tableState = ConstProto.TableState.WAITE;
 
 	private final Set<User> tableRoles = new HashSet<>();
 
@@ -49,8 +54,8 @@ public class TableInfo {
 		return ownerId;
 	}
 
-	public ConstProto.TableState getStat() {
-		return stat;
+	public ConstProto.TableState getTableState() {
+		return tableState;
 	}
 
 	public Set<User> getTableRoles() {
@@ -61,12 +66,13 @@ public class TableInfo {
 		this.ownerId = ownerId;
 	}
 
-	public void setStat(ConstProto.TableState stat) {
-		this.stat = stat;
+	public void setTableState(ConstProto.TableState tableState) {
+		this.tableState = tableState;
 	}
 
 	public void joinRole(User user) {
 		tableRoles.add(user);
+		user.addTable(tableId);
 	}
 
 	public void removeUser(User user) {
@@ -74,6 +80,23 @@ public class TableInfo {
 	}
 
 	public boolean canJoin() {
-		return stat == ConstProto.TableState.WAITE && tableRoles.size() < model.getNum();
+		return tableState == ConstProto.TableState.WAITE && tableRoles.size() < model.getNum();
+	}
+
+	public ServerProto.RoomTableInfo getTableInfo() {
+		ServerProto.RoomTableInfo.Builder builder = ServerProto.RoomTableInfo.newBuilder()
+				.setRoomId(model.getId())
+				.setTableId(ByteString.copyFromUtf8(tableId))
+				.setOwnerId(ownerId)
+				.setStat(tableState.getNumber())
+				.setCreatorId(ownerId);
+
+		for (User user : tableRoles) {
+			if (user != null) {
+				builder.addTableRoles(user.getRole());
+			}
+		}
+
+		return builder.build();
 	}
 }

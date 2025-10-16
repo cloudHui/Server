@@ -32,12 +32,12 @@ message RoomRole {
 }
 
 //请求玩家房间列表
-message ReqRoomTable {
+message ReqRoleRoomTable {
     int32 roleId = 1;
 }
 
 //玩家房间列表回复
-message AckRoomTable {
+message AckRoleRoomTable {
     int32 roleId = 1;
     repeated RoomTableInfo tables = 2;//桌子可能有多张后面再看
 }

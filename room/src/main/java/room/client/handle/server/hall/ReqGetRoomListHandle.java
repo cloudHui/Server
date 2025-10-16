@@ -21,12 +21,12 @@ public class ReqGetRoomListHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
 		try {
-			ServerProto.ReqRoomTable request = (ServerProto.ReqRoomTable) msg;
+			ServerProto.ReqRoleRoomTable request = (ServerProto.ReqRoleRoomTable) msg;
 			int roleId = request.getRoleId();
 
 			logger.debug("处理获取房间列表请求, roleId: {}, clientId: {}", roleId, clientId);
 
-			ServerProto.AckRoomTable response = buildRoomTableResponse(roleId);
+			ServerProto.AckRoleRoomTable response = buildRoomTableResponse(roleId);
 			sender.sendMessage(clientId, SMsg.ACK_GET_TABLE_MSG, mapId, response, sequence);
 
 			logger.info("返回玩家房间列表, roleId: {}, 房间数量: {}", roleId, response.getTablesCount());
@@ -40,8 +40,8 @@ public class ReqGetRoomListHandle implements Handler {
 	/**
 	 * 构建房间表响应
 	 */
-	private ServerProto.AckRoomTable buildRoomTableResponse(int roleId) {
-		ServerProto.AckRoomTable.Builder response = ServerProto.AckRoomTable.newBuilder();
+	private ServerProto.AckRoleRoomTable buildRoomTableResponse(int roleId) {
+		ServerProto.AckRoleRoomTable.Builder response = ServerProto.AckRoleRoomTable.newBuilder();
 		response.setRoleId(roleId);
 
 		User user = UserManager.getInstance().getUser(roleId);

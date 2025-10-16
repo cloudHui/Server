@@ -33,9 +33,6 @@ public class ReqJoinTableHandle implements Handler {
 
 	private static final Logger logger = LoggerFactory.getLogger(ReqJoinTableHandle.class);
 
-	// 游戏服务器请求超时时间（秒）
-	private static final int GAME_SERVER_TIMEOUT = 3;
-
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
 		// 1. 验证用户是否存在

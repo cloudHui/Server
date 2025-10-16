@@ -3062,8 +3062,8 @@ public final class ServerProto {
 
   }
 
-  public interface ReqRoomTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqRoomTable)
+  public interface ReqRoleRoomTableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.ReqRoleRoomTable)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3076,18 +3076,18 @@ public final class ServerProto {
    *请求玩家房间列表
    * </pre>
    *
-   * Protobuf type {@code proto.ReqRoomTable}
+   * Protobuf type {@code proto.ReqRoleRoomTable}
    */
-  public  static final class ReqRoomTable extends
+  public  static final class ReqRoleRoomTable extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqRoomTable)
-      ReqRoomTableOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.ReqRoleRoomTable)
+      ReqRoleRoomTableOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use ReqRoomTable.newBuilder() to construct.
-    private ReqRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use ReqRoleRoomTable.newBuilder() to construct.
+    private ReqRoleRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private ReqRoomTable() {
+    private ReqRoleRoomTable() {
       roleId_ = 0;
     }
 
@@ -3096,7 +3096,7 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqRoomTable(
+    private ReqRoleRoomTable(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3138,14 +3138,14 @@ public final class ServerProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.ServerProto.internal_static_proto_ReqRoomTable_descriptor;
+      return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.ServerProto.internal_static_proto_ReqRoomTable_fieldAccessorTable
+      return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.ServerProto.ReqRoomTable.class, proto.ServerProto.ReqRoomTable.Builder.class);
+              proto.ServerProto.ReqRoleRoomTable.class, proto.ServerProto.ReqRoleRoomTable.Builder.class);
     }
 
     public static final int ROLEID_FIELD_NUMBER = 1;
@@ -3194,10 +3194,10 @@ public final class ServerProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.ServerProto.ReqRoomTable)) {
+      if (!(obj instanceof proto.ServerProto.ReqRoleRoomTable)) {
         return super.equals(obj);
       }
-      proto.ServerProto.ReqRoomTable other = (proto.ServerProto.ReqRoomTable) obj;
+      proto.ServerProto.ReqRoleRoomTable other = (proto.ServerProto.ReqRoleRoomTable) obj;
 
       boolean result = true;
       result = result && (getRoleId()
@@ -3220,69 +3220,69 @@ public final class ServerProto {
       return hash;
     }
 
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(byte[] data)
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(java.io.InputStream input)
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ServerProto.ReqRoomTable parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ServerProto.ReqRoleRoomTable parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.ServerProto.ReqRoomTable parseDelimitedFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ServerProto.ReqRoomTable parseFrom(
+    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3294,7 +3294,7 @@ public final class ServerProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.ServerProto.ReqRoomTable prototype) {
+    public static Builder newBuilder(proto.ServerProto.ReqRoleRoomTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -3313,25 +3313,25 @@ public final class ServerProto {
      *请求玩家房间列表
      * </pre>
      *
-     * Protobuf type {@code proto.ReqRoomTable}
+     * Protobuf type {@code proto.ReqRoleRoomTable}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqRoomTable)
-        proto.ServerProto.ReqRoomTableOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.ReqRoleRoomTable)
+        proto.ServerProto.ReqRoleRoomTableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.ServerProto.internal_static_proto_ReqRoomTable_descriptor;
+        return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.ServerProto.internal_static_proto_ReqRoomTable_fieldAccessorTable
+        return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.ServerProto.ReqRoomTable.class, proto.ServerProto.ReqRoomTable.Builder.class);
+                proto.ServerProto.ReqRoleRoomTable.class, proto.ServerProto.ReqRoleRoomTable.Builder.class);
       }
 
-      // Construct using proto.ServerProto.ReqRoomTable.newBuilder()
+      // Construct using proto.ServerProto.ReqRoleRoomTable.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3355,23 +3355,23 @@ public final class ServerProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.ServerProto.internal_static_proto_ReqRoomTable_descriptor;
+        return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_descriptor;
       }
 
-      public proto.ServerProto.ReqRoomTable getDefaultInstanceForType() {
-        return proto.ServerProto.ReqRoomTable.getDefaultInstance();
+      public proto.ServerProto.ReqRoleRoomTable getDefaultInstanceForType() {
+        return proto.ServerProto.ReqRoleRoomTable.getDefaultInstance();
       }
 
-      public proto.ServerProto.ReqRoomTable build() {
-        proto.ServerProto.ReqRoomTable result = buildPartial();
+      public proto.ServerProto.ReqRoleRoomTable build() {
+        proto.ServerProto.ReqRoleRoomTable result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.ServerProto.ReqRoomTable buildPartial() {
-        proto.ServerProto.ReqRoomTable result = new proto.ServerProto.ReqRoomTable(this);
+      public proto.ServerProto.ReqRoleRoomTable buildPartial() {
+        proto.ServerProto.ReqRoleRoomTable result = new proto.ServerProto.ReqRoleRoomTable(this);
         result.roleId_ = roleId_;
         onBuilt();
         return result;
@@ -3404,16 +3404,16 @@ public final class ServerProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ServerProto.ReqRoomTable) {
-          return mergeFrom((proto.ServerProto.ReqRoomTable)other);
+        if (other instanceof proto.ServerProto.ReqRoleRoomTable) {
+          return mergeFrom((proto.ServerProto.ReqRoleRoomTable)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.ServerProto.ReqRoomTable other) {
-        if (other == proto.ServerProto.ReqRoomTable.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ServerProto.ReqRoleRoomTable other) {
+        if (other == proto.ServerProto.ReqRoleRoomTable.getDefaultInstance()) return this;
         if (other.getRoleId() != 0) {
           setRoleId(other.getRoleId());
         }
@@ -3430,11 +3430,11 @@ public final class ServerProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.ReqRoomTable parsedMessage = null;
+        proto.ServerProto.ReqRoleRoomTable parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.ReqRoomTable) e.getUnfinishedMessage();
+          parsedMessage = (proto.ServerProto.ReqRoleRoomTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -3480,46 +3480,46 @@ public final class ServerProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.ReqRoomTable)
+      // @@protoc_insertion_point(builder_scope:proto.ReqRoleRoomTable)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.ReqRoomTable)
-    private static final proto.ServerProto.ReqRoomTable DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.ReqRoleRoomTable)
+    private static final proto.ServerProto.ReqRoleRoomTable DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.ServerProto.ReqRoomTable();
+      DEFAULT_INSTANCE = new proto.ServerProto.ReqRoleRoomTable();
     }
 
-    public static proto.ServerProto.ReqRoomTable getDefaultInstance() {
+    public static proto.ServerProto.ReqRoleRoomTable getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ReqRoomTable>
-        PARSER = new com.google.protobuf.AbstractParser<ReqRoomTable>() {
-      public ReqRoomTable parsePartialFrom(
+    private static final com.google.protobuf.Parser<ReqRoleRoomTable>
+        PARSER = new com.google.protobuf.AbstractParser<ReqRoleRoomTable>() {
+      public ReqRoleRoomTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqRoomTable(input, extensionRegistry);
+          return new ReqRoleRoomTable(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<ReqRoomTable> parser() {
+    public static com.google.protobuf.Parser<ReqRoleRoomTable> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<ReqRoomTable> getParserForType() {
+    public com.google.protobuf.Parser<ReqRoleRoomTable> getParserForType() {
       return PARSER;
     }
 
-    public proto.ServerProto.ReqRoomTable getDefaultInstanceForType() {
+    public proto.ServerProto.ReqRoleRoomTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface AckRoomTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckRoomTable)
+  public interface AckRoleRoomTableOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.AckRoleRoomTable)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3576,18 +3576,18 @@ public final class ServerProto {
    *玩家房间列表回复
    * </pre>
    *
-   * Protobuf type {@code proto.AckRoomTable}
+   * Protobuf type {@code proto.AckRoleRoomTable}
    */
-  public  static final class AckRoomTable extends
+  public  static final class AckRoleRoomTable extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckRoomTable)
-      AckRoomTableOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.AckRoleRoomTable)
+      AckRoleRoomTableOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use AckRoomTable.newBuilder() to construct.
-    private AckRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use AckRoleRoomTable.newBuilder() to construct.
+    private AckRoleRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private AckRoomTable() {
+    private AckRoleRoomTable() {
       roleId_ = 0;
       tables_ = java.util.Collections.emptyList();
     }
@@ -3597,7 +3597,7 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private AckRoomTable(
+    private AckRoleRoomTable(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3651,14 +3651,14 @@ public final class ServerProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.ServerProto.internal_static_proto_AckRoomTable_descriptor;
+      return proto.ServerProto.internal_static_proto_AckRoleRoomTable_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.ServerProto.internal_static_proto_AckRoomTable_fieldAccessorTable
+      return proto.ServerProto.internal_static_proto_AckRoleRoomTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.ServerProto.AckRoomTable.class, proto.ServerProto.AckRoomTable.Builder.class);
+              proto.ServerProto.AckRoleRoomTable.class, proto.ServerProto.AckRoleRoomTable.Builder.class);
     }
 
     private int bitField0_;
@@ -3770,10 +3770,10 @@ public final class ServerProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.ServerProto.AckRoomTable)) {
+      if (!(obj instanceof proto.ServerProto.AckRoleRoomTable)) {
         return super.equals(obj);
       }
-      proto.ServerProto.AckRoomTable other = (proto.ServerProto.AckRoomTable) obj;
+      proto.ServerProto.AckRoleRoomTable other = (proto.ServerProto.AckRoleRoomTable) obj;
 
       boolean result = true;
       result = result && (getRoleId()
@@ -3802,69 +3802,69 @@ public final class ServerProto {
       return hash;
     }
 
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(byte[] data)
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(java.io.InputStream input)
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ServerProto.AckRoomTable parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ServerProto.AckRoleRoomTable parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.ServerProto.AckRoomTable parseDelimitedFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ServerProto.AckRoomTable parseFrom(
+    public static proto.ServerProto.AckRoleRoomTable parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3876,7 +3876,7 @@ public final class ServerProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.ServerProto.AckRoomTable prototype) {
+    public static Builder newBuilder(proto.ServerProto.AckRoleRoomTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -3895,25 +3895,25 @@ public final class ServerProto {
      *玩家房间列表回复
      * </pre>
      *
-     * Protobuf type {@code proto.AckRoomTable}
+     * Protobuf type {@code proto.AckRoleRoomTable}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckRoomTable)
-        proto.ServerProto.AckRoomTableOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.AckRoleRoomTable)
+        proto.ServerProto.AckRoleRoomTableOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.ServerProto.internal_static_proto_AckRoomTable_descriptor;
+        return proto.ServerProto.internal_static_proto_AckRoleRoomTable_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.ServerProto.internal_static_proto_AckRoomTable_fieldAccessorTable
+        return proto.ServerProto.internal_static_proto_AckRoleRoomTable_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.ServerProto.AckRoomTable.class, proto.ServerProto.AckRoomTable.Builder.class);
+                proto.ServerProto.AckRoleRoomTable.class, proto.ServerProto.AckRoleRoomTable.Builder.class);
       }
 
-      // Construct using proto.ServerProto.AckRoomTable.newBuilder()
+      // Construct using proto.ServerProto.AckRoleRoomTable.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3944,23 +3944,23 @@ public final class ServerProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.ServerProto.internal_static_proto_AckRoomTable_descriptor;
+        return proto.ServerProto.internal_static_proto_AckRoleRoomTable_descriptor;
       }
 
-      public proto.ServerProto.AckRoomTable getDefaultInstanceForType() {
-        return proto.ServerProto.AckRoomTable.getDefaultInstance();
+      public proto.ServerProto.AckRoleRoomTable getDefaultInstanceForType() {
+        return proto.ServerProto.AckRoleRoomTable.getDefaultInstance();
       }
 
-      public proto.ServerProto.AckRoomTable build() {
-        proto.ServerProto.AckRoomTable result = buildPartial();
+      public proto.ServerProto.AckRoleRoomTable build() {
+        proto.ServerProto.AckRoleRoomTable result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.ServerProto.AckRoomTable buildPartial() {
-        proto.ServerProto.AckRoomTable result = new proto.ServerProto.AckRoomTable(this);
+      public proto.ServerProto.AckRoleRoomTable buildPartial() {
+        proto.ServerProto.AckRoleRoomTable result = new proto.ServerProto.AckRoleRoomTable(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.roleId_ = roleId_;
@@ -4005,16 +4005,16 @@ public final class ServerProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ServerProto.AckRoomTable) {
-          return mergeFrom((proto.ServerProto.AckRoomTable)other);
+        if (other instanceof proto.ServerProto.AckRoleRoomTable) {
+          return mergeFrom((proto.ServerProto.AckRoleRoomTable)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.ServerProto.AckRoomTable other) {
-        if (other == proto.ServerProto.AckRoomTable.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ServerProto.AckRoleRoomTable other) {
+        if (other == proto.ServerProto.AckRoleRoomTable.getDefaultInstance()) return this;
         if (other.getRoleId() != 0) {
           setRoleId(other.getRoleId());
         }
@@ -4057,11 +4057,11 @@ public final class ServerProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.AckRoomTable parsedMessage = null;
+        proto.ServerProto.AckRoleRoomTable parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.AckRoomTable) e.getUnfinishedMessage();
+          parsedMessage = (proto.ServerProto.AckRoleRoomTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4420,39 +4420,39 @@ public final class ServerProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.AckRoomTable)
+      // @@protoc_insertion_point(builder_scope:proto.AckRoleRoomTable)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.AckRoomTable)
-    private static final proto.ServerProto.AckRoomTable DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.AckRoleRoomTable)
+    private static final proto.ServerProto.AckRoleRoomTable DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.ServerProto.AckRoomTable();
+      DEFAULT_INSTANCE = new proto.ServerProto.AckRoleRoomTable();
     }
 
-    public static proto.ServerProto.AckRoomTable getDefaultInstance() {
+    public static proto.ServerProto.AckRoleRoomTable getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<AckRoomTable>
-        PARSER = new com.google.protobuf.AbstractParser<AckRoomTable>() {
-      public AckRoomTable parsePartialFrom(
+    private static final com.google.protobuf.Parser<AckRoleRoomTable>
+        PARSER = new com.google.protobuf.AbstractParser<AckRoleRoomTable>() {
+      public AckRoleRoomTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckRoomTable(input, extensionRegistry);
+          return new AckRoleRoomTable(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<AckRoomTable> parser() {
+    public static com.google.protobuf.Parser<AckRoleRoomTable> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<AckRoomTable> getParserForType() {
+    public com.google.protobuf.Parser<AckRoleRoomTable> getParserForType() {
       return PARSER;
     }
 
-    public proto.ServerProto.AckRoomTable getDefaultInstanceForType() {
+    public proto.ServerProto.AckRoleRoomTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -4479,15 +4479,15 @@ public final class ServerProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_RoomRole_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqRoomTable_descriptor;
+    internal_static_proto_ReqRoleRoomTable_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqRoomTable_fieldAccessorTable;
+      internal_static_proto_ReqRoleRoomTable_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckRoomTable_descriptor;
+    internal_static_proto_AckRoleRoomTable_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckRoomTable_fieldAccessorTable;
+      internal_static_proto_AckRoleRoomTable_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -4505,10 +4505,11 @@ public final class ServerProto {
       "\002 \001(\014\022\021\n\tcreatorId\030\003 \001(\005\022\017\n\007ownerId\030\004 \001(" +
       "\005\022\014\n\004stat\030\005 \001(\005\022#\n\ntableRoles\030\006 \003(\0132\017.pr" +
       "oto.RoomRole\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005" +
-      "\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\"\036\n\014Re" +
-      "qRoomTable\022\016\n\006roleId\030\001 \001(\005\"D\n\014AckRoomTab",
-      "le\022\016\n\006roleId\030\001 \001(\005\022$\n\006tables\030\002 \003(\0132\024.pro" +
-      "to.RoomTableInfoB\rB\013ServerProtob\006proto3"
+      "\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\"\"\n\020Re" +
+      "qRoleRoomTable\022\016\n\006roleId\030\001 \001(\005\"H\n\020AckRol",
+      "eRoomTable\022\016\n\006roleId\030\001 \001(\005\022$\n\006tables\030\002 \003" +
+      "(\0132\024.proto.RoomTableInfoB\rB\013ServerProtob" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4546,17 +4547,17 @@ public final class ServerProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_RoomRole_descriptor,
         new java.lang.String[] { "RoleId", "Avatar", "NickName", });
-    internal_static_proto_ReqRoomTable_descriptor =
+    internal_static_proto_ReqRoleRoomTable_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_proto_ReqRoomTable_fieldAccessorTable = new
+    internal_static_proto_ReqRoleRoomTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqRoomTable_descriptor,
+        internal_static_proto_ReqRoleRoomTable_descriptor,
         new java.lang.String[] { "RoleId", });
-    internal_static_proto_AckRoomTable_descriptor =
+    internal_static_proto_AckRoleRoomTable_descriptor =
       getDescriptor().getMessageTypes().get(5);
-    internal_static_proto_AckRoomTable_fieldAccessorTable = new
+    internal_static_proto_AckRoleRoomTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckRoomTable_descriptor,
+        internal_static_proto_AckRoleRoomTable_descriptor,
         new java.lang.String[] { "RoleId", "Tables", });
   }
 

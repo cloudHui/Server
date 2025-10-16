@@ -87,7 +87,7 @@ public class ReqLoginHandler implements Handler {
 				return;
 			}
 
-			ServerProto.ReqRoomTable request = ServerProto.ReqRoomTable.newBuilder()
+			ServerProto.ReqRoleRoomTable request = ServerProto.ReqRoleRoomTable.newBuilder()
 					.setRoleId(user.getUserId())
 					.build();
 
