@@ -25,7 +25,7 @@ public final class ServerProto {
 
     /**
      * <pre>
-     *这个玩家是要加入房间的(后面有只创建的需求再说)
+     *房间创建者
      * </pre>
      *
      * <code>.proto.RoomRole roomRole = 2;</code>
@@ -33,7 +33,7 @@ public final class ServerProto {
     boolean hasRoomRole();
     /**
      * <pre>
-     *这个玩家是要加入房间的(后面有只创建的需求再说)
+     *房间创建者
      * </pre>
      *
      * <code>.proto.RoomRole roomRole = 2;</code>
@@ -41,7 +41,7 @@ public final class ServerProto {
     proto.ServerProto.RoomRole getRoomRole();
     /**
      * <pre>
-     *这个玩家是要加入房间的(后面有只创建的需求再说)
+     *房间创建者
      * </pre>
      *
      * <code>.proto.RoomRole roomRole = 2;</code>
@@ -151,7 +151,7 @@ public final class ServerProto {
     private proto.ServerProto.RoomRole roomRole_;
     /**
      * <pre>
-     *这个玩家是要加入房间的(后面有只创建的需求再说)
+     *房间创建者
      * </pre>
      *
      * <code>.proto.RoomRole roomRole = 2;</code>
@@ -161,7 +161,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *这个玩家是要加入房间的(后面有只创建的需求再说)
+     *房间创建者
      * </pre>
      *
      * <code>.proto.RoomRole roomRole = 2;</code>
@@ -171,7 +171,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *这个玩家是要加入房间的(后面有只创建的需求再说)
+     *房间创建者
      * </pre>
      *
      * <code>.proto.RoomRole roomRole = 2;</code>
@@ -528,7 +528,7 @@ public final class ServerProto {
           proto.ServerProto.RoomRole, proto.ServerProto.RoomRole.Builder, proto.ServerProto.RoomRoleOrBuilder> roomRoleBuilder_;
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -538,7 +538,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -552,7 +552,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -572,7 +572,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -590,7 +590,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -612,7 +612,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -630,7 +630,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -642,7 +642,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -657,7 +657,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *这个玩家是要加入房间的(后面有只创建的需求再说)
+       *房间创建者
        * </pre>
        *
        * <code>.proto.RoomRole roomRole = 2;</code>
@@ -729,11 +729,6 @@ public final class ServerProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 roomId = 1;</code>
-     */
-    int getRoomId();
-
-    /**
      * <pre>
      *桌子
      * </pre>
@@ -775,7 +770,6 @@ public final class ServerProto {
       super(builder);
     }
     private AckCreateGameTable() {
-      roomId_ = 0;
     }
 
     @java.lang.Override
@@ -804,11 +798,6 @@ public final class ServerProto {
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
-              break;
-            }
-            case 8: {
-
-              roomId_ = input.readInt32();
               break;
             }
             case 18: {
@@ -846,15 +835,6 @@ public final class ServerProto {
       return proto.ServerProto.internal_static_proto_AckCreateGameTable_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               proto.ServerProto.AckCreateGameTable.class, proto.ServerProto.AckCreateGameTable.Builder.class);
-    }
-
-    public static final int ROOMID_FIELD_NUMBER = 1;
-    private int roomId_;
-    /**
-     * <code>int32 roomId = 1;</code>
-     */
-    public int getRoomId() {
-      return roomId_;
     }
 
     public static final int TABLES_FIELD_NUMBER = 2;
@@ -902,9 +882,6 @@ public final class ServerProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (roomId_ != 0) {
-        output.writeInt32(1, roomId_);
-      }
       if (tables_ != null) {
         output.writeMessage(2, getTables());
       }
@@ -916,10 +893,6 @@ public final class ServerProto {
       if (size != -1) return size;
 
       size = 0;
-      if (roomId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, roomId_);
-      }
       if (tables_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getTables());
@@ -940,8 +913,6 @@ public final class ServerProto {
       proto.ServerProto.AckCreateGameTable other = (proto.ServerProto.AckCreateGameTable) obj;
 
       boolean result = true;
-      result = result && (getRoomId()
-          == other.getRoomId());
       result = result && (hasTables() == other.hasTables());
       if (hasTables()) {
         result = result && getTables()
@@ -958,8 +929,6 @@ public final class ServerProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
-      hash = (53 * hash) + getRoomId();
       if (hasTables()) {
         hash = (37 * hash) + TABLES_FIELD_NUMBER;
         hash = (53 * hash) + getTables().hashCode();
@@ -1097,8 +1066,6 @@ public final class ServerProto {
       }
       public Builder clear() {
         super.clear();
-        roomId_ = 0;
-
         if (tablesBuilder_ == null) {
           tables_ = null;
         } else {
@@ -1127,7 +1094,6 @@ public final class ServerProto {
 
       public proto.ServerProto.AckCreateGameTable buildPartial() {
         proto.ServerProto.AckCreateGameTable result = new proto.ServerProto.AckCreateGameTable(this);
-        result.roomId_ = roomId_;
         if (tablesBuilder_ == null) {
           result.tables_ = tables_;
         } else {
@@ -1174,9 +1140,6 @@ public final class ServerProto {
 
       public Builder mergeFrom(proto.ServerProto.AckCreateGameTable other) {
         if (other == proto.ServerProto.AckCreateGameTable.getDefaultInstance()) return this;
-        if (other.getRoomId() != 0) {
-          setRoomId(other.getRoomId());
-        }
         if (other.hasTables()) {
           mergeTables(other.getTables());
         }
@@ -1204,32 +1167,6 @@ public final class ServerProto {
             mergeFrom(parsedMessage);
           }
         }
-        return this;
-      }
-
-      private int roomId_ ;
-      /**
-       * <code>int32 roomId = 1;</code>
-       */
-      public int getRoomId() {
-        return roomId_;
-      }
-      /**
-       * <code>int32 roomId = 1;</code>
-       */
-      public Builder setRoomId(int value) {
-        
-        roomId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 roomId = 1;</code>
-       */
-      public Builder clearRoomId() {
-        
-        roomId_ = 0;
-        onChanged();
         return this;
       }
 
@@ -1439,17 +1376,22 @@ public final class ServerProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>bytes tableId = 1;</code>
+     * <code>int32 roomId = 1;</code>
+     */
+    int getRoomId();
+
+    /**
+     * <code>bytes tableId = 2;</code>
      */
     com.google.protobuf.ByteString getTableId();
 
     /**
-     * <code>int32 creatorId = 2;</code>
+     * <code>int32 creatorId = 3;</code>
      */
     int getCreatorId();
 
     /**
-     * <code>int32 ownerId = 3;</code>
+     * <code>int32 ownerId = 4;</code>
      */
     int getOwnerId();
 
@@ -1458,30 +1400,30 @@ public final class ServerProto {
      *等待中  已开始
      * </pre>
      *
-     * <code>int32 stat = 4;</code>
+     * <code>int32 stat = 5;</code>
      */
     int getStat();
 
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     java.util.List<proto.ServerProto.RoomRole> 
         getTableRolesList();
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     proto.ServerProto.RoomRole getTableRoles(int index);
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     int getTableRolesCount();
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     java.util.List<? extends proto.ServerProto.RoomRoleOrBuilder> 
         getTableRolesOrBuilderList();
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     proto.ServerProto.RoomRoleOrBuilder getTableRolesOrBuilder(
         int index);
@@ -1503,6 +1445,7 @@ public final class ServerProto {
       super(builder);
     }
     private RoomTableInfo() {
+      roomId_ = 0;
       tableId_ = com.google.protobuf.ByteString.EMPTY;
       creatorId_ = 0;
       ownerId_ = 0;
@@ -1538,30 +1481,35 @@ public final class ServerProto {
               }
               break;
             }
-            case 10: {
+            case 8: {
+
+              roomId_ = input.readInt32();
+              break;
+            }
+            case 18: {
 
               tableId_ = input.readBytes();
               break;
             }
-            case 16: {
+            case 24: {
 
               creatorId_ = input.readInt32();
               break;
             }
-            case 24: {
+            case 32: {
 
               ownerId_ = input.readInt32();
               break;
             }
-            case 32: {
+            case 40: {
 
               stat_ = input.readInt32();
               break;
             }
-            case 42: {
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+            case 50: {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
                 tableRoles_ = new java.util.ArrayList<proto.ServerProto.RoomRole>();
-                mutable_bitField0_ |= 0x00000010;
+                mutable_bitField0_ |= 0x00000020;
               }
               tableRoles_.add(
                   input.readMessage(proto.ServerProto.RoomRole.parser(), extensionRegistry));
@@ -1575,7 +1523,7 @@ public final class ServerProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
           tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
         }
         this.unknownFields = unknownFields.build();
@@ -1595,75 +1543,84 @@ public final class ServerProto {
     }
 
     private int bitField0_;
-    public static final int TABLEID_FIELD_NUMBER = 1;
+    public static final int ROOMID_FIELD_NUMBER = 1;
+    private int roomId_;
+    /**
+     * <code>int32 roomId = 1;</code>
+     */
+    public int getRoomId() {
+      return roomId_;
+    }
+
+    public static final int TABLEID_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString tableId_;
     /**
-     * <code>bytes tableId = 1;</code>
+     * <code>bytes tableId = 2;</code>
      */
     public com.google.protobuf.ByteString getTableId() {
       return tableId_;
     }
 
-    public static final int CREATORID_FIELD_NUMBER = 2;
+    public static final int CREATORID_FIELD_NUMBER = 3;
     private int creatorId_;
     /**
-     * <code>int32 creatorId = 2;</code>
+     * <code>int32 creatorId = 3;</code>
      */
     public int getCreatorId() {
       return creatorId_;
     }
 
-    public static final int OWNERID_FIELD_NUMBER = 3;
+    public static final int OWNERID_FIELD_NUMBER = 4;
     private int ownerId_;
     /**
-     * <code>int32 ownerId = 3;</code>
+     * <code>int32 ownerId = 4;</code>
      */
     public int getOwnerId() {
       return ownerId_;
     }
 
-    public static final int STAT_FIELD_NUMBER = 4;
+    public static final int STAT_FIELD_NUMBER = 5;
     private int stat_;
     /**
      * <pre>
      *等待中  已开始
      * </pre>
      *
-     * <code>int32 stat = 4;</code>
+     * <code>int32 stat = 5;</code>
      */
     public int getStat() {
       return stat_;
     }
 
-    public static final int TABLEROLES_FIELD_NUMBER = 5;
+    public static final int TABLEROLES_FIELD_NUMBER = 6;
     private java.util.List<proto.ServerProto.RoomRole> tableRoles_;
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     public java.util.List<proto.ServerProto.RoomRole> getTableRolesList() {
       return tableRoles_;
     }
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     public java.util.List<? extends proto.ServerProto.RoomRoleOrBuilder> 
         getTableRolesOrBuilderList() {
       return tableRoles_;
     }
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     public int getTableRolesCount() {
       return tableRoles_.size();
     }
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     public proto.ServerProto.RoomRole getTableRoles(int index) {
       return tableRoles_.get(index);
     }
     /**
-     * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
     public proto.ServerProto.RoomRoleOrBuilder getTableRolesOrBuilder(
         int index) {
@@ -1682,20 +1639,23 @@ public final class ServerProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (roomId_ != 0) {
+        output.writeInt32(1, roomId_);
+      }
       if (!tableId_.isEmpty()) {
-        output.writeBytes(1, tableId_);
+        output.writeBytes(2, tableId_);
       }
       if (creatorId_ != 0) {
-        output.writeInt32(2, creatorId_);
+        output.writeInt32(3, creatorId_);
       }
       if (ownerId_ != 0) {
-        output.writeInt32(3, ownerId_);
+        output.writeInt32(4, ownerId_);
       }
       if (stat_ != 0) {
-        output.writeInt32(4, stat_);
+        output.writeInt32(5, stat_);
       }
       for (int i = 0; i < tableRoles_.size(); i++) {
-        output.writeMessage(5, tableRoles_.get(i));
+        output.writeMessage(6, tableRoles_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -1705,25 +1665,29 @@ public final class ServerProto {
       if (size != -1) return size;
 
       size = 0;
+      if (roomId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, roomId_);
+      }
       if (!tableId_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, tableId_);
+          .computeBytesSize(2, tableId_);
       }
       if (creatorId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, creatorId_);
+          .computeInt32Size(3, creatorId_);
       }
       if (ownerId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, ownerId_);
+          .computeInt32Size(4, ownerId_);
       }
       if (stat_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, stat_);
+          .computeInt32Size(5, stat_);
       }
       for (int i = 0; i < tableRoles_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, tableRoles_.get(i));
+          .computeMessageSize(6, tableRoles_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1741,6 +1705,8 @@ public final class ServerProto {
       proto.ServerProto.RoomTableInfo other = (proto.ServerProto.RoomTableInfo) obj;
 
       boolean result = true;
+      result = result && (getRoomId()
+          == other.getRoomId());
       result = result && getTableId()
           .equals(other.getTableId());
       result = result && (getCreatorId()
@@ -1762,6 +1728,8 @@ public final class ServerProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
       hash = (53 * hash) + getTableId().hashCode();
       hash = (37 * hash) + CREATORID_FIELD_NUMBER;
@@ -1908,6 +1876,8 @@ public final class ServerProto {
       }
       public Builder clear() {
         super.clear();
+        roomId_ = 0;
+
         tableId_ = com.google.protobuf.ByteString.EMPTY;
 
         creatorId_ = 0;
@@ -1918,7 +1888,7 @@ public final class ServerProto {
 
         if (tableRolesBuilder_ == null) {
           tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ = (bitField0_ & ~0x00000020);
         } else {
           tableRolesBuilder_.clear();
         }
@@ -1946,14 +1916,15 @@ public final class ServerProto {
         proto.ServerProto.RoomTableInfo result = new proto.ServerProto.RoomTableInfo(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
+        result.roomId_ = roomId_;
         result.tableId_ = tableId_;
         result.creatorId_ = creatorId_;
         result.ownerId_ = ownerId_;
         result.stat_ = stat_;
         if (tableRolesBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          if (((bitField0_ & 0x00000020) == 0x00000020)) {
             tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
-            bitField0_ = (bitField0_ & ~0x00000010);
+            bitField0_ = (bitField0_ & ~0x00000020);
           }
           result.tableRoles_ = tableRoles_;
         } else {
@@ -2001,6 +1972,9 @@ public final class ServerProto {
 
       public Builder mergeFrom(proto.ServerProto.RoomTableInfo other) {
         if (other == proto.ServerProto.RoomTableInfo.getDefaultInstance()) return this;
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
+        }
         if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
           setTableId(other.getTableId());
         }
@@ -2017,7 +1991,7 @@ public final class ServerProto {
           if (!other.tableRoles_.isEmpty()) {
             if (tableRoles_.isEmpty()) {
               tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000010);
+              bitField0_ = (bitField0_ & ~0x00000020);
             } else {
               ensureTableRolesIsMutable();
               tableRoles_.addAll(other.tableRoles_);
@@ -2030,7 +2004,7 @@ public final class ServerProto {
               tableRolesBuilder_.dispose();
               tableRolesBuilder_ = null;
               tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000010);
+              bitField0_ = (bitField0_ & ~0x00000020);
               tableRolesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getTableRolesFieldBuilder() : null;
@@ -2067,15 +2041,41 @@ public final class ServerProto {
       }
       private int bitField0_;
 
+      private int roomId_ ;
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public int getRoomId() {
+        return roomId_;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder setRoomId(int value) {
+        
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder clearRoomId() {
+        
+        roomId_ = 0;
+        onChanged();
+        return this;
+      }
+
       private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>bytes tableId = 2;</code>
        */
       public com.google.protobuf.ByteString getTableId() {
         return tableId_;
       }
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>bytes tableId = 2;</code>
        */
       public Builder setTableId(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -2087,7 +2087,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>bytes tableId = 2;</code>
        */
       public Builder clearTableId() {
         
@@ -2098,13 +2098,13 @@ public final class ServerProto {
 
       private int creatorId_ ;
       /**
-       * <code>int32 creatorId = 2;</code>
+       * <code>int32 creatorId = 3;</code>
        */
       public int getCreatorId() {
         return creatorId_;
       }
       /**
-       * <code>int32 creatorId = 2;</code>
+       * <code>int32 creatorId = 3;</code>
        */
       public Builder setCreatorId(int value) {
         
@@ -2113,7 +2113,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>int32 creatorId = 2;</code>
+       * <code>int32 creatorId = 3;</code>
        */
       public Builder clearCreatorId() {
         
@@ -2124,13 +2124,13 @@ public final class ServerProto {
 
       private int ownerId_ ;
       /**
-       * <code>int32 ownerId = 3;</code>
+       * <code>int32 ownerId = 4;</code>
        */
       public int getOwnerId() {
         return ownerId_;
       }
       /**
-       * <code>int32 ownerId = 3;</code>
+       * <code>int32 ownerId = 4;</code>
        */
       public Builder setOwnerId(int value) {
         
@@ -2139,7 +2139,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>int32 ownerId = 3;</code>
+       * <code>int32 ownerId = 4;</code>
        */
       public Builder clearOwnerId() {
         
@@ -2154,7 +2154,7 @@ public final class ServerProto {
        *等待中  已开始
        * </pre>
        *
-       * <code>int32 stat = 4;</code>
+       * <code>int32 stat = 5;</code>
        */
       public int getStat() {
         return stat_;
@@ -2164,7 +2164,7 @@ public final class ServerProto {
        *等待中  已开始
        * </pre>
        *
-       * <code>int32 stat = 4;</code>
+       * <code>int32 stat = 5;</code>
        */
       public Builder setStat(int value) {
         
@@ -2177,7 +2177,7 @@ public final class ServerProto {
        *等待中  已开始
        * </pre>
        *
-       * <code>int32 stat = 4;</code>
+       * <code>int32 stat = 5;</code>
        */
       public Builder clearStat() {
         
@@ -2189,9 +2189,9 @@ public final class ServerProto {
       private java.util.List<proto.ServerProto.RoomRole> tableRoles_ =
         java.util.Collections.emptyList();
       private void ensureTableRolesIsMutable() {
-        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
           tableRoles_ = new java.util.ArrayList<proto.ServerProto.RoomRole>(tableRoles_);
-          bitField0_ |= 0x00000010;
+          bitField0_ |= 0x00000020;
          }
       }
 
@@ -2199,7 +2199,7 @@ public final class ServerProto {
           proto.ServerProto.RoomRole, proto.ServerProto.RoomRole.Builder, proto.ServerProto.RoomRoleOrBuilder> tableRolesBuilder_;
 
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public java.util.List<proto.ServerProto.RoomRole> getTableRolesList() {
         if (tableRolesBuilder_ == null) {
@@ -2209,7 +2209,7 @@ public final class ServerProto {
         }
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public int getTableRolesCount() {
         if (tableRolesBuilder_ == null) {
@@ -2219,7 +2219,7 @@ public final class ServerProto {
         }
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public proto.ServerProto.RoomRole getTableRoles(int index) {
         if (tableRolesBuilder_ == null) {
@@ -2229,7 +2229,7 @@ public final class ServerProto {
         }
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder setTableRoles(
           int index, proto.ServerProto.RoomRole value) {
@@ -2246,7 +2246,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder setTableRoles(
           int index, proto.ServerProto.RoomRole.Builder builderForValue) {
@@ -2260,7 +2260,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder addTableRoles(proto.ServerProto.RoomRole value) {
         if (tableRolesBuilder_ == null) {
@@ -2276,7 +2276,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder addTableRoles(
           int index, proto.ServerProto.RoomRole value) {
@@ -2293,7 +2293,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder addTableRoles(
           proto.ServerProto.RoomRole.Builder builderForValue) {
@@ -2307,7 +2307,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder addTableRoles(
           int index, proto.ServerProto.RoomRole.Builder builderForValue) {
@@ -2321,7 +2321,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder addAllTableRoles(
           java.lang.Iterable<? extends proto.ServerProto.RoomRole> values) {
@@ -2336,12 +2336,12 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder clearTableRoles() {
         if (tableRolesBuilder_ == null) {
           tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ = (bitField0_ & ~0x00000020);
           onChanged();
         } else {
           tableRolesBuilder_.clear();
@@ -2349,7 +2349,7 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public Builder removeTableRoles(int index) {
         if (tableRolesBuilder_ == null) {
@@ -2362,14 +2362,14 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public proto.ServerProto.RoomRole.Builder getTableRolesBuilder(
           int index) {
         return getTableRolesFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public proto.ServerProto.RoomRoleOrBuilder getTableRolesOrBuilder(
           int index) {
@@ -2379,7 +2379,7 @@ public final class ServerProto {
         }
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public java.util.List<? extends proto.ServerProto.RoomRoleOrBuilder> 
            getTableRolesOrBuilderList() {
@@ -2390,14 +2390,14 @@ public final class ServerProto {
         }
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public proto.ServerProto.RoomRole.Builder addTableRolesBuilder() {
         return getTableRolesFieldBuilder().addBuilder(
             proto.ServerProto.RoomRole.getDefaultInstance());
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public proto.ServerProto.RoomRole.Builder addTableRolesBuilder(
           int index) {
@@ -2405,7 +2405,7 @@ public final class ServerProto {
             index, proto.ServerProto.RoomRole.getDefaultInstance());
       }
       /**
-       * <code>repeated .proto.RoomRole tableRoles = 5;</code>
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
        */
       public java.util.List<proto.ServerProto.RoomRole.Builder> 
            getTableRolesBuilderList() {
@@ -2418,7 +2418,7 @@ public final class ServerProto {
           tableRolesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.ServerProto.RoomRole, proto.ServerProto.RoomRole.Builder, proto.ServerProto.RoomRoleOrBuilder>(
                   tableRoles_,
-                  ((bitField0_ & 0x00000010) == 0x00000010),
+                  ((bitField0_ & 0x00000020) == 0x00000020),
                   getParentForChildren(),
                   isClean());
           tableRoles_ = null;
@@ -4499,16 +4499,16 @@ public final class ServerProto {
     java.lang.String[] descriptorData = {
       "\n\014server.proto\022\005proto\"G\n\022ReqCreateGameTa" +
       "ble\022\016\n\006roomId\030\001 \001(\005\022!\n\010roomRole\030\002 \001(\0132\017." +
-      "proto.RoomRole\"J\n\022AckCreateGameTable\022\016\n\006" +
-      "roomId\030\001 \001(\005\022$\n\006tables\030\002 \001(\0132\024.proto.Roo" +
-      "mTableInfo\"w\n\rRoomTableInfo\022\017\n\007tableId\030\001" +
-      " \001(\014\022\021\n\tcreatorId\030\002 \001(\005\022\017\n\007ownerId\030\003 \001(\005" +
-      "\022\014\n\004stat\030\004 \001(\005\022#\n\ntableRoles\030\005 \003(\0132\017.pro" +
-      "to.RoomRole\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005\022" +
-      "\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\"\036\n\014Req" +
-      "RoomTable\022\016\n\006roleId\030\001 \001(\005\"D\n\014AckRoomTabl",
-      "e\022\016\n\006roleId\030\001 \001(\005\022$\n\006tables\030\002 \003(\0132\024.prot" +
-      "o.RoomTableInfoB\rB\013ServerProtob\006proto3"
+      "proto.RoomRole\":\n\022AckCreateGameTable\022$\n\006" +
+      "tables\030\002 \001(\0132\024.proto.RoomTableInfo\"\207\001\n\rR" +
+      "oomTableInfo\022\016\n\006roomId\030\001 \001(\005\022\017\n\007tableId\030" +
+      "\002 \001(\014\022\021\n\tcreatorId\030\003 \001(\005\022\017\n\007ownerId\030\004 \001(" +
+      "\005\022\014\n\004stat\030\005 \001(\005\022#\n\ntableRoles\030\006 \003(\0132\017.pr" +
+      "oto.RoomRole\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005" +
+      "\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\"\036\n\014Re" +
+      "qRoomTable\022\016\n\006roleId\030\001 \001(\005\"D\n\014AckRoomTab",
+      "le\022\016\n\006roleId\030\001 \001(\005\022$\n\006tables\030\002 \003(\0132\024.pro" +
+      "to.RoomTableInfoB\rB\013ServerProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4533,13 +4533,13 @@ public final class ServerProto {
     internal_static_proto_AckCreateGameTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckCreateGameTable_descriptor,
-        new java.lang.String[] { "RoomId", "Tables", });
+        new java.lang.String[] { "Tables", });
     internal_static_proto_RoomTableInfo_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_RoomTableInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_RoomTableInfo_descriptor,
-        new java.lang.String[] { "TableId", "CreatorId", "OwnerId", "Stat", "TableRoles", });
+        new java.lang.String[] { "RoomId", "TableId", "CreatorId", "OwnerId", "Stat", "TableRoles", });
     internal_static_proto_RoomRole_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_proto_RoomRole_fieldAccessorTable = new

@@ -59,13 +59,6 @@ public class TableManager {
 	}
 
 	/**
-	 * 存房间信息
-	 */
-	public synchronized void putRoomInfo(TableInfo tableInfo) {
-		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
-	}
-
-	/**
 	 * 获取所有展示房间信息
 	 */
 	public synchronized void getAllRoomTable(RoomProto.AckGetRoomList.Builder response) {
@@ -107,7 +100,6 @@ public class TableManager {
 		return model;
 	}
 
-
 	/**
 	 * 获取模板可加入房间
 	 */
@@ -125,10 +117,13 @@ public class TableManager {
 		return null;
 	}
 
+
 	/**
-	 * 获取所有模板ID
+	 * 存房间信息
 	 */
-	public List<Integer> getAllModelIds() {
-		return new ArrayList<>(tableModelMap.keySet());
+	public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
+		TableInfo tableInfo = new TableInfo(roomTable.getTableId().toStringUtf8(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
+		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
+		return tableInfo;
 	}
 }

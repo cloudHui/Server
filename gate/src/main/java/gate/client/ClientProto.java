@@ -20,9 +20,9 @@ import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ConstProto;
 import proto.HallProto;
 import proto.ModelProto;
-import proto.ResultProto;
 import utils.ServerManager;
 
 /**
@@ -125,7 +125,7 @@ public class ClientProto {
 										ConnectHandler serverConnection, GateTcpClient client) {
 		logger.error("发送消息到服务器失败, msgId: {}, server: {}, error: {}",
 				Integer.toHexString(msgId), serverConnection.getConnectServer(), error.getMessage());
-		client.sendMessage(TCPMessage.newInstance(ResultProto.Result.TIME_OUT_VALUE));
+		client.sendMessage(TCPMessage.newInstance(ConstProto.Result.TIME_OUT_VALUE));
 	}
 
 	/**

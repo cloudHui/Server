@@ -32,7 +32,7 @@ public class GameUser {
 		return online;
 	}
 
-	public void setOnline(boolean online) {
+	public void setOnLine(boolean online) {
 		boolean changed = this.online != online;
 		this.online = online;
 		if (changed) {

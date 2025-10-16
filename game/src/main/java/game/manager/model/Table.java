@@ -1,8 +1,9 @@
 package game.manager.model;
 
+import game.Game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import game.Game;
+import proto.ServerProto;
 
 /**
  * 游戏桌子模型
@@ -13,13 +14,20 @@ public class Table {
 
 	private final String tableId;
 
-	public Table(String tableId) {
+	private final ServerProto.RoomRole creator;
+
+	public Table(String tableId, ServerProto.RoomRole creator) {
 		this.tableId = tableId;
+		this.creator = creator;
 		logger.debug("创建桌子实例, tableId: {}", tableId);
 	}
 
 	public String getTableId() {
 		return tableId;
+	}
+
+	public ServerProto.RoomRole getCreator() {
+		return creator;
 	}
 
 	/**

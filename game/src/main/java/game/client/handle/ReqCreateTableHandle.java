@@ -28,7 +28,7 @@ public class ReqCreateTableHandle implements Handler {
 			logger.info("处理创建桌子请求, clientId: {}, roomId: {}", clientId, roomId);
 
 			// 创建桌子并生成响应
-			ServerProto.AckCreateGameTable response = createGameTable(roomId);
+			ServerProto.AckCreateGameTable response = createGameTable(roomId, request.getRoomRole());
 
 			// 发送响应
 			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId, response, sequence);
@@ -44,14 +44,14 @@ public class ReqCreateTableHandle implements Handler {
 	/**
 	 * 创建游戏桌子
 	 */
-	private ServerProto.AckCreateGameTable createGameTable(int roomId) {
+	private ServerProto.AckCreateGameTable createGameTable(int roomId, ServerProto.RoomRole role) {
 		TableManager tableManager = game.Game.getInstance().getTableManager();
 
 		// 生成桌子ID
 		String tableId = tableManager.getTableId();
 
 		// 创建桌子实例
-		Table table = new Table(tableId);
+		Table table = new Table(tableId, role);
 		tableManager.addTable(table);
 
 		// 启动桌子逻辑循环
@@ -59,9 +59,9 @@ public class ReqCreateTableHandle implements Handler {
 
 		// 构建响应
 		ServerProto.AckCreateGameTable.Builder response = ServerProto.AckCreateGameTable.newBuilder();
-		response.setRoomId(roomId);
 		response.setTables(ServerProto.RoomTableInfo.newBuilder()
 				.setTableId(com.google.protobuf.ByteString.copyFromUtf8(tableId))
+				.setRoomId(roomId)
 				.build());
 
 		logger.debug("创建游戏桌子成功, tableId: {}, roomId: {}", tableId, roomId);

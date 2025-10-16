@@ -1,5 +1,5 @@
 syntax = "proto3";
-option java_outer_classname = "ResultProto";
+option java_outer_classname = "ConstProto";
 
 package proto;
 
@@ -9,4 +9,9 @@ enum Result{
     TIME_OUT = 2;//回复超时
     SERVER_ERROR = 3;//服务错误
     TABLE_CONFIG_ERROR = 5;//桌子配置错误
+}
+
+enum TableState{
+    WAITE = 0;//等待
+    START = 1;//开始
 }

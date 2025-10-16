@@ -1,15 +1,15 @@
 package game.client.handle;
 
+import com.google.protobuf.Message;
 import game.manager.TableManager;
 import game.manager.model.GameUser;
 import game.manager.model.Table;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.google.protobuf.Message;
 import msg.annotation.ProcessType;
 import msg.registor.message.GMsg;
 import net.client.Sender;
 import net.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.GameProto;
 
 /**
@@ -25,12 +25,11 @@ public class ReqEnterTableHandle implements Handler {
 		try {
 			GameProto.ReqEnterTable request = (GameProto.ReqEnterTable) message;
 			String tableId = request.getTableId().toStringUtf8();
-			int userId = request.getUserId();
 
-			logger.info("处理进入桌子请求, userId: {}, tableId: {}, clientId: {}", userId, tableId, clientId);
+			logger.info("处理进入桌子请求, userId: {}, tableId: {}", clientId, tableId);
 
 			// 处理进入桌子逻辑
-			boolean success = processEnterTable(userId, tableId);
+			boolean success = processEnterTable(clientId, tableId);
 
 			// 构建响应
 			GameProto.AckEnterTable response = buildEnterTableResponse();
@@ -38,11 +37,10 @@ public class ReqEnterTableHandle implements Handler {
 			// 发送响应
 			sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, mapId, response, sequence);
 
-			logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}",
-					userId, tableId, success);
+			logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", clientId, tableId, success);
 			return true;
 		} catch (Exception e) {
-			logger.error("处理进入桌子请求失败, clientId: {}", clientId, e);
+			logger.error("处理进入桌子请求失败, userId: {}", clientId, e);
 			return false;
 		}
 	}

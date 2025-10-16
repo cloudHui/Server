@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import model.TableModel;
-import msg.registor.enums.TableState;
+import proto.ConstProto;
 import room.manager.user.User;
 
 /**
@@ -23,7 +23,7 @@ public class TableInfo {
 
 	private int ownerId;
 
-	private TableState stat = TableState.WAITE;
+	private ConstProto.TableState stat = ConstProto.TableState.WAITE;
 
 	private final Set<User> tableRoles = new HashSet<>();
 
@@ -49,7 +49,7 @@ public class TableInfo {
 		return ownerId;
 	}
 
-	public TableState getStat() {
+	public ConstProto.TableState getStat() {
 		return stat;
 	}
 
@@ -61,13 +61,12 @@ public class TableInfo {
 		this.ownerId = ownerId;
 	}
 
-	public void setStat(TableState stat) {
+	public void setStat(ConstProto.TableState stat) {
 		this.stat = stat;
 	}
 
 	public void joinRole(User user) {
 		tableRoles.add(user);
-		//Todo 机器人房间只要加入了真人玩家就直接开始
 	}
 
 	public void removeUser(User user) {
@@ -75,6 +74,6 @@ public class TableInfo {
 	}
 
 	public boolean canJoin() {
-		return stat == TableState.WAITE && tableRoles.size() < model.getNum();
+		return stat == ConstProto.TableState.WAITE && tableRoles.size() < model.getNum();
 	}
 }
