@@ -190,6 +190,7 @@ public class Room {
 			ClientProto.init();
 			ConnectProcessor.init();
 			HandleManager.init(ClientProto.class);
+			HandleManager.init(ConnectProcessor.class);
 			String[] centerAddress = center.split(":");
 			if (centerAddress.length != 2) {
 				throw new IllegalArgumentException("中心服务器地址格式错误: " + center);
@@ -200,7 +201,7 @@ public class Room {
 			serverManager.registerSever(centerAddress, ConnectProcessor.TRANSFER,
 					ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
 					ServerType.Center, serverId, serverInfo.getIpConfig().toStringUtf8(),
-					ServerType.Room, new TCPConnect.CallParam(CMsg.REQ_SERVER, serverInfoRequest));
+					ServerType.Room, new TCPConnect.CallParam(CMsg.REQ_SERVER, serverInfoRequest, HandleManager::sendMsg, ConnectProcessor.PARSER));
 
 			logger.info("已向中心服务器注册, 地址: {}:{}", centerAddress[0], centerAddress[1]);
 
