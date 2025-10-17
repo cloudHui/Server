@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 
 /**
- * 处理网关服务器注册请求
- * 负责管理网关服务器到游戏服务器的连接注册
+ * 处理服务器注册请求
+ * 负责管理服务器到游戏服务器的连接注册
  */
 @ProcessType(CMsg.REQ_REGISTER)
 public class ReqRegisterHandle implements Handler {
@@ -32,18 +32,18 @@ public class ReqRegisterHandle implements Handler {
 				return true;
 			}
 
-			logger.info("处理网关注册请求, serverType: {}, serverId: {}, address: {}",
+			logger.info("处理注册请求, serverType: {}, serverId: {}, address: {}",
 					serverType, serverInfo.getServerId(), serverInfo.getIpConfig().toStringUtf8());
 
-			// 处理网关注册
-			processGatewayRegistration(sender, serverInfo, serverType);
+			// 处理服务注册
+			processRegistration(sender, serverInfo, serverType);
 
 			// 发送注册响应
 			sendRegistrationResponse(sender, clientId, mapId, sequence);
 
 			return true;
 		} catch (Exception e) {
-			logger.error("处理网关注册请求失败", e);
+			logger.error("处理注册请求失败", e);
 			return false;
 		}
 	}
@@ -51,13 +51,13 @@ public class ReqRegisterHandle implements Handler {
 	/**
 	 * 处理网关注册
 	 */
-	private void processGatewayRegistration(Sender sender, ModelProto.ServerInfo serverInfo, ServerType serverType) {
+	private void processRegistration(Sender sender, ModelProto.ServerInfo serverInfo, ServerType serverType) {
 		GameClient client = (GameClient) sender;
 		client.setServerInfo(serverInfo);
 
 		Game.getInstance().getServerClientManager().addServerClient(serverType, client, serverInfo.getServerId());
 
-		logger.info("网关注册成功, serverType: {}, serverId: {}", serverType, serverInfo.getServerId());
+		logger.info("注册成功, serverType: {}, serverId: {}", serverType, serverInfo.getServerId());
 	}
 
 	/**

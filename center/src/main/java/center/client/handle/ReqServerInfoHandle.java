@@ -30,12 +30,12 @@ public class ReqServerInfoHandle implements Handler {
 			ModelProto.ReqServerInfo request = (ModelProto.ReqServerInfo) message;
 			ServerClientManager manager = Center.getInstance().getServerManager();
 
-			logger.debug("处理服务信息查询请求, 查询类型数量: {}", request.getServerTypeCount());
+			logger.info("处理服务信息查询请求, 查询类型数量: {}", request.getServerTypeCount());
 
 			ModelProto.AckServerInfo response = buildServerInfoResponse(request, manager);
 			sender.sendMessage(clientId, CMsg.ACK_SERVER, mapId, response, sequence);
 
-			logger.debug("返回服务信息, 服务器数量: {}", response.getServersCount());
+			logger.info("返回服务信息, 服务器数量: {}", response.getServersCount());
 			return true;
 		} catch (Exception e) {
 			logger.error("处理服务信息查询请求失败", e);
@@ -53,7 +53,7 @@ public class ReqServerInfoHandle implements Handler {
 		for (int serverTypeValue : serverTypes) {
 			ServerType serverType = ServerType.get(serverTypeValue);
 			if (serverType == null) {
-				logger.warn("未知的服务器类型值: {}", serverTypeValue);
+				logger.error("未知的服务器类型值: {}", serverTypeValue);
 				continue;
 			}
 
@@ -71,7 +71,7 @@ public class ReqServerInfoHandle implements Handler {
 										 ServerType serverType) {
 		List<ClientHandler> servers = manager.getAllTypeServer(serverType);
 		if (servers == null || servers.isEmpty()) {
-			logger.debug("该类型服务器暂无在线实例: {}", serverType);
+			logger.info("该类型服务器暂无在线实例: {}", serverType);
 			return;
 		}
 
@@ -84,6 +84,6 @@ public class ReqServerInfoHandle implements Handler {
 			}
 		}
 
-		logger.debug("添加服务器信息到响应, serverType: {}, 数量: {}", serverType, addedCount);
+		logger.info("添加服务器信息到响应, serverType: {}, 数量: {}", serverType, addedCount);
 	}
 }

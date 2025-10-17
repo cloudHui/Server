@@ -36,14 +36,14 @@ public class ReqRegisterHandle implements Handler {
 				return true;
 			}
 
-			logger.debug("处理服务注册请求, serverType: {}, serverId: {}, address: {}",
+			logger.info("处理服务注册请求, serverType: {}, serverId: {}, address: {}",
 					serverType, serverInfo.getServerId(), serverInfo.getIpConfig().toStringUtf8());
 
 			// 处理服务器注册
 			processServerRegistration(sender, serverInfo, serverType);
 
 			// 发送注册响应
-			sendRegistrationResponse(sender, clientId, mapId, sequence);
+			sendRegistrationResponse(sender, serverType, sequence);
 
 			// 通知相关服务器新服务上线
 			notifyRelatedServers(serverInfo, serverType);
@@ -76,18 +76,18 @@ public class ReqRegisterHandle implements Handler {
 		newClient.setServerInfo(serverInfo);
 		manager.addServerClient(serverType, newClient, serverId);
 
-		logger.debug("服务器注册成功, serverType: {}, serverId: {}", serverType, serverId);
+		logger.info("服务器注册成功, serverType: {}, serverId: {}", serverType, serverId);
 	}
 
 	/**
 	 * 发送注册响应
 	 */
-	private void sendRegistrationResponse(Sender sender, int clientId, int mapId, int sequence) {
+	private void sendRegistrationResponse(Sender sender, ServerType serverType, int sequence) {
 		ModelProto.AckRegister.Builder response = ModelProto.AckRegister.newBuilder();
 		response.setServerInfo(Center.getInstance().getServerInfo().build());
 
-		sender.sendMessage(clientId, CMsg.ACK_REGISTER, mapId, response.build(), sequence);
-		logger.debug("已发送注册响应, clientId: {}", clientId);
+		sender.sendMessage(CMsg.ACK_REGISTER, response.build(), sequence);
+		logger.info("已发送注册响应, serverType: {}", serverType);
 	}
 
 	/**
@@ -113,10 +113,10 @@ public class ReqRegisterHandle implements Handler {
 				break;
 			case Gate:
 				// 网关服务器上线，不需要特别通知其他服务器
-				logger.debug("网关服务器注册，无需特别通知");
+				logger.info("网关服务器注册，无需特别通知");
 				break;
 			default:
-				logger.warn("未知服务器类型，不进行通知: {}", serverType);
+				logger.error("未知服务器类型，不进行通知: {}", serverType);
 				break;
 		}
 	}
@@ -127,7 +127,7 @@ public class ReqRegisterHandle implements Handler {
 	private void notifyServerConnect(ServerClientManager manager, ModelProto.ServerInfo serverInfo, ServerType targetServerType) {
 		List<ClientHandler> targetServers = manager.getAllTypeServer(targetServerType);
 		if (targetServers == null || targetServers.isEmpty()) {
-			logger.debug("目标服务器类型暂无在线实例: {}", targetServerType);
+			logger.info("目标服务器类型暂无在线实例: {}", targetServerType);
 			return;
 		}
 

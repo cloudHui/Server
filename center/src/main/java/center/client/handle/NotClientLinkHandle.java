@@ -30,7 +30,7 @@ public class NotClientLinkHandle implements Handler {
 		if (removedGate != null) {
 			logger.info("客户端断开连接, clientIp: {}, gate: {}", clientIp, removedGate);
 		} else {
-			logger.debug("客户端断开连接但未找到映射, clientIp: {}", clientIp);
+			logger.error("客户端断开连接但未找到映射, clientIp: {}", clientIp);
 		}
 	}
 
@@ -39,7 +39,7 @@ public class NotClientLinkHandle implements Handler {
 	 */
 	public static void addClientConnection(String clientIp, String gateAddress) {
 		if (clientIp == null || gateAddress == null) {
-			logger.warn("无效的客户端连接参数, clientIp: {}, gate: {}", clientIp, gateAddress);
+			logger.error("无效的客户端连接参数, clientIp: {}, gate: {}", clientIp, gateAddress);
 			return;
 		}
 
