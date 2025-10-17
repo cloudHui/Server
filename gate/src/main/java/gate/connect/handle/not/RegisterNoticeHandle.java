@@ -1,4 +1,4 @@
-package gate.connect.handle;
+package gate.connect.handle.not;
 
 import com.google.protobuf.Message;
 import gate.Gate;

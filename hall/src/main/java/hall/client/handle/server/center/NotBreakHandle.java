@@ -1,5 +1,5 @@
 // 示例：NotBreakHandle.java 优化后
-package hall.client.handle.server;
+package hall.client.handle.server.center;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

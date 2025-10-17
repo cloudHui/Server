@@ -1,4 +1,4 @@
-package room.client.handle.server;
+package room.client.handle.server.hall.time;
 
 
 import com.google.protobuf.Message;
@@ -8,7 +8,7 @@ import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ServerProto;
-import room.client.handle.ReqJoinTableHandle;
+import room.client.handle.role.ReqJoinTableHandle;
 import room.manager.table.TableInfo;
 import room.manager.table.TableManager;
 import room.manager.user.User;

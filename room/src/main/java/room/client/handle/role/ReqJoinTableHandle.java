@@ -1,4 +1,4 @@
-package room.client.handle;
+package room.client.handle.role;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;

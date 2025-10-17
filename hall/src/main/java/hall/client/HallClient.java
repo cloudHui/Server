@@ -49,8 +49,4 @@ public class HallClient extends ClientHandler {
 		logger.debug("设置服务器信息, serverType: {}, serverId: {}",
 				ServerType.get(serverInfo.getServerType()), serverInfo.getServerId());
 	}
-
-	public ModelProto.ServerInfo getServerInfo() {
-		return serverInfo;
-	}
 }

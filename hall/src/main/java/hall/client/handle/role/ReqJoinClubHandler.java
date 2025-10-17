@@ -1,4 +1,4 @@
-package hall.client.handle;
+package hall.client.handle.role;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessType;

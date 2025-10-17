@@ -1,4 +1,4 @@
-package game.client.handle;
+package game.client.handle.server;
 
 import com.google.protobuf.Message;
 import game.manager.TableManager;

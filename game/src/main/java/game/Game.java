@@ -35,7 +35,7 @@ public class Game {
 	private Timer timer;
 	private int serverId;
 	private String center;
-	private ModelProto.ServerInfo.Builder serverInfo;
+	private ModelProto.ServerInfo serverInfo;
 	private ServerManager serverManager;
 	private TableManager tableManager;
 
@@ -87,7 +87,7 @@ public class Game {
 		this.tableManager = tableManager;
 	}
 
-	public ModelProto.ServerInfo.Builder getServerInfo() {
+	public ModelProto.ServerInfo getServerInfo() {
 		return serverInfo;
 	}
 

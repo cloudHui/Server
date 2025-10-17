@@ -16,9 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
+import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
+import utils.manager.HandleManager;
 import utils.other.IpUtil;
 
 /**
@@ -93,6 +95,12 @@ public class Gate {
 
 	public void execute(Runnable task) {
 		executorPool.execute(task);
+	}
+
+
+	public <T> void registerTimer(long delay, long interval, int count, Runner<T> runner, T param) {
+		timer.register(delay, interval, count, runner, param);
+		logger.debug("注册定时器, delay: {}, interval: {}, count: {}", delay, interval, count);
 	}
 
 	/**
@@ -171,7 +179,7 @@ public class Gate {
 		try {
 			ConnectProcessor.init();
 			ClientProto.init();
-
+			HandleManager.init(ConnectProcessor.class);
 			String[] centerAddress = center.split(":");
 			if (centerAddress.length != 2) {
 				throw new IllegalArgumentException("中心服务器地址格式错误: " + center);
@@ -183,7 +191,8 @@ public class Gate {
 			serverManager.registerSever(centerAddress, null, ConnectProcessor.PARSER,
 					ConnectProcessor.HANDLERS, ServerType.Center, serverId,
 					serverAddress, ServerType.Gate,
-					new TCPConnect.CallParam(CMsg.REQ_SERVER, serverInfo));
+					new TCPConnect.CallParam(CMsg.REQ_SERVER, serverInfo,
+							HandleManager::sendMsg, ConnectProcessor.PARSER));
 
 			logger.info("已向中心服务器注册, 地址: {}:{}", centerAddress[0], centerAddress[1]);
 

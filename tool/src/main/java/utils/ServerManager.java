@@ -243,13 +243,13 @@ public class ServerManager {
 	/**
 	 * 构建服务信息
 	 */
-	public static ModelProto.ServerInfo.Builder buildServerInfo(ConfigurationManager cfgMgr,
+	public static ModelProto.ServerInfo buildServerInfo(ConfigurationManager cfgMgr,
 																ServerType serverType) {
 		return ModelProto.ServerInfo.newBuilder()
 				.setServerId(cfgMgr.getInt("id", 0))
 				.setServerType(serverType.getServerType())
 				.setIpConfig(ByteString.copyFromUtf8(
-						IpUtil.getLocalIP() + ":" + cfgMgr.getInt("port", 0)));
+						IpUtil.getLocalIP() + ":" + cfgMgr.getInt("port", 0))).build();
 	}
 
 	/**

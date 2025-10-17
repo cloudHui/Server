@@ -1,4 +1,4 @@
-package game.client.handle;
+package game.client.handle.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

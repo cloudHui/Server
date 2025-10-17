@@ -40,7 +40,7 @@ public class Hall {
 	private String center;
 	private String innerIp;
 	private int port;
-	private ModelProto.ServerInfo.Builder serverInfo;
+	private ModelProto.ServerInfo serverInfo;
 	private ServerManager serverManager;
 
 	private Hall() {
@@ -96,7 +96,7 @@ public class Hall {
 		return serverManager;
 	}
 
-	public ModelProto.ServerInfo.Builder getServerInfo() {
+	public ModelProto.ServerInfo getServerInfo() {
 		return serverInfo;
 	}
 

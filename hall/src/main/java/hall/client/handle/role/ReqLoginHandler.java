@@ -1,4 +1,4 @@
-package hall.client.handle;
+package hall.client.handle.role;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

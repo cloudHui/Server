@@ -96,11 +96,11 @@ public class HandleManager {
 				}
 
 				// 解析返回消息
-				Message message = parser.parser(msgId, msg.getMessage());
-				ConnectHandle connectHandle = handleMap.get(parser.getClass());
+				Message message = parser.parser(msg.getMessageId(), msg.getMessage());
+				ConnectHandle connectHandle = handleMap.get(message.getClass());
 				if (connectHandle == null) {
 					LOGGER.error("未找到对应的消息处理器 - 解析器类型:{}，消息ID:0x{}，用户ID:{}",
-							parser.getClass().getSimpleName(), Integer.toHexString(msgId), userId);
+							parser.getClass().getSimpleName(), Integer.toHexString(msg.getMessageId()), userId);
 					return;
 				}
 

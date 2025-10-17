@@ -17,12 +17,14 @@ import room.client.RoomClient;
 import room.connect.ConnectProcessor;
 import room.manager.table.TableManager;
 import threadtutil.thread.ExecutorPool;
+import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
 import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.config.ServerConfiguration;
 import utils.manager.HandleManager;
+import utils.other.IpUtil;
 
 /**
  * 房间服务器主类
@@ -38,7 +40,9 @@ public class Room {
 
 	private int serverId;
 	private String center;
-	private ModelProto.ServerInfo.Builder serverInfo;
+	private String innerIp;
+	private int port;
+	private ModelProto.ServerInfo serverInfo;
 	private ServerManager serverManager;
 
 	private Room() {
@@ -70,7 +74,7 @@ public class Room {
 		return serverManager;
 	}
 
-	public ModelProto.ServerInfo.Builder getServerInfo() {
+	public ModelProto.ServerInfo getServerInfo() {
 		return serverInfo;
 	}
 
@@ -78,8 +82,29 @@ public class Room {
 		return serverClientManager;
 	}
 
+	public String getInnerIp() {
+		return innerIp;
+	}
+
+	public void setInnerIp(String innerIp) {
+		this.innerIp = innerIp;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
 	public void execute(Runnable task) {
 		executorPool.execute(task);
+	}
+
+	public <T> void registerTimer(long delay, long interval, int count, Runner<T> runner, T param) {
+		timer.register(delay, interval, count, runner, param);
+		logger.debug("注册定时器, delay: {}, interval: {}, count: {}", delay, interval, count);
 	}
 
 	/**
@@ -121,7 +146,8 @@ public class Room {
 		if (serverConfig == null || !serverConfig.hasHostString()) {
 			throw new RuntimeException("找不到房间服务器配置");
 		}
-
+		setInnerIp(IpUtil.getLocalIP());
+		setPort(config.getInt("port", 0));
 		serverId = config.getInt("id", 0);
 		center = config.getProperty("center");
 		serverInfo = ServerManager.buildServerInfo(config, ServerType.Room);

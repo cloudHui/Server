@@ -1,15 +1,15 @@
-package hall.connect.center;
+package room.connect.center.time;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.google.protobuf.Message;
-import hall.Hall;
-import hall.connect.ConnectProcessor;
-import msg.annotation.ProcessType;
+import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
 import net.connect.handle.ConnectHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import room.Room;
+import room.connect.ConnectProcessor;
 import utils.manager.ConnectHandle;
 import utils.manager.HandleManager;
 
@@ -17,7 +17,7 @@ import utils.manager.HandleManager;
  * 处理中心服务器返回的服务信息响应
  * 负责连接到大堂需要的其他服务
  */
-@ProcessType(CMsg.ACK_SERVER)
+@ProcessClass(ModelProto.AckServerInfo.class)
 public class AckServerInfoHandle implements ConnectHandle {
 	private static final Logger logger = LoggerFactory.getLogger(AckServerInfoHandle.class);
 
@@ -48,33 +48,30 @@ public class AckServerInfoHandle implements ConnectHandle {
 	 */
 	private void processServerInfo(ModelProto.AckServerInfo response) {
 		ModelProto.ServerInfo serverInfo = response.getServers(0);
+		logger.info("处理请求需要连接的服务器信息返回, response:{}", response.toString());
 
-		logger.info("处理服务器信息, serverType: {}, serverId: {}, address: {}",
-				serverInfo.getServerType(), serverInfo.getServerId(),
-				serverInfo.getIpConfig().toStringUtf8());
-
-		Hall.getInstance().execute(() ->
-				Hall.getInstance().getServerManager().connectToSingleServer(
+		Room.getInstance().execute(() ->
+				Room.getInstance().getServerManager().connectToSingleServer(
 						serverInfo,
-						Hall.getInstance().getServerId(),
-						Hall.getInstance().getInnerIp() + ":" + Hall.getInstance().getPort(),
+						Room.getInstance().getServerId(),
+						Room.getInstance().getInnerIp() + ":" + Room.getInstance().getPort(),
 						ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-						ConnectProcessor.HANDLERS, ServerType.Hall, null));
+						ConnectProcessor.HANDLERS, ServerType.Room, null));
 	}
 
 	/**
 	 * 调度重试机制
 	 */
 	private void scheduleRetry(ConnectHandler serverClient) {
-		logger.warn("未找到可用服务器，将在 {}ms 后重试", RETRY_DELAY);
+		logger.error("未找到可用服务器，将在 {}ms 后重试", RETRY_DELAY);
 
-		Hall.getInstance().registerTimer(RETRY_DELAY, RETRY_INTERVAL, RETRY_COUNT, robot -> {
+		Room.getInstance().registerTimer(RETRY_DELAY, RETRY_INTERVAL, RETRY_COUNT, room -> {
 			ModelProto.ReqServerInfo request = ModelProto.ReqServerInfo.newBuilder()
-					.addServerType(ServerType.Room.getServerType())
+					.addServerType(ServerType.Game.getServerType())
 					.build();
 
 			HandleManager.sendMsg(CMsg.REQ_SERVER, request, serverClient, ConnectProcessor.PARSER);
 			return true;
-		}, Hall.getInstance());
+		}, Room.getInstance());
 	}
 }

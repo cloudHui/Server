@@ -49,8 +49,4 @@ public class RoomClient extends ClientHandler {
 		logger.debug("设置服务器信息, serverId: {}, type: {}",
 				serverInfo.getServerId(), serverInfo.getServerType());
 	}
-
-	public ModelProto.ServerInfo getServerInfo() {
-		return serverInfo;
-	}
 }
