@@ -20,15 +20,12 @@ class CenterHttpService extends HttpService {
 
 	CenterHttpService() {
 		super(new NioEventLoopGroup(), new NioEventLoopGroup());
-		logger.debug("创建中心服务器HTTP服务");
 	}
 
 	void start(SocketAddress address) {
 		try {
 			super.start(address, ServerDecoder.class, RESPONSE_MAKER);
-			logger.info("中心服务器HTTP服务启动成功, 地址: {}", address);
 		} catch (Exception e) {
-			logger.error("中心服务器HTTP服务启动失败, 地址: {}", address, e);
 			throw new RuntimeException("HTTP服务启动失败", e);
 		}
 	}

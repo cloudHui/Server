@@ -72,9 +72,6 @@ public class Center {
 
 			// 启动HTTP服务
 			startHttpService(config);
-
-			logger.info("中心服务器启动完成");
-
 		} catch (Exception e) {
 			logger.error("中心服务器启动过程中发生错误", e);
 			throw new RuntimeException("中心服务器启动失败", e);

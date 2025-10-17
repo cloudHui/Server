@@ -38,10 +38,6 @@ public class TableManager {
 		logger.info("桌子管理器初始化完成");
 	}
 
-	public String getIdPrefix() {
-		return idPrefix;
-	}
-
 	public void setIdPrefix(String idPrefix) {
 		this.idPrefix = idPrefix;
 	}
