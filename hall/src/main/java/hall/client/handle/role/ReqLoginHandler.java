@@ -48,11 +48,10 @@ public class ReqLoginHandler implements Handler {
 			// 向房间服务器请求用户房间信息
 			requestUserRoomInfo(user, sequence);
 
-			return true;
 		} catch (Exception e) {
 			logger.error("处理登录请求失败, gateId: {}", gateId, e);
-			return false;
 		}
+		return true;
 	}
 
 	/**

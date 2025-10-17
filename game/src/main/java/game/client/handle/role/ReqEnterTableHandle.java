@@ -38,11 +38,10 @@ public class ReqEnterTableHandle implements Handler {
 			sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, mapId, response, sequence);
 
 			logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", clientId, tableId, success);
-			return true;
 		} catch (Exception e) {
 			logger.error("处理进入桌子请求失败, userId: {}", clientId, e);
-			return false;
 		}
+		return true;
 	}
 
 	/**

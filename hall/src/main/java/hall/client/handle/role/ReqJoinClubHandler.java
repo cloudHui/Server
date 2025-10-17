@@ -31,11 +31,10 @@ public class ReqJoinClubHandler implements Handler {
 			sender.sendMessage(clientId, HMsg.ACK_JOIN_CLUB_MSG, mapId, response.build(), sequence);
 
 			logger.info("加入工会请求处理完成, clientId: {}", clientId);
-			return true;
 		} catch (Exception e) {
 			logger.error("处理加入工会请求失败, clientId: {}", clientId, e);
-			return false;
 		}
+		return true;
 	}
 
 	/**

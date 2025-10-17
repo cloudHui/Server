@@ -34,11 +34,10 @@ public class ReqCreateTableHandle implements Handler {
 			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId, response, sequence);
 
 			logger.info("创建桌子请求处理完成, clientId: {}, tableId: {}", clientId, response.getTables().getTableId().toStringUtf8());
-			return true;
 		} catch (Exception e) {
 			logger.error("处理创建桌子请求失败, clientId: {}", clientId, e);
-			return false;
 		}
+		return true;
 	}
 
 	/**

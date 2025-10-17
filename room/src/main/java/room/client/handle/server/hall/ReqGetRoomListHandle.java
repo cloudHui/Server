@@ -30,11 +30,10 @@ public class ReqGetRoomListHandle implements Handler {
 			sender.sendMessage(clientId, SMsg.ACK_GET_TABLE_MSG, mapId, response, sequence);
 
 			logger.info("返回玩家房间列表, roleId: {}, 房间数量: {}", roleId, response.getTablesCount());
-			return true;
 		} catch (Exception e) {
 			logger.error("处理获取房间列表请求失败, clientId: {}", clientId, e);
-			return false;
 		}
+		return true;
 	}
 
 	/**

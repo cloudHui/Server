@@ -29,10 +29,9 @@ public class NotBreakHandle implements Handler {
 			// TODO: 实现玩家断线后的清理逻辑
 			// 例如：清理用户会话、通知房间服务器等
 
-			return true;
 		} catch (Exception e) {
 			logger.error("处理断线通知失败, clientId: {}", clientId, e);
-			return false;
 		}
+		return true;
 	}
 }

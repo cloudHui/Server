@@ -97,8 +97,11 @@ public class ServerManager {
 			connectMap.remove(serverId);
 			if (connectMap.isEmpty()) {
 				serverMap.remove(serverType);
+				logger.info("removeServerClient success:{} serverId:{}", serverType, serverId);
+				return;
 			}
 		}
+		logger.info("removeServerClient fail:{} serverId:{}", serverType, serverId);
 	}
 
 	/**

@@ -85,11 +85,10 @@ public abstract class AbstractRegisterHandler<T_INSTANCE> implements Handler {
 			logger.info("服务器注册成功, serverType: {}, serverId: {}",
 					serverType, serverInfo.getServerId());
 
-			return true;
 		} catch (Exception e) {
 			logger.error("处理注册请求失败", e);
-			return false;
 		}
+		return true;
 	}
 
 	/**

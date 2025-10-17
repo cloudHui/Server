@@ -36,11 +36,10 @@ public class ReqServerInfoHandle implements Handler {
 			sender.sendMessage(clientId, CMsg.ACK_SERVER, mapId, response, sequence);
 
 			logger.info("返回服务信息, 服务器数量: {}", response.getServersCount());
-			return true;
 		} catch (Exception e) {
 			logger.error("处理服务信息查询请求失败", e);
-			return false;
 		}
+		return true;
 	}
 
 	/**
