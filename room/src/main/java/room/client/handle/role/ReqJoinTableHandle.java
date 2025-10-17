@@ -66,7 +66,7 @@ public class ReqJoinTableHandle implements Handler {
 				return true;
 			}
 			// 4. 执行创建桌子逻辑
-			createTable(gameServer, roomId, sequence, clientId);
+			createTable(gameServer, roomId, sequence, mapId);
 		}
 		return true;
 	}

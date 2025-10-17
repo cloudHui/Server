@@ -138,7 +138,7 @@ public class ClientProto {
 		int msgId = response.getMessageId();
 
 		// 验证消息类型和ID范围
-		if (msgId > CMsg.BASE_ID_INDEX && (msgId & 2) != 0) {
+		if (msgId > CMsg.BASE_ID_INDEX && (msgId & 1) == 0) {
 			processClientResponse(response, client);
 			client.sendMessage(response);
 
@@ -147,7 +147,7 @@ public class ClientProto {
 			return;
 		}
 
-		logger.warn("无法转发响应到客户端, clientId: {}, msgId: {}", client.getId(), Integer.toHexString(msgId));
+		logger.warn("无法转发响应到客户端, clientId: {}, msgId: {} msgId & 2:{} Hex:{}", client.getId(), Integer.toHexString(msgId), msgId & 2, Integer.toHexString(msgId & 2));
 	}
 
 	/**

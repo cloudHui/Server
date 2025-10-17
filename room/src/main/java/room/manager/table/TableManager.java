@@ -127,7 +127,7 @@ public class TableManager {
 	public synchronized TableInfo getCanJoinTable(int modelId) {
 		Map<String, TableInfo> model = roomTables.get(modelId);
 		if (model == null || model.isEmpty()) {
-			logger.warn("没有可加入房间, modelId: {}", modelId);
+			logger.warn("没有可加入房间 create, modelId: {}", modelId);
 			return null;
 		}
 		for (Map.Entry<String, TableInfo> entry : model.entrySet()) {
