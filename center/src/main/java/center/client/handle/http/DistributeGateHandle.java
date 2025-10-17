@@ -74,7 +74,7 @@ public class DistributeGateHandle implements Handler<String> {
 
 	/**
 	 * 选择可用的网关服务器
-	 * 这里使用简单的随机选择，可以扩展为更复杂的负载均衡算法
+	 * 这里使用简单的随机选择,可以扩展为更复杂的负载均衡算法
 	 */
 	private CenterClient selectAvailableGateway() {
 		return (CenterClient) Center.getInstance().getServerManager().getServerClient(ServerType.Gate);

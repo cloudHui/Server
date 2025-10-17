@@ -83,7 +83,7 @@ public class User {
 		if (removed) {
 			logger.info("用户移除桌子, userId: {}, tableId: {}", userId, tableId);
 		} else {
-			logger.error("用户桌子不存在，无法移除, userId: {}, tableId: {}", userId, tableId);
+			logger.error("用户桌子不存在,无法移除, userId: {}, tableId: {}", userId, tableId);
 		}
 	}
 

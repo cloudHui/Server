@@ -12,7 +12,7 @@ import proto.ModelProto;
 
 /**
  * 处理玩家断线通知
- * 当玩家从网关断开时，其他服务器会发送此通知
+ * 当玩家从网关断开时,其他服务器会发送此通知
  */
 @ProcessType(CMsg.NOT_BREAK)
 public class NotBreakHandle implements Handler {

@@ -28,7 +28,7 @@ public class Center {
 	private ModelProto.ServerInfo serverInfo;
 
 	private Center() {
-		// 私有构造函数，单例模式
+		// 私有构造函数,单例模式
 	}
 
 	public static Center getInstance() {
@@ -113,7 +113,7 @@ public class Center {
 			int httpPort = config.getInt("httpPort", 0);
 
 			if (httpPort <= 0) {
-				logger.warn("HTTP端口未配置或配置错误，跳过HTTP服务启动");
+				logger.warn("HTTP端口未配置或配置错误,跳过HTTP服务启动");
 				return;
 			}
 

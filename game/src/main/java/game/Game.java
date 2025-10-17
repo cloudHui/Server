@@ -40,7 +40,7 @@ public class Game {
 	private TableManager tableManager;
 
 	private Game() {
-		// 私有构造函数，单例模式
+		// 私有构造函数,单例模式
 	}
 
 	public static Game getInstance() {

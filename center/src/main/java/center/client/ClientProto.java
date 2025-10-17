@@ -19,7 +19,7 @@ public class ClientProto {
 	private static final Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	/**
-	 * 消息转发接口 - 中心服务器不直接转发消息，返回false
+	 * 消息转发接口 - 中心服务器不直接转发消息,返回false
 	 */
 	public static final Transfer TRANSFER = (client, message) -> false;
 
@@ -36,7 +36,7 @@ public class ClientProto {
 			HandleTypeRegister.initFactory(ClientProto.class, handlers);
 			// 绑定通用服务器消息处理
 			HandleTypeRegister.initFactory(handlers);
-			logger.info("中心服务器协议处理器初始化完成，注册处理器数量: {}", handlers.size());
+			logger.info("中心服务器协议处理器初始化完成,注册处理器数量: {}", handlers.size());
 		} catch (Exception e) {
 			logger.error("中心服务器协议处理器初始化失败", e);
 			throw new RuntimeException("ClientProto初始化失败", e);

@@ -14,7 +14,7 @@ import proto.GameProto;
 
 /**
  * 处理玩家请求进入桌子
- * 负责验证玩家和桌子状态，处理入桌逻辑
+ * 负责验证玩家和桌子状态,处理入桌逻辑
  */
 @ProcessType(GMsg.REQ_ENTER_TABLE_MSG)
 public class ReqEnterTableHandle implements Handler {
@@ -86,7 +86,7 @@ public class ReqEnterTableHandle implements Handler {
 	 */
 	private GameProto.AckEnterTable buildEnterTableResponse() {
 		GameProto.AckEnterTable.Builder response = GameProto.AckEnterTable.newBuilder();
-		// 可以添加更多响应字段，如错误码、提示信息等
+		// 可以添加更多响应字段,如错误码、提示信息等
 		return response.build();
 	}
 }

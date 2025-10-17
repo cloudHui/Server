@@ -50,7 +50,7 @@ public class ClientProto {
 			HandleTypeRegister.initFactory(ClientProto.class, HANDLER_MAP);
 			// 绑定通用服务器消息处理
 			HandleTypeRegister.initFactory(HANDLER_MAP);
-			logger.info("ClientProto初始化完成，注册处理器数量: {}", HANDLER_MAP.size());
+			logger.info("ClientProto初始化完成,注册处理器数量: {}", HANDLER_MAP.size());
 		} catch (Exception e) {
 			logger.error("ClientProto初始化失败", e);
 			throw new RuntimeException("ClientProto初始化失败", e);
@@ -301,7 +301,7 @@ public class ClientProto {
 			centerConnection.sendMessage(CMsg.NOT_LINK, loginNotify.build());
 			logger.debug("已通知中心服务器登录成功, certificate: {}", certificate);
 		} else {
-			logger.warn("中心服务器连接不可用，无法通知登录成功");
+			logger.warn("中心服务器连接不可用,无法通知登录成功");
 		}
 	}
 }

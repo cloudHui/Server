@@ -48,7 +48,7 @@ public class TableManager {
 		Table existingTable = tableMap.putIfAbsent(tableId, table);
 
 		if (existingTable != null) {
-			logger.warn("桌子已存在，添加失败, tableId: {}", tableId);
+			logger.warn("桌子已存在,添加失败, tableId: {}", tableId);
 		} else {
 			logger.debug("添加新桌子, tableId: {}", tableId);
 		}
@@ -73,7 +73,7 @@ public class TableManager {
 		if (removedTable != null) {
 			logger.info("删除桌子, tableId: {}", tableId);
 		} else {
-			logger.warn("桌子不存在，无法删除, tableId: {}", tableId);
+			logger.warn("桌子不存在,无法删除, tableId: {}", tableId);
 		}
 		return removedTable;
 	}
@@ -84,7 +84,7 @@ public class TableManager {
 	public String getTableId() {
 		synchronized (TableManager.class) {
 			if (currentIndex >= Integer.MAX_VALUE - 1000) {
-				logger.warn("桌子ID即将耗尽，考虑重置");
+				logger.warn("桌子ID即将耗尽,考虑重置");
 			}
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHH");
 			String head = dateFormat.format(new Date());
@@ -111,6 +111,6 @@ public class TableManager {
 	public void clearAllTables() {
 		int count = tableMap.size();
 		tableMap.clear();
-		logger.info("清理所有桌子，数量: {}", count);
+		logger.info("清理所有桌子,数量: {}", count);
 	}
 }

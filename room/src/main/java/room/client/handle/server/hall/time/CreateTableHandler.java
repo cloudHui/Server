@@ -30,7 +30,7 @@ public class CreateTableHandler implements ConnectHandle {
 		// 真实用户的处理逻辑
 		dealCreateSuccessTableJoin(sequence, ackMessage, transId);
 
-		logger.info("创建桌子成功处理完成，userId: {}", transId);
+		logger.info("创建桌子成功处理完成,userId: {}", transId);
 	}
 
 	/**

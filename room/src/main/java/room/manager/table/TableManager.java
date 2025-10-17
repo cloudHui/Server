@@ -53,7 +53,7 @@ public class TableManager {
 				}
 			}
 
-			logger.info("房间管理器初始化完成，加载模板数量: {}", tableModelMap.size());
+			logger.info("房间管理器初始化完成,加载模板数量: {}", tableModelMap.size());
 		} catch (Exception e) {
 			logger.error("房间管理器初始化失败", e);
 			throw new RuntimeException("房间管理器初始化失败", e);
@@ -82,7 +82,7 @@ public class TableManager {
 				response.addRoomList(roomBuilder);
 			}
 
-			logger.debug("返回房间列表，房间类型数: {}, 总房间数: {}", roomTables.size(), totalRooms);
+			logger.debug("返回房间列表,房间类型数: {}, 总房间数: {}", roomTables.size(), totalRooms);
 		} catch (Exception e) {
 			logger.error("获取房间列表失败", e);
 			throw new RuntimeException("获取房间列表失败", e);

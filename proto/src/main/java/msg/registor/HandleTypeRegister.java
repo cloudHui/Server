@@ -231,7 +231,7 @@ public class HandleTypeRegister {
 	 *
 	 * @param messageId 消息ID
 	 * @param bytes     消息字节数据
-	 * @return 解析后的消息对象，解析失败返回null
+	 * @return 解析后的消息对象,解析失败返回null
 	 */
 	public static Message parseMessage(int messageId, byte[] bytes) {
 		Class<?> messageClass = TRANS_MAP.get(messageId);

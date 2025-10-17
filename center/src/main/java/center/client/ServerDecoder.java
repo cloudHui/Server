@@ -43,7 +43,7 @@ public class ServerDecoder extends HttpDecoder {
 				}
 			}
 
-			logger.info("HTTP请求处理器初始化完成，注册数量: {}", handlerCount);
+			logger.info("HTTP请求处理器初始化完成,注册数量: {}", handlerCount);
 		} catch (Exception e) {
 			logger.error("HTTP请求处理器初始化失败", e);
 			throw new RuntimeException("ServerDecoder初始化失败", e);

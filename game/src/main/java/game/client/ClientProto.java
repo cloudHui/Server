@@ -19,7 +19,7 @@ public class ClientProto {
 	private static final Logger logger = LoggerFactory.getLogger(ClientProto.class);
 
 	/**
-	 * 消息转发接口 - 游戏服务器不直接转发消息，返回false
+	 * 消息转发接口 - 游戏服务器不直接转发消息,返回false
 	 */
 	public static final Transfer TRANSFER = (client, message) -> false;
 
@@ -36,7 +36,7 @@ public class ClientProto {
 			HandleTypeRegister.initFactory(ClientProto.class, HANDLER_MAP);
 			// 绑定通用服务器消息处理
 			HandleTypeRegister.initFactory(HANDLER_MAP);
-			logger.info("游戏客户端协议处理器初始化完成，注册处理器数量: {}", HANDLER_MAP.size());
+			logger.info("游戏客户端协议处理器初始化完成,注册处理器数量: {}", HANDLER_MAP.size());
 		} catch (Exception e) {
 			logger.error("游戏客户端协议处理器初始化失败", e);
 			throw new RuntimeException("ClientProto初始化失败", e);

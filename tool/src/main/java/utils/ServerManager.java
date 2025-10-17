@@ -183,7 +183,7 @@ public class ServerManager {
 		tcpConnect.setLocalServer(new ServerInfo(localServer.getServerType(), serverId, ipPorts));
 		tcpConnect.setConnectServer(new ServerInfo(connectServer.getServerType(), ipPort[0] + ":" + ipPort[1]));
 
-		// 如果是连接中心服务器，启用重连机制
+		// 如果是连接中心服务器,启用重连机制
 		if (connectServer == ServerType.Center) {
 			tcpConnect.setConRetry(true);
 			tcpConnect.setDiRetry(true);

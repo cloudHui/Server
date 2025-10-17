@@ -84,7 +84,7 @@ public class ReqLoginHandler implements Handler {
 		try {
 			ConnectHandler roomServer = Hall.getInstance().getServerManager().getServerClient(ServerType.Room);
 			if (roomServer == null) {
-				logger.warn("房间服务器不可用，无法获取用户房间信息, userId: {}", user.getUserId());
+				logger.warn("房间服务器不可用,无法获取用户房间信息, userId: {}", user.getUserId());
 				return;
 			}
 

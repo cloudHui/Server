@@ -13,7 +13,7 @@ import room.manager.user.UserManager;
 
 /**
  * 处理玩家断线通知
- * 当玩家从网关断开时，中心服务器会发送此通知
+ * 当玩家从网关断开时,中心服务器会发送此通知
  */
 @ProcessType(CMsg.NOT_BREAK)
 public class NotBreakHandle implements Handler {
@@ -51,7 +51,7 @@ public class NotBreakHandle implements Handler {
 			// TODO: 根据业务需求处理离线逻辑
 			// 例如：清理临时数据、通知游戏服务器等
 		} else {
-			logger.warn("用户不存在，无法设置离线状态, userId: {}", userId);
+			logger.warn("用户不存在,无法设置离线状态, userId: {}", userId);
 		}
 	}
 }

@@ -13,7 +13,7 @@ import proto.ModelProto;
 
 /**
  * 处理网关服务器通知的客户端连接事件
- * 跟踪客户端到网关的映射关系，用于负载均衡
+ * 跟踪客户端到网关的映射关系,用于负载均衡
  */
 @ProcessType(CMsg.NOT_LINK)
 public class NotClientLinkHandle implements Handler {

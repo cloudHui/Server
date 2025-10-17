@@ -36,13 +36,13 @@ public class CenterClient extends ClientHandler {
 	 */
 	private void handleConnectionClose(ChannelHandler client) {
 		if (serverInfo == null) {
-			logger.warn("连接关闭，但服务器信息为空");
+			logger.warn("连接关闭,但服务器信息为空");
 			return;
 		}
 
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
 		if (serverType == null) {
-			logger.warn("连接关闭，未知的服务器类型: {}", serverInfo.getServerType());
+			logger.warn("连接关闭,未知的服务器类型: {}", serverInfo.getServerType());
 			return;
 		}
 

@@ -19,7 +19,7 @@ public class UserManager {
 
 	private UserManager() {
 		users = new ConcurrentHashMap<>(MAX_CAPACITY);
-		logger.info("用户管理器初始化完成，最大容量: {}", MAX_CAPACITY);
+		logger.info("用户管理器初始化完成,最大容量: {}", MAX_CAPACITY);
 	}
 
 	public static UserManager getInstance() {
@@ -46,7 +46,7 @@ public class UserManager {
 			removedUser.destroy();
 			logger.info("移除用户, userId: {}", userId);
 		} else {
-			logger.warn("用户不存在，无法移除, userId: {}", userId);
+			logger.warn("用户不存在,无法移除, userId: {}", userId);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class UserManager {
 		User existingUser = users.putIfAbsent(userId, user);
 
 		if (existingUser != null) {
-			logger.warn("用户已存在，添加失败, userId: {}", userId);
+			logger.warn("用户已存在,添加失败, userId: {}", userId);
 		} else {
 			logger.debug("添加新用户, userId: {}", userId);
 		}

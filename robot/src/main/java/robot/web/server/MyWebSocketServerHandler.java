@@ -35,7 +35,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 		}
 
 		ChannelFuture f = ctx.channel().writeAndFlush(res);
-		// 如果是非Keep-Alive，关闭连接
+		// 如果是非Keep-Alive,关闭连接
 		if (!isKeepAlive(req) || res.status().code() != 200) {
 			f.addListener(ChannelFutureListener.CLOSE);
 		}
@@ -48,7 +48,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
 		if (msg instanceof FullHttpRequest) {
-			//以http请求形式接入，但是走的是websocket
+			//以http请求形式接入,但是走的是websocket
 			handleHttpRequest(ctx, (FullHttpRequest) msg);
 		} else if (msg instanceof WebSocketFrame) {
 			//处理websocket客户端的消息
@@ -62,9 +62,9 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 	}
 
 	private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
-		//要求Upgrade为websocket，过滤掉get/Post
+		//要求Upgrade为websocket,过滤掉get/Post
 		if (!req.decoderResult().isSuccess() || (!"websocket".equals(req.headers().get("Upgrade")))) {
-			//若不是websocket方式，则创建BAD_REQUEST的req，返回给客户端
+			//若不是websocket方式,则创建BAD_REQUEST的req,返回给客户端
 			sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
 			return;
 		}

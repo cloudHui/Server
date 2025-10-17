@@ -8,7 +8,7 @@ while true; do
     # 获取名为 "${server}" 的进程数量（排除 grep 自身）
     servers=$(ps -ef | grep "${server}" | grep -v grep | wc -l)
 
-    # 如果进程数为 1（表示只有 grep 进程）或尝试次数达到 10 次，则退出循环
+    # 如果进程数为 1（表示只有 grep 进程）或尝试次数达到 10 次,则退出循环
     if [ "$servers" -le 1 ] ;then
         echo "${server} 进程已停止"
         sleep 1
@@ -25,7 +25,7 @@ while true; do
     else
         # 等待 1 秒后重试
         sleep 1
-        echo "${server} 进程尚未完全退出，等待中... (${count}/10)"
+        echo "${server} 进程尚未完全退出,等待中... (${count}/10)"
         count=$((count + 1))
     fi
 done

@@ -49,7 +49,7 @@ public class ReqGetRoomListHandle implements Handler {
 			response.addAllTables(user.getAllTables());
 			logger.debug("找到用户房间信息, roleId: {}, 房间数: {}", roleId, user.getAllTables().size());
 		} else {
-			logger.warn("用户不存在，返回空房间列表, roleId: {}", roleId);
+			logger.warn("用户不存在,返回空房间列表, roleId: {}", roleId);
 		}
 
 		return response.build();

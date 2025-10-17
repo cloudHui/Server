@@ -41,7 +41,7 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 
 	@Override
 	protected void scheduleRetry(ConnectHandler serverClient) {
-		logger.error("未找到可用服务器，将在 {}ms 后重试", RETRY_DELAY);
+		logger.error("未找到可用服务器,将在 {}ms 后重试", RETRY_DELAY);
 
 		Robot.getInstance().registerTimer(RETRY_DELAY, RETRY_INTERVAL, RETRY_COUNT, room -> {
 			sendRetryRequest(serverClient, RETRY_SERVER_TYPES, ConnectProcessor.PARSER);

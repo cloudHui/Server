@@ -32,7 +32,7 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 
 	@Override
 	protected void scheduleRetry(ConnectHandler serverClient) {
-		logger.warn("未找到可用服务器，将在 {}ms 后重试", RETRY_DELAY);
+		logger.warn("未找到可用服务器,将在 {}ms 后重试", RETRY_DELAY);
 
 		Hall.getInstance().registerTimer(RETRY_DELAY, RETRY_INTERVAL, RETRY_COUNT, hall -> {
 			sendRetryRequest(serverClient, RETRY_SERVER_TYPES, ConnectProcessor.PARSER);

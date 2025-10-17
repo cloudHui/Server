@@ -33,7 +33,7 @@ public class ConnectProcessor {
 	public static void init() {
 		try {
 			HandleTypeRegister.initFactory(ConnectProcessor.class, handlers);
-			logger.debug("连接处理器初始化完成，注册处理器数量: {}", handlers.size());
+			logger.debug("连接处理器初始化完成,注册处理器数量: {}", handlers.size());
 		} catch (Exception e) {
 			logger.error("连接处理器初始化失败", e);
 			throw new RuntimeException("ConnectProcessor初始化失败", e);

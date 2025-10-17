@@ -25,7 +25,7 @@ public class ResponseMaker<T> implements HttpResponseMaker<T> {
 
 	@Override
 	public FullHttpResponse wrap(int messageId, T content) {
-		// 不支持消息ID包装，返回null
+		// 不支持消息ID包装,返回null
 		return null;
 	}
 

@@ -22,13 +22,13 @@ if %errorlevel% neq 0 (
 
 :: 检查尝试次数是否达到 10 次
 if %count% geq 10 (
-    echo %server% 服务启动失败，进程未停止，请检查。
+    echo %server% 服务启动失败,进程未停止,请检查。
     goto end
 )
 
 :: 等待 1 秒后重试
 timeout /t 1 /nobreak >nul
-echo %server% 进程尚未完全退出，等待中... (%count%/10)
+echo %server% 进程尚未完全退出,等待中... (%count%/10)
 set /a count+=1
 goto check_process
 

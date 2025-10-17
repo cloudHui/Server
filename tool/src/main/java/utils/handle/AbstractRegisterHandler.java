@@ -11,7 +11,7 @@ import proto.ModelProto;
 
 /**
  * 抽象注册处理器
- * 处理服务器注册请求的通用逻辑，支持扩展点
+ * 处理服务器注册请求的通用逻辑,支持扩展点
  */
 public abstract class AbstractRegisterHandler<T_INSTANCE> implements Handler {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());

@@ -45,12 +45,12 @@ public class Table {
 
 	/**
 	 * 获取线程组处理ID
-	 * 根据桌子ID的最后一位数字确定线程组，实现负载均衡
+	 * 根据桌子ID的最后一位数字确定线程组,实现负载均衡
 	 */
 	public int getGroupIndex() {
 		try {
 			if (tableId == null || tableId.length() == 0) {
-				logger.warn("桌子ID为空，使用默认线程组0");
+				logger.warn("桌子ID为空,使用默认线程组0");
 				return 0;
 			}
 

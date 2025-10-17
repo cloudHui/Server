@@ -40,7 +40,7 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 	}
 
 	/**
-	 * 注册前处理：检查并移除重复连接，设置服务器信息
+	 * 注册前处理：检查并移除重复连接,设置服务器信息
 	 */
 	@Override
 	protected void beforeRegistration(Sender sender, ModelProto.ServerInfo serverInfo, ServerType serverType) {
@@ -52,7 +52,7 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 		CenterClient existingClient = (CenterClient) manager.getServerClient(serverType, serverId);
 
 		if (existingClient != null) {
-			logger.warn("服务器已存在，先移除旧连接, serverType: {}, serverId: {}", serverType, serverId);
+			logger.warn("服务器已存在,先移除旧连接, serverType: {}, serverId: {}", serverType, serverId);
 			manager.removeServerClient(serverType, serverId);
 			// 设置旧连接为不安全以触发关闭
 			existingClient.setSafe((msgId) -> false);
@@ -91,25 +91,25 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 
 		switch (serverType) {
 			case Game:
-				// 游戏服务器上线，通知网关和房间服务器
+				// 游戏服务器上线,通知网关和房间服务器
 				notifyServerConnect(serverInfo, ServerType.Gate);
 				notifyServerConnect(serverInfo, ServerType.Room);
 				break;
 			case Room:
-				// 房间服务器上线，通知网关和大厅服务器
+				// 房间服务器上线,通知网关和大厅服务器
 				notifyServerConnect(serverInfo, ServerType.Gate);
 				notifyServerConnect(serverInfo, ServerType.Hall);
 				break;
 			case Hall:
-				// 大厅服务器上线，通知网关
+				// 大厅服务器上线,通知网关
 				notifyServerConnect(serverInfo, ServerType.Gate);
 				break;
 			case Gate:
-				// 网关服务器上线，不需要特别通知其他服务器
-				logger.info("网关服务器注册，无需特别通知");
+				// 网关服务器上线,不需要特别通知其他服务器
+				logger.info("网关服务器注册,无需特别通知");
 				break;
 			default:
-				logger.error("未知服务器类型，不进行通知: {}", serverType);
+				logger.error("未知服务器类型,不进行通知: {}", serverType);
 				break;
 		}
 	}

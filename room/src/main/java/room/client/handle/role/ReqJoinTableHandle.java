@@ -27,7 +27,7 @@ import utils.manager.HandleManager;
 
 /**
  * 处理玩家请求进入桌子的处理器
- * 负责验证用户和房间信息，并向游戏服务器发送创建桌子请求
+ * 负责验证用户和房间信息,并向游戏服务器发送创建桌子请求
  */
 @ProcessType(RMsg.REQ_JOIN_ROOM_TABLE_MSG)
 public class ReqJoinTableHandle implements Handler {
@@ -88,7 +88,7 @@ public class ReqJoinTableHandle implements Handler {
 
 	/**
 	 * 执行实际的创建桌子操作
-	 * 向游戏服务器发送创建桌子的请求，并处理响应
+	 * 向游戏服务器发送创建桌子的请求,并处理响应
 	 *
 	 * @param gameServer 游戏服务器连接处理器
 	 * @param roomId     房间ID
