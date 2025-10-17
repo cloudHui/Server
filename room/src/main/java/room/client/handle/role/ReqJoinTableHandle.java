@@ -8,6 +8,7 @@ import msg.registor.enums.ServerType;
 import msg.registor.message.RMsg;
 import msg.registor.message.SMsg;
 import net.client.Sender;
+import net.client.handler.ClientHandler;
 import net.connect.handle.ConnectHandler;
 import net.handler.Handler;
 import net.message.TCPMessage;
@@ -36,9 +37,9 @@ public class ReqJoinTableHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
 		// 1. 验证用户是否存在
-		User user = UserManager.getInstance().getUser(clientId);
+		User user = UserManager.getInstance().getUser(mapId);
 		if (user == null) {
-			logger.error("用户不存在, clientId: {}, 错误码: {}", clientId, ConstProto.Result.SERVER_ERROR_VALUE);
+			logger.error("用户不存在, userId: {}, 错误码: {}", mapId, ConstProto.Result.SERVER_ERROR_VALUE);
 			sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.SERVER_ERROR_VALUE));
 			return true;
 		}
@@ -55,7 +56,7 @@ public class ReqJoinTableHandle implements Handler {
 		}
 
 		// 3. 能否加入旧房间
-		boolean join = joinTable(tableModel, user, sender, sequence);
+		boolean join = joinTable(tableModel, user, sequence);
 		if (!join) {
 			// 4. 获取游戏服务器连接
 			ConnectHandler gameServer = Room.getInstance().getServerManager().getServerClient(ServerType.Game);
@@ -74,14 +75,14 @@ public class ReqJoinTableHandle implements Handler {
 	/**
 	 * 加入桌子
 	 */
-	private boolean joinTable(TableModel tableModel, User user, Sender sender, int sequence) {
+	private boolean joinTable(TableModel tableModel, User user, int sequence) {
 		TableInfo canJoinTable = TableManager.getInstance().getCanJoinTable(tableModel.getId());
 		if (canJoinTable == null) {
 			return false;
 		}
 		canJoinTable.joinRole(user);
 
-		sendJoinTableAck(canJoinTable.getTableId(), sender, sequence, user.getUserId());
+		sendJoinTableAck(canJoinTable.getTableId(), sequence, user);
 		return true;
 	}
 
@@ -122,11 +123,16 @@ public class ReqJoinTableHandle implements Handler {
 	/**
 	 * 发送 玩家加入room桌子回复
 	 */
-	public static void sendJoinTableAck(String tableId, Sender sender, int sequence, int userId) {
-		RoomProto.AckJoinRoomTable response = RoomProto.AckJoinRoomTable.newBuilder()
+	public static void sendJoinTableAck(String tableId, int sequence, User user) {
+
+		ClientHandler gate = Room.getInstance().getServerClientManager().getServerClient(ServerType.Gate, user.getClientId());
+		if (gate == null) {
+			logger.error("sendJoinTableAck role:{} gate:{} null", user.getUserId(), user.getClientId());
+			return;
+		}
+		gate.sendMessage(RMsg.ACK_JOIN_ROOM_TABLE_MSG, RoomProto.AckJoinRoomTable.newBuilder()
 				.setTableId(ByteString.copyFromUtf8(tableId))
-				.build();
-		sender.sendMessage(0, RMsg.ACK_JOIN_ROOM_TABLE_MSG, 0, response, sequence);
-		logger.info("玩家加入桌子成功, userId: {}, tableId: {}", userId, tableId);
+				.build(), sequence);
+		logger.info("玩家加入桌子成功, userId: {}, tableId: {}", user.getUserId(), tableId);
 	}
 }

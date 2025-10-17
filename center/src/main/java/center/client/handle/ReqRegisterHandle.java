@@ -18,7 +18,7 @@ import utils.handle.AbstractRegisterHandler;
  * 负责管理所有服务器的注册和发现
  */
 @ProcessType(CMsg.REQ_REGISTER)
-public class ReqRegisterHandle extends AbstractRegisterHandler<CenterClient, Center> {
+public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 	private ServerClientManager manager;
 
 	@Override
@@ -27,16 +27,11 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<CenterClient, Cen
 	}
 
 	@Override
-	protected CenterClient castSender(Sender sender) {
-		return (CenterClient) sender;
-	}
-
-	@Override
-	protected void addServerClient(ServerType serverType, CenterClient client, int serverId) {
+	protected void addServerClient(ServerType serverType, Sender client) {
 		if (manager == null) {
 			manager = getServerInstance().getServerManager();
 		}
-		manager.addServerClient(serverType, client, serverId);
+		manager.addServerClient(serverType, (CenterClient) client);
 	}
 
 	@Override
@@ -64,8 +59,7 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<CenterClient, Cen
 		}
 
 		// 设置新连接的服务器信息
-		CenterClient newClient = castSender(sender);
-		newClient.setServerInfo(serverInfo);
+		((CenterClient) sender).setServerInfo(serverInfo);
 	}
 
 	/**

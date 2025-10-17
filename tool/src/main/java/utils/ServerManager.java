@@ -169,11 +169,11 @@ public class ServerManager {
 	/**
 	 * 统一注册服务方法
 	 */
-	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType serverType,
+	public void registerSever(String[] ipPort, Transfer transfer, Parser parser, Handlers handlers, ServerType connectServer,
 							  int serverId, String ipPorts, ServerType localServer, TCPConnect.CallParam callParam) {
 		TCPConnect tcpConnect = new TCPConnect(workerGroup,
 				new InetSocketAddress(ipPort[0], Integer.parseInt(ipPort[1])),
-				transfer, parser, handlers, activeHandle, closeHandle);
+				transfer, parser, handlers, getActiveHandle(connectServer, localServer), closeHandle);
 
 		// 设置回调参数
 		if (callParam != null) {
@@ -181,15 +181,22 @@ public class ServerManager {
 		}
 
 		tcpConnect.setLocalServer(new ServerInfo(localServer.getServerType(), serverId, ipPorts));
-		tcpConnect.setConnectServer(new ServerInfo(serverType.getServerType(), ipPort[0] + ":" + ipPort[1]));
+		tcpConnect.setConnectServer(new ServerInfo(connectServer.getServerType(), ipPort[0] + ":" + ipPort[1]));
 
 		// 如果是连接中心服务器，启用重连机制
-		if (serverType == ServerType.Center) {
+		if (connectServer == ServerType.Center) {
 			tcpConnect.setConRetry(true);
 			tcpConnect.setDiRetry(true);
 		}
 
 		tcpConnect.connect();
+	}
+
+	/**
+	 * 机器人连gate 不需要注册
+	 */
+	private EventHandle getActiveHandle(ServerType connectServer, ServerType localServer) {
+		return connectServer == ServerType.Gate && localServer == ServerType.Robot ? activeHandleRobot : activeHandle;
 	}
 
 	/**
@@ -244,7 +251,7 @@ public class ServerManager {
 	 * 构建服务信息
 	 */
 	public static ModelProto.ServerInfo buildServerInfo(ConfigurationManager cfgMgr,
-																ServerType serverType) {
+														ServerType serverType) {
 		return ModelProto.ServerInfo.newBuilder()
 				.setServerId(cfgMgr.getInt("id", 0))
 				.setServerType(serverType.getServerType())
@@ -280,6 +287,13 @@ public class ServerManager {
 						executeRegisterCallback(handler);
 					}
 				});
+	};
+
+	/**
+	 * 连接激活事件处理器 - 机器人连gate发送注册消息
+	 */
+	private final EventHandle activeHandleRobot = channelHandler -> {
+		executeRegisterCallback((TCPConnect) channelHandler);
 	};
 
 	/**

@@ -70,14 +70,13 @@ public class ClientProto {
 
 		// 验证消息ID范围
 		if (msgId < CMsg.BASE_ID_INDEX) {
-			logger.warn("消息ID超出转发范围, msgId: {}, clientId: {}",
-					Integer.toHexString(msgId), client.getId());
+			logger.warn("消息ID超出转发范围, msgId: {}, clientId: {}", Integer.toHexString(msgId), client.getId());
 			return false;
 		}
 
 		int sequence = tcpMessage.getSequence();
-		tcpMessage.setMapId(client.getId());
-		setClientId(tcpMessage, client);
+		tcpMessage.setClientId(client.getId());
+		tcpMessage.setMapId(client.getRoleId());
 
 		ConnectHandler serverConnection = getTargetServerConnection(msgId);
 		if (serverConnection == null) {
@@ -86,15 +85,6 @@ public class ClientProto {
 		}
 
 		return sendMessageToServer(serverConnection, tcpMessage, sequence, client);
-	}
-
-	/**
-	 * 设置客户端ID
-	 * 如果是登录消息使用连接ID，否则使用玩家ID
-	 */
-	private static void setClientId(TCPMessage tcpMessage, GateTcpClient client) {
-		boolean isLoginMessage = (tcpMessage.getMessageId() & HMsg.REQ_LOGIN_MSG) != 0;
-		tcpMessage.setClientId(isLoginMessage ? client.getId() : client.getRoleId());
 	}
 
 	/**
@@ -122,9 +112,8 @@ public class ClientProto {
 	 * 处理发送错误
 	 */
 	private static void handleSendError(Throwable error, int msgId,
-										ConnectHandler serverConnection, GateTcpClient client) {
-		logger.error("发送消息到服务器失败, msgId: {}, server: {}, error: {}",
-				Integer.toHexString(msgId), serverConnection.getConnectServer(), error.getMessage());
+										ConnectHandler server, GateTcpClient client) {
+		logger.error("发送消息到服务器失败, msgId: {}, server: {}, error: {}", Integer.toHexString(msgId), server.getConnectServer(), error.getMessage());
 		client.sendMessage(TCPMessage.newInstance(ConstProto.Result.TIME_OUT_VALUE));
 	}
 
@@ -138,8 +127,7 @@ public class ClientProto {
 			responseMessage.setSequence(sequence);
 			forwardResponseToClient(responseMessage, startTime, client);
 		} catch (Exception e) {
-			logger.error("处理服务器响应失败, msgId: {}, clientId: {}, error: {}",
-					Integer.toHexString(msgId), client.getId(), e.getMessage(), e);
+			logger.error("处理服务器响应失败, msgId: {}, clientId: {}, error: {}", Integer.toHexString(msgId), client.getId(), e.getMessage(), e);
 		}
 	}
 
@@ -155,13 +143,11 @@ public class ClientProto {
 			client.sendMessage(response);
 
 			long costTime = System.currentTimeMillis() - startTime;
-			logger.debug("消息转发成功, msgId: {}, userId: {}, 耗时: {}ms",
-					Integer.toHexString(msgId), client.getRoleId(), costTime);
+			logger.info("消息转发成功, msgId: {}, userId: {}, 耗时: {}ms", Integer.toHexString(msgId), client.getRoleId(), costTime);
 			return;
 		}
 
-		logger.warn("无法转发响应到客户端, clientId: {}, msgId: {}",
-				client.getId(), Integer.toHexString(msgId));
+		logger.warn("无法转发响应到客户端, clientId: {}, msgId: {}", client.getId(), Integer.toHexString(msgId));
 	}
 
 	/**
@@ -178,17 +164,15 @@ public class ClientProto {
 	 */
 	private static void processLoginResponse(TCPMessage response, GateTcpClient client) {
 		try {
-			HallProto.AckLogin loginResponse = HallProto.AckLogin.parseFrom(response.getMessage());
-			client.setRoleId(loginResponse.getUserId());
-			client.setClubId(loginResponse.getClub());
-			client.setChannel(loginResponse.getChannel());
+			HallProto.AckLogin res = HallProto.AckLogin.parseFrom(response.getMessage());
+			client.setRoleId(res.getUserId());
+			client.setClubId(res.getClub());
+			client.setChannel(res.getChannel());
 
 			notifyCenterLoginSuccess(ClientHandler.getRemoteIP(client).getHostString());
-			logger.info("用户登录成功, userId: {}, channel: {}, club: {}",
-					loginResponse.getUserId(), loginResponse.getChannel(), loginResponse.getClub());
+			logger.info("用户登录成功, userId: {}, channel: {}, club: {}", res.getUserId(), res.getChannel(), res.getClub());
 		} catch (Exception e) {
-			logger.error("解析登录响应失败, msgId: {}, userId: {}",
-					Integer.toHexString(response.getMessageId()), client.getRoleId(), e);
+			logger.error("解析登录响应失败, msgId: {}, userId: {}", Integer.toHexString(response.getMessageId()), client.getRoleId(), e);
 		}
 	}
 

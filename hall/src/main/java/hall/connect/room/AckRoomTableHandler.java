@@ -4,10 +4,13 @@ import java.util.List;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
+import hall.Hall;
 import hall.manager.User;
 import hall.manager.UserManager;
 import msg.annotation.ProcessClass;
+import msg.registor.enums.ServerType;
 import msg.registor.message.HMsg;
+import net.client.handler.ClientHandler;
 import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +36,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 				logger.debug("收到用户房间列表, userId: {}, 房间数量: {}", roleId, rooms.size());
 
 				//发送登录响应
-				sendLoginResponseWithRetry(roleId, rooms, sequence, handler);
+				returnLoginResponse(roleId, rooms, sequence);
 				logger.debug("登录响应发送, userId: {}", roleId);
 			}
 		} catch (Exception e) {
@@ -44,7 +47,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 	/**
 	 * 发送登录响应
 	 */
-	private void sendLoginResponseWithRetry(int roleId, List<ServerProto.RoomTableInfo> rooms, int sequence, ConnectHandler serverClient) {
+	private void returnLoginResponse(int roleId, List<ServerProto.RoomTableInfo> rooms, int sequence) {
 		try {
 			User user = UserManager.getInstance().getUser(roleId);
 			if (user == null) {
@@ -52,8 +55,14 @@ public class AckRoomTableHandler implements ConnectHandle {
 				return; // 返回
 			}
 
+			ClientHandler gate = Hall.getInstance().serverClientManager.getServerClient(ServerType.Gate, user.getClientId());
+
+			if (gate == null) {
+				logger.error("用户 userId: {} gate:{} 不存在, ", roleId, user.getClientId());
+				return; // 返回
+			}
 			// 发送响应到网关服务器
-			serverClient.sendMessage(roleId, HMsg.ACK_LOGIN_MSG, 0, buildLoginResponse(user, rooms), sequence);
+			gate.sendMessage(roleId, HMsg.ACK_LOGIN_MSG, 0, buildLoginResponse(user, rooms), sequence);
 
 			logger.debug("登录响应发送成功, userId: {}, 房间数量: {}", roleId, rooms.size());
 

@@ -13,7 +13,7 @@ import utils.handle.AbstractRegisterHandler;
  * 注册服务信息请求
  */
 @ProcessType(CMsg.REQ_REGISTER)
-public class ReqRegisterHandler extends AbstractRegisterHandler<HallClient, Hall> {
+public class ReqRegisterHandler extends AbstractRegisterHandler<Hall> {
 
 	@Override
 	protected Hall getServerInstance() {
@@ -21,13 +21,8 @@ public class ReqRegisterHandler extends AbstractRegisterHandler<HallClient, Hall
 	}
 
 	@Override
-	protected HallClient castSender(Sender sender) {
-		return (HallClient) sender;
-	}
-
-	@Override
-	protected void addServerClient(ServerType serverType, HallClient client, int serverId) {
-		getServerInstance().serverClientManager.addServerClient(serverType, client, serverId);
+	protected void addServerClient(ServerType serverType, Sender client) {
+		getServerInstance().serverClientManager.addServerClient(serverType, (HallClient) client);
 	}
 
 	@Override
@@ -40,7 +35,6 @@ public class ReqRegisterHandler extends AbstractRegisterHandler<HallClient, Hall
 	 */
 	@Override
 	protected void beforeRegistration(Sender sender, ModelProto.ServerInfo serverInfo, ServerType serverType) {
-		HallClient client = castSender(sender);
-		client.setServerInfo(serverInfo);
+		((HallClient) sender).setServerInfo(serverInfo);
 	}
 }

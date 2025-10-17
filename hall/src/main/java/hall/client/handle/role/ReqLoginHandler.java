@@ -12,6 +12,7 @@ import msg.registor.enums.ServerType;
 import msg.registor.message.HMsg;
 import msg.registor.message.SMsg;
 import net.client.Sender;
+import net.client.handler.ClientHandler;
 import net.connect.handle.ConnectHandler;
 import net.handler.Handler;
 import org.slf4j.Logger;
@@ -33,23 +34,23 @@ public class ReqLoginHandler implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
+		int gateId = ((ClientHandler) sender).getId();
 		try {
 			HallProto.ReqLogin request = (HallProto.ReqLogin) message;
 			String nickname = request.getNickName().toStringUtf8();
 			String certificate = request.getCert().toStringUtf8();
 
-			logger.info("处理登录请求, clientId: {}, nickname: {}, cert: {}",
-					clientId, nickname, certificate);
+			logger.info("处理登录请求, gateId: {}, nickname: {}, cert: {}", gateId, nickname, certificate);
 
 			// 处理用户登录
-			User user = processUserLogin(clientId, nickname, certificate);
+			User user = processUserLogin(gateId, nickname, certificate);
 
 			// 向房间服务器请求用户房间信息
 			requestUserRoomInfo(user, sequence);
 
 			return true;
 		} catch (Exception e) {
-			logger.error("处理登录请求失败, clientId: {}", clientId, e);
+			logger.error("处理登录请求失败, gateId: {}", gateId, e);
 			return false;
 		}
 	}

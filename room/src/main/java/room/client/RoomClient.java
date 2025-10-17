@@ -32,7 +32,7 @@ public class RoomClient extends ClientHandler {
 	 */
 	private void handleConnectionClose(ChannelHandler client) {
 		logger.info("房间客户端连接关闭, serverInfo: {}",
-				serverInfo != null ? serverInfo.getServerId() : "unknown");
+				serverInfo != null ? ServerType.get(serverInfo.getServerType()) : "unknown");
 
 		if (serverInfo != null) {
 			ServerType serverType = ServerType.get(serverInfo.getServerType());

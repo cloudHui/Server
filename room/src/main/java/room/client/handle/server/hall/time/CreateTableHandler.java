@@ -3,7 +3,6 @@ package room.client.handle.server.hall.time;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
-import net.client.Sender;
 import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,7 @@ public class CreateTableHandler implements ConnectHandle {
 		ServerProto.AckCreateGameTable ackMessage = (ServerProto.AckCreateGameTable) message;
 
 		// 真实用户的处理逻辑
-		dealCreateSuccessTableJoin(handler, sequence, ackMessage, transId);
+		dealCreateSuccessTableJoin(sequence, ackMessage, transId);
 
 		logger.info("创建桌子成功处理完成，userId: {}", transId);
 	}
@@ -37,11 +36,10 @@ public class CreateTableHandler implements ConnectHandle {
 	/**
 	 * 发送加入桌子成功的响应给客户端
 	 */
-	private void dealCreateSuccessTableJoin(Sender sender, int sequence, ServerProto.AckCreateGameTable ack, int userId) {
+	private void dealCreateSuccessTableJoin(int sequence, ServerProto.AckCreateGameTable ack, int userId) {
 		TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
 		User user = UserManager.getInstance().getUser(userId);
 		tableInfo.joinRole(user);
-		// 处理成功响应
-		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId().toStringUtf8(), sender, sequence, userId);
+		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId().toStringUtf8(), sequence, user);
 	}
 }

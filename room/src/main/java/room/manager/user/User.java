@@ -23,15 +23,21 @@ public class User {
 	private boolean joinGame;
 	private ServerProto.RoomRole role;
 	private boolean offline = false;
+	private final int clientId;
 	private final Set<String> tables = new HashSet<>();
 
-	public User(int userId) {
+	public User(int userId, int clientId) {
 		this.userId = userId;
+		this.clientId = clientId;
 		logger.debug("创建用户实例, userId: {}", userId);
 	}
 
 	public int getUserId() {
 		return userId;
+	}
+
+	public int getClientId() {
+		return clientId;
 	}
 
 	public void setRole(ServerProto.RoomRole role) {

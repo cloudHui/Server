@@ -4,6 +4,7 @@ import com.google.protobuf.Message;
 import msg.annotation.ProcessType;
 import msg.registor.message.RMsg;
 import net.client.Sender;
+import net.client.handler.ClientHandler;
 import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +31,10 @@ public class ReqRoomListHandle implements Handler {
 			TableManager.getInstance().getAllRoomTable(response);
 
 			// 发送响应
-			sender.sendMessage(clientId, RMsg.ACK_ROOM_LIST_MSG, mapId, response.build(), sequence);
+			sender.sendMessage(RMsg.ACK_ROOM_LIST_MSG, response.build(), sequence);
 
 			// 创建或更新用户会话
-			createOrUpdateUserSession(clientId);
+			createOrUpdateUserSession(((ClientHandler)sender).getId(), mapId);
 
 			logger.debug("房间列表请求处理完成, clientId: {}, 房间数量: {}", clientId, response.getRoomListCount());
 			return true;
@@ -46,14 +47,14 @@ public class ReqRoomListHandle implements Handler {
 	/**
 	 * 创建或更新用户会话
 	 */
-	private void createOrUpdateUserSession(int clientId) {
-		User existingUser = UserManager.getInstance().getUser(clientId);
+	private void createOrUpdateUserSession(int gateClientId, int userId) {
+		User existingUser = UserManager.getInstance().getUser(userId);
 		if (existingUser == null) {
-			User newUser = new User(clientId);
+			User newUser = new User(userId, gateClientId);
 			UserManager.getInstance().addUser(newUser);
-			logger.debug("创建新用户会话, clientId: {}", clientId);
+			logger.debug("创建新用户会话, clientId: {}", gateClientId);
 		} else {
-			logger.debug("用户会话已存在, clientId: {}", clientId);
+			logger.debug("用户会话已存在, clientId: {}", gateClientId);
 		}
 	}
 }

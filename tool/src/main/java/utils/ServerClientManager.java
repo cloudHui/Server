@@ -21,10 +21,9 @@ public class ServerClientManager {
 	 *
 	 * @param serverType 服务类型
 	 * @param client     链接
-	 * @param serverId   服务id
 	 */
-	public void addServerClient(ServerType serverType, ClientHandler client, int serverId) {
-		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).put(serverId, client);
+	public void addServerClient(ServerType serverType, ClientHandler client) {
+		serverMap.computeIfAbsent(serverType, k -> new ConcurrentHashMap<>()).put(client.getId(), client);
 	}
 
 	/**

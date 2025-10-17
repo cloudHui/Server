@@ -92,9 +92,9 @@ public class TableManager {
 				currHead = head;
 				currentIndex = BASE_INDEX;
 			}
-			currHead += currentIndex++;
-			logger.info("创建新桌子ID: {}", head);
-			return head;
+			String tableId = currHead + ++currentIndex;
+			logger.info("创建新桌子ID: {}", tableId);
+			return tableId;
 		}
 	}
 

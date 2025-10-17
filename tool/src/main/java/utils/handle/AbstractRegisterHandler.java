@@ -13,7 +13,7 @@ import proto.ModelProto;
  * 抽象注册处理器
  * 处理服务器注册请求的通用逻辑，支持扩展点
  */
-public abstract class AbstractRegisterHandler<T_CLIENT extends Sender, T_INSTANCE> implements Handler {
+public abstract class AbstractRegisterHandler<T_INSTANCE> implements Handler {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
@@ -22,14 +22,9 @@ public abstract class AbstractRegisterHandler<T_CLIENT extends Sender, T_INSTANC
 	protected abstract T_INSTANCE getServerInstance();
 
 	/**
-	 * 转换发送者为具体的客户端类型
-	 */
-	protected abstract T_CLIENT castSender(Sender sender);
-
-	/**
 	 * 添加服务器客户端到管理器
 	 */
-	protected abstract void addServerClient(ServerType serverType, T_CLIENT client, int serverId);
+	protected abstract void addServerClient(ServerType serverType, Sender client);
 
 	/**
 	 * 获取当前服务器的信息用于响应
@@ -101,8 +96,7 @@ public abstract class AbstractRegisterHandler<T_CLIENT extends Sender, T_INSTANC
 	 * 处理服务器注册
 	 */
 	private void processRegistration(Sender sender, ModelProto.ServerInfo serverInfo, ServerType serverType) {
-		T_CLIENT client = castSender(sender);
-		addServerClient(serverType, client, serverInfo.getServerId());
+		addServerClient(serverType, sender);
 		logger.debug("已添加服务器客户端, serverType: {}, serverId: {}", serverType, serverInfo.getServerId());
 	}
 }

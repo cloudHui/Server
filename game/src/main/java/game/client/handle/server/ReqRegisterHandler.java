@@ -13,7 +13,7 @@ import utils.handle.AbstractRegisterHandler;
  * 注册服务信息请求
  */
 @ProcessType(CMsg.REQ_REGISTER)
-public class ReqRegisterHandler extends AbstractRegisterHandler<GameClient, Game> {
+public class ReqRegisterHandler extends AbstractRegisterHandler<Game> {
 
 	@Override
 	protected Game getServerInstance() {
@@ -21,13 +21,8 @@ public class ReqRegisterHandler extends AbstractRegisterHandler<GameClient, Game
 	}
 
 	@Override
-	protected GameClient castSender(Sender sender) {
-		return (GameClient) sender;
-	}
-
-	@Override
-	protected void addServerClient(ServerType serverType, GameClient client, int serverId) {
-		getServerInstance().getServerClientManager().addServerClient(serverType, client, serverId);
+	protected void addServerClient(ServerType serverType, Sender client) {
+		getServerInstance().getServerClientManager().addServerClient(serverType, (GameClient) client);
 	}
 
 	@Override
@@ -40,7 +35,6 @@ public class ReqRegisterHandler extends AbstractRegisterHandler<GameClient, Game
 	 */
 	@Override
 	protected void beforeRegistration(Sender sender, ModelProto.ServerInfo serverInfo, ServerType serverType) {
-		GameClient client = castSender(sender);
-		client.setServerInfo(serverInfo);
+		((GameClient) sender).setServerInfo(serverInfo);
 	}
 }
