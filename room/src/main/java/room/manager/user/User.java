@@ -21,7 +21,6 @@ public class User {
 
 	private final int userId;
 	private boolean joinGame;
-	private ServerProto.RoomRole role;
 	private boolean offline = false;
 	private final int clientId;
 	private final Set<String> tables = new HashSet<>();
@@ -40,13 +39,10 @@ public class User {
 		return clientId;
 	}
 
-	public void setRole(ServerProto.RoomRole role) {
-		this.role = role;
-		logger.info("设置用户角色, userId: {}, role: {}", userId, role);
-	}
-
 	public ServerProto.RoomRole getRole() {
-		return role;
+		return ServerProto.RoomRole.newBuilder()
+				.setRoleId(userId)
+				.build();
 	}
 
 	public void setOffline(boolean offline) {
