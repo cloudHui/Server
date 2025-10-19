@@ -68,12 +68,6 @@ public class ClientProto {
 		GateTcpClient client = (GateTcpClient) channelHandler;
 		int msgId = tcpMessage.getMessageId();
 
-		// 验证消息ID范围
-		if (msgId < CMsg.BASE_ID_INDEX) {
-			logger.warn("消息ID超出转发范围, msgId: {}, clientId: {}", Integer.toHexString(msgId), client.getId());
-			return false;
-		}
-
 		int sequence = tcpMessage.getSequence();
 		tcpMessage.setClientId(client.getId());
 		tcpMessage.setMapId(client.getRoleId());
@@ -111,8 +105,7 @@ public class ClientProto {
 	/**
 	 * 处理发送错误
 	 */
-	private static void handleSendError(Throwable error, int msgId,
-										ConnectHandler server, GateTcpClient client) {
+	private static void handleSendError(Throwable error, int msgId, ConnectHandler server, GateTcpClient client) {
 		logger.error("发送消息到服务器失败, msgId: {}, server: {}, error: {}", Integer.toHexString(msgId), server.getConnectServer(), error.getMessage());
 		client.sendMessage(TCPMessage.newInstance(ConstProto.Result.TIME_OUT_VALUE));
 	}
@@ -120,8 +113,7 @@ public class ClientProto {
 	/**
 	 * 处理服务器响应
 	 */
-	private static void handleServerResponse(Object response, int sequence,
-											 long startTime, GateTcpClient client, int msgId) {
+	private static void handleServerResponse(Object response, int sequence, long startTime, GateTcpClient client, int msgId) {
 		try {
 			TCPMessage responseMessage = (TCPMessage) response;
 			responseMessage.setSequence(sequence);
