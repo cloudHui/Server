@@ -1564,6 +1564,5507 @@ public final class GameProto {
 
   }
 
+  public interface NotCardOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.NotCard)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    java.util.List<proto.GameProto.NCardsInfo> 
+        getNCardsList();
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    proto.GameProto.NCardsInfo getNCards(int index);
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    int getNCardsCount();
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    java.util.List<? extends proto.GameProto.NCardsInfoOrBuilder> 
+        getNCardsOrBuilderList();
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    proto.GameProto.NCardsInfoOrBuilder getNCardsOrBuilder(
+        int index);
+  }
+  /**
+   * <pre>
+   *发牌
+   * </pre>
+   *
+   * Protobuf type {@code proto.NotCard}
+   */
+  public  static final class NotCard extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.NotCard)
+      NotCardOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use NotCard.newBuilder() to construct.
+    private NotCard(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private NotCard() {
+      nCards_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private NotCard(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                nCards_ = new java.util.ArrayList<proto.GameProto.NCardsInfo>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              nCards_.add(
+                  input.readMessage(proto.GameProto.NCardsInfo.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          nCards_ = java.util.Collections.unmodifiableList(nCards_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_NotCard_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_NotCard_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.NotCard.class, proto.GameProto.NotCard.Builder.class);
+    }
+
+    public static final int NCARDS_FIELD_NUMBER = 1;
+    private java.util.List<proto.GameProto.NCardsInfo> nCards_;
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    public java.util.List<proto.GameProto.NCardsInfo> getNCardsList() {
+      return nCards_;
+    }
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    public java.util.List<? extends proto.GameProto.NCardsInfoOrBuilder> 
+        getNCardsOrBuilderList() {
+      return nCards_;
+    }
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    public int getNCardsCount() {
+      return nCards_.size();
+    }
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    public proto.GameProto.NCardsInfo getNCards(int index) {
+      return nCards_.get(index);
+    }
+    /**
+     * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+     */
+    public proto.GameProto.NCardsInfoOrBuilder getNCardsOrBuilder(
+        int index) {
+      return nCards_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < nCards_.size(); i++) {
+        output.writeMessage(1, nCards_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < nCards_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, nCards_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.NotCard)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.NotCard other = (proto.GameProto.NotCard) obj;
+
+      boolean result = true;
+      result = result && getNCardsList()
+          .equals(other.getNCardsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getNCardsCount() > 0) {
+        hash = (37 * hash) + NCARDS_FIELD_NUMBER;
+        hash = (53 * hash) + getNCardsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.NotCard parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotCard parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotCard parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotCard parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotCard parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotCard parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotCard parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotCard parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NotCard parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotCard parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NotCard parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotCard parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.NotCard prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *发牌
+     * </pre>
+     *
+     * Protobuf type {@code proto.NotCard}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.NotCard)
+        proto.GameProto.NotCardOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_NotCard_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_NotCard_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.NotCard.class, proto.GameProto.NotCard.Builder.class);
+      }
+
+      // Construct using proto.GameProto.NotCard.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getNCardsFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (nCardsBuilder_ == null) {
+          nCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          nCardsBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_NotCard_descriptor;
+      }
+
+      public proto.GameProto.NotCard getDefaultInstanceForType() {
+        return proto.GameProto.NotCard.getDefaultInstance();
+      }
+
+      public proto.GameProto.NotCard build() {
+        proto.GameProto.NotCard result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.NotCard buildPartial() {
+        proto.GameProto.NotCard result = new proto.GameProto.NotCard(this);
+        int from_bitField0_ = bitField0_;
+        if (nCardsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            nCards_ = java.util.Collections.unmodifiableList(nCards_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.nCards_ = nCards_;
+        } else {
+          result.nCards_ = nCardsBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.NotCard) {
+          return mergeFrom((proto.GameProto.NotCard)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.NotCard other) {
+        if (other == proto.GameProto.NotCard.getDefaultInstance()) return this;
+        if (nCardsBuilder_ == null) {
+          if (!other.nCards_.isEmpty()) {
+            if (nCards_.isEmpty()) {
+              nCards_ = other.nCards_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureNCardsIsMutable();
+              nCards_.addAll(other.nCards_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.nCards_.isEmpty()) {
+            if (nCardsBuilder_.isEmpty()) {
+              nCardsBuilder_.dispose();
+              nCardsBuilder_ = null;
+              nCards_ = other.nCards_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              nCardsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getNCardsFieldBuilder() : null;
+            } else {
+              nCardsBuilder_.addAllMessages(other.nCards_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.NotCard parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.NotCard) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<proto.GameProto.NCardsInfo> nCards_ =
+        java.util.Collections.emptyList();
+      private void ensureNCardsIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          nCards_ = new java.util.ArrayList<proto.GameProto.NCardsInfo>(nCards_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.NCardsInfo, proto.GameProto.NCardsInfo.Builder, proto.GameProto.NCardsInfoOrBuilder> nCardsBuilder_;
+
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public java.util.List<proto.GameProto.NCardsInfo> getNCardsList() {
+        if (nCardsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(nCards_);
+        } else {
+          return nCardsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public int getNCardsCount() {
+        if (nCardsBuilder_ == null) {
+          return nCards_.size();
+        } else {
+          return nCardsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public proto.GameProto.NCardsInfo getNCards(int index) {
+        if (nCardsBuilder_ == null) {
+          return nCards_.get(index);
+        } else {
+          return nCardsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder setNCards(
+          int index, proto.GameProto.NCardsInfo value) {
+        if (nCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNCardsIsMutable();
+          nCards_.set(index, value);
+          onChanged();
+        } else {
+          nCardsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder setNCards(
+          int index, proto.GameProto.NCardsInfo.Builder builderForValue) {
+        if (nCardsBuilder_ == null) {
+          ensureNCardsIsMutable();
+          nCards_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          nCardsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder addNCards(proto.GameProto.NCardsInfo value) {
+        if (nCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNCardsIsMutable();
+          nCards_.add(value);
+          onChanged();
+        } else {
+          nCardsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder addNCards(
+          int index, proto.GameProto.NCardsInfo value) {
+        if (nCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNCardsIsMutable();
+          nCards_.add(index, value);
+          onChanged();
+        } else {
+          nCardsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder addNCards(
+          proto.GameProto.NCardsInfo.Builder builderForValue) {
+        if (nCardsBuilder_ == null) {
+          ensureNCardsIsMutable();
+          nCards_.add(builderForValue.build());
+          onChanged();
+        } else {
+          nCardsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder addNCards(
+          int index, proto.GameProto.NCardsInfo.Builder builderForValue) {
+        if (nCardsBuilder_ == null) {
+          ensureNCardsIsMutable();
+          nCards_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          nCardsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder addAllNCards(
+          java.lang.Iterable<? extends proto.GameProto.NCardsInfo> values) {
+        if (nCardsBuilder_ == null) {
+          ensureNCardsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, nCards_);
+          onChanged();
+        } else {
+          nCardsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder clearNCards() {
+        if (nCardsBuilder_ == null) {
+          nCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          nCardsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public Builder removeNCards(int index) {
+        if (nCardsBuilder_ == null) {
+          ensureNCardsIsMutable();
+          nCards_.remove(index);
+          onChanged();
+        } else {
+          nCardsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public proto.GameProto.NCardsInfo.Builder getNCardsBuilder(
+          int index) {
+        return getNCardsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public proto.GameProto.NCardsInfoOrBuilder getNCardsOrBuilder(
+          int index) {
+        if (nCardsBuilder_ == null) {
+          return nCards_.get(index);  } else {
+          return nCardsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public java.util.List<? extends proto.GameProto.NCardsInfoOrBuilder> 
+           getNCardsOrBuilderList() {
+        if (nCardsBuilder_ != null) {
+          return nCardsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(nCards_);
+        }
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public proto.GameProto.NCardsInfo.Builder addNCardsBuilder() {
+        return getNCardsFieldBuilder().addBuilder(
+            proto.GameProto.NCardsInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public proto.GameProto.NCardsInfo.Builder addNCardsBuilder(
+          int index) {
+        return getNCardsFieldBuilder().addBuilder(
+            index, proto.GameProto.NCardsInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.NCardsInfo nCards = 1;</code>
+       */
+      public java.util.List<proto.GameProto.NCardsInfo.Builder> 
+           getNCardsBuilderList() {
+        return getNCardsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.NCardsInfo, proto.GameProto.NCardsInfo.Builder, proto.GameProto.NCardsInfoOrBuilder> 
+          getNCardsFieldBuilder() {
+        if (nCardsBuilder_ == null) {
+          nCardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.NCardsInfo, proto.GameProto.NCardsInfo.Builder, proto.GameProto.NCardsInfoOrBuilder>(
+                  nCards_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          nCards_ = null;
+        }
+        return nCardsBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.NotCard)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.NotCard)
+    private static final proto.GameProto.NotCard DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.NotCard();
+    }
+
+    public static proto.GameProto.NotCard getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<NotCard>
+        PARSER = new com.google.protobuf.AbstractParser<NotCard>() {
+      public NotCard parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new NotCard(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<NotCard> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NotCard> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.NotCard getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface NotOperationOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.NotOperation)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *选择等待时间
+     * </pre>
+     *
+     * <code>int32 wait = 1;</code>
+     */
+    int getWait();
+
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    java.util.List<proto.GameProto.OpInfo> 
+        getChoiceList();
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    proto.GameProto.OpInfo getChoice(int index);
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    int getChoiceCount();
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    java.util.List<? extends proto.GameProto.OpInfoOrBuilder> 
+        getChoiceOrBuilderList();
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    proto.GameProto.OpInfoOrBuilder getChoiceOrBuilder(
+        int index);
+  }
+  /**
+   * <pre>
+   *通知操作
+   * </pre>
+   *
+   * Protobuf type {@code proto.NotOperation}
+   */
+  public  static final class NotOperation extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.NotOperation)
+      NotOperationOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use NotOperation.newBuilder() to construct.
+    private NotOperation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private NotOperation() {
+      wait_ = 0;
+      choice_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private NotOperation(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              wait_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                choice_ = new java.util.ArrayList<proto.GameProto.OpInfo>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              choice_.add(
+                  input.readMessage(proto.GameProto.OpInfo.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          choice_ = java.util.Collections.unmodifiableList(choice_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_NotOperation_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_NotOperation_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.NotOperation.class, proto.GameProto.NotOperation.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int WAIT_FIELD_NUMBER = 1;
+    private int wait_;
+    /**
+     * <pre>
+     *选择等待时间
+     * </pre>
+     *
+     * <code>int32 wait = 1;</code>
+     */
+    public int getWait() {
+      return wait_;
+    }
+
+    public static final int CHOICE_FIELD_NUMBER = 2;
+    private java.util.List<proto.GameProto.OpInfo> choice_;
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    public java.util.List<proto.GameProto.OpInfo> getChoiceList() {
+      return choice_;
+    }
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    public java.util.List<? extends proto.GameProto.OpInfoOrBuilder> 
+        getChoiceOrBuilderList() {
+      return choice_;
+    }
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    public int getChoiceCount() {
+      return choice_.size();
+    }
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    public proto.GameProto.OpInfo getChoice(int index) {
+      return choice_.get(index);
+    }
+    /**
+     * <pre>
+     *选择 叫地主
+     * </pre>
+     *
+     * <code>repeated .proto.OpInfo choice = 2;</code>
+     */
+    public proto.GameProto.OpInfoOrBuilder getChoiceOrBuilder(
+        int index) {
+      return choice_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (wait_ != 0) {
+        output.writeInt32(1, wait_);
+      }
+      for (int i = 0; i < choice_.size(); i++) {
+        output.writeMessage(2, choice_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (wait_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, wait_);
+      }
+      for (int i = 0; i < choice_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, choice_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.NotOperation)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.NotOperation other = (proto.GameProto.NotOperation) obj;
+
+      boolean result = true;
+      result = result && (getWait()
+          == other.getWait());
+      result = result && getChoiceList()
+          .equals(other.getChoiceList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + WAIT_FIELD_NUMBER;
+      hash = (53 * hash) + getWait();
+      if (getChoiceCount() > 0) {
+        hash = (37 * hash) + CHOICE_FIELD_NUMBER;
+        hash = (53 * hash) + getChoiceList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.NotOperation parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotOperation parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotOperation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotOperation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotOperation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotOperation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotOperation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotOperation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NotOperation parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotOperation parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NotOperation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotOperation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.NotOperation prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *通知操作
+     * </pre>
+     *
+     * Protobuf type {@code proto.NotOperation}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.NotOperation)
+        proto.GameProto.NotOperationOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_NotOperation_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_NotOperation_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.NotOperation.class, proto.GameProto.NotOperation.Builder.class);
+      }
+
+      // Construct using proto.GameProto.NotOperation.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getChoiceFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        wait_ = 0;
+
+        if (choiceBuilder_ == null) {
+          choice_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          choiceBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_NotOperation_descriptor;
+      }
+
+      public proto.GameProto.NotOperation getDefaultInstanceForType() {
+        return proto.GameProto.NotOperation.getDefaultInstance();
+      }
+
+      public proto.GameProto.NotOperation build() {
+        proto.GameProto.NotOperation result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.NotOperation buildPartial() {
+        proto.GameProto.NotOperation result = new proto.GameProto.NotOperation(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.wait_ = wait_;
+        if (choiceBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            choice_ = java.util.Collections.unmodifiableList(choice_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.choice_ = choice_;
+        } else {
+          result.choice_ = choiceBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.NotOperation) {
+          return mergeFrom((proto.GameProto.NotOperation)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.NotOperation other) {
+        if (other == proto.GameProto.NotOperation.getDefaultInstance()) return this;
+        if (other.getWait() != 0) {
+          setWait(other.getWait());
+        }
+        if (choiceBuilder_ == null) {
+          if (!other.choice_.isEmpty()) {
+            if (choice_.isEmpty()) {
+              choice_ = other.choice_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureChoiceIsMutable();
+              choice_.addAll(other.choice_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.choice_.isEmpty()) {
+            if (choiceBuilder_.isEmpty()) {
+              choiceBuilder_.dispose();
+              choiceBuilder_ = null;
+              choice_ = other.choice_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              choiceBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getChoiceFieldBuilder() : null;
+            } else {
+              choiceBuilder_.addAllMessages(other.choice_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.NotOperation parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.NotOperation) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int wait_ ;
+      /**
+       * <pre>
+       *选择等待时间
+       * </pre>
+       *
+       * <code>int32 wait = 1;</code>
+       */
+      public int getWait() {
+        return wait_;
+      }
+      /**
+       * <pre>
+       *选择等待时间
+       * </pre>
+       *
+       * <code>int32 wait = 1;</code>
+       */
+      public Builder setWait(int value) {
+        
+        wait_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *选择等待时间
+       * </pre>
+       *
+       * <code>int32 wait = 1;</code>
+       */
+      public Builder clearWait() {
+        
+        wait_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.GameProto.OpInfo> choice_ =
+        java.util.Collections.emptyList();
+      private void ensureChoiceIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          choice_ = new java.util.ArrayList<proto.GameProto.OpInfo>(choice_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder> choiceBuilder_;
+
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public java.util.List<proto.GameProto.OpInfo> getChoiceList() {
+        if (choiceBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(choice_);
+        } else {
+          return choiceBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public int getChoiceCount() {
+        if (choiceBuilder_ == null) {
+          return choice_.size();
+        } else {
+          return choiceBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public proto.GameProto.OpInfo getChoice(int index) {
+        if (choiceBuilder_ == null) {
+          return choice_.get(index);
+        } else {
+          return choiceBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder setChoice(
+          int index, proto.GameProto.OpInfo value) {
+        if (choiceBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureChoiceIsMutable();
+          choice_.set(index, value);
+          onChanged();
+        } else {
+          choiceBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder setChoice(
+          int index, proto.GameProto.OpInfo.Builder builderForValue) {
+        if (choiceBuilder_ == null) {
+          ensureChoiceIsMutable();
+          choice_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          choiceBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder addChoice(proto.GameProto.OpInfo value) {
+        if (choiceBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureChoiceIsMutable();
+          choice_.add(value);
+          onChanged();
+        } else {
+          choiceBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder addChoice(
+          int index, proto.GameProto.OpInfo value) {
+        if (choiceBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureChoiceIsMutable();
+          choice_.add(index, value);
+          onChanged();
+        } else {
+          choiceBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder addChoice(
+          proto.GameProto.OpInfo.Builder builderForValue) {
+        if (choiceBuilder_ == null) {
+          ensureChoiceIsMutable();
+          choice_.add(builderForValue.build());
+          onChanged();
+        } else {
+          choiceBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder addChoice(
+          int index, proto.GameProto.OpInfo.Builder builderForValue) {
+        if (choiceBuilder_ == null) {
+          ensureChoiceIsMutable();
+          choice_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          choiceBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder addAllChoice(
+          java.lang.Iterable<? extends proto.GameProto.OpInfo> values) {
+        if (choiceBuilder_ == null) {
+          ensureChoiceIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, choice_);
+          onChanged();
+        } else {
+          choiceBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder clearChoice() {
+        if (choiceBuilder_ == null) {
+          choice_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          choiceBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public Builder removeChoice(int index) {
+        if (choiceBuilder_ == null) {
+          ensureChoiceIsMutable();
+          choice_.remove(index);
+          onChanged();
+        } else {
+          choiceBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public proto.GameProto.OpInfo.Builder getChoiceBuilder(
+          int index) {
+        return getChoiceFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public proto.GameProto.OpInfoOrBuilder getChoiceOrBuilder(
+          int index) {
+        if (choiceBuilder_ == null) {
+          return choice_.get(index);  } else {
+          return choiceBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public java.util.List<? extends proto.GameProto.OpInfoOrBuilder> 
+           getChoiceOrBuilderList() {
+        if (choiceBuilder_ != null) {
+          return choiceBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(choice_);
+        }
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public proto.GameProto.OpInfo.Builder addChoiceBuilder() {
+        return getChoiceFieldBuilder().addBuilder(
+            proto.GameProto.OpInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public proto.GameProto.OpInfo.Builder addChoiceBuilder(
+          int index) {
+        return getChoiceFieldBuilder().addBuilder(
+            index, proto.GameProto.OpInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *选择 叫地主
+       * </pre>
+       *
+       * <code>repeated .proto.OpInfo choice = 2;</code>
+       */
+      public java.util.List<proto.GameProto.OpInfo.Builder> 
+           getChoiceBuilderList() {
+        return getChoiceFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder> 
+          getChoiceFieldBuilder() {
+        if (choiceBuilder_ == null) {
+          choiceBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder>(
+                  choice_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          choice_ = null;
+        }
+        return choiceBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.NotOperation)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.NotOperation)
+    private static final proto.GameProto.NotOperation DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.NotOperation();
+    }
+
+    public static proto.GameProto.NotOperation getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<NotOperation>
+        PARSER = new com.google.protobuf.AbstractParser<NotOperation>() {
+      public NotOperation parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new NotOperation(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<NotOperation> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NotOperation> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.NotOperation getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ReqOpOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.ReqOp)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    boolean hasOp();
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    proto.GameProto.OpInfo getOp();
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    proto.GameProto.OpInfoOrBuilder getOpOrBuilder();
+  }
+  /**
+   * <pre>
+   *请求操作
+   * </pre>
+   *
+   * Protobuf type {@code proto.ReqOp}
+   */
+  public  static final class ReqOp extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.ReqOp)
+      ReqOpOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ReqOp.newBuilder() to construct.
+    private ReqOp(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ReqOp() {
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ReqOp(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              proto.GameProto.OpInfo.Builder subBuilder = null;
+              if (op_ != null) {
+                subBuilder = op_.toBuilder();
+              }
+              op_ = input.readMessage(proto.GameProto.OpInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(op_);
+                op_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_ReqOp_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_ReqOp_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.ReqOp.class, proto.GameProto.ReqOp.Builder.class);
+    }
+
+    public static final int OP_FIELD_NUMBER = 1;
+    private proto.GameProto.OpInfo op_;
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    public boolean hasOp() {
+      return op_ != null;
+    }
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    public proto.GameProto.OpInfo getOp() {
+      return op_ == null ? proto.GameProto.OpInfo.getDefaultInstance() : op_;
+    }
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    public proto.GameProto.OpInfoOrBuilder getOpOrBuilder() {
+      return getOp();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (op_ != null) {
+        output.writeMessage(1, getOp());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (op_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getOp());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.ReqOp)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.ReqOp other = (proto.GameProto.ReqOp) obj;
+
+      boolean result = true;
+      result = result && (hasOp() == other.hasOp());
+      if (hasOp()) {
+        result = result && getOp()
+            .equals(other.getOp());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasOp()) {
+        hash = (37 * hash) + OP_FIELD_NUMBER;
+        hash = (53 * hash) + getOp().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.ReqOp parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.ReqOp parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.ReqOp parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.ReqOp parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.ReqOp parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.ReqOp parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.ReqOp parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.ReqOp parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.ReqOp parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.ReqOp parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.ReqOp parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.ReqOp parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.ReqOp prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *请求操作
+     * </pre>
+     *
+     * Protobuf type {@code proto.ReqOp}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.ReqOp)
+        proto.GameProto.ReqOpOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_ReqOp_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_ReqOp_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.ReqOp.class, proto.GameProto.ReqOp.Builder.class);
+      }
+
+      // Construct using proto.GameProto.ReqOp.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (opBuilder_ == null) {
+          op_ = null;
+        } else {
+          op_ = null;
+          opBuilder_ = null;
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_ReqOp_descriptor;
+      }
+
+      public proto.GameProto.ReqOp getDefaultInstanceForType() {
+        return proto.GameProto.ReqOp.getDefaultInstance();
+      }
+
+      public proto.GameProto.ReqOp build() {
+        proto.GameProto.ReqOp result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.ReqOp buildPartial() {
+        proto.GameProto.ReqOp result = new proto.GameProto.ReqOp(this);
+        if (opBuilder_ == null) {
+          result.op_ = op_;
+        } else {
+          result.op_ = opBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.ReqOp) {
+          return mergeFrom((proto.GameProto.ReqOp)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.ReqOp other) {
+        if (other == proto.GameProto.ReqOp.getDefaultInstance()) return this;
+        if (other.hasOp()) {
+          mergeOp(other.getOp());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.ReqOp parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.ReqOp) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private proto.GameProto.OpInfo op_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder> opBuilder_;
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public boolean hasOp() {
+        return opBuilder_ != null || op_ != null;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public proto.GameProto.OpInfo getOp() {
+        if (opBuilder_ == null) {
+          return op_ == null ? proto.GameProto.OpInfo.getDefaultInstance() : op_;
+        } else {
+          return opBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder setOp(proto.GameProto.OpInfo value) {
+        if (opBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          op_ = value;
+          onChanged();
+        } else {
+          opBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder setOp(
+          proto.GameProto.OpInfo.Builder builderForValue) {
+        if (opBuilder_ == null) {
+          op_ = builderForValue.build();
+          onChanged();
+        } else {
+          opBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder mergeOp(proto.GameProto.OpInfo value) {
+        if (opBuilder_ == null) {
+          if (op_ != null) {
+            op_ =
+              proto.GameProto.OpInfo.newBuilder(op_).mergeFrom(value).buildPartial();
+          } else {
+            op_ = value;
+          }
+          onChanged();
+        } else {
+          opBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder clearOp() {
+        if (opBuilder_ == null) {
+          op_ = null;
+          onChanged();
+        } else {
+          op_ = null;
+          opBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public proto.GameProto.OpInfo.Builder getOpBuilder() {
+        
+        onChanged();
+        return getOpFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public proto.GameProto.OpInfoOrBuilder getOpOrBuilder() {
+        if (opBuilder_ != null) {
+          return opBuilder_.getMessageOrBuilder();
+        } else {
+          return op_ == null ?
+              proto.GameProto.OpInfo.getDefaultInstance() : op_;
+        }
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder> 
+          getOpFieldBuilder() {
+        if (opBuilder_ == null) {
+          opBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder>(
+                  getOp(),
+                  getParentForChildren(),
+                  isClean());
+          op_ = null;
+        }
+        return opBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.ReqOp)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.ReqOp)
+    private static final proto.GameProto.ReqOp DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.ReqOp();
+    }
+
+    public static proto.GameProto.ReqOp getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ReqOp>
+        PARSER = new com.google.protobuf.AbstractParser<ReqOp>() {
+      public ReqOp parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new ReqOp(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ReqOp> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ReqOp> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.ReqOp getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AckOpOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.AckOp)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    boolean hasOp();
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    proto.GameProto.OpInfo getOp();
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    proto.GameProto.OpInfoOrBuilder getOpOrBuilder();
+
+    /**
+     * <code>int32 opId = 2;</code>
+     */
+    int getOpId();
+
+    /**
+     * <code>int32 opFrom = 3;</code>
+     */
+    int getOpFrom();
+  }
+  /**
+   * <pre>
+   *操作回复
+   * </pre>
+   *
+   * Protobuf type {@code proto.AckOp}
+   */
+  public  static final class AckOp extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.AckOp)
+      AckOpOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use AckOp.newBuilder() to construct.
+    private AckOp(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AckOp() {
+      opId_ = 0;
+      opFrom_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AckOp(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              proto.GameProto.OpInfo.Builder subBuilder = null;
+              if (op_ != null) {
+                subBuilder = op_.toBuilder();
+              }
+              op_ = input.readMessage(proto.GameProto.OpInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(op_);
+                op_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 16: {
+
+              opId_ = input.readInt32();
+              break;
+            }
+            case 24: {
+
+              opFrom_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_AckOp_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_AckOp_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.AckOp.class, proto.GameProto.AckOp.Builder.class);
+    }
+
+    public static final int OP_FIELD_NUMBER = 1;
+    private proto.GameProto.OpInfo op_;
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    public boolean hasOp() {
+      return op_ != null;
+    }
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    public proto.GameProto.OpInfo getOp() {
+      return op_ == null ? proto.GameProto.OpInfo.getDefaultInstance() : op_;
+    }
+    /**
+     * <code>.proto.OpInfo op = 1;</code>
+     */
+    public proto.GameProto.OpInfoOrBuilder getOpOrBuilder() {
+      return getOp();
+    }
+
+    public static final int OPID_FIELD_NUMBER = 2;
+    private int opId_;
+    /**
+     * <code>int32 opId = 2;</code>
+     */
+    public int getOpId() {
+      return opId_;
+    }
+
+    public static final int OPFROM_FIELD_NUMBER = 3;
+    private int opFrom_;
+    /**
+     * <code>int32 opFrom = 3;</code>
+     */
+    public int getOpFrom() {
+      return opFrom_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (op_ != null) {
+        output.writeMessage(1, getOp());
+      }
+      if (opId_ != 0) {
+        output.writeInt32(2, opId_);
+      }
+      if (opFrom_ != 0) {
+        output.writeInt32(3, opFrom_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (op_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getOp());
+      }
+      if (opId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, opId_);
+      }
+      if (opFrom_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, opFrom_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.AckOp)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.AckOp other = (proto.GameProto.AckOp) obj;
+
+      boolean result = true;
+      result = result && (hasOp() == other.hasOp());
+      if (hasOp()) {
+        result = result && getOp()
+            .equals(other.getOp());
+      }
+      result = result && (getOpId()
+          == other.getOpId());
+      result = result && (getOpFrom()
+          == other.getOpFrom());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasOp()) {
+        hash = (37 * hash) + OP_FIELD_NUMBER;
+        hash = (53 * hash) + getOp().hashCode();
+      }
+      hash = (37 * hash) + OPID_FIELD_NUMBER;
+      hash = (53 * hash) + getOpId();
+      hash = (37 * hash) + OPFROM_FIELD_NUMBER;
+      hash = (53 * hash) + getOpFrom();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.AckOp parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.AckOp parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.AckOp parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.AckOp parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.AckOp parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.AckOp parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.AckOp parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.AckOp parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.AckOp parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.AckOp parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.AckOp parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.AckOp parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.AckOp prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *操作回复
+     * </pre>
+     *
+     * Protobuf type {@code proto.AckOp}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.AckOp)
+        proto.GameProto.AckOpOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_AckOp_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_AckOp_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.AckOp.class, proto.GameProto.AckOp.Builder.class);
+      }
+
+      // Construct using proto.GameProto.AckOp.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (opBuilder_ == null) {
+          op_ = null;
+        } else {
+          op_ = null;
+          opBuilder_ = null;
+        }
+        opId_ = 0;
+
+        opFrom_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_AckOp_descriptor;
+      }
+
+      public proto.GameProto.AckOp getDefaultInstanceForType() {
+        return proto.GameProto.AckOp.getDefaultInstance();
+      }
+
+      public proto.GameProto.AckOp build() {
+        proto.GameProto.AckOp result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.AckOp buildPartial() {
+        proto.GameProto.AckOp result = new proto.GameProto.AckOp(this);
+        if (opBuilder_ == null) {
+          result.op_ = op_;
+        } else {
+          result.op_ = opBuilder_.build();
+        }
+        result.opId_ = opId_;
+        result.opFrom_ = opFrom_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.AckOp) {
+          return mergeFrom((proto.GameProto.AckOp)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.AckOp other) {
+        if (other == proto.GameProto.AckOp.getDefaultInstance()) return this;
+        if (other.hasOp()) {
+          mergeOp(other.getOp());
+        }
+        if (other.getOpId() != 0) {
+          setOpId(other.getOpId());
+        }
+        if (other.getOpFrom() != 0) {
+          setOpFrom(other.getOpFrom());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.AckOp parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.AckOp) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private proto.GameProto.OpInfo op_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder> opBuilder_;
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public boolean hasOp() {
+        return opBuilder_ != null || op_ != null;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public proto.GameProto.OpInfo getOp() {
+        if (opBuilder_ == null) {
+          return op_ == null ? proto.GameProto.OpInfo.getDefaultInstance() : op_;
+        } else {
+          return opBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder setOp(proto.GameProto.OpInfo value) {
+        if (opBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          op_ = value;
+          onChanged();
+        } else {
+          opBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder setOp(
+          proto.GameProto.OpInfo.Builder builderForValue) {
+        if (opBuilder_ == null) {
+          op_ = builderForValue.build();
+          onChanged();
+        } else {
+          opBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder mergeOp(proto.GameProto.OpInfo value) {
+        if (opBuilder_ == null) {
+          if (op_ != null) {
+            op_ =
+              proto.GameProto.OpInfo.newBuilder(op_).mergeFrom(value).buildPartial();
+          } else {
+            op_ = value;
+          }
+          onChanged();
+        } else {
+          opBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public Builder clearOp() {
+        if (opBuilder_ == null) {
+          op_ = null;
+          onChanged();
+        } else {
+          op_ = null;
+          opBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public proto.GameProto.OpInfo.Builder getOpBuilder() {
+        
+        onChanged();
+        return getOpFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      public proto.GameProto.OpInfoOrBuilder getOpOrBuilder() {
+        if (opBuilder_ != null) {
+          return opBuilder_.getMessageOrBuilder();
+        } else {
+          return op_ == null ?
+              proto.GameProto.OpInfo.getDefaultInstance() : op_;
+        }
+      }
+      /**
+       * <code>.proto.OpInfo op = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder> 
+          getOpFieldBuilder() {
+        if (opBuilder_ == null) {
+          opBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.GameProto.OpInfo, proto.GameProto.OpInfo.Builder, proto.GameProto.OpInfoOrBuilder>(
+                  getOp(),
+                  getParentForChildren(),
+                  isClean());
+          op_ = null;
+        }
+        return opBuilder_;
+      }
+
+      private int opId_ ;
+      /**
+       * <code>int32 opId = 2;</code>
+       */
+      public int getOpId() {
+        return opId_;
+      }
+      /**
+       * <code>int32 opId = 2;</code>
+       */
+      public Builder setOpId(int value) {
+        
+        opId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 opId = 2;</code>
+       */
+      public Builder clearOpId() {
+        
+        opId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int opFrom_ ;
+      /**
+       * <code>int32 opFrom = 3;</code>
+       */
+      public int getOpFrom() {
+        return opFrom_;
+      }
+      /**
+       * <code>int32 opFrom = 3;</code>
+       */
+      public Builder setOpFrom(int value) {
+        
+        opFrom_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 opFrom = 3;</code>
+       */
+      public Builder clearOpFrom() {
+        
+        opFrom_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.AckOp)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.AckOp)
+    private static final proto.GameProto.AckOp DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.AckOp();
+    }
+
+    public static proto.GameProto.AckOp getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AckOp>
+        PARSER = new com.google.protobuf.AbstractParser<AckOp>() {
+      public AckOp parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new AckOp(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AckOp> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AckOp> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.AckOp getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface NotResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.NotResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 winner = 1;</code>
+     */
+    int getWinner();
+
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    java.util.List<proto.GameProto.RPlayer> 
+        getRPlayersList();
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    proto.GameProto.RPlayer getRPlayers(int index);
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    int getRPlayersCount();
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    java.util.List<? extends proto.GameProto.RPlayerOrBuilder> 
+        getRPlayersOrBuilderList();
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    proto.GameProto.RPlayerOrBuilder getRPlayersOrBuilder(
+        int index);
+  }
+  /**
+   * <pre>
+   *通知结果
+   * </pre>
+   *
+   * Protobuf type {@code proto.NotResult}
+   */
+  public  static final class NotResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.NotResult)
+      NotResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use NotResult.newBuilder() to construct.
+    private NotResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private NotResult() {
+      winner_ = 0;
+      rPlayers_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private NotResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              winner_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                rPlayers_ = new java.util.ArrayList<proto.GameProto.RPlayer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              rPlayers_.add(
+                  input.readMessage(proto.GameProto.RPlayer.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          rPlayers_ = java.util.Collections.unmodifiableList(rPlayers_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_NotResult_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_NotResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.NotResult.class, proto.GameProto.NotResult.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int WINNER_FIELD_NUMBER = 1;
+    private int winner_;
+    /**
+     * <code>int32 winner = 1;</code>
+     */
+    public int getWinner() {
+      return winner_;
+    }
+
+    public static final int RPLAYERS_FIELD_NUMBER = 2;
+    private java.util.List<proto.GameProto.RPlayer> rPlayers_;
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    public java.util.List<proto.GameProto.RPlayer> getRPlayersList() {
+      return rPlayers_;
+    }
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    public java.util.List<? extends proto.GameProto.RPlayerOrBuilder> 
+        getRPlayersOrBuilderList() {
+      return rPlayers_;
+    }
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    public int getRPlayersCount() {
+      return rPlayers_.size();
+    }
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    public proto.GameProto.RPlayer getRPlayers(int index) {
+      return rPlayers_.get(index);
+    }
+    /**
+     * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+     */
+    public proto.GameProto.RPlayerOrBuilder getRPlayersOrBuilder(
+        int index) {
+      return rPlayers_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (winner_ != 0) {
+        output.writeInt32(1, winner_);
+      }
+      for (int i = 0; i < rPlayers_.size(); i++) {
+        output.writeMessage(2, rPlayers_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (winner_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, winner_);
+      }
+      for (int i = 0; i < rPlayers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, rPlayers_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.NotResult)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.NotResult other = (proto.GameProto.NotResult) obj;
+
+      boolean result = true;
+      result = result && (getWinner()
+          == other.getWinner());
+      result = result && getRPlayersList()
+          .equals(other.getRPlayersList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + WINNER_FIELD_NUMBER;
+      hash = (53 * hash) + getWinner();
+      if (getRPlayersCount() > 0) {
+        hash = (37 * hash) + RPLAYERS_FIELD_NUMBER;
+        hash = (53 * hash) + getRPlayersList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.NotResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NotResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NotResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NotResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NotResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NotResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.NotResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *通知结果
+     * </pre>
+     *
+     * Protobuf type {@code proto.NotResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.NotResult)
+        proto.GameProto.NotResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_NotResult_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_NotResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.NotResult.class, proto.GameProto.NotResult.Builder.class);
+      }
+
+      // Construct using proto.GameProto.NotResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getRPlayersFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        winner_ = 0;
+
+        if (rPlayersBuilder_ == null) {
+          rPlayers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          rPlayersBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_NotResult_descriptor;
+      }
+
+      public proto.GameProto.NotResult getDefaultInstanceForType() {
+        return proto.GameProto.NotResult.getDefaultInstance();
+      }
+
+      public proto.GameProto.NotResult build() {
+        proto.GameProto.NotResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.NotResult buildPartial() {
+        proto.GameProto.NotResult result = new proto.GameProto.NotResult(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.winner_ = winner_;
+        if (rPlayersBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            rPlayers_ = java.util.Collections.unmodifiableList(rPlayers_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.rPlayers_ = rPlayers_;
+        } else {
+          result.rPlayers_ = rPlayersBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.NotResult) {
+          return mergeFrom((proto.GameProto.NotResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.NotResult other) {
+        if (other == proto.GameProto.NotResult.getDefaultInstance()) return this;
+        if (other.getWinner() != 0) {
+          setWinner(other.getWinner());
+        }
+        if (rPlayersBuilder_ == null) {
+          if (!other.rPlayers_.isEmpty()) {
+            if (rPlayers_.isEmpty()) {
+              rPlayers_ = other.rPlayers_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureRPlayersIsMutable();
+              rPlayers_.addAll(other.rPlayers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.rPlayers_.isEmpty()) {
+            if (rPlayersBuilder_.isEmpty()) {
+              rPlayersBuilder_.dispose();
+              rPlayersBuilder_ = null;
+              rPlayers_ = other.rPlayers_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              rPlayersBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getRPlayersFieldBuilder() : null;
+            } else {
+              rPlayersBuilder_.addAllMessages(other.rPlayers_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.NotResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.NotResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int winner_ ;
+      /**
+       * <code>int32 winner = 1;</code>
+       */
+      public int getWinner() {
+        return winner_;
+      }
+      /**
+       * <code>int32 winner = 1;</code>
+       */
+      public Builder setWinner(int value) {
+        
+        winner_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 winner = 1;</code>
+       */
+      public Builder clearWinner() {
+        
+        winner_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.GameProto.RPlayer> rPlayers_ =
+        java.util.Collections.emptyList();
+      private void ensureRPlayersIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          rPlayers_ = new java.util.ArrayList<proto.GameProto.RPlayer>(rPlayers_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.RPlayer, proto.GameProto.RPlayer.Builder, proto.GameProto.RPlayerOrBuilder> rPlayersBuilder_;
+
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public java.util.List<proto.GameProto.RPlayer> getRPlayersList() {
+        if (rPlayersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(rPlayers_);
+        } else {
+          return rPlayersBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public int getRPlayersCount() {
+        if (rPlayersBuilder_ == null) {
+          return rPlayers_.size();
+        } else {
+          return rPlayersBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public proto.GameProto.RPlayer getRPlayers(int index) {
+        if (rPlayersBuilder_ == null) {
+          return rPlayers_.get(index);
+        } else {
+          return rPlayersBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder setRPlayers(
+          int index, proto.GameProto.RPlayer value) {
+        if (rPlayersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureRPlayersIsMutable();
+          rPlayers_.set(index, value);
+          onChanged();
+        } else {
+          rPlayersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder setRPlayers(
+          int index, proto.GameProto.RPlayer.Builder builderForValue) {
+        if (rPlayersBuilder_ == null) {
+          ensureRPlayersIsMutable();
+          rPlayers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          rPlayersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder addRPlayers(proto.GameProto.RPlayer value) {
+        if (rPlayersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureRPlayersIsMutable();
+          rPlayers_.add(value);
+          onChanged();
+        } else {
+          rPlayersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder addRPlayers(
+          int index, proto.GameProto.RPlayer value) {
+        if (rPlayersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureRPlayersIsMutable();
+          rPlayers_.add(index, value);
+          onChanged();
+        } else {
+          rPlayersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder addRPlayers(
+          proto.GameProto.RPlayer.Builder builderForValue) {
+        if (rPlayersBuilder_ == null) {
+          ensureRPlayersIsMutable();
+          rPlayers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          rPlayersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder addRPlayers(
+          int index, proto.GameProto.RPlayer.Builder builderForValue) {
+        if (rPlayersBuilder_ == null) {
+          ensureRPlayersIsMutable();
+          rPlayers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          rPlayersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder addAllRPlayers(
+          java.lang.Iterable<? extends proto.GameProto.RPlayer> values) {
+        if (rPlayersBuilder_ == null) {
+          ensureRPlayersIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, rPlayers_);
+          onChanged();
+        } else {
+          rPlayersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder clearRPlayers() {
+        if (rPlayersBuilder_ == null) {
+          rPlayers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          rPlayersBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public Builder removeRPlayers(int index) {
+        if (rPlayersBuilder_ == null) {
+          ensureRPlayersIsMutable();
+          rPlayers_.remove(index);
+          onChanged();
+        } else {
+          rPlayersBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public proto.GameProto.RPlayer.Builder getRPlayersBuilder(
+          int index) {
+        return getRPlayersFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public proto.GameProto.RPlayerOrBuilder getRPlayersOrBuilder(
+          int index) {
+        if (rPlayersBuilder_ == null) {
+          return rPlayers_.get(index);  } else {
+          return rPlayersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public java.util.List<? extends proto.GameProto.RPlayerOrBuilder> 
+           getRPlayersOrBuilderList() {
+        if (rPlayersBuilder_ != null) {
+          return rPlayersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(rPlayers_);
+        }
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public proto.GameProto.RPlayer.Builder addRPlayersBuilder() {
+        return getRPlayersFieldBuilder().addBuilder(
+            proto.GameProto.RPlayer.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public proto.GameProto.RPlayer.Builder addRPlayersBuilder(
+          int index) {
+        return getRPlayersFieldBuilder().addBuilder(
+            index, proto.GameProto.RPlayer.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.RPlayer rPlayers = 2;</code>
+       */
+      public java.util.List<proto.GameProto.RPlayer.Builder> 
+           getRPlayersBuilderList() {
+        return getRPlayersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.RPlayer, proto.GameProto.RPlayer.Builder, proto.GameProto.RPlayerOrBuilder> 
+          getRPlayersFieldBuilder() {
+        if (rPlayersBuilder_ == null) {
+          rPlayersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.RPlayer, proto.GameProto.RPlayer.Builder, proto.GameProto.RPlayerOrBuilder>(
+                  rPlayers_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          rPlayers_ = null;
+        }
+        return rPlayersBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.NotResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.NotResult)
+    private static final proto.GameProto.NotResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.NotResult();
+    }
+
+    public static proto.GameProto.NotResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<NotResult>
+        PARSER = new com.google.protobuf.AbstractParser<NotResult>() {
+      public NotResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new NotResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<NotResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NotResult> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.NotResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface OpInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.OpInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 choice = 1;</code>
+     */
+    int getChoice();
+
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    java.util.List<proto.GameProto.CardInfo> 
+        getOpCardsList();
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    proto.GameProto.CardInfo getOpCards(int index);
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    int getOpCardsCount();
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    java.util.List<? extends proto.GameProto.CardInfoOrBuilder> 
+        getOpCardsOrBuilderList();
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    proto.GameProto.CardInfoOrBuilder getOpCardsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code proto.OpInfo}
+   */
+  public  static final class OpInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.OpInfo)
+      OpInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use OpInfo.newBuilder() to construct.
+    private OpInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private OpInfo() {
+      choice_ = 0;
+      opCards_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private OpInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              choice_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                opCards_ = new java.util.ArrayList<proto.GameProto.CardInfo>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              opCards_.add(
+                  input.readMessage(proto.GameProto.CardInfo.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          opCards_ = java.util.Collections.unmodifiableList(opCards_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_OpInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_OpInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.OpInfo.class, proto.GameProto.OpInfo.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int CHOICE_FIELD_NUMBER = 1;
+    private int choice_;
+    /**
+     * <code>int32 choice = 1;</code>
+     */
+    public int getChoice() {
+      return choice_;
+    }
+
+    public static final int OPCARDS_FIELD_NUMBER = 2;
+    private java.util.List<proto.GameProto.CardInfo> opCards_;
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    public java.util.List<proto.GameProto.CardInfo> getOpCardsList() {
+      return opCards_;
+    }
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    public java.util.List<? extends proto.GameProto.CardInfoOrBuilder> 
+        getOpCardsOrBuilderList() {
+      return opCards_;
+    }
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    public int getOpCardsCount() {
+      return opCards_.size();
+    }
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    public proto.GameProto.CardInfo getOpCards(int index) {
+      return opCards_.get(index);
+    }
+    /**
+     * <code>repeated .proto.CardInfo opCards = 2;</code>
+     */
+    public proto.GameProto.CardInfoOrBuilder getOpCardsOrBuilder(
+        int index) {
+      return opCards_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (choice_ != 0) {
+        output.writeInt32(1, choice_);
+      }
+      for (int i = 0; i < opCards_.size(); i++) {
+        output.writeMessage(2, opCards_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (choice_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, choice_);
+      }
+      for (int i = 0; i < opCards_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, opCards_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.OpInfo)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.OpInfo other = (proto.GameProto.OpInfo) obj;
+
+      boolean result = true;
+      result = result && (getChoice()
+          == other.getChoice());
+      result = result && getOpCardsList()
+          .equals(other.getOpCardsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CHOICE_FIELD_NUMBER;
+      hash = (53 * hash) + getChoice();
+      if (getOpCardsCount() > 0) {
+        hash = (37 * hash) + OPCARDS_FIELD_NUMBER;
+        hash = (53 * hash) + getOpCardsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.OpInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.OpInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.OpInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.OpInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.OpInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.OpInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.OpInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.OpInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.OpInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.OpInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.OpInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.OpInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.OpInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.OpInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.OpInfo)
+        proto.GameProto.OpInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_OpInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_OpInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.OpInfo.class, proto.GameProto.OpInfo.Builder.class);
+      }
+
+      // Construct using proto.GameProto.OpInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getOpCardsFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        choice_ = 0;
+
+        if (opCardsBuilder_ == null) {
+          opCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          opCardsBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_OpInfo_descriptor;
+      }
+
+      public proto.GameProto.OpInfo getDefaultInstanceForType() {
+        return proto.GameProto.OpInfo.getDefaultInstance();
+      }
+
+      public proto.GameProto.OpInfo build() {
+        proto.GameProto.OpInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.OpInfo buildPartial() {
+        proto.GameProto.OpInfo result = new proto.GameProto.OpInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.choice_ = choice_;
+        if (opCardsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            opCards_ = java.util.Collections.unmodifiableList(opCards_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.opCards_ = opCards_;
+        } else {
+          result.opCards_ = opCardsBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.OpInfo) {
+          return mergeFrom((proto.GameProto.OpInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.OpInfo other) {
+        if (other == proto.GameProto.OpInfo.getDefaultInstance()) return this;
+        if (other.getChoice() != 0) {
+          setChoice(other.getChoice());
+        }
+        if (opCardsBuilder_ == null) {
+          if (!other.opCards_.isEmpty()) {
+            if (opCards_.isEmpty()) {
+              opCards_ = other.opCards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureOpCardsIsMutable();
+              opCards_.addAll(other.opCards_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.opCards_.isEmpty()) {
+            if (opCardsBuilder_.isEmpty()) {
+              opCardsBuilder_.dispose();
+              opCardsBuilder_ = null;
+              opCards_ = other.opCards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              opCardsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getOpCardsFieldBuilder() : null;
+            } else {
+              opCardsBuilder_.addAllMessages(other.opCards_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.OpInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.OpInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int choice_ ;
+      /**
+       * <code>int32 choice = 1;</code>
+       */
+      public int getChoice() {
+        return choice_;
+      }
+      /**
+       * <code>int32 choice = 1;</code>
+       */
+      public Builder setChoice(int value) {
+        
+        choice_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 choice = 1;</code>
+       */
+      public Builder clearChoice() {
+        
+        choice_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.GameProto.CardInfo> opCards_ =
+        java.util.Collections.emptyList();
+      private void ensureOpCardsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          opCards_ = new java.util.ArrayList<proto.GameProto.CardInfo>(opCards_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.CardInfo, proto.GameProto.CardInfo.Builder, proto.GameProto.CardInfoOrBuilder> opCardsBuilder_;
+
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public java.util.List<proto.GameProto.CardInfo> getOpCardsList() {
+        if (opCardsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(opCards_);
+        } else {
+          return opCardsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public int getOpCardsCount() {
+        if (opCardsBuilder_ == null) {
+          return opCards_.size();
+        } else {
+          return opCardsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public proto.GameProto.CardInfo getOpCards(int index) {
+        if (opCardsBuilder_ == null) {
+          return opCards_.get(index);
+        } else {
+          return opCardsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder setOpCards(
+          int index, proto.GameProto.CardInfo value) {
+        if (opCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureOpCardsIsMutable();
+          opCards_.set(index, value);
+          onChanged();
+        } else {
+          opCardsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder setOpCards(
+          int index, proto.GameProto.CardInfo.Builder builderForValue) {
+        if (opCardsBuilder_ == null) {
+          ensureOpCardsIsMutable();
+          opCards_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          opCardsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder addOpCards(proto.GameProto.CardInfo value) {
+        if (opCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureOpCardsIsMutable();
+          opCards_.add(value);
+          onChanged();
+        } else {
+          opCardsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder addOpCards(
+          int index, proto.GameProto.CardInfo value) {
+        if (opCardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureOpCardsIsMutable();
+          opCards_.add(index, value);
+          onChanged();
+        } else {
+          opCardsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder addOpCards(
+          proto.GameProto.CardInfo.Builder builderForValue) {
+        if (opCardsBuilder_ == null) {
+          ensureOpCardsIsMutable();
+          opCards_.add(builderForValue.build());
+          onChanged();
+        } else {
+          opCardsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder addOpCards(
+          int index, proto.GameProto.CardInfo.Builder builderForValue) {
+        if (opCardsBuilder_ == null) {
+          ensureOpCardsIsMutable();
+          opCards_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          opCardsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder addAllOpCards(
+          java.lang.Iterable<? extends proto.GameProto.CardInfo> values) {
+        if (opCardsBuilder_ == null) {
+          ensureOpCardsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, opCards_);
+          onChanged();
+        } else {
+          opCardsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder clearOpCards() {
+        if (opCardsBuilder_ == null) {
+          opCards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          opCardsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public Builder removeOpCards(int index) {
+        if (opCardsBuilder_ == null) {
+          ensureOpCardsIsMutable();
+          opCards_.remove(index);
+          onChanged();
+        } else {
+          opCardsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public proto.GameProto.CardInfo.Builder getOpCardsBuilder(
+          int index) {
+        return getOpCardsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public proto.GameProto.CardInfoOrBuilder getOpCardsOrBuilder(
+          int index) {
+        if (opCardsBuilder_ == null) {
+          return opCards_.get(index);  } else {
+          return opCardsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public java.util.List<? extends proto.GameProto.CardInfoOrBuilder> 
+           getOpCardsOrBuilderList() {
+        if (opCardsBuilder_ != null) {
+          return opCardsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(opCards_);
+        }
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public proto.GameProto.CardInfo.Builder addOpCardsBuilder() {
+        return getOpCardsFieldBuilder().addBuilder(
+            proto.GameProto.CardInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public proto.GameProto.CardInfo.Builder addOpCardsBuilder(
+          int index) {
+        return getOpCardsFieldBuilder().addBuilder(
+            index, proto.GameProto.CardInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.CardInfo opCards = 2;</code>
+       */
+      public java.util.List<proto.GameProto.CardInfo.Builder> 
+           getOpCardsBuilderList() {
+        return getOpCardsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.CardInfo, proto.GameProto.CardInfo.Builder, proto.GameProto.CardInfoOrBuilder> 
+          getOpCardsFieldBuilder() {
+        if (opCardsBuilder_ == null) {
+          opCardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.CardInfo, proto.GameProto.CardInfo.Builder, proto.GameProto.CardInfoOrBuilder>(
+                  opCards_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          opCards_ = null;
+        }
+        return opCardsBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.OpInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.OpInfo)
+    private static final proto.GameProto.OpInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.OpInfo();
+    }
+
+    public static proto.GameProto.OpInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OpInfo>
+        PARSER = new com.google.protobuf.AbstractParser<OpInfo>() {
+      public OpInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new OpInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<OpInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OpInfo> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.OpInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TableInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.TableInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 roomId = 1;</code>
+     */
+    int getRoomId();
+
+    /**
+     * <code>bytes tableId = 2;</code>
+     */
+    com.google.protobuf.ByteString getTableId();
+
+    /**
+     * <code>int32 landlord = 3;</code>
+     */
+    int getLandlord();
+
+    /**
+     * <pre>
+     *上一次出的牌
+     * </pre>
+     *
+     * <code>.proto.CardInfo lastCard = 4;</code>
+     */
+    boolean hasLastCard();
+    /**
+     * <pre>
+     *上一次出的牌
+     * </pre>
+     *
+     * <code>.proto.CardInfo lastCard = 4;</code>
+     */
+    proto.GameProto.CardInfo getLastCard();
+    /**
+     * <pre>
+     *上一次出的牌
+     * </pre>
+     *
+     * <code>.proto.CardInfo lastCard = 4;</code>
+     */
+    proto.GameProto.CardInfoOrBuilder getLastCardOrBuilder();
+  }
+  /**
+   * Protobuf type {@code proto.TableInfo}
+   */
+  public  static final class TableInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.TableInfo)
+      TableInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TableInfo.newBuilder() to construct.
+    private TableInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TableInfo() {
+      roomId_ = 0;
+      tableId_ = com.google.protobuf.ByteString.EMPTY;
+      landlord_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TableInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              roomId_ = input.readInt32();
+              break;
+            }
+            case 18: {
+
+              tableId_ = input.readBytes();
+              break;
+            }
+            case 24: {
+
+              landlord_ = input.readInt32();
+              break;
+            }
+            case 34: {
+              proto.GameProto.CardInfo.Builder subBuilder = null;
+              if (lastCard_ != null) {
+                subBuilder = lastCard_.toBuilder();
+              }
+              lastCard_ = input.readMessage(proto.GameProto.CardInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(lastCard_);
+                lastCard_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_TableInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_TableInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.TableInfo.class, proto.GameProto.TableInfo.Builder.class);
+    }
+
+    public static final int ROOMID_FIELD_NUMBER = 1;
+    private int roomId_;
+    /**
+     * <code>int32 roomId = 1;</code>
+     */
+    public int getRoomId() {
+      return roomId_;
+    }
+
+    public static final int TABLEID_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString tableId_;
+    /**
+     * <code>bytes tableId = 2;</code>
+     */
+    public com.google.protobuf.ByteString getTableId() {
+      return tableId_;
+    }
+
+    public static final int LANDLORD_FIELD_NUMBER = 3;
+    private int landlord_;
+    /**
+     * <code>int32 landlord = 3;</code>
+     */
+    public int getLandlord() {
+      return landlord_;
+    }
+
+    public static final int LASTCARD_FIELD_NUMBER = 4;
+    private proto.GameProto.CardInfo lastCard_;
+    /**
+     * <pre>
+     *上一次出的牌
+     * </pre>
+     *
+     * <code>.proto.CardInfo lastCard = 4;</code>
+     */
+    public boolean hasLastCard() {
+      return lastCard_ != null;
+    }
+    /**
+     * <pre>
+     *上一次出的牌
+     * </pre>
+     *
+     * <code>.proto.CardInfo lastCard = 4;</code>
+     */
+    public proto.GameProto.CardInfo getLastCard() {
+      return lastCard_ == null ? proto.GameProto.CardInfo.getDefaultInstance() : lastCard_;
+    }
+    /**
+     * <pre>
+     *上一次出的牌
+     * </pre>
+     *
+     * <code>.proto.CardInfo lastCard = 4;</code>
+     */
+    public proto.GameProto.CardInfoOrBuilder getLastCardOrBuilder() {
+      return getLastCard();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (roomId_ != 0) {
+        output.writeInt32(1, roomId_);
+      }
+      if (!tableId_.isEmpty()) {
+        output.writeBytes(2, tableId_);
+      }
+      if (landlord_ != 0) {
+        output.writeInt32(3, landlord_);
+      }
+      if (lastCard_ != null) {
+        output.writeMessage(4, getLastCard());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (roomId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, roomId_);
+      }
+      if (!tableId_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, tableId_);
+      }
+      if (landlord_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, landlord_);
+      }
+      if (lastCard_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getLastCard());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.TableInfo)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.TableInfo other = (proto.GameProto.TableInfo) obj;
+
+      boolean result = true;
+      result = result && (getRoomId()
+          == other.getRoomId());
+      result = result && getTableId()
+          .equals(other.getTableId());
+      result = result && (getLandlord()
+          == other.getLandlord());
+      result = result && (hasLastCard() == other.hasLastCard());
+      if (hasLastCard()) {
+        result = result && getLastCard()
+            .equals(other.getLastCard());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
+      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
+      hash = (53 * hash) + getTableId().hashCode();
+      hash = (37 * hash) + LANDLORD_FIELD_NUMBER;
+      hash = (53 * hash) + getLandlord();
+      if (hasLastCard()) {
+        hash = (37 * hash) + LASTCARD_FIELD_NUMBER;
+        hash = (53 * hash) + getLastCard().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.TableInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.TableInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.TableInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.TableInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.TableInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.TableInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.TableInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.TableInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.TableInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.TableInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.TableInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.TableInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.TableInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.TableInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.TableInfo)
+        proto.GameProto.TableInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_TableInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_TableInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.TableInfo.class, proto.GameProto.TableInfo.Builder.class);
+      }
+
+      // Construct using proto.GameProto.TableInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        roomId_ = 0;
+
+        tableId_ = com.google.protobuf.ByteString.EMPTY;
+
+        landlord_ = 0;
+
+        if (lastCardBuilder_ == null) {
+          lastCard_ = null;
+        } else {
+          lastCard_ = null;
+          lastCardBuilder_ = null;
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_TableInfo_descriptor;
+      }
+
+      public proto.GameProto.TableInfo getDefaultInstanceForType() {
+        return proto.GameProto.TableInfo.getDefaultInstance();
+      }
+
+      public proto.GameProto.TableInfo build() {
+        proto.GameProto.TableInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.TableInfo buildPartial() {
+        proto.GameProto.TableInfo result = new proto.GameProto.TableInfo(this);
+        result.roomId_ = roomId_;
+        result.tableId_ = tableId_;
+        result.landlord_ = landlord_;
+        if (lastCardBuilder_ == null) {
+          result.lastCard_ = lastCard_;
+        } else {
+          result.lastCard_ = lastCardBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.TableInfo) {
+          return mergeFrom((proto.GameProto.TableInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.TableInfo other) {
+        if (other == proto.GameProto.TableInfo.getDefaultInstance()) return this;
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
+        }
+        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
+          setTableId(other.getTableId());
+        }
+        if (other.getLandlord() != 0) {
+          setLandlord(other.getLandlord());
+        }
+        if (other.hasLastCard()) {
+          mergeLastCard(other.getLastCard());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.TableInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.TableInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int roomId_ ;
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public int getRoomId() {
+        return roomId_;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder setRoomId(int value) {
+        
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder clearRoomId() {
+        
+        roomId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes tableId = 2;</code>
+       */
+      public com.google.protobuf.ByteString getTableId() {
+        return tableId_;
+      }
+      /**
+       * <code>bytes tableId = 2;</code>
+       */
+      public Builder setTableId(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        tableId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes tableId = 2;</code>
+       */
+      public Builder clearTableId() {
+        
+        tableId_ = getDefaultInstance().getTableId();
+        onChanged();
+        return this;
+      }
+
+      private int landlord_ ;
+      /**
+       * <code>int32 landlord = 3;</code>
+       */
+      public int getLandlord() {
+        return landlord_;
+      }
+      /**
+       * <code>int32 landlord = 3;</code>
+       */
+      public Builder setLandlord(int value) {
+        
+        landlord_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 landlord = 3;</code>
+       */
+      public Builder clearLandlord() {
+        
+        landlord_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private proto.GameProto.CardInfo lastCard_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.CardInfo, proto.GameProto.CardInfo.Builder, proto.GameProto.CardInfoOrBuilder> lastCardBuilder_;
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public boolean hasLastCard() {
+        return lastCardBuilder_ != null || lastCard_ != null;
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public proto.GameProto.CardInfo getLastCard() {
+        if (lastCardBuilder_ == null) {
+          return lastCard_ == null ? proto.GameProto.CardInfo.getDefaultInstance() : lastCard_;
+        } else {
+          return lastCardBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public Builder setLastCard(proto.GameProto.CardInfo value) {
+        if (lastCardBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          lastCard_ = value;
+          onChanged();
+        } else {
+          lastCardBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public Builder setLastCard(
+          proto.GameProto.CardInfo.Builder builderForValue) {
+        if (lastCardBuilder_ == null) {
+          lastCard_ = builderForValue.build();
+          onChanged();
+        } else {
+          lastCardBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public Builder mergeLastCard(proto.GameProto.CardInfo value) {
+        if (lastCardBuilder_ == null) {
+          if (lastCard_ != null) {
+            lastCard_ =
+              proto.GameProto.CardInfo.newBuilder(lastCard_).mergeFrom(value).buildPartial();
+          } else {
+            lastCard_ = value;
+          }
+          onChanged();
+        } else {
+          lastCardBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public Builder clearLastCard() {
+        if (lastCardBuilder_ == null) {
+          lastCard_ = null;
+          onChanged();
+        } else {
+          lastCard_ = null;
+          lastCardBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public proto.GameProto.CardInfo.Builder getLastCardBuilder() {
+        
+        onChanged();
+        return getLastCardFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      public proto.GameProto.CardInfoOrBuilder getLastCardOrBuilder() {
+        if (lastCardBuilder_ != null) {
+          return lastCardBuilder_.getMessageOrBuilder();
+        } else {
+          return lastCard_ == null ?
+              proto.GameProto.CardInfo.getDefaultInstance() : lastCard_;
+        }
+      }
+      /**
+       * <pre>
+       *上一次出的牌
+       * </pre>
+       *
+       * <code>.proto.CardInfo lastCard = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          proto.GameProto.CardInfo, proto.GameProto.CardInfo.Builder, proto.GameProto.CardInfoOrBuilder> 
+          getLastCardFieldBuilder() {
+        if (lastCardBuilder_ == null) {
+          lastCardBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              proto.GameProto.CardInfo, proto.GameProto.CardInfo.Builder, proto.GameProto.CardInfoOrBuilder>(
+                  getLastCard(),
+                  getParentForChildren(),
+                  isClean());
+          lastCard_ = null;
+        }
+        return lastCardBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.TableInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.TableInfo)
+    private static final proto.GameProto.TableInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.TableInfo();
+    }
+
+    public static proto.GameProto.TableInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TableInfo>
+        PARSER = new com.google.protobuf.AbstractParser<TableInfo>() {
+      public TableInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new TableInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TableInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TableInfo> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.TableInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface PlayerOrBuilder extends
       // @@protoc_insertion_point(interface_extends:proto.Player)
       com.google.protobuf.MessageOrBuilder {
@@ -1589,17 +7090,28 @@ public final class GameProto {
     com.google.protobuf.ByteString getNickName();
 
     /**
-     * <code>repeated int32 cards = 5;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    java.util.List<java.lang.Integer> getCardsList();
+    java.util.List<proto.GameProto.Card> 
+        getCardsList();
     /**
-     * <code>repeated int32 cards = 5;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    proto.GameProto.Card getCards(int index);
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
      */
     int getCardsCount();
     /**
-     * <code>repeated int32 cards = 5;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    int getCards(int index);
+    java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList();
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code proto.Player}
@@ -1669,25 +7181,13 @@ public final class GameProto {
               nickName_ = input.readBytes();
               break;
             }
-            case 40: {
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-                cards_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000010;
-              }
-              cards_.add(input.readInt32());
-              break;
-            }
             case 42: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010) && input.getBytesUntilLimit() > 0) {
-                cards_ = new java.util.ArrayList<java.lang.Integer>();
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                cards_ = new java.util.ArrayList<proto.GameProto.Card>();
                 mutable_bitField0_ |= 0x00000010;
               }
-              while (input.getBytesUntilLimit() > 0) {
-                cards_.add(input.readInt32());
-              }
-              input.popLimit(limit);
+              cards_.add(
+                  input.readMessage(proto.GameProto.Card.parser(), extensionRegistry));
               break;
             }
           }
@@ -1755,27 +7255,39 @@ public final class GameProto {
     }
 
     public static final int CARDS_FIELD_NUMBER = 5;
-    private java.util.List<java.lang.Integer> cards_;
+    private java.util.List<proto.GameProto.Card> cards_;
     /**
-     * <code>repeated int32 cards = 5;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    public java.util.List<java.lang.Integer>
-        getCardsList() {
+    public java.util.List<proto.GameProto.Card> getCardsList() {
       return cards_;
     }
     /**
-     * <code>repeated int32 cards = 5;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList() {
+      return cards_;
+    }
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
      */
     public int getCardsCount() {
       return cards_.size();
     }
     /**
-     * <code>repeated int32 cards = 5;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    public int getCards(int index) {
+    public proto.GameProto.Card getCards(int index) {
       return cards_.get(index);
     }
-    private int cardsMemoizedSerializedSize = -1;
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index) {
+      return cards_.get(index);
+    }
 
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1789,7 +7301,6 @@ public final class GameProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
       if (roleId_ != 0) {
         output.writeInt32(1, roleId_);
       }
@@ -1802,12 +7313,8 @@ public final class GameProto {
       if (!nickName_.isEmpty()) {
         output.writeBytes(4, nickName_);
       }
-      if (getCardsList().size() > 0) {
-        output.writeUInt32NoTag(42);
-        output.writeUInt32NoTag(cardsMemoizedSerializedSize);
-      }
       for (int i = 0; i < cards_.size(); i++) {
-        output.writeInt32NoTag(cards_.get(i));
+        output.writeMessage(5, cards_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -1833,19 +7340,9 @@ public final class GameProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(4, nickName_);
       }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < cards_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(cards_.get(i));
-        }
-        size += dataSize;
-        if (!getCardsList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        cardsMemoizedSerializedSize = dataSize;
+      for (int i = 0; i < cards_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, cards_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2021,6 +7518,7 @@ public final class GameProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getCardsFieldBuilder();
         }
       }
       public Builder clear() {
@@ -2033,8 +7531,12 @@ public final class GameProto {
 
         nickName_ = com.google.protobuf.ByteString.EMPTY;
 
-        cards_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000010);
+        } else {
+          cardsBuilder_.clear();
+        }
         return this;
       }
 
@@ -2063,11 +7565,15 @@ public final class GameProto {
         result.position_ = position_;
         result.avatar_ = avatar_;
         result.nickName_ = nickName_;
-        if (((bitField0_ & 0x00000010) == 0x00000010)) {
-          cards_ = java.util.Collections.unmodifiableList(cards_);
-          bitField0_ = (bitField0_ & ~0x00000010);
+        if (cardsBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010)) {
+            cards_ = java.util.Collections.unmodifiableList(cards_);
+            bitField0_ = (bitField0_ & ~0x00000010);
+          }
+          result.cards_ = cards_;
+        } else {
+          result.cards_ = cardsBuilder_.build();
         }
-        result.cards_ = cards_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2122,15 +7628,31 @@ public final class GameProto {
         if (other.getNickName() != com.google.protobuf.ByteString.EMPTY) {
           setNickName(other.getNickName());
         }
-        if (!other.cards_.isEmpty()) {
-          if (cards_.isEmpty()) {
-            cards_ = other.cards_;
-            bitField0_ = (bitField0_ & ~0x00000010);
-          } else {
-            ensureCardsIsMutable();
-            cards_.addAll(other.cards_);
+        if (cardsBuilder_ == null) {
+          if (!other.cards_.isEmpty()) {
+            if (cards_.isEmpty()) {
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000010);
+            } else {
+              ensureCardsIsMutable();
+              cards_.addAll(other.cards_);
+            }
+            onChanged();
           }
-          onChanged();
+        } else {
+          if (!other.cards_.isEmpty()) {
+            if (cardsBuilder_.isEmpty()) {
+              cardsBuilder_.dispose();
+              cardsBuilder_ = null;
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000010);
+              cardsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getCardsFieldBuilder() : null;
+            } else {
+              cardsBuilder_.addAllMessages(other.cards_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2270,70 +7792,244 @@ public final class GameProto {
         return this;
       }
 
-      private java.util.List<java.lang.Integer> cards_ = java.util.Collections.emptyList();
+      private java.util.List<proto.GameProto.Card> cards_ =
+        java.util.Collections.emptyList();
       private void ensureCardsIsMutable() {
         if (!((bitField0_ & 0x00000010) == 0x00000010)) {
-          cards_ = new java.util.ArrayList<java.lang.Integer>(cards_);
+          cards_ = new java.util.ArrayList<proto.GameProto.Card>(cards_);
           bitField0_ |= 0x00000010;
          }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> cardsBuilder_;
+
       /**
-       * <code>repeated int32 cards = 5;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
-      public java.util.List<java.lang.Integer>
-          getCardsList() {
-        return java.util.Collections.unmodifiableList(cards_);
+      public java.util.List<proto.GameProto.Card> getCardsList() {
+        if (cardsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(cards_);
+        } else {
+          return cardsBuilder_.getMessageList();
+        }
       }
       /**
-       * <code>repeated int32 cards = 5;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
       public int getCardsCount() {
-        return cards_.size();
+        if (cardsBuilder_ == null) {
+          return cards_.size();
+        } else {
+          return cardsBuilder_.getCount();
+        }
       }
       /**
-       * <code>repeated int32 cards = 5;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
-      public int getCards(int index) {
-        return cards_.get(index);
+      public proto.GameProto.Card getCards(int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);
+        } else {
+          return cardsBuilder_.getMessage(index);
+        }
       }
       /**
-       * <code>repeated int32 cards = 5;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
       public Builder setCards(
-          int index, int value) {
-        ensureCardsIsMutable();
-        cards_.set(index, value);
-        onChanged();
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.set(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, value);
+        }
         return this;
       }
       /**
-       * <code>repeated int32 cards = 5;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
-      public Builder addCards(int value) {
-        ensureCardsIsMutable();
-        cards_.add(value);
-        onChanged();
+      public Builder setCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       /**
-       * <code>repeated int32 cards = 5;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(
+          proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
        */
       public Builder addAllCards(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureCardsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, cards_);
-        onChanged();
+          java.lang.Iterable<? extends proto.GameProto.Card> values) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, cards_);
+          onChanged();
+        } else {
+          cardsBuilder_.addAllMessages(values);
+        }
         return this;
       }
       /**
-       * <code>repeated int32 cards = 5;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
       public Builder clearCards() {
-        cards_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000010);
+          onChanged();
+        } else {
+          cardsBuilder_.clear();
+        }
         return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder removeCards(int index) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.remove(index);
+          onChanged();
+        } else {
+          cardsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.Card.Builder getCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+          int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);  } else {
+          return cardsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+           getCardsOrBuilderList() {
+        if (cardsBuilder_ != null) {
+          return cardsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(cards_);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder() {
+        return getCardsFieldBuilder().addBuilder(
+            proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().addBuilder(
+            index, proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public java.util.List<proto.GameProto.Card.Builder> 
+           getCardsBuilderList() {
+        return getCardsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> 
+          getCardsFieldBuilder() {
+        if (cardsBuilder_ == null) {
+          cardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder>(
+                  cards_,
+                  ((bitField0_ & 0x00000010) == 0x00000010),
+                  getParentForChildren(),
+                  isClean());
+          cards_ = null;
+        }
+        return cardsBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2384,41 +8080,58 @@ public final class GameProto {
 
   }
 
-  public interface TableInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.TableInfo)
+  public interface RPlayerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.RPlayer)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 roomId = 1;</code>
+     * <code>int32 roleId = 1;</code>
      */
-    int getRoomId();
+    int getRoleId();
 
     /**
-     * <code>bytes tableId = 2;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    com.google.protobuf.ByteString getTableId();
-
+    java.util.List<proto.GameProto.Card> 
+        getCardsList();
     /**
-     * <code>int32 landlord = 3;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    int getLandlord();
+    proto.GameProto.Card getCards(int index);
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    int getCardsCount();
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList();
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index);
   }
   /**
-   * Protobuf type {@code proto.TableInfo}
+   * <pre>
+   *结果玩家
+   * </pre>
+   *
+   * Protobuf type {@code proto.RPlayer}
    */
-  public  static final class TableInfo extends
+  public  static final class RPlayer extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.TableInfo)
-      TableInfoOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.RPlayer)
+      RPlayerOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use TableInfo.newBuilder() to construct.
-    private TableInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use RPlayer.newBuilder() to construct.
+    private RPlayer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private TableInfo() {
-      roomId_ = 0;
-      tableId_ = com.google.protobuf.ByteString.EMPTY;
-      landlord_ = 0;
+    private RPlayer() {
+      roleId_ = 0;
+      cards_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -2426,7 +8139,7 @@ public final class GameProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private TableInfo(
+    private RPlayer(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2451,17 +8164,16 @@ public final class GameProto {
             }
             case 8: {
 
-              roomId_ = input.readInt32();
+              roleId_ = input.readInt32();
               break;
             }
-            case 18: {
-
-              tableId_ = input.readBytes();
-              break;
-            }
-            case 24: {
-
-              landlord_ = input.readInt32();
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                cards_ = new java.util.ArrayList<proto.GameProto.Card>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              cards_.add(
+                  input.readMessage(proto.GameProto.Card.parser(), extensionRegistry));
               break;
             }
           }
@@ -2472,47 +8184,68 @@ public final class GameProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          cards_ = java.util.Collections.unmodifiableList(cards_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.GameProto.internal_static_proto_TableInfo_descriptor;
+      return proto.GameProto.internal_static_proto_RPlayer_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.GameProto.internal_static_proto_TableInfo_fieldAccessorTable
+      return proto.GameProto.internal_static_proto_RPlayer_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.GameProto.TableInfo.class, proto.GameProto.TableInfo.Builder.class);
+              proto.GameProto.RPlayer.class, proto.GameProto.RPlayer.Builder.class);
     }
 
-    public static final int ROOMID_FIELD_NUMBER = 1;
-    private int roomId_;
+    private int bitField0_;
+    public static final int ROLEID_FIELD_NUMBER = 1;
+    private int roleId_;
     /**
-     * <code>int32 roomId = 1;</code>
+     * <code>int32 roleId = 1;</code>
      */
-    public int getRoomId() {
-      return roomId_;
+    public int getRoleId() {
+      return roleId_;
     }
 
-    public static final int TABLEID_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString tableId_;
+    public static final int CARDS_FIELD_NUMBER = 5;
+    private java.util.List<proto.GameProto.Card> cards_;
     /**
-     * <code>bytes tableId = 2;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    public com.google.protobuf.ByteString getTableId() {
-      return tableId_;
+    public java.util.List<proto.GameProto.Card> getCardsList() {
+      return cards_;
     }
-
-    public static final int LANDLORD_FIELD_NUMBER = 3;
-    private int landlord_;
     /**
-     * <code>int32 landlord = 3;</code>
+     * <code>repeated .proto.Card cards = 5;</code>
      */
-    public int getLandlord() {
-      return landlord_;
+    public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList() {
+      return cards_;
+    }
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    public int getCardsCount() {
+      return cards_.size();
+    }
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    public proto.GameProto.Card getCards(int index) {
+      return cards_.get(index);
+    }
+    /**
+     * <code>repeated .proto.Card cards = 5;</code>
+     */
+    public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index) {
+      return cards_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2527,14 +8260,11 @@ public final class GameProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (roomId_ != 0) {
-        output.writeInt32(1, roomId_);
+      if (roleId_ != 0) {
+        output.writeInt32(1, roleId_);
       }
-      if (!tableId_.isEmpty()) {
-        output.writeBytes(2, tableId_);
-      }
-      if (landlord_ != 0) {
-        output.writeInt32(3, landlord_);
+      for (int i = 0; i < cards_.size(); i++) {
+        output.writeMessage(5, cards_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -2544,17 +8274,13 @@ public final class GameProto {
       if (size != -1) return size;
 
       size = 0;
-      if (roomId_ != 0) {
+      if (roleId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, roomId_);
+          .computeInt32Size(1, roleId_);
       }
-      if (!tableId_.isEmpty()) {
+      for (int i = 0; i < cards_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, tableId_);
-      }
-      if (landlord_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, landlord_);
+          .computeMessageSize(5, cards_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2566,18 +8292,16 @@ public final class GameProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.GameProto.TableInfo)) {
+      if (!(obj instanceof proto.GameProto.RPlayer)) {
         return super.equals(obj);
       }
-      proto.GameProto.TableInfo other = (proto.GameProto.TableInfo) obj;
+      proto.GameProto.RPlayer other = (proto.GameProto.RPlayer) obj;
 
       boolean result = true;
-      result = result && (getRoomId()
-          == other.getRoomId());
-      result = result && getTableId()
-          .equals(other.getTableId());
-      result = result && (getLandlord()
-          == other.getLandlord());
+      result = result && (getRoleId()
+          == other.getRoleId());
+      result = result && getCardsList()
+          .equals(other.getCardsList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2589,80 +8313,80 @@ public final class GameProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
-      hash = (53 * hash) + getRoomId();
-      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId().hashCode();
-      hash = (37 * hash) + LANDLORD_FIELD_NUMBER;
-      hash = (53 * hash) + getLandlord();
+      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoleId();
+      if (getCardsCount() > 0) {
+        hash = (37 * hash) + CARDS_FIELD_NUMBER;
+        hash = (53 * hash) + getCardsList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.TableInfo parseFrom(byte[] data)
+    public static proto.GameProto.RPlayer parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.GameProto.TableInfo parseFrom(java.io.InputStream input)
+    public static proto.GameProto.RPlayer parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.TableInfo parseDelimitedFrom(java.io.InputStream input)
+    public static proto.GameProto.RPlayer parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.GameProto.TableInfo parseDelimitedFrom(
+    public static proto.GameProto.RPlayer parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.GameProto.TableInfo parseFrom(
+    public static proto.GameProto.RPlayer parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2674,7 +8398,7 @@ public final class GameProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.GameProto.TableInfo prototype) {
+    public static Builder newBuilder(proto.GameProto.RPlayer prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -2689,25 +8413,29 @@ public final class GameProto {
       return builder;
     }
     /**
-     * Protobuf type {@code proto.TableInfo}
+     * <pre>
+     *结果玩家
+     * </pre>
+     *
+     * Protobuf type {@code proto.RPlayer}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.TableInfo)
-        proto.GameProto.TableInfoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.RPlayer)
+        proto.GameProto.RPlayerOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.GameProto.internal_static_proto_TableInfo_descriptor;
+        return proto.GameProto.internal_static_proto_RPlayer_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.GameProto.internal_static_proto_TableInfo_fieldAccessorTable
+        return proto.GameProto.internal_static_proto_RPlayer_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.GameProto.TableInfo.class, proto.GameProto.TableInfo.Builder.class);
+                proto.GameProto.RPlayer.class, proto.GameProto.RPlayer.Builder.class);
       }
 
-      // Construct using proto.GameProto.TableInfo.newBuilder()
+      // Construct using proto.GameProto.RPlayer.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2720,41 +8448,54 @@ public final class GameProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getCardsFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        roomId_ = 0;
+        roleId_ = 0;
 
-        tableId_ = com.google.protobuf.ByteString.EMPTY;
-
-        landlord_ = 0;
-
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          cardsBuilder_.clear();
+        }
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.GameProto.internal_static_proto_TableInfo_descriptor;
+        return proto.GameProto.internal_static_proto_RPlayer_descriptor;
       }
 
-      public proto.GameProto.TableInfo getDefaultInstanceForType() {
-        return proto.GameProto.TableInfo.getDefaultInstance();
+      public proto.GameProto.RPlayer getDefaultInstanceForType() {
+        return proto.GameProto.RPlayer.getDefaultInstance();
       }
 
-      public proto.GameProto.TableInfo build() {
-        proto.GameProto.TableInfo result = buildPartial();
+      public proto.GameProto.RPlayer build() {
+        proto.GameProto.RPlayer result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.GameProto.TableInfo buildPartial() {
-        proto.GameProto.TableInfo result = new proto.GameProto.TableInfo(this);
-        result.roomId_ = roomId_;
-        result.tableId_ = tableId_;
-        result.landlord_ = landlord_;
+      public proto.GameProto.RPlayer buildPartial() {
+        proto.GameProto.RPlayer result = new proto.GameProto.RPlayer(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.roleId_ = roleId_;
+        if (cardsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            cards_ = java.util.Collections.unmodifiableList(cards_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.cards_ = cards_;
+        } else {
+          result.cards_ = cardsBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -2786,24 +8527,44 @@ public final class GameProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.GameProto.TableInfo) {
-          return mergeFrom((proto.GameProto.TableInfo)other);
+        if (other instanceof proto.GameProto.RPlayer) {
+          return mergeFrom((proto.GameProto.RPlayer)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.GameProto.TableInfo other) {
-        if (other == proto.GameProto.TableInfo.getDefaultInstance()) return this;
-        if (other.getRoomId() != 0) {
-          setRoomId(other.getRoomId());
+      public Builder mergeFrom(proto.GameProto.RPlayer other) {
+        if (other == proto.GameProto.RPlayer.getDefaultInstance()) return this;
+        if (other.getRoleId() != 0) {
+          setRoleId(other.getRoleId());
         }
-        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
-          setTableId(other.getTableId());
-        }
-        if (other.getLandlord() != 0) {
-          setLandlord(other.getLandlord());
+        if (cardsBuilder_ == null) {
+          if (!other.cards_.isEmpty()) {
+            if (cards_.isEmpty()) {
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureCardsIsMutable();
+              cards_.addAll(other.cards_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.cards_.isEmpty()) {
+            if (cardsBuilder_.isEmpty()) {
+              cardsBuilder_.dispose();
+              cardsBuilder_ = null;
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              cardsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getCardsFieldBuilder() : null;
+            } else {
+              cardsBuilder_.addAllMessages(other.cards_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2818,11 +8579,11 @@ public final class GameProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.GameProto.TableInfo parsedMessage = null;
+        proto.GameProto.RPlayer parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.GameProto.TableInfo) e.getUnfinishedMessage();
+          parsedMessage = (proto.GameProto.RPlayer) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2831,84 +8592,1090 @@ public final class GameProto {
         }
         return this;
       }
+      private int bitField0_;
 
-      private int roomId_ ;
+      private int roleId_ ;
       /**
-       * <code>int32 roomId = 1;</code>
+       * <code>int32 roleId = 1;</code>
        */
-      public int getRoomId() {
-        return roomId_;
+      public int getRoleId() {
+        return roleId_;
       }
       /**
-       * <code>int32 roomId = 1;</code>
+       * <code>int32 roleId = 1;</code>
        */
-      public Builder setRoomId(int value) {
+      public Builder setRoleId(int value) {
         
-        roomId_ = value;
+        roleId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 roomId = 1;</code>
+       * <code>int32 roleId = 1;</code>
        */
-      public Builder clearRoomId() {
+      public Builder clearRoleId() {
         
-        roomId_ = 0;
+        roleId_ = 0;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
+      private java.util.List<proto.GameProto.Card> cards_ =
+        java.util.Collections.emptyList();
+      private void ensureCardsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          cards_ = new java.util.ArrayList<proto.GameProto.Card>(cards_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> cardsBuilder_;
+
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
-      public com.google.protobuf.ByteString getTableId() {
-        return tableId_;
+      public java.util.List<proto.GameProto.Card> getCardsList() {
+        if (cardsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(cards_);
+        } else {
+          return cardsBuilder_.getMessageList();
+        }
       }
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>repeated .proto.Card cards = 5;</code>
        */
-      public Builder setTableId(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
+      public int getCardsCount() {
+        if (cardsBuilder_ == null) {
+          return cards_.size();
+        } else {
+          return cardsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.Card getCards(int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);
+        } else {
+          return cardsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder setCards(
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.set(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder setCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(
+          proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder addAllCards(
+          java.lang.Iterable<? extends proto.GameProto.Card> values) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, cards_);
+          onChanged();
+        } else {
+          cardsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder clearCards() {
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          cardsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public Builder removeCards(int index) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.remove(index);
+          onChanged();
+        } else {
+          cardsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.Card.Builder getCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+          int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);  } else {
+          return cardsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+           getCardsOrBuilderList() {
+        if (cardsBuilder_ != null) {
+          return cardsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(cards_);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder() {
+        return getCardsFieldBuilder().addBuilder(
+            proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().addBuilder(
+            index, proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.Card cards = 5;</code>
+       */
+      public java.util.List<proto.GameProto.Card.Builder> 
+           getCardsBuilderList() {
+        return getCardsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> 
+          getCardsFieldBuilder() {
+        if (cardsBuilder_ == null) {
+          cardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder>(
+                  cards_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          cards_ = null;
+        }
+        return cardsBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.RPlayer)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.RPlayer)
+    private static final proto.GameProto.RPlayer DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.RPlayer();
+    }
+
+    public static proto.GameProto.RPlayer getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<RPlayer>
+        PARSER = new com.google.protobuf.AbstractParser<RPlayer>() {
+      public RPlayer parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new RPlayer(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<RPlayer> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RPlayer> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.RPlayer getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
-  
-        tableId_ = value;
-        onChanged();
+
+  public interface CardInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.CardInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    java.util.List<proto.GameProto.Card> 
+        getCardsList();
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    proto.GameProto.Card getCards(int index);
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    int getCardsCount();
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList();
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index);
+
+    /**
+     * <code>int32 type = 2;</code>
+     */
+    int getType();
+  }
+  /**
+   * Protobuf type {@code proto.CardInfo}
+   */
+  public  static final class CardInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.CardInfo)
+      CardInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CardInfo.newBuilder() to construct.
+    private CardInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CardInfo() {
+      cards_ = java.util.Collections.emptyList();
+      type_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CardInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                cards_ = new java.util.ArrayList<proto.GameProto.Card>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              cards_.add(
+                  input.readMessage(proto.GameProto.Card.parser(), extensionRegistry));
+              break;
+            }
+            case 16: {
+
+              type_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          cards_ = java.util.Collections.unmodifiableList(cards_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_CardInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_CardInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.CardInfo.class, proto.GameProto.CardInfo.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int CARDS_FIELD_NUMBER = 1;
+    private java.util.List<proto.GameProto.Card> cards_;
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    public java.util.List<proto.GameProto.Card> getCardsList() {
+      return cards_;
+    }
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList() {
+      return cards_;
+    }
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    public int getCardsCount() {
+      return cards_.size();
+    }
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    public proto.GameProto.Card getCards(int index) {
+      return cards_.get(index);
+    }
+    /**
+     * <code>repeated .proto.Card cards = 1;</code>
+     */
+    public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index) {
+      return cards_.get(index);
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 2;
+    private int type_;
+    /**
+     * <code>int32 type = 2;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < cards_.size(); i++) {
+        output.writeMessage(1, cards_.get(i));
+      }
+      if (type_ != 0) {
+        output.writeInt32(2, type_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < cards_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, cards_.get(i));
+      }
+      if (type_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, type_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.CardInfo)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.CardInfo other = (proto.GameProto.CardInfo) obj;
+
+      boolean result = true;
+      result = result && getCardsList()
+          .equals(other.getCardsList());
+      result = result && (getType()
+          == other.getType());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getCardsCount() > 0) {
+        hash = (37 * hash) + CARDS_FIELD_NUMBER;
+        hash = (53 * hash) + getCardsList().hashCode();
+      }
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getType();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.CardInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.CardInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.CardInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.CardInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.CardInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.CardInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.CardInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.CardInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.CardInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.CardInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.CardInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.CardInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.CardInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.CardInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.CardInfo)
+        proto.GameProto.CardInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_CardInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_CardInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.CardInfo.class, proto.GameProto.CardInfo.Builder.class);
+      }
+
+      // Construct using proto.GameProto.CardInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getCardsFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          cardsBuilder_.clear();
+        }
+        type_ = 0;
+
         return this;
       }
-      /**
-       * <code>bytes tableId = 2;</code>
-       */
-      public Builder clearTableId() {
-        
-        tableId_ = getDefaultInstance().getTableId();
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_CardInfo_descriptor;
+      }
+
+      public proto.GameProto.CardInfo getDefaultInstanceForType() {
+        return proto.GameProto.CardInfo.getDefaultInstance();
+      }
+
+      public proto.GameProto.CardInfo build() {
+        proto.GameProto.CardInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.CardInfo buildPartial() {
+        proto.GameProto.CardInfo result = new proto.GameProto.CardInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (cardsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            cards_ = java.util.Collections.unmodifiableList(cards_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.cards_ = cards_;
+        } else {
+          result.cards_ = cardsBuilder_.build();
+        }
+        result.type_ = type_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.CardInfo) {
+          return mergeFrom((proto.GameProto.CardInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.CardInfo other) {
+        if (other == proto.GameProto.CardInfo.getDefaultInstance()) return this;
+        if (cardsBuilder_ == null) {
+          if (!other.cards_.isEmpty()) {
+            if (cards_.isEmpty()) {
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureCardsIsMutable();
+              cards_.addAll(other.cards_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.cards_.isEmpty()) {
+            if (cardsBuilder_.isEmpty()) {
+              cardsBuilder_.dispose();
+              cardsBuilder_ = null;
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              cardsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getCardsFieldBuilder() : null;
+            } else {
+              cardsBuilder_.addAllMessages(other.cards_);
+            }
+          }
+        }
+        if (other.getType() != 0) {
+          setType(other.getType());
+        }
+        this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
-      private int landlord_ ;
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.CardInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.CardInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<proto.GameProto.Card> cards_ =
+        java.util.Collections.emptyList();
+      private void ensureCardsIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          cards_ = new java.util.ArrayList<proto.GameProto.Card>(cards_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> cardsBuilder_;
+
       /**
-       * <code>int32 landlord = 3;</code>
+       * <code>repeated .proto.Card cards = 1;</code>
        */
-      public int getLandlord() {
-        return landlord_;
+      public java.util.List<proto.GameProto.Card> getCardsList() {
+        if (cardsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(cards_);
+        } else {
+          return cardsBuilder_.getMessageList();
+        }
       }
       /**
-       * <code>int32 landlord = 3;</code>
+       * <code>repeated .proto.Card cards = 1;</code>
        */
-      public Builder setLandlord(int value) {
+      public int getCardsCount() {
+        if (cardsBuilder_ == null) {
+          return cards_.size();
+        } else {
+          return cardsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public proto.GameProto.Card getCards(int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);
+        } else {
+          return cardsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder setCards(
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.set(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder setCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder addCards(proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder addCards(
+          proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder addAllCards(
+          java.lang.Iterable<? extends proto.GameProto.Card> values) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, cards_);
+          onChanged();
+        } else {
+          cardsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder clearCards() {
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          cardsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public Builder removeCards(int index) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.remove(index);
+          onChanged();
+        } else {
+          cardsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public proto.GameProto.Card.Builder getCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+          int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);  } else {
+          return cardsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+           getCardsOrBuilderList() {
+        if (cardsBuilder_ != null) {
+          return cardsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(cards_);
+        }
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder() {
+        return getCardsFieldBuilder().addBuilder(
+            proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().addBuilder(
+            index, proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.Card cards = 1;</code>
+       */
+      public java.util.List<proto.GameProto.Card.Builder> 
+           getCardsBuilderList() {
+        return getCardsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> 
+          getCardsFieldBuilder() {
+        if (cardsBuilder_ == null) {
+          cardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder>(
+                  cards_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          cards_ = null;
+        }
+        return cardsBuilder_;
+      }
+
+      private int type_ ;
+      /**
+       * <code>int32 type = 2;</code>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>int32 type = 2;</code>
+       */
+      public Builder setType(int value) {
         
-        landlord_ = value;
+        type_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 landlord = 3;</code>
+       * <code>int32 type = 2;</code>
        */
-      public Builder clearLandlord() {
+      public Builder clearType() {
         
-        landlord_ = 0;
+        type_ = 0;
         onChanged();
         return this;
       }
@@ -2923,39 +9690,1482 @@ public final class GameProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.TableInfo)
+      // @@protoc_insertion_point(builder_scope:proto.CardInfo)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.TableInfo)
-    private static final proto.GameProto.TableInfo DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.CardInfo)
+    private static final proto.GameProto.CardInfo DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.GameProto.TableInfo();
+      DEFAULT_INSTANCE = new proto.GameProto.CardInfo();
     }
 
-    public static proto.GameProto.TableInfo getDefaultInstance() {
+    public static proto.GameProto.CardInfo getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<TableInfo>
-        PARSER = new com.google.protobuf.AbstractParser<TableInfo>() {
-      public TableInfo parsePartialFrom(
+    private static final com.google.protobuf.Parser<CardInfo>
+        PARSER = new com.google.protobuf.AbstractParser<CardInfo>() {
+      public CardInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new TableInfo(input, extensionRegistry);
+          return new CardInfo(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<TableInfo> parser() {
+    public static com.google.protobuf.Parser<CardInfo> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<TableInfo> getParserForType() {
+    public com.google.protobuf.Parser<CardInfo> getParserForType() {
       return PARSER;
     }
 
-    public proto.GameProto.TableInfo getDefaultInstanceForType() {
+    public proto.GameProto.CardInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface CardOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.Card)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 value = 1;</code>
+     */
+    int getValue();
+
+    /**
+     * <code>int32 replace = 2;</code>
+     */
+    int getReplace();
+  }
+  /**
+   * Protobuf type {@code proto.Card}
+   */
+  public  static final class Card extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.Card)
+      CardOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Card.newBuilder() to construct.
+    private Card(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Card() {
+      value_ = 0;
+      replace_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Card(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              value_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              replace_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_Card_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_Card_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.Card.class, proto.GameProto.Card.Builder.class);
+    }
+
+    public static final int VALUE_FIELD_NUMBER = 1;
+    private int value_;
+    /**
+     * <code>int32 value = 1;</code>
+     */
+    public int getValue() {
+      return value_;
+    }
+
+    public static final int REPLACE_FIELD_NUMBER = 2;
+    private int replace_;
+    /**
+     * <code>int32 replace = 2;</code>
+     */
+    public int getReplace() {
+      return replace_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (value_ != 0) {
+        output.writeInt32(1, value_);
+      }
+      if (replace_ != 0) {
+        output.writeInt32(2, replace_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (value_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, value_);
+      }
+      if (replace_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, replace_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.Card)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.Card other = (proto.GameProto.Card) obj;
+
+      boolean result = true;
+      result = result && (getValue()
+          == other.getValue());
+      result = result && (getReplace()
+          == other.getReplace());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + VALUE_FIELD_NUMBER;
+      hash = (53 * hash) + getValue();
+      hash = (37 * hash) + REPLACE_FIELD_NUMBER;
+      hash = (53 * hash) + getReplace();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.Card parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.Card parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.Card parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.Card parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.Card parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.Card parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.Card parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.Card parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.Card parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.Card parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.Card parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.Card parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.Card prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.Card}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.Card)
+        proto.GameProto.CardOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_Card_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_Card_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.Card.class, proto.GameProto.Card.Builder.class);
+      }
+
+      // Construct using proto.GameProto.Card.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        value_ = 0;
+
+        replace_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_Card_descriptor;
+      }
+
+      public proto.GameProto.Card getDefaultInstanceForType() {
+        return proto.GameProto.Card.getDefaultInstance();
+      }
+
+      public proto.GameProto.Card build() {
+        proto.GameProto.Card result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.Card buildPartial() {
+        proto.GameProto.Card result = new proto.GameProto.Card(this);
+        result.value_ = value_;
+        result.replace_ = replace_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.Card) {
+          return mergeFrom((proto.GameProto.Card)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.Card other) {
+        if (other == proto.GameProto.Card.getDefaultInstance()) return this;
+        if (other.getValue() != 0) {
+          setValue(other.getValue());
+        }
+        if (other.getReplace() != 0) {
+          setReplace(other.getReplace());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.Card parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.Card) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int value_ ;
+      /**
+       * <code>int32 value = 1;</code>
+       */
+      public int getValue() {
+        return value_;
+      }
+      /**
+       * <code>int32 value = 1;</code>
+       */
+      public Builder setValue(int value) {
+        
+        value_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 value = 1;</code>
+       */
+      public Builder clearValue() {
+        
+        value_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int replace_ ;
+      /**
+       * <code>int32 replace = 2;</code>
+       */
+      public int getReplace() {
+        return replace_;
+      }
+      /**
+       * <code>int32 replace = 2;</code>
+       */
+      public Builder setReplace(int value) {
+        
+        replace_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 replace = 2;</code>
+       */
+      public Builder clearReplace() {
+        
+        replace_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.Card)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.Card)
+    private static final proto.GameProto.Card DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.Card();
+    }
+
+    public static proto.GameProto.Card getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Card>
+        PARSER = new com.google.protobuf.AbstractParser<Card>() {
+      public Card parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Card(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Card> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Card> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.Card getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface NCardsInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.NCardsInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 roleId = 1;</code>
+     */
+    int getRoleId();
+
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    java.util.List<proto.GameProto.Card> 
+        getCardsList();
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    proto.GameProto.Card getCards(int index);
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    int getCardsCount();
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList();
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code proto.NCardsInfo}
+   */
+  public  static final class NCardsInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.NCardsInfo)
+      NCardsInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use NCardsInfo.newBuilder() to construct.
+    private NCardsInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private NCardsInfo() {
+      roleId_ = 0;
+      cards_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private NCardsInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              roleId_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                cards_ = new java.util.ArrayList<proto.GameProto.Card>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              cards_.add(
+                  input.readMessage(proto.GameProto.Card.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          cards_ = java.util.Collections.unmodifiableList(cards_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.GameProto.internal_static_proto_NCardsInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.GameProto.internal_static_proto_NCardsInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.GameProto.NCardsInfo.class, proto.GameProto.NCardsInfo.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int ROLEID_FIELD_NUMBER = 1;
+    private int roleId_;
+    /**
+     * <code>int32 roleId = 1;</code>
+     */
+    public int getRoleId() {
+      return roleId_;
+    }
+
+    public static final int CARDS_FIELD_NUMBER = 2;
+    private java.util.List<proto.GameProto.Card> cards_;
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    public java.util.List<proto.GameProto.Card> getCardsList() {
+      return cards_;
+    }
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+        getCardsOrBuilderList() {
+      return cards_;
+    }
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    public int getCardsCount() {
+      return cards_.size();
+    }
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    public proto.GameProto.Card getCards(int index) {
+      return cards_.get(index);
+    }
+    /**
+     * <pre>
+     *自己才有值其他人的牌都是牌值都是0
+     * </pre>
+     *
+     * <code>repeated .proto.Card cards = 2;</code>
+     */
+    public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+        int index) {
+      return cards_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (roleId_ != 0) {
+        output.writeInt32(1, roleId_);
+      }
+      for (int i = 0; i < cards_.size(); i++) {
+        output.writeMessage(2, cards_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (roleId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, roleId_);
+      }
+      for (int i = 0; i < cards_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, cards_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.GameProto.NCardsInfo)) {
+        return super.equals(obj);
+      }
+      proto.GameProto.NCardsInfo other = (proto.GameProto.NCardsInfo) obj;
+
+      boolean result = true;
+      result = result && (getRoleId()
+          == other.getRoleId());
+      result = result && getCardsList()
+          .equals(other.getCardsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoleId();
+      if (getCardsCount() > 0) {
+        hash = (37 * hash) + CARDS_FIELD_NUMBER;
+        hash = (53 * hash) + getCardsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.GameProto.NCardsInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NCardsInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NCardsInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.GameProto.NCardsInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.GameProto.NCardsInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.NCardsInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.NCardsInfo)
+        proto.GameProto.NCardsInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.GameProto.internal_static_proto_NCardsInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.GameProto.internal_static_proto_NCardsInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.GameProto.NCardsInfo.class, proto.GameProto.NCardsInfo.Builder.class);
+      }
+
+      // Construct using proto.GameProto.NCardsInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getCardsFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        roleId_ = 0;
+
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          cardsBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.GameProto.internal_static_proto_NCardsInfo_descriptor;
+      }
+
+      public proto.GameProto.NCardsInfo getDefaultInstanceForType() {
+        return proto.GameProto.NCardsInfo.getDefaultInstance();
+      }
+
+      public proto.GameProto.NCardsInfo build() {
+        proto.GameProto.NCardsInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.GameProto.NCardsInfo buildPartial() {
+        proto.GameProto.NCardsInfo result = new proto.GameProto.NCardsInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.roleId_ = roleId_;
+        if (cardsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            cards_ = java.util.Collections.unmodifiableList(cards_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.cards_ = cards_;
+        } else {
+          result.cards_ = cardsBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.GameProto.NCardsInfo) {
+          return mergeFrom((proto.GameProto.NCardsInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.GameProto.NCardsInfo other) {
+        if (other == proto.GameProto.NCardsInfo.getDefaultInstance()) return this;
+        if (other.getRoleId() != 0) {
+          setRoleId(other.getRoleId());
+        }
+        if (cardsBuilder_ == null) {
+          if (!other.cards_.isEmpty()) {
+            if (cards_.isEmpty()) {
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureCardsIsMutable();
+              cards_.addAll(other.cards_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.cards_.isEmpty()) {
+            if (cardsBuilder_.isEmpty()) {
+              cardsBuilder_.dispose();
+              cardsBuilder_ = null;
+              cards_ = other.cards_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              cardsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getCardsFieldBuilder() : null;
+            } else {
+              cardsBuilder_.addAllMessages(other.cards_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.GameProto.NCardsInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.GameProto.NCardsInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int roleId_ ;
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public int getRoleId() {
+        return roleId_;
+      }
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public Builder setRoleId(int value) {
+        
+        roleId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public Builder clearRoleId() {
+        
+        roleId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.GameProto.Card> cards_ =
+        java.util.Collections.emptyList();
+      private void ensureCardsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          cards_ = new java.util.ArrayList<proto.GameProto.Card>(cards_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> cardsBuilder_;
+
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public java.util.List<proto.GameProto.Card> getCardsList() {
+        if (cardsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(cards_);
+        } else {
+          return cardsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public int getCardsCount() {
+        if (cardsBuilder_ == null) {
+          return cards_.size();
+        } else {
+          return cardsBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public proto.GameProto.Card getCards(int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);
+        } else {
+          return cardsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder setCards(
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.set(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder setCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder addCards(proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card value) {
+        if (cardsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCardsIsMutable();
+          cards_.add(index, value);
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder addCards(
+          proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder addCards(
+          int index, proto.GameProto.Card.Builder builderForValue) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          cardsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder addAllCards(
+          java.lang.Iterable<? extends proto.GameProto.Card> values) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, cards_);
+          onChanged();
+        } else {
+          cardsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder clearCards() {
+        if (cardsBuilder_ == null) {
+          cards_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          cardsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public Builder removeCards(int index) {
+        if (cardsBuilder_ == null) {
+          ensureCardsIsMutable();
+          cards_.remove(index);
+          onChanged();
+        } else {
+          cardsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public proto.GameProto.Card.Builder getCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public proto.GameProto.CardOrBuilder getCardsOrBuilder(
+          int index) {
+        if (cardsBuilder_ == null) {
+          return cards_.get(index);  } else {
+          return cardsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public java.util.List<? extends proto.GameProto.CardOrBuilder> 
+           getCardsOrBuilderList() {
+        if (cardsBuilder_ != null) {
+          return cardsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(cards_);
+        }
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder() {
+        return getCardsFieldBuilder().addBuilder(
+            proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public proto.GameProto.Card.Builder addCardsBuilder(
+          int index) {
+        return getCardsFieldBuilder().addBuilder(
+            index, proto.GameProto.Card.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *自己才有值其他人的牌都是牌值都是0
+       * </pre>
+       *
+       * <code>repeated .proto.Card cards = 2;</code>
+       */
+      public java.util.List<proto.GameProto.Card.Builder> 
+           getCardsBuilderList() {
+        return getCardsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder> 
+          getCardsFieldBuilder() {
+        if (cardsBuilder_ == null) {
+          cardsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.GameProto.Card, proto.GameProto.Card.Builder, proto.GameProto.CardOrBuilder>(
+                  cards_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          cards_ = null;
+        }
+        return cardsBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.NCardsInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.NCardsInfo)
+    private static final proto.GameProto.NCardsInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.GameProto.NCardsInfo();
+    }
+
+    public static proto.GameProto.NCardsInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<NCardsInfo>
+        PARSER = new com.google.protobuf.AbstractParser<NCardsInfo>() {
+      public NCardsInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new NCardsInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<NCardsInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NCardsInfo> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.GameProto.NCardsInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2972,15 +11182,65 @@ public final class GameProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckEnterTable_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_Player_descriptor;
+    internal_static_proto_NotCard_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_Player_fieldAccessorTable;
+      internal_static_proto_NotCard_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_NotOperation_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_NotOperation_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_ReqOp_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_ReqOp_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_AckOp_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_AckOp_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_NotResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_NotResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_OpInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_OpInfo_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_TableInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_TableInfo_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_Player_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_Player_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_RPlayer_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_RPlayer_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_CardInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_CardInfo_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_Card_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_Card_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_NCardsInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_NCardsInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2994,11 +11254,26 @@ public final class GameProto {
       "tableId\030\001 \001(\014\022\014\n\004head\030\002 \001(\014\022\014\n\004nick\030\003 \001(" +
       "\014\"T\n\rAckEnterTable\022\036\n\007players\030\001 \003(\0132\r.pr" +
       "oto.Player\022#\n\ttableInfo\030\002 \001(\0132\020.proto.Ta" +
-      "bleInfo\"[\n\006Player\022\016\n\006roleId\030\001 \001(\005\022\020\n\010pos" +
-      "ition\030\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030" +
-      "\004 \001(\014\022\r\n\005cards\030\005 \003(\005\">\n\tTableInfo\022\016\n\006roo" +
-      "mId\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\014\022\020\n\010landlord\030\003" +
-      " \001(\005B\013B\tGameProtob\006proto3"
+      "bleInfo\",\n\007NotCard\022!\n\006nCards\030\001 \003(\0132\021.pro" +
+      "to.NCardsInfo\";\n\014NotOperation\022\014\n\004wait\030\001 " +
+      "\001(\005\022\035\n\006choice\030\002 \003(\0132\r.proto.OpInfo\"\"\n\005Re" +
+      "qOp\022\031\n\002op\030\001 \001(\0132\r.proto.OpInfo\"@\n\005AckOp\022" +
+      "\031\n\002op\030\001 \001(\0132\r.proto.OpInfo\022\014\n\004opId\030\002 \001(\005" +
+      "\022\016\n\006opFrom\030\003 \001(\005\"=\n\tNotResult\022\016\n\006winner\030",
+      "\001 \001(\005\022 \n\010rPlayers\030\002 \003(\0132\016.proto.RPlayer\"" +
+      ":\n\006OpInfo\022\016\n\006choice\030\001 \001(\005\022 \n\007opCards\030\002 \003" +
+      "(\0132\017.proto.CardInfo\"a\n\tTableInfo\022\016\n\006room" +
+      "Id\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\014\022\020\n\010landlord\030\003 " +
+      "\001(\005\022!\n\010lastCard\030\004 \001(\0132\017.proto.CardInfo\"h" +
+      "\n\006Player\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030\002 \001" +
+      "(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022\032\n\005" +
+      "cards\030\005 \003(\0132\013.proto.Card\"5\n\007RPlayer\022\016\n\006r" +
+      "oleId\030\001 \001(\005\022\032\n\005cards\030\005 \003(\0132\013.proto.Card\"" +
+      "4\n\010CardInfo\022\032\n\005cards\030\001 \003(\0132\013.proto.Card\022",
+      "\014\n\004type\030\002 \001(\005\"&\n\004Card\022\r\n\005value\030\001 \001(\005\022\017\n\007" +
+      "replace\030\002 \001(\005\"8\n\nNCardsInfo\022\016\n\006roleId\030\001 " +
+      "\001(\005\022\032\n\005cards\030\002 \003(\0132\013.proto.CardB\013B\tGameP" +
+      "rotob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3024,18 +11299,78 @@ public final class GameProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckEnterTable_descriptor,
         new java.lang.String[] { "Players", "TableInfo", });
-    internal_static_proto_Player_descriptor =
+    internal_static_proto_NotCard_descriptor =
       getDescriptor().getMessageTypes().get(2);
+    internal_static_proto_NotCard_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_NotCard_descriptor,
+        new java.lang.String[] { "NCards", });
+    internal_static_proto_NotOperation_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_proto_NotOperation_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_NotOperation_descriptor,
+        new java.lang.String[] { "Wait", "Choice", });
+    internal_static_proto_ReqOp_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_proto_ReqOp_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_ReqOp_descriptor,
+        new java.lang.String[] { "Op", });
+    internal_static_proto_AckOp_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_proto_AckOp_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_AckOp_descriptor,
+        new java.lang.String[] { "Op", "OpId", "OpFrom", });
+    internal_static_proto_NotResult_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_proto_NotResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_NotResult_descriptor,
+        new java.lang.String[] { "Winner", "RPlayers", });
+    internal_static_proto_OpInfo_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_proto_OpInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_OpInfo_descriptor,
+        new java.lang.String[] { "Choice", "OpCards", });
+    internal_static_proto_TableInfo_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_proto_TableInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_TableInfo_descriptor,
+        new java.lang.String[] { "RoomId", "TableId", "Landlord", "LastCard", });
+    internal_static_proto_Player_descriptor =
+      getDescriptor().getMessageTypes().get(9);
     internal_static_proto_Player_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_Player_descriptor,
         new java.lang.String[] { "RoleId", "Position", "Avatar", "NickName", "Cards", });
-    internal_static_proto_TableInfo_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_proto_TableInfo_fieldAccessorTable = new
+    internal_static_proto_RPlayer_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_proto_RPlayer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_TableInfo_descriptor,
-        new java.lang.String[] { "RoomId", "TableId", "Landlord", });
+        internal_static_proto_RPlayer_descriptor,
+        new java.lang.String[] { "RoleId", "Cards", });
+    internal_static_proto_CardInfo_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_proto_CardInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_CardInfo_descriptor,
+        new java.lang.String[] { "Cards", "Type", });
+    internal_static_proto_Card_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_proto_Card_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_Card_descriptor,
+        new java.lang.String[] { "Value", "Replace", });
+    internal_static_proto_NCardsInfo_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_proto_NCardsInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_NCardsInfo_descriptor,
+        new java.lang.String[] { "RoleId", "Cards", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

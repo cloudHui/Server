@@ -15,3 +15,26 @@ enum TableState{
     WAITE = 0;//等待
     START = 1;//开始
 }
+
+enum Choice{
+    PASS = 0;//过
+    CALL = 1;//叫地主
+    NOT_CALL = 2;//不叫地主
+    TIP = 3;//提示
+    PLAY = 4;//出
+}
+
+enum CardType{
+    SINGLE = 0;//单
+    DOUBLE = 1;//对子
+    TRIPLE = 2;//三不带
+    TRIPLE_ONE = 3;//三带一
+    TRIPLE_DOUBLE = 4;//三带二
+    PLANE_ONE = 5;//飞机带一
+    PLANE_DOUBLE = 6;//飞机带二
+    BOOM_DOUBLE_SINGLE = 7;//炸弹带二单
+    BOOM_DOUBLE_CUP = 8;//炸弹带二对
+    STRAIGHT = 9;//顺子
+    BOOM = 10;//炸弹
+    BOOM_MAX = 11;//双王炸
+}

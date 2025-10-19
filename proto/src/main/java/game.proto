@@ -16,16 +16,71 @@ message AckEnterTable {
     TableInfo tableInfo = 2;
 }
 
-message Player{
-    int32 roleId = 1;
-    int32 position = 2;
-    bytes avatar = 3;
-    bytes nickName = 4;
-    repeated int32 cards = 5;
+//发牌
+message NotCard{
+    repeated NCardsInfo nCards = 1;
+}
+
+//通知操作
+message NotOperation{
+    int32 wait = 1;//选择等待时间
+    repeated OpInfo choice = 2;//选择 叫地主
+}
+
+//请求操作
+message ReqOp {
+    OpInfo op = 1;
+}
+
+//操作回复
+message AckOp {
+    OpInfo op = 1;
+    int32 opId = 2;
+    int32 opFrom = 3;
+}
+
+//通知结果
+message NotResult{
+    int32 winner = 1;
+    repeated RPlayer rPlayers = 2;
+}
+
+message OpInfo{
+    int32 choice = 1;
+    repeated CardInfo opCards = 2;
 }
 
 message TableInfo{
     int32 roomId = 1;
     bytes tableId = 2;
     int32 landlord = 3;
+    CardInfo lastCard = 4;//上一次出的牌
+}
+
+message Player{
+    int32 roleId = 1;
+    int32 position = 2;
+    bytes avatar = 3;
+    bytes nickName = 4;
+    repeated Card cards = 5;
+}
+
+//结果玩家
+message RPlayer{
+    int32 roleId = 1;
+    repeated Card cards = 5;
+}
+
+message CardInfo{
+    repeated Card cards = 1;
+    int32 type = 2;
+}
+message Card{
+    int32 value = 1;
+    int32 replace = 2;
+}
+
+message NCardsInfo{
+    int32 roleId = 1;
+    repeated Card cards = 2;//自己才有值其他人的牌都是牌值都是0
 }
