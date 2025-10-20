@@ -1,16 +1,23 @@
 package game.client.handle.role;
 
+import java.util.Map;
+
+import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
+import game.Game;
 import game.manager.TableManager;
-import game.manager.model.GameUser;
-import game.manager.model.Table;
+import game.manager.table.Table;
+import game.manager.table.TableUser;
 import msg.annotation.ProcessType;
 import msg.registor.message.GMsg;
 import net.client.Sender;
 import net.handler.Handler;
+import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ConstProto;
 import proto.GameProto;
+import threadtutil.thread.Task;
 
 /**
  * 处理玩家请求进入桌子
@@ -26,20 +33,44 @@ public class ReqEnterTableHandle implements Handler {
 			GameProto.ReqEnterTable request = (GameProto.ReqEnterTable) message;
 			String tableId = request.getTableId().toStringUtf8();
 
-			logger.info("处理进入桌子请求, userId: {}, tableId: {}", clientId, tableId);
+			logger.info("处理进入桌子请求, userId: {}, tableId: {}", mapId, tableId);
 
-			// 处理进入桌子逻辑
-			boolean success = processEnterTable(clientId, tableId);
+			// 获取桌子管理器
+			TableManager tableManager = Game.getInstance().getTableManager();
 
-			// 构建响应
-			GameProto.AckEnterTable response = buildEnterTableResponse();
+			// 查找桌子
+			Table table = tableManager.getTable(tableId);
+			if (table == null) {
+				logger.warn("桌子不存在, tableId: {}", tableId);
+				sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.TABLE_NULL_VALUE));
+				return true;
+			}
+			Game.getInstance().serialExecute(new Task() {
+				@Override
+				public int groupId() {
+					return tableId.hashCode();
+				}
 
-			// 发送响应
-			sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, mapId, response, sequence);
+				@Override
+				public void run() {
+					// 处理进入桌子逻辑
+					int result = processEnterTable(mapId, tableId, clientId, request, table);
 
-			logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", clientId, tableId, success);
+					if (result == ConstProto.Result.SUCCESS_VALUE) {
+						// 构建响应
+						GameProto.AckEnterTable response = buildEnterTableResponse(table);
+						// 发送响应
+						sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, mapId, response, sequence);
+					} else {
+						sender.sendMessage(TCPMessage.newInstance(result));
+					}
+
+					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", mapId, tableId, result);
+				}
+			});
+
 		} catch (Exception e) {
-			logger.error("处理进入桌子请求失败, userId: {}", clientId, e);
+			logger.error("处理进入桌子请求失败, userId: {}", mapId, e);
 		}
 		return true;
 	}
@@ -47,45 +78,46 @@ public class ReqEnterTableHandle implements Handler {
 	/**
 	 * 处理进入桌子逻辑
 	 */
-	private boolean processEnterTable(int userId, String tableId) {
+	private int processEnterTable(int userId, String tableId, int gateId, GameProto.ReqEnterTable req, Table table) {
 		try {
-			// 获取桌子管理器
-			TableManager tableManager = game.Game.getInstance().getTableManager();
-
-			// 查找桌子
-			Table table = tableManager.getTable(tableId);
-			if (table == null) {
-				logger.warn("桌子不存在, tableId: {}", tableId);
-				return false;
-			}
-
-			// 创建用户对象
-			GameUser user = new GameUser();
-			user.setUserId(userId);
-			user.setOnLine(true);
+			// 获取用户对象
+			TableUser user = table.getUser(userId, gateId, req);
 
 			// 尝试加入桌子
-			boolean success = table.addUser(user);
-			if (success) {
+			int result = table.addUser(user);
+			if (result == ConstProto.Result.SUCCESS_VALUE) {
 				logger.debug("用户成功加入桌子, userId: {}, tableId: {}", userId, tableId);
 				user.addTable(tableId);
 			} else {
 				logger.warn("用户加入桌子失败, userId: {}, tableId: {}", userId, tableId);
 			}
 
-			return success;
+			return ConstProto.Result.SUCCESS_VALUE;
 		} catch (Exception e) {
 			logger.error("处理进入桌子逻辑失败, userId: {}, tableId: {}", userId, tableId, e);
-			return false;
+			return ConstProto.Result.TABLE_ERROR_VALUE;
 		}
 	}
 
 	/**
 	 * 构建进入桌子响应
 	 */
-	private GameProto.AckEnterTable buildEnterTableResponse() {
+	private GameProto.AckEnterTable buildEnterTableResponse(Table table) {
 		GameProto.AckEnterTable.Builder response = GameProto.AckEnterTable.newBuilder();
-		// 可以添加更多响应字段,如错误码、提示信息等
+		response.setTableInfo(GameProto.TableInfo.newBuilder()
+				.setTableId(ByteString.copyFromUtf8(table.getTableId()))
+				.setRoomId(table.getRoomId())
+				.build());
+		Map<Integer, TableUser> users = table.getUsers();
+		for (Map.Entry<Integer, TableUser> entry : users.entrySet()) {
+			TableUser tableUser = entry.getValue();
+			response.addPlayers(GameProto.Player.newBuilder()
+					.setPosition(tableUser.getSeated())
+					.setRoleId(tableUser.getUserId())
+					.setNickName(ByteString.copyFromUtf8(tableUser.getNick()))
+					.setAvatar(ByteString.copyFromUtf8(tableUser.getHead()))
+					.build());
+		}
 		return response.build();
 	}
 }

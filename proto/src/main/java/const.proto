@@ -3,20 +3,28 @@ option java_outer_classname = "ConstProto";
 
 package proto;
 
+//错误码
 enum Result{
     SUCCESS = 0;
     SERVER_NULL = 1;//服务空
     TIME_OUT = 2;//回复超时
     SERVER_ERROR = 3;//服务错误
     TABLE_CONFIG_ERROR = 5;//桌子配置错误
+    TABLE_NULL = 6;//桌子空
+    TABLE_FULL = 7;//桌子满
+    TABLE_ERROR = 8;//桌子异常
+    ROLE_ERROR = 9;//玩家异常
+    ROLE_NULL = 10;//玩家空
 }
 
+//room状态
 enum TableState{
     WAITE = 0;//等待
     START = 1;//开始
 }
 
-enum Choice{
+//操作选择
+enum Operation{
     PASS = 0;//过
     CALL = 1;//叫地主
     NOT_CALL = 2;//不叫地主
@@ -24,6 +32,7 @@ enum Choice{
     PLAY = 4;//出
 }
 
+//牌型
 enum CardType{
     SINGLE = 0;//单
     DOUBLE = 1;//对子

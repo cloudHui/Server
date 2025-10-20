@@ -83,10 +83,6 @@ public class Game {
 		return tableManager;
 	}
 
-	public void setTableManager(TableManager tableManager) {
-		this.tableManager = tableManager;
-	}
-
 	public ModelProto.ServerInfo getServerInfo() {
 		return serverInfo;
 	}

@@ -16,6 +16,17 @@ message AckEnterTable {
     TableInfo tableInfo = 2;
 }
 
+//请求离开桌子
+message ReqLeaveTable {
+    bytes tableId = 1;
+}
+
+//离开桌子回复
+message AckLeaveTable {
+    repeated Player players = 1;
+    TableInfo tableInfo = 2;
+}
+
 //发牌
 message NotCard{
     repeated NCardsInfo nCards = 1;

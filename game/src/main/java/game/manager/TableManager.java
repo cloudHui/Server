@@ -1,13 +1,19 @@
 package game.manager;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import game.manager.model.Table;
+import game.manager.table.Table;
+import model.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ServerProto;
+import utils.other.excel.ExcelUtil;
 
 /**
  * 桌子管理器
@@ -30,9 +36,42 @@ public class TableManager {
 	 */
 	private String currHead;
 
+	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
+
 	public TableManager() {
 		tableMap = new ConcurrentHashMap<>();
+		init();
 		logger.info("桌子管理器初始化完成");
+	}
+
+
+	/**
+	 * 初始化房间管理器
+	 * 从Excel文件加载房间配置
+	 */
+	public synchronized void init() {
+		try {
+			List<Object> properties = new ArrayList<>();
+
+			// 读取Excel配置
+			ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties);
+
+			synchronized (tableModelMap) {
+				//Todo 重新load 以后之前的房间尽量打完删除
+				tableModelMap.clear();
+
+				for (Object object : properties) {
+					TableModel model = (TableModel) object;
+					tableModelMap.put(model.getId(), model);
+					logger.debug("加载房间模板, id: {}", model.getId());
+				}
+			}
+
+			logger.info("房间管理器初始化完成,加载模板数量: {}", tableModelMap.size());
+		} catch (Exception e) {
+			logger.error("房间管理器初始化失败", e);
+			throw new RuntimeException("房间管理器初始化失败", e);
+		}
 	}
 
 	/**
@@ -81,20 +120,35 @@ public class TableManager {
 	/**
 	 * 获取新的桌子ID
 	 */
-	public String getTableId() {
+	private String getTableId() {
+		if (currentIndex >= Integer.MAX_VALUE - 1000) {
+			logger.warn("桌子ID即将耗尽,考虑重置");
+		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHH");
+		String head = dateFormat.format(new Date());
+		if (!head.equals(currHead)) {
+			currHead = head;
+			currentIndex = BASE_INDEX;
+		}
+		String tableId = currHead + ++currentIndex;
+		logger.info("创建新桌子ID: {}", tableId);
+		return tableId;
+
+	}
+
+	/**
+	 * 创建桌子
+	 *
+	 * @param roomId 桌子类型
+	 * @param role   创建的玩家
+	 * @return 桌子实例
+	 */
+	public Table createTable(int roomId, ServerProto.RoomRole role) {
 		synchronized (TableManager.class) {
-			if (currentIndex >= Integer.MAX_VALUE - 1000) {
-				logger.warn("桌子ID即将耗尽,考虑重置");
-			}
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHH");
-			String head = dateFormat.format(new Date());
-			if (!head.equals(currHead)) {
-				currHead = head;
-				currentIndex = BASE_INDEX;
-			}
-			String tableId = currHead + ++currentIndex;
-			logger.info("创建新桌子ID: {}", tableId);
-			return tableId;
+			TableModel model = tableModelMap.get(roomId);
+			Table table = new Table(getTableId(), model, role);
+			addTable(table);
+			return table;
 		}
 	}
 

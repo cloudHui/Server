@@ -1,4 +1,4 @@
-package game.manager.model;
+package game.manager.table;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,14 +10,25 @@ import org.slf4j.LoggerFactory;
  * 游戏用户模型
  * 代表一个游戏玩家的状态和信息
  */
-public class GameUser {
-	private static final Logger logger = LoggerFactory.getLogger(GameUser.class);
+public class TableUser {
+	private static final Logger logger = LoggerFactory.getLogger(TableUser.class);
 
 	private final Set<String> tableIds = new HashSet<>();
 	private int userId;
 	private boolean online;
-	private boolean seated;
-	private long diamond;
+	private String head;
+	private String nick;
+	private final int gateId;
+	private int seated = -1;
+	//private long diamond;
+
+	public TableUser(int userId, String head, String nick, int gateId) {
+		this.userId = userId;
+		this.head = head;
+		this.nick = nick;
+		this.gateId = gateId;
+		online = true;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -40,29 +51,47 @@ public class GameUser {
 		}
 	}
 
-	public boolean isSeated() {
+	public String getHead() {
+		return head;
+	}
+
+	public void setHead(String head) {
+		this.head = head;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public int getGateId() {
+		return gateId;
+	}
+
+
+	public int getSeated() {
 		return seated;
 	}
 
-	public void setSeated(boolean seated) {
-		boolean changed = this.seated != seated;
+	public void setSeated(int seated) {
 		this.seated = seated;
-		if (changed) {
-			logger.debug("更新用户入座状态, userId: {}, seated: {}", userId, seated);
-		}
+		logger.info("更新用户入座状态, userId: {}, old:{} seated: {}", userId, this.seated, seated);
 	}
 
-	public long getDiamond() {
-		return diamond;
-	}
-
-	public void setDiamond(long diamond) {
-		long oldValue = this.diamond;
-		this.diamond = diamond;
-		if (oldValue != diamond) {
-			logger.debug("更新用户钻石数量, userId: {}, old: {}, new: {}", userId, oldValue, diamond);
-		}
-	}
+	//public long getDiamond() {
+	//	return diamond;
+	//}
+	//
+	//public void setDiamond(long diamond) {
+	//	long oldValue = this.diamond;
+	//	this.diamond = diamond;
+	//	if (oldValue != diamond) {
+	//		logger.debug("更新用户钻石数量, userId: {}, old: {}, new: {}", userId, oldValue, diamond);
+	//	}
+	//}
 
 	public Set<String> getTableIds() {
 		return new HashSet<>(tableIds); // 返回副本避免外部修改
@@ -78,7 +107,7 @@ public class GameUser {
 		}
 
 		if (tableIds.add(tableId)) {
-			logger.debug("用户添加桌子, userId: {}, tableId: {}", userId, tableId);
+			logger.info("用户添加桌子, userId: {}, tableId: {}", userId, tableId);
 		}
 	}
 
@@ -121,7 +150,10 @@ public class GameUser {
 
 	@Override
 	public String toString() {
-		return String.format("GameUser{userId=%d, online=%s, seated=%s, diamond=%d, tableCount=%d}",
-				userId, online, seated, diamond, tableIds.size());
+		return "GameUser{" +
+				"tableIds=" + tableIds +
+				", userId=" + userId +
+				", online=" + online +
+				'}';
 	}
 }

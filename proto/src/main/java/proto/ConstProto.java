@@ -15,6 +15,10 @@ public final class ConstProto {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   /**
+   * <pre>
+   *错误码
+   * </pre>
+   *
    * Protobuf enum {@code proto.Result}
    */
   public enum Result
@@ -55,6 +59,46 @@ public final class ConstProto {
      * <code>TABLE_CONFIG_ERROR = 5;</code>
      */
     TABLE_CONFIG_ERROR(5),
+    /**
+     * <pre>
+     *桌子空
+     * </pre>
+     *
+     * <code>TABLE_NULL = 6;</code>
+     */
+    TABLE_NULL(6),
+    /**
+     * <pre>
+     *桌子满
+     * </pre>
+     *
+     * <code>TABLE_FULL = 7;</code>
+     */
+    TABLE_FULL(7),
+    /**
+     * <pre>
+     *桌子异常
+     * </pre>
+     *
+     * <code>TABLE_ERROR = 8;</code>
+     */
+    TABLE_ERROR(8),
+    /**
+     * <pre>
+     *玩家异常
+     * </pre>
+     *
+     * <code>ROLE_ERROR = 9;</code>
+     */
+    ROLE_ERROR(9),
+    /**
+     * <pre>
+     *玩家空
+     * </pre>
+     *
+     * <code>ROLE_NULL = 10;</code>
+     */
+    ROLE_NULL(10),
     UNRECOGNIZED(-1),
     ;
 
@@ -94,6 +138,46 @@ public final class ConstProto {
      * <code>TABLE_CONFIG_ERROR = 5;</code>
      */
     public static final int TABLE_CONFIG_ERROR_VALUE = 5;
+    /**
+     * <pre>
+     *桌子空
+     * </pre>
+     *
+     * <code>TABLE_NULL = 6;</code>
+     */
+    public static final int TABLE_NULL_VALUE = 6;
+    /**
+     * <pre>
+     *桌子满
+     * </pre>
+     *
+     * <code>TABLE_FULL = 7;</code>
+     */
+    public static final int TABLE_FULL_VALUE = 7;
+    /**
+     * <pre>
+     *桌子异常
+     * </pre>
+     *
+     * <code>TABLE_ERROR = 8;</code>
+     */
+    public static final int TABLE_ERROR_VALUE = 8;
+    /**
+     * <pre>
+     *玩家异常
+     * </pre>
+     *
+     * <code>ROLE_ERROR = 9;</code>
+     */
+    public static final int ROLE_ERROR_VALUE = 9;
+    /**
+     * <pre>
+     *玩家空
+     * </pre>
+     *
+     * <code>ROLE_NULL = 10;</code>
+     */
+    public static final int ROLE_NULL_VALUE = 10;
 
 
     public final int getNumber() {
@@ -119,6 +203,11 @@ public final class ConstProto {
         case 2: return TIME_OUT;
         case 3: return SERVER_ERROR;
         case 5: return TABLE_CONFIG_ERROR;
+        case 6: return TABLE_NULL;
+        case 7: return TABLE_FULL;
+        case 8: return TABLE_ERROR;
+        case 9: return ROLE_ERROR;
+        case 10: return ROLE_NULL;
         default: return null;
       }
     }
@@ -172,6 +261,10 @@ public final class ConstProto {
   }
 
   /**
+   * <pre>
+   *room状态
+   * </pre>
+   *
    * Protobuf enum {@code proto.TableState}
    */
   public enum TableState
@@ -286,9 +379,13 @@ public final class ConstProto {
   }
 
   /**
-   * Protobuf enum {@code proto.Choice}
+   * <pre>
+   *操作选择
+   * </pre>
+   *
+   * Protobuf enum {@code proto.Operation}
    */
-  public enum Choice
+  public enum Operation
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
@@ -387,11 +484,11 @@ public final class ConstProto {
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
-    public static Choice valueOf(int value) {
+    public static Operation valueOf(int value) {
       return forNumber(value);
     }
 
-    public static Choice forNumber(int value) {
+    public static Operation forNumber(int value) {
       switch (value) {
         case 0: return PASS;
         case 1: return CALL;
@@ -402,15 +499,15 @@ public final class ConstProto {
       }
     }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<Choice>
+    public static com.google.protobuf.Internal.EnumLiteMap<Operation>
         internalGetValueMap() {
       return internalValueMap;
     }
     private static final com.google.protobuf.Internal.EnumLiteMap<
-        Choice> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Choice>() {
-            public Choice findValueByNumber(int number) {
-              return Choice.forNumber(number);
+        Operation> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Operation>() {
+            public Operation findValueByNumber(int number) {
+              return Operation.forNumber(number);
             }
           };
 
@@ -427,9 +524,9 @@ public final class ConstProto {
       return proto.ConstProto.getDescriptor().getEnumTypes().get(2);
     }
 
-    private static final Choice[] VALUES = values();
+    private static final Operation[] VALUES = values();
 
-    public static Choice valueOf(
+    public static Operation valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
@@ -443,14 +540,18 @@ public final class ConstProto {
 
     private final int value;
 
-    private Choice(int value) {
+    private Operation(int value) {
       this.value = value;
     }
 
-    // @@protoc_insertion_point(enum_scope:proto.Choice)
+    // @@protoc_insertion_point(enum_scope:proto.Operation)
   }
 
   /**
+   * <pre>
+   *牌型
+   * </pre>
+   *
    * Protobuf enum {@code proto.CardType}
    */
   public enum CardType
@@ -760,18 +861,20 @@ public final class ConstProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013const.proto\022\005proto*^\n\006Result\022\013\n\007SUCCES" +
-      "S\020\000\022\017\n\013SERVER_NULL\020\001\022\014\n\010TIME_OUT\020\002\022\020\n\014SE" +
-      "RVER_ERROR\020\003\022\026\n\022TABLE_CONFIG_ERROR\020\005*\"\n\n" +
-      "TableState\022\t\n\005WAITE\020\000\022\t\n\005START\020\001*=\n\006Choi" +
-      "ce\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\014\n\010NOT_CALL\020\002\022\007\n\003" +
-      "TIP\020\003\022\010\n\004PLAY\020\004*\332\001\n\010CardType\022\n\n\006SINGLE\020\000" +
-      "\022\n\n\006DOUBLE\020\001\022\n\n\006TRIPLE\020\002\022\016\n\nTRIPLE_ONE\020\003" +
-      "\022\021\n\rTRIPLE_DOUBLE\020\004\022\r\n\tPLANE_ONE\020\005\022\020\n\014PL" +
-      "ANE_DOUBLE\020\006\022\026\n\022BOOM_DOUBLE_SINGLE\020\007\022\023\n\017" +
-      "BOOM_DOUBLE_CUP\020\010\022\014\n\010STRAIGHT\020\t\022\023\n\017STRAI",
-      "GHT_DOUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014B\014B\n" +
-      "ConstProtob\006proto3"
+      "\n\013const.proto\022\005proto*\256\001\n\006Result\022\013\n\007SUCCE" +
+      "SS\020\000\022\017\n\013SERVER_NULL\020\001\022\014\n\010TIME_OUT\020\002\022\020\n\014S" +
+      "ERVER_ERROR\020\003\022\026\n\022TABLE_CONFIG_ERROR\020\005\022\016\n" +
+      "\nTABLE_NULL\020\006\022\016\n\nTABLE_FULL\020\007\022\017\n\013TABLE_E" +
+      "RROR\020\010\022\016\n\nROLE_ERROR\020\t\022\r\n\tROLE_NULL\020\n*\"\n" +
+      "\nTableState\022\t\n\005WAITE\020\000\022\t\n\005START\020\001*@\n\tOpe" +
+      "ration\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\014\n\010NOT_CALL\020\002" +
+      "\022\007\n\003TIP\020\003\022\010\n\004PLAY\020\004*\332\001\n\010CardType\022\n\n\006SING" +
+      "LE\020\000\022\n\n\006DOUBLE\020\001\022\n\n\006TRIPLE\020\002\022\016\n\nTRIPLE_O" +
+      "NE\020\003\022\021\n\rTRIPLE_DOUBLE\020\004\022\r\n\tPLANE_ONE\020\005\022\020",
+      "\n\014PLANE_DOUBLE\020\006\022\026\n\022BOOM_DOUBLE_SINGLE\020\007" +
+      "\022\023\n\017BOOM_DOUBLE_CUP\020\010\022\014\n\010STRAIGHT\020\t\022\023\n\017S" +
+      "TRAIGHT_DOUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014" +
+      "B\014B\nConstProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

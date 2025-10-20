@@ -12,7 +12,9 @@ import com.google.protobuf.MessageLite;
 import msg.annotation.ClassField;
 import msg.annotation.ClassType;
 import msg.annotation.ProcessClass;
+import msg.annotation.ProcessEnum;
 import msg.annotation.ProcessType;
+import msg.registor.enums.TableState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.other.ClazzUtil;
@@ -28,7 +30,6 @@ public class HandleTypeRegister {
 
 	// 配置常量
 	private static final String DEFAULT_HANDLE_PACKAGE = "utils.handle";
-	private static final String BIND_SUCCESS_TEMPLATE = "{} bind success, size: {}";
 
 	private static final Map<Integer, Class<?>> TRANS_MAP = new ConcurrentHashMap<>();
 	private static final Map<Class<?>, Integer> MSG_TRANS_MAP = new ConcurrentHashMap<>();
@@ -92,6 +93,32 @@ public class HandleTypeRegister {
 	public static <T> void initFactory(Class<?> packageClass, Map<Integer, T> handles) {
 		String packageName = packageClass.getPackage().getName();
 		initFactory(packageName, handles);
+	}
+
+	/**
+	 * 初始化处理工厂
+	 */
+	public static <T> void initFactoryEnum(Class<?> packageClass, Map<TableState, T> handles) {
+		String packageName = packageClass.getPackage().getName();
+
+		try {
+			long start = System.currentTimeMillis();
+			List<Class<?>> classes = ClazzUtil.getClasses(packageName);
+			Map<Class<?>, T> classProcessMap = new HashMap<>();
+
+			for (Class<?> aclass : classes) {
+				ProcessEnum processesType = aclass.getAnnotation(ProcessEnum.class);
+				if (processesType == null) {
+					continue;
+				}
+				putHandle(processesType.value(), aclass, handles, classProcessMap);
+			}
+
+			logger.info("{} bind success, size:{} cost:{}ms", packageName, handles.size(),
+					System.currentTimeMillis() - start);
+		} catch (Exception e) {
+			logger.error("{} bind processors error", packageName, e);
+		}
 	}
 
 	/**
@@ -231,7 +258,7 @@ public class HandleTypeRegister {
 	 *
 	 * @param messageId 消息ID
 	 * @param bytes     消息字节数据
-	 * @return 解析后的消息对象,解析失败返回null
+	 * @return 解析后的消息对象, 解析失败返回null
 	 */
 	public static Message parseMessage(int messageId, byte[] bytes) {
 		Class<?> messageClass = TRANS_MAP.get(messageId);
