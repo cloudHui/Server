@@ -129,17 +129,11 @@ public class ClientProto {
 	private static void forwardResponseToClient(TCPMessage response, long startTime, GateTcpClient client) {
 		int msgId = response.getMessageId();
 
-		// 验证消息类型和ID范围
-		if (msgId > CMsg.BASE_ID_INDEX && (msgId & 1) == 0) {
-			processClientResponse(response, client);
-			client.sendMessage(response);
+		processClientResponse(response, client);
+		client.sendMessage(response);
 
-			long costTime = System.currentTimeMillis() - startTime;
-			logger.info("消息转发成功, msgId: {}, userId: {}, 耗时: {}ms", Integer.toHexString(msgId), client.getRoleId(), costTime);
-			return;
-		}
-
-		logger.warn("无法转发响应到客户端, clientId: {}, msgId: {} msgId & 2:{} Hex:{}", client.getId(), Integer.toHexString(msgId), msgId & 2, Integer.toHexString(msgId & 2));
+		long costTime = System.currentTimeMillis() - startTime;
+		logger.info("消息转发成功, msgId: {}, userId: {}, 耗时: {}ms", Integer.toHexString(msgId), client.getRoleId(), costTime);
 	}
 
 	/**
@@ -147,6 +141,7 @@ public class ClientProto {
 	 */
 	private static void processClientResponse(TCPMessage response, GateTcpClient client) {
 		if (response.getMessageId() == HMsg.ACK_LOGIN_MSG) {
+			//Todo 有其他消息字段 gate要存储
 			processLoginResponse(response, client);
 		}
 	}

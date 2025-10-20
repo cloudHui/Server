@@ -537,20 +537,28 @@ public final class ConstProto {
     STRAIGHT(9),
     /**
      * <pre>
+     *连对子
+     * </pre>
+     *
+     * <code>STRAIGHT_DOUBLE = 10;</code>
+     */
+    STRAIGHT_DOUBLE(10),
+    /**
+     * <pre>
      *炸弹
      * </pre>
      *
-     * <code>BOOM = 10;</code>
+     * <code>BOOM = 11;</code>
      */
-    BOOM(10),
+    BOOM(11),
     /**
      * <pre>
      *双王炸
      * </pre>
      *
-     * <code>BOOM_MAX = 11;</code>
+     * <code>BOOM_MAX = 12;</code>
      */
-    BOOM_MAX(11),
+    BOOM_MAX(12),
     UNRECOGNIZED(-1),
     ;
 
@@ -636,20 +644,28 @@ public final class ConstProto {
     public static final int STRAIGHT_VALUE = 9;
     /**
      * <pre>
+     *连对子
+     * </pre>
+     *
+     * <code>STRAIGHT_DOUBLE = 10;</code>
+     */
+    public static final int STRAIGHT_DOUBLE_VALUE = 10;
+    /**
+     * <pre>
      *炸弹
      * </pre>
      *
-     * <code>BOOM = 10;</code>
+     * <code>BOOM = 11;</code>
      */
-    public static final int BOOM_VALUE = 10;
+    public static final int BOOM_VALUE = 11;
     /**
      * <pre>
      *双王炸
      * </pre>
      *
-     * <code>BOOM_MAX = 11;</code>
+     * <code>BOOM_MAX = 12;</code>
      */
-    public static final int BOOM_MAX_VALUE = 11;
+    public static final int BOOM_MAX_VALUE = 12;
 
 
     public final int getNumber() {
@@ -680,8 +696,9 @@ public final class ConstProto {
         case 7: return BOOM_DOUBLE_SINGLE;
         case 8: return BOOM_DOUBLE_CUP;
         case 9: return STRAIGHT;
-        case 10: return BOOM;
-        case 11: return BOOM_MAX;
+        case 10: return STRAIGHT_DOUBLE;
+        case 11: return BOOM;
+        case 12: return BOOM_MAX;
         default: return null;
       }
     }
@@ -748,12 +765,13 @@ public final class ConstProto {
       "RVER_ERROR\020\003\022\026\n\022TABLE_CONFIG_ERROR\020\005*\"\n\n" +
       "TableState\022\t\n\005WAITE\020\000\022\t\n\005START\020\001*=\n\006Choi" +
       "ce\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\014\n\010NOT_CALL\020\002\022\007\n\003" +
-      "TIP\020\003\022\010\n\004PLAY\020\004*\305\001\n\010CardType\022\n\n\006SINGLE\020\000" +
+      "TIP\020\003\022\010\n\004PLAY\020\004*\332\001\n\010CardType\022\n\n\006SINGLE\020\000" +
       "\022\n\n\006DOUBLE\020\001\022\n\n\006TRIPLE\020\002\022\016\n\nTRIPLE_ONE\020\003" +
       "\022\021\n\rTRIPLE_DOUBLE\020\004\022\r\n\tPLANE_ONE\020\005\022\020\n\014PL" +
       "ANE_DOUBLE\020\006\022\026\n\022BOOM_DOUBLE_SINGLE\020\007\022\023\n\017" +
-      "BOOM_DOUBLE_CUP\020\010\022\014\n\010STRAIGHT\020\t\022\010\n\004BOOM\020",
-      "\n\022\014\n\010BOOM_MAX\020\013B\014B\nConstProtob\006proto3"
+      "BOOM_DOUBLE_CUP\020\010\022\014\n\010STRAIGHT\020\t\022\023\n\017STRAI",
+      "GHT_DOUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014B\014B\n" +
+      "ConstProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

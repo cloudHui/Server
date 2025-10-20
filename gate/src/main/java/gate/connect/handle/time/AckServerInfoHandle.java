@@ -28,8 +28,7 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 						response.getServersList(),
 						Gate.getInstance().getServerId(),
 						Gate.getInstance().getInnerIp() + ":" + Gate.getInstance().getPort(),
-						null, ConnectProcessor.PARSER,
-						ConnectProcessor.HANDLERS, ServerType.Gate));
+						ConnectProcessor.TRANSFER, ConnectProcessor.PARSER, ConnectProcessor.HANDLERS, ServerType.Gate));
 	}
 
 	@Override
