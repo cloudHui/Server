@@ -80,7 +80,7 @@ public class TableInfo {
 	}
 
 	public boolean canJoin() {
-		return tableState == ConstProto.TableState.WAITE && tableRoles.size() < model.getNum();
+		return tableState == ConstProto.TableState.WAITE && tableRoles.size() < model.getSeatNum();
 	}
 
 	public ServerProto.RoomTableInfo getTableInfo() {

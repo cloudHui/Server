@@ -1,8 +1,17 @@
 package game.manager.table;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import com.google.protobuf.Message;
+import game.Game;
+import game.manager.table.cards.Card;
+import msg.registor.enums.ServerType;
+import net.client.handler.ClientHandler;
+import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +29,7 @@ public class TableUser {
 	private String nick;
 	private final int gateId;
 	private int seated = -1;
+	private final List<Card> cards;
 	//private long diamond;
 
 	public TableUser(int userId, String head, String nick, int gateId) {
@@ -28,6 +38,7 @@ public class TableUser {
 		this.nick = nick;
 		this.gateId = gateId;
 		online = true;
+		cards = new ArrayList<>();
 	}
 
 	public int getUserId() {
@@ -71,7 +82,6 @@ public class TableUser {
 		return gateId;
 	}
 
-
 	public int getSeated() {
 		return seated;
 	}
@@ -81,6 +91,23 @@ public class TableUser {
 		logger.info("更新用户入座状态, userId: {}, old:{} seated: {}", userId, this.seated, seated);
 	}
 
+	/**
+	 * 摸牌
+	 */
+	public void addCards(Card card) {
+		cards.add(card);
+	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
+
+	/**
+	 * 出牌
+	 */
+	public boolean outCards(Card card) {
+		return cards.remove(card);
+	}
 	//public long getDiamond() {
 	//	return diamond;
 	//}
@@ -148,6 +175,22 @@ public class TableUser {
 		logger.debug("清理用户所有桌子关联, userId: {}, 数量: {}", userId, count);
 	}
 
+	/**
+	 * 发送玩家消息
+	 *
+	 * @param message 消息
+	 */
+	public void sendRoleMessage(Message message, int messageId, String tableId) {
+		ClientHandler serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate, gateId);
+
+		if (serverClient == null) {
+			logger.error("sendRole:{} Message error gate:{} null table:{}", userId, gateId, tableId);
+			return;
+		}
+		serverClient.sendMessage(TCPMessage.newInstance(messageId, message.toByteArray()));
+		logger.info("sendRole:{} Message success gate:{} null table:{}", userId, gateId, tableId);
+	}
+
 	@Override
 	public String toString() {
 		return "GameUser{" +
@@ -155,5 +198,18 @@ public class TableUser {
 				", userId=" + userId +
 				", online=" + online +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		TableUser tableUser = (TableUser) o;
+		return Objects.equals(tableIds, tableUser.tableIds);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(tableIds);
 	}
 }

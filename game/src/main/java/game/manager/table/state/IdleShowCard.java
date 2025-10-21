@@ -6,7 +6,7 @@ import msg.registor.enums.TableState;
 
 /**
  * @author admin
- * @className WaitHandle
+ * @className IdleShowCard
  * @description
  * @createDate 2025/10/20 16:57
  */
@@ -17,5 +17,10 @@ public class IdleShowCard implements TableHandle {
 	public boolean handleState(Table table) {
 
 		return false;
+	}
+
+	@Override
+	public void overTime(Table table) {
+
 	}
 }

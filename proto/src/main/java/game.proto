@@ -3,6 +3,8 @@ option java_outer_classname = "GameProto";
 
 package proto;
 
+import "const.proto";
+
 //请求加入桌子
 message ReqEnterTable {
     bytes tableId = 1;
@@ -34,8 +36,16 @@ message NotCard{
 
 //通知操作
 message NotOperation{
-    int32 wait = 1;//选择等待时间
-    repeated OpInfo choice = 2;//选择 叫地主
+    int32 wait = 1;//操作等待时间
+    int32 opSeat = 2;//操作玩家位置
+    repeated OpInfo choice = 3;//选择 叫地主
+}
+
+//通知桌子状态
+message NotTableState{
+    int32 state = 1;//桌子状态
+    int64 stateStart = 2;//状态开始时间
+    int32 stateDuration = 3;//状态持续时间(s)
 }
 
 //请求操作
@@ -57,7 +67,7 @@ message NotResult{
 }
 
 message OpInfo{
-    int32 choice = 1;
+    Operation choice = 1;
     repeated CardInfo opCards = 2;
 }
 
@@ -84,7 +94,7 @@ message RPlayer{
 
 message CardInfo{
     repeated Card cards = 1;
-    int32 type = 2;
+    CardType type = 2;
 }
 message Card{
     int32 value = 1;

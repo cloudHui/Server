@@ -12,17 +12,26 @@ public interface TableHandle {
 	 */
 	default boolean handle(Table table) {
 		TableState currState = table.getTableState();
-		TableState next = currState.getNext();
 		//有超时时间并且有默认下一个状态的默认处理等待超时切状态
-		if (next != null && currState.getOverTime() > 0) {
+		if (currState.getOverTime() > 0) {
 			long now = System.currentTimeMillis();
 			if (table.getStateStartTime() + table.getTableState().getOverTime() * 1000L >= now) {
-				table.setTableState(next);
-				table.setStateStartTime(now);
+				TableState next = currState.getNext();
+				if (next != null) {
+					table.setTableState(next);
+					table.setStateStartTime(now);
+				} else {
+					overTime(table);
+				}
 			}
-		} else {
-			return handleState(table);
+			return false;
 		}
-		return false;
+		return handleState(table);
+	}
+
+	/**
+	 * 超时处理
+	 */
+	default void overTime(Table table) {
 	}
 }

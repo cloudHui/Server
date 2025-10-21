@@ -9,6 +9,7 @@ enum Result{
     SERVER_NULL = 1;//服务空
     TIME_OUT = 2;//回复超时
     SERVER_ERROR = 3;//服务错误
+    TABLE_START = 4;//桌子已经开始
     TABLE_CONFIG_ERROR = 5;//桌子配置错误
     TABLE_NULL = 6;//桌子空
     TABLE_FULL = 7;//桌子满
@@ -27,9 +28,11 @@ enum TableState{
 enum Operation{
     PASS = 0;//过
     CALL = 1;//叫地主
-    NOT_CALL = 2;//不叫地主
-    TIP = 3;//提示
-    PLAY = 4;//出
+    ROB = 2;//抢地主
+    NOT_CALL = 3;//不叫地主
+    NOT_ROB = 4;//不抢地主
+    TIP = 5;//提示
+    PLAY = 6;//出
 }
 
 //牌型

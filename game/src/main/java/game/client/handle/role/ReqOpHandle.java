@@ -23,14 +23,14 @@ import threadtutil.thread.Task;
  * 处理玩家请求进入桌子
  * 负责验证玩家和桌子状态,处理入桌逻辑
  */
-@ProcessType(GMsg.REQ_ENTER_TABLE_MSG)
-public class ReqEnterTableHandle implements Handler {
-	private static final Logger logger = LoggerFactory.getLogger(ReqEnterTableHandle.class);
+@ProcessType(GMsg.REQ_OP)
+public class ReqOpHandle implements Handler {
+	private static final Logger logger = LoggerFactory.getLogger(ReqOpHandle.class);
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
 		try {
-			GameProto.ReqEnterTable request = (GameProto.ReqEnterTable) message;
+			GameProto.ReqOp request = (GameProto.ReqOp) message;
 			String tableId = request.getTableId().toStringUtf8();
 
 			logger.info("处理进入桌子请求, userId: {}, tableId: {}", mapId, tableId);
@@ -80,7 +80,7 @@ public class ReqEnterTableHandle implements Handler {
 	 */
 	private int processEnterTable(int userId, String tableId, int gateId, GameProto.ReqEnterTable req, Table table) {
 		try {
-			if(table.gaming()){
+			if (table.gaming()) {
 				logger.error("桌子已经开始, userId: {}, tableId: {}", userId, tableId);
 				return ConstProto.Result.TABLE_START_VALUE;
 			}

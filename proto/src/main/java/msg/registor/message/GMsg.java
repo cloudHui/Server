@@ -36,4 +36,7 @@ public class GMsg {
 
 	@ClassField(value = GameProto.AckLeaveTable.class, des = "离开桌子回复")
 	public static final int ACK_LEAVE = CMsg.GAME_TYPE | 8;
+
+	@ClassField(value = GameProto.NotTableState.class, des = "桌子状态通知")
+	public static final int NOT_STATE = CMsg.GAME_TYPE | 9;
 }

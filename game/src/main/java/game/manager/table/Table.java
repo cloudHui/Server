@@ -3,10 +3,15 @@ package game.manager.table;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.Message;
 import game.Game;
+import game.manager.table.banner.Banner;
+import game.manager.table.card.poll.CardPool;
+import game.manager.table.op.Operate;
 import game.manager.table.state.TableStateHandleManager;
 import model.TableModel;
 import msg.registor.enums.TableState;
+import msg.registor.message.GMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
@@ -27,14 +32,14 @@ public class Table {
 	private final ServerProto.RoomRole creator;
 
 	/**
-	 * 桌子上的玩家
+	 * 桌子上的玩家(玩家id 和玩家数据)
 	 */
 	private final Map<Integer, TableUser> users = new HashMap<>();
 
 	/**
-	 * 桌子上的玩家
+	 * 桌子上的玩家(座位号和玩家id)
 	 */
-	private final Map<Integer, Integer> seatUsers = new HashMap<>();
+	private final Map<Integer, TableUser> seatUsers = new HashMap<>();
 
 	/**
 	 * 牌桌运行状态
@@ -47,6 +52,20 @@ public class Table {
 	private long stateStartTime;
 
 	private int errorTimes;
+	/**
+	 * 牌桌牌数据
+	 */
+	private final CardPool cardPool;
+
+	/**
+	 * 抢地主数据
+	 */
+	private Banner banner;
+
+	/**
+	 * 操作数据
+	 */
+	private Operate op;
 
 	/**
 	 * 最大错误次数
@@ -57,11 +76,16 @@ public class Table {
 		this.tableId = tableId;
 		this.creator = creator;
 		this.tableModel = model;
-		logger.debug("创建桌子实例, tableId: {}", tableId);
+		cardPool = new CardPool(this);
+		logger.info("创建桌子实例, tableId: {}", tableId);
 	}
 
 	public String getTableId() {
 		return tableId;
+	}
+
+	public TableModel getTableModel() {
+		return tableModel;
 	}
 
 	public ServerProto.RoomRole getCreator() {
@@ -81,7 +105,9 @@ public class Table {
 	}
 
 	public void setTableState(TableState tableState) {
+		logger.error("table:{} change state old:{} new:{}", tableId, this.tableState, tableState);
 		this.tableState = tableState;
+		sendTableMessage(builderTableState(), GMsg.NOT_STATE);
 	}
 
 	public long getStateStartTime() {
@@ -107,13 +133,33 @@ public class Table {
 		return tableUser;
 	}
 
+	public Map<Integer, TableUser> getSeatUsers() {
+		return seatUsers;
+	}
+
+	public Banner getBanner() {
+		return banner;
+	}
+
+	public void setBanner(Banner banner) {
+		this.banner = banner;
+	}
+
+	public Operate getOp() {
+		return op;
+	}
+
+	public void setOp(Operate op) {
+		this.op = op;
+	}
+
 	/**
 	 * 桌子是否坐满了
 	 *
 	 * @return 是否坐满
 	 */
 	public boolean sitFull() {
-		return users.size() >= tableModel.getNum();
+		return users.size() >= tableModel.getSeatNum();
 	}
 
 	/**
@@ -186,6 +232,8 @@ public class Table {
 	 * 给玩家发牌
 	 */
 	public void sendCard() {
+		cardPool.initCards();
+		cardPool.dealInitCard();
 	}
 
 	/**
@@ -224,9 +272,9 @@ public class Table {
 	 * @return 坐下的位置
 	 */
 	private int occupySeat(TableUser user) {
-		for (int index = 0; index < tableModel.getNum(); index++) {
+		for (int index = 0; index < tableModel.getSeatNum(); index++) {
 			if (!seatUsers.containsKey(index)) {
-				seatUsers.put(index, user.getUserId());
+				seatUsers.put(index, user);
 				user.setSeated(index);
 				return index;
 			}
@@ -256,6 +304,25 @@ public class Table {
 		}
 	}
 
+	private GameProto.NotTableState builderTableState() {
+		return GameProto.NotTableState.newBuilder()
+				.setState(tableState.getId())
+				.setStateStart(stateStartTime)
+				.setStateDuration(tableState.getOverTime())
+				.build();
+	}
+
+	/**
+	 * 发送桌子消息
+	 *
+	 * @param message 消息
+	 */
+	public void sendTableMessage(Message message, int messageId) {
+		for (Map.Entry<Integer, TableUser> entry : seatUsers.entrySet()) {
+			entry.getValue().sendRoleMessage(message, messageId, tableId);
+		}
+		logger.info("sendTableMessage:{} message:{}", tableId, message.toString());
+	}
 
 	@Override
 	public String toString() {

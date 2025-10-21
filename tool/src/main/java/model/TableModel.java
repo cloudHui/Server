@@ -9,8 +9,14 @@ public class TableModel {
     //类型(1麻将2斗地主)
     private int type;
 
-    //人数
-    private int num;
+    //座位数量
+    private int seatNum;
+
+    //牌数量
+    private int cardNum;
+
+    //额外牌数量
+    private int exCardNum;
  
     // Getters and Setters
     public int getId() {
@@ -29,12 +35,28 @@ public class TableModel {
         this.type = type;
     }
 
-    public int getNum() {
-        return num;
+    public int getSeatNum() {
+        return seatNum;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setSeatNum(int seatNum) {
+        this.seatNum = seatNum;
+    }
+
+    public int getCardNum() {
+        return cardNum;
+    }
+
+    public void setCardNum(int cardNum) {
+        this.cardNum = cardNum;
+    }
+
+    public int getExCardNum() {
+        return exCardNum;
+    }
+
+    public void setExCardNum(int exCardNum) {
+        this.exCardNum = exCardNum;
     }
 
  
@@ -43,7 +65,9 @@ public class TableModel {
         return "TableModel{"+
                 "     id="+id+ 
                 "     type="+type+ 
-                "     num="+num+ 
+                "     seatNum="+seatNum+ 
+                "     cardNum="+cardNum+ 
+                "     exCardNum="+exCardNum+ 
                 '}';
     }
 
