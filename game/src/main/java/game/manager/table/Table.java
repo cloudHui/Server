@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
+import proto.ModelProto;
 import proto.ServerProto;
 
 /**
@@ -29,7 +30,7 @@ public class Table {
 
 	private final TableModel tableModel;
 
-	private final ServerProto.RoomRole creator;
+	private final ModelProto.RoomRole creator;
 
 	/**
 	 * 桌子上的玩家(玩家id 和玩家数据)
@@ -72,7 +73,7 @@ public class Table {
 	 */
 	private static final int MAX_ERROR = 100;
 
-	public Table(long tableId, TableModel model, ServerProto.RoomRole creator) {
+	public Table(long tableId, TableModel model, ModelProto.RoomRole creator) {
 		this.tableId = tableId;
 		this.creator = creator;
 		this.tableModel = model;
@@ -88,7 +89,7 @@ public class Table {
 		return tableModel;
 	}
 
-	public ServerProto.RoomRole getCreator() {
+	public ModelProto.RoomRole getCreator() {
 		return creator;
 	}
 

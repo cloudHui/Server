@@ -13,7 +13,7 @@ import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
-import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * @author admin
@@ -45,7 +45,7 @@ public class LoginBack implements BackHandle {
 	 * 通知中心服务器登录成功
 	 */
 	private void notifyCenterLoginSuccess(String certificate) {
-		ModelProto.NotRegisterClient.Builder loginNotify = ModelProto.NotRegisterClient.newBuilder();
+		ServerProto.NotRegisterClient.Builder loginNotify = ServerProto.NotRegisterClient.newBuilder();
 		loginNotify.setCert(ByteString.copyFromUtf8(certificate));
 
 		ConnectHandler centerConnection = Gate.getInstance().getServerManager().getServerClient(ServerType.Center);

@@ -7,6 +7,7 @@ import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
+import proto.ServerProto;
 import room.Room;
 import room.connect.ConnectProcessor;
 
@@ -19,7 +20,7 @@ public class RegisterNoticeHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		Room.getInstance().execute(() -> Room.getInstance().getServerManager().connectToSever(
-				((ModelProto.NotRegisterInfo) msg).getServersList(),
+				((ServerProto.NotRegisterInfo) msg).getServersList(),
 				Room.getInstance().getServerId(), Room.getInstance().getServerInfo().getIpConfig().toStringUtf8(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Room));

@@ -23,6 +23,7 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 import threadtutil.timer.Timer;
 import utils.config.ConfigurationManager;
 import utils.other.IpUtil;
@@ -139,7 +140,7 @@ public class ServerManager {
 	 */
 	private void handleHeartbeatResponse(TCPConnect connect, Object message) {
 		try {
-			ModelProto.AckHeart ack = (ModelProto.AckHeart) message;
+			ServerProto.AckHeart ack = (ServerProto.AckHeart) message;
 			long costTime = System.currentTimeMillis() - ack.getReqTime();
 			logger.debug("[收到心跳应答 {} 耗时:{}ms]", connect, costTime);
 
@@ -153,8 +154,8 @@ public class ServerManager {
 	/**
 	 * 构建心跳消息
 	 */
-	private ModelProto.ReqHeart buildHeartMessage(int serverType) {
-		return ModelProto.ReqHeart.newBuilder()
+	private ServerProto.ReqHeart buildHeartMessage(int serverType) {
+		return ServerProto.ReqHeart.newBuilder()
 				.setReqTime(System.currentTimeMillis())
 				.setServerType(serverType)
 				.build();
@@ -265,8 +266,8 @@ public class ServerManager {
 	/**
 	 * 构建注册请求消息
 	 */
-	private ModelProto.ReqRegister.Builder buildRegisterMessage(ServerInfo localServer) {
-		return ModelProto.ReqRegister.newBuilder()
+	private ServerProto.ReqRegister.Builder buildRegisterMessage(ServerInfo localServer) {
+		return ServerProto.ReqRegister.newBuilder()
 				.setServerInfo(ModelProto.ServerInfo.newBuilder()
 						.setServerType(localServer.getServerType())
 						.setServerId(localServer.getServerId())
@@ -304,7 +305,7 @@ public class ServerManager {
 	 */
 	private void handleRegisterResponse(TCPConnect handler, Object message) {
 		try {
-			ModelProto.ServerInfo serverInfo = ((ModelProto.AckRegister) message).getServerInfo();
+			ModelProto.ServerInfo serverInfo = ((ServerProto.AckRegister) message).getServerInfo();
 			handler.getConnectServer().setServerId(serverInfo.getServerId());
 			addServerClient(handler);
 			logger.info("[注册成功:{} {} ]", ServerType.get(handler.getConnectServer().getServerType()), handler.getConnectServer());

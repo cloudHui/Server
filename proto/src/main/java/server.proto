@@ -3,6 +3,8 @@ option java_outer_classname = "ServerProto";
 
 package proto;
 
+import "model.proto";
+
 //请求创建game房间
 message ReqCreateGameTable {
     int32 roomId = 1;
@@ -14,22 +16,6 @@ message AckCreateGameTable {
     RoomTableInfo tables = 2;//桌子
 }
 
-//room桌子
-message RoomTableInfo{
-    int32 roomId = 1;
-    int64 tableId = 2;
-    int32 creatorId = 3;
-    int32 ownerId = 4;
-    int32 stat = 5;//等待中  已开始
-    repeated RoomRole tableRoles = 6;
-}
-
-//room桌子玩家
-message RoomRole {
-    int32 roleId = 1;
-    bytes avatar = 3;
-    bytes nickName = 4;
-}
 
 //请求玩家房间列表
 message ReqRoleRoomTable {
@@ -39,5 +25,59 @@ message ReqRoleRoomTable {
 //玩家房间列表回复
 message AckRoleRoomTable {
     int32 roleId = 1;
-    repeated RoomTableInfo tables = 2;//桌子可能有多张后面再看
+    repeated int64 tables = 2;//桌子可能有多张后面再看
+    repeated Room roomList = 3;
+}
+
+
+//心跳
+message ReqHeart {
+    int32 serverType = 1;
+    int32 serverId = 2;
+    int64 reqTime = 3;
+    //    int32 retryTime = 4;//重试次数
+}
+message AckHeart {
+    int32 serverId = 1;
+    int64 reqTime = 2;
+    //    int32 retryTime = 3;//重试次数
+}
+
+
+//服务在路由注册信息
+message ReqRegister {
+    ServerInfo serverInfo = 1;//要注册的请求方信息
+}
+message AckRegister {
+    ServerInfo serverInfo = 1;//服务器信息
+}
+
+//服务变更通知
+message NotRegisterInfo {
+    repeated ServerInfo servers = 1;
+}
+
+//client链接通知
+message NotRegisterClient {
+    bytes cert = 1;
+    bytes gate = 2;
+}
+
+//获取服务信息
+message ReqServerInfo {
+    repeated int32 serverType = 1;
+}
+message AckServerInfo {
+    repeated ServerInfo servers = 1;
+}
+
+//通知服务掉线
+message NotServerBreak {
+    repeated ServerInfo servers = 1;
+}
+
+//通知玩家掉线
+message NotBreak {
+    int32 userId = 1;//用户id
+    bytes cert = 2;
 }

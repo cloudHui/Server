@@ -60,34 +60,34 @@ public class TableManager {
 		}
 	}
 
-	/**
-	 * 获取所有展示房间信息
-	 */
-	public synchronized void getAllRoomTable(RoomProto.AckGetRoomList.Builder response) {
-		try {
-			int totalRooms = 0;
-
-			for (Map.Entry<Integer, Map<Long, TableInfo>> roomEntry : roomTables.entrySet()) {
-				RoomProto.Room.Builder roomBuilder = RoomProto.Room.newBuilder();
-				roomBuilder.setRoomId(roomEntry.getKey());
-
-				Map<Long, TableInfo> tables = roomEntry.getValue();
-				if (tables != null && !tables.isEmpty()) {
-					for (Map.Entry<Long, TableInfo> entry : tables.entrySet()) {
-						roomBuilder.addTables(entry.getValue().getTableInfo());
-					}
-					totalRooms += tables.size();
-				}
-
-				response.addRoomList(roomBuilder);
-			}
-
-			logger.debug("返回房间列表,房间类型数: {}, 总房间数: {}", roomTables.size(), totalRooms);
-		} catch (Exception e) {
-			logger.error("获取房间列表失败", e);
-			throw new RuntimeException("获取房间列表失败", e);
-		}
-	}
+	///**
+	// * 获取所有展示房间信息
+	// */
+	//public synchronized void getAllRoomTable(ServerProto.AckGetRoomList.Builder response) {
+	//	try {
+	//		int totalRooms = 0;
+	//
+	//		for (Map.Entry<Integer, Map<Long, TableInfo>> roomEntry : roomTables.entrySet()) {
+	//			RoomProto.Room.Builder roomBuilder = RoomProto.Room.newBuilder();
+	//			roomBuilder.setRoomId(roomEntry.getKey());
+	//
+	//			Map<Long, TableInfo> tables = roomEntry.getValue();
+	//			if (tables != null && !tables.isEmpty()) {
+	//				for (Map.Entry<Long, TableInfo> entry : tables.entrySet()) {
+	//					roomBuilder.addTables(entry.getValue().getTableInfo());
+	//				}
+	//				totalRooms += tables.size();
+	//			}
+	//
+	//			response.addRoomList(roomBuilder);
+	//		}
+	//
+	//		logger.debug("返回房间列表,房间类型数: {}, 总房间数: {}", roomTables.size(), totalRooms);
+	//	} catch (Exception e) {
+	//		logger.error("获取房间列表失败", e);
+	//		throw new RuntimeException("获取房间列表失败", e);
+	//	}
+	//}
 
 	/**
 	 * 通过模板ID获取房间模板
@@ -139,13 +139,13 @@ public class TableManager {
 	}
 
 
-	/**
-	 * 存房间信息
-	 */
-	public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
-		TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
-		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
-		tableInfoMap.put(tableInfo.getTableId(), tableInfo);
-		return tableInfo;
-	}
+	///**
+	// * 存房间信息
+	// */
+	//public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
+	//	TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
+	//	roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
+	//	tableInfoMap.put(tableInfo.getTableId(), tableInfo);
+	//	return tableInfo;
+	//}
 }

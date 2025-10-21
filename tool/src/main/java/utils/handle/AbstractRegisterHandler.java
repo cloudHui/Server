@@ -8,6 +8,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * 抽象注册处理器
@@ -48,7 +49,7 @@ public abstract class AbstractRegisterHandler<T_INSTANCE> implements Handler {
 	 * 发送注册响应（可重写以支持不同的发送方式）
 	 */
 	protected void sendRegistrationResponse(Sender sender, int clientId, long mapId, int sequence) {
-		ModelProto.AckRegister.Builder response = ModelProto.AckRegister.newBuilder();
+		ServerProto.AckRegister.Builder response = ServerProto.AckRegister.newBuilder();
 		response.setServerInfo(getCurrentServerInfo());
 		sender.sendMessage(clientId, CMsg.ACK_REGISTER, mapId, response.build(), sequence);
 		logger.debug("已发送注册响应, clientId: {}", clientId);
@@ -57,7 +58,7 @@ public abstract class AbstractRegisterHandler<T_INSTANCE> implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		try {
-			ModelProto.ReqRegister request = (ModelProto.ReqRegister) msg;
+			ServerProto.ReqRegister request = (ServerProto.ReqRegister) msg;
 			ModelProto.ServerInfo serverInfo = request.getServerInfo();
 			ServerType serverType = ServerType.get(serverInfo.getServerType());
 

@@ -8,6 +8,7 @@ import net.connect.TCPConnect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 import robot.connect.ConnectProcessor;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Runner;
@@ -207,7 +208,7 @@ public class Robot {
 			LOGGER.info("[Registering server - ID: {}, Address: {}, Center: {}]",
 					getServerId(), serverAddress, center);
 
-			ModelProto.ReqServerInfo serverInfo = ModelProto.ReqServerInfo.newBuilder()
+			ServerProto.ReqServerInfo serverInfo = ServerProto.ReqServerInfo.newBuilder()
 					.addServerType(ServerType.Gate.getServerType())
 					.build();
 			LOGGER.debug("[Created server info with server type: {}]", ServerType.Gate.getServerType());

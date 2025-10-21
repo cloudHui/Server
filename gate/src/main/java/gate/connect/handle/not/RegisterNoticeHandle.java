@@ -9,6 +9,7 @@ import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * 注册信息通知
@@ -19,7 +20,7 @@ public class RegisterNoticeHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message registerInfo, long mapId, int sequence) {
 		Gate.getInstance().execute(() -> Gate.getInstance().getServerManager().connectToSever(
-				((ModelProto.NotRegisterInfo) registerInfo).getServersList(), Gate.getInstance().getServerId(),
+				((ServerProto.NotRegisterInfo) registerInfo).getServersList(), Gate.getInstance().getServerId(),
 				(Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort()),
 				null, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate));

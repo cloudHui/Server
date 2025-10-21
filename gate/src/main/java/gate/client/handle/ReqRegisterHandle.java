@@ -7,6 +7,7 @@ import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * 机器人注册服务信息请求
@@ -16,14 +17,14 @@ public class ReqRegisterHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqRegister, long mapId, int sequence) {
-		ModelProto.ReqRegister req = (ModelProto.ReqRegister) reqRegister;
+		ServerProto.ReqRegister req = (ServerProto.ReqRegister) reqRegister;
 		ModelProto.ServerInfo serverInfo = req.getServerInfo();
 		ServerType serverType = ServerType.get(serverInfo.getServerType());
 		if (serverType == null) {
 			return true;
 		}
 
-		ModelProto.AckRegister.Builder ackRegister = ModelProto.AckRegister.newBuilder();
+		ServerProto.AckRegister.Builder ackRegister = ServerProto.AckRegister.newBuilder();
 		sender.sendMessage(clientId, CMsg.ACK_REGISTER, mapId, ackRegister.build(), sequence);
 		return true;
 	}

@@ -802,24 +802,15 @@ public final class HallProto {
      *加入的房间(重连回去的)
      * </pre>
      *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated int64 tables = 6;</code>
      */
-    java.util.List<proto.ServerProto.RoomTableInfo> 
-        getTablesList();
+    java.util.List<java.lang.Long> getTablesList();
     /**
      * <pre>
      *加入的房间(重连回去的)
      * </pre>
      *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
-     */
-    proto.ServerProto.RoomTableInfo getTables(int index);
-    /**
-     * <pre>
-     *加入的房间(重连回去的)
-     * </pre>
-     *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated int64 tables = 6;</code>
      */
     int getTablesCount();
     /**
@@ -827,18 +818,32 @@ public final class HallProto {
      *加入的房间(重连回去的)
      * </pre>
      *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated int64 tables = 6;</code>
      */
-    java.util.List<? extends proto.ServerProto.RoomTableInfoOrBuilder> 
-        getTablesOrBuilderList();
+    long getTables(int index);
+
     /**
-     * <pre>
-     *加入的房间(重连回去的)
-     * </pre>
-     *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated .proto.Room roomList = 7;</code>
      */
-    proto.ServerProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+    java.util.List<proto.ModelProto.Room> 
+        getRoomListList();
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    proto.ModelProto.Room getRoomList(int index);
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    int getRoomListCount();
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    java.util.List<? extends proto.ModelProto.RoomOrBuilder> 
+        getRoomListOrBuilderList();
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    proto.ModelProto.RoomOrBuilder getRoomListOrBuilder(
         int index);
   }
   /**
@@ -860,6 +865,7 @@ public final class HallProto {
       channel_ = 0;
       club_ = 0;
       tables_ = java.util.Collections.emptyList();
+      roomList_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -915,13 +921,34 @@ public final class HallProto {
               club_ = input.readInt32();
               break;
             }
-            case 50: {
+            case 48: {
               if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-                tables_ = new java.util.ArrayList<proto.ServerProto.RoomTableInfo>();
+                tables_ = new java.util.ArrayList<java.lang.Long>();
                 mutable_bitField0_ |= 0x00000020;
               }
-              tables_.add(
-                  input.readMessage(proto.ServerProto.RoomTableInfo.parser(), extensionRegistry));
+              tables_.add(input.readInt64());
+              break;
+            }
+            case 50: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020) && input.getBytesUntilLimit() > 0) {
+                tables_ = new java.util.ArrayList<java.lang.Long>();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                tables_.add(input.readInt64());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 58: {
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+                roomList_ = new java.util.ArrayList<proto.ModelProto.Room>();
+                mutable_bitField0_ |= 0x00000040;
+              }
+              roomList_.add(
+                  input.readMessage(proto.ModelProto.Room.parser(), extensionRegistry));
               break;
             }
           }
@@ -934,6 +961,9 @@ public final class HallProto {
       } finally {
         if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
           tables_ = java.util.Collections.unmodifiableList(tables_);
+        }
+        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+          roomList_ = java.util.Collections.unmodifiableList(roomList_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1018,15 +1048,16 @@ public final class HallProto {
     }
 
     public static final int TABLES_FIELD_NUMBER = 6;
-    private java.util.List<proto.ServerProto.RoomTableInfo> tables_;
+    private java.util.List<java.lang.Long> tables_;
     /**
      * <pre>
      *加入的房间(重连回去的)
      * </pre>
      *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated int64 tables = 6;</code>
      */
-    public java.util.List<proto.ServerProto.RoomTableInfo> getTablesList() {
+    public java.util.List<java.lang.Long>
+        getTablesList() {
       return tables_;
     }
     /**
@@ -1034,18 +1065,7 @@ public final class HallProto {
      *加入的房间(重连回去的)
      * </pre>
      *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
-     */
-    public java.util.List<? extends proto.ServerProto.RoomTableInfoOrBuilder> 
-        getTablesOrBuilderList() {
-      return tables_;
-    }
-    /**
-     * <pre>
-     *加入的房间(重连回去的)
-     * </pre>
-     *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated int64 tables = 6;</code>
      */
     public int getTablesCount() {
       return tables_.size();
@@ -1055,21 +1075,46 @@ public final class HallProto {
      *加入的房间(重连回去的)
      * </pre>
      *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated int64 tables = 6;</code>
      */
-    public proto.ServerProto.RoomTableInfo getTables(int index) {
+    public long getTables(int index) {
       return tables_.get(index);
     }
+    private int tablesMemoizedSerializedSize = -1;
+
+    public static final int ROOMLIST_FIELD_NUMBER = 7;
+    private java.util.List<proto.ModelProto.Room> roomList_;
     /**
-     * <pre>
-     *加入的房间(重连回去的)
-     * </pre>
-     *
-     * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+     * <code>repeated .proto.Room roomList = 7;</code>
      */
-    public proto.ServerProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+    public java.util.List<proto.ModelProto.Room> getRoomListList() {
+      return roomList_;
+    }
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    public java.util.List<? extends proto.ModelProto.RoomOrBuilder> 
+        getRoomListOrBuilderList() {
+      return roomList_;
+    }
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    public int getRoomListCount() {
+      return roomList_.size();
+    }
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    public proto.ModelProto.Room getRoomList(int index) {
+      return roomList_.get(index);
+    }
+    /**
+     * <code>repeated .proto.Room roomList = 7;</code>
+     */
+    public proto.ModelProto.RoomOrBuilder getRoomListOrBuilder(
         int index) {
-      return tables_.get(index);
+      return roomList_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1084,6 +1129,7 @@ public final class HallProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (!cert_.isEmpty()) {
         output.writeBytes(1, cert_);
       }
@@ -1099,8 +1145,15 @@ public final class HallProto {
       if (club_ != 0) {
         output.writeInt32(5, club_);
       }
+      if (getTablesList().size() > 0) {
+        output.writeUInt32NoTag(50);
+        output.writeUInt32NoTag(tablesMemoizedSerializedSize);
+      }
       for (int i = 0; i < tables_.size(); i++) {
-        output.writeMessage(6, tables_.get(i));
+        output.writeInt64NoTag(tables_.get(i));
+      }
+      for (int i = 0; i < roomList_.size(); i++) {
+        output.writeMessage(7, roomList_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -1130,9 +1183,23 @@ public final class HallProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, club_);
       }
-      for (int i = 0; i < tables_.size(); i++) {
+      {
+        int dataSize = 0;
+        for (int i = 0; i < tables_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt64SizeNoTag(tables_.get(i));
+        }
+        size += dataSize;
+        if (!getTablesList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        tablesMemoizedSerializedSize = dataSize;
+      }
+      for (int i = 0; i < roomList_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, tables_.get(i));
+          .computeMessageSize(7, roomList_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1162,6 +1229,8 @@ public final class HallProto {
           == other.getClub());
       result = result && getTablesList()
           .equals(other.getTablesList());
+      result = result && getRoomListList()
+          .equals(other.getRoomListList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1186,6 +1255,10 @@ public final class HallProto {
       if (getTablesCount() > 0) {
         hash = (37 * hash) + TABLES_FIELD_NUMBER;
         hash = (53 * hash) + getTablesList().hashCode();
+      }
+      if (getRoomListCount() > 0) {
+        hash = (37 * hash) + ROOMLIST_FIELD_NUMBER;
+        hash = (53 * hash) + getRoomListList().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -1312,7 +1385,7 @@ public final class HallProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getTablesFieldBuilder();
+          getRoomListFieldBuilder();
         }
       }
       public Builder clear() {
@@ -1327,11 +1400,13 @@ public final class HallProto {
 
         club_ = 0;
 
-        if (tablesBuilder_ == null) {
-          tables_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
+        tables_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        if (roomListBuilder_ == null) {
+          roomList_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000040);
         } else {
-          tablesBuilder_.clear();
+          roomListBuilder_.clear();
         }
         return this;
       }
@@ -1362,14 +1437,19 @@ public final class HallProto {
         result.nickName_ = nickName_;
         result.channel_ = channel_;
         result.club_ = club_;
-        if (tablesBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) == 0x00000020)) {
-            tables_ = java.util.Collections.unmodifiableList(tables_);
-            bitField0_ = (bitField0_ & ~0x00000020);
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          tables_ = java.util.Collections.unmodifiableList(tables_);
+          bitField0_ = (bitField0_ & ~0x00000020);
+        }
+        result.tables_ = tables_;
+        if (roomListBuilder_ == null) {
+          if (((bitField0_ & 0x00000040) == 0x00000040)) {
+            roomList_ = java.util.Collections.unmodifiableList(roomList_);
+            bitField0_ = (bitField0_ & ~0x00000040);
           }
-          result.tables_ = tables_;
+          result.roomList_ = roomList_;
         } else {
-          result.tables_ = tablesBuilder_.build();
+          result.roomList_ = roomListBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -1428,29 +1508,39 @@ public final class HallProto {
         if (other.getClub() != 0) {
           setClub(other.getClub());
         }
-        if (tablesBuilder_ == null) {
-          if (!other.tables_.isEmpty()) {
-            if (tables_.isEmpty()) {
-              tables_ = other.tables_;
-              bitField0_ = (bitField0_ & ~0x00000020);
+        if (!other.tables_.isEmpty()) {
+          if (tables_.isEmpty()) {
+            tables_ = other.tables_;
+            bitField0_ = (bitField0_ & ~0x00000020);
+          } else {
+            ensureTablesIsMutable();
+            tables_.addAll(other.tables_);
+          }
+          onChanged();
+        }
+        if (roomListBuilder_ == null) {
+          if (!other.roomList_.isEmpty()) {
+            if (roomList_.isEmpty()) {
+              roomList_ = other.roomList_;
+              bitField0_ = (bitField0_ & ~0x00000040);
             } else {
-              ensureTablesIsMutable();
-              tables_.addAll(other.tables_);
+              ensureRoomListIsMutable();
+              roomList_.addAll(other.roomList_);
             }
             onChanged();
           }
         } else {
-          if (!other.tables_.isEmpty()) {
-            if (tablesBuilder_.isEmpty()) {
-              tablesBuilder_.dispose();
-              tablesBuilder_ = null;
-              tables_ = other.tables_;
-              bitField0_ = (bitField0_ & ~0x00000020);
-              tablesBuilder_ = 
+          if (!other.roomList_.isEmpty()) {
+            if (roomListBuilder_.isEmpty()) {
+              roomListBuilder_.dispose();
+              roomListBuilder_ = null;
+              roomList_ = other.roomList_;
+              bitField0_ = (bitField0_ & ~0x00000040);
+              roomListBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getTablesFieldBuilder() : null;
+                   getRoomListFieldBuilder() : null;
             } else {
-              tablesBuilder_.addAllMessages(other.tables_);
+              roomListBuilder_.addAllMessages(other.roomList_);
             }
           }
         }
@@ -1678,316 +1768,338 @@ public final class HallProto {
         return this;
       }
 
-      private java.util.List<proto.ServerProto.RoomTableInfo> tables_ =
-        java.util.Collections.emptyList();
+      private java.util.List<java.lang.Long> tables_ = java.util.Collections.emptyList();
       private void ensureTablesIsMutable() {
         if (!((bitField0_ & 0x00000020) == 0x00000020)) {
-          tables_ = new java.util.ArrayList<proto.ServerProto.RoomTableInfo>(tables_);
+          tables_ = new java.util.ArrayList<java.lang.Long>(tables_);
           bitField0_ |= 0x00000020;
+         }
+      }
+      /**
+       * <pre>
+       *加入的房间(重连回去的)
+       * </pre>
+       *
+       * <code>repeated int64 tables = 6;</code>
+       */
+      public java.util.List<java.lang.Long>
+          getTablesList() {
+        return java.util.Collections.unmodifiableList(tables_);
+      }
+      /**
+       * <pre>
+       *加入的房间(重连回去的)
+       * </pre>
+       *
+       * <code>repeated int64 tables = 6;</code>
+       */
+      public int getTablesCount() {
+        return tables_.size();
+      }
+      /**
+       * <pre>
+       *加入的房间(重连回去的)
+       * </pre>
+       *
+       * <code>repeated int64 tables = 6;</code>
+       */
+      public long getTables(int index) {
+        return tables_.get(index);
+      }
+      /**
+       * <pre>
+       *加入的房间(重连回去的)
+       * </pre>
+       *
+       * <code>repeated int64 tables = 6;</code>
+       */
+      public Builder setTables(
+          int index, long value) {
+        ensureTablesIsMutable();
+        tables_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *加入的房间(重连回去的)
+       * </pre>
+       *
+       * <code>repeated int64 tables = 6;</code>
+       */
+      public Builder addTables(long value) {
+        ensureTablesIsMutable();
+        tables_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *加入的房间(重连回去的)
+       * </pre>
+       *
+       * <code>repeated int64 tables = 6;</code>
+       */
+      public Builder addAllTables(
+          java.lang.Iterable<? extends java.lang.Long> values) {
+        ensureTablesIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, tables_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *加入的房间(重连回去的)
+       * </pre>
+       *
+       * <code>repeated int64 tables = 6;</code>
+       */
+      public Builder clearTables() {
+        tables_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.ModelProto.Room> roomList_ =
+        java.util.Collections.emptyList();
+      private void ensureRoomListIsMutable() {
+        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+          roomList_ = new java.util.ArrayList<proto.ModelProto.Room>(roomList_);
+          bitField0_ |= 0x00000040;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ServerProto.RoomTableInfo, proto.ServerProto.RoomTableInfo.Builder, proto.ServerProto.RoomTableInfoOrBuilder> tablesBuilder_;
+          proto.ModelProto.Room, proto.ModelProto.Room.Builder, proto.ModelProto.RoomOrBuilder> roomListBuilder_;
 
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public java.util.List<proto.ServerProto.RoomTableInfo> getTablesList() {
-        if (tablesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(tables_);
+      public java.util.List<proto.ModelProto.Room> getRoomListList() {
+        if (roomListBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(roomList_);
         } else {
-          return tablesBuilder_.getMessageList();
+          return roomListBuilder_.getMessageList();
         }
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public int getTablesCount() {
-        if (tablesBuilder_ == null) {
-          return tables_.size();
+      public int getRoomListCount() {
+        if (roomListBuilder_ == null) {
+          return roomList_.size();
         } else {
-          return tablesBuilder_.getCount();
+          return roomListBuilder_.getCount();
         }
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public proto.ServerProto.RoomTableInfo getTables(int index) {
-        if (tablesBuilder_ == null) {
-          return tables_.get(index);
+      public proto.ModelProto.Room getRoomList(int index) {
+        if (roomListBuilder_ == null) {
+          return roomList_.get(index);
         } else {
-          return tablesBuilder_.getMessage(index);
+          return roomListBuilder_.getMessage(index);
         }
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder setTables(
-          int index, proto.ServerProto.RoomTableInfo value) {
-        if (tablesBuilder_ == null) {
+      public Builder setRoomList(
+          int index, proto.ModelProto.Room value) {
+        if (roomListBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureTablesIsMutable();
-          tables_.set(index, value);
+          ensureRoomListIsMutable();
+          roomList_.set(index, value);
           onChanged();
         } else {
-          tablesBuilder_.setMessage(index, value);
+          roomListBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder setTables(
-          int index, proto.ServerProto.RoomTableInfo.Builder builderForValue) {
-        if (tablesBuilder_ == null) {
-          ensureTablesIsMutable();
-          tables_.set(index, builderForValue.build());
+      public Builder setRoomList(
+          int index, proto.ModelProto.Room.Builder builderForValue) {
+        if (roomListBuilder_ == null) {
+          ensureRoomListIsMutable();
+          roomList_.set(index, builderForValue.build());
           onChanged();
         } else {
-          tablesBuilder_.setMessage(index, builderForValue.build());
+          roomListBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder addTables(proto.ServerProto.RoomTableInfo value) {
-        if (tablesBuilder_ == null) {
+      public Builder addRoomList(proto.ModelProto.Room value) {
+        if (roomListBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureTablesIsMutable();
-          tables_.add(value);
+          ensureRoomListIsMutable();
+          roomList_.add(value);
           onChanged();
         } else {
-          tablesBuilder_.addMessage(value);
+          roomListBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder addTables(
-          int index, proto.ServerProto.RoomTableInfo value) {
-        if (tablesBuilder_ == null) {
+      public Builder addRoomList(
+          int index, proto.ModelProto.Room value) {
+        if (roomListBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureTablesIsMutable();
-          tables_.add(index, value);
+          ensureRoomListIsMutable();
+          roomList_.add(index, value);
           onChanged();
         } else {
-          tablesBuilder_.addMessage(index, value);
+          roomListBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder addTables(
-          proto.ServerProto.RoomTableInfo.Builder builderForValue) {
-        if (tablesBuilder_ == null) {
-          ensureTablesIsMutable();
-          tables_.add(builderForValue.build());
+      public Builder addRoomList(
+          proto.ModelProto.Room.Builder builderForValue) {
+        if (roomListBuilder_ == null) {
+          ensureRoomListIsMutable();
+          roomList_.add(builderForValue.build());
           onChanged();
         } else {
-          tablesBuilder_.addMessage(builderForValue.build());
+          roomListBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder addTables(
-          int index, proto.ServerProto.RoomTableInfo.Builder builderForValue) {
-        if (tablesBuilder_ == null) {
-          ensureTablesIsMutable();
-          tables_.add(index, builderForValue.build());
+      public Builder addRoomList(
+          int index, proto.ModelProto.Room.Builder builderForValue) {
+        if (roomListBuilder_ == null) {
+          ensureRoomListIsMutable();
+          roomList_.add(index, builderForValue.build());
           onChanged();
         } else {
-          tablesBuilder_.addMessage(index, builderForValue.build());
+          roomListBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder addAllTables(
-          java.lang.Iterable<? extends proto.ServerProto.RoomTableInfo> values) {
-        if (tablesBuilder_ == null) {
-          ensureTablesIsMutable();
+      public Builder addAllRoomList(
+          java.lang.Iterable<? extends proto.ModelProto.Room> values) {
+        if (roomListBuilder_ == null) {
+          ensureRoomListIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, tables_);
+              values, roomList_);
           onChanged();
         } else {
-          tablesBuilder_.addAllMessages(values);
+          roomListBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder clearTables() {
-        if (tablesBuilder_ == null) {
-          tables_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
+      public Builder clearRoomList() {
+        if (roomListBuilder_ == null) {
+          roomList_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000040);
           onChanged();
         } else {
-          tablesBuilder_.clear();
+          roomListBuilder_.clear();
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public Builder removeTables(int index) {
-        if (tablesBuilder_ == null) {
-          ensureTablesIsMutable();
-          tables_.remove(index);
+      public Builder removeRoomList(int index) {
+        if (roomListBuilder_ == null) {
+          ensureRoomListIsMutable();
+          roomList_.remove(index);
           onChanged();
         } else {
-          tablesBuilder_.remove(index);
+          roomListBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public proto.ServerProto.RoomTableInfo.Builder getTablesBuilder(
+      public proto.ModelProto.Room.Builder getRoomListBuilder(
           int index) {
-        return getTablesFieldBuilder().getBuilder(index);
+        return getRoomListFieldBuilder().getBuilder(index);
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public proto.ServerProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+      public proto.ModelProto.RoomOrBuilder getRoomListOrBuilder(
           int index) {
-        if (tablesBuilder_ == null) {
-          return tables_.get(index);  } else {
-          return tablesBuilder_.getMessageOrBuilder(index);
+        if (roomListBuilder_ == null) {
+          return roomList_.get(index);  } else {
+          return roomListBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public java.util.List<? extends proto.ServerProto.RoomTableInfoOrBuilder> 
-           getTablesOrBuilderList() {
-        if (tablesBuilder_ != null) {
-          return tablesBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends proto.ModelProto.RoomOrBuilder> 
+           getRoomListOrBuilderList() {
+        if (roomListBuilder_ != null) {
+          return roomListBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(tables_);
+          return java.util.Collections.unmodifiableList(roomList_);
         }
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public proto.ServerProto.RoomTableInfo.Builder addTablesBuilder() {
-        return getTablesFieldBuilder().addBuilder(
-            proto.ServerProto.RoomTableInfo.getDefaultInstance());
+      public proto.ModelProto.Room.Builder addRoomListBuilder() {
+        return getRoomListFieldBuilder().addBuilder(
+            proto.ModelProto.Room.getDefaultInstance());
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public proto.ServerProto.RoomTableInfo.Builder addTablesBuilder(
+      public proto.ModelProto.Room.Builder addRoomListBuilder(
           int index) {
-        return getTablesFieldBuilder().addBuilder(
-            index, proto.ServerProto.RoomTableInfo.getDefaultInstance());
+        return getRoomListFieldBuilder().addBuilder(
+            index, proto.ModelProto.Room.getDefaultInstance());
       }
       /**
-       * <pre>
-       *加入的房间(重连回去的)
-       * </pre>
-       *
-       * <code>repeated .proto.RoomTableInfo tables = 6;</code>
+       * <code>repeated .proto.Room roomList = 7;</code>
        */
-      public java.util.List<proto.ServerProto.RoomTableInfo.Builder> 
-           getTablesBuilderList() {
-        return getTablesFieldBuilder().getBuilderList();
+      public java.util.List<proto.ModelProto.Room.Builder> 
+           getRoomListBuilderList() {
+        return getRoomListFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ServerProto.RoomTableInfo, proto.ServerProto.RoomTableInfo.Builder, proto.ServerProto.RoomTableInfoOrBuilder> 
-          getTablesFieldBuilder() {
-        if (tablesBuilder_ == null) {
-          tablesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.ServerProto.RoomTableInfo, proto.ServerProto.RoomTableInfo.Builder, proto.ServerProto.RoomTableInfoOrBuilder>(
-                  tables_,
-                  ((bitField0_ & 0x00000020) == 0x00000020),
+          proto.ModelProto.Room, proto.ModelProto.Room.Builder, proto.ModelProto.RoomOrBuilder> 
+          getRoomListFieldBuilder() {
+        if (roomListBuilder_ == null) {
+          roomListBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.ModelProto.Room, proto.ModelProto.Room.Builder, proto.ModelProto.RoomOrBuilder>(
+                  roomList_,
+                  ((bitField0_ & 0x00000040) == 0x00000040),
                   getParentForChildren(),
                   isClean());
-          tables_ = null;
+          roomList_ = null;
         }
-        return tablesBuilder_;
+        return roomListBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4805,19 +4917,19 @@ public final class HallProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nhall.proto\022\005proto\032\014server.proto\"K\n\010Req" +
-      "Login\022\014\n\004cert\030\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n" +
-      "\006avatar\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\"\177\n\010AckLog" +
+      "\n\nhall.proto\022\005proto\032\013model.proto\"K\n\010ReqL" +
+      "ogin\022\014\n\004cert\030\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006" +
+      "avatar\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\"\210\001\n\010AckLog" +
       "in\022\014\n\004cert\030\001 \001(\014\022\016\n\006userId\030\002 \001(\005\022\020\n\010nick" +
       "Name\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\022\014\n\004club\030\005 \001(" +
-      "\005\022$\n\006tables\030\006 \003(\0132\024.proto.RoomTableInfo\"" +
-      "\035\n\013ReqJoinClub\022\016\n\006clubId\030\001 \001(\005\",\n\013AckJoi" +
-      "nClub\022\035\n\010joinClub\030\001 \001(\0132\013.proto.Club\"e\n\004" +
-      "Club\022\016\n\006clubId\030\001 \001(\005\022\016\n\006avatar\030\002 \001(\014\022\014\n\004" +
-      "name\030\003 \001(\014\022\013\n\003des\030\004 \001(\014\022\"\n\007members\030\005 \003(\013",
-      "2\021.proto.ClubMember\".\n\nClubMember\022\016\n\006rol" +
-      "eId\030\001 \001(\005\022\020\n\010position\030\002 \001(\005B\013B\tHallProto" +
-      "b\006proto3"
+      "\005\022\016\n\006tables\030\006 \003(\003\022\035\n\010roomList\030\007 \003(\0132\013.pr" +
+      "oto.Room\"\035\n\013ReqJoinClub\022\016\n\006clubId\030\001 \001(\005\"" +
+      ",\n\013AckJoinClub\022\035\n\010joinClub\030\001 \001(\0132\013.proto" +
+      ".Club\"e\n\004Club\022\016\n\006clubId\030\001 \001(\005\022\016\n\006avatar\030" +
+      "\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\013\n\003des\030\004 \001(\014\022\"\n\007memb",
+      "ers\030\005 \003(\0132\021.proto.ClubMember\".\n\nClubMemb" +
+      "er\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030\002 \001(\005B\013B\t" +
+      "HallProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4830,7 +4942,7 @@ public final class HallProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          proto.ServerProto.getDescriptor(),
+          proto.ModelProto.getDescriptor(),
         }, assigner);
     internal_static_proto_ReqLogin_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -4843,7 +4955,7 @@ public final class HallProto {
     internal_static_proto_AckLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckLogin_descriptor,
-        new java.lang.String[] { "Cert", "UserId", "NickName", "Channel", "Club", "Tables", });
+        new java.lang.String[] { "Cert", "UserId", "NickName", "Channel", "Club", "Tables", "RoomList", });
     internal_static_proto_ReqJoinClub_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_ReqJoinClub_fieldAccessorTable = new
@@ -4868,7 +4980,7 @@ public final class HallProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ClubMember_descriptor,
         new java.lang.String[] { "RoleId", "Position", });
-    proto.ServerProto.getDescriptor();
+    proto.ModelProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.protobuf.ByteString;
 import model.TableModel;
 import proto.ConstProto;
+import proto.ModelProto;
 import proto.ServerProto;
 import room.manager.user.User;
 
@@ -83,8 +84,8 @@ public class TableInfo {
 		return tableState == ConstProto.TableState.WAITE && tableRoles.size() < model.getSeatNum();
 	}
 
-	public ServerProto.RoomTableInfo getTableInfo() {
-		ServerProto.RoomTableInfo.Builder builder = ServerProto.RoomTableInfo.newBuilder()
+	public ModelProto.RoomTableInfo getTableInfo() {
+		ModelProto.RoomTableInfo.Builder builder = ModelProto.RoomTableInfo.newBuilder()
 				.setRoomId(model.getId())
 				.setTableId(tableId)
 				.setOwnerId(ownerId)

@@ -8,6 +8,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 import room.manager.user.User;
 import room.manager.user.UserManager;
 
@@ -22,7 +23,7 @@ public class NotBreakHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		try {
-			ModelProto.NotBreak notice = (ModelProto.NotBreak) msg;
+			ServerProto.NotBreak notice = (ServerProto.NotBreak) msg;
 			int userId = notice.getUserId();
 
 			logger.info("收到玩家断线通知, userId: {}, cert: {}",

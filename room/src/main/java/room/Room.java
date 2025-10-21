@@ -12,6 +12,7 @@ import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 import room.client.ClientProto;
 import room.client.RoomClient;
 import room.connect.ConnectProcessor;
@@ -196,7 +197,7 @@ public class Room {
 				throw new IllegalArgumentException("中心服务器地址格式错误: " + center);
 			}
 
-			ModelProto.ReqServerInfo serverInfoRequest = buildServerInfoRequest();
+			ServerProto.ReqServerInfo serverInfoRequest = buildServerInfoRequest();
 
 			serverManager.registerSever(centerAddress, ConnectProcessor.TRANSFER,
 					ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
@@ -214,8 +215,8 @@ public class Room {
 	/**
 	 * 构建服务器信息请求
 	 */
-	private ModelProto.ReqServerInfo buildServerInfoRequest() {
-		return ModelProto.ReqServerInfo.newBuilder()
+	private ServerProto.ReqServerInfo buildServerInfoRequest() {
+		return ServerProto.ReqServerInfo.newBuilder()
 				.addServerType(ServerType.Game.getServerType())
 				.build();
 	}

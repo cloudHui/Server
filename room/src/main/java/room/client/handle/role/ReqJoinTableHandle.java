@@ -15,6 +15,7 @@ import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
+import proto.ModelProto;
 import proto.RoomProto;
 import proto.ServerProto;
 import room.Room;
@@ -114,7 +115,7 @@ public class ReqJoinTableHandle implements Handler {
 	private ServerProto.ReqCreateGameTable buildCreateTableRequest(int roomId, int userId) {
 		return ServerProto.ReqCreateGameTable.newBuilder()
 				.setRoomId(roomId)
-				.setRoomRole(ServerProto.RoomRole.newBuilder()
+				.setRoomRole(ModelProto.RoomRole.newBuilder()
 						.setRoleId(userId)
 						.build())
 				.build();

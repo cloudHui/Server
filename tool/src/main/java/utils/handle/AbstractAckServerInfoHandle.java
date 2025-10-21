@@ -9,7 +9,7 @@ import net.connect.handle.ConnectHandler;
 import net.message.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.ModelProto;
+import proto.ServerProto;
 import utils.manager.ConnectHandle;
 import utils.manager.HandleManager;
 
@@ -27,8 +27,8 @@ public abstract class AbstractAckServerInfoHandle implements ConnectHandle {
 	@Override
 	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
 		try {
-			if (message instanceof ModelProto.AckServerInfo) {
-				ModelProto.AckServerInfo response = (ModelProto.AckServerInfo) message;
+			if (message instanceof ServerProto.AckServerInfo) {
+				ServerProto.AckServerInfo response = (ServerProto.AckServerInfo) message;
 
 				if (response.getServersCount() > 0) {
 					processServerInfo(response);
@@ -44,7 +44,7 @@ public abstract class AbstractAckServerInfoHandle implements ConnectHandle {
 	/**
 	 * 处理服务器信息 - 由子类实现
 	 */
-	protected abstract void processServerInfo(ModelProto.AckServerInfo response);
+	protected abstract void processServerInfo(ServerProto.AckServerInfo response);
 
 	/**
 	 * 调度重试机制 - 由子类实现
@@ -56,7 +56,7 @@ public abstract class AbstractAckServerInfoHandle implements ConnectHandle {
 	 */
 	protected void sendRetryRequest(ConnectHandler serverClient, List<ServerType> serverTypes,
 									Parser processor) {
-		ModelProto.ReqServerInfo.Builder builder = ModelProto.ReqServerInfo.newBuilder();
+		ServerProto.ReqServerInfo.Builder builder = ServerProto.ReqServerInfo.newBuilder();
 		for (ServerType serverType : serverTypes) {
 			builder.addServerType(serverType.getServerType());
 		}

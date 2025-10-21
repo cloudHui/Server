@@ -10,17 +10,17 @@ import msg.registor.enums.ServerType;
 import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.ModelProto;
+import proto.ServerProto;
 import utils.handle.AbstractAckServerInfoHandle;
 
-@ProcessClass(ModelProto.AckServerInfo.class)
+@ProcessClass(ServerProto.AckServerInfo.class)
 public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 	private static final Logger logger = LoggerFactory.getLogger(AckServerInfoHandle.class);
 
 	private static final List<ServerType> RETRY_SERVER_TYPES = Arrays.asList(ServerType.Room, ServerType.Game, ServerType.Hall);
 
 	@Override
-	protected void processServerInfo(ModelProto.AckServerInfo response) {
+	protected void processServerInfo(ServerProto.AckServerInfo response) {
 		logger.info("处理请求需要连接的服务器信息返回, response:{}", response.toString());
 
 		Gate.getInstance().execute(() ->

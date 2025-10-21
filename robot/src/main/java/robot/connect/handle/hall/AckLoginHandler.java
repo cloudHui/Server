@@ -2,13 +2,9 @@ package robot.connect.handle.hall;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
-import msg.registor.message.RMsg;
 import net.connect.handle.ConnectHandler;
 import proto.HallProto;
-import proto.RoomProto;
-import robot.connect.ConnectProcessor;
 import utils.manager.ConnectHandle;
-import utils.manager.HandleManager;
 
 /**
  * 登录回复
@@ -22,8 +18,7 @@ public class AckLoginHandler implements ConnectHandle {
 			HallProto.AckLogin ack = (HallProto.AckLogin) message;
 			LOGGER.error("AckLogin:{}", ack.toString());
 			//Todo 添加区分处理有房间重连 没房间获取房间列表 或者获取房间列表登录完成后直接请求 不管有没有房间 等获取房间列表回来后再看 没有房间就创建房间
-			RoomProto.ReqGetRoomList.Builder builder = RoomProto.ReqGetRoomList.newBuilder();
-			HandleManager.sendMsg(RMsg.REQ_ROOM_LIST_MSG, builder.build(), handler, ConnectProcessor.PARSER);
+
 		}
 	}
 }

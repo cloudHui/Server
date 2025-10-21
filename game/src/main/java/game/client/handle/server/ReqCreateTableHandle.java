@@ -10,6 +10,7 @@ import net.client.Sender;
 import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import proto.ServerProto;
 
 /**
@@ -44,7 +45,7 @@ public class ReqCreateTableHandle implements Handler {
 	/**
 	 * 创建游戏桌子
 	 */
-	private ServerProto.AckCreateGameTable createGameTable(int roomId, ServerProto.RoomRole role) {
+	private ServerProto.AckCreateGameTable createGameTable(int roomId, ModelProto.RoomRole role) {
 		TableManager tableManager = Game.getInstance().getTableManager();
 
 		// 创建桌子实例
@@ -53,7 +54,7 @@ public class ReqCreateTableHandle implements Handler {
 
 		// 构建响应
 		ServerProto.AckCreateGameTable.Builder response = ServerProto.AckCreateGameTable.newBuilder();
-		response.setTables(ServerProto.RoomTableInfo.newBuilder()
+		response.setTables(ModelProto.RoomTableInfo.newBuilder()
 				.setTableId(table.getTableId())
 				.setRoomId(roomId)
 				.build());

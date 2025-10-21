@@ -8,9 +8,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.ServerProto;
-import room.manager.table.TableInfo;
-import room.manager.table.TableManager;
+import proto.ModelProto;
 
 /**
  * 用户信息模型
@@ -39,8 +37,8 @@ public class User {
 		return clientId;
 	}
 
-	public ServerProto.RoomRole getRole() {
-		return ServerProto.RoomRole.newBuilder()
+	public ModelProto.RoomRole getRole() {
+		return ModelProto.RoomRole.newBuilder()
 				.setRoleId(userId)
 				.build();
 	}
@@ -86,21 +84,9 @@ public class User {
 	/**
 	 * 获取用户所有桌子
 	 */
-	public List<ServerProto.RoomTableInfo> getAllTables() {
-		List<ServerProto.RoomTableInfo> tableInfos = new ArrayList<>();
-		TableInfo tableById;
-		List<Long> remove = new ArrayList<>();
-		for (long table : tables) {
-			tableById = TableManager.getInstance().getTableById(table);
-			if (tableById != null) {
-				tableInfos.add(tableById.getTableInfo());
-			} else {
-				remove.add(table);
-				logger.info("getAllTables no table:{}, userId: {}", table, userId);
-			}
-		}
-		tables.removeAll(remove);
-		return tableInfos;
+	public List<Long> getAllTables() {
+		//Todo 是否需要删除不存在房间
+		return new ArrayList<>(tables);
 	}
 
 	/**

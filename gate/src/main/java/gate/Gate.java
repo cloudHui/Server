@@ -16,6 +16,7 @@ import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
@@ -187,7 +188,7 @@ public class Gate {
 			}
 
 			String serverAddress = innerIp + ":" + port;
-			ModelProto.ReqServerInfo serverInfo = buildServerInfoRequest();
+			ServerProto.ReqServerInfo serverInfo = buildServerInfoRequest();
 
 			serverManager.registerSever(centerAddress, null, ConnectProcessor.PARSER,
 					ConnectProcessor.HANDLERS, ServerType.Center, serverId,
@@ -206,8 +207,8 @@ public class Gate {
 	/**
 	 * 构建服务器信息请求
 	 */
-	private ModelProto.ReqServerInfo buildServerInfoRequest() {
-		return ModelProto.ReqServerInfo.newBuilder()
+	private ServerProto.ReqServerInfo buildServerInfoRequest() {
+		return ServerProto.ReqServerInfo.newBuilder()
 				.addServerType(ServerType.Game.getServerType())
 				.addServerType(ServerType.Hall.getServerType())
 				.addServerType(ServerType.Room.getServerType())

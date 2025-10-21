@@ -7,17 +7,18 @@ import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
 import net.connect.handle.ConnectHandler;
 import proto.ModelProto;
+import proto.ServerProto;
 import room.Room;
 import room.connect.ConnectProcessor;
 import utils.handle.AbstractAckServerInfoHandle;
 
-@ProcessClass(ModelProto.AckServerInfo.class)
+@ProcessClass(ServerProto.AckServerInfo.class)
 public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 
 	private static final List<ServerType> RETRY_SERVER_TYPES = Collections.singletonList(ServerType.Game);
 
 	@Override
-	protected void processServerInfo(ModelProto.AckServerInfo response) {
+	protected void processServerInfo(ServerProto.AckServerInfo response) {
 		ModelProto.ServerInfo serverInfo = response.getServers(0);
 		logger.info("处理请求需要连接的服务器信息返回, response:{}", response.toString());
 

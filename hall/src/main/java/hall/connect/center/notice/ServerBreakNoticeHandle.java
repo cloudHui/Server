@@ -12,6 +12,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 import utils.ServerManager;
 
 /**
@@ -24,7 +25,7 @@ public class ServerBreakNoticeHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int aLong, Message notServerBreak, long mapId, int sequence) {
-		ModelProto.NotServerBreak req = (ModelProto.NotServerBreak) notServerBreak;
+		ServerProto.NotServerBreak req = (ServerProto.NotServerBreak) notServerBreak;
 		List<ModelProto.ServerInfo> serverInfos = req.getServersList();
 		if (serverInfos.isEmpty()) {
 			return true;

@@ -10,6 +10,7 @@ import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
 import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * 处理网关服务器通知的客户端连接事件
@@ -69,7 +70,7 @@ public class NotClientLinkHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
-			ModelProto.NotRegisterClient notification = (ModelProto.NotRegisterClient) message;
+			ServerProto.NotRegisterClient notification = (ServerProto.NotRegisterClient) message;
 			String clientIp = notification.getCert().toStringUtf8();
 			String gateAddress = notification.getGate().toStringUtf8();
 

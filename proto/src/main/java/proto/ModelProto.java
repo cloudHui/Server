@@ -14,1658 +14,6 @@ public final class ModelProto {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface KeyValueOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.KeyValue)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>bytes key = 1;</code>
-     */
-    com.google.protobuf.ByteString getKey();
-
-    /**
-     * <code>bytes value = 2;</code>
-     */
-    com.google.protobuf.ByteString getValue();
-  }
-  /**
-   * Protobuf type {@code proto.KeyValue}
-   */
-  public  static final class KeyValue extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.KeyValue)
-      KeyValueOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use KeyValue.newBuilder() to construct.
-    private KeyValue(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private KeyValue() {
-      key_ = com.google.protobuf.ByteString.EMPTY;
-      value_ = com.google.protobuf.ByteString.EMPTY;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private KeyValue(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-
-              key_ = input.readBytes();
-              break;
-            }
-            case 18: {
-
-              value_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_KeyValue_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.KeyValue.class, proto.ModelProto.KeyValue.Builder.class);
-    }
-
-    public static final int KEY_FIELD_NUMBER = 1;
-    private com.google.protobuf.ByteString key_;
-    /**
-     * <code>bytes key = 1;</code>
-     */
-    public com.google.protobuf.ByteString getKey() {
-      return key_;
-    }
-
-    public static final int VALUE_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString value_;
-    /**
-     * <code>bytes value = 2;</code>
-     */
-    public com.google.protobuf.ByteString getValue() {
-      return value_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!key_.isEmpty()) {
-        output.writeBytes(1, key_);
-      }
-      if (!value_.isEmpty()) {
-        output.writeBytes(2, value_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!key_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, key_);
-      }
-      if (!value_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, value_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.KeyValue)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.KeyValue other = (proto.ModelProto.KeyValue) obj;
-
-      boolean result = true;
-      result = result && getKey()
-          .equals(other.getKey());
-      result = result && getValue()
-          .equals(other.getValue());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + KEY_FIELD_NUMBER;
-      hash = (53 * hash) + getKey().hashCode();
-      hash = (37 * hash) + VALUE_FIELD_NUMBER;
-      hash = (53 * hash) + getValue().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.KeyValue parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.KeyValue parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.KeyValue parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.KeyValue parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.KeyValue prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.KeyValue}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.KeyValue)
-        proto.ModelProto.KeyValueOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_KeyValue_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.KeyValue.class, proto.ModelProto.KeyValue.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.KeyValue.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        key_ = com.google.protobuf.ByteString.EMPTY;
-
-        value_ = com.google.protobuf.ByteString.EMPTY;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
-      }
-
-      public proto.ModelProto.KeyValue getDefaultInstanceForType() {
-        return proto.ModelProto.KeyValue.getDefaultInstance();
-      }
-
-      public proto.ModelProto.KeyValue build() {
-        proto.ModelProto.KeyValue result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.KeyValue buildPartial() {
-        proto.ModelProto.KeyValue result = new proto.ModelProto.KeyValue(this);
-        result.key_ = key_;
-        result.value_ = value_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.KeyValue) {
-          return mergeFrom((proto.ModelProto.KeyValue)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.KeyValue other) {
-        if (other == proto.ModelProto.KeyValue.getDefaultInstance()) return this;
-        if (other.getKey() != com.google.protobuf.ByteString.EMPTY) {
-          setKey(other.getKey());
-        }
-        if (other.getValue() != com.google.protobuf.ByteString.EMPTY) {
-          setValue(other.getValue());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.KeyValue parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.KeyValue) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private com.google.protobuf.ByteString key_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes key = 1;</code>
-       */
-      public com.google.protobuf.ByteString getKey() {
-        return key_;
-      }
-      /**
-       * <code>bytes key = 1;</code>
-       */
-      public Builder setKey(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        key_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes key = 1;</code>
-       */
-      public Builder clearKey() {
-        
-        key_ = getDefaultInstance().getKey();
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes value = 2;</code>
-       */
-      public com.google.protobuf.ByteString getValue() {
-        return value_;
-      }
-      /**
-       * <code>bytes value = 2;</code>
-       */
-      public Builder setValue(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        value_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes value = 2;</code>
-       */
-      public Builder clearValue() {
-        
-        value_ = getDefaultInstance().getValue();
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.KeyValue)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.KeyValue)
-    private static final proto.ModelProto.KeyValue DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.KeyValue();
-    }
-
-    public static proto.ModelProto.KeyValue getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<KeyValue>
-        PARSER = new com.google.protobuf.AbstractParser<KeyValue>() {
-      public KeyValue parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new KeyValue(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<KeyValue> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<KeyValue> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.KeyValue getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface ReqHeartOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqHeart)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 serverType = 1;</code>
-     */
-    int getServerType();
-
-    /**
-     * <code>int32 serverId = 2;</code>
-     */
-    int getServerId();
-
-    /**
-     * <pre>
-     *    int32 retryTime = 4;//重试次数
-     * </pre>
-     *
-     * <code>int64 reqTime = 3;</code>
-     */
-    long getReqTime();
-  }
-  /**
-   * <pre>
-   *心跳
-   * </pre>
-   *
-   * Protobuf type {@code proto.ReqHeart}
-   */
-  public  static final class ReqHeart extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqHeart)
-      ReqHeartOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use ReqHeart.newBuilder() to construct.
-    private ReqHeart(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private ReqHeart() {
-      serverType_ = 0;
-      serverId_ = 0;
-      reqTime_ = 0L;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private ReqHeart(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              serverType_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              serverId_ = input.readInt32();
-              break;
-            }
-            case 24: {
-
-              reqTime_ = input.readInt64();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_ReqHeart_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_ReqHeart_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.ReqHeart.class, proto.ModelProto.ReqHeart.Builder.class);
-    }
-
-    public static final int SERVERTYPE_FIELD_NUMBER = 1;
-    private int serverType_;
-    /**
-     * <code>int32 serverType = 1;</code>
-     */
-    public int getServerType() {
-      return serverType_;
-    }
-
-    public static final int SERVERID_FIELD_NUMBER = 2;
-    private int serverId_;
-    /**
-     * <code>int32 serverId = 2;</code>
-     */
-    public int getServerId() {
-      return serverId_;
-    }
-
-    public static final int REQTIME_FIELD_NUMBER = 3;
-    private long reqTime_;
-    /**
-     * <pre>
-     *    int32 retryTime = 4;//重试次数
-     * </pre>
-     *
-     * <code>int64 reqTime = 3;</code>
-     */
-    public long getReqTime() {
-      return reqTime_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (serverType_ != 0) {
-        output.writeInt32(1, serverType_);
-      }
-      if (serverId_ != 0) {
-        output.writeInt32(2, serverId_);
-      }
-      if (reqTime_ != 0L) {
-        output.writeInt64(3, reqTime_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (serverType_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, serverType_);
-      }
-      if (serverId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, serverId_);
-      }
-      if (reqTime_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, reqTime_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.ReqHeart)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.ReqHeart other = (proto.ModelProto.ReqHeart) obj;
-
-      boolean result = true;
-      result = result && (getServerType()
-          == other.getServerType());
-      result = result && (getServerId()
-          == other.getServerId());
-      result = result && (getReqTime()
-          == other.getReqTime());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SERVERTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getServerType();
-      hash = (37 * hash) + SERVERID_FIELD_NUMBER;
-      hash = (53 * hash) + getServerId();
-      hash = (37 * hash) + REQTIME_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getReqTime());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.ReqHeart parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqHeart parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqHeart parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqHeart parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.ReqHeart prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *心跳
-     * </pre>
-     *
-     * Protobuf type {@code proto.ReqHeart}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqHeart)
-        proto.ModelProto.ReqHeartOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_ReqHeart_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_ReqHeart_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.ReqHeart.class, proto.ModelProto.ReqHeart.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.ReqHeart.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        serverType_ = 0;
-
-        serverId_ = 0;
-
-        reqTime_ = 0L;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_ReqHeart_descriptor;
-      }
-
-      public proto.ModelProto.ReqHeart getDefaultInstanceForType() {
-        return proto.ModelProto.ReqHeart.getDefaultInstance();
-      }
-
-      public proto.ModelProto.ReqHeart build() {
-        proto.ModelProto.ReqHeart result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.ReqHeart buildPartial() {
-        proto.ModelProto.ReqHeart result = new proto.ModelProto.ReqHeart(this);
-        result.serverType_ = serverType_;
-        result.serverId_ = serverId_;
-        result.reqTime_ = reqTime_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.ReqHeart) {
-          return mergeFrom((proto.ModelProto.ReqHeart)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.ReqHeart other) {
-        if (other == proto.ModelProto.ReqHeart.getDefaultInstance()) return this;
-        if (other.getServerType() != 0) {
-          setServerType(other.getServerType());
-        }
-        if (other.getServerId() != 0) {
-          setServerId(other.getServerId());
-        }
-        if (other.getReqTime() != 0L) {
-          setReqTime(other.getReqTime());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.ReqHeart parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.ReqHeart) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int serverType_ ;
-      /**
-       * <code>int32 serverType = 1;</code>
-       */
-      public int getServerType() {
-        return serverType_;
-      }
-      /**
-       * <code>int32 serverType = 1;</code>
-       */
-      public Builder setServerType(int value) {
-        
-        serverType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 serverType = 1;</code>
-       */
-      public Builder clearServerType() {
-        
-        serverType_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int serverId_ ;
-      /**
-       * <code>int32 serverId = 2;</code>
-       */
-      public int getServerId() {
-        return serverId_;
-      }
-      /**
-       * <code>int32 serverId = 2;</code>
-       */
-      public Builder setServerId(int value) {
-        
-        serverId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 serverId = 2;</code>
-       */
-      public Builder clearServerId() {
-        
-        serverId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private long reqTime_ ;
-      /**
-       * <pre>
-       *    int32 retryTime = 4;//重试次数
-       * </pre>
-       *
-       * <code>int64 reqTime = 3;</code>
-       */
-      public long getReqTime() {
-        return reqTime_;
-      }
-      /**
-       * <pre>
-       *    int32 retryTime = 4;//重试次数
-       * </pre>
-       *
-       * <code>int64 reqTime = 3;</code>
-       */
-      public Builder setReqTime(long value) {
-        
-        reqTime_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *    int32 retryTime = 4;//重试次数
-       * </pre>
-       *
-       * <code>int64 reqTime = 3;</code>
-       */
-      public Builder clearReqTime() {
-        
-        reqTime_ = 0L;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.ReqHeart)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.ReqHeart)
-    private static final proto.ModelProto.ReqHeart DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.ReqHeart();
-    }
-
-    public static proto.ModelProto.ReqHeart getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ReqHeart>
-        PARSER = new com.google.protobuf.AbstractParser<ReqHeart>() {
-      public ReqHeart parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqHeart(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ReqHeart> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ReqHeart> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.ReqHeart getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface AckHeartOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckHeart)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 serverId = 1;</code>
-     */
-    int getServerId();
-
-    /**
-     * <pre>
-     *    int32 retryTime = 3;//重试次数
-     * </pre>
-     *
-     * <code>int64 reqTime = 2;</code>
-     */
-    long getReqTime();
-  }
-  /**
-   * Protobuf type {@code proto.AckHeart}
-   */
-  public  static final class AckHeart extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckHeart)
-      AckHeartOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use AckHeart.newBuilder() to construct.
-    private AckHeart(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private AckHeart() {
-      serverId_ = 0;
-      reqTime_ = 0L;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private AckHeart(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              serverId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              reqTime_ = input.readInt64();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_AckHeart_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_AckHeart_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.AckHeart.class, proto.ModelProto.AckHeart.Builder.class);
-    }
-
-    public static final int SERVERID_FIELD_NUMBER = 1;
-    private int serverId_;
-    /**
-     * <code>int32 serverId = 1;</code>
-     */
-    public int getServerId() {
-      return serverId_;
-    }
-
-    public static final int REQTIME_FIELD_NUMBER = 2;
-    private long reqTime_;
-    /**
-     * <pre>
-     *    int32 retryTime = 3;//重试次数
-     * </pre>
-     *
-     * <code>int64 reqTime = 2;</code>
-     */
-    public long getReqTime() {
-      return reqTime_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (serverId_ != 0) {
-        output.writeInt32(1, serverId_);
-      }
-      if (reqTime_ != 0L) {
-        output.writeInt64(2, reqTime_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (serverId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, serverId_);
-      }
-      if (reqTime_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, reqTime_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.AckHeart)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.AckHeart other = (proto.ModelProto.AckHeart) obj;
-
-      boolean result = true;
-      result = result && (getServerId()
-          == other.getServerId());
-      result = result && (getReqTime()
-          == other.getReqTime());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SERVERID_FIELD_NUMBER;
-      hash = (53 * hash) + getServerId();
-      hash = (37 * hash) + REQTIME_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getReqTime());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.AckHeart parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckHeart parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckHeart parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.AckHeart prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.AckHeart}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckHeart)
-        proto.ModelProto.AckHeartOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_AckHeart_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_AckHeart_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.AckHeart.class, proto.ModelProto.AckHeart.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.AckHeart.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        serverId_ = 0;
-
-        reqTime_ = 0L;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_AckHeart_descriptor;
-      }
-
-      public proto.ModelProto.AckHeart getDefaultInstanceForType() {
-        return proto.ModelProto.AckHeart.getDefaultInstance();
-      }
-
-      public proto.ModelProto.AckHeart build() {
-        proto.ModelProto.AckHeart result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.AckHeart buildPartial() {
-        proto.ModelProto.AckHeart result = new proto.ModelProto.AckHeart(this);
-        result.serverId_ = serverId_;
-        result.reqTime_ = reqTime_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.AckHeart) {
-          return mergeFrom((proto.ModelProto.AckHeart)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.AckHeart other) {
-        if (other == proto.ModelProto.AckHeart.getDefaultInstance()) return this;
-        if (other.getServerId() != 0) {
-          setServerId(other.getServerId());
-        }
-        if (other.getReqTime() != 0L) {
-          setReqTime(other.getReqTime());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.AckHeart parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.AckHeart) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int serverId_ ;
-      /**
-       * <code>int32 serverId = 1;</code>
-       */
-      public int getServerId() {
-        return serverId_;
-      }
-      /**
-       * <code>int32 serverId = 1;</code>
-       */
-      public Builder setServerId(int value) {
-        
-        serverId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 serverId = 1;</code>
-       */
-      public Builder clearServerId() {
-        
-        serverId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private long reqTime_ ;
-      /**
-       * <pre>
-       *    int32 retryTime = 3;//重试次数
-       * </pre>
-       *
-       * <code>int64 reqTime = 2;</code>
-       */
-      public long getReqTime() {
-        return reqTime_;
-      }
-      /**
-       * <pre>
-       *    int32 retryTime = 3;//重试次数
-       * </pre>
-       *
-       * <code>int64 reqTime = 2;</code>
-       */
-      public Builder setReqTime(long value) {
-        
-        reqTime_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *    int32 retryTime = 3;//重试次数
-       * </pre>
-       *
-       * <code>int64 reqTime = 2;</code>
-       */
-      public Builder clearReqTime() {
-        
-        reqTime_ = 0L;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.AckHeart)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.AckHeart)
-    private static final proto.ModelProto.AckHeart DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.AckHeart();
-    }
-
-    public static proto.ModelProto.AckHeart getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<AckHeart>
-        PARSER = new com.google.protobuf.AbstractParser<AckHeart>() {
-      public AckHeart parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckHeart(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AckHeart> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AckHeart> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.AckHeart getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   public interface ServerInfoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:proto.ServerInfo)
       com.google.protobuf.MessageOrBuilder {
@@ -2243,1338 +591,74 @@ public final class ModelProto {
 
   }
 
-  public interface ReqRegisterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqRegister)
+  public interface RoomOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.Room)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * <code>int32 roomId = 1;</code>
      */
-    boolean hasServerInfo();
-    /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
-     */
-    proto.ModelProto.ServerInfo getServerInfo();
-    /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
-     */
-    proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder();
-  }
-  /**
-   * <pre>
-   *服务在路由注册信息
-   * </pre>
-   *
-   * Protobuf type {@code proto.ReqRegister}
-   */
-  public  static final class ReqRegister extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqRegister)
-      ReqRegisterOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use ReqRegister.newBuilder() to construct.
-    private ReqRegister(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private ReqRegister() {
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private ReqRegister(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              proto.ModelProto.ServerInfo.Builder subBuilder = null;
-              if (serverInfo_ != null) {
-                subBuilder = serverInfo_.toBuilder();
-              }
-              serverInfo_ = input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(serverInfo_);
-                serverInfo_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_ReqRegister_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_ReqRegister_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.ReqRegister.class, proto.ModelProto.ReqRegister.Builder.class);
-    }
-
-    public static final int SERVERINFO_FIELD_NUMBER = 1;
-    private proto.ModelProto.ServerInfo serverInfo_;
-    /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
-     */
-    public boolean hasServerInfo() {
-      return serverInfo_ != null;
-    }
-    /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
-     */
-    public proto.ModelProto.ServerInfo getServerInfo() {
-      return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
-    }
-    /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
-     */
-    public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
-      return getServerInfo();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (serverInfo_ != null) {
-        output.writeMessage(1, getServerInfo());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (serverInfo_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getServerInfo());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.ReqRegister)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.ReqRegister other = (proto.ModelProto.ReqRegister) obj;
-
-      boolean result = true;
-      result = result && (hasServerInfo() == other.hasServerInfo());
-      if (hasServerInfo()) {
-        result = result && getServerInfo()
-            .equals(other.getServerInfo());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasServerInfo()) {
-        hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
-        hash = (53 * hash) + getServerInfo().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.ReqRegister parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqRegister parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqRegister parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqRegister parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.ReqRegister prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *服务在路由注册信息
-     * </pre>
-     *
-     * Protobuf type {@code proto.ReqRegister}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqRegister)
-        proto.ModelProto.ReqRegisterOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_ReqRegister_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_ReqRegister_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.ReqRegister.class, proto.ModelProto.ReqRegister.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.ReqRegister.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        if (serverInfoBuilder_ == null) {
-          serverInfo_ = null;
-        } else {
-          serverInfo_ = null;
-          serverInfoBuilder_ = null;
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_ReqRegister_descriptor;
-      }
-
-      public proto.ModelProto.ReqRegister getDefaultInstanceForType() {
-        return proto.ModelProto.ReqRegister.getDefaultInstance();
-      }
-
-      public proto.ModelProto.ReqRegister build() {
-        proto.ModelProto.ReqRegister result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.ReqRegister buildPartial() {
-        proto.ModelProto.ReqRegister result = new proto.ModelProto.ReqRegister(this);
-        if (serverInfoBuilder_ == null) {
-          result.serverInfo_ = serverInfo_;
-        } else {
-          result.serverInfo_ = serverInfoBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.ReqRegister) {
-          return mergeFrom((proto.ModelProto.ReqRegister)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.ReqRegister other) {
-        if (other == proto.ModelProto.ReqRegister.getDefaultInstance()) return this;
-        if (other.hasServerInfo()) {
-          mergeServerInfo(other.getServerInfo());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.ReqRegister parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.ReqRegister) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private proto.ModelProto.ServerInfo serverInfo_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serverInfoBuilder_;
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public boolean hasServerInfo() {
-        return serverInfoBuilder_ != null || serverInfo_ != null;
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo getServerInfo() {
-        if (serverInfoBuilder_ == null) {
-          return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
-        } else {
-          return serverInfoBuilder_.getMessage();
-        }
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder setServerInfo(proto.ModelProto.ServerInfo value) {
-        if (serverInfoBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          serverInfo_ = value;
-          onChanged();
-        } else {
-          serverInfoBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder setServerInfo(
-          proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serverInfoBuilder_ == null) {
-          serverInfo_ = builderForValue.build();
-          onChanged();
-        } else {
-          serverInfoBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder mergeServerInfo(proto.ModelProto.ServerInfo value) {
-        if (serverInfoBuilder_ == null) {
-          if (serverInfo_ != null) {
-            serverInfo_ =
-              proto.ModelProto.ServerInfo.newBuilder(serverInfo_).mergeFrom(value).buildPartial();
-          } else {
-            serverInfo_ = value;
-          }
-          onChanged();
-        } else {
-          serverInfoBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder clearServerInfo() {
-        if (serverInfoBuilder_ == null) {
-          serverInfo_ = null;
-          onChanged();
-        } else {
-          serverInfo_ = null;
-          serverInfoBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder getServerInfoBuilder() {
-        
-        onChanged();
-        return getServerInfoFieldBuilder().getBuilder();
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
-        if (serverInfoBuilder_ != null) {
-          return serverInfoBuilder_.getMessageOrBuilder();
-        } else {
-          return serverInfo_ == null ?
-              proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
-        }
-      }
-      /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> 
-          getServerInfoFieldBuilder() {
-        if (serverInfoBuilder_ == null) {
-          serverInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
-                  getServerInfo(),
-                  getParentForChildren(),
-                  isClean());
-          serverInfo_ = null;
-        }
-        return serverInfoBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.ReqRegister)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.ReqRegister)
-    private static final proto.ModelProto.ReqRegister DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.ReqRegister();
-    }
-
-    public static proto.ModelProto.ReqRegister getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ReqRegister>
-        PARSER = new com.google.protobuf.AbstractParser<ReqRegister>() {
-      public ReqRegister parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqRegister(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ReqRegister> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ReqRegister> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.ReqRegister getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface AckRegisterOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckRegister)
-      com.google.protobuf.MessageOrBuilder {
+    int getRoomId();
 
     /**
      * <pre>
-     *服务器信息
+     *桌子
      * </pre>
      *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    boolean hasServerInfo();
+    java.util.List<proto.ModelProto.RoomTableInfo> 
+        getTablesList();
     /**
      * <pre>
-     *服务器信息
+     *桌子
      * </pre>
      *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    proto.ModelProto.ServerInfo getServerInfo();
+    proto.ModelProto.RoomTableInfo getTables(int index);
     /**
      * <pre>
-     *服务器信息
+     *桌子
      * </pre>
      *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder();
-  }
-  /**
-   * Protobuf type {@code proto.AckRegister}
-   */
-  public  static final class AckRegister extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckRegister)
-      AckRegisterOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use AckRegister.newBuilder() to construct.
-    private AckRegister(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private AckRegister() {
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private AckRegister(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              proto.ModelProto.ServerInfo.Builder subBuilder = null;
-              if (serverInfo_ != null) {
-                subBuilder = serverInfo_.toBuilder();
-              }
-              serverInfo_ = input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(serverInfo_);
-                serverInfo_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_AckRegister_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_AckRegister_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.AckRegister.class, proto.ModelProto.AckRegister.Builder.class);
-    }
-
-    public static final int SERVERINFO_FIELD_NUMBER = 1;
-    private proto.ModelProto.ServerInfo serverInfo_;
+    int getTablesCount();
     /**
      * <pre>
-     *服务器信息
+     *桌子
      * </pre>
      *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public boolean hasServerInfo() {
-      return serverInfo_ != null;
-    }
+    java.util.List<? extends proto.ModelProto.RoomTableInfoOrBuilder> 
+        getTablesOrBuilderList();
     /**
      * <pre>
-     *服务器信息
+     *桌子
      * </pre>
      *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public proto.ModelProto.ServerInfo getServerInfo() {
-      return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
-    }
-    /**
-     * <pre>
-     *服务器信息
-     * </pre>
-     *
-     * <code>.proto.ServerInfo serverInfo = 1;</code>
-     */
-    public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
-      return getServerInfo();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (serverInfo_ != null) {
-        output.writeMessage(1, getServerInfo());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (serverInfo_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getServerInfo());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.AckRegister)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.AckRegister other = (proto.ModelProto.AckRegister) obj;
-
-      boolean result = true;
-      result = result && (hasServerInfo() == other.hasServerInfo());
-      if (hasServerInfo()) {
-        result = result && getServerInfo()
-            .equals(other.getServerInfo());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasServerInfo()) {
-        hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
-        hash = (53 * hash) + getServerInfo().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.AckRegister parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckRegister parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckRegister parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckRegister parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.AckRegister prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.AckRegister}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckRegister)
-        proto.ModelProto.AckRegisterOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_AckRegister_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_AckRegister_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.AckRegister.class, proto.ModelProto.AckRegister.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.AckRegister.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        if (serverInfoBuilder_ == null) {
-          serverInfo_ = null;
-        } else {
-          serverInfo_ = null;
-          serverInfoBuilder_ = null;
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_AckRegister_descriptor;
-      }
-
-      public proto.ModelProto.AckRegister getDefaultInstanceForType() {
-        return proto.ModelProto.AckRegister.getDefaultInstance();
-      }
-
-      public proto.ModelProto.AckRegister build() {
-        proto.ModelProto.AckRegister result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.AckRegister buildPartial() {
-        proto.ModelProto.AckRegister result = new proto.ModelProto.AckRegister(this);
-        if (serverInfoBuilder_ == null) {
-          result.serverInfo_ = serverInfo_;
-        } else {
-          result.serverInfo_ = serverInfoBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.AckRegister) {
-          return mergeFrom((proto.ModelProto.AckRegister)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.AckRegister other) {
-        if (other == proto.ModelProto.AckRegister.getDefaultInstance()) return this;
-        if (other.hasServerInfo()) {
-          mergeServerInfo(other.getServerInfo());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.AckRegister parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.AckRegister) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private proto.ModelProto.ServerInfo serverInfo_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serverInfoBuilder_;
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public boolean hasServerInfo() {
-        return serverInfoBuilder_ != null || serverInfo_ != null;
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo getServerInfo() {
-        if (serverInfoBuilder_ == null) {
-          return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
-        } else {
-          return serverInfoBuilder_.getMessage();
-        }
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder setServerInfo(proto.ModelProto.ServerInfo value) {
-        if (serverInfoBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          serverInfo_ = value;
-          onChanged();
-        } else {
-          serverInfoBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder setServerInfo(
-          proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serverInfoBuilder_ == null) {
-          serverInfo_ = builderForValue.build();
-          onChanged();
-        } else {
-          serverInfoBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder mergeServerInfo(proto.ModelProto.ServerInfo value) {
-        if (serverInfoBuilder_ == null) {
-          if (serverInfo_ != null) {
-            serverInfo_ =
-              proto.ModelProto.ServerInfo.newBuilder(serverInfo_).mergeFrom(value).buildPartial();
-          } else {
-            serverInfo_ = value;
-          }
-          onChanged();
-        } else {
-          serverInfoBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public Builder clearServerInfo() {
-        if (serverInfoBuilder_ == null) {
-          serverInfo_ = null;
-          onChanged();
-        } else {
-          serverInfo_ = null;
-          serverInfoBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder getServerInfoBuilder() {
-        
-        onChanged();
-        return getServerInfoFieldBuilder().getBuilder();
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
-        if (serverInfoBuilder_ != null) {
-          return serverInfoBuilder_.getMessageOrBuilder();
-        } else {
-          return serverInfo_ == null ?
-              proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
-        }
-      }
-      /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
-       * <code>.proto.ServerInfo serverInfo = 1;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> 
-          getServerInfoFieldBuilder() {
-        if (serverInfoBuilder_ == null) {
-          serverInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
-                  getServerInfo(),
-                  getParentForChildren(),
-                  isClean());
-          serverInfo_ = null;
-        }
-        return serverInfoBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.AckRegister)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.AckRegister)
-    private static final proto.ModelProto.AckRegister DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.AckRegister();
-    }
-
-    public static proto.ModelProto.AckRegister getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<AckRegister>
-        PARSER = new com.google.protobuf.AbstractParser<AckRegister>() {
-      public AckRegister parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckRegister(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AckRegister> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AckRegister> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.AckRegister getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface NotRegisterInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.NotRegisterInfo)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    java.util.List<proto.ModelProto.ServerInfo> 
-        getServersList();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    proto.ModelProto.ServerInfo getServers(int index);
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    int getServersCount();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-        getServersOrBuilderList();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
+    proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder(
         int index);
   }
   /**
-   * <pre>
-   *服务变更通知
-   * </pre>
-   *
-   * Protobuf type {@code proto.NotRegisterInfo}
+   * Protobuf type {@code proto.Room}
    */
-  public  static final class NotRegisterInfo extends
+  public  static final class Room extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.NotRegisterInfo)
-      NotRegisterInfoOrBuilder {
+      // @@protoc_insertion_point(message_implements:proto.Room)
+      RoomOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use NotRegisterInfo.newBuilder() to construct.
-    private NotRegisterInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use Room.newBuilder() to construct.
+    private Room(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private NotRegisterInfo() {
-      servers_ = java.util.Collections.emptyList();
+    private Room() {
+      roomId_ = 0;
+      tables_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -3582,3368 +666,7 @@ public final class ModelProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private NotRegisterInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              servers_.add(
-                  input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = java.util.Collections.unmodifiableList(servers_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_NotRegisterInfo_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_NotRegisterInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.NotRegisterInfo.class, proto.ModelProto.NotRegisterInfo.Builder.class);
-    }
-
-    public static final int SERVERS_FIELD_NUMBER = 1;
-    private java.util.List<proto.ModelProto.ServerInfo> servers_;
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
-      return servers_;
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-        getServersOrBuilderList() {
-      return servers_;
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public int getServersCount() {
-      return servers_.size();
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public proto.ModelProto.ServerInfo getServers(int index) {
-      return servers_.get(index);
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-        int index) {
-      return servers_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < servers_.size(); i++) {
-        output.writeMessage(1, servers_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < servers_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, servers_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.NotRegisterInfo)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.NotRegisterInfo other = (proto.ModelProto.NotRegisterInfo) obj;
-
-      boolean result = true;
-      result = result && getServersList()
-          .equals(other.getServersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getServersCount() > 0) {
-        hash = (37 * hash) + SERVERS_FIELD_NUMBER;
-        hash = (53 * hash) + getServersList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotRegisterInfo parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.NotRegisterInfo prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *服务变更通知
-     * </pre>
-     *
-     * Protobuf type {@code proto.NotRegisterInfo}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.NotRegisterInfo)
-        proto.ModelProto.NotRegisterInfoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_NotRegisterInfo_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_NotRegisterInfo_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.NotRegisterInfo.class, proto.ModelProto.NotRegisterInfo.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.NotRegisterInfo.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getServersFieldBuilder();
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        if (serversBuilder_ == null) {
-          servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          serversBuilder_.clear();
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_NotRegisterInfo_descriptor;
-      }
-
-      public proto.ModelProto.NotRegisterInfo getDefaultInstanceForType() {
-        return proto.ModelProto.NotRegisterInfo.getDefaultInstance();
-      }
-
-      public proto.ModelProto.NotRegisterInfo build() {
-        proto.ModelProto.NotRegisterInfo result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.NotRegisterInfo buildPartial() {
-        proto.ModelProto.NotRegisterInfo result = new proto.ModelProto.NotRegisterInfo(this);
-        int from_bitField0_ = bitField0_;
-        if (serversBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            servers_ = java.util.Collections.unmodifiableList(servers_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.servers_ = servers_;
-        } else {
-          result.servers_ = serversBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.NotRegisterInfo) {
-          return mergeFrom((proto.ModelProto.NotRegisterInfo)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.NotRegisterInfo other) {
-        if (other == proto.ModelProto.NotRegisterInfo.getDefaultInstance()) return this;
-        if (serversBuilder_ == null) {
-          if (!other.servers_.isEmpty()) {
-            if (servers_.isEmpty()) {
-              servers_ = other.servers_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureServersIsMutable();
-              servers_.addAll(other.servers_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.servers_.isEmpty()) {
-            if (serversBuilder_.isEmpty()) {
-              serversBuilder_.dispose();
-              serversBuilder_ = null;
-              servers_ = other.servers_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              serversBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getServersFieldBuilder() : null;
-            } else {
-              serversBuilder_.addAllMessages(other.servers_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.NotRegisterInfo parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.NotRegisterInfo) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<proto.ModelProto.ServerInfo> servers_ =
-        java.util.Collections.emptyList();
-      private void ensureServersIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>(servers_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serversBuilder_;
-
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
-        if (serversBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(servers_);
-        } else {
-          return serversBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public int getServersCount() {
-        if (serversBuilder_ == null) {
-          return servers_.size();
-        } else {
-          return serversBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo getServers(int index) {
-        if (serversBuilder_ == null) {
-          return servers_.get(index);
-        } else {
-          return serversBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder setServers(
-          int index, proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.set(index, value);
-          onChanged();
-        } else {
-          serversBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder setServers(
-          int index, proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.add(value);
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          int index, proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.add(index, value);
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.add(builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          int index, proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addAllServers(
-          java.lang.Iterable<? extends proto.ModelProto.ServerInfo> values) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, servers_);
-          onChanged();
-        } else {
-          serversBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder clearServers() {
-        if (serversBuilder_ == null) {
-          servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          serversBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder removeServers(int index) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.remove(index);
-          onChanged();
-        } else {
-          serversBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder getServersBuilder(
-          int index) {
-        return getServersFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-          int index) {
-        if (serversBuilder_ == null) {
-          return servers_.get(index);  } else {
-          return serversBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-           getServersOrBuilderList() {
-        if (serversBuilder_ != null) {
-          return serversBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(servers_);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder addServersBuilder() {
-        return getServersFieldBuilder().addBuilder(
-            proto.ModelProto.ServerInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder addServersBuilder(
-          int index) {
-        return getServersFieldBuilder().addBuilder(
-            index, proto.ModelProto.ServerInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<proto.ModelProto.ServerInfo.Builder> 
-           getServersBuilderList() {
-        return getServersFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> 
-          getServersFieldBuilder() {
-        if (serversBuilder_ == null) {
-          serversBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
-                  servers_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
-                  getParentForChildren(),
-                  isClean());
-          servers_ = null;
-        }
-        return serversBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.NotRegisterInfo)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.NotRegisterInfo)
-    private static final proto.ModelProto.NotRegisterInfo DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.NotRegisterInfo();
-    }
-
-    public static proto.ModelProto.NotRegisterInfo getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<NotRegisterInfo>
-        PARSER = new com.google.protobuf.AbstractParser<NotRegisterInfo>() {
-      public NotRegisterInfo parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotRegisterInfo(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<NotRegisterInfo> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NotRegisterInfo> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.NotRegisterInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface NotRegisterClientOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.NotRegisterClient)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>bytes cert = 1;</code>
-     */
-    com.google.protobuf.ByteString getCert();
-
-    /**
-     * <code>bytes gate = 2;</code>
-     */
-    com.google.protobuf.ByteString getGate();
-  }
-  /**
-   * <pre>
-   *client链接通知
-   * </pre>
-   *
-   * Protobuf type {@code proto.NotRegisterClient}
-   */
-  public  static final class NotRegisterClient extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.NotRegisterClient)
-      NotRegisterClientOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use NotRegisterClient.newBuilder() to construct.
-    private NotRegisterClient(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private NotRegisterClient() {
-      cert_ = com.google.protobuf.ByteString.EMPTY;
-      gate_ = com.google.protobuf.ByteString.EMPTY;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private NotRegisterClient(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-
-              cert_ = input.readBytes();
-              break;
-            }
-            case 18: {
-
-              gate_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_NotRegisterClient_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_NotRegisterClient_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.NotRegisterClient.class, proto.ModelProto.NotRegisterClient.Builder.class);
-    }
-
-    public static final int CERT_FIELD_NUMBER = 1;
-    private com.google.protobuf.ByteString cert_;
-    /**
-     * <code>bytes cert = 1;</code>
-     */
-    public com.google.protobuf.ByteString getCert() {
-      return cert_;
-    }
-
-    public static final int GATE_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString gate_;
-    /**
-     * <code>bytes gate = 2;</code>
-     */
-    public com.google.protobuf.ByteString getGate() {
-      return gate_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!cert_.isEmpty()) {
-        output.writeBytes(1, cert_);
-      }
-      if (!gate_.isEmpty()) {
-        output.writeBytes(2, gate_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!cert_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, cert_);
-      }
-      if (!gate_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, gate_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.NotRegisterClient)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.NotRegisterClient other = (proto.ModelProto.NotRegisterClient) obj;
-
-      boolean result = true;
-      result = result && getCert()
-          .equals(other.getCert());
-      result = result && getGate()
-          .equals(other.getGate());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + CERT_FIELD_NUMBER;
-      hash = (53 * hash) + getCert().hashCode();
-      hash = (37 * hash) + GATE_FIELD_NUMBER;
-      hash = (53 * hash) + getGate().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterClient parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotRegisterClient parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotRegisterClient parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.NotRegisterClient prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *client链接通知
-     * </pre>
-     *
-     * Protobuf type {@code proto.NotRegisterClient}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.NotRegisterClient)
-        proto.ModelProto.NotRegisterClientOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_NotRegisterClient_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_NotRegisterClient_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.NotRegisterClient.class, proto.ModelProto.NotRegisterClient.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.NotRegisterClient.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        cert_ = com.google.protobuf.ByteString.EMPTY;
-
-        gate_ = com.google.protobuf.ByteString.EMPTY;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_NotRegisterClient_descriptor;
-      }
-
-      public proto.ModelProto.NotRegisterClient getDefaultInstanceForType() {
-        return proto.ModelProto.NotRegisterClient.getDefaultInstance();
-      }
-
-      public proto.ModelProto.NotRegisterClient build() {
-        proto.ModelProto.NotRegisterClient result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.NotRegisterClient buildPartial() {
-        proto.ModelProto.NotRegisterClient result = new proto.ModelProto.NotRegisterClient(this);
-        result.cert_ = cert_;
-        result.gate_ = gate_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.NotRegisterClient) {
-          return mergeFrom((proto.ModelProto.NotRegisterClient)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.NotRegisterClient other) {
-        if (other == proto.ModelProto.NotRegisterClient.getDefaultInstance()) return this;
-        if (other.getCert() != com.google.protobuf.ByteString.EMPTY) {
-          setCert(other.getCert());
-        }
-        if (other.getGate() != com.google.protobuf.ByteString.EMPTY) {
-          setGate(other.getGate());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.NotRegisterClient parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.NotRegisterClient) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private com.google.protobuf.ByteString cert_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes cert = 1;</code>
-       */
-      public com.google.protobuf.ByteString getCert() {
-        return cert_;
-      }
-      /**
-       * <code>bytes cert = 1;</code>
-       */
-      public Builder setCert(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        cert_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes cert = 1;</code>
-       */
-      public Builder clearCert() {
-        
-        cert_ = getDefaultInstance().getCert();
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString gate_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes gate = 2;</code>
-       */
-      public com.google.protobuf.ByteString getGate() {
-        return gate_;
-      }
-      /**
-       * <code>bytes gate = 2;</code>
-       */
-      public Builder setGate(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        gate_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes gate = 2;</code>
-       */
-      public Builder clearGate() {
-        
-        gate_ = getDefaultInstance().getGate();
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.NotRegisterClient)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.NotRegisterClient)
-    private static final proto.ModelProto.NotRegisterClient DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.NotRegisterClient();
-    }
-
-    public static proto.ModelProto.NotRegisterClient getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<NotRegisterClient>
-        PARSER = new com.google.protobuf.AbstractParser<NotRegisterClient>() {
-      public NotRegisterClient parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotRegisterClient(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<NotRegisterClient> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NotRegisterClient> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.NotRegisterClient getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface ReqServerInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqServerInfo)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated int32 serverType = 1;</code>
-     */
-    java.util.List<java.lang.Integer> getServerTypeList();
-    /**
-     * <code>repeated int32 serverType = 1;</code>
-     */
-    int getServerTypeCount();
-    /**
-     * <code>repeated int32 serverType = 1;</code>
-     */
-    int getServerType(int index);
-  }
-  /**
-   * <pre>
-   *获取服务信息
-   * </pre>
-   *
-   * Protobuf type {@code proto.ReqServerInfo}
-   */
-  public  static final class ReqServerInfo extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqServerInfo)
-      ReqServerInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use ReqServerInfo.newBuilder() to construct.
-    private ReqServerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private ReqServerInfo() {
-      serverType_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private ReqServerInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                serverType_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              serverType_.add(input.readInt32());
-              break;
-            }
-            case 10: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001) && input.getBytesUntilLimit() > 0) {
-                serverType_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              while (input.getBytesUntilLimit() > 0) {
-                serverType_.add(input.readInt32());
-              }
-              input.popLimit(limit);
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          serverType_ = java.util.Collections.unmodifiableList(serverType_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_ReqServerInfo_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_ReqServerInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.ReqServerInfo.class, proto.ModelProto.ReqServerInfo.Builder.class);
-    }
-
-    public static final int SERVERTYPE_FIELD_NUMBER = 1;
-    private java.util.List<java.lang.Integer> serverType_;
-    /**
-     * <code>repeated int32 serverType = 1;</code>
-     */
-    public java.util.List<java.lang.Integer>
-        getServerTypeList() {
-      return serverType_;
-    }
-    /**
-     * <code>repeated int32 serverType = 1;</code>
-     */
-    public int getServerTypeCount() {
-      return serverType_.size();
-    }
-    /**
-     * <code>repeated int32 serverType = 1;</code>
-     */
-    public int getServerType(int index) {
-      return serverType_.get(index);
-    }
-    private int serverTypeMemoizedSerializedSize = -1;
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (getServerTypeList().size() > 0) {
-        output.writeUInt32NoTag(10);
-        output.writeUInt32NoTag(serverTypeMemoizedSerializedSize);
-      }
-      for (int i = 0; i < serverType_.size(); i++) {
-        output.writeInt32NoTag(serverType_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < serverType_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(serverType_.get(i));
-        }
-        size += dataSize;
-        if (!getServerTypeList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        serverTypeMemoizedSerializedSize = dataSize;
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.ReqServerInfo)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.ReqServerInfo other = (proto.ModelProto.ReqServerInfo) obj;
-
-      boolean result = true;
-      result = result && getServerTypeList()
-          .equals(other.getServerTypeList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getServerTypeCount() > 0) {
-        hash = (37 * hash) + SERVERTYPE_FIELD_NUMBER;
-        hash = (53 * hash) + getServerTypeList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqServerInfo parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqServerInfo parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.ReqServerInfo parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.ReqServerInfo prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *获取服务信息
-     * </pre>
-     *
-     * Protobuf type {@code proto.ReqServerInfo}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqServerInfo)
-        proto.ModelProto.ReqServerInfoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_ReqServerInfo_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_ReqServerInfo_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.ReqServerInfo.class, proto.ModelProto.ReqServerInfo.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.ReqServerInfo.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        serverType_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_ReqServerInfo_descriptor;
-      }
-
-      public proto.ModelProto.ReqServerInfo getDefaultInstanceForType() {
-        return proto.ModelProto.ReqServerInfo.getDefaultInstance();
-      }
-
-      public proto.ModelProto.ReqServerInfo build() {
-        proto.ModelProto.ReqServerInfo result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.ReqServerInfo buildPartial() {
-        proto.ModelProto.ReqServerInfo result = new proto.ModelProto.ReqServerInfo(this);
-        int from_bitField0_ = bitField0_;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          serverType_ = java.util.Collections.unmodifiableList(serverType_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.serverType_ = serverType_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.ReqServerInfo) {
-          return mergeFrom((proto.ModelProto.ReqServerInfo)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.ReqServerInfo other) {
-        if (other == proto.ModelProto.ReqServerInfo.getDefaultInstance()) return this;
-        if (!other.serverType_.isEmpty()) {
-          if (serverType_.isEmpty()) {
-            serverType_ = other.serverType_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureServerTypeIsMutable();
-            serverType_.addAll(other.serverType_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.ReqServerInfo parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.ReqServerInfo) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<java.lang.Integer> serverType_ = java.util.Collections.emptyList();
-      private void ensureServerTypeIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          serverType_ = new java.util.ArrayList<java.lang.Integer>(serverType_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-      /**
-       * <code>repeated int32 serverType = 1;</code>
-       */
-      public java.util.List<java.lang.Integer>
-          getServerTypeList() {
-        return java.util.Collections.unmodifiableList(serverType_);
-      }
-      /**
-       * <code>repeated int32 serverType = 1;</code>
-       */
-      public int getServerTypeCount() {
-        return serverType_.size();
-      }
-      /**
-       * <code>repeated int32 serverType = 1;</code>
-       */
-      public int getServerType(int index) {
-        return serverType_.get(index);
-      }
-      /**
-       * <code>repeated int32 serverType = 1;</code>
-       */
-      public Builder setServerType(
-          int index, int value) {
-        ensureServerTypeIsMutable();
-        serverType_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 serverType = 1;</code>
-       */
-      public Builder addServerType(int value) {
-        ensureServerTypeIsMutable();
-        serverType_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 serverType = 1;</code>
-       */
-      public Builder addAllServerType(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureServerTypeIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, serverType_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 serverType = 1;</code>
-       */
-      public Builder clearServerType() {
-        serverType_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.ReqServerInfo)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.ReqServerInfo)
-    private static final proto.ModelProto.ReqServerInfo DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.ReqServerInfo();
-    }
-
-    public static proto.ModelProto.ReqServerInfo getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ReqServerInfo>
-        PARSER = new com.google.protobuf.AbstractParser<ReqServerInfo>() {
-      public ReqServerInfo parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqServerInfo(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ReqServerInfo> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ReqServerInfo> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.ReqServerInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface AckServerInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckServerInfo)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    java.util.List<proto.ModelProto.ServerInfo> 
-        getServersList();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    proto.ModelProto.ServerInfo getServers(int index);
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    int getServersCount();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-        getServersOrBuilderList();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code proto.AckServerInfo}
-   */
-  public  static final class AckServerInfo extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckServerInfo)
-      AckServerInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use AckServerInfo.newBuilder() to construct.
-    private AckServerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private AckServerInfo() {
-      servers_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private AckServerInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              servers_.add(
-                  input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = java.util.Collections.unmodifiableList(servers_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_AckServerInfo_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_AckServerInfo_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.AckServerInfo.class, proto.ModelProto.AckServerInfo.Builder.class);
-    }
-
-    public static final int SERVERS_FIELD_NUMBER = 1;
-    private java.util.List<proto.ModelProto.ServerInfo> servers_;
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
-      return servers_;
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-        getServersOrBuilderList() {
-      return servers_;
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public int getServersCount() {
-      return servers_.size();
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public proto.ModelProto.ServerInfo getServers(int index) {
-      return servers_.get(index);
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-        int index) {
-      return servers_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < servers_.size(); i++) {
-        output.writeMessage(1, servers_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < servers_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, servers_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.AckServerInfo)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.AckServerInfo other = (proto.ModelProto.AckServerInfo) obj;
-
-      boolean result = true;
-      result = result && getServersList()
-          .equals(other.getServersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getServersCount() > 0) {
-        hash = (37 * hash) + SERVERS_FIELD_NUMBER;
-        hash = (53 * hash) + getServersList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckServerInfo parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckServerInfo parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.AckServerInfo parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.AckServerInfo prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code proto.AckServerInfo}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckServerInfo)
-        proto.ModelProto.AckServerInfoOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_AckServerInfo_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_AckServerInfo_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.AckServerInfo.class, proto.ModelProto.AckServerInfo.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.AckServerInfo.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getServersFieldBuilder();
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        if (serversBuilder_ == null) {
-          servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          serversBuilder_.clear();
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_AckServerInfo_descriptor;
-      }
-
-      public proto.ModelProto.AckServerInfo getDefaultInstanceForType() {
-        return proto.ModelProto.AckServerInfo.getDefaultInstance();
-      }
-
-      public proto.ModelProto.AckServerInfo build() {
-        proto.ModelProto.AckServerInfo result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.AckServerInfo buildPartial() {
-        proto.ModelProto.AckServerInfo result = new proto.ModelProto.AckServerInfo(this);
-        int from_bitField0_ = bitField0_;
-        if (serversBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            servers_ = java.util.Collections.unmodifiableList(servers_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.servers_ = servers_;
-        } else {
-          result.servers_ = serversBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.AckServerInfo) {
-          return mergeFrom((proto.ModelProto.AckServerInfo)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.AckServerInfo other) {
-        if (other == proto.ModelProto.AckServerInfo.getDefaultInstance()) return this;
-        if (serversBuilder_ == null) {
-          if (!other.servers_.isEmpty()) {
-            if (servers_.isEmpty()) {
-              servers_ = other.servers_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureServersIsMutable();
-              servers_.addAll(other.servers_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.servers_.isEmpty()) {
-            if (serversBuilder_.isEmpty()) {
-              serversBuilder_.dispose();
-              serversBuilder_ = null;
-              servers_ = other.servers_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              serversBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getServersFieldBuilder() : null;
-            } else {
-              serversBuilder_.addAllMessages(other.servers_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.AckServerInfo parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.AckServerInfo) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<proto.ModelProto.ServerInfo> servers_ =
-        java.util.Collections.emptyList();
-      private void ensureServersIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>(servers_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serversBuilder_;
-
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
-        if (serversBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(servers_);
-        } else {
-          return serversBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public int getServersCount() {
-        if (serversBuilder_ == null) {
-          return servers_.size();
-        } else {
-          return serversBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo getServers(int index) {
-        if (serversBuilder_ == null) {
-          return servers_.get(index);
-        } else {
-          return serversBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder setServers(
-          int index, proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.set(index, value);
-          onChanged();
-        } else {
-          serversBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder setServers(
-          int index, proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.add(value);
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          int index, proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.add(index, value);
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.add(builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          int index, proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addAllServers(
-          java.lang.Iterable<? extends proto.ModelProto.ServerInfo> values) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, servers_);
-          onChanged();
-        } else {
-          serversBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder clearServers() {
-        if (serversBuilder_ == null) {
-          servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          serversBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder removeServers(int index) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.remove(index);
-          onChanged();
-        } else {
-          serversBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder getServersBuilder(
-          int index) {
-        return getServersFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-          int index) {
-        if (serversBuilder_ == null) {
-          return servers_.get(index);  } else {
-          return serversBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-           getServersOrBuilderList() {
-        if (serversBuilder_ != null) {
-          return serversBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(servers_);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder addServersBuilder() {
-        return getServersFieldBuilder().addBuilder(
-            proto.ModelProto.ServerInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder addServersBuilder(
-          int index) {
-        return getServersFieldBuilder().addBuilder(
-            index, proto.ModelProto.ServerInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<proto.ModelProto.ServerInfo.Builder> 
-           getServersBuilderList() {
-        return getServersFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> 
-          getServersFieldBuilder() {
-        if (serversBuilder_ == null) {
-          serversBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
-                  servers_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
-                  getParentForChildren(),
-                  isClean());
-          servers_ = null;
-        }
-        return serversBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.AckServerInfo)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.AckServerInfo)
-    private static final proto.ModelProto.AckServerInfo DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.AckServerInfo();
-    }
-
-    public static proto.ModelProto.AckServerInfo getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<AckServerInfo>
-        PARSER = new com.google.protobuf.AbstractParser<AckServerInfo>() {
-      public AckServerInfo parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckServerInfo(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AckServerInfo> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AckServerInfo> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.AckServerInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface NotServerBreakOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.NotServerBreak)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    java.util.List<proto.ModelProto.ServerInfo> 
-        getServersList();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    proto.ModelProto.ServerInfo getServers(int index);
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    int getServersCount();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-        getServersOrBuilderList();
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-        int index);
-  }
-  /**
-   * <pre>
-   *通知服务掉线
-   * </pre>
-   *
-   * Protobuf type {@code proto.NotServerBreak}
-   */
-  public  static final class NotServerBreak extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.NotServerBreak)
-      NotServerBreakOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use NotServerBreak.newBuilder() to construct.
-    private NotServerBreak(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private NotServerBreak() {
-      servers_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private NotServerBreak(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              servers_.add(
-                  input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = java.util.Collections.unmodifiableList(servers_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ModelProto.internal_static_proto_NotServerBreak_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_NotServerBreak_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ModelProto.NotServerBreak.class, proto.ModelProto.NotServerBreak.Builder.class);
-    }
-
-    public static final int SERVERS_FIELD_NUMBER = 1;
-    private java.util.List<proto.ModelProto.ServerInfo> servers_;
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
-      return servers_;
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-        getServersOrBuilderList() {
-      return servers_;
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public int getServersCount() {
-      return servers_.size();
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public proto.ModelProto.ServerInfo getServers(int index) {
-      return servers_.get(index);
-    }
-    /**
-     * <code>repeated .proto.ServerInfo servers = 1;</code>
-     */
-    public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-        int index) {
-      return servers_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < servers_.size(); i++) {
-        output.writeMessage(1, servers_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < servers_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, servers_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ModelProto.NotServerBreak)) {
-        return super.equals(obj);
-      }
-      proto.ModelProto.NotServerBreak other = (proto.ModelProto.NotServerBreak) obj;
-
-      boolean result = true;
-      result = result && getServersList()
-          .equals(other.getServersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getServersCount() > 0) {
-        hash = (37 * hash) + SERVERS_FIELD_NUMBER;
-        hash = (53 * hash) + getServersList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.NotServerBreak parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotServerBreak parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ModelProto.NotServerBreak parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ModelProto.NotServerBreak prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *通知服务掉线
-     * </pre>
-     *
-     * Protobuf type {@code proto.NotServerBreak}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.NotServerBreak)
-        proto.ModelProto.NotServerBreakOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ModelProto.internal_static_proto_NotServerBreak_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_NotServerBreak_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ModelProto.NotServerBreak.class, proto.ModelProto.NotServerBreak.Builder.class);
-      }
-
-      // Construct using proto.ModelProto.NotServerBreak.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getServersFieldBuilder();
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        if (serversBuilder_ == null) {
-          servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          serversBuilder_.clear();
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_NotServerBreak_descriptor;
-      }
-
-      public proto.ModelProto.NotServerBreak getDefaultInstanceForType() {
-        return proto.ModelProto.NotServerBreak.getDefaultInstance();
-      }
-
-      public proto.ModelProto.NotServerBreak build() {
-        proto.ModelProto.NotServerBreak result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ModelProto.NotServerBreak buildPartial() {
-        proto.ModelProto.NotServerBreak result = new proto.ModelProto.NotServerBreak(this);
-        int from_bitField0_ = bitField0_;
-        if (serversBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            servers_ = java.util.Collections.unmodifiableList(servers_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.servers_ = servers_;
-        } else {
-          result.servers_ = serversBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.NotServerBreak) {
-          return mergeFrom((proto.ModelProto.NotServerBreak)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ModelProto.NotServerBreak other) {
-        if (other == proto.ModelProto.NotServerBreak.getDefaultInstance()) return this;
-        if (serversBuilder_ == null) {
-          if (!other.servers_.isEmpty()) {
-            if (servers_.isEmpty()) {
-              servers_ = other.servers_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureServersIsMutable();
-              servers_.addAll(other.servers_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.servers_.isEmpty()) {
-            if (serversBuilder_.isEmpty()) {
-              serversBuilder_.dispose();
-              serversBuilder_ = null;
-              servers_ = other.servers_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              serversBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getServersFieldBuilder() : null;
-            } else {
-              serversBuilder_.addAllMessages(other.servers_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ModelProto.NotServerBreak parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.NotServerBreak) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<proto.ModelProto.ServerInfo> servers_ =
-        java.util.Collections.emptyList();
-      private void ensureServersIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>(servers_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serversBuilder_;
-
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
-        if (serversBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(servers_);
-        } else {
-          return serversBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public int getServersCount() {
-        if (serversBuilder_ == null) {
-          return servers_.size();
-        } else {
-          return serversBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo getServers(int index) {
-        if (serversBuilder_ == null) {
-          return servers_.get(index);
-        } else {
-          return serversBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder setServers(
-          int index, proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.set(index, value);
-          onChanged();
-        } else {
-          serversBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder setServers(
-          int index, proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.add(value);
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          int index, proto.ModelProto.ServerInfo value) {
-        if (serversBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureServersIsMutable();
-          servers_.add(index, value);
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.add(builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addServers(
-          int index, proto.ModelProto.ServerInfo.Builder builderForValue) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          serversBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder addAllServers(
-          java.lang.Iterable<? extends proto.ModelProto.ServerInfo> values) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, servers_);
-          onChanged();
-        } else {
-          serversBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder clearServers() {
-        if (serversBuilder_ == null) {
-          servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          serversBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public Builder removeServers(int index) {
-        if (serversBuilder_ == null) {
-          ensureServersIsMutable();
-          servers_.remove(index);
-          onChanged();
-        } else {
-          serversBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder getServersBuilder(
-          int index) {
-        return getServersFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
-          int index) {
-        if (serversBuilder_ == null) {
-          return servers_.get(index);  } else {
-          return serversBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
-           getServersOrBuilderList() {
-        if (serversBuilder_ != null) {
-          return serversBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(servers_);
-        }
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder addServersBuilder() {
-        return getServersFieldBuilder().addBuilder(
-            proto.ModelProto.ServerInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public proto.ModelProto.ServerInfo.Builder addServersBuilder(
-          int index) {
-        return getServersFieldBuilder().addBuilder(
-            index, proto.ModelProto.ServerInfo.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.ServerInfo servers = 1;</code>
-       */
-      public java.util.List<proto.ModelProto.ServerInfo.Builder> 
-           getServersBuilderList() {
-        return getServersFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> 
-          getServersFieldBuilder() {
-        if (serversBuilder_ == null) {
-          serversBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
-                  servers_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
-                  getParentForChildren(),
-                  isClean());
-          servers_ = null;
-        }
-        return serversBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.NotServerBreak)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.NotServerBreak)
-    private static final proto.ModelProto.NotServerBreak DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ModelProto.NotServerBreak();
-    }
-
-    public static proto.ModelProto.NotServerBreak getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<NotServerBreak>
-        PARSER = new com.google.protobuf.AbstractParser<NotServerBreak>() {
-      public NotServerBreak parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotServerBreak(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<NotServerBreak> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<NotServerBreak> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ModelProto.NotServerBreak getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface NotBreakOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.NotBreak)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     *用户id
-     * </pre>
-     *
-     * <code>int32 userId = 1;</code>
-     */
-    int getUserId();
-
-    /**
-     * <code>bytes cert = 2;</code>
-     */
-    com.google.protobuf.ByteString getCert();
-  }
-  /**
-   * <pre>
-   *通知玩家掉线
-   * </pre>
-   *
-   * Protobuf type {@code proto.NotBreak}
-   */
-  public  static final class NotBreak extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.NotBreak)
-      NotBreakOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use NotBreak.newBuilder() to construct.
-    private NotBreak(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private NotBreak() {
-      userId_ = 0;
-      cert_ = com.google.protobuf.ByteString.EMPTY;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private NotBreak(
+    private Room(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6968,12 +691,16 @@ public final class ModelProto {
             }
             case 8: {
 
-              userId_ = input.readInt32();
+              roomId_ = input.readInt32();
               break;
             }
             case 18: {
-
-              cert_ = input.readBytes();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                tables_ = new java.util.ArrayList<proto.ModelProto.RoomTableInfo>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              tables_.add(
+                  input.readMessage(proto.ModelProto.RoomTableInfo.parser(), extensionRegistry));
               break;
             }
           }
@@ -6984,42 +711,88 @@ public final class ModelProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          tables_ = java.util.Collections.unmodifiableList(tables_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.ModelProto.internal_static_proto_NotBreak_descriptor;
+      return proto.ModelProto.internal_static_proto_Room_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.ModelProto.internal_static_proto_NotBreak_fieldAccessorTable
+      return proto.ModelProto.internal_static_proto_Room_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.ModelProto.NotBreak.class, proto.ModelProto.NotBreak.Builder.class);
+              proto.ModelProto.Room.class, proto.ModelProto.Room.Builder.class);
     }
 
-    public static final int USERID_FIELD_NUMBER = 1;
-    private int userId_;
+    private int bitField0_;
+    public static final int ROOMID_FIELD_NUMBER = 1;
+    private int roomId_;
+    /**
+     * <code>int32 roomId = 1;</code>
+     */
+    public int getRoomId() {
+      return roomId_;
+    }
+
+    public static final int TABLES_FIELD_NUMBER = 2;
+    private java.util.List<proto.ModelProto.RoomTableInfo> tables_;
     /**
      * <pre>
-     *用户id
+     *桌子
      * </pre>
      *
-     * <code>int32 userId = 1;</code>
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public int getUserId() {
-      return userId_;
+    public java.util.List<proto.ModelProto.RoomTableInfo> getTablesList() {
+      return tables_;
     }
-
-    public static final int CERT_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString cert_;
     /**
-     * <code>bytes cert = 2;</code>
+     * <pre>
+     *桌子
+     * </pre>
+     *
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
-    public com.google.protobuf.ByteString getCert() {
-      return cert_;
+    public java.util.List<? extends proto.ModelProto.RoomTableInfoOrBuilder> 
+        getTablesOrBuilderList() {
+      return tables_;
+    }
+    /**
+     * <pre>
+     *桌子
+     * </pre>
+     *
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+     */
+    public int getTablesCount() {
+      return tables_.size();
+    }
+    /**
+     * <pre>
+     *桌子
+     * </pre>
+     *
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+     */
+    public proto.ModelProto.RoomTableInfo getTables(int index) {
+      return tables_.get(index);
+    }
+    /**
+     * <pre>
+     *桌子
+     * </pre>
+     *
+     * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+     */
+    public proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+        int index) {
+      return tables_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -7034,11 +807,11 @@ public final class ModelProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (userId_ != 0) {
-        output.writeInt32(1, userId_);
+      if (roomId_ != 0) {
+        output.writeInt32(1, roomId_);
       }
-      if (!cert_.isEmpty()) {
-        output.writeBytes(2, cert_);
+      for (int i = 0; i < tables_.size(); i++) {
+        output.writeMessage(2, tables_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -7048,13 +821,13 @@ public final class ModelProto {
       if (size != -1) return size;
 
       size = 0;
-      if (userId_ != 0) {
+      if (roomId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, userId_);
+          .computeInt32Size(1, roomId_);
       }
-      if (!cert_.isEmpty()) {
+      for (int i = 0; i < tables_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, cert_);
+          .computeMessageSize(2, tables_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7066,16 +839,16 @@ public final class ModelProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.ModelProto.NotBreak)) {
+      if (!(obj instanceof proto.ModelProto.Room)) {
         return super.equals(obj);
       }
-      proto.ModelProto.NotBreak other = (proto.ModelProto.NotBreak) obj;
+      proto.ModelProto.Room other = (proto.ModelProto.Room) obj;
 
       boolean result = true;
-      result = result && (getUserId()
-          == other.getUserId());
-      result = result && getCert()
-          .equals(other.getCert());
+      result = result && (getRoomId()
+          == other.getRoomId());
+      result = result && getTablesList()
+          .equals(other.getTablesList());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -7087,78 +860,80 @@ public final class ModelProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + USERID_FIELD_NUMBER;
-      hash = (53 * hash) + getUserId();
-      hash = (37 * hash) + CERT_FIELD_NUMBER;
-      hash = (53 * hash) + getCert().hashCode();
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
+      if (getTablesCount() > 0) {
+        hash = (37 * hash) + TABLES_FIELD_NUMBER;
+        hash = (53 * hash) + getTablesList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.NotBreak parseFrom(byte[] data)
+    public static proto.ModelProto.Room parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.ModelProto.NotBreak parseFrom(java.io.InputStream input)
+    public static proto.ModelProto.Room parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ModelProto.NotBreak parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ModelProto.Room parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.NotBreak parseDelimitedFrom(
+    public static proto.ModelProto.Room parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.ModelProto.NotBreak parseFrom(
+    public static proto.ModelProto.Room parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -7170,7 +945,7 @@ public final class ModelProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.ModelProto.NotBreak prototype) {
+    public static Builder newBuilder(proto.ModelProto.Room prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -7185,29 +960,25 @@ public final class ModelProto {
       return builder;
     }
     /**
-     * <pre>
-     *通知玩家掉线
-     * </pre>
-     *
-     * Protobuf type {@code proto.NotBreak}
+     * Protobuf type {@code proto.Room}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.NotBreak)
-        proto.ModelProto.NotBreakOrBuilder {
+        // @@protoc_insertion_point(builder_implements:proto.Room)
+        proto.ModelProto.RoomOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.ModelProto.internal_static_proto_NotBreak_descriptor;
+        return proto.ModelProto.internal_static_proto_Room_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.ModelProto.internal_static_proto_NotBreak_fieldAccessorTable
+        return proto.ModelProto.internal_static_proto_Room_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.ModelProto.NotBreak.class, proto.ModelProto.NotBreak.Builder.class);
+                proto.ModelProto.Room.class, proto.ModelProto.Room.Builder.class);
       }
 
-      // Construct using proto.ModelProto.NotBreak.newBuilder()
+      // Construct using proto.ModelProto.Room.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7220,38 +991,54 @@ public final class ModelProto {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getTablesFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        userId_ = 0;
+        roomId_ = 0;
 
-        cert_ = com.google.protobuf.ByteString.EMPTY;
-
+        if (tablesBuilder_ == null) {
+          tables_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          tablesBuilder_.clear();
+        }
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.ModelProto.internal_static_proto_NotBreak_descriptor;
+        return proto.ModelProto.internal_static_proto_Room_descriptor;
       }
 
-      public proto.ModelProto.NotBreak getDefaultInstanceForType() {
-        return proto.ModelProto.NotBreak.getDefaultInstance();
+      public proto.ModelProto.Room getDefaultInstanceForType() {
+        return proto.ModelProto.Room.getDefaultInstance();
       }
 
-      public proto.ModelProto.NotBreak build() {
-        proto.ModelProto.NotBreak result = buildPartial();
+      public proto.ModelProto.Room build() {
+        proto.ModelProto.Room result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.ModelProto.NotBreak buildPartial() {
-        proto.ModelProto.NotBreak result = new proto.ModelProto.NotBreak(this);
-        result.userId_ = userId_;
-        result.cert_ = cert_;
+      public proto.ModelProto.Room buildPartial() {
+        proto.ModelProto.Room result = new proto.ModelProto.Room(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.roomId_ = roomId_;
+        if (tablesBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            tables_ = java.util.Collections.unmodifiableList(tables_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.tables_ = tables_;
+        } else {
+          result.tables_ = tablesBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -7283,21 +1070,44 @@ public final class ModelProto {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ModelProto.NotBreak) {
-          return mergeFrom((proto.ModelProto.NotBreak)other);
+        if (other instanceof proto.ModelProto.Room) {
+          return mergeFrom((proto.ModelProto.Room)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.ModelProto.NotBreak other) {
-        if (other == proto.ModelProto.NotBreak.getDefaultInstance()) return this;
-        if (other.getUserId() != 0) {
-          setUserId(other.getUserId());
+      public Builder mergeFrom(proto.ModelProto.Room other) {
+        if (other == proto.ModelProto.Room.getDefaultInstance()) return this;
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
         }
-        if (other.getCert() != com.google.protobuf.ByteString.EMPTY) {
-          setCert(other.getCert());
+        if (tablesBuilder_ == null) {
+          if (!other.tables_.isEmpty()) {
+            if (tables_.isEmpty()) {
+              tables_ = other.tables_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureTablesIsMutable();
+              tables_.addAll(other.tables_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.tables_.isEmpty()) {
+            if (tablesBuilder_.isEmpty()) {
+              tablesBuilder_.dispose();
+              tablesBuilder_ = null;
+              tables_ = other.tables_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              tablesBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getTablesFieldBuilder() : null;
+            } else {
+              tablesBuilder_.addAllMessages(other.tables_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -7312,11 +1122,809 @@ public final class ModelProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.NotBreak parsedMessage = null;
+        proto.ModelProto.Room parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.NotBreak) e.getUnfinishedMessage();
+          parsedMessage = (proto.ModelProto.Room) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int roomId_ ;
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public int getRoomId() {
+        return roomId_;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder setRoomId(int value) {
+        
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder clearRoomId() {
+        
+        roomId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.ModelProto.RoomTableInfo> tables_ =
+        java.util.Collections.emptyList();
+      private void ensureTablesIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          tables_ = new java.util.ArrayList<proto.ModelProto.RoomTableInfo>(tables_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.ModelProto.RoomTableInfo, proto.ModelProto.RoomTableInfo.Builder, proto.ModelProto.RoomTableInfoOrBuilder> tablesBuilder_;
+
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public java.util.List<proto.ModelProto.RoomTableInfo> getTablesList() {
+        if (tablesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(tables_);
+        } else {
+          return tablesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public int getTablesCount() {
+        if (tablesBuilder_ == null) {
+          return tables_.size();
+        } else {
+          return tablesBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public proto.ModelProto.RoomTableInfo getTables(int index) {
+        if (tablesBuilder_ == null) {
+          return tables_.get(index);
+        } else {
+          return tablesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder setTables(
+          int index, proto.ModelProto.RoomTableInfo value) {
+        if (tablesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTablesIsMutable();
+          tables_.set(index, value);
+          onChanged();
+        } else {
+          tablesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder setTables(
+          int index, proto.ModelProto.RoomTableInfo.Builder builderForValue) {
+        if (tablesBuilder_ == null) {
+          ensureTablesIsMutable();
+          tables_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          tablesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder addTables(proto.ModelProto.RoomTableInfo value) {
+        if (tablesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTablesIsMutable();
+          tables_.add(value);
+          onChanged();
+        } else {
+          tablesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder addTables(
+          int index, proto.ModelProto.RoomTableInfo value) {
+        if (tablesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTablesIsMutable();
+          tables_.add(index, value);
+          onChanged();
+        } else {
+          tablesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder addTables(
+          proto.ModelProto.RoomTableInfo.Builder builderForValue) {
+        if (tablesBuilder_ == null) {
+          ensureTablesIsMutable();
+          tables_.add(builderForValue.build());
+          onChanged();
+        } else {
+          tablesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder addTables(
+          int index, proto.ModelProto.RoomTableInfo.Builder builderForValue) {
+        if (tablesBuilder_ == null) {
+          ensureTablesIsMutable();
+          tables_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          tablesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder addAllTables(
+          java.lang.Iterable<? extends proto.ModelProto.RoomTableInfo> values) {
+        if (tablesBuilder_ == null) {
+          ensureTablesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, tables_);
+          onChanged();
+        } else {
+          tablesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder clearTables() {
+        if (tablesBuilder_ == null) {
+          tables_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          tablesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public Builder removeTables(int index) {
+        if (tablesBuilder_ == null) {
+          ensureTablesIsMutable();
+          tables_.remove(index);
+          onChanged();
+        } else {
+          tablesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public proto.ModelProto.RoomTableInfo.Builder getTablesBuilder(
+          int index) {
+        return getTablesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder(
+          int index) {
+        if (tablesBuilder_ == null) {
+          return tables_.get(index);  } else {
+          return tablesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public java.util.List<? extends proto.ModelProto.RoomTableInfoOrBuilder> 
+           getTablesOrBuilderList() {
+        if (tablesBuilder_ != null) {
+          return tablesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(tables_);
+        }
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public proto.ModelProto.RoomTableInfo.Builder addTablesBuilder() {
+        return getTablesFieldBuilder().addBuilder(
+            proto.ModelProto.RoomTableInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public proto.ModelProto.RoomTableInfo.Builder addTablesBuilder(
+          int index) {
+        return getTablesFieldBuilder().addBuilder(
+            index, proto.ModelProto.RoomTableInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *桌子
+       * </pre>
+       *
+       * <code>repeated .proto.RoomTableInfo tables = 2;</code>
+       */
+      public java.util.List<proto.ModelProto.RoomTableInfo.Builder> 
+           getTablesBuilderList() {
+        return getTablesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.ModelProto.RoomTableInfo, proto.ModelProto.RoomTableInfo.Builder, proto.ModelProto.RoomTableInfoOrBuilder> 
+          getTablesFieldBuilder() {
+        if (tablesBuilder_ == null) {
+          tablesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.ModelProto.RoomTableInfo, proto.ModelProto.RoomTableInfo.Builder, proto.ModelProto.RoomTableInfoOrBuilder>(
+                  tables_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
+          tables_ = null;
+        }
+        return tablesBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.Room)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.Room)
+    private static final proto.ModelProto.Room DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ModelProto.Room();
+    }
+
+    public static proto.ModelProto.Room getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Room>
+        PARSER = new com.google.protobuf.AbstractParser<Room>() {
+      public Room parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Room(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Room> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Room> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.ModelProto.Room getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface KeyValueOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.KeyValue)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bytes key = 1;</code>
+     */
+    com.google.protobuf.ByteString getKey();
+
+    /**
+     * <code>bytes value = 2;</code>
+     */
+    com.google.protobuf.ByteString getValue();
+  }
+  /**
+   * Protobuf type {@code proto.KeyValue}
+   */
+  public  static final class KeyValue extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.KeyValue)
+      KeyValueOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use KeyValue.newBuilder() to construct.
+    private KeyValue(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private KeyValue() {
+      key_ = com.google.protobuf.ByteString.EMPTY;
+      value_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private KeyValue(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+
+              key_ = input.readBytes();
+              break;
+            }
+            case 18: {
+
+              value_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ModelProto.internal_static_proto_KeyValue_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ModelProto.KeyValue.class, proto.ModelProto.KeyValue.Builder.class);
+    }
+
+    public static final int KEY_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString key_;
+    /**
+     * <code>bytes key = 1;</code>
+     */
+    public com.google.protobuf.ByteString getKey() {
+      return key_;
+    }
+
+    public static final int VALUE_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString value_;
+    /**
+     * <code>bytes value = 2;</code>
+     */
+    public com.google.protobuf.ByteString getValue() {
+      return value_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!key_.isEmpty()) {
+        output.writeBytes(1, key_);
+      }
+      if (!value_.isEmpty()) {
+        output.writeBytes(2, value_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!key_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, key_);
+      }
+      if (!value_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, value_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ModelProto.KeyValue)) {
+        return super.equals(obj);
+      }
+      proto.ModelProto.KeyValue other = (proto.ModelProto.KeyValue) obj;
+
+      boolean result = true;
+      result = result && getKey()
+          .equals(other.getKey());
+      result = result && getValue()
+          .equals(other.getValue());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + KEY_FIELD_NUMBER;
+      hash = (53 * hash) + getKey().hashCode();
+      hash = (37 * hash) + VALUE_FIELD_NUMBER;
+      hash = (53 * hash) + getValue().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ModelProto.KeyValue parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.KeyValue parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.KeyValue parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.KeyValue parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ModelProto.KeyValue prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code proto.KeyValue}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.KeyValue)
+        proto.ModelProto.KeyValueOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ModelProto.internal_static_proto_KeyValue_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ModelProto.KeyValue.class, proto.ModelProto.KeyValue.Builder.class);
+      }
+
+      // Construct using proto.ModelProto.KeyValue.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        key_ = com.google.protobuf.ByteString.EMPTY;
+
+        value_ = com.google.protobuf.ByteString.EMPTY;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
+      }
+
+      public proto.ModelProto.KeyValue getDefaultInstanceForType() {
+        return proto.ModelProto.KeyValue.getDefaultInstance();
+      }
+
+      public proto.ModelProto.KeyValue build() {
+        proto.ModelProto.KeyValue result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.ModelProto.KeyValue buildPartial() {
+        proto.ModelProto.KeyValue result = new proto.ModelProto.KeyValue(this);
+        result.key_ = key_;
+        result.value_ = value_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ModelProto.KeyValue) {
+          return mergeFrom((proto.ModelProto.KeyValue)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ModelProto.KeyValue other) {
+        if (other == proto.ModelProto.KeyValue.getDefaultInstance()) return this;
+        if (other.getKey() != com.google.protobuf.ByteString.EMPTY) {
+          setKey(other.getKey());
+        }
+        if (other.getValue() != com.google.protobuf.ByteString.EMPTY) {
+          setValue(other.getValue());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.ModelProto.KeyValue parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.ModelProto.KeyValue) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -7326,69 +1934,60 @@ public final class ModelProto {
         return this;
       }
 
-      private int userId_ ;
+      private com.google.protobuf.ByteString key_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <pre>
-       *用户id
-       * </pre>
-       *
-       * <code>int32 userId = 1;</code>
+       * <code>bytes key = 1;</code>
        */
-      public int getUserId() {
-        return userId_;
+      public com.google.protobuf.ByteString getKey() {
+        return key_;
       }
       /**
-       * <pre>
-       *用户id
-       * </pre>
-       *
-       * <code>int32 userId = 1;</code>
+       * <code>bytes key = 1;</code>
        */
-      public Builder setUserId(int value) {
-        
-        userId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *用户id
-       * </pre>
-       *
-       * <code>int32 userId = 1;</code>
-       */
-      public Builder clearUserId() {
-        
-        userId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.ByteString cert_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes cert = 2;</code>
-       */
-      public com.google.protobuf.ByteString getCert() {
-        return cert_;
-      }
-      /**
-       * <code>bytes cert = 2;</code>
-       */
-      public Builder setCert(com.google.protobuf.ByteString value) {
+      public Builder setKey(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        cert_ = value;
+        key_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bytes cert = 2;</code>
+       * <code>bytes key = 1;</code>
        */
-      public Builder clearCert() {
+      public Builder clearKey() {
         
-        cert_ = getDefaultInstance().getCert();
+        key_ = getDefaultInstance().getKey();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes value = 2;</code>
+       */
+      public com.google.protobuf.ByteString getValue() {
+        return value_;
+      }
+      /**
+       * <code>bytes value = 2;</code>
+       */
+      public Builder setValue(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        value_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes value = 2;</code>
+       */
+      public Builder clearValue() {
+        
+        value_ = getDefaultInstance().getValue();
         onChanged();
         return this;
       }
@@ -7403,104 +2002,1758 @@ public final class ModelProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:proto.NotBreak)
+      // @@protoc_insertion_point(builder_scope:proto.KeyValue)
     }
 
-    // @@protoc_insertion_point(class_scope:proto.NotBreak)
-    private static final proto.ModelProto.NotBreak DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:proto.KeyValue)
+    private static final proto.ModelProto.KeyValue DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.ModelProto.NotBreak();
+      DEFAULT_INSTANCE = new proto.ModelProto.KeyValue();
     }
 
-    public static proto.ModelProto.NotBreak getDefaultInstance() {
+    public static proto.ModelProto.KeyValue getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<NotBreak>
-        PARSER = new com.google.protobuf.AbstractParser<NotBreak>() {
-      public NotBreak parsePartialFrom(
+    private static final com.google.protobuf.Parser<KeyValue>
+        PARSER = new com.google.protobuf.AbstractParser<KeyValue>() {
+      public KeyValue parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotBreak(input, extensionRegistry);
+          return new KeyValue(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<NotBreak> parser() {
+    public static com.google.protobuf.Parser<KeyValue> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<NotBreak> getParserForType() {
+    public com.google.protobuf.Parser<KeyValue> getParserForType() {
       return PARSER;
     }
 
-    public proto.ModelProto.NotBreak getDefaultInstanceForType() {
+    public proto.ModelProto.KeyValue getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_KeyValue_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_KeyValue_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqHeart_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqHeart_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckHeart_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckHeart_fieldAccessorTable;
+  public interface RoomTableInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.RoomTableInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 roomId = 1;</code>
+     */
+    int getRoomId();
+
+    /**
+     * <code>int64 tableId = 2;</code>
+     */
+    long getTableId();
+
+    /**
+     * <code>int32 creatorId = 3;</code>
+     */
+    int getCreatorId();
+
+    /**
+     * <code>int32 ownerId = 4;</code>
+     */
+    int getOwnerId();
+
+    /**
+     * <pre>
+     *等待中  已开始
+     * </pre>
+     *
+     * <code>int32 stat = 5;</code>
+     */
+    int getStat();
+
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    java.util.List<proto.ModelProto.RoomRole> 
+        getTableRolesList();
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    proto.ModelProto.RoomRole getTableRoles(int index);
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    int getTableRolesCount();
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    java.util.List<? extends proto.ModelProto.RoomRoleOrBuilder> 
+        getTableRolesOrBuilderList();
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    proto.ModelProto.RoomRoleOrBuilder getTableRolesOrBuilder(
+        int index);
+  }
+  /**
+   * <pre>
+   *room桌子
+   * </pre>
+   *
+   * Protobuf type {@code proto.RoomTableInfo}
+   */
+  public  static final class RoomTableInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.RoomTableInfo)
+      RoomTableInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use RoomTableInfo.newBuilder() to construct.
+    private RoomTableInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private RoomTableInfo() {
+      roomId_ = 0;
+      tableId_ = 0L;
+      creatorId_ = 0;
+      ownerId_ = 0;
+      stat_ = 0;
+      tableRoles_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private RoomTableInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              roomId_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              tableId_ = input.readInt64();
+              break;
+            }
+            case 24: {
+
+              creatorId_ = input.readInt32();
+              break;
+            }
+            case 32: {
+
+              ownerId_ = input.readInt32();
+              break;
+            }
+            case 40: {
+
+              stat_ = input.readInt32();
+              break;
+            }
+            case 50: {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+                tableRoles_ = new java.util.ArrayList<proto.ModelProto.RoomRole>();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              tableRoles_.add(
+                  input.readMessage(proto.ModelProto.RoomRole.parser(), extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+          tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ModelProto.internal_static_proto_RoomTableInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ModelProto.internal_static_proto_RoomTableInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ModelProto.RoomTableInfo.class, proto.ModelProto.RoomTableInfo.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int ROOMID_FIELD_NUMBER = 1;
+    private int roomId_;
+    /**
+     * <code>int32 roomId = 1;</code>
+     */
+    public int getRoomId() {
+      return roomId_;
+    }
+
+    public static final int TABLEID_FIELD_NUMBER = 2;
+    private long tableId_;
+    /**
+     * <code>int64 tableId = 2;</code>
+     */
+    public long getTableId() {
+      return tableId_;
+    }
+
+    public static final int CREATORID_FIELD_NUMBER = 3;
+    private int creatorId_;
+    /**
+     * <code>int32 creatorId = 3;</code>
+     */
+    public int getCreatorId() {
+      return creatorId_;
+    }
+
+    public static final int OWNERID_FIELD_NUMBER = 4;
+    private int ownerId_;
+    /**
+     * <code>int32 ownerId = 4;</code>
+     */
+    public int getOwnerId() {
+      return ownerId_;
+    }
+
+    public static final int STAT_FIELD_NUMBER = 5;
+    private int stat_;
+    /**
+     * <pre>
+     *等待中  已开始
+     * </pre>
+     *
+     * <code>int32 stat = 5;</code>
+     */
+    public int getStat() {
+      return stat_;
+    }
+
+    public static final int TABLEROLES_FIELD_NUMBER = 6;
+    private java.util.List<proto.ModelProto.RoomRole> tableRoles_;
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    public java.util.List<proto.ModelProto.RoomRole> getTableRolesList() {
+      return tableRoles_;
+    }
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    public java.util.List<? extends proto.ModelProto.RoomRoleOrBuilder> 
+        getTableRolesOrBuilderList() {
+      return tableRoles_;
+    }
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    public int getTableRolesCount() {
+      return tableRoles_.size();
+    }
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    public proto.ModelProto.RoomRole getTableRoles(int index) {
+      return tableRoles_.get(index);
+    }
+    /**
+     * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+     */
+    public proto.ModelProto.RoomRoleOrBuilder getTableRolesOrBuilder(
+        int index) {
+      return tableRoles_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (roomId_ != 0) {
+        output.writeInt32(1, roomId_);
+      }
+      if (tableId_ != 0L) {
+        output.writeInt64(2, tableId_);
+      }
+      if (creatorId_ != 0) {
+        output.writeInt32(3, creatorId_);
+      }
+      if (ownerId_ != 0) {
+        output.writeInt32(4, ownerId_);
+      }
+      if (stat_ != 0) {
+        output.writeInt32(5, stat_);
+      }
+      for (int i = 0; i < tableRoles_.size(); i++) {
+        output.writeMessage(6, tableRoles_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (roomId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, roomId_);
+      }
+      if (tableId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, tableId_);
+      }
+      if (creatorId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, creatorId_);
+      }
+      if (ownerId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, ownerId_);
+      }
+      if (stat_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, stat_);
+      }
+      for (int i = 0; i < tableRoles_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, tableRoles_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ModelProto.RoomTableInfo)) {
+        return super.equals(obj);
+      }
+      proto.ModelProto.RoomTableInfo other = (proto.ModelProto.RoomTableInfo) obj;
+
+      boolean result = true;
+      result = result && (getRoomId()
+          == other.getRoomId());
+      result = result && (getTableId()
+          == other.getTableId());
+      result = result && (getCreatorId()
+          == other.getCreatorId());
+      result = result && (getOwnerId()
+          == other.getOwnerId());
+      result = result && (getStat()
+          == other.getStat());
+      result = result && getTableRolesList()
+          .equals(other.getTableRolesList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
+      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTableId());
+      hash = (37 * hash) + CREATORID_FIELD_NUMBER;
+      hash = (53 * hash) + getCreatorId();
+      hash = (37 * hash) + OWNERID_FIELD_NUMBER;
+      hash = (53 * hash) + getOwnerId();
+      hash = (37 * hash) + STAT_FIELD_NUMBER;
+      hash = (53 * hash) + getStat();
+      if (getTableRolesCount() > 0) {
+        hash = (37 * hash) + TABLEROLES_FIELD_NUMBER;
+        hash = (53 * hash) + getTableRolesList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomTableInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.RoomTableInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.RoomTableInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ModelProto.RoomTableInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *room桌子
+     * </pre>
+     *
+     * Protobuf type {@code proto.RoomTableInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.RoomTableInfo)
+        proto.ModelProto.RoomTableInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ModelProto.internal_static_proto_RoomTableInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ModelProto.internal_static_proto_RoomTableInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ModelProto.RoomTableInfo.class, proto.ModelProto.RoomTableInfo.Builder.class);
+      }
+
+      // Construct using proto.ModelProto.RoomTableInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getTableRolesFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        roomId_ = 0;
+
+        tableId_ = 0L;
+
+        creatorId_ = 0;
+
+        ownerId_ = 0;
+
+        stat_ = 0;
+
+        if (tableRolesBuilder_ == null) {
+          tableRoles_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+        } else {
+          tableRolesBuilder_.clear();
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ModelProto.internal_static_proto_RoomTableInfo_descriptor;
+      }
+
+      public proto.ModelProto.RoomTableInfo getDefaultInstanceForType() {
+        return proto.ModelProto.RoomTableInfo.getDefaultInstance();
+      }
+
+      public proto.ModelProto.RoomTableInfo build() {
+        proto.ModelProto.RoomTableInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.ModelProto.RoomTableInfo buildPartial() {
+        proto.ModelProto.RoomTableInfo result = new proto.ModelProto.RoomTableInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.roomId_ = roomId_;
+        result.tableId_ = tableId_;
+        result.creatorId_ = creatorId_;
+        result.ownerId_ = ownerId_;
+        result.stat_ = stat_;
+        if (tableRolesBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) == 0x00000020)) {
+            tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
+            bitField0_ = (bitField0_ & ~0x00000020);
+          }
+          result.tableRoles_ = tableRoles_;
+        } else {
+          result.tableRoles_ = tableRolesBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ModelProto.RoomTableInfo) {
+          return mergeFrom((proto.ModelProto.RoomTableInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ModelProto.RoomTableInfo other) {
+        if (other == proto.ModelProto.RoomTableInfo.getDefaultInstance()) return this;
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
+        }
+        if (other.getTableId() != 0L) {
+          setTableId(other.getTableId());
+        }
+        if (other.getCreatorId() != 0) {
+          setCreatorId(other.getCreatorId());
+        }
+        if (other.getOwnerId() != 0) {
+          setOwnerId(other.getOwnerId());
+        }
+        if (other.getStat() != 0) {
+          setStat(other.getStat());
+        }
+        if (tableRolesBuilder_ == null) {
+          if (!other.tableRoles_.isEmpty()) {
+            if (tableRoles_.isEmpty()) {
+              tableRoles_ = other.tableRoles_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+            } else {
+              ensureTableRolesIsMutable();
+              tableRoles_.addAll(other.tableRoles_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.tableRoles_.isEmpty()) {
+            if (tableRolesBuilder_.isEmpty()) {
+              tableRolesBuilder_.dispose();
+              tableRolesBuilder_ = null;
+              tableRoles_ = other.tableRoles_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+              tableRolesBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getTableRolesFieldBuilder() : null;
+            } else {
+              tableRolesBuilder_.addAllMessages(other.tableRoles_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.ModelProto.RoomTableInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.ModelProto.RoomTableInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int roomId_ ;
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public int getRoomId() {
+        return roomId_;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder setRoomId(int value) {
+        
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roomId = 1;</code>
+       */
+      public Builder clearRoomId() {
+        
+        roomId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long tableId_ ;
+      /**
+       * <code>int64 tableId = 2;</code>
+       */
+      public long getTableId() {
+        return tableId_;
+      }
+      /**
+       * <code>int64 tableId = 2;</code>
+       */
+      public Builder setTableId(long value) {
+        
+        tableId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 tableId = 2;</code>
+       */
+      public Builder clearTableId() {
+        
+        tableId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int creatorId_ ;
+      /**
+       * <code>int32 creatorId = 3;</code>
+       */
+      public int getCreatorId() {
+        return creatorId_;
+      }
+      /**
+       * <code>int32 creatorId = 3;</code>
+       */
+      public Builder setCreatorId(int value) {
+        
+        creatorId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 creatorId = 3;</code>
+       */
+      public Builder clearCreatorId() {
+        
+        creatorId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int ownerId_ ;
+      /**
+       * <code>int32 ownerId = 4;</code>
+       */
+      public int getOwnerId() {
+        return ownerId_;
+      }
+      /**
+       * <code>int32 ownerId = 4;</code>
+       */
+      public Builder setOwnerId(int value) {
+        
+        ownerId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 ownerId = 4;</code>
+       */
+      public Builder clearOwnerId() {
+        
+        ownerId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int stat_ ;
+      /**
+       * <pre>
+       *等待中  已开始
+       * </pre>
+       *
+       * <code>int32 stat = 5;</code>
+       */
+      public int getStat() {
+        return stat_;
+      }
+      /**
+       * <pre>
+       *等待中  已开始
+       * </pre>
+       *
+       * <code>int32 stat = 5;</code>
+       */
+      public Builder setStat(int value) {
+        
+        stat_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *等待中  已开始
+       * </pre>
+       *
+       * <code>int32 stat = 5;</code>
+       */
+      public Builder clearStat() {
+        
+        stat_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.ModelProto.RoomRole> tableRoles_ =
+        java.util.Collections.emptyList();
+      private void ensureTableRolesIsMutable() {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+          tableRoles_ = new java.util.ArrayList<proto.ModelProto.RoomRole>(tableRoles_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.ModelProto.RoomRole, proto.ModelProto.RoomRole.Builder, proto.ModelProto.RoomRoleOrBuilder> tableRolesBuilder_;
+
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public java.util.List<proto.ModelProto.RoomRole> getTableRolesList() {
+        if (tableRolesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(tableRoles_);
+        } else {
+          return tableRolesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public int getTableRolesCount() {
+        if (tableRolesBuilder_ == null) {
+          return tableRoles_.size();
+        } else {
+          return tableRolesBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public proto.ModelProto.RoomRole getTableRoles(int index) {
+        if (tableRolesBuilder_ == null) {
+          return tableRoles_.get(index);
+        } else {
+          return tableRolesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder setTableRoles(
+          int index, proto.ModelProto.RoomRole value) {
+        if (tableRolesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableRolesIsMutable();
+          tableRoles_.set(index, value);
+          onChanged();
+        } else {
+          tableRolesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder setTableRoles(
+          int index, proto.ModelProto.RoomRole.Builder builderForValue) {
+        if (tableRolesBuilder_ == null) {
+          ensureTableRolesIsMutable();
+          tableRoles_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          tableRolesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder addTableRoles(proto.ModelProto.RoomRole value) {
+        if (tableRolesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableRolesIsMutable();
+          tableRoles_.add(value);
+          onChanged();
+        } else {
+          tableRolesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder addTableRoles(
+          int index, proto.ModelProto.RoomRole value) {
+        if (tableRolesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableRolesIsMutable();
+          tableRoles_.add(index, value);
+          onChanged();
+        } else {
+          tableRolesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder addTableRoles(
+          proto.ModelProto.RoomRole.Builder builderForValue) {
+        if (tableRolesBuilder_ == null) {
+          ensureTableRolesIsMutable();
+          tableRoles_.add(builderForValue.build());
+          onChanged();
+        } else {
+          tableRolesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder addTableRoles(
+          int index, proto.ModelProto.RoomRole.Builder builderForValue) {
+        if (tableRolesBuilder_ == null) {
+          ensureTableRolesIsMutable();
+          tableRoles_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          tableRolesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder addAllTableRoles(
+          java.lang.Iterable<? extends proto.ModelProto.RoomRole> values) {
+        if (tableRolesBuilder_ == null) {
+          ensureTableRolesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, tableRoles_);
+          onChanged();
+        } else {
+          tableRolesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder clearTableRoles() {
+        if (tableRolesBuilder_ == null) {
+          tableRoles_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+          onChanged();
+        } else {
+          tableRolesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public Builder removeTableRoles(int index) {
+        if (tableRolesBuilder_ == null) {
+          ensureTableRolesIsMutable();
+          tableRoles_.remove(index);
+          onChanged();
+        } else {
+          tableRolesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public proto.ModelProto.RoomRole.Builder getTableRolesBuilder(
+          int index) {
+        return getTableRolesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public proto.ModelProto.RoomRoleOrBuilder getTableRolesOrBuilder(
+          int index) {
+        if (tableRolesBuilder_ == null) {
+          return tableRoles_.get(index);  } else {
+          return tableRolesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public java.util.List<? extends proto.ModelProto.RoomRoleOrBuilder> 
+           getTableRolesOrBuilderList() {
+        if (tableRolesBuilder_ != null) {
+          return tableRolesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(tableRoles_);
+        }
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public proto.ModelProto.RoomRole.Builder addTableRolesBuilder() {
+        return getTableRolesFieldBuilder().addBuilder(
+            proto.ModelProto.RoomRole.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public proto.ModelProto.RoomRole.Builder addTableRolesBuilder(
+          int index) {
+        return getTableRolesFieldBuilder().addBuilder(
+            index, proto.ModelProto.RoomRole.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.RoomRole tableRoles = 6;</code>
+       */
+      public java.util.List<proto.ModelProto.RoomRole.Builder> 
+           getTableRolesBuilderList() {
+        return getTableRolesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.ModelProto.RoomRole, proto.ModelProto.RoomRole.Builder, proto.ModelProto.RoomRoleOrBuilder> 
+          getTableRolesFieldBuilder() {
+        if (tableRolesBuilder_ == null) {
+          tableRolesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.ModelProto.RoomRole, proto.ModelProto.RoomRole.Builder, proto.ModelProto.RoomRoleOrBuilder>(
+                  tableRoles_,
+                  ((bitField0_ & 0x00000020) == 0x00000020),
+                  getParentForChildren(),
+                  isClean());
+          tableRoles_ = null;
+        }
+        return tableRolesBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.RoomTableInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.RoomTableInfo)
+    private static final proto.ModelProto.RoomTableInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ModelProto.RoomTableInfo();
+    }
+
+    public static proto.ModelProto.RoomTableInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<RoomTableInfo>
+        PARSER = new com.google.protobuf.AbstractParser<RoomTableInfo>() {
+      public RoomTableInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new RoomTableInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<RoomTableInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RoomTableInfo> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.ModelProto.RoomTableInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface RoomRoleOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.RoomRole)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 roleId = 1;</code>
+     */
+    int getRoleId();
+
+    /**
+     * <code>bytes avatar = 3;</code>
+     */
+    com.google.protobuf.ByteString getAvatar();
+
+    /**
+     * <code>bytes nickName = 4;</code>
+     */
+    com.google.protobuf.ByteString getNickName();
+  }
+  /**
+   * <pre>
+   *room桌子玩家
+   * </pre>
+   *
+   * Protobuf type {@code proto.RoomRole}
+   */
+  public  static final class RoomRole extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.RoomRole)
+      RoomRoleOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use RoomRole.newBuilder() to construct.
+    private RoomRole(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private RoomRole() {
+      roleId_ = 0;
+      avatar_ = com.google.protobuf.ByteString.EMPTY;
+      nickName_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private RoomRole(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              roleId_ = input.readInt32();
+              break;
+            }
+            case 26: {
+
+              avatar_ = input.readBytes();
+              break;
+            }
+            case 34: {
+
+              nickName_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ModelProto.internal_static_proto_RoomRole_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ModelProto.internal_static_proto_RoomRole_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ModelProto.RoomRole.class, proto.ModelProto.RoomRole.Builder.class);
+    }
+
+    public static final int ROLEID_FIELD_NUMBER = 1;
+    private int roleId_;
+    /**
+     * <code>int32 roleId = 1;</code>
+     */
+    public int getRoleId() {
+      return roleId_;
+    }
+
+    public static final int AVATAR_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString avatar_;
+    /**
+     * <code>bytes avatar = 3;</code>
+     */
+    public com.google.protobuf.ByteString getAvatar() {
+      return avatar_;
+    }
+
+    public static final int NICKNAME_FIELD_NUMBER = 4;
+    private com.google.protobuf.ByteString nickName_;
+    /**
+     * <code>bytes nickName = 4;</code>
+     */
+    public com.google.protobuf.ByteString getNickName() {
+      return nickName_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (roleId_ != 0) {
+        output.writeInt32(1, roleId_);
+      }
+      if (!avatar_.isEmpty()) {
+        output.writeBytes(3, avatar_);
+      }
+      if (!nickName_.isEmpty()) {
+        output.writeBytes(4, nickName_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (roleId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, roleId_);
+      }
+      if (!avatar_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, avatar_);
+      }
+      if (!nickName_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, nickName_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ModelProto.RoomRole)) {
+        return super.equals(obj);
+      }
+      proto.ModelProto.RoomRole other = (proto.ModelProto.RoomRole) obj;
+
+      boolean result = true;
+      result = result && (getRoleId()
+          == other.getRoleId());
+      result = result && getAvatar()
+          .equals(other.getAvatar());
+      result = result && getNickName()
+          .equals(other.getNickName());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoleId();
+      hash = (37 * hash) + AVATAR_FIELD_NUMBER;
+      hash = (53 * hash) + getAvatar().hashCode();
+      hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getNickName().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ModelProto.RoomRole parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomRole parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.RoomRole parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ModelProto.RoomRole parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ModelProto.RoomRole prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *room桌子玩家
+     * </pre>
+     *
+     * Protobuf type {@code proto.RoomRole}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.RoomRole)
+        proto.ModelProto.RoomRoleOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ModelProto.internal_static_proto_RoomRole_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ModelProto.internal_static_proto_RoomRole_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ModelProto.RoomRole.class, proto.ModelProto.RoomRole.Builder.class);
+      }
+
+      // Construct using proto.ModelProto.RoomRole.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        roleId_ = 0;
+
+        avatar_ = com.google.protobuf.ByteString.EMPTY;
+
+        nickName_ = com.google.protobuf.ByteString.EMPTY;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ModelProto.internal_static_proto_RoomRole_descriptor;
+      }
+
+      public proto.ModelProto.RoomRole getDefaultInstanceForType() {
+        return proto.ModelProto.RoomRole.getDefaultInstance();
+      }
+
+      public proto.ModelProto.RoomRole build() {
+        proto.ModelProto.RoomRole result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public proto.ModelProto.RoomRole buildPartial() {
+        proto.ModelProto.RoomRole result = new proto.ModelProto.RoomRole(this);
+        result.roleId_ = roleId_;
+        result.avatar_ = avatar_;
+        result.nickName_ = nickName_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ModelProto.RoomRole) {
+          return mergeFrom((proto.ModelProto.RoomRole)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ModelProto.RoomRole other) {
+        if (other == proto.ModelProto.RoomRole.getDefaultInstance()) return this;
+        if (other.getRoleId() != 0) {
+          setRoleId(other.getRoleId());
+        }
+        if (other.getAvatar() != com.google.protobuf.ByteString.EMPTY) {
+          setAvatar(other.getAvatar());
+        }
+        if (other.getNickName() != com.google.protobuf.ByteString.EMPTY) {
+          setNickName(other.getNickName());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        proto.ModelProto.RoomRole parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (proto.ModelProto.RoomRole) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int roleId_ ;
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public int getRoleId() {
+        return roleId_;
+      }
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public Builder setRoleId(int value) {
+        
+        roleId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roleId = 1;</code>
+       */
+      public Builder clearRoleId() {
+        
+        roleId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString avatar_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes avatar = 3;</code>
+       */
+      public com.google.protobuf.ByteString getAvatar() {
+        return avatar_;
+      }
+      /**
+       * <code>bytes avatar = 3;</code>
+       */
+      public Builder setAvatar(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        avatar_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes avatar = 3;</code>
+       */
+      public Builder clearAvatar() {
+        
+        avatar_ = getDefaultInstance().getAvatar();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString nickName_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes nickName = 4;</code>
+       */
+      public com.google.protobuf.ByteString getNickName() {
+        return nickName_;
+      }
+      /**
+       * <code>bytes nickName = 4;</code>
+       */
+      public Builder setNickName(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nickName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes nickName = 4;</code>
+       */
+      public Builder clearNickName() {
+        
+        nickName_ = getDefaultInstance().getNickName();
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.RoomRole)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.RoomRole)
+    private static final proto.ModelProto.RoomRole DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ModelProto.RoomRole();
+    }
+
+    public static proto.ModelProto.RoomRole getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<RoomRole>
+        PARSER = new com.google.protobuf.AbstractParser<RoomRole>() {
+      public RoomRole parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new RoomRole(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<RoomRole> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RoomRole> getParserForType() {
+      return PARSER;
+    }
+
+    public proto.ModelProto.RoomRole getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ServerInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_ServerInfo_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqRegister_descriptor;
+    internal_static_proto_Room_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqRegister_fieldAccessorTable;
+      internal_static_proto_Room_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckRegister_descriptor;
+    internal_static_proto_KeyValue_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckRegister_fieldAccessorTable;
+      internal_static_proto_KeyValue_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_NotRegisterInfo_descriptor;
+    internal_static_proto_RoomTableInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_NotRegisterInfo_fieldAccessorTable;
+      internal_static_proto_RoomTableInfo_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_NotRegisterClient_descriptor;
+    internal_static_proto_RoomRole_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_NotRegisterClient_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqServerInfo_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqServerInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckServerInfo_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckServerInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_NotServerBreak_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_NotServerBreak_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_NotBreak_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_NotBreak_fieldAccessorTable;
+      internal_static_proto_RoomRole_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -7510,23 +3763,17 @@ public final class ModelProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013model.proto\022\005proto\"&\n\010KeyValue\022\013\n\003key\030" +
-      "\001 \001(\014\022\r\n\005value\030\002 \001(\014\"A\n\010ReqHeart\022\022\n\nserv" +
-      "erType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\017\n\007reqTim" +
-      "e\030\003 \001(\003\"-\n\010AckHeart\022\020\n\010serverId\030\001 \001(\005\022\017\n" +
-      "\007reqTime\030\002 \001(\003\"D\n\nServerInfo\022\022\n\nserverTy" +
-      "pe\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\020\n\010ipConfig\030\003" +
-      " \001(\014\"4\n\013ReqRegister\022%\n\nserverInfo\030\001 \001(\0132" +
-      "\021.proto.ServerInfo\"4\n\013AckRegister\022%\n\nser" +
-      "verInfo\030\001 \001(\0132\021.proto.ServerInfo\"5\n\017NotR" +
-      "egisterInfo\022\"\n\007servers\030\001 \003(\0132\021.proto.Ser",
-      "verInfo\"/\n\021NotRegisterClient\022\014\n\004cert\030\001 \001" +
-      "(\014\022\014\n\004gate\030\002 \001(\014\"#\n\rReqServerInfo\022\022\n\nser" +
-      "verType\030\001 \003(\005\"3\n\rAckServerInfo\022\"\n\007server" +
-      "s\030\001 \003(\0132\021.proto.ServerInfo\"4\n\016NotServerB" +
-      "reak\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo" +
-      "\"(\n\010NotBreak\022\016\n\006userId\030\001 \001(\005\022\014\n\004cert\030\002 \001" +
-      "(\014B\014B\nModelProtob\006proto3"
+      "\n\013model.proto\022\005proto\"D\n\nServerInfo\022\022\n\nse" +
+      "rverType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\020\n\010ipCo" +
+      "nfig\030\003 \001(\014\"<\n\004Room\022\016\n\006roomId\030\001 \001(\005\022$\n\006ta" +
+      "bles\030\002 \003(\0132\024.proto.RoomTableInfo\"&\n\010KeyV" +
+      "alue\022\013\n\003key\030\001 \001(\014\022\r\n\005value\030\002 \001(\014\"\207\001\n\rRoo" +
+      "mTableInfo\022\016\n\006roomId\030\001 \001(\005\022\017\n\007tableId\030\002 " +
+      "\001(\003\022\021\n\tcreatorId\030\003 \001(\005\022\017\n\007ownerId\030\004 \001(\005\022" +
+      "\014\n\004stat\030\005 \001(\005\022#\n\ntableRoles\030\006 \003(\0132\017.prot" +
+      "o.RoomRole\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005\022\016" +
+      "\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014B\014B\nMode",
+      "lProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -7540,78 +3787,36 @@ public final class ModelProto {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_proto_KeyValue_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_proto_KeyValue_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_KeyValue_descriptor,
-        new java.lang.String[] { "Key", "Value", });
-    internal_static_proto_ReqHeart_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_proto_ReqHeart_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqHeart_descriptor,
-        new java.lang.String[] { "ServerType", "ServerId", "ReqTime", });
-    internal_static_proto_AckHeart_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_proto_AckHeart_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckHeart_descriptor,
-        new java.lang.String[] { "ServerId", "ReqTime", });
     internal_static_proto_ServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(0);
     internal_static_proto_ServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ServerInfo_descriptor,
         new java.lang.String[] { "ServerType", "ServerId", "IpConfig", });
-    internal_static_proto_ReqRegister_descriptor =
+    internal_static_proto_Room_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_proto_Room_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_Room_descriptor,
+        new java.lang.String[] { "RoomId", "Tables", });
+    internal_static_proto_KeyValue_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_proto_KeyValue_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_KeyValue_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_proto_RoomTableInfo_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_proto_RoomTableInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_RoomTableInfo_descriptor,
+        new java.lang.String[] { "RoomId", "TableId", "CreatorId", "OwnerId", "Stat", "TableRoles", });
+    internal_static_proto_RoomRole_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_proto_ReqRegister_fieldAccessorTable = new
+    internal_static_proto_RoomRole_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqRegister_descriptor,
-        new java.lang.String[] { "ServerInfo", });
-    internal_static_proto_AckRegister_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_proto_AckRegister_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckRegister_descriptor,
-        new java.lang.String[] { "ServerInfo", });
-    internal_static_proto_NotRegisterInfo_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_proto_NotRegisterInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_NotRegisterInfo_descriptor,
-        new java.lang.String[] { "Servers", });
-    internal_static_proto_NotRegisterClient_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_proto_NotRegisterClient_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_NotRegisterClient_descriptor,
-        new java.lang.String[] { "Cert", "Gate", });
-    internal_static_proto_ReqServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_proto_ReqServerInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqServerInfo_descriptor,
-        new java.lang.String[] { "ServerType", });
-    internal_static_proto_AckServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(9);
-    internal_static_proto_AckServerInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckServerInfo_descriptor,
-        new java.lang.String[] { "Servers", });
-    internal_static_proto_NotServerBreak_descriptor =
-      getDescriptor().getMessageTypes().get(10);
-    internal_static_proto_NotServerBreak_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_NotServerBreak_descriptor,
-        new java.lang.String[] { "Servers", });
-    internal_static_proto_NotBreak_descriptor =
-      getDescriptor().getMessageTypes().get(11);
-    internal_static_proto_NotBreak_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_NotBreak_descriptor,
-        new java.lang.String[] { "UserId", "Cert", });
+        internal_static_proto_RoomRole_descriptor,
+        new java.lang.String[] { "RoleId", "Avatar", "NickName", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

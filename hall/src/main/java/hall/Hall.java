@@ -15,6 +15,7 @@ import msg.registor.message.CMsg;
 import net.connect.TCPConnect;
 import net.service.ServerService;
 import proto.ModelProto;
+import proto.ServerProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
@@ -191,7 +192,7 @@ public class Hall {
 				throw new IllegalArgumentException("中心服务器地址格式错误: " + center);
 			}
 
-			ModelProto.ReqServerInfo serverInfoRequest = buildServerInfoRequest();
+			ServerProto.ReqServerInfo serverInfoRequest = buildServerInfoRequest();
 
 			serverManager.registerSever(centerAddress, ConnectProcessor.TRANSFER,
 					ConnectProcessor.PARSER, ConnectProcessor.HANDLERS,
@@ -210,8 +211,8 @@ public class Hall {
 	/**
 	 * 构建服务器信息请求
 	 */
-	private ModelProto.ReqServerInfo buildServerInfoRequest() {
-		return ModelProto.ReqServerInfo.newBuilder()
+	private ServerProto.ReqServerInfo buildServerInfoRequest() {
+		return ServerProto.ReqServerInfo.newBuilder()
 				.addServerType(ServerType.Room.getServerType())
 				.build();
 	}

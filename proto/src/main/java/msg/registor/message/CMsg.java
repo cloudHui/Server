@@ -4,6 +4,7 @@ import msg.annotation.ClassField;
 import msg.annotation.ClassType;
 import proto.GateProto;
 import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * BASE_ID_INDEX 以下 的是通用消息
@@ -18,34 +19,34 @@ public class CMsg {
 	public static final int ROOM_TYPE = 0x8000;
 	public static final int SERVER_TYPE = 0x16000;
 
-	@ClassField(value = ModelProto.ReqHeart.class, des = "心跳")
+	@ClassField(value = ServerProto.ReqHeart.class, des = "心跳")
 	public static final int HEART = 1;
 
-	@ClassField(value = ModelProto.AckHeart.class, des = "心跳回复")
+	@ClassField(value = ServerProto.AckHeart.class, des = "心跳回复")
 	public static final int HEART_ACK = 2;
 
-	@ClassField(value = ModelProto.ReqRegister.class, des = "请求注册")
+	@ClassField(value = ServerProto.ReqRegister.class, des = "请求注册")
 	public static final int REQ_REGISTER = 3;
 
-	@ClassField(value = ModelProto.AckRegister.class, des = "注册回复")
+	@ClassField(value = ServerProto.AckRegister.class, des = "注册回复")
 	public static final int ACK_REGISTER = 4;
 
-	@ClassField(value = ModelProto.NotRegisterInfo.class, des = "注册通知")
+	@ClassField(value = ServerProto.NotRegisterInfo.class, des = "注册通知")
 	public static final int REGISTER_NOTICE = 5;
 
-	@ClassField(value = ModelProto.NotServerBreak.class, des = "服务掉线通知")
+	@ClassField(value = ServerProto.NotServerBreak.class, des = "服务掉线通知")
 	public static final int BREAK_NOTICE = 6;
 
-	@ClassField(value = ModelProto.ReqServerInfo.class, des = "服务信息请求")
+	@ClassField(value = ServerProto.ReqServerInfo.class, des = "服务信息请求")
 	public static final int REQ_SERVER = 7;
 
-	@ClassField(value = ModelProto.AckServerInfo.class, des = "服务信息回复")
+	@ClassField(value = ServerProto.AckServerInfo.class, des = "服务信息回复")
 	public static final int ACK_SERVER = 8;
 
-	@ClassField(value = ModelProto.NotBreak.class, des = "通知玩家掉线")
+	@ClassField(value = ServerProto.NotBreak.class, des = "通知玩家掉线")
 	public static final int NOT_BREAK = 9;
 
-	@ClassField(value = ModelProto.NotRegisterClient.class, des = "通知中心玩家登录")
+	@ClassField(value = ServerProto.NotRegisterClient.class, des = "通知中心玩家登录")
 	public static final int NOT_LINK = 10;
 
 	@ClassField(value = GateProto.BroadCast.class, des = "广播")

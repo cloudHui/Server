@@ -15,6 +15,7 @@ import net.connect.handle.ConnectHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
+import proto.ModelProto;
 import proto.ServerProto;
 import utils.manager.ConnectHandle;
 
@@ -32,11 +33,12 @@ public class AckRoomTableHandler implements ConnectHandle {
 			if (message instanceof ServerProto.AckRoleRoomTable) {
 				ServerProto.AckRoleRoomTable roomTable = (ServerProto.AckRoleRoomTable) message;
 				int roleId = roomTable.getRoleId();
-				List<ServerProto.RoomTableInfo> rooms = roomTable.getTablesList();
-				logger.debug("收到用户房间列表, userId: {}, 房间数量: {}", roleId, rooms.size());
+				List<Long> tables = roomTable.getTablesList();
+				List<ModelProto.Room> rooms = roomTable.getRoomListList();
+				logger.debug("收到用户房间列表, userId: {}, 房间数量: {}", roleId, tables.size());
 
 				//发送登录响应
-				returnLoginResponse(roleId, rooms, sequence);
+				returnLoginResponse(roleId, tables, rooms, sequence);
 				logger.debug("登录响应发送, userId: {}", roleId);
 			}
 		} catch (Exception e) {
@@ -47,7 +49,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 	/**
 	 * 发送登录响应
 	 */
-	private void returnLoginResponse(int roleId, List<ServerProto.RoomTableInfo> rooms, int sequence) {
+	private void returnLoginResponse(int roleId, List<Long> tables, List<ModelProto.Room> rooms, int sequence) {
 		try {
 			User user = UserManager.getInstance().getUser(roleId);
 			if (user == null) {
@@ -62,9 +64,9 @@ public class AckRoomTableHandler implements ConnectHandle {
 				return; // 返回
 			}
 			// 发送响应到网关服务器
-			gate.sendMessage(roleId, HMsg.ACK_LOGIN_MSG, 0, buildLoginResponse(user, rooms), sequence);
+			gate.sendMessage(roleId, HMsg.ACK_LOGIN_MSG, 0, buildLoginResponse(user, tables, rooms), sequence);
 
-			logger.debug("登录响应发送成功, userId: {}, 房间数量: {}", roleId, rooms.size());
+			logger.debug("登录响应发送成功, userId: {}, 房间数量: {}", roleId, tables.size());
 
 		} catch (Exception e) {
 			logger.error("发送登录响应失败, userId: {}", roleId, e);
@@ -74,12 +76,13 @@ public class AckRoomTableHandler implements ConnectHandle {
 	/**
 	 * 构建登录响应
 	 */
-	private HallProto.AckLogin buildLoginResponse(User user, List<ServerProto.RoomTableInfo> rooms) {
+	private HallProto.AckLogin buildLoginResponse(User user, List<Long> tables, List<ModelProto.Room> rooms) {
 		return HallProto.AckLogin.newBuilder()
 				.setCert(ByteString.copyFromUtf8(user.getCert()))
 				.setUserId(user.getUserId())
 				.setNickName(ByteString.copyFromUtf8(user.getNick()))
-				.addAllTables(rooms)
+				.addAllTables(tables)
+				.addAllRoomList(rooms)
 				.build();
 	}
 }

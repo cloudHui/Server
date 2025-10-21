@@ -37,9 +37,9 @@ public class CreateTableHandler implements ConnectHandle {
 	 * 发送加入桌子成功的响应给客户端
 	 */
 	private void dealCreateSuccessTableJoin(int sequence, ServerProto.AckCreateGameTable ack, int userId) {
-		TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
+		//TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
 		User user = UserManager.getInstance().getUser(userId);
-		tableInfo.joinRole(user);
+		//tableInfo.joinRole(user);
 		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId(), sequence, user);
 	}
 }

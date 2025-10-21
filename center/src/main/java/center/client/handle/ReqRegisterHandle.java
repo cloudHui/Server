@@ -10,6 +10,7 @@ import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import proto.ModelProto;
+import proto.ServerProto;
 import utils.ServerClientManager;
 import utils.handle.AbstractRegisterHandler;
 
@@ -75,7 +76,7 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 	 */
 	@Override
 	protected void sendRegistrationResponse(Sender sender, int clientId, long mapId, int sequence) {
-		ModelProto.AckRegister.Builder response = ModelProto.AckRegister.newBuilder();
+		ServerProto.AckRegister.Builder response = ServerProto.AckRegister.newBuilder();
 		response.setServerInfo(getCurrentServerInfo());
 		sender.sendMessage(CMsg.ACK_REGISTER, response.build(), sequence);
 		logger.info("已发送注册响应");
@@ -124,7 +125,7 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 			return;
 		}
 
-		ModelProto.NotRegisterInfo.Builder notification = ModelProto.NotRegisterInfo.newBuilder();
+		ServerProto.NotRegisterInfo.Builder notification = ServerProto.NotRegisterInfo.newBuilder();
 		notification.addServers(serverInfo);
 
 		int notifiedCount = 0;

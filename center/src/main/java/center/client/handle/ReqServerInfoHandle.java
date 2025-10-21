@@ -14,6 +14,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 import utils.ServerClientManager;
 
 /**
@@ -27,12 +28,12 @@ public class ReqServerInfoHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
-			ModelProto.ReqServerInfo request = (ModelProto.ReqServerInfo) message;
+			ServerProto.ReqServerInfo request = (ServerProto.ReqServerInfo) message;
 			ServerClientManager manager = Center.getInstance().getServerManager();
 
 			logger.info("处理服务信息查询请求, 查询类型数量: {}", request.getServerTypeCount());
 
-			ModelProto.AckServerInfo response = buildServerInfoResponse(request, manager);
+			ServerProto.AckServerInfo response = buildServerInfoResponse(request, manager);
 			sender.sendMessage(clientId, CMsg.ACK_SERVER, mapId, response, sequence);
 
 			logger.info("返回服务信息, 服务器数量: {}", response.getServersCount());
@@ -45,8 +46,8 @@ public class ReqServerInfoHandle implements Handler {
 	/**
 	 * 构建服务器信息响应
 	 */
-	private ModelProto.AckServerInfo buildServerInfoResponse(ModelProto.ReqServerInfo request, ServerClientManager manager) {
-		ModelProto.AckServerInfo.Builder response = ModelProto.AckServerInfo.newBuilder();
+	private ServerProto.AckServerInfo buildServerInfoResponse(ServerProto.ReqServerInfo request, ServerClientManager manager) {
+		ServerProto.AckServerInfo.Builder response = ServerProto.AckServerInfo.newBuilder();
 		List<Integer> serverTypes = request.getServerTypeList();
 
 		for (int serverTypeValue : serverTypes) {
@@ -66,7 +67,7 @@ public class ReqServerInfoHandle implements Handler {
 	 * 添加指定类型的服务器信息到响应
 	 */
 	private void addServerInfoToResponse(ServerClientManager manager,
-										 ModelProto.AckServerInfo.Builder response,
+										 ServerProto.AckServerInfo.Builder response,
 										 ServerType serverType) {
 		List<ClientHandler> servers = manager.getAllTypeServer(serverType);
 		if (servers == null || servers.isEmpty()) {

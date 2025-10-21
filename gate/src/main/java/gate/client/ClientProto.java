@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.ModelProto;
+import proto.ServerProto;
 import utils.ServerManager;
 
 /**
@@ -185,7 +186,7 @@ public class ClientProto {
 	protected static void notifyServerDisconnect(int userId, ChannelHandler handler) {
 		logger.info("通知服务器玩家断开连接, userId: {}", userId);
 
-		ModelProto.NotBreak.Builder disconnectNotify = ModelProto.NotBreak.newBuilder();
+		ServerProto.NotBreak.Builder disconnectNotify = ServerProto.NotBreak.newBuilder();
 		disconnectNotify.setUserId(userId);
 
 		ServerManager serverManager = Gate.getInstance().getServerManager();
@@ -201,7 +202,7 @@ public class ClientProto {
 	/**
 	 * 通知所有服务器玩家断开
 	 */
-	private static void notifyAllServersDisconnect(ModelProto.NotBreak disconnectNotify, ChannelHandler handler) {
+	private static void notifyAllServersDisconnect(ServerProto.NotBreak disconnectNotify, ChannelHandler handler) {
 		sendDisconnectNotify(ServerType.Game, disconnectNotify);
 		sendDisconnectNotify(ServerType.Hall, disconnectNotify);
 		sendDisconnectNotify(ServerType.Room, disconnectNotify);
@@ -213,7 +214,7 @@ public class ClientProto {
 	/**
 	 * 发送断开连接通知到指定服务器
 	 */
-	private static void sendDisconnectNotify(ServerType serverType, ModelProto.NotBreak disconnectNotify) {
+	private static void sendDisconnectNotify(ServerType serverType, ServerProto.NotBreak disconnectNotify) {
 		ConnectHandler serverConnection = Gate.getInstance().getServerManager().getServerClient(serverType);
 		if (serverConnection != null) {
 			serverConnection.sendMessage(CMsg.NOT_BREAK, disconnectNotify);
@@ -226,10 +227,10 @@ public class ClientProto {
 	/**
 	 * 通知中心服务器断开连接
 	 */
-	private static void notifyCenterServerDisconnect(ModelProto.NotBreak disconnectNotify, ChannelHandler handler) {
+	private static void notifyCenterServerDisconnect(ServerProto.NotBreak disconnectNotify, ChannelHandler handler) {
 		ConnectHandler centerConnection = Gate.getInstance().getServerManager().getServerClient(ServerType.Center);
 		if (centerConnection != null) {
-			ModelProto.NotBreak.Builder notifyBuilder = disconnectNotify.toBuilder();
+			ServerProto.NotBreak.Builder notifyBuilder = disconnectNotify.toBuilder();
 			setDisconnectCertificate(notifyBuilder, handler);
 			centerConnection.sendMessage(CMsg.NOT_BREAK, notifyBuilder.build());
 			logger.debug("已通知中心服务器玩家断开");
@@ -239,7 +240,7 @@ public class ClientProto {
 	/**
 	 * 设置断开连接的证书信息
 	 */
-	private static void setDisconnectCertificate(ModelProto.NotBreak.Builder notifyBuilder, ChannelHandler handler) {
+	private static void setDisconnectCertificate(ServerProto.NotBreak.Builder notifyBuilder, ChannelHandler handler) {
 		String hostAddress = getHandlerHostAddress(handler);
 		if (hostAddress != null) {
 			notifyBuilder.setCert(ByteString.copyFromUtf8(hostAddress));

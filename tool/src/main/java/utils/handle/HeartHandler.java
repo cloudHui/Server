@@ -9,6 +9,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * 心跳请求
@@ -20,10 +21,10 @@ public class HeartHandler implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message reqHeart, long mapId, int sequence) {
-		ModelProto.ReqHeart req = (ModelProto.ReqHeart) reqHeart;
+		ServerProto.ReqHeart req = (ServerProto.ReqHeart) reqHeart;
 		long now = System.currentTimeMillis();
 		int serverType = req.getServerType();
-		ModelProto.AckHeart.Builder ack = ModelProto.AckHeart.newBuilder();
+		ServerProto.AckHeart.Builder ack = ServerProto.AckHeart.newBuilder();
 		ack.setReqTime(now);
 		//ack.setRetryTime(req.getRetryTime());
 		sender.sendMessage(clientId, CMsg.HEART_ACK, mapId, ack.build(), sequence);

@@ -8,6 +8,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
 
 /**
  * 处理网关通知的玩家断线事件
@@ -20,7 +21,7 @@ public class NotBreakHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
-			ModelProto.NotBreak notification = (ModelProto.NotBreak) message;
+			ServerProto.NotBreak notification = (ServerProto.NotBreak) message;
 			int userId = notification.getUserId();
 
 			logger.info("处理玩家断线通知, userId: {}, clientId: {}", userId, clientId);

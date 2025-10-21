@@ -10,6 +10,7 @@ import game.manager.table.Table;
 import model.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ModelProto;
 import proto.ServerProto;
 import utils.other.excel.ExcelUtil;
 
@@ -134,7 +135,7 @@ public class TableManager {
 	 * @param role   创建的玩家
 	 * @return 桌子实例
 	 */
-	public Table createTable(int roomId, ServerProto.RoomRole role) {
+	public Table createTable(int roomId, ModelProto.RoomRole role) {
 		synchronized (TableManager.class) {
 			TableModel model = tableModelMap.get(roomId);
 			Table table = new Table(getTableId(), model, role);
