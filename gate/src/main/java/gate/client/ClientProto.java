@@ -10,7 +10,6 @@ import io.netty.channel.ChannelHandler;
 import msg.registor.HandleTypeRegister;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
-import msg.registor.message.HMsg;
 import net.client.handler.ClientHandler;
 import net.client.handler.WsClientHandler;
 import net.connect.handle.ConnectHandler;
@@ -22,7 +21,6 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
-import proto.HallProto;
 import proto.ModelProto;
 import utils.ServerManager;
 
@@ -144,16 +142,6 @@ public class ClientProto {
 
 		long costTime = System.currentTimeMillis() - startTime;
 		logger.info("消息转发成功, msgId: {}, userId: {}, 耗时: {}ms", Integer.toHexString(msgId), client.getRoleId(), costTime);
-	}
-
-	/**
-	 * 处理客户端特殊响应（如登录响应）
-	 */
-	private static void processClientResponse(TCPMessage response, GateTcpClient client) {
-		if (response.getMessageId() == HMsg.ACK_LOGIN_MSG) {
-			//Todo 有其他消息字段 gate要存储
-			processLoginResponse(response, client);
-		}
 	}
 
 

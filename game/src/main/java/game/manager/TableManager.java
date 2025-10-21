@@ -1,8 +1,6 @@
 package game.manager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,13 +77,21 @@ public class TableManager {
 		}
 
 		long tableId = table.getTableId();
-		Table existingTable = tableMap.putIfAbsent(tableId, table);
+		Table existingTable = tableMap.get(tableId);
 
 		if (existingTable != null) {
 			logger.warn("桌子已存在,添加失败, tableId: {}", tableId);
 		} else {
+			tableMap.put(tableId, table);
 			logger.debug("添加新桌子, tableId: {}", tableId);
 		}
+	}
+
+	public static void main(String[] args) {
+		Map<Integer, Integer> map = new HashMap<>();
+		Integer integer = map.putIfAbsent(1, 2);
+
+		System.out.println(integer);
 	}
 
 	/**

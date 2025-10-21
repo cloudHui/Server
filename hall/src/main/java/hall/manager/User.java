@@ -13,17 +13,17 @@ public class User {
 	private final int userId;
 	private final String cert;
 	private String nick;
-	private int clientId;
+	private int gateId;
 	private long lastActiveTime;
 
-	public User(int userId, String nick, int clientId, String cert) {
+	public User(int userId, String nick, int gateId, String cert) {
 		this.userId = userId;
 		this.nick = nick;
-		this.clientId = clientId;
+		this.gateId = gateId;
 		this.cert = cert;
 		this.lastActiveTime = System.currentTimeMillis();
 
-		logger.debug("创建用户实例, userId: {}, nick: {}, clientId: {}", userId, nick, clientId);
+		logger.debug("创建用户实例, userId: {}, nick: {}, clientId: {}", userId, nick, gateId);
 	}
 
 	public String getCert() {
@@ -43,14 +43,14 @@ public class User {
 		logger.debug("更新用户昵称, userId: {}, newNick: {}", userId, nick);
 	}
 
-	public int getClientId() {
-		return clientId;
+	public int getGateId() {
+		return gateId;
 	}
 
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
+	public void setGateId(int gateId) {
+		this.gateId = gateId;
 		updateActiveTime();
-		logger.debug("更新用户客户端ID, userId: {}, newClientId: {}", userId, clientId);
+		logger.debug("更新用户客户端ID, userId: {}, newClientId: {}", userId, gateId);
 	}
 
 	public long getLastActiveTime() {
@@ -74,6 +74,6 @@ public class User {
 	@Override
 	public String toString() {
 		return String.format("User{userId=%d, nick='%s', clientId=%d, cert='%s'}",
-				userId, nick, clientId, cert);
+				userId, nick, gateId, cert);
 	}
 }

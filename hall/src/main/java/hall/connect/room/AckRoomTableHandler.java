@@ -55,10 +55,10 @@ public class AckRoomTableHandler implements ConnectHandle {
 				return; // 返回
 			}
 
-			ClientHandler gate = Hall.getInstance().serverClientManager.getServerClient(ServerType.Gate, user.getClientId());
+			ClientHandler gate = Hall.getInstance().serverClientManager.getServerClient(ServerType.Gate, user.getGateId());
 
 			if (gate == null) {
-				logger.error("用户 userId: {} gate:{} 不存在, ", roleId, user.getClientId());
+				logger.error("用户 userId: {} gate:{} 不存在, ", roleId, user.getGateId());
 				return; // 返回
 			}
 			// 发送响应到网关服务器
