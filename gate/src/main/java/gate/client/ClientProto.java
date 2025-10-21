@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.protobuf.ByteString;
 import gate.Gate;
+import gate.client.handle.back.BackHandleManager;
 import io.netty.channel.ChannelHandler;
 import msg.registor.HandleTypeRegister;
 import msg.registor.enums.ServerType;
@@ -69,9 +70,8 @@ public class ClientProto {
 		int msgId = tcpMessage.getMessageId();
 
 		int sequence = tcpMessage.getSequence();
-		tcpMessage.setClientId(client.getId());
-		tcpMessage.setMapId(client.getRoleId());
 
+		setClientMap(tcpMessage, client);
 		ConnectHandler serverConnection = getTargetServerConnection(msgId);
 		if (serverConnection == null) {
 			logger.error("无法找到目标服务器连接, msgId: {}", Integer.toHexString(msgId));
@@ -79,6 +79,17 @@ public class ClientProto {
 		}
 
 		return sendMessageToServer(serverConnection, tcpMessage, sequence, client);
+	}
+
+	/**
+	 * 设置链接id, 用户id,和桌子号
+	 *
+	 * @param tcpMessage 消息
+	 * @param client     链接
+	 */
+	private static void setClientMap(TCPMessage tcpMessage, GateTcpClient client) {
+		tcpMessage.setClientId(client.getRoleId() == -1 ? client.getId() : client.getRoleId());
+		tcpMessage.setMapId(client.getMapId() == -1 ? client.getRoleId() : client.getMapId());//没登陆是玩家id 登录后是桌子id
 	}
 
 	/**
@@ -113,11 +124,10 @@ public class ClientProto {
 	/**
 	 * 处理服务器响应
 	 */
-	private static void handleServerResponse(Object response, int sequence, long startTime, GateTcpClient client, int msgId) {
+	private static void handleServerResponse(TCPMessage response, int sequence, long startTime, GateTcpClient client, int msgId) {
 		try {
-			TCPMessage responseMessage = (TCPMessage) response;
-			responseMessage.setSequence(sequence);
-			forwardResponseToClient(responseMessage, startTime, client);
+			response.setSequence(sequence);
+			forwardResponseToClient(response, startTime, client);
 		} catch (Exception e) {
 			logger.error("处理服务器响应失败, msgId: {}, clientId: {}, error: {}", Integer.toHexString(msgId), client.getId(), e.getMessage(), e);
 		}
@@ -129,7 +139,7 @@ public class ClientProto {
 	private static void forwardResponseToClient(TCPMessage response, long startTime, GateTcpClient client) {
 		int msgId = response.getMessageId();
 
-		processClientResponse(response, client);
+		BackHandleManager.handle(response, client);
 		client.sendMessage(response);
 
 		long costTime = System.currentTimeMillis() - startTime;
@@ -146,22 +156,6 @@ public class ClientProto {
 		}
 	}
 
-	/**
-	 * 处理登录响应
-	 */
-	private static void processLoginResponse(TCPMessage response, GateTcpClient client) {
-		try {
-			HallProto.AckLogin res = HallProto.AckLogin.parseFrom(response.getMessage());
-			client.setRoleId(res.getUserId());
-			client.setClubId(res.getClub());
-			client.setChannel(res.getChannel());
-
-			notifyCenterLoginSuccess(ClientHandler.getRemoteIP(client).getHostString());
-			logger.info("用户登录成功, userId: {}, channel: {}, club: {}", res.getUserId(), res.getChannel(), res.getClub());
-		} catch (Exception e) {
-			logger.error("解析登录响应失败, msgId: {}, userId: {}", Integer.toHexString(response.getMessageId()), client.getRoleId(), e);
-		}
-	}
 
 	/**
 	 * 获取目标服务器连接
@@ -274,21 +268,5 @@ public class ClientProto {
 			return WsClientHandler.getRemoteIP((WsClientHandler) handler).getHostName();
 		}
 		return null;
-	}
-
-	/**
-	 * 通知中心服务器登录成功
-	 */
-	private static void notifyCenterLoginSuccess(String certificate) {
-		ModelProto.NotRegisterClient.Builder loginNotify = ModelProto.NotRegisterClient.newBuilder();
-		loginNotify.setCert(ByteString.copyFromUtf8(certificate));
-
-		ConnectHandler centerConnection = Gate.getInstance().getServerManager().getServerClient(ServerType.Center);
-		if (centerConnection != null) {
-			centerConnection.sendMessage(CMsg.NOT_LINK, loginNotify.build());
-			logger.debug("已通知中心服务器登录成功, certificate: {}", certificate);
-		} else {
-			logger.warn("中心服务器连接不可用,无法通知登录成功");
-		}
 	}
 }

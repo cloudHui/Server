@@ -14,7 +14,7 @@ import proto.ServerProto;
 public class AckCreateTableHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		ServerProto.AckCreateGameTable ack = (ServerProto.AckCreateGameTable) msg;
 
 		return true;

@@ -17,7 +17,7 @@ message AckCreateGameTable {
 //room桌子
 message RoomTableInfo{
     int32 roomId = 1;
-    bytes tableId = 2;
+    int64 tableId = 2;
     int32 creatorId = 3;
     int32 ownerId = 4;
     int32 stat = 5;//等待中  已开始

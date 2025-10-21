@@ -1,12 +1,12 @@
 package game.client.handle.server;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.google.protobuf.Message;
 import msg.annotation.ProcessType;
 import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 
 /**
@@ -18,7 +18,7 @@ public class NotBreakHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(NotBreakHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
 			ModelProto.NotBreak notification = (ModelProto.NotBreak) message;
 			int userId = notification.getUserId();

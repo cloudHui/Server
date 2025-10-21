@@ -17,7 +17,7 @@ import proto.ModelProto;
 public class RegisterNoticeHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message msg, int mapId, int sequence) {
+	public boolean handler(Sender sender, int aLong, Message msg, long mapId, int sequence) {
 		Hall.getInstance().execute(() -> Hall.getInstance().getServerManager().connectToSever(
 				((ModelProto.NotRegisterInfo) msg).getServersList(),
 				Hall.getInstance().getServerId(), Hall.getInstance().getServerInfo().getIpConfig().toStringUtf8(),

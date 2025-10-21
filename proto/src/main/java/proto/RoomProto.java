@@ -2553,9 +2553,9 @@ public final class RoomProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>bytes tableId = 1;</code>
+     * <code>int64 tableId = 1;</code>
      */
-    com.google.protobuf.ByteString getTableId();
+    long getTableId();
   }
   /**
    * <pre>
@@ -2574,7 +2574,7 @@ public final class RoomProto {
       super(builder);
     }
     private AckJoinRoomTable() {
-      tableId_ = com.google.protobuf.ByteString.EMPTY;
+      tableId_ = 0L;
     }
 
     @java.lang.Override
@@ -2605,9 +2605,9 @@ public final class RoomProto {
               }
               break;
             }
-            case 10: {
+            case 8: {
 
-              tableId_ = input.readBytes();
+              tableId_ = input.readInt64();
               break;
             }
           }
@@ -2635,11 +2635,11 @@ public final class RoomProto {
     }
 
     public static final int TABLEID_FIELD_NUMBER = 1;
-    private com.google.protobuf.ByteString tableId_;
+    private long tableId_;
     /**
-     * <code>bytes tableId = 1;</code>
+     * <code>int64 tableId = 1;</code>
      */
-    public com.google.protobuf.ByteString getTableId() {
+    public long getTableId() {
       return tableId_;
     }
 
@@ -2655,8 +2655,8 @@ public final class RoomProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!tableId_.isEmpty()) {
-        output.writeBytes(1, tableId_);
+      if (tableId_ != 0L) {
+        output.writeInt64(1, tableId_);
       }
       unknownFields.writeTo(output);
     }
@@ -2666,9 +2666,9 @@ public final class RoomProto {
       if (size != -1) return size;
 
       size = 0;
-      if (!tableId_.isEmpty()) {
+      if (tableId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, tableId_);
+          .computeInt64Size(1, tableId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2686,8 +2686,8 @@ public final class RoomProto {
       proto.RoomProto.AckJoinRoomTable other = (proto.RoomProto.AckJoinRoomTable) obj;
 
       boolean result = true;
-      result = result && getTableId()
-          .equals(other.getTableId());
+      result = result && (getTableId()
+          == other.getTableId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2700,7 +2700,8 @@ public final class RoomProto {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTableId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2834,7 +2835,7 @@ public final class RoomProto {
       }
       public Builder clear() {
         super.clear();
-        tableId_ = com.google.protobuf.ByteString.EMPTY;
+        tableId_ = 0L;
 
         return this;
       }
@@ -2900,7 +2901,7 @@ public final class RoomProto {
 
       public Builder mergeFrom(proto.RoomProto.AckJoinRoomTable other) {
         if (other == proto.RoomProto.AckJoinRoomTable.getDefaultInstance()) return this;
-        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
+        if (other.getTableId() != 0L) {
           setTableId(other.getTableId());
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -2930,31 +2931,28 @@ public final class RoomProto {
         return this;
       }
 
-      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
+      private long tableId_ ;
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>int64 tableId = 1;</code>
        */
-      public com.google.protobuf.ByteString getTableId() {
+      public long getTableId() {
         return tableId_;
       }
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>int64 tableId = 1;</code>
        */
-      public Builder setTableId(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setTableId(long value) {
+        
         tableId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>int64 tableId = 1;</code>
        */
       public Builder clearTableId() {
         
-        tableId_ = getDefaultInstance().getTableId();
+        tableId_ = 0L;
         onChanged();
         return this;
       }
@@ -3046,7 +3044,7 @@ public final class RoomProto {
       "ables\030\002 \003(\0132\024.proto.RoomTableInfo\"/\n\016Ack" +
       "GetRoomList\022\035\n\010roomList\030\001 \003(\0132\013.proto.Ro" +
       "om\"\"\n\020ReqJoinRoomTable\022\016\n\006roomId\030\001 \001(\005\"#" +
-      "\n\020AckJoinRoomTable\022\017\n\007tableId\030\001 \001(\014B\013B\tR" +
+      "\n\020AckJoinRoomTable\022\017\n\007tableId\030\001 \001(\003B\013B\tR" +
       "oomProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

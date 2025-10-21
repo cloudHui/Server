@@ -33,7 +33,7 @@ public class ReqLoginHandler implements Handler {
 	private final AtomicInteger userIdGenerator = new AtomicInteger(1000);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		int gateId = ((ClientHandler) sender).getId();
 		try {
 			HallProto.ReqLogin request = (HallProto.ReqLogin) message;

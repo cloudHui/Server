@@ -23,7 +23,7 @@ public class ServerBreakNoticeHandle implements Handler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerBreakNoticeHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int aLong, Message notServerBreak, int mapId, int sequence) {
+	public boolean handler(Sender sender, int aLong, Message notServerBreak, long mapId, int sequence) {
 		ModelProto.NotServerBreak req = (ModelProto.NotServerBreak) notServerBreak;
 		List<ModelProto.ServerInfo> serverInfos = req.getServersList();
 		if (serverInfos.isEmpty()) {

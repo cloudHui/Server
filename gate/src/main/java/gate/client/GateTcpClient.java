@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
  */
 public class GateTcpClient extends ClientHandler {
 	private static final Logger logger = LoggerFactory.getLogger(GateTcpClient.class);
-	private int roleId;
+	private int roleId = -1;
+	private long mapId = -1;//当前进入的桌子号
 	private int clubId;
 	private int channel;
 
@@ -62,5 +63,13 @@ public class GateTcpClient extends ClientHandler {
 	public void setChannel(int channel) {
 		this.channel = channel;
 		logger.debug("设置渠道ID: {}", channel);
+	}
+
+	public long getMapId() {
+		return mapId;
+	}
+
+	public void setMapId(long mapId) {
+		this.mapId = mapId;
 	}
 }

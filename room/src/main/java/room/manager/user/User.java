@@ -23,7 +23,7 @@ public class User {
 	private boolean joinGame;
 	private boolean offline = false;
 	private final int clientId;
-	private final Set<String> tables = new HashSet<>();
+	private final Set<Long> tables = new HashSet<>();
 
 	public User(int userId, int clientId) {
 		this.userId = userId;
@@ -66,7 +66,7 @@ public class User {
 	/**
 	 * 添加用户桌子
 	 */
-	public void addTable(String tableId) {
+	public void addTable(long tableId) {
 		tables.add(tableId);
 		logger.info("用户添加桌子, userId: {}, tableId: {}", userId, tableId);
 	}
@@ -89,8 +89,8 @@ public class User {
 	public List<ServerProto.RoomTableInfo> getAllTables() {
 		List<ServerProto.RoomTableInfo> tableInfos = new ArrayList<>();
 		TableInfo tableById;
-		List<String> remove = new ArrayList<>();
-		for (String table : tables) {
+		List<Long> remove = new ArrayList<>();
+		for (long table : tables) {
 			tableById = TableManager.getInstance().getTableById(table);
 			if (tableById != null) {
 				tableInfos.add(tableById.getTableInfo());

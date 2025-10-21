@@ -21,7 +21,7 @@ public class ReqCreateTableHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqCreateTableHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
 			ServerProto.ReqCreateGameTable request = (ServerProto.ReqCreateGameTable) message;
 			int roomId = request.getRoomId();
@@ -33,7 +33,7 @@ public class ReqCreateTableHandle implements Handler {
 			// 发送响应
 			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId, response, sequence);
 
-			logger.info("创建桌子请求处理完成, clientId: {}, tableId: {}", clientId, response.getTables().getTableId().toStringUtf8());
+			logger.info("创建桌子请求处理完成, clientId: {}, tableId: {}", clientId, response.getTables().getTableId());
 
 		} catch (Exception e) {
 			logger.error("处理创建桌子请求失败, clientId: {}", clientId, e);
@@ -54,7 +54,7 @@ public class ReqCreateTableHandle implements Handler {
 		// 构建响应
 		ServerProto.AckCreateGameTable.Builder response = ServerProto.AckCreateGameTable.newBuilder();
 		response.setTables(ServerProto.RoomTableInfo.newBuilder()
-				.setTableId(com.google.protobuf.ByteString.copyFromUtf8(table.getTableId()))
+				.setTableId(table.getTableId())
 				.setRoomId(roomId)
 				.build());
 

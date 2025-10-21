@@ -17,7 +17,7 @@ import room.manager.user.User;
  */
 public class TableInfo {
 
-	private final String tableId;
+	private final long tableId;
 
 	private final int creatorId;
 
@@ -32,13 +32,13 @@ public class TableInfo {
 
 	private final Set<User> tableRoles = new HashSet<>();
 
-	public TableInfo(String tableId, int creatorId, TableModel model) {
+	public TableInfo(long tableId, int creatorId, TableModel model) {
 		this.tableId = tableId;
 		this.creatorId = creatorId;
 		this.model = model;
 	}
 
-	public String getTableId() {
+	public Long getTableId() {
 		return tableId;
 	}
 
@@ -86,7 +86,7 @@ public class TableInfo {
 	public ServerProto.RoomTableInfo getTableInfo() {
 		ServerProto.RoomTableInfo.Builder builder = ServerProto.RoomTableInfo.newBuilder()
 				.setRoomId(model.getId())
-				.setTableId(ByteString.copyFromUtf8(tableId))
+				.setTableId(tableId)
 				.setOwnerId(ownerId)
 				.setStat(tableState.getNumber())
 				.setCreatorId(ownerId);

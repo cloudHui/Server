@@ -22,8 +22,8 @@ public class TableManager {
 	private static final TableManager instance = new TableManager();
 
 	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
-	private final Map<Integer, Map<String, TableInfo>> roomTables = new HashMap<>();
-	private final Map<String, TableInfo> tableInfoMap = new HashMap<>();
+	private final Map<Integer, Map<Long, TableInfo>> roomTables = new HashMap<>();
+	private final Map<Long, TableInfo> tableInfoMap = new HashMap<>();
 
 	public static TableManager getInstance() {
 		return instance;
@@ -67,13 +67,13 @@ public class TableManager {
 		try {
 			int totalRooms = 0;
 
-			for (Map.Entry<Integer, Map<String, TableInfo>> roomEntry : roomTables.entrySet()) {
+			for (Map.Entry<Integer, Map<Long, TableInfo>> roomEntry : roomTables.entrySet()) {
 				RoomProto.Room.Builder roomBuilder = RoomProto.Room.newBuilder();
 				roomBuilder.setRoomId(roomEntry.getKey());
 
-				Map<String, TableInfo> tables = roomEntry.getValue();
+				Map<Long, TableInfo> tables = roomEntry.getValue();
 				if (tables != null && !tables.isEmpty()) {
-					for (Map.Entry<String, TableInfo> entry : tables.entrySet()) {
+					for (Map.Entry<Long, TableInfo> entry : tables.entrySet()) {
 						roomBuilder.addTables(entry.getValue().getTableInfo());
 					}
 					totalRooms += tables.size();
@@ -105,7 +105,7 @@ public class TableManager {
 	 *
 	 * @param tableId 桌子号
 	 */
-	public TableInfo getTableById(String tableId) {
+	public TableInfo getTableById(long tableId) {
 		return tableInfoMap.get(tableId);
 	}
 
@@ -125,12 +125,12 @@ public class TableManager {
 	 * 获取模板可加入房间
 	 */
 	public synchronized TableInfo getCanJoinTable(int modelId) {
-		Map<String, TableInfo> model = roomTables.get(modelId);
+		Map<Long, TableInfo> model = roomTables.get(modelId);
 		if (model == null || model.isEmpty()) {
 			logger.warn("没有可加入房间 create, modelId: {}", modelId);
 			return null;
 		}
-		for (Map.Entry<String, TableInfo> entry : model.entrySet()) {
+		for (Map.Entry<Long, TableInfo> entry : model.entrySet()) {
 			if (entry.getValue().canJoin()) {
 				return entry.getValue();
 			}
@@ -143,7 +143,7 @@ public class TableManager {
 	 * 存房间信息
 	 */
 	public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
-		TableInfo tableInfo = new TableInfo(roomTable.getTableId().toStringUtf8(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
+		TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
 		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
 		tableInfoMap.put(tableInfo.getTableId(), tableInfo);
 		return tableInfo;

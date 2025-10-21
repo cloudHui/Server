@@ -25,7 +25,7 @@ import proto.ServerProto;
 public class Table {
 	private static final Logger logger = LoggerFactory.getLogger(Table.class);
 
-	private final String tableId;
+	private final long tableId;
 
 	private final TableModel tableModel;
 
@@ -72,7 +72,7 @@ public class Table {
 	 */
 	private static final int MAX_ERROR = 100;
 
-	public Table(String tableId, TableModel model, ServerProto.RoomRole creator) {
+	public Table(long tableId, TableModel model, ServerProto.RoomRole creator) {
 		this.tableId = tableId;
 		this.creator = creator;
 		this.tableModel = model;
@@ -80,7 +80,7 @@ public class Table {
 		logger.info("创建桌子实例, tableId: {}", tableId);
 	}
 
-	public String getTableId() {
+	public long getTableId() {
 		return tableId;
 	}
 
@@ -197,13 +197,7 @@ public class Table {
 	 */
 	public int getGroupIndex() {
 		try {
-			if (tableId == null || tableId.length() == 0) {
-				logger.warn("桌子ID为空,使用默认线程组0");
-				return 0;
-			}
-
-			char lastChar = tableId.charAt(tableId.length() - 1);
-			int groupIndex = Character.getNumericValue(lastChar) % 10;
+			int groupIndex = (int) (tableId % 10);
 			logger.debug("计算线程组索引, tableId: {}, groupIndex: {}", tableId, groupIndex);
 			return groupIndex;
 		} catch (Exception e) {
@@ -326,6 +320,6 @@ public class Table {
 
 	@Override
 	public String toString() {
-		return String.format("Table{tableId='%s'}", tableId);
+		return String.format("Table{tableId='%d'}", tableId);
 	}
 }

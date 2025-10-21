@@ -28,33 +28,31 @@ public class ReqEnterTableHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqEnterTableHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
 			GameProto.ReqEnterTable request = (GameProto.ReqEnterTable) message;
-			String tableId = request.getTableId().toStringUtf8();
-
-			logger.info("处理进入桌子请求, userId: {}, tableId: {}", mapId, tableId);
+			logger.info("处理进入桌子请求, userId: {}, tableId: {}", clientId, mapId);
 
 			// 获取桌子管理器
 			TableManager tableManager = Game.getInstance().getTableManager();
 
 			// 查找桌子
-			Table table = tableManager.getTable(tableId);
+			Table table = tableManager.getTable(mapId);
 			if (table == null) {
-				logger.warn("桌子不存在, tableId: {}", tableId);
+				logger.warn("桌子不存在, tableId: {}", mapId);
 				sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.TABLE_NULL_VALUE));
 				return true;
 			}
 			Game.getInstance().serialExecute(new Task() {
 				@Override
 				public int groupId() {
-					return tableId.hashCode();
+					return (int) (mapId / Game.getInstance().getPooSize());
 				}
 
 				@Override
 				public void run() {
 					// 处理进入桌子逻辑
-					int result = processEnterTable(mapId, tableId, clientId, request, table);
+					int result = processEnterTable(clientId, mapId, clientId, request, table);
 
 					if (result == ConstProto.Result.SUCCESS_VALUE) {
 						// 构建响应
@@ -65,7 +63,7 @@ public class ReqEnterTableHandle implements Handler {
 						sender.sendMessage(TCPMessage.newInstance(result));
 					}
 
-					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", mapId, tableId, result);
+					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", clientId, mapId, result);
 				}
 			});
 
@@ -78,9 +76,9 @@ public class ReqEnterTableHandle implements Handler {
 	/**
 	 * 处理进入桌子逻辑
 	 */
-	private int processEnterTable(int userId, String tableId, int gateId, GameProto.ReqEnterTable req, Table table) {
+	private int processEnterTable(int userId, long tableId, int gateId, GameProto.ReqEnterTable req, Table table) {
 		try {
-			if(table.gaming()){
+			if (table.gaming()) {
 				logger.error("桌子已经开始, userId: {}, tableId: {}", userId, tableId);
 				return ConstProto.Result.TABLE_START_VALUE;
 			}
@@ -109,7 +107,7 @@ public class ReqEnterTableHandle implements Handler {
 	private GameProto.AckEnterTable buildEnterTableResponse(Table table) {
 		GameProto.AckEnterTable.Builder response = GameProto.AckEnterTable.newBuilder();
 		response.setTableInfo(GameProto.TableInfo.newBuilder()
-				.setTableId(ByteString.copyFromUtf8(table.getTableId()))
+				.setTableId(table.getTableId())
 				.setRoomId(table.getRoomId())
 				.build());
 		Map<Integer, TableUser> users = table.getUsers();

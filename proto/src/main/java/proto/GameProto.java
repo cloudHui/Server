@@ -19,9 +19,9 @@ public final class GameProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>bytes tableId = 1;</code>
+     * <code>int64 tableId = 1;</code>
      */
-    com.google.protobuf.ByteString getTableId();
+    long getTableId();
 
     /**
      * <code>bytes head = 2;</code>
@@ -50,7 +50,7 @@ public final class GameProto {
       super(builder);
     }
     private ReqEnterTable() {
-      tableId_ = com.google.protobuf.ByteString.EMPTY;
+      tableId_ = 0L;
       head_ = com.google.protobuf.ByteString.EMPTY;
       nick_ = com.google.protobuf.ByteString.EMPTY;
     }
@@ -83,9 +83,9 @@ public final class GameProto {
               }
               break;
             }
-            case 10: {
+            case 8: {
 
-              tableId_ = input.readBytes();
+              tableId_ = input.readInt64();
               break;
             }
             case 18: {
@@ -123,11 +123,11 @@ public final class GameProto {
     }
 
     public static final int TABLEID_FIELD_NUMBER = 1;
-    private com.google.protobuf.ByteString tableId_;
+    private long tableId_;
     /**
-     * <code>bytes tableId = 1;</code>
+     * <code>int64 tableId = 1;</code>
      */
-    public com.google.protobuf.ByteString getTableId() {
+    public long getTableId() {
       return tableId_;
     }
 
@@ -161,8 +161,8 @@ public final class GameProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!tableId_.isEmpty()) {
-        output.writeBytes(1, tableId_);
+      if (tableId_ != 0L) {
+        output.writeInt64(1, tableId_);
       }
       if (!head_.isEmpty()) {
         output.writeBytes(2, head_);
@@ -178,9 +178,9 @@ public final class GameProto {
       if (size != -1) return size;
 
       size = 0;
-      if (!tableId_.isEmpty()) {
+      if (tableId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, tableId_);
+          .computeInt64Size(1, tableId_);
       }
       if (!head_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
@@ -206,8 +206,8 @@ public final class GameProto {
       proto.GameProto.ReqEnterTable other = (proto.GameProto.ReqEnterTable) obj;
 
       boolean result = true;
-      result = result && getTableId()
-          .equals(other.getTableId());
+      result = result && (getTableId()
+          == other.getTableId());
       result = result && getHead()
           .equals(other.getHead());
       result = result && getNick()
@@ -224,7 +224,8 @@ public final class GameProto {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTableId());
       hash = (37 * hash) + HEAD_FIELD_NUMBER;
       hash = (53 * hash) + getHead().hashCode();
       hash = (37 * hash) + NICK_FIELD_NUMBER;
@@ -362,7 +363,7 @@ public final class GameProto {
       }
       public Builder clear() {
         super.clear();
-        tableId_ = com.google.protobuf.ByteString.EMPTY;
+        tableId_ = 0L;
 
         head_ = com.google.protobuf.ByteString.EMPTY;
 
@@ -434,7 +435,7 @@ public final class GameProto {
 
       public Builder mergeFrom(proto.GameProto.ReqEnterTable other) {
         if (other == proto.GameProto.ReqEnterTable.getDefaultInstance()) return this;
-        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
+        if (other.getTableId() != 0L) {
           setTableId(other.getTableId());
         }
         if (other.getHead() != com.google.protobuf.ByteString.EMPTY) {
@@ -470,31 +471,28 @@ public final class GameProto {
         return this;
       }
 
-      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
+      private long tableId_ ;
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>int64 tableId = 1;</code>
        */
-      public com.google.protobuf.ByteString getTableId() {
+      public long getTableId() {
         return tableId_;
       }
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>int64 tableId = 1;</code>
        */
-      public Builder setTableId(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setTableId(long value) {
+        
         tableId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bytes tableId = 1;</code>
+       * <code>int64 tableId = 1;</code>
        */
       public Builder clearTableId() {
         
-        tableId_ = getDefaultInstance().getTableId();
+        tableId_ = 0L;
         onChanged();
         return this;
       }
@@ -8417,9 +8415,9 @@ public final class GameProto {
     int getRoomId();
 
     /**
-     * <code>bytes tableId = 2;</code>
+     * <code>int64 tableId = 2;</code>
      */
-    com.google.protobuf.ByteString getTableId();
+    long getTableId();
 
     /**
      * <code>int32 landlord = 3;</code>
@@ -8465,7 +8463,7 @@ public final class GameProto {
     }
     private TableInfo() {
       roomId_ = 0;
-      tableId_ = com.google.protobuf.ByteString.EMPTY;
+      tableId_ = 0L;
       landlord_ = 0;
     }
 
@@ -8502,9 +8500,9 @@ public final class GameProto {
               roomId_ = input.readInt32();
               break;
             }
-            case 18: {
+            case 16: {
 
-              tableId_ = input.readBytes();
+              tableId_ = input.readInt64();
               break;
             }
             case 24: {
@@ -8559,11 +8557,11 @@ public final class GameProto {
     }
 
     public static final int TABLEID_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString tableId_;
+    private long tableId_;
     /**
-     * <code>bytes tableId = 2;</code>
+     * <code>int64 tableId = 2;</code>
      */
-    public com.google.protobuf.ByteString getTableId() {
+    public long getTableId() {
       return tableId_;
     }
 
@@ -8624,8 +8622,8 @@ public final class GameProto {
       if (roomId_ != 0) {
         output.writeInt32(1, roomId_);
       }
-      if (!tableId_.isEmpty()) {
-        output.writeBytes(2, tableId_);
+      if (tableId_ != 0L) {
+        output.writeInt64(2, tableId_);
       }
       if (landlord_ != 0) {
         output.writeInt32(3, landlord_);
@@ -8645,9 +8643,9 @@ public final class GameProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, roomId_);
       }
-      if (!tableId_.isEmpty()) {
+      if (tableId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, tableId_);
+          .computeInt64Size(2, tableId_);
       }
       if (landlord_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -8675,8 +8673,8 @@ public final class GameProto {
       boolean result = true;
       result = result && (getRoomId()
           == other.getRoomId());
-      result = result && getTableId()
-          .equals(other.getTableId());
+      result = result && (getTableId()
+          == other.getTableId());
       result = result && (getLandlord()
           == other.getLandlord());
       result = result && (hasLastCard() == other.hasLastCard());
@@ -8698,7 +8696,8 @@ public final class GameProto {
       hash = (37 * hash) + ROOMID_FIELD_NUMBER;
       hash = (53 * hash) + getRoomId();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTableId());
       hash = (37 * hash) + LANDLORD_FIELD_NUMBER;
       hash = (53 * hash) + getLandlord();
       if (hasLastCard()) {
@@ -8836,7 +8835,7 @@ public final class GameProto {
         super.clear();
         roomId_ = 0;
 
-        tableId_ = com.google.protobuf.ByteString.EMPTY;
+        tableId_ = 0L;
 
         landlord_ = 0;
 
@@ -8920,7 +8919,7 @@ public final class GameProto {
         if (other.getRoomId() != 0) {
           setRoomId(other.getRoomId());
         }
-        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
+        if (other.getTableId() != 0L) {
           setTableId(other.getTableId());
         }
         if (other.getLandlord() != 0) {
@@ -8982,31 +8981,28 @@ public final class GameProto {
         return this;
       }
 
-      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
+      private long tableId_ ;
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>int64 tableId = 2;</code>
        */
-      public com.google.protobuf.ByteString getTableId() {
+      public long getTableId() {
         return tableId_;
       }
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>int64 tableId = 2;</code>
        */
-      public Builder setTableId(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setTableId(long value) {
+        
         tableId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>int64 tableId = 2;</code>
        */
       public Builder clearTableId() {
         
-        tableId_ = getDefaultInstance().getTableId();
+        tableId_ = 0L;
         onChanged();
         return this;
       }
@@ -13468,7 +13464,7 @@ public final class GameProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\ngame.proto\022\005proto\032\013const.proto\"<\n\rReqE" +
-      "nterTable\022\017\n\007tableId\030\001 \001(\014\022\014\n\004head\030\002 \001(\014" +
+      "nterTable\022\017\n\007tableId\030\001 \001(\003\022\014\n\004head\030\002 \001(\014" +
       "\022\014\n\004nick\030\003 \001(\014\"T\n\rAckEnterTable\022\036\n\007playe" +
       "rs\030\001 \003(\0132\r.proto.Player\022#\n\ttableInfo\030\002 \001" +
       "(\0132\020.proto.TableInfo\" \n\rReqLeaveTable\022\017\n" +
@@ -13486,7 +13482,7 @@ public final class GameProto {
       "s\030\002 \003(\0132\016.proto.RPlayer\"L\n\006OpInfo\022 \n\006cho" +
       "ice\030\001 \001(\0162\020.proto.Operation\022 \n\007opCards\030\002" +
       " \003(\0132\017.proto.CardInfo\"a\n\tTableInfo\022\016\n\006ro" +
-      "omId\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\014\022\020\n\010landlord\030",
+      "omId\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\003\022\020\n\010landlord\030",
       "\003 \001(\005\022!\n\010lastCard\030\004 \001(\0132\017.proto.CardInfo" +
       "\"h\n\006Player\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030\002" +
       " \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022\032" +

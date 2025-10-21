@@ -25,5 +25,5 @@ message ReqJoinRoomTable {
 
 //加入房间回复
 message AckJoinRoomTable {
-    bytes tableId = 1;
+    int64 tableId = 1;
 }

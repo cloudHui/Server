@@ -7,6 +7,7 @@ import java.util.List;
 
 import gate.client.ClientProto;
 import gate.client.GateTcpClient;
+import gate.client.handle.back.BackHandleManager;
 import gate.connect.ConnectProcessor;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
@@ -148,8 +149,11 @@ public class Gate {
 	 * 初始化组件
 	 */
 	private void initializeComponents() {
-		serverManager = new ServerManager(timer,
-				ConfigurationManager.getInstance().getInt("plant", 0) != 0);
+		serverManager = new ServerManager(timer, ConfigurationManager.getInstance().getInt("plant", 0) != 0);
+		ConnectProcessor.init();
+		ClientProto.init();
+		HandleManager.init(ConnectProcessor.class);
+		BackHandleManager.init();
 		logger.info("服务器管理器初始化完成");
 	}
 
@@ -177,9 +181,6 @@ public class Gate {
 	 */
 	private void registerToCenter() {
 		try {
-			ConnectProcessor.init();
-			ClientProto.init();
-			HandleManager.init(ConnectProcessor.class);
 			String[] centerAddress = center.split(":");
 			if (centerAddress.length != 2) {
 				throw new IllegalArgumentException("中心服务器地址格式错误: " + center);

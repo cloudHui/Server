@@ -7,7 +7,7 @@ import "const.proto";
 
 //请求加入桌子
 message ReqEnterTable {
-    bytes tableId = 1;
+    int64 tableId = 1;
     bytes head = 2;
     bytes nick = 3;
 }
@@ -73,7 +73,7 @@ message OpInfo{
 
 message TableInfo{
     int32 roomId = 1;
-    bytes tableId = 2;
+    int64 tableId = 2;
     int32 landlord = 3;
     CardInfo lastCard = 4;//上一次出的牌
 }

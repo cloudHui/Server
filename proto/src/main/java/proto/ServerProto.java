@@ -1381,9 +1381,9 @@ public final class ServerProto {
     int getRoomId();
 
     /**
-     * <code>bytes tableId = 2;</code>
+     * <code>int64 tableId = 2;</code>
      */
-    com.google.protobuf.ByteString getTableId();
+    long getTableId();
 
     /**
      * <code>int32 creatorId = 3;</code>
@@ -1446,7 +1446,7 @@ public final class ServerProto {
     }
     private RoomTableInfo() {
       roomId_ = 0;
-      tableId_ = com.google.protobuf.ByteString.EMPTY;
+      tableId_ = 0L;
       creatorId_ = 0;
       ownerId_ = 0;
       stat_ = 0;
@@ -1486,9 +1486,9 @@ public final class ServerProto {
               roomId_ = input.readInt32();
               break;
             }
-            case 18: {
+            case 16: {
 
-              tableId_ = input.readBytes();
+              tableId_ = input.readInt64();
               break;
             }
             case 24: {
@@ -1553,11 +1553,11 @@ public final class ServerProto {
     }
 
     public static final int TABLEID_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString tableId_;
+    private long tableId_;
     /**
-     * <code>bytes tableId = 2;</code>
+     * <code>int64 tableId = 2;</code>
      */
-    public com.google.protobuf.ByteString getTableId() {
+    public long getTableId() {
       return tableId_;
     }
 
@@ -1642,8 +1642,8 @@ public final class ServerProto {
       if (roomId_ != 0) {
         output.writeInt32(1, roomId_);
       }
-      if (!tableId_.isEmpty()) {
-        output.writeBytes(2, tableId_);
+      if (tableId_ != 0L) {
+        output.writeInt64(2, tableId_);
       }
       if (creatorId_ != 0) {
         output.writeInt32(3, creatorId_);
@@ -1669,9 +1669,9 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, roomId_);
       }
-      if (!tableId_.isEmpty()) {
+      if (tableId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, tableId_);
+          .computeInt64Size(2, tableId_);
       }
       if (creatorId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -1707,8 +1707,8 @@ public final class ServerProto {
       boolean result = true;
       result = result && (getRoomId()
           == other.getRoomId());
-      result = result && getTableId()
-          .equals(other.getTableId());
+      result = result && (getTableId()
+          == other.getTableId());
       result = result && (getCreatorId()
           == other.getCreatorId());
       result = result && (getOwnerId()
@@ -1731,7 +1731,8 @@ public final class ServerProto {
       hash = (37 * hash) + ROOMID_FIELD_NUMBER;
       hash = (53 * hash) + getRoomId();
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getTableId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTableId());
       hash = (37 * hash) + CREATORID_FIELD_NUMBER;
       hash = (53 * hash) + getCreatorId();
       hash = (37 * hash) + OWNERID_FIELD_NUMBER;
@@ -1878,7 +1879,7 @@ public final class ServerProto {
         super.clear();
         roomId_ = 0;
 
-        tableId_ = com.google.protobuf.ByteString.EMPTY;
+        tableId_ = 0L;
 
         creatorId_ = 0;
 
@@ -1975,7 +1976,7 @@ public final class ServerProto {
         if (other.getRoomId() != 0) {
           setRoomId(other.getRoomId());
         }
-        if (other.getTableId() != com.google.protobuf.ByteString.EMPTY) {
+        if (other.getTableId() != 0L) {
           setTableId(other.getTableId());
         }
         if (other.getCreatorId() != 0) {
@@ -2067,31 +2068,28 @@ public final class ServerProto {
         return this;
       }
 
-      private com.google.protobuf.ByteString tableId_ = com.google.protobuf.ByteString.EMPTY;
+      private long tableId_ ;
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>int64 tableId = 2;</code>
        */
-      public com.google.protobuf.ByteString getTableId() {
+      public long getTableId() {
         return tableId_;
       }
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>int64 tableId = 2;</code>
        */
-      public Builder setTableId(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      public Builder setTableId(long value) {
+        
         tableId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bytes tableId = 2;</code>
+       * <code>int64 tableId = 2;</code>
        */
       public Builder clearTableId() {
         
-        tableId_ = getDefaultInstance().getTableId();
+        tableId_ = 0L;
         onChanged();
         return this;
       }
@@ -4502,7 +4500,7 @@ public final class ServerProto {
       "proto.RoomRole\":\n\022AckCreateGameTable\022$\n\006" +
       "tables\030\002 \001(\0132\024.proto.RoomTableInfo\"\207\001\n\rR" +
       "oomTableInfo\022\016\n\006roomId\030\001 \001(\005\022\017\n\007tableId\030" +
-      "\002 \001(\014\022\021\n\tcreatorId\030\003 \001(\005\022\017\n\007ownerId\030\004 \001(" +
+      "\002 \001(\003\022\021\n\tcreatorId\030\003 \001(\005\022\017\n\007ownerId\030\004 \001(" +
       "\005\022\014\n\004stat\030\005 \001(\005\022#\n\ntableRoles\030\006 \003(\0132\017.pr" +
       "oto.RoomRole\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005" +
       "\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\"\"\n\020Re" +

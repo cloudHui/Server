@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public class TableUser {
 	private static final Logger logger = LoggerFactory.getLogger(TableUser.class);
 
-	private final Set<String> tableIds = new HashSet<>();
+	private final Set<Long> tableIds = new HashSet<>();
 	private int userId;
 	private boolean online;
 	private String head;
@@ -120,19 +120,14 @@ public class TableUser {
 	//	}
 	//}
 
-	public Set<String> getTableIds() {
+	public Set<Long> getTableIds() {
 		return new HashSet<>(tableIds); // 返回副本避免外部修改
 	}
 
 	/**
 	 * 添加桌子ID到用户
 	 */
-	public void addTable(String tableId) {
-		if (tableId == null) {
-			logger.warn("尝试添加空桌子ID到用户, userId: {}", userId);
-			return;
-		}
-
+	public void addTable(long tableId) {
 		if (tableIds.add(tableId)) {
 			logger.info("用户添加桌子, userId: {}, tableId: {}", userId, tableId);
 		}
@@ -141,12 +136,7 @@ public class TableUser {
 	/**
 	 * 从用户移除桌子ID
 	 */
-	public void removeTable(String tableId) {
-		if (tableId == null) {
-			logger.warn("尝试从用户移除空桌子ID, userId: {}", userId);
-			return;
-		}
-
+	public void removeTable(long tableId) {
 		if (tableIds.remove(tableId)) {
 			logger.debug("用户移除桌子, userId: {}, tableId: {}", userId, tableId);
 		}
@@ -180,7 +170,7 @@ public class TableUser {
 	 *
 	 * @param message 消息
 	 */
-	public void sendRoleMessage(Message message, int messageId, String tableId) {
+	public void sendRoleMessage(Message message, int messageId, long tableId) {
 		ClientHandler serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate, gateId);
 
 		if (serverClient == null) {

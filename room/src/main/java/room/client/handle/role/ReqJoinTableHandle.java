@@ -35,9 +35,9 @@ public class ReqJoinTableHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqJoinTableHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		// 1. 验证用户是否存在
-		User user = UserManager.getInstance().getUser(mapId);
+		User user = UserManager.getInstance().getUser(clientId);
 		if (user == null) {
 			logger.error("用户不存在, userId: {}, 错误码: {}", mapId, ConstProto.Result.SERVER_ERROR_VALUE);
 			sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.SERVER_ERROR_VALUE));
@@ -66,7 +66,7 @@ public class ReqJoinTableHandle implements Handler {
 				return true;
 			}
 			// 4. 执行创建桌子逻辑
-			createTable(gameServer, roomId, sequence, mapId);
+			createTable(gameServer, roomId, sequence, clientId);
 		}
 		return true;
 	}
@@ -123,7 +123,7 @@ public class ReqJoinTableHandle implements Handler {
 	/**
 	 * 发送 玩家加入room桌子回复
 	 */
-	public static void sendJoinTableAck(String tableId, int sequence, User user) {
+	public static void sendJoinTableAck(long tableId, int sequence, User user) {
 
 		ClientHandler gate = Room.getInstance().getServerClientManager().getServerClient(ServerType.Gate, user.getClientId());
 		if (gate == null) {
@@ -131,7 +131,7 @@ public class ReqJoinTableHandle implements Handler {
 			return;
 		}
 		gate.sendMessage(RMsg.ACK_JOIN_ROOM_TABLE_MSG, RoomProto.AckJoinRoomTable.newBuilder()
-				.setTableId(ByteString.copyFromUtf8(tableId))
+				.setTableId(tableId)
 				.build(), sequence);
 		logger.info("玩家加入桌子成功, userId: {}, tableId: {}", user.getUserId(), tableId);
 	}

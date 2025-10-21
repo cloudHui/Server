@@ -90,7 +90,6 @@ public class CardPool {
 				builder.addNCards(nCards.build());
 			}
 			logger.info("table:{} role:{} sendCard:{}", table.getTableId(), sendUser.getCards(), builder.toString());
-			sendUser.sendRoleMessage(builder.build(), GMsg.NOT_CARD, table.getTableId());
 		}
 	}
 }

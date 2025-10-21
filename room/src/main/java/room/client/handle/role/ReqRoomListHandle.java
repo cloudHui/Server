@@ -22,7 +22,7 @@ public class ReqRoomListHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqRoomListHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		try {
 			logger.debug("处理房间列表请求, clientId: {}", clientId);
 
@@ -34,7 +34,7 @@ public class ReqRoomListHandle implements Handler {
 			sender.sendMessage(RMsg.ACK_ROOM_LIST_MSG, response.build(), sequence);
 
 			// 创建或更新用户会话
-			createOrUpdateUserSession(((ClientHandler)sender).getId(), mapId);
+			createOrUpdateUserSession(((ClientHandler)sender).getId(), (int) mapId);
 
 			logger.debug("房间列表请求处理完成, clientId: {}, 房间数量: {}", clientId, response.getRoomListCount());
 			return true;

@@ -119,6 +119,10 @@ public class Game {
 		logger.debug("提交串行任务");
 	}
 
+	public int getPooSize(){
+		return executorPool.size();
+	}
+
 	/**
 	 * 启动游戏服务器
 	 */

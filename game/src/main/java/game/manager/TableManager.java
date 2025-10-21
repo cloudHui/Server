@@ -24,17 +24,12 @@ public class TableManager {
 
 	// 初始桌子序号
 	private static final int BASE_INDEX = 100000;
-	private final Map<String, Table> tableMap;
+	private final Map<Long, Table> tableMap;
 
 	/**
 	 * 当前初始化桌子号
 	 */
 	private int currentIndex = BASE_INDEX;
-
-	/**
-	 * 当前桌子头
-	 */
-	private String currHead;
 
 	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
 
@@ -83,7 +78,7 @@ public class TableManager {
 			return;
 		}
 
-		String tableId = table.getTableId();
+		long tableId = table.getTableId();
 		Table existingTable = tableMap.putIfAbsent(tableId, table);
 
 		if (existingTable != null) {
@@ -96,7 +91,7 @@ public class TableManager {
 	/**
 	 * 获取桌子
 	 */
-	public Table getTable(String tableId) {
+	public Table getTable(long tableId) {
 		Table table = tableMap.get(tableId);
 		if (table == null) {
 			logger.debug("桌子不存在, tableId: {}", tableId);
@@ -120,19 +115,9 @@ public class TableManager {
 	/**
 	 * 获取新的桌子ID
 	 */
-	private String getTableId() {
-		if (currentIndex >= Integer.MAX_VALUE - 1000) {
-			logger.warn("桌子ID即将耗尽,考虑重置");
-		}
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHH");
-		String head = dateFormat.format(new Date());
-		if (!head.equals(currHead)) {
-			currHead = head;
-			currentIndex = BASE_INDEX;
-		}
-		String tableId = currHead + ++currentIndex;
-		logger.info("创建新桌子ID: {}", tableId);
-		return tableId;
+	private long getTableId() {
+		logger.info("创建新桌子ID: {}", ++currentIndex);
+		return currentIndex;
 
 	}
 

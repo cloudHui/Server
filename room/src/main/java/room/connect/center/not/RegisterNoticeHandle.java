@@ -17,7 +17,7 @@ import room.connect.ConnectProcessor;
 public class RegisterNoticeHandle implements Handler {
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		Room.getInstance().execute(() -> Room.getInstance().getServerManager().connectToSever(
 				((ModelProto.NotRegisterInfo) msg).getServersList(),
 				Room.getInstance().getServerId(), Room.getInstance().getServerInfo().getIpConfig().toStringUtf8(),

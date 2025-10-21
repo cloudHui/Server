@@ -47,7 +47,7 @@ public abstract class AbstractRegisterHandler<T_INSTANCE> implements Handler {
 	/**
 	 * 发送注册响应（可重写以支持不同的发送方式）
 	 */
-	protected void sendRegistrationResponse(Sender sender, int clientId, int mapId, int sequence) {
+	protected void sendRegistrationResponse(Sender sender, int clientId, long mapId, int sequence) {
 		ModelProto.AckRegister.Builder response = ModelProto.AckRegister.newBuilder();
 		response.setServerInfo(getCurrentServerInfo());
 		sender.sendMessage(clientId, CMsg.ACK_REGISTER, mapId, response.build(), sequence);
@@ -55,7 +55,7 @@ public abstract class AbstractRegisterHandler<T_INSTANCE> implements Handler {
 	}
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		try {
 			ModelProto.ReqRegister request = (ModelProto.ReqRegister) msg;
 			ModelProto.ServerInfo serverInfo = request.getServerInfo();

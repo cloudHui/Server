@@ -40,6 +40,6 @@ public class CreateTableHandler implements ConnectHandle {
 		TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
 		User user = UserManager.getInstance().getUser(userId);
 		tableInfo.joinRole(user);
-		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId().toStringUtf8(), sequence, user);
+		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId(), sequence, user);
 	}
 }

@@ -22,9 +22,8 @@ public class AckJoinRoomTableHandler implements ConnectHandle {
 		if (message instanceof RoomProto.AckJoinRoomTable) {
 			RoomProto.AckJoinRoomTable rooms = (RoomProto.AckJoinRoomTable) message;
 			LOGGER.error("AckJoinRoomTable:{}", rooms.toString());
-			String tableId = rooms.getTableId().toStringUtf8();
 			GameProto.ReqEnterTable.Builder builder = GameProto.ReqEnterTable.newBuilder();
-			builder.setTableId(ByteString.copyFromUtf8(tableId));
+			builder.setTableId(rooms.getTableId());
 			HandleManager.sendMsg(GMsg.REQ_ENTER_TABLE_MSG, builder.build(), handler, ConnectProcessor.PARSER);
 		}
 	}

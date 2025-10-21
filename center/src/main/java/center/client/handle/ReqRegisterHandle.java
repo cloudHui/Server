@@ -74,7 +74,7 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 	 * 重写发送响应方法（Center服务器使用不同的参数）
 	 */
 	@Override
-	protected void sendRegistrationResponse(Sender sender, int clientId, int mapId, int sequence) {
+	protected void sendRegistrationResponse(Sender sender, int clientId, long mapId, int sequence) {
 		ModelProto.AckRegister.Builder response = ModelProto.AckRegister.newBuilder();
 		response.setServerInfo(getCurrentServerInfo());
 		sender.sendMessage(CMsg.ACK_REGISTER, response.build(), sequence);

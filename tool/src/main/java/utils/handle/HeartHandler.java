@@ -19,7 +19,7 @@ public class HeartHandler implements Handler {
 	private final static Logger logger = LoggerFactory.getLogger(HeartHandler.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message reqHeart, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message reqHeart, long mapId, int sequence) {
 		ModelProto.ReqHeart req = (ModelProto.ReqHeart) reqHeart;
 		long now = System.currentTimeMillis();
 		int serverType = req.getServerType();

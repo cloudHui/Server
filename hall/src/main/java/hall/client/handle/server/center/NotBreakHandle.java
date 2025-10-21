@@ -19,7 +19,7 @@ public class NotBreakHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(NotBreakHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message message, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
 			ModelProto.NotBreak notification = (ModelProto.NotBreak) message;
 			int userId = notification.getUserId();

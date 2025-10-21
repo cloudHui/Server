@@ -19,7 +19,7 @@ public class ReqGetRoomListHandle implements Handler {
 	private static final Logger logger = LoggerFactory.getLogger(ReqGetRoomListHandle.class);
 
 	@Override
-	public boolean handler(Sender sender, int clientId, Message msg, int mapId, int sequence) {
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		try {
 			ServerProto.ReqRoleRoomTable request = (ServerProto.ReqRoleRoomTable) msg;
 			int roleId = request.getRoleId();
