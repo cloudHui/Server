@@ -11,10 +11,10 @@ import msg.registor.enums.TableState;
  * @createDate 2025/10/20 16:57
  */
 @ProcessEnum(TableState.IDLE_SHOW_CARD)
-public class IdleShowCard implements TableHandle {
+public class IdleShowCard extends AbstractTableHandle {
 
 	@Override
-	public boolean handleState(Table table) {
+	public boolean onTiming(Table table) {
 
 		return false;
 	}

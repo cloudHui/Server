@@ -6,17 +6,17 @@ import msg.registor.enums.TableState;
 
 /**
  * @author admin
- * @className WaitHandle
+ * @className Waiting
  * @description
  * @createDate 2025/10/20 16:57
  */
 @ProcessEnum(TableState.WAITING)
-public class WaitHandle implements TableHandle {
+public class Waiting extends AbstractTableHandle {
 
 	@Override
-	public boolean handleState(Table table) {
+	public boolean onTiming(Table table) {
 		if (table.sitFull()) {
-			table.setTableState(table.getTableState().getNext());
+			table.upNextState();
 			table.sendCard();
 			return false;
 		}

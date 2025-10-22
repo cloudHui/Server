@@ -111,7 +111,9 @@ public class HandleTypeRegister {
 				if (processesType == null) {
 					continue;
 				}
-				putHandle(processesType.value(), aclass, handles, classProcessMap);
+				for(TableState state: processesType.value()){
+					putHandle(state, aclass, handles, classProcessMap);
+				}
 			}
 
 			logger.info("{} bind success, size:{} cost:{}ms", packageName, handles.size(),

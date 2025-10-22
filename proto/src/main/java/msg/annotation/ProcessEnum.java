@@ -21,5 +21,5 @@ public @interface ProcessEnum {
 	 *
 	 * @return 类型值
 	 */
-	TableState value();
+	TableState[] value();
 }

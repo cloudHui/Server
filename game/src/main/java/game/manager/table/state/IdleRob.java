@@ -1,15 +1,14 @@
 package game.manager.table.state;
 
-import java.util.Map;
-
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
-import utils.other.RandomUtils;
 
 /**
  * @author admin
@@ -18,47 +17,26 @@ import utils.other.RandomUtils;
  * @createDate 2025/10/20 16:57
  */
 @ProcessEnum(TableState.IDLE_ROB)
-public class IdleRob implements TableHandle {
+public class IdleRob extends AbstractTableHandle {
 
-	@Override
-	public boolean handleState(Table table) {
-		int firstRob = table.getBanner().getFirstRandomRobSeat();
-		if (firstRob == -1) {
-			firstRob = RandomUtils.randomRange(table.getUsers().size());
-			table.getBanner().setFirstRandomRobSeat(firstRob);
-			table.getOp().setLastOpSeat(table.getOp().getCurrOpSeat());
-			table.getOp().setCurrOpSeat(firstRob);
-		} else {
-			table.getOp().moveToNextOp();
-		}
-
-		GameProto.NotOperation not = builderRobBannerOp(table.getOp().getCurrOpSeat(),
-				firstRob != -1 ? new ConstProto.Operation[] { ConstProto.Operation.ROB, ConstProto.Operation.NOT_ROB }
-						: new ConstProto.Operation[] { ConstProto.Operation.CALL, ConstProto.Operation.NOT_CALL });
-		for (Map.Entry<Integer, TableUser> entry : table.getSeatUsers().entrySet()) {
-			entry.getValue().sendRoleMessage(not, GMsg.NOT_OP, table.getTableId());
-		}
-		return false;
-	}
+	private static final Logger logger = LoggerFactory.getLogger(IdleRob.class);
 
 	@Override
 	public void overTime(Table table) {
-	}
-
-	/**
-	 * 构造抢地主操作通知消息
-	 *
-	 * @return 构造消息
-	 */
-	private GameProto.NotOperation builderRobBannerOp(int seat, ConstProto.Operation[] ops) {
-		GameProto.NotOperation.Builder builder = GameProto.NotOperation.newBuilder();
-		builder.setWait(TableState.IDLE_ROB.getOverTime());
-		builder.setOpSeat(seat);
-		for (ConstProto.Operation op : ops) {
-			builder.addChoice(GameProto.OpInfo.newBuilder()
-					.setChoice(op)
-					.build());
+		int currOpSeat = table.getOp().getCurrOpSeat();
+		ConstProto.Operation operation = table.getBanner().getFirstRobSeat() != -1 ? ConstProto.Operation.NOT_ROB : ConstProto.Operation.NOT_CALL;
+		TableUser seatUser = table.getSeatUser(currOpSeat);
+		if (seatUser == null) {
+			logger.error("table:{} seat:{} IdleRob role null", table.getTableId(), currOpSeat);
+			return;
 		}
-		return builder.build();
+		table.sendTableMessage(GameProto.AckOp.newBuilder()
+				.setOpId(seatUser.getUserId())
+				.setOp(GameProto.OpInfo.newBuilder()
+						.setChoice(operation)
+						.build())
+				.build(), GMsg.ACK_OP);
+		table.getOp().moveToNextOp();
+		table.upNextState();
 	}
 }

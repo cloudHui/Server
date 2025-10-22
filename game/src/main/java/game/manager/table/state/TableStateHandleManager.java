@@ -20,7 +20,7 @@ public class TableStateHandleManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(TableUser.class);
 
-	private static final Map<TableState, TableHandle> STATE_TABLE_HANDLE_MAP = new HashMap<>();
+	private static final Map<TableState, AbstractTableHandle> STATE_TABLE_HANDLE_MAP = new HashMap<>();
 
 	static {
 		HandleTypeRegister.initFactoryEnum(TableStateHandleManager.class, STATE_TABLE_HANDLE_MAP);
@@ -32,18 +32,18 @@ public class TableStateHandleManager {
 	 * @param table 牌局
 	 */
 	public static boolean handle(Table table) {
-		TableHandle tableHandle = STATE_TABLE_HANDLE_MAP.get(table.getTableState());
+		AbstractTableHandle handle = STATE_TABLE_HANDLE_MAP.get(table.getTableState());
 
-		if (tableHandle == null) {
+		if (handle == null) {
 			logger.error("table:{} state:{} no handle", table.getTableId(), table.getTableState());
-			return true;
+			return false;
 		}
 		boolean exit = false;
 		if (logger.isDebugEnabled()) {
 			logger.debug("桌子状态处理开始, tableId: {}, state:{}", table.getTableId(), table.getTableState());
 		}
 		try {
-			exit = tableHandle.handle(table);
+			exit = handle.handle(table);
 		} catch (Exception e) {
 			table.addErrorTime();
 			e.printStackTrace();

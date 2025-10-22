@@ -56,8 +56,8 @@ message ReqOp {
 //操作回复
 message AckOp {
     OpInfo op = 1;
-    int32 opId = 2;
-    int32 opFrom = 3;
+    int32 opId = 2;//操作玩家id
+    int32 opFrom = 3;//来源id
 }
 
 //通知结果

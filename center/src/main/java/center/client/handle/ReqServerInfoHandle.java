@@ -23,6 +23,7 @@ import utils.ServerClientManager;
  */
 @ProcessType(CMsg.REQ_SERVER)
 public class ReqServerInfoHandle implements Handler {
+
 	private static final Logger logger = LoggerFactory.getLogger(ReqServerInfoHandle.class);
 
 	@Override

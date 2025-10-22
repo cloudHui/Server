@@ -20,6 +20,7 @@ import utils.handle.AbstractRegisterHandler;
  */
 @ProcessType(CMsg.REQ_REGISTER)
 public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
+
 	private ServerClientManager manager;
 
 	@Override

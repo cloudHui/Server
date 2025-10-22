@@ -6033,11 +6033,19 @@ public final class GameProto {
     proto.GameProto.OpInfoOrBuilder getOpOrBuilder();
 
     /**
+     * <pre>
+     *操作玩家id
+     * </pre>
+     *
      * <code>int32 opId = 2;</code>
      */
     int getOpId();
 
     /**
+     * <pre>
+     *来源id
+     * </pre>
+     *
      * <code>int32 opFrom = 3;</code>
      */
     int getOpFrom();
@@ -6162,6 +6170,10 @@ public final class GameProto {
     public static final int OPID_FIELD_NUMBER = 2;
     private int opId_;
     /**
+     * <pre>
+     *操作玩家id
+     * </pre>
+     *
      * <code>int32 opId = 2;</code>
      */
     public int getOpId() {
@@ -6171,6 +6183,10 @@ public final class GameProto {
     public static final int OPFROM_FIELD_NUMBER = 3;
     private int opFrom_;
     /**
+     * <pre>
+     *来源id
+     * </pre>
+     *
      * <code>int32 opFrom = 3;</code>
      */
     public int getOpFrom() {
@@ -6630,12 +6646,20 @@ public final class GameProto {
 
       private int opId_ ;
       /**
+       * <pre>
+       *操作玩家id
+       * </pre>
+       *
        * <code>int32 opId = 2;</code>
        */
       public int getOpId() {
         return opId_;
       }
       /**
+       * <pre>
+       *操作玩家id
+       * </pre>
+       *
        * <code>int32 opId = 2;</code>
        */
       public Builder setOpId(int value) {
@@ -6645,6 +6669,10 @@ public final class GameProto {
         return this;
       }
       /**
+       * <pre>
+       *操作玩家id
+       * </pre>
+       *
        * <code>int32 opId = 2;</code>
        */
       public Builder clearOpId() {
@@ -6656,12 +6684,20 @@ public final class GameProto {
 
       private int opFrom_ ;
       /**
+       * <pre>
+       *来源id
+       * </pre>
+       *
        * <code>int32 opFrom = 3;</code>
        */
       public int getOpFrom() {
         return opFrom_;
       }
       /**
+       * <pre>
+       *来源id
+       * </pre>
+       *
        * <code>int32 opFrom = 3;</code>
        */
       public Builder setOpFrom(int value) {
@@ -6671,6 +6707,10 @@ public final class GameProto {
         return this;
       }
       /**
+       * <pre>
+       *来源id
+       * </pre>
+       *
        * <code>int32 opFrom = 3;</code>
        */
       public Builder clearOpFrom() {

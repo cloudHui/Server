@@ -11,13 +11,11 @@ import game.manager.table.op.Operate;
 import game.manager.table.state.TableStateHandleManager;
 import model.TableModel;
 import msg.registor.enums.TableState;
-import msg.registor.message.GMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
 import proto.ModelProto;
-import proto.ServerProto;
 
 /**
  * 游戏桌子模型
@@ -61,12 +59,12 @@ public class Table {
 	/**
 	 * 抢地主数据
 	 */
-	private Banner banner;
+	private final Banner banner;
 
 	/**
 	 * 操作数据
 	 */
-	private Operate op;
+	private final Operate op;
 
 	/**
 	 * 最大错误次数
@@ -78,6 +76,8 @@ public class Table {
 		this.creator = creator;
 		this.tableModel = model;
 		cardPool = new CardPool(this);
+		op = new Operate(this);
+		banner = new Banner();
 		logger.info("创建桌子实例, tableId: {}", tableId);
 	}
 
@@ -105,23 +105,35 @@ public class Table {
 		return tableState;
 	}
 
-	public void setTableState(TableState tableState) {
-		logger.error("table:{} change state old:{} new:{}", tableId, this.tableState, tableState);
-		this.tableState = tableState;
-		sendTableMessage(builderTableState(), GMsg.NOT_STATE);
+	public void upNextState(TableState next) {
+		upNextStateWithTime(next, System.currentTimeMillis());
+	}
+
+	public void upNextState() {
+		upNextStateWithTime(tableState.getNext(), System.currentTimeMillis());
+	}
+
+	public void upNextStateWithTime(TableState next, long now) {
+		logger.info("table:{} change state old:{} new:{}", tableId, this.tableState, tableState);
+		if (next == null) {
+			next = tableState.getNext();
+		}
+		if (next == null) {
+			logger.error("table:{} stat:{} update to nextState:null error ", tableId, tableState);
+			return;
+		}
+		tableState = tableState.getNext();
+		stateStartTime = now;
+
 	}
 
 	public long getStateStartTime() {
 		return stateStartTime;
 	}
 
-	public void setStateStartTime(long stateStartTime) {
-		this.stateStartTime = stateStartTime;
-	}
-
 	public void addErrorTime() {
 		if (++errorTimes >= MAX_ERROR) {
-			setTableState(TableState.TABLE_OVER);
+			upNextState(TableState.TABLE_OVER);
 		}
 	}
 
@@ -138,20 +150,16 @@ public class Table {
 		return seatUsers;
 	}
 
+	public TableUser getSeatUser(int seat){
+		return seatUsers.get(seat);
+	}
+
 	public Banner getBanner() {
 		return banner;
 	}
 
-	public void setBanner(Banner banner) {
-		this.banner = banner;
-	}
-
 	public Operate getOp() {
 		return op;
-	}
-
-	public void setOp(Operate op) {
-		this.op = op;
 	}
 
 	/**

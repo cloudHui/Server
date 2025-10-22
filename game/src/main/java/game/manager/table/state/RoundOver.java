@@ -6,15 +6,20 @@ import msg.registor.enums.TableState;
 
 /**
  * @author admin
- * @className RoundOverHandle
+ * @className RoundOver
  * @description
  * @createDate 2025/10/20 16:57
  */
 @ProcessEnum(TableState.ROUND_OVER)
-public class RoundOverHandle implements TableHandle {
+public class RoundOver extends AbstractTableHandle {
 
 	@Override
-	public boolean handleState(Table table) {
+	public boolean onTiming(Table table) {
 		return false;
+	}
+
+	@Override
+	protected void overTime(Table table) {
+
 	}
 }

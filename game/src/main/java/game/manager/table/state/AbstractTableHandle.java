@@ -3,14 +3,22 @@ package game.manager.table.state;
 import game.manager.table.Table;
 import msg.registor.enums.TableState;
 
-public interface TableHandle {
+public abstract class AbstractTableHandle {
 
-	boolean handleState(Table table);
+	/**
+	 * 状态实时检测反应和处理
+	 *
+	 * @param table 桌子
+	 * @return 是否退出循环
+	 */
+	protected boolean onTiming(Table table) {
+		return false;
+	}
 
 	/**
 	 * 默认通用处理
 	 */
-	default boolean handle(Table table) {
+	public boolean handle(Table table) {
 		TableState currState = table.getTableState();
 		//有超时时间并且有默认下一个状态的默认处理等待超时切状态
 		if (currState.getOverTime() > 0) {
@@ -18,20 +26,19 @@ public interface TableHandle {
 			if (table.getStateStartTime() + table.getTableState().getOverTime() * 1000L >= now) {
 				TableState next = currState.getNext();
 				if (next != null) {
-					table.setTableState(next);
-					table.setStateStartTime(now);
+					table.upNextStateWithTime(next, now);
 				} else {
 					overTime(table);
 				}
 			}
 			return false;
 		}
-		return handleState(table);
+		return onTiming(table);
 	}
 
 	/**
 	 * 超时处理
 	 */
-	default void overTime(Table table) {
+	protected void overTime(Table table) {
 	}
 }
