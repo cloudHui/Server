@@ -150,8 +150,16 @@ public class Table {
 		return seatUsers;
 	}
 
-	public TableUser getSeatUser(int seat){
+	public TableUser getSeatUser(int seat) {
 		return seatUsers.get(seat);
+	}
+
+	public int nextSeat(int seat) {
+		return ++seat >= tableModel.getSeatNum() ? 0 : seat;
+	}
+
+	public TableUser getNextSeatUser(int seat) {
+		return seatUsers.get(nextSeat(seat));
 	}
 
 	public Banner getBanner() {

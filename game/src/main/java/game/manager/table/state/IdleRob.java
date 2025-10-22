@@ -30,6 +30,16 @@ public class IdleRob extends AbstractTableHandle {
 			logger.error("table:{} seat:{} IdleRob role null", table.getTableId(), currOpSeat);
 			return;
 		}
+
+		int nextSeat = table.nextSeat(currOpSeat);
+		TableUser nextSeatUser = table.getSeatUser(nextSeat);
+		if (nextSeatUser == null) {
+			logger.error("table:{} seat:{} IdleRob nextSeatUser null", table.getTableId(), nextSeat);
+			return;
+		}
+		//Todo 好像得判断是否到第一个人了 还没超过次数就重新发拍否则直接给第一个人
+		
+
 		table.sendTableMessage(GameProto.AckOp.newBuilder()
 				.setOpId(seatUser.getUserId())
 				.setOp(GameProto.OpInfo.newBuilder()
