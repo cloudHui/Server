@@ -13,7 +13,7 @@ public class MyWebSocketClient extends WebSocketClient {
 	}
 
 	public static void main(String[] args) throws URISyntaxException {
-		MyWebSocketClient client = new MyWebSocketClient(new URI("ws://172.20.16.119:5601/ws"));
+		MyWebSocketClient client = new MyWebSocketClient(new URI("ws://10.3.112.30:5601/ws"));
 		client.connect();
 	}
 
