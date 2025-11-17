@@ -31,34 +31,34 @@ public class ReqEnterTableHandle implements Handler {
 	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
 			GameProto.ReqEnterTable request = (GameProto.ReqEnterTable) message;
-			logger.info("处理进入桌子请求, userId: {}, tableId: {}", clientId, mapId);
+			logger.info("处理进入桌子请求, userId: {}, tableId: {}", clientId, request.getTableId());
 
 			// 获取桌子管理器
 			TableManager tableManager = Game.getInstance().getTableManager();
 
 			// 查找桌子
-			Table table = tableManager.getTable(mapId);
+			Table table = tableManager.getTable(request.getTableId());
 			if (table == null) {
-				logger.warn("桌子不存在, tableId: {}", mapId);
+				logger.warn("桌子不存在, tableId: {}", request.getTableId());
 				sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.TABLE_NULL_VALUE));
 				return true;
 			}
 			Game.getInstance().serialExecute(new Task() {
 				@Override
 				public int groupId() {
-					return (int) (mapId / Game.getInstance().getPooSize());
+					return (int) (request.getTableId() / Game.getInstance().getPooSize());
 				}
 
 				@Override
 				public void run() {
 					// 处理进入桌子逻辑
-					int result = processEnterTable(clientId, mapId, clientId, request, table);
+					int result = processEnterTable(clientId, request.getTableId(), clientId, request, table);
 
 					if (result == ConstProto.Result.SUCCESS_VALUE) {
 						// 构建响应
 						GameProto.AckEnterTable response = buildEnterTableResponse(table);
 						// 发送响应
-						sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, mapId, response, sequence);
+						sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, request.getTableId(), response, sequence);
 					} else {
 						sender.sendMessage(TCPMessage.newInstance(result));
 					}

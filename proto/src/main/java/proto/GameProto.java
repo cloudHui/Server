@@ -19,7 +19,7 @@ public final class GameProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int64 tableId = 1;</code>
+     * <code>int64 table_id = 1;</code>
      */
     long getTableId();
 
@@ -122,10 +122,10 @@ public final class GameProto {
               proto.GameProto.ReqEnterTable.class, proto.GameProto.ReqEnterTable.Builder.class);
     }
 
-    public static final int TABLEID_FIELD_NUMBER = 1;
+    public static final int TABLE_ID_FIELD_NUMBER = 1;
     private long tableId_;
     /**
-     * <code>int64 tableId = 1;</code>
+     * <code>int64 table_id = 1;</code>
      */
     public long getTableId() {
       return tableId_;
@@ -223,7 +223,7 @@ public final class GameProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
+      hash = (37 * hash) + TABLE_ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTableId());
       hash = (37 * hash) + HEAD_FIELD_NUMBER;
@@ -473,13 +473,13 @@ public final class GameProto {
 
       private long tableId_ ;
       /**
-       * <code>int64 tableId = 1;</code>
+       * <code>int64 table_id = 1;</code>
        */
       public long getTableId() {
         return tableId_;
       }
       /**
-       * <code>int64 tableId = 1;</code>
+       * <code>int64 table_id = 1;</code>
        */
       public Builder setTableId(long value) {
         
@@ -488,7 +488,7 @@ public final class GameProto {
         return this;
       }
       /**
-       * <code>int64 tableId = 1;</code>
+       * <code>int64 table_id = 1;</code>
        */
       public Builder clearTableId() {
         
@@ -13503,36 +13503,36 @@ public final class GameProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\ngame.proto\022\005proto\032\013const.proto\"<\n\rReqE" +
-      "nterTable\022\017\n\007tableId\030\001 \001(\003\022\014\n\004head\030\002 \001(\014" +
-      "\022\014\n\004nick\030\003 \001(\014\"T\n\rAckEnterTable\022\036\n\007playe" +
-      "rs\030\001 \003(\0132\r.proto.Player\022#\n\ttableInfo\030\002 \001" +
-      "(\0132\020.proto.TableInfo\" \n\rReqLeaveTable\022\017\n" +
-      "\007tableId\030\001 \001(\014\"T\n\rAckLeaveTable\022\036\n\007playe" +
-      "rs\030\001 \003(\0132\r.proto.Player\022#\n\ttableInfo\030\002 \001" +
-      "(\0132\020.proto.TableInfo\",\n\007NotCard\022!\n\006nCard" +
-      "s\030\001 \003(\0132\021.proto.NCardsInfo\"K\n\014NotOperati" +
-      "on\022\014\n\004wait\030\001 \001(\005\022\016\n\006opSeat\030\002 \001(\005\022\035\n\006choi",
-      "ce\030\003 \003(\0132\r.proto.OpInfo\"I\n\rNotTableState" +
-      "\022\r\n\005state\030\001 \001(\005\022\022\n\nstateStart\030\002 \001(\003\022\025\n\rs" +
-      "tateDuration\030\003 \001(\005\"\"\n\005ReqOp\022\031\n\002op\030\001 \001(\0132" +
-      "\r.proto.OpInfo\"@\n\005AckOp\022\031\n\002op\030\001 \001(\0132\r.pr" +
-      "oto.OpInfo\022\014\n\004opId\030\002 \001(\005\022\016\n\006opFrom\030\003 \001(\005" +
-      "\"=\n\tNotResult\022\016\n\006winner\030\001 \001(\005\022 \n\010rPlayer" +
-      "s\030\002 \003(\0132\016.proto.RPlayer\"L\n\006OpInfo\022 \n\006cho" +
-      "ice\030\001 \001(\0162\020.proto.Operation\022 \n\007opCards\030\002" +
-      " \003(\0132\017.proto.CardInfo\"a\n\tTableInfo\022\016\n\006ro" +
-      "omId\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\003\022\020\n\010landlord\030",
-      "\003 \001(\005\022!\n\010lastCard\030\004 \001(\0132\017.proto.CardInfo" +
-      "\"h\n\006Player\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030\002" +
-      " \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022\032" +
-      "\n\005cards\030\005 \003(\0132\013.proto.Card\"5\n\007RPlayer\022\016\n" +
-      "\006roleId\030\001 \001(\005\022\032\n\005cards\030\005 \003(\0132\013.proto.Car" +
-      "d\"E\n\010CardInfo\022\032\n\005cards\030\001 \003(\0132\013.proto.Car" +
-      "d\022\035\n\004type\030\002 \001(\0162\017.proto.CardType\"&\n\004Card" +
-      "\022\r\n\005value\030\001 \001(\005\022\017\n\007replace\030\002 \001(\005\"8\n\nNCar" +
-      "dsInfo\022\016\n\006roleId\030\001 \001(\005\022\032\n\005cards\030\002 \003(\0132\013." +
-      "proto.CardB\013B\tGameProtob\006proto3"
+      "\n\ngame.proto\022\005proto\032\013const.proto\"=\n\rReqE" +
+      "nterTable\022\020\n\010table_id\030\001 \001(\003\022\014\n\004head\030\002 \001(" +
+      "\014\022\014\n\004nick\030\003 \001(\014\"T\n\rAckEnterTable\022\036\n\007play" +
+      "ers\030\001 \003(\0132\r.proto.Player\022#\n\ttableInfo\030\002 " +
+      "\001(\0132\020.proto.TableInfo\" \n\rReqLeaveTable\022\017" +
+      "\n\007tableId\030\001 \001(\014\"T\n\rAckLeaveTable\022\036\n\007play" +
+      "ers\030\001 \003(\0132\r.proto.Player\022#\n\ttableInfo\030\002 " +
+      "\001(\0132\020.proto.TableInfo\",\n\007NotCard\022!\n\006nCar" +
+      "ds\030\001 \003(\0132\021.proto.NCardsInfo\"K\n\014NotOperat" +
+      "ion\022\014\n\004wait\030\001 \001(\005\022\016\n\006opSeat\030\002 \001(\005\022\035\n\006cho",
+      "ice\030\003 \003(\0132\r.proto.OpInfo\"I\n\rNotTableStat" +
+      "e\022\r\n\005state\030\001 \001(\005\022\022\n\nstateStart\030\002 \001(\003\022\025\n\r" +
+      "stateDuration\030\003 \001(\005\"\"\n\005ReqOp\022\031\n\002op\030\001 \001(\013" +
+      "2\r.proto.OpInfo\"@\n\005AckOp\022\031\n\002op\030\001 \001(\0132\r.p" +
+      "roto.OpInfo\022\014\n\004opId\030\002 \001(\005\022\016\n\006opFrom\030\003 \001(" +
+      "\005\"=\n\tNotResult\022\016\n\006winner\030\001 \001(\005\022 \n\010rPlaye" +
+      "rs\030\002 \003(\0132\016.proto.RPlayer\"L\n\006OpInfo\022 \n\006ch" +
+      "oice\030\001 \001(\0162\020.proto.Operation\022 \n\007opCards\030" +
+      "\002 \003(\0132\017.proto.CardInfo\"a\n\tTableInfo\022\016\n\006r" +
+      "oomId\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\003\022\020\n\010landlord",
+      "\030\003 \001(\005\022!\n\010lastCard\030\004 \001(\0132\017.proto.CardInf" +
+      "o\"h\n\006Player\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030" +
+      "\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022" +
+      "\032\n\005cards\030\005 \003(\0132\013.proto.Card\"5\n\007RPlayer\022\016" +
+      "\n\006roleId\030\001 \001(\005\022\032\n\005cards\030\005 \003(\0132\013.proto.Ca" +
+      "rd\"E\n\010CardInfo\022\032\n\005cards\030\001 \003(\0132\013.proto.Ca" +
+      "rd\022\035\n\004type\030\002 \001(\0162\017.proto.CardType\"&\n\004Car" +
+      "d\022\r\n\005value\030\001 \001(\005\022\017\n\007replace\030\002 \001(\005\"8\n\nNCa" +
+      "rdsInfo\022\016\n\006roleId\030\001 \001(\005\022\032\n\005cards\030\002 \003(\0132\013" +
+      ".proto.CardB\013B\tGameProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
