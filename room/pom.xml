@@ -41,9 +41,6 @@
                         </manifest>
                     </archive>
                     <finalName>Room</finalName>
-                    <excludes>
-                        <exclude>xml/TableModel.xlsx</exclude>
-                    </excludes>
                     <outputDirectory>
                         ${session.executionRootDirectory}/build/room
                     </outputDirectory>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>Server</artifactId>
         <groupId>com.cloud</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>game</artifactId>
     <packaging>jar</packaging>
 
@@ -46,6 +47,7 @@
                     </outputDirectory>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -60,6 +62,41 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/game/lib
                             </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>GameAll</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <finalName>GameAll</finalName>
+                            <!-- 设置为 false 以在最终文件名中不包含 assembly 插件自动添加的标识（如 'jar-with-dependencies'） -->
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>game.Game</mainClass>
+                                </manifest>
+                            </archive>
+
+                            <outputDirectory>
+                                <!--../Tool/-->
+                                ${session.executionRootDirectory}/build/game
+                            </outputDirectory>
+<!--                            <excludes>-->
+<!--                                <exclude>*.zip</exclude>-->
+<!--                            </excludes>-->
                         </configuration>
                     </execution>
                 </executions>
