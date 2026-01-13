@@ -10,12 +10,15 @@ enum Result{
     TIME_OUT = 2;//回复超时
     SERVER_ERROR = 3;//服务错误
     TABLE_START = 4;//桌子已经开始
-    TABLE_CONFIG_ERROR = 5;//桌子配置错误
-    TABLE_NULL = 6;//桌子空
-    TABLE_FULL = 7;//桌子满
-    TABLE_ERROR = 8;//桌子异常
-    ROLE_ERROR = 9;//玩家异常
-    ROLE_NULL = 10;//玩家空
+    TABLE_NOT_START = 5;//桌子未开始
+    TABLE_CONFIG_ERROR = 6;//桌子配置错误
+    TABLE_NULL = 7;//桌子空
+    TABLE_FULL = 8;//桌子满
+    TABLE_ERROR = 9;//桌子异常
+    ROLE_ERROR = 10;//玩家异常
+    ROLE_NULL = 11;//玩家空
+    OP_CURR_ERROR = 12;//当前操作位置没有操作
+    OP_CARD_NOT_MATCH = 13;//操作牌数不匹配
 }
 
 //room状态
@@ -33,6 +36,8 @@ enum Operation{
     NOT_ROB = 4;//不抢地主
     TIP = 5;//提示
     PLAY = 6;//出
+    PREPARE = 7;//准备
+    START_GAME = 8;//开始
 }
 
 //牌型

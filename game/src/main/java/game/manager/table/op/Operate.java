@@ -2,7 +2,6 @@ package game.manager.table.op;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,6 +59,10 @@ public class Operate {
 
 	public Set<GameProto.OpInfo> getSeatOps(int seat) {
 		return posOp.get(seat);
+	}
+
+	public Set<GameProto.OpInfo> getCurrChoice() {
+		return posOp.get(currOpSeat);
 	}
 
 	/**

@@ -46,8 +46,8 @@ public class ReqEnterTableHandle implements Handler {
 			Game.getInstance().serialExecute(new Task() {
 				@Override
 				public int groupId() {
-					return (int) (request.getTableId() / Game.getInstance().getPooSize());
-				}
+						return table.getGroupIndex();
+					}
 
 				@Override
 				public void run() {

@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.card.CardSuit;
 import game.manager.table.cards.Card;
-import msg.registor.message.GMsg;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import proto.GameProto;
 
 /**
@@ -62,7 +62,7 @@ public class CardPool {
 				entry.getValue().addCards(dealCard());
 			}
 		}
-		//发牌通知
+		// 发牌通知
 		sendInitCardNotice(seatUsers);
 	}
 
@@ -83,9 +83,7 @@ public class CardPool {
 				nCards = GameProto.NCardsInfo.newBuilder().setRoleId(otherUser.getUserId());
 				owner = otherUser.equals(sendUser);
 				for (Card card : otherUser.getCards()) {
-					nCards.addCards(GameProto.Card.newBuilder()
-							.setValue(owner ? card.getId() : 0)
-							.build());
+					nCards.addCards(GameProto.Card.newBuilder().setValue(owner ? card.getId() : 0).build());
 				}
 				builder.addNCards(nCards.build());
 			}
