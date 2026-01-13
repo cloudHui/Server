@@ -61,52 +61,76 @@ public final class ConstProto {
     TABLE_START(4),
     /**
      * <pre>
+     *桌子未开始
+     * </pre>
+     *
+     * <code>TABLE_NOT_START = 5;</code>
+     */
+    TABLE_NOT_START(5),
+    /**
+     * <pre>
      *桌子配置错误
      * </pre>
      *
-     * <code>TABLE_CONFIG_ERROR = 5;</code>
+     * <code>TABLE_CONFIG_ERROR = 6;</code>
      */
-    TABLE_CONFIG_ERROR(5),
+    TABLE_CONFIG_ERROR(6),
     /**
      * <pre>
      *桌子空
      * </pre>
      *
-     * <code>TABLE_NULL = 6;</code>
+     * <code>TABLE_NULL = 7;</code>
      */
-    TABLE_NULL(6),
+    TABLE_NULL(7),
     /**
      * <pre>
      *桌子满
      * </pre>
      *
-     * <code>TABLE_FULL = 7;</code>
+     * <code>TABLE_FULL = 8;</code>
      */
-    TABLE_FULL(7),
+    TABLE_FULL(8),
     /**
      * <pre>
      *桌子异常
      * </pre>
      *
-     * <code>TABLE_ERROR = 8;</code>
+     * <code>TABLE_ERROR = 9;</code>
      */
-    TABLE_ERROR(8),
+    TABLE_ERROR(9),
     /**
      * <pre>
      *玩家异常
      * </pre>
      *
-     * <code>ROLE_ERROR = 9;</code>
+     * <code>ROLE_ERROR = 10;</code>
      */
-    ROLE_ERROR(9),
+    ROLE_ERROR(10),
     /**
      * <pre>
      *玩家空
      * </pre>
      *
-     * <code>ROLE_NULL = 10;</code>
+     * <code>ROLE_NULL = 11;</code>
      */
-    ROLE_NULL(10),
+    ROLE_NULL(11),
+    /**
+     * <pre>
+     *当前操作位置没有操作
+     * </pre>
+     *
+     * <code>OP_CURR_ERROR = 12;</code>
+     */
+    OP_CURR_ERROR(12),
+    /**
+     * <pre>
+     *操作牌数不匹配
+     * </pre>
+     *
+     * <code>OP_CARD_NOT_MATCH = 13;</code>
+     */
+    OP_CARD_NOT_MATCH(13),
     UNRECOGNIZED(-1),
     ;
 
@@ -148,52 +172,76 @@ public final class ConstProto {
     public static final int TABLE_START_VALUE = 4;
     /**
      * <pre>
+     *桌子未开始
+     * </pre>
+     *
+     * <code>TABLE_NOT_START = 5;</code>
+     */
+    public static final int TABLE_NOT_START_VALUE = 5;
+    /**
+     * <pre>
      *桌子配置错误
      * </pre>
      *
-     * <code>TABLE_CONFIG_ERROR = 5;</code>
+     * <code>TABLE_CONFIG_ERROR = 6;</code>
      */
-    public static final int TABLE_CONFIG_ERROR_VALUE = 5;
+    public static final int TABLE_CONFIG_ERROR_VALUE = 6;
     /**
      * <pre>
      *桌子空
      * </pre>
      *
-     * <code>TABLE_NULL = 6;</code>
+     * <code>TABLE_NULL = 7;</code>
      */
-    public static final int TABLE_NULL_VALUE = 6;
+    public static final int TABLE_NULL_VALUE = 7;
     /**
      * <pre>
      *桌子满
      * </pre>
      *
-     * <code>TABLE_FULL = 7;</code>
+     * <code>TABLE_FULL = 8;</code>
      */
-    public static final int TABLE_FULL_VALUE = 7;
+    public static final int TABLE_FULL_VALUE = 8;
     /**
      * <pre>
      *桌子异常
      * </pre>
      *
-     * <code>TABLE_ERROR = 8;</code>
+     * <code>TABLE_ERROR = 9;</code>
      */
-    public static final int TABLE_ERROR_VALUE = 8;
+    public static final int TABLE_ERROR_VALUE = 9;
     /**
      * <pre>
      *玩家异常
      * </pre>
      *
-     * <code>ROLE_ERROR = 9;</code>
+     * <code>ROLE_ERROR = 10;</code>
      */
-    public static final int ROLE_ERROR_VALUE = 9;
+    public static final int ROLE_ERROR_VALUE = 10;
     /**
      * <pre>
      *玩家空
      * </pre>
      *
-     * <code>ROLE_NULL = 10;</code>
+     * <code>ROLE_NULL = 11;</code>
      */
-    public static final int ROLE_NULL_VALUE = 10;
+    public static final int ROLE_NULL_VALUE = 11;
+    /**
+     * <pre>
+     *当前操作位置没有操作
+     * </pre>
+     *
+     * <code>OP_CURR_ERROR = 12;</code>
+     */
+    public static final int OP_CURR_ERROR_VALUE = 12;
+    /**
+     * <pre>
+     *操作牌数不匹配
+     * </pre>
+     *
+     * <code>OP_CARD_NOT_MATCH = 13;</code>
+     */
+    public static final int OP_CARD_NOT_MATCH_VALUE = 13;
 
 
     public final int getNumber() {
@@ -219,12 +267,15 @@ public final class ConstProto {
         case 2: return TIME_OUT;
         case 3: return SERVER_ERROR;
         case 4: return TABLE_START;
-        case 5: return TABLE_CONFIG_ERROR;
-        case 6: return TABLE_NULL;
-        case 7: return TABLE_FULL;
-        case 8: return TABLE_ERROR;
-        case 9: return ROLE_ERROR;
-        case 10: return ROLE_NULL;
+        case 5: return TABLE_NOT_START;
+        case 6: return TABLE_CONFIG_ERROR;
+        case 7: return TABLE_NULL;
+        case 8: return TABLE_FULL;
+        case 9: return TABLE_ERROR;
+        case 10: return ROLE_ERROR;
+        case 11: return ROLE_NULL;
+        case 12: return OP_CURR_ERROR;
+        case 13: return OP_CARD_NOT_MATCH;
         default: return null;
       }
     }
@@ -460,6 +511,22 @@ public final class ConstProto {
      * <code>PLAY = 6;</code>
      */
     PLAY(6),
+    /**
+     * <pre>
+     *准备
+     * </pre>
+     *
+     * <code>PREPARE = 7;</code>
+     */
+    PREPARE(7),
+    /**
+     * <pre>
+     *开始
+     * </pre>
+     *
+     * <code>START_GAME = 8;</code>
+     */
+    START_GAME(8),
     UNRECOGNIZED(-1),
     ;
 
@@ -519,6 +586,22 @@ public final class ConstProto {
      * <code>PLAY = 6;</code>
      */
     public static final int PLAY_VALUE = 6;
+    /**
+     * <pre>
+     *准备
+     * </pre>
+     *
+     * <code>PREPARE = 7;</code>
+     */
+    public static final int PREPARE_VALUE = 7;
+    /**
+     * <pre>
+     *开始
+     * </pre>
+     *
+     * <code>START_GAME = 8;</code>
+     */
+    public static final int START_GAME_VALUE = 8;
 
 
     public final int getNumber() {
@@ -546,6 +629,8 @@ public final class ConstProto {
         case 4: return NOT_ROB;
         case 5: return TIP;
         case 6: return PLAY;
+        case 7: return PREPARE;
+        case 8: return START_GAME;
         default: return null;
       }
     }
@@ -912,21 +997,23 @@ public final class ConstProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013const.proto\022\005proto*\277\001\n\006Result\022\013\n\007SUCCE" +
+      "\n\013const.proto\022\005proto*\376\001\n\006Result\022\013\n\007SUCCE" +
       "SS\020\000\022\017\n\013SERVER_NULL\020\001\022\014\n\010TIME_OUT\020\002\022\020\n\014S" +
-      "ERVER_ERROR\020\003\022\017\n\013TABLE_START\020\004\022\026\n\022TABLE_" +
-      "CONFIG_ERROR\020\005\022\016\n\nTABLE_NULL\020\006\022\016\n\nTABLE_" +
-      "FULL\020\007\022\017\n\013TABLE_ERROR\020\010\022\016\n\nROLE_ERROR\020\t\022" +
-      "\r\n\tROLE_NULL\020\n*\"\n\nTableState\022\t\n\005WAITE\020\000\022" +
-      "\t\n\005START\020\001*V\n\tOperation\022\010\n\004PASS\020\000\022\010\n\004CAL" +
-      "L\020\001\022\007\n\003ROB\020\002\022\014\n\010NOT_CALL\020\003\022\013\n\007NOT_ROB\020\004\022" +
-      "\007\n\003TIP\020\005\022\010\n\004PLAY\020\006*\332\001\n\010CardType\022\n\n\006SINGL" +
-      "E\020\000\022\n\n\006DOUBLE\020\001\022\n\n\006TRIPLE\020\002\022\016\n\nTRIPLE_ON",
-      "E\020\003\022\021\n\rTRIPLE_DOUBLE\020\004\022\r\n\tPLANE_ONE\020\005\022\020\n" +
-      "\014PLANE_DOUBLE\020\006\022\026\n\022BOOM_DOUBLE_SINGLE\020\007\022" +
-      "\023\n\017BOOM_DOUBLE_CUP\020\010\022\014\n\010STRAIGHT\020\t\022\023\n\017ST" +
-      "RAIGHT_DOUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014B" +
-      "\014B\nConstProtob\006proto3"
+      "ERVER_ERROR\020\003\022\017\n\013TABLE_START\020\004\022\023\n\017TABLE_" +
+      "NOT_START\020\005\022\026\n\022TABLE_CONFIG_ERROR\020\006\022\016\n\nT" +
+      "ABLE_NULL\020\007\022\016\n\nTABLE_FULL\020\010\022\017\n\013TABLE_ERR" +
+      "OR\020\t\022\016\n\nROLE_ERROR\020\n\022\r\n\tROLE_NULL\020\013\022\021\n\rO" +
+      "P_CURR_ERROR\020\014\022\025\n\021OP_CARD_NOT_MATCH\020\r*\"\n" +
+      "\nTableState\022\t\n\005WAITE\020\000\022\t\n\005START\020\001*s\n\tOpe" +
+      "ration\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\007\n\003ROB\020\002\022\014\n\010N" +
+      "OT_CALL\020\003\022\013\n\007NOT_ROB\020\004\022\007\n\003TIP\020\005\022\010\n\004PLAY\020",
+      "\006\022\013\n\007PREPARE\020\007\022\016\n\nSTART_GAME\020\010*\332\001\n\010CardT" +
+      "ype\022\n\n\006SINGLE\020\000\022\n\n\006DOUBLE\020\001\022\n\n\006TRIPLE\020\002\022" +
+      "\016\n\nTRIPLE_ONE\020\003\022\021\n\rTRIPLE_DOUBLE\020\004\022\r\n\tPL" +
+      "ANE_ONE\020\005\022\020\n\014PLANE_DOUBLE\020\006\022\026\n\022BOOM_DOUB" +
+      "LE_SINGLE\020\007\022\023\n\017BOOM_DOUBLE_CUP\020\010\022\014\n\010STRA" +
+      "IGHT\020\t\022\023\n\017STRAIGHT_DOUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n" +
+      "\010BOOM_MAX\020\014B\014B\nConstProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
