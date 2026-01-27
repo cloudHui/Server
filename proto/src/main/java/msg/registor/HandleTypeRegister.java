@@ -8,6 +8,8 @@ import msg.annotation.ClassType;
 import msg.annotation.ProcessClass;
 import msg.annotation.ProcessEnum;
 import msg.annotation.ProcessType;
+import msg.annotation.Register;
+import msg.annotation.RegistryParam;
 import msg.registor.enums.TableState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +37,12 @@ public class HandleTypeRegister {
     private static final Map<Integer, Class<?>> TRANS_MAP = new ConcurrentHashMap<>();
     private static final Map<Class<?>, Integer> MSG_TRANS_MAP = new ConcurrentHashMap<>();
     // 注解和处理方式的映射
-    private static final Map<Class<? extends Annotation>, InnerRegister<Object>> inMap =
-            new HashMap<>();
+    private static final Map<Class<? extends Annotation>, Register<Object, Object>> anoMap = new HashMap<>();
     // ==================== 消息类型转换相关方法 ====================
 
     static {
         initLocalMethod();
-        putHandle();
+        initAnoFactory();
     }
 
     /**
@@ -62,32 +63,53 @@ public class HandleTypeRegister {
             logger.error("init message id bind class", e);
         }
     }
-
-
-    /**
-     * 存处理方式
-     */
-    private static void putHandle() {
-        // ProcessInt 注解的处理方式
-        inMap.put(ProcessType.class, (RegistryParam<Object> param) ->
-                putHandle(((ProcessType) param.annotation).value(), param.aclass, param.handles, param.classProcessMap));
-        inMap.put(ProcessEnum.class, (RegistryParam<Object> param) -> {
-            for (TableState value : ((ProcessEnum) param.annotation).value()) {
-                putHandle(value.getId(), param.aclass, param.handles, param.classProcessMap);
-            }
-        });
-    }
     // ==================== 基于 Integer 键的扫描方法 ====================
 
     /**
      * 初始化处理工厂 - 基于 Integer 键
-     *
-     * @param superClass 包名 和父类
-     * @param handles    处理器
-     * @param <T>        处理器类型
      */
     @SuppressWarnings("unchecked")
-    public static <T> void initFactory(Class<?> superClass, Map<Integer, T> handles, Class<? extends Annotation> ano) {
+    private static void initAnoFactory() {
+        try {
+            long start = System.currentTimeMillis();
+            List<Class<?>> classes = ClazzUtil.getAllAssignedClass(Register.class);
+
+            Register<Object, Object> register;
+            Class<? extends Annotation> targetAnnotation;
+            for (Class<?> aclass : classes) {
+                ProcessClass annotation = aclass.getAnnotation(ProcessClass.class);
+                if (annotation == null) {
+                    continue;
+                }
+                // 获取要处理的注解类型
+                targetAnnotation = (Class<? extends Annotation>)annotation.value();
+                register = newInstance(aclass, aclass);
+                if (register != null) {
+                    anoMap.put(targetAnnotation, register);
+                } else {
+                    logger.error("{} initAnoFactory error", aclass.getName());
+                }
+            }
+
+            logger.info("initAnoFactory {} bind success, size:{} cost:{}ms", Register.class.getName(),
+                    anoMap.size(), System.currentTimeMillis() - start);
+        } catch (Exception e) {
+            logger.error("{} initAnoFactory error", Register.class.getName(), e);
+        }
+    }
+
+    /**
+     * 初始化处理工厂 - 基于 Integer 键
+     *
+     * @param superClass
+     *            包名 和父类
+     * @param handles
+     *            处理器
+     * @param <T>
+     *            处理器类型
+     */
+    @SuppressWarnings("unchecked")
+    public static <K, T> void initFactory(Class<?> superClass, Map<K, T> handles, Class<? extends Annotation> ano) {
         try {
             long start = System.currentTimeMillis();
             List<Class<?>> classes = ClazzUtil.getAllAssignedClass(superClass);
@@ -98,12 +120,11 @@ public class HandleTypeRegister {
                 if (annotation == null) {
                     continue;
                 }
-                InnerRegister<Object> innerRegister = inMap.get(annotation.annotationType());
-                if (innerRegister == null) {
-                    throw new RuntimeException("annotation type not supported: " + annotation.getClass().getName());
+                Register<K, T> handle = (Register<K, T>)anoMap.get(annotation.annotationType());
+                if (handle == null) {
+                    throw new RuntimeException("annotation type not supported: " + annotation.annotationType());
                 }
-                RegistryParam<T> param = new RegistryParam<>(annotation, aclass, handles, classProcessMap);
-                innerRegister.handle((RegistryParam<Object>) param);
+                handle.handle(new RegistryParam<>(annotation, aclass, handles, classProcessMap));
             }
 
             logger.info("initFactory with ano {} bind success, size:{} cost:{}ms", superClass.getName(), handles.size(),
@@ -136,9 +157,6 @@ public class HandleTypeRegister {
             }
         }
     }
-
-    // ==================== 处理器绑定相关方法 ====================
-
 
     // ==================== 工厂方法相关方法 ====================
 
@@ -178,7 +196,7 @@ public class HandleTypeRegister {
                 }
             }
 
-            logger.info("{} bind success, size:{} cost:{}ms", packageName, handles.size(),
+            logger.info("{} bind success initFactoryEnum, size:{} cost:{}ms", packageName, handles.size(),
                     System.currentTimeMillis() - start);
         } catch (Exception e) {
             logger.error("{} bind processors error", packageName, e);
@@ -202,7 +220,7 @@ public class HandleTypeRegister {
                 putHandle(processesType.value(), aclass, handles, classProcessMap);
             }
 
-            logger.info("{} bind success, size:{} cost:{}ms", packageName, handles.size(),
+            logger.info("{} bind success initFactory, size:{} cost:{}ms", packageName, handles.size(),
                     System.currentTimeMillis() - start);
         } catch (Exception e) {
             logger.error("{} bind processors error", packageName, e);
@@ -239,38 +257,6 @@ public class HandleTypeRegister {
         }
     }
 
-
-    ///**
-    // * 初始化类处理工厂
-    // *
-    // * @param factoryClass   要扫描的目录中的类
-    // * @param handles        处理器存储集合
-    // * @param classMethodMap 类方法绑定集合(有 @ProcessClassMethod注解的方法)
-    // * @param managerClass   @ProcessClassMethod注解上的父类
-    // * @param <T>            动态处理器类
-    // */
-    //public static <T> void initClassFactory(Class<?> factoryClass, Map<Class<?>, T> handles, Map<Class<?>, Map<Class<?>, Method>> classMethodMap, Class<?> managerClass) {
-    //	try {
-    //		List<Class<?>> classes = ClazzUtil.getClasses(factoryClass, "");
-    //		Map<Class<?>, T> classProcessMap = new HashMap<>();
-    //
-    //		for (Class<?> aclass : classes) {
-    //			ProcessClass processesType = aclass.getAnnotation(ProcessClass.class);
-    //			if (processesType == null) {
-    //				continue;
-    //			}
-    //
-    //			Class<?> value = processesType.value();
-    //			putHandle(value, aclass, handles, classProcessMap);
-    //			managerFunctionMap(aclass, managerClass, classMethodMap);
-    //		}
-    //
-    //		logger.info("{} bind success, size:{}", factoryClass.getPackage().getName(), handles.size());
-    //	} catch (Exception e) {
-    //		logger.error("{} bind processors error", factoryClass.getPackage().getName(), e);
-    //	}
-    //}
-
     /**
      * 处理器绑定核心方法
      */
@@ -287,26 +273,12 @@ public class HandleTypeRegister {
         }
     }
 
-    ///**
-    // * 管理函数方法存储
-    // */
-    //private static void managerFunctionMap(Class<?> aClass, Class<?> managerClass, Map<Class<?>, Map<Class<?>, Method>> classMethodMap) {
-    //	Method[] declaredMethods = aClass.getDeclaredMethods();
-    //	for (Method method : declaredMethods) {
-    //		ProcessClassMethod annotation = method.getAnnotation(ProcessClassMethod.class);
-    //		if (annotation != null) {
-    //			if (managerClass.isAssignableFrom(annotation.value())) {
-    //				classMethodMap.computeIfAbsent(aClass, k -> new HashMap<>()).put(annotation.value(), method);
-    //			}
-    //		}
-    //	}
-    //}
-
     // ==================== 实例创建方法 ====================
 
     /**
      * 创建通用实例
      */
+    @SuppressWarnings("unchecked")
     private static <T> T newInstance(Object key, Class<?> aclass) {
         try {
             return (T) aclass.getConstructor().newInstance();
@@ -325,6 +297,7 @@ public class HandleTypeRegister {
      * @param bytes     消息字节数据
      * @return 解析后的消息对象, 解析失败返回null
      */
+    @SuppressWarnings("unchecked")
     public static Message parseMessage(int messageId, byte[] bytes) {
         Class<?> messageClass = TRANS_MAP.get(messageId);
         if (messageClass == null) {
@@ -342,13 +315,6 @@ public class HandleTypeRegister {
     }
 
     /**
-     * 通过对象获取消息id
-     */
-    public static int parseMessageId(Class<?> aClass) {
-        return MSG_TRANS_MAP.getOrDefault(aClass, 0);
-    }
-
-    /**
      * 使用Protocol Buffer解析消息数据
      */
     private static MessageLite parseMessageData(Class<MessageLite> messageClass, byte[] bytes) throws Exception {
@@ -359,32 +325,4 @@ public class HandleTypeRegister {
         return defaultInstance.getParserForType().parseFrom(bytes);
     }
 
-    /**
-     * 内部处理类型注册
-     *
-     * @param <T> 处理类型
-     */
-    private interface InnerRegister<T> {
-        void handle(RegistryParam<T> param);
-    }
-
-    /**
-     * 注册参数
-     *
-     * @param <T> 处理类型
-     */
-    private static class RegistryParam<T> {
-        public Annotation annotation;
-        public Class<?> aclass;
-        public Map<Integer, T> handles;
-        public Map<Class<?>, T> classProcessMap;
-
-        public RegistryParam(Annotation annotation, Class<?> aclass, Map<Integer, T> handles,
-                             Map<Class<?>, T> classProcessMap) {
-            this.annotation = annotation;
-            this.aclass = aclass;
-            this.handles = handles;
-            this.classProcessMap = classProcessMap;
-        }
-    }
 }
