@@ -21,7 +21,6 @@ import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
-import proto.ModelProto;
 import proto.ServerProto;
 import utils.ServerManager;
 

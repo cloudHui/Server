@@ -75,4 +75,8 @@ public class ConnectProcessor {
 	@ProcessMethod(GMsg.NOT_OP)
 	private static void handleNotOp(ChannelHandler connectHandler, TCPMessage tcpMessage) {
 	}
+
+	@ProcessMethod(GMsg.NOT_RESULT)
+	private static void handleNotResult(ChannelHandler connectHandler, TCPMessage tcpMessage) {
+	}
 }

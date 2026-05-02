@@ -15,7 +15,6 @@ import net.connect.TCPConnect;
 import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.ModelProto;
 import proto.ServerProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.timer.Runner;

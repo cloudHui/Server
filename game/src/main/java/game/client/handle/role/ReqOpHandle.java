@@ -10,7 +10,10 @@ import com.google.protobuf.Message;
 import game.Game;
 import game.manager.TableManager;
 import game.manager.table.Table;
+import game.manager.table.ddz.DdzBidService;
+import game.manager.table.ddz.DdzPlayService;
 import msg.annotation.ProcessType;
+import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import net.client.Sender;
 import net.handler.Handler;
@@ -52,13 +55,8 @@ public class ReqOpHandle implements Handler {
 				@Override
 				public void run() {
 					// 处理玩家在桌子上的操作逻辑
-					int result = processUserOp(clientId, request.getOp(), table, sender, sequence);
-					if (result == ConstProto.Result.SUCCESS_VALUE) {
-						// 发送响应
-						sender.sendMessage(clientId, GMsg.ACK_OP, table.getTableId(),
-							buildUserOpResponse(table, request.getOp(), request.getOp().getChoiceValue(), clientId),
-							sequence);
-					} else {
+					int result = processUserOp(clientId, request.getOp(), table);
+					if (result != ConstProto.Result.SUCCESS_VALUE) {
 						sender.sendMessage(TCPMessage.newInstance(result));
 					}
 
@@ -75,16 +73,19 @@ public class ReqOpHandle implements Handler {
 	/**
 	 * 处理玩家操作逻辑
 	 */
-	private int processUserOp(int userId, GameProto.OpInfo op, Table table, Sender sender, int sequence) {
+	private int processUserOp(int userId, GameProto.OpInfo op, Table table) {
 		try {
-
+			TableState ts = table.getTableState();
+			if (ts != TableState.IDLE_ROB && ts != TableState.IDLE_CARD) {
+				return ConstProto.Result.OP_CURR_ERROR_VALUE;
+			}
 			if (!table.gaming()) {
 				logger.error("桌子未开始, userId: {}, tableId: {}", userId, table.getTableId());
 				return ConstProto.Result.TABLE_NOT_START_VALUE;
 			}
 
 			Set<GameProto.OpInfo> currChoice = table.getOp().getCurrChoice();
-			if (currChoice.isEmpty()) {
+			if (currChoice == null || currChoice.isEmpty()) {
 				logger.error("当前操作位置没有操作, userId: {}, tableId: {}", userId, table.getTableId());
 				return ConstProto.Result.OP_CURR_ERROR_VALUE;
 			}
@@ -100,27 +101,18 @@ public class ReqOpHandle implements Handler {
 				return ConstProto.Result.OP_CURR_ERROR_VALUE;
 			}
 
-			if (currOp.getOpCardsCount() != op.getOpCardsCount()) {
+			if (currOp.getOpCardsCount() > 0 && currOp.getOpCardsCount() != op.getOpCardsCount()) {
 				logger.error("操作牌数不匹配, userId: {}, tableId: {}", userId, table.getTableId());
 				return ConstProto.Result.OP_CARD_NOT_MATCH_VALUE;
 			}
 
-			//TODO 应该这么操作了
-			return ConstProto.Result.SUCCESS_VALUE;
+			if (ts == TableState.IDLE_ROB) {
+				return DdzBidService.apply(table, userId, op);
+			}
+			return DdzPlayService.apply(table, userId, op);
 		} catch (Exception e) {
 			logger.error("处理玩家操作请求失败, userId: {}", userId, e);
 			return ConstProto.Result.SERVER_ERROR_VALUE;
 		}
-	}
-
-	/**
-	 * 构建玩家操作响应
-	 */
-	private GameProto.AckOp buildUserOpResponse(Table table, GameProto.OpInfo op, int opId, int clientId) {
-		GameProto.AckOp.Builder response = GameProto.AckOp.newBuilder();
-		response.setOp(op);
-		response.setOpId(opId);
-		response.setOpFrom(clientId);
-		return response.build();
 	}
 }

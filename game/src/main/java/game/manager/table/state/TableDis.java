@@ -10,7 +10,7 @@ import msg.registor.enums.TableState;
  * @description
  * @createDate 2025/10/20 16:57
  */
-@ProcessEnum(TableState.TABLE_OVER)
+@ProcessEnum(TableState.TABLE_DIS)
 public class TableDis extends AbstractTableHandle {
 
 	@Override

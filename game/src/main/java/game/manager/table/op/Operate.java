@@ -84,4 +84,8 @@ public class Operate {
 		lastOpSeat = -1;
 		posOp.clear();
 	}
+
+	public void clearChoiceMap() {
+		posOp.clear();
+	}
 }

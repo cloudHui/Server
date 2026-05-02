@@ -67,6 +67,11 @@ public class Table {
 	private final Operate op;
 
 	/**
+	 * 斗地主牌局上下文（叫地主、出牌）
+	 */
+	private final game.manager.table.ddz.DdzTableContext ddz = new game.manager.table.ddz.DdzTableContext();
+
+	/**
 	 * 最大错误次数
 	 */
 	private static final int MAX_ERROR = 100;
@@ -114,7 +119,6 @@ public class Table {
 	}
 
 	public void upNextStateWithTime(TableState next, long now) {
-		logger.info("table:{} change state old:{} new:{}", tableId, this.tableState, tableState);
 		if (next == null) {
 			next = tableState.getNext();
 		}
@@ -122,9 +126,9 @@ public class Table {
 			logger.error("table:{} stat:{} update to nextState:null error ", tableId, tableState);
 			return;
 		}
-		tableState = tableState.getNext();
+		logger.info("table:{} change state old:{} new:{}", tableId, this.tableState, next);
+		tableState = next;
 		stateStartTime = now;
-
 	}
 
 	public long getStateStartTime() {
@@ -170,6 +174,14 @@ public class Table {
 		return op;
 	}
 
+	public game.manager.table.ddz.DdzTableContext getDdz() {
+		return ddz;
+	}
+
+	public CardPool getCardPool() {
+		return cardPool;
+	}
+
 	/**
 	 * 桌子是否坐满了
 	 *
@@ -192,7 +204,9 @@ public class Table {
 	 * @return 是否开始游戏
 	 */
 	public boolean gaming() {
-		return tableState != TableState.WAITING && tableState != TableState.TABLE_OVER;
+		return tableState != TableState.WAITING
+				&& tableState != TableState.TABLE_OVER
+				&& tableState != TableState.TABLE_DIS;
 	}
 
 	/**
@@ -303,8 +317,13 @@ public class Table {
 				return false;
 			}
 
-			// TODO: 实现具体的移除逻辑
+			users.remove(user.getUserId());
+			int seat = user.getSeated();
+			if (seat >= 0) {
+				seatUsers.remove(seat);
+			}
 			user.removeTable(tableId);
+			user.setSeated(-1);
 
 			logger.info("玩家离开桌子, userId: {}, tableId: {}", user.getUserId(), tableId);
 			return true;
@@ -333,6 +352,13 @@ public class Table {
 			entry.getValue().sendRoleMessage(message, messageId, tableId);
 		}
 		logger.info("sendTableMessage:{} message:{}", tableId, message.toString());
+	}
+
+	public void sendTableMessageRaw(int messageId, byte[] payload) {
+		for (Map.Entry<Integer, TableUser> entry : seatUsers.entrySet()) {
+			entry.getValue().sendRoleMessageBytes(messageId, payload, tableId);
+		}
+		logger.info("sendTableMessageRaw:{} bytes:{}", tableId, payload != null ? payload.length : 0);
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package msg.registor.message;
 import msg.annotation.ClassField;
 import msg.annotation.ClassType;
 import proto.GateProto;
-import proto.ModelProto;
 import proto.ServerProto;
 
 /**

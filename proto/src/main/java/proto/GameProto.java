@@ -6800,6 +6800,69 @@ public final class GameProto {
      */
     proto.GameProto.RPlayerOrBuilder getRPlayersOrBuilder(
         int index);
+
+    /**
+     * <pre>
+     *地主 roleId
+     * </pre>
+     *
+     * <code>int32 landlord_id = 3;</code>
+     */
+    int getLandlordId();
+
+    /**
+     * <pre>
+     *0 地主胜 1 农民胜
+     * </pre>
+     *
+     * <code>int32 win_team = 4;</code>
+     */
+    int getWinTeam();
+
+    /**
+     * <pre>
+     *叫分 1-3
+     * </pre>
+     *
+     * <code>int32 base_score = 5;</code>
+     */
+    int getBaseScore();
+
+    /**
+     * <pre>
+     *抢地主倍数(每抢一次×2，底数1)
+     * </pre>
+     *
+     * <code>int32 rob_multiplier = 6;</code>
+     */
+    int getRobMultiplier();
+
+    /**
+     * <pre>
+     *春天：地主胜且农民未出过牌
+     * </pre>
+     *
+     * <code>bool spring = 7;</code>
+     */
+    boolean getSpring();
+
+    /**
+     * <pre>
+     *反春：农民胜且地主只出过一手牌
+     * </pre>
+     *
+     * <code>bool anti_spring = 8;</code>
+     */
+    boolean getAntiSpring();
+
+    /**
+     * <pre>
+     *示意：base_score*rob_multiplier*春天/反春加倍后的系数，具体结算客户端可按规则拆
+     * </pre>
+     *
+     * <code>int32 settle_factor = 9;</code>
+     */
+    int getSettleFactor();
   }
   /**
    * <pre>
@@ -6820,6 +6883,13 @@ public final class GameProto {
     private NotResult() {
       winner_ = 0;
       rPlayers_ = java.util.Collections.emptyList();
+      landlordId_ = 0;
+      winTeam_ = 0;
+      baseScore_ = 0;
+      robMultiplier_ = 0;
+      spring_ = false;
+      antiSpring_ = false;
+      settleFactor_ = 0;
     }
 
     @java.lang.Override
@@ -6862,6 +6932,41 @@ public final class GameProto {
               }
               rPlayers_.add(
                   input.readMessage(proto.GameProto.RPlayer.parser(), extensionRegistry));
+              break;
+            }
+            case 24: {
+
+              landlordId_ = input.readInt32();
+              break;
+            }
+            case 32: {
+
+              winTeam_ = input.readInt32();
+              break;
+            }
+            case 40: {
+
+              baseScore_ = input.readInt32();
+              break;
+            }
+            case 48: {
+
+              robMultiplier_ = input.readInt32();
+              break;
+            }
+            case 56: {
+
+              spring_ = input.readBool();
+              break;
+            }
+            case 64: {
+
+              antiSpring_ = input.readBool();
+              break;
+            }
+            case 72: {
+
+              settleFactor_ = input.readInt32();
               break;
             }
           }
@@ -6936,6 +7041,97 @@ public final class GameProto {
       return rPlayers_.get(index);
     }
 
+    public static final int LANDLORD_ID_FIELD_NUMBER = 3;
+    private int landlordId_;
+    /**
+     * <pre>
+     *地主 roleId
+     * </pre>
+     *
+     * <code>int32 landlord_id = 3;</code>
+     */
+    public int getLandlordId() {
+      return landlordId_;
+    }
+
+    public static final int WIN_TEAM_FIELD_NUMBER = 4;
+    private int winTeam_;
+    /**
+     * <pre>
+     *0 地主胜 1 农民胜
+     * </pre>
+     *
+     * <code>int32 win_team = 4;</code>
+     */
+    public int getWinTeam() {
+      return winTeam_;
+    }
+
+    public static final int BASE_SCORE_FIELD_NUMBER = 5;
+    private int baseScore_;
+    /**
+     * <pre>
+     *叫分 1-3
+     * </pre>
+     *
+     * <code>int32 base_score = 5;</code>
+     */
+    public int getBaseScore() {
+      return baseScore_;
+    }
+
+    public static final int ROB_MULTIPLIER_FIELD_NUMBER = 6;
+    private int robMultiplier_;
+    /**
+     * <pre>
+     *抢地主倍数(每抢一次×2，底数1)
+     * </pre>
+     *
+     * <code>int32 rob_multiplier = 6;</code>
+     */
+    public int getRobMultiplier() {
+      return robMultiplier_;
+    }
+
+    public static final int SPRING_FIELD_NUMBER = 7;
+    private boolean spring_;
+    /**
+     * <pre>
+     *春天：地主胜且农民未出过牌
+     * </pre>
+     *
+     * <code>bool spring = 7;</code>
+     */
+    public boolean getSpring() {
+      return spring_;
+    }
+
+    public static final int ANTI_SPRING_FIELD_NUMBER = 8;
+    private boolean antiSpring_;
+    /**
+     * <pre>
+     *反春：农民胜且地主只出过一手牌
+     * </pre>
+     *
+     * <code>bool anti_spring = 8;</code>
+     */
+    public boolean getAntiSpring() {
+      return antiSpring_;
+    }
+
+    public static final int SETTLE_FACTOR_FIELD_NUMBER = 9;
+    private int settleFactor_;
+    /**
+     * <pre>
+     *示意：base_score*rob_multiplier*春天/反春加倍后的系数，具体结算客户端可按规则拆
+     * </pre>
+     *
+     * <code>int32 settle_factor = 9;</code>
+     */
+    public int getSettleFactor() {
+      return settleFactor_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -6954,6 +7150,27 @@ public final class GameProto {
       for (int i = 0; i < rPlayers_.size(); i++) {
         output.writeMessage(2, rPlayers_.get(i));
       }
+      if (landlordId_ != 0) {
+        output.writeInt32(3, landlordId_);
+      }
+      if (winTeam_ != 0) {
+        output.writeInt32(4, winTeam_);
+      }
+      if (baseScore_ != 0) {
+        output.writeInt32(5, baseScore_);
+      }
+      if (robMultiplier_ != 0) {
+        output.writeInt32(6, robMultiplier_);
+      }
+      if (spring_ != false) {
+        output.writeBool(7, spring_);
+      }
+      if (antiSpring_ != false) {
+        output.writeBool(8, antiSpring_);
+      }
+      if (settleFactor_ != 0) {
+        output.writeInt32(9, settleFactor_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -6969,6 +7186,34 @@ public final class GameProto {
       for (int i = 0; i < rPlayers_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, rPlayers_.get(i));
+      }
+      if (landlordId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, landlordId_);
+      }
+      if (winTeam_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, winTeam_);
+      }
+      if (baseScore_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, baseScore_);
+      }
+      if (robMultiplier_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, robMultiplier_);
+      }
+      if (spring_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(7, spring_);
+      }
+      if (antiSpring_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(8, antiSpring_);
+      }
+      if (settleFactor_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(9, settleFactor_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6990,6 +7235,20 @@ public final class GameProto {
           == other.getWinner());
       result = result && getRPlayersList()
           .equals(other.getRPlayersList());
+      result = result && (getLandlordId()
+          == other.getLandlordId());
+      result = result && (getWinTeam()
+          == other.getWinTeam());
+      result = result && (getBaseScore()
+          == other.getBaseScore());
+      result = result && (getRobMultiplier()
+          == other.getRobMultiplier());
+      result = result && (getSpring()
+          == other.getSpring());
+      result = result && (getAntiSpring()
+          == other.getAntiSpring());
+      result = result && (getSettleFactor()
+          == other.getSettleFactor());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -7007,6 +7266,22 @@ public final class GameProto {
         hash = (37 * hash) + RPLAYERS_FIELD_NUMBER;
         hash = (53 * hash) + getRPlayersList().hashCode();
       }
+      hash = (37 * hash) + LANDLORD_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getLandlordId();
+      hash = (37 * hash) + WIN_TEAM_FIELD_NUMBER;
+      hash = (53 * hash) + getWinTeam();
+      hash = (37 * hash) + BASE_SCORE_FIELD_NUMBER;
+      hash = (53 * hash) + getBaseScore();
+      hash = (37 * hash) + ROB_MULTIPLIER_FIELD_NUMBER;
+      hash = (53 * hash) + getRobMultiplier();
+      hash = (37 * hash) + SPRING_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSpring());
+      hash = (37 * hash) + ANTI_SPRING_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAntiSpring());
+      hash = (37 * hash) + SETTLE_FACTOR_FIELD_NUMBER;
+      hash = (53 * hash) + getSettleFactor();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7149,6 +7424,20 @@ public final class GameProto {
         } else {
           rPlayersBuilder_.clear();
         }
+        landlordId_ = 0;
+
+        winTeam_ = 0;
+
+        baseScore_ = 0;
+
+        robMultiplier_ = 0;
+
+        spring_ = false;
+
+        antiSpring_ = false;
+
+        settleFactor_ = 0;
+
         return this;
       }
 
@@ -7183,6 +7472,13 @@ public final class GameProto {
         } else {
           result.rPlayers_ = rPlayersBuilder_.build();
         }
+        result.landlordId_ = landlordId_;
+        result.winTeam_ = winTeam_;
+        result.baseScore_ = baseScore_;
+        result.robMultiplier_ = robMultiplier_;
+        result.spring_ = spring_;
+        result.antiSpring_ = antiSpring_;
+        result.settleFactor_ = settleFactor_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -7253,6 +7549,27 @@ public final class GameProto {
               rPlayersBuilder_.addAllMessages(other.rPlayers_);
             }
           }
+        }
+        if (other.getLandlordId() != 0) {
+          setLandlordId(other.getLandlordId());
+        }
+        if (other.getWinTeam() != 0) {
+          setWinTeam(other.getWinTeam());
+        }
+        if (other.getBaseScore() != 0) {
+          setBaseScore(other.getBaseScore());
+        }
+        if (other.getRobMultiplier() != 0) {
+          setRobMultiplier(other.getRobMultiplier());
+        }
+        if (other.getSpring() != false) {
+          setSpring(other.getSpring());
+        }
+        if (other.getAntiSpring() != false) {
+          setAntiSpring(other.getAntiSpring());
+        }
+        if (other.getSettleFactor() != 0) {
+          setSettleFactor(other.getSettleFactor());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -7546,6 +7863,272 @@ public final class GameProto {
           rPlayers_ = null;
         }
         return rPlayersBuilder_;
+      }
+
+      private int landlordId_ ;
+      /**
+       * <pre>
+       *地主 roleId
+       * </pre>
+       *
+       * <code>int32 landlord_id = 3;</code>
+       */
+      public int getLandlordId() {
+        return landlordId_;
+      }
+      /**
+       * <pre>
+       *地主 roleId
+       * </pre>
+       *
+       * <code>int32 landlord_id = 3;</code>
+       */
+      public Builder setLandlordId(int value) {
+        
+        landlordId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *地主 roleId
+       * </pre>
+       *
+       * <code>int32 landlord_id = 3;</code>
+       */
+      public Builder clearLandlordId() {
+        
+        landlordId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int winTeam_ ;
+      /**
+       * <pre>
+       *0 地主胜 1 农民胜
+       * </pre>
+       *
+       * <code>int32 win_team = 4;</code>
+       */
+      public int getWinTeam() {
+        return winTeam_;
+      }
+      /**
+       * <pre>
+       *0 地主胜 1 农民胜
+       * </pre>
+       *
+       * <code>int32 win_team = 4;</code>
+       */
+      public Builder setWinTeam(int value) {
+        
+        winTeam_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *0 地主胜 1 农民胜
+       * </pre>
+       *
+       * <code>int32 win_team = 4;</code>
+       */
+      public Builder clearWinTeam() {
+        
+        winTeam_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int baseScore_ ;
+      /**
+       * <pre>
+       *叫分 1-3
+       * </pre>
+       *
+       * <code>int32 base_score = 5;</code>
+       */
+      public int getBaseScore() {
+        return baseScore_;
+      }
+      /**
+       * <pre>
+       *叫分 1-3
+       * </pre>
+       *
+       * <code>int32 base_score = 5;</code>
+       */
+      public Builder setBaseScore(int value) {
+        
+        baseScore_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *叫分 1-3
+       * </pre>
+       *
+       * <code>int32 base_score = 5;</code>
+       */
+      public Builder clearBaseScore() {
+        
+        baseScore_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int robMultiplier_ ;
+      /**
+       * <pre>
+       *抢地主倍数(每抢一次×2，底数1)
+       * </pre>
+       *
+       * <code>int32 rob_multiplier = 6;</code>
+       */
+      public int getRobMultiplier() {
+        return robMultiplier_;
+      }
+      /**
+       * <pre>
+       *抢地主倍数(每抢一次×2，底数1)
+       * </pre>
+       *
+       * <code>int32 rob_multiplier = 6;</code>
+       */
+      public Builder setRobMultiplier(int value) {
+        
+        robMultiplier_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *抢地主倍数(每抢一次×2，底数1)
+       * </pre>
+       *
+       * <code>int32 rob_multiplier = 6;</code>
+       */
+      public Builder clearRobMultiplier() {
+        
+        robMultiplier_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean spring_ ;
+      /**
+       * <pre>
+       *春天：地主胜且农民未出过牌
+       * </pre>
+       *
+       * <code>bool spring = 7;</code>
+       */
+      public boolean getSpring() {
+        return spring_;
+      }
+      /**
+       * <pre>
+       *春天：地主胜且农民未出过牌
+       * </pre>
+       *
+       * <code>bool spring = 7;</code>
+       */
+      public Builder setSpring(boolean value) {
+        
+        spring_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *春天：地主胜且农民未出过牌
+       * </pre>
+       *
+       * <code>bool spring = 7;</code>
+       */
+      public Builder clearSpring() {
+        
+        spring_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean antiSpring_ ;
+      /**
+       * <pre>
+       *反春：农民胜且地主只出过一手牌
+       * </pre>
+       *
+       * <code>bool anti_spring = 8;</code>
+       */
+      public boolean getAntiSpring() {
+        return antiSpring_;
+      }
+      /**
+       * <pre>
+       *反春：农民胜且地主只出过一手牌
+       * </pre>
+       *
+       * <code>bool anti_spring = 8;</code>
+       */
+      public Builder setAntiSpring(boolean value) {
+        
+        antiSpring_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *反春：农民胜且地主只出过一手牌
+       * </pre>
+       *
+       * <code>bool anti_spring = 8;</code>
+       */
+      public Builder clearAntiSpring() {
+        
+        antiSpring_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int settleFactor_ ;
+      /**
+       * <pre>
+       *示意：base_score*rob_multiplier*春天/反春加倍后的系数，具体结算客户端可按规则拆
+       * </pre>
+       *
+       * <code>int32 settle_factor = 9;</code>
+       */
+      public int getSettleFactor() {
+        return settleFactor_;
+      }
+      /**
+       * <pre>
+       *示意：base_score*rob_multiplier*春天/反春加倍后的系数，具体结算客户端可按规则拆
+       * </pre>
+       *
+       * <code>int32 settle_factor = 9;</code>
+       */
+      public Builder setSettleFactor(int value) {
+        
+        settleFactor_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *示意：base_score*rob_multiplier*春天/反春加倍后的系数，具体结算客户端可按规则拆
+       * </pre>
+       *
+       * <code>int32 settle_factor = 9;</code>
+       */
+      public Builder clearSettleFactor() {
+        
+        settleFactor_ = 0;
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -13518,21 +14101,25 @@ public final class GameProto {
       "stateDuration\030\003 \001(\005\"\"\n\005ReqOp\022\031\n\002op\030\001 \001(\013" +
       "2\r.proto.OpInfo\"@\n\005AckOp\022\031\n\002op\030\001 \001(\0132\r.p" +
       "roto.OpInfo\022\014\n\004opId\030\002 \001(\005\022\016\n\006opFrom\030\003 \001(" +
-      "\005\"=\n\tNotResult\022\016\n\006winner\030\001 \001(\005\022 \n\010rPlaye" +
-      "rs\030\002 \003(\0132\016.proto.RPlayer\"L\n\006OpInfo\022 \n\006ch" +
-      "oice\030\001 \001(\0162\020.proto.Operation\022 \n\007opCards\030" +
-      "\002 \003(\0132\017.proto.CardInfo\"a\n\tTableInfo\022\016\n\006r" +
-      "oomId\030\001 \001(\005\022\017\n\007tableId\030\002 \001(\003\022\020\n\010landlord",
-      "\030\003 \001(\005\022!\n\010lastCard\030\004 \001(\0132\017.proto.CardInf" +
-      "o\"h\n\006Player\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030" +
-      "\002 \001(\005\022\016\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022" +
-      "\032\n\005cards\030\005 \003(\0132\013.proto.Card\"5\n\007RPlayer\022\016" +
-      "\n\006roleId\030\001 \001(\005\022\032\n\005cards\030\005 \003(\0132\013.proto.Ca" +
-      "rd\"E\n\010CardInfo\022\032\n\005cards\030\001 \003(\0132\013.proto.Ca" +
-      "rd\022\035\n\004type\030\002 \001(\0162\017.proto.CardType\"&\n\004Car" +
-      "d\022\r\n\005value\030\001 \001(\005\022\017\n\007replace\030\002 \001(\005\"8\n\nNCa" +
-      "rdsInfo\022\016\n\006roleId\030\001 \001(\005\022\032\n\005cards\030\002 \003(\0132\013" +
-      ".proto.CardB\013B\tGameProtob\006proto3"
+      "\005\"\314\001\n\tNotResult\022\016\n\006winner\030\001 \001(\005\022 \n\010rPlay" +
+      "ers\030\002 \003(\0132\016.proto.RPlayer\022\023\n\013landlord_id" +
+      "\030\003 \001(\005\022\020\n\010win_team\030\004 \001(\005\022\022\n\nbase_score\030\005" +
+      " \001(\005\022\026\n\016rob_multiplier\030\006 \001(\005\022\016\n\006spring\030\007" +
+      " \001(\010\022\023\n\013anti_spring\030\010 \001(\010\022\025\n\rsettle_fact",
+      "or\030\t \001(\005\"L\n\006OpInfo\022 \n\006choice\030\001 \001(\0162\020.pro" +
+      "to.Operation\022 \n\007opCards\030\002 \003(\0132\017.proto.Ca" +
+      "rdInfo\"a\n\tTableInfo\022\016\n\006roomId\030\001 \001(\005\022\017\n\007t" +
+      "ableId\030\002 \001(\003\022\020\n\010landlord\030\003 \001(\005\022!\n\010lastCa" +
+      "rd\030\004 \001(\0132\017.proto.CardInfo\"h\n\006Player\022\016\n\006r" +
+      "oleId\030\001 \001(\005\022\020\n\010position\030\002 \001(\005\022\016\n\006avatar\030" +
+      "\003 \001(\014\022\020\n\010nickName\030\004 \001(\014\022\032\n\005cards\030\005 \003(\0132\013" +
+      ".proto.Card\"5\n\007RPlayer\022\016\n\006roleId\030\001 \001(\005\022\032" +
+      "\n\005cards\030\005 \003(\0132\013.proto.Card\"E\n\010CardInfo\022\032" +
+      "\n\005cards\030\001 \003(\0132\013.proto.Card\022\035\n\004type\030\002 \001(\016",
+      "2\017.proto.CardType\"&\n\004Card\022\r\n\005value\030\001 \001(\005" +
+      "\022\017\n\007replace\030\002 \001(\005\"8\n\nNCardsInfo\022\016\n\006roleI" +
+      "d\030\001 \001(\005\022\032\n\005cards\030\002 \003(\0132\013.proto.CardB\013B\tG" +
+      "ameProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -13606,7 +14193,7 @@ public final class GameProto {
     internal_static_proto_NotResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotResult_descriptor,
-        new java.lang.String[] { "Winner", "RPlayers", });
+        new java.lang.String[] { "Winner", "RPlayers", "LandlordId", "WinTeam", "BaseScore", "RobMultiplier", "Spring", "AntiSpring", "SettleFactor", });
     internal_static_proto_OpInfo_descriptor =
       getDescriptor().getMessageTypes().get(10);
     internal_static_proto_OpInfo_fieldAccessorTable = new

@@ -10,7 +10,7 @@ import msg.registor.enums.TableState;
  * @description
  * @createDate 2025/10/22 14:18
  */
-@ProcessEnum({ TableState.START_ANI, TableState.TABLE_OVER })
+@ProcessEnum(TableState.START_ANI)
 public class DefaultHandle extends AbstractTableHandle {
 
 	@Override

@@ -47,7 +47,7 @@ public class TableManager {
             List<Object> properties = new ArrayList<>();
 
             // 读取Excel配置
-            ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties);
+            ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties, TableModel.class);
 
             synchronized (tableModelMap) {
                 //Todo 重新load 以后之前的房间尽量打完删除

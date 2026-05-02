@@ -20,10 +20,11 @@ public abstract class AbstractTableHandle {
 	 */
 	public boolean handle(Table table) {
 		TableState currState = table.getTableState();
-		//有超时时间并且有默认下一个状态的默认处理等待超时切状态
+		// 有超时时间：仅在已超过等待时长后切下一状态或调用 overTime
 		if (currState.getOverTime() > 0) {
 			long now = System.currentTimeMillis();
-			if (table.getStateStartTime() + table.getTableState().getOverTime() * 1000L >= now) {
+			long deadline = table.getStateStartTime() + currState.getOverTime() * 1000L;
+			if (now >= deadline) {
 				TableState next = currState.getNext();
 				if (next != null) {
 					table.upNextStateWithTime(next, now);

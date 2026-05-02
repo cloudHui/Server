@@ -260,7 +260,7 @@ public class HandleTypeRegister {
     /**
      * 处理器绑定核心方法
      */
-    private static <K, T> void putHandle(K key, Class<?> aclass, Map<K, T> handles, Map<Class<?>, T> classProcessMap) {
+    public static <K, T> void putHandle(K key, Class<?> aclass, Map<K, T> handles, Map<Class<?>, T> classProcessMap) {
         T handler = handles.get(key);
         if (handler != null) {
             logger.error("putHandle same key:{} old:{} new:{} ", key, handler.getClass(), aclass);

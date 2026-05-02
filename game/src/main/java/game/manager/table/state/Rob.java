@@ -1,64 +1,78 @@
 package game.manager.table.state;
 
-import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import game.manager.table.Table;
-import game.manager.table.TableUser;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import proto.ConstProto;
 import proto.GameProto;
-import utils.other.RandomUtils;
 
 /**
- * @author admin
- * @className Rob
- * @description
- * @createDate 2025/10/20 16:57
+ * 广播叫分或抢地主选项，并进入 {@link TableState#IDLE_ROB}。
  */
 @ProcessEnum(TableState.ROB)
 public class Rob extends AbstractTableHandle {
 
 	@Override
 	public boolean onTiming(Table table) {
-		int firstRob = table.getBanner().getFirstRandomRobSeat();
-		if (firstRob == -1) {
-			firstRob = RandomUtils.randomRange(table.getUsers().size());
-			table.getBanner().setFirstRandomRobSeat(firstRob);
-			table.getOp().setLastOpSeat(table.getOp().getCurrOpSeat());
-			table.getOp().setCurrOpSeat(firstRob);
-		} else {
-			table.getOp().moveToNextOp();
+		if (table.getBanner().isRobBroadcastDone()) {
+			return false;
 		}
+		int seats = table.getTableModel().getSeatNum();
 
-		GameProto.NotOperation not = builderRobBannerOp(table, firstRob != -1 ?
-				new ConstProto.Operation[] { ConstProto.Operation.ROB, ConstProto.Operation.NOT_ROB }
-				: new ConstProto.Operation[] { ConstProto.Operation.CALL, ConstProto.Operation.NOT_CALL });
-		for (Map.Entry<Integer, TableUser> entry : table.getSeatUsers().entrySet()) {
-			entry.getValue().sendRoleMessage(not, GMsg.NOT_OP, table.getTableId());
-		}
-		return false;
-	}
+		if (!table.getBanner().isRobPhase()) {
+			int first = table.getBanner().getFirstRandomRobSeat();
+			if (first < 0) {
+				first = ThreadLocalRandom.current().nextInt(seats);
+				table.getBanner().setFirstRandomRobSeat(first);
+			}
+			table.getOp().clearChoiceMap();
+			table.getOp().setCurrOpSeat(first);
 
-	/**
-	 * 构造抢地主操作通知消息
-	 *
-	 * @return 构造消息
-	 */
-	private GameProto.NotOperation builderRobBannerOp(Table table, ConstProto.Operation[] ops) {
-		int currOpSeat = table.getOp().getCurrOpSeat();
+			GameProto.OpInfo notCall = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.NOT_CALL).build();
+			GameProto.OpInfo s1 = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL_SCORE_1).build();
+			GameProto.OpInfo s2 = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL_SCORE_2).build();
+			GameProto.OpInfo s3 = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL_SCORE_3).build();
+			table.getOp().addPosOpInfo(first, notCall);
+			table.getOp().addPosOpInfo(first, s1);
+			table.getOp().addPosOpInfo(first, s2);
+			table.getOp().addPosOpInfo(first, s3);
 
-		GameProto.NotOperation.Builder builder = GameProto.NotOperation.newBuilder();
-		builder.setWait(TableState.IDLE_ROB.getOverTime());
-		builder.setOpSeat(currOpSeat);
-		for (ConstProto.Operation op : ops) {
-			GameProto.OpInfo build = GameProto.OpInfo.newBuilder()
-					.setChoice(op)
+			GameProto.NotOperation not = GameProto.NotOperation.newBuilder()
+					.setWait(TableState.IDLE_ROB.getOverTime())
+					.setOpSeat(first)
+					.addChoice(notCall)
+					.addChoice(s1)
+					.addChoice(s2)
+					.addChoice(s3)
 					.build();
-			table.getOp().addPosOpInfo(currOpSeat, build);
-			builder.addChoice(build);
+			table.sendTableMessage(not, GMsg.NOT_OP);
+		} else {
+			int seat = table.getBanner().getCurrentRobSeat();
+			if (seat < 0) {
+				return false;
+			}
+			table.getOp().clearChoiceMap();
+			table.getOp().setCurrOpSeat(seat);
+
+			GameProto.OpInfo rob = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.ROB).build();
+			GameProto.OpInfo notRob = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.NOT_ROB).build();
+			table.getOp().addPosOpInfo(seat, rob);
+			table.getOp().addPosOpInfo(seat, notRob);
+
+			GameProto.NotOperation not = GameProto.NotOperation.newBuilder()
+					.setWait(TableState.IDLE_ROB.getOverTime())
+					.setOpSeat(seat)
+					.addChoice(rob)
+					.addChoice(notRob)
+					.build();
+			table.sendTableMessage(not, GMsg.NOT_OP);
 		}
-		return builder.build();
+
+		table.getBanner().setRobBroadcastDone(true);
+		table.upNextState();
+		return false;
 	}
 }

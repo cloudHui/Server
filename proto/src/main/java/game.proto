@@ -64,6 +64,13 @@ message AckOp {
 message NotResult{
     int32 winner = 1;
     repeated RPlayer rPlayers = 2;
+    int32 landlord_id = 3;//地主 roleId
+    int32 win_team = 4;//0 地主胜 1 农民胜
+    int32 base_score = 5;//叫分 1-3
+    int32 rob_multiplier = 6;//抢地主倍数(每抢一次×2，底数1)
+    bool spring = 7;//春天：地主胜且农民未出过牌
+    bool anti_spring = 8;//反春：农民胜且地主只出过一手牌
+    int32 settle_factor = 9;//示意：base_score*rob_multiplier*春天/反春加倍后的系数，具体结算客户端可按规则拆
 }
 
 message OpInfo{

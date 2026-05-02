@@ -108,6 +108,19 @@ public class TableUser {
 	public boolean outCards(Card card) {
 		return cards.remove(card);
 	}
+
+	/**
+	 * 按牌 id 从手牌移除（出牌校验成功后调用）
+	 */
+	public boolean removeCardsByProtoIds(java.util.List<Integer> ids) {
+		for (int id : ids) {
+			boolean removed = cards.removeIf(c -> c.getId() == id);
+			if (!removed) {
+				return false;
+			}
+		}
+		return true;
+	}
 	//public long getDiamond() {
 	//	return diamond;
 	//}
@@ -171,14 +184,18 @@ public class TableUser {
 	 * @param message 消息
 	 */
 	public void sendRoleMessage(Message message, int messageId, long tableId) {
+		sendRoleMessageBytes(messageId, message.toByteArray(), tableId);
+	}
+
+	public void sendRoleMessageBytes(int messageId, byte[] payload, long tableId) {
 		ClientHandler serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate, gateId);
 
 		if (serverClient == null) {
 			logger.error("sendRole:{} Message error gate:{} null table:{}", userId, gateId, tableId);
 			return;
 		}
-		serverClient.sendMessage(TCPMessage.newInstance(messageId, message.toByteArray()));
-		logger.info("sendRole:{} Message success gate:{} null table:{}", userId, gateId, tableId);
+		serverClient.sendMessage(TCPMessage.newInstance(messageId, payload));
+		logger.info("sendRole:{} Message success gate:{} table:{}", userId, gateId, tableId);
 	}
 
 	@Override

@@ -12,6 +12,6 @@ public class GeneraExcel {
 
 	public static void main(String[] args) {
 		//读取文件生成结构
-		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "tool");
+		ExcelUtil.readExcelCreateJavaHead("TableModel.xlsx", "tool", GeneraExcel.class);
 	}
 }

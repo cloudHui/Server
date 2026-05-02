@@ -1,21 +1,32 @@
 package game.manager.table.banner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @author admin
- * @className Banner
- * @description
- * @createDate 2025/10/21 14:28
+ * 斗地主叫分与抢地主阶段状态。
  */
 public class Banner {
 
-	/**
-	 * 第一个随机抢地主位置
-	 */
-	private int firstRandomRobSeat;
-	/**
-	 * 第一个抢地主位置
-	 */
-	private int firstRobSeat;
+	private int firstRandomRobSeat = -1;
+	private int firstRobSeat = -1;
+
+	private boolean robBroadcastDone;
+
+	/** false=叫分阶段 true=抢地主阶段（各农民各决策一次） */
+	private boolean robPhase;
+
+	private int maxCallScore;
+	private int candidateSeat = -1;
+
+	private int bidResponses;
+
+	private final List<Integer> robFarmerSeats = new ArrayList<>();
+	private int robTurnIndex;
+	private int robResponses;
+
+	/** 抢地主累积倍数，初始 1，每次「抢」×2 */
+	private int robMultiplierAccum = 1;
 
 	public Banner() {
 	}
@@ -36,11 +47,120 @@ public class Banner {
 		this.firstRobSeat = firstRobSeat;
 	}
 
+	public boolean isRobBroadcastDone() {
+		return robBroadcastDone;
+	}
+
+	public void setRobBroadcastDone(boolean robBroadcastDone) {
+		this.robBroadcastDone = robBroadcastDone;
+	}
+
+	public boolean isRobPhase() {
+		return robPhase;
+	}
+
+	public void setRobPhase(boolean robPhase) {
+		this.robPhase = robPhase;
+	}
+
+	public int getMaxCallScore() {
+		return maxCallScore;
+	}
+
+	public void setMaxCallScore(int maxCallScore) {
+		this.maxCallScore = maxCallScore;
+	}
+
+	public int getCandidateSeat() {
+		return candidateSeat;
+	}
+
+	public void setCandidateSeat(int candidateSeat) {
+		this.candidateSeat = candidateSeat;
+	}
+
+	public int getBidResponses() {
+		return bidResponses;
+	}
+
+	public void setBidResponses(int bidResponses) {
+		this.bidResponses = bidResponses;
+	}
+
+	public void addBidResponse() {
+		this.bidResponses++;
+	}
+
+	public List<Integer> getRobFarmerSeats() {
+		return robFarmerSeats;
+	}
+
+	public int getRobTurnIndex() {
+		return robTurnIndex;
+	}
+
+	public void setRobTurnIndex(int robTurnIndex) {
+		this.robTurnIndex = robTurnIndex;
+	}
+
+	public int getRobResponses() {
+		return robResponses;
+	}
+
+	public void setRobResponses(int robResponses) {
+		this.robResponses = robResponses;
+	}
+
+	public void addRobResponse() {
+		this.robResponses++;
+	}
+
+	public int getRobMultiplierAccum() {
+		return robMultiplierAccum;
+	}
+
+	public void setRobMultiplierAccum(int robMultiplierAccum) {
+		this.robMultiplierAccum = robMultiplierAccum;
+	}
+
 	/**
-	 * 重置
+	 * 抢地主阶段当前应操作的座位（农民）。
 	 */
+	public int getCurrentRobSeat() {
+		if (robTurnIndex < 0 || robTurnIndex >= robFarmerSeats.size()) {
+			return -1;
+		}
+		return robFarmerSeats.get(robTurnIndex);
+	}
+
+	/**
+	 * 进入抢地主阶段：按座位顺序两名农民各决策一次。
+	 */
+	public void prepareRobFarmerOrder(int candidateSeat, int seatNum) {
+		robFarmerSeats.clear();
+		for (int step = 1; step < seatNum; step++) {
+			robFarmerSeats.add((candidateSeat + step) % seatNum);
+		}
+		robTurnIndex = 0;
+		robResponses = 0;
+		robMultiplierAccum = 1;
+	}
+
+	public void advanceRobTurn() {
+		robTurnIndex++;
+	}
+
 	public void reset() {
 		firstRandomRobSeat = -1;
 		firstRobSeat = -1;
+		robBroadcastDone = false;
+		robPhase = false;
+		maxCallScore = 0;
+		candidateSeat = -1;
+		bidResponses = 0;
+		robFarmerSeats.clear();
+		robTurnIndex = 0;
+		robResponses = 0;
+		robMultiplierAccum = 1;
 	}
 }
