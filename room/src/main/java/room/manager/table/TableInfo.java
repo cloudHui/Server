@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.protobuf.ByteString;
-import model.TableModel;
+import model.tablemodel.TableModel;
 import proto.ConstProto;
 import proto.ModelProto;
 import proto.ServerProto;

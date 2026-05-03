@@ -34,8 +34,14 @@ public class ReqCreateTableHandle implements Handler {
 			// 发送响应
 			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId, response, sequence);
 
-			logger.info("创建桌子请求处理完成, clientId: {}, tableId: {}", clientId, response.getTables().getTableId());
+			if (response.hasTables()) {
+				logger.info("创建桌子请求处理完成, clientId: {}, tableId: {}", clientId, response.getTables().getTableId());
+			}
 
+		} catch (IllegalArgumentException e) {
+			logger.warn("创建桌子被拒绝, clientId: {}, reason: {}", clientId, e.getMessage());
+			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId,
+					ServerProto.AckCreateGameTable.getDefaultInstance(), sequence);
 		} catch (Exception e) {
 			logger.error("处理创建桌子请求失败, clientId: {}", clientId, e);
 		}
@@ -50,7 +56,6 @@ public class ReqCreateTableHandle implements Handler {
 
 		// 创建桌子实例
 		Table table = tableManager.createTable(roomId, role);
-		tableManager.addTable(table);
 
 		// 构建响应
 		ServerProto.AckCreateGameTable.Builder response = ServerProto.AckCreateGameTable.newBuilder();

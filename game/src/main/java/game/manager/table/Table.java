@@ -9,7 +9,7 @@ import game.manager.table.banner.Banner;
 import game.manager.table.card.poll.CardPool;
 import game.manager.table.op.Operate;
 import game.manager.table.state.TableStateHandleManager;
-import model.TableModel;
+import model.tablemodel.TableModel;
 import msg.registor.enums.TableState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -257,7 +257,6 @@ public class Table {
 	 * 给玩家发牌
 	 */
 	public void sendCard() {
-		cardPool.initCards();
 		cardPool.dealInitCard();
 	}
 
@@ -272,6 +271,14 @@ public class Table {
 			if (user == null) {
 				logger.warn("尝试添加空玩家到桌子, tableId: {}", tableId);
 				return ConstProto.Result.ROLE_NULL_VALUE;
+			}
+
+			int prevSeat = user.getSeated();
+			if (prevSeat >= 0 && seatUsers.get(prevSeat) == user) {
+				return ConstProto.Result.SUCCESS_VALUE;
+			}
+			if (prevSeat >= 0) {
+				user.setSeated(-1);
 			}
 
 			if (sitFull()) {

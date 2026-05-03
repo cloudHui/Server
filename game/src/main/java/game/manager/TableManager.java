@@ -1,7 +1,7 @@
 package game.manager;
 
 import game.manager.table.Table;
-import model.TableModel;
+import model.tablemodel.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
@@ -108,7 +108,7 @@ public class TableManager {
     /**
      * 删除桌子
      */
-    public Table removeTable(String tableId) {
+    public Table removeTable(long tableId) {
         Table removedTable = tableMap.remove(tableId);
         if (removedTable != null) {
             logger.info("删除桌子, tableId: {}", tableId);
@@ -137,6 +137,9 @@ public class TableManager {
     public Table createTable(int roomId, ModelProto.RoomRole role) {
         synchronized (TableManager.class) {
             TableModel model = tableModelMap.get(roomId);
+            if (model == null) {
+                throw new IllegalArgumentException("未知房间模板 roomId=" + roomId);
+            }
             Table table = new Table(getTableId(), model, role);
             addTable(table);
             return table;

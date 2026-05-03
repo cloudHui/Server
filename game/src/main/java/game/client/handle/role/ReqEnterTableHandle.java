@@ -90,11 +90,11 @@ public class ReqEnterTableHandle implements Handler {
 			if (result == ConstProto.Result.SUCCESS_VALUE) {
 				logger.debug("用户成功加入桌子, userId: {}, tableId: {}", userId, tableId);
 				user.addTable(tableId);
-			} else {
-				logger.error("用户加入桌子失败, userId: {}, tableId: {}", userId, tableId);
+				return result;
 			}
-
-			return ConstProto.Result.SUCCESS_VALUE;
+			logger.error("用户加入桌子失败, userId: {}, tableId: {}", userId, tableId);
+			table.getUsers().remove(userId);
+			return result;
 		} catch (Exception e) {
 			logger.error("处理进入桌子逻辑失败, userId: {}, tableId: {}", userId, tableId, e);
 			return ConstProto.Result.TABLE_ERROR_VALUE;

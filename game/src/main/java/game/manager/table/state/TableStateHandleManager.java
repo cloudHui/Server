@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import game.manager.table.Table;
-import game.manager.table.TableUser;
 import msg.registor.HandleTypeRegister;
 import msg.registor.enums.TableState;
 import org.slf4j.Logger;
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableStateHandleManager {
 
-	private static final Logger logger = LoggerFactory.getLogger(TableUser.class);
+	private static final Logger logger = LoggerFactory.getLogger(TableStateHandleManager.class);
 
 	private static final Map<TableState, AbstractTableHandle> STATE_TABLE_HANDLE_MAP = new HashMap<>();
 

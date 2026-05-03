@@ -1,6 +1,6 @@
-package model; 
- 
- 
+package model.tablemodel;
+
+
 public class TableModel {
 
     //主键
@@ -17,7 +17,7 @@ public class TableModel {
 
     //额外牌数量
     private int exCardNum;
- 
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -59,16 +59,16 @@ public class TableModel {
         this.exCardNum = exCardNum;
     }
 
- 
+
     @Override
     public String toString() {
         return "TableModel{"+
-                "     id="+id+ 
-                "     type="+type+ 
-                "     seatNum="+seatNum+ 
-                "     cardNum="+cardNum+ 
-                "     exCardNum="+exCardNum+ 
+                "     id="+id+
+                "     type="+type+
+                "     seatNum="+seatNum+
+                "     cardNum="+cardNum+
+                "     exCardNum="+exCardNum+
                 '}';
     }
 
- }
+}

@@ -2,7 +2,7 @@ package room.client.handle.role;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
-import model.TableModel;
+import model.tablemodel.TableModel;
 import msg.annotation.ProcessType;
 import msg.registor.enums.ServerType;
 import msg.registor.message.RMsg;
