@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 斗地主叫分与抢地主阶段状态。
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className Banner
+ * @description 斗地主叫分与抢地主阶段状态，负责游戏桌子的叫分与抢地主阶段状态管理
+ * @createDate 2026-05-03
  */
 public class Banner {
 
@@ -16,17 +22,17 @@ public class Banner {
 	/** false=叫分阶段 true=抢地主阶段（各农民各决策一次） */
 	private boolean robPhase;
 
-	private int maxCallScore;
-	private int candidateSeat = -1;
+	private int maxCallScore;//最大叫分
+	private int candidateSeat = -1;//候选人座位
 
-	private int bidResponses;
+	private int bidResponses;//叫分响应次数
 
-	private final List<Integer> robFarmerSeats = new ArrayList<>();
-	private int robTurnIndex;
-	private int robResponses;
+	private final List<Integer> robFarmerSeats = new ArrayList<>();//抢地主座位列表
+	private int robTurnIndex;//抢地主轮次
+	private int robResponses;//抢地主响应次数
 
 	/** 抢地主累积倍数，初始 1，每次「抢」×2 */
-	private int robMultiplierAccum = 1;
+	private int robMultiplierAccum = 1;//抢地主累积倍数
 
 	public Banner() {
 	}
@@ -146,10 +152,16 @@ public class Banner {
 		robMultiplierAccum = 1;
 	}
 
+	/**
+	 * 抢地主轮次递增
+	 */
 	public void advanceRobTurn() {
 		robTurnIndex++;
 	}
 
+	/**
+	 * 重置抢地主阶段状态
+	 */
 	public void reset() {
 		firstRandomRobSeat = -1;
 		firstRobSeat = -1;

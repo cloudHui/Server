@@ -1,21 +1,27 @@
 package game.manager;
 
-import game.manager.table.Table;
-import model.tablemodel.TableModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import proto.ModelProto;
-import utils.other.excel.ExcelUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import game.manager.table.Table;
+import model.tablemodel.TableModel;
+import proto.ModelProto;
+import utils.other.excel.ExcelUtil;
+
 /**
- * 桌子管理器
- * 负责游戏桌子的创建、管理和生命周期控制
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className TableManager
+ * @description 桌子管理器，负责游戏桌子的创建、管理和生命周期控制
+ * @createDate 2026-05-03
  */
 public class TableManager {
     private static final Logger logger = LoggerFactory.getLogger(TableManager.class);
@@ -37,7 +43,6 @@ public class TableManager {
         logger.info("桌子管理器初始化完成");
     }
 
-
     /**
      * 初始化房间管理器
      * 从Excel文件加载房间配置
@@ -50,7 +55,7 @@ public class TableManager {
             ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties, TableModel.class);
 
             synchronized (tableModelMap) {
-                //Todo 重新load 以后之前的房间尽量打完删除
+                // Todo 重新load 以后之前的房间尽量打完删除
                 tableModelMap.clear();
 
                 for (Object object : properties) {

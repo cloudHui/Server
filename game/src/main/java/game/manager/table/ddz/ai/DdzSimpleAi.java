@@ -16,13 +16,26 @@ import proto.ConstProto;
 import proto.GameProto;
 
 /**
+ * DdzSimpleAi
  * 简易托管 AI：拆牌规划 + 合法压制枚举 + 阶段/角色极简启发。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 public final class DdzSimpleAi {
 
 	private DdzSimpleAi() {
 	}
 
+	/**
+	 * 决定
+	 * 
+	 * @param table 桌子
+	 * @param user  用户
+	 * @return 决定
+	 */
 	public static GameProto.OpInfo decide(Table table, TableUser user) {
 		List<Card> hand = new ArrayList<>(user.getCards());
 		if (hand.isEmpty()) {
@@ -46,6 +59,12 @@ public final class DdzSimpleAi {
 		return playHand(pick);
 	}
 
+	/**
+	 * 阶段
+	 * 
+	 * @param handSize 手牌大小
+	 * @return 阶段
+	 */
 	private static int phaseOf(int handSize) {
 		if (handSize >= DdzAiConstants.PHASE_EARLY_MIN_CARDS) {
 			return 0;
@@ -56,6 +75,13 @@ public final class DdzSimpleAi {
 		return 2;
 	}
 
+	/**
+	 * 是否应该在队友之后出牌
+	 * 
+	 * @param table 桌子
+	 * @param user  用户
+	 * @return 是否应该在队友之后出牌
+	 */
 	private static boolean shouldPassAfterTeammate(Table table, TableUser user) {
 		if (!DdzAiConstants.AI_PASS_AFTER_TEAMMATE_PLAY) {
 			return false;
@@ -72,6 +98,14 @@ public final class DdzSimpleAi {
 		return true;
 	}
 
+	/**
+	 * 过滤重牌
+	 * 
+	 * @param beats 牌
+	 * @param last  上一手
+	 * @param phase 阶段
+	 * @return 过滤重牌
+	 */
 	private static List<DdzHand> filterHeavyBeats(List<DdzHand> beats, DdzHand last, int phase) {
 		if (phase > 0 || last.isBomb() || last.isRocket()) {
 			return beats;
@@ -88,6 +122,12 @@ public final class DdzSimpleAi {
 		return light.isEmpty() ? beats : light;
 	}
 
+	/**
+	 * 选择最便宜的牌
+	 * 
+	 * @param beats 牌
+	 * @return 最便宜的牌
+	 */
 	private static DdzHand pickCheapestBeat(List<DdzHand> beats) {
 		DdzHand best = null;
 		double bestCost = Double.MAX_VALUE;
@@ -107,6 +147,13 @@ public final class DdzSimpleAi {
 		return best;
 	}
 
+	/**
+	 * 出牌
+	 * 
+	 * @param hand  手牌
+	 * @param phase 阶段
+	 * @return 出牌
+	 */
 	private static GameProto.OpInfo lead(List<Card> hand, int phase) {
 		List<CardGroup> plan = DdzSplitPlanner.plan(hand);
 		Set<String> seen = new HashSet<>();
@@ -135,6 +182,13 @@ public final class DdzSimpleAi {
 		return playHand(best);
 	}
 
+	/**
+	 * 添加出牌候选
+	 * 
+	 * @param cards      牌
+	 * @param candidates 候选
+	 * @param seen       已见过
+	 */
 	private static void addLeadCandidate(List<Card> cards, List<DdzHand> candidates, Set<String> seen) {
 		Optional<DdzHand> o = DdzRules.analyze(cards);
 		if (!o.isPresent()) {
@@ -146,6 +200,12 @@ public final class DdzSimpleAi {
 		}
 	}
 
+	/**
+	 * 保留提示
+	 * 
+	 * @param h 牌型
+	 * @return 保留提示
+	 */
 	private static double preserveHint(DdzHand h) {
 		if (h.isRocket()) {
 			return DdzAiConstants.SPLIT_WEIGHT_ROCKET;
@@ -175,6 +235,13 @@ public final class DdzSimpleAi {
 		}
 	}
 
+	/**
+	 * 得分提示
+	 * 
+	 * @param h     牌型
+	 * @param phase 阶段
+	 * @return 得分提示
+	 */
 	private static double scoreLead(DdzHand h, int phase) {
 		double s = h.getStrengthKey();
 		if (phase == 0) {
@@ -206,6 +273,12 @@ public final class DdzSimpleAi {
 		return s;
 	}
 
+	/**
+	 * 出牌
+	 * 
+	 * @param h 牌型
+	 * @return 出牌
+	 */
 	private static GameProto.OpInfo playHand(DdzHand h) {
 		return GameProto.OpInfo.newBuilder()
 				.setChoice(ConstProto.Operation.PLAY)
@@ -213,6 +286,11 @@ public final class DdzSimpleAi {
 				.build();
 	}
 
+	/**
+	 * 过牌
+	 * 
+	 * @return 过牌
+	 */
 	private static GameProto.OpInfo pass() {
 		return GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.PASS).build();
 	}

@@ -7,7 +7,8 @@ import msg.registor.enums.TableState;
 /**
  * @author admin
  * @className RoundOver
- * @description
+ * @description 牌局结束阶段：依赖 {@link AbstractTableHandle} 的超时逻辑切入
+ *              {@link TableState#ROUND_OVER}。
  * @createDate 2025/10/20 16:57
  */
 @ProcessEnum(TableState.ROUND_OVER)

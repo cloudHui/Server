@@ -11,6 +11,11 @@ import proto.GameProto;
 
 /**
  * 广播叫分或抢地主选项，并进入 {@link TableState#IDLE_ROB}。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 @ProcessEnum(TableState.ROB)
 public class Rob extends AbstractTableHandle {

@@ -8,6 +8,11 @@ import msg.registor.enums.TableState;
 
 /**
  * 等待玩家出牌；超时自动处理（首家出最小单张，否则视为过）。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 @ProcessEnum(TableState.IDLE_CARD)
 public class IdleCardPlay extends AbstractTableHandle {

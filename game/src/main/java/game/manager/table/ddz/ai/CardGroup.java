@@ -8,6 +8,11 @@ import game.manager.table.cards.Card;
 
 /**
  * 拆牌后的一个出牌单元（不一定已是合法统一牌型，需经 {@link game.manager.table.ddz.DdzRules#analyze}）。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 public final class CardGroup {
 

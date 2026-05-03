@@ -7,6 +7,11 @@ import msg.registor.enums.TableState;
 
 /**
  * 等待叫地主；超时视为「不叫」。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 @ProcessEnum(TableState.IDLE_ROB)
 public class IdleRob extends AbstractTableHandle {

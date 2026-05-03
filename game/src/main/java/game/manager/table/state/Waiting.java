@@ -7,7 +7,8 @@ import msg.registor.enums.TableState;
 /**
  * @author admin
  * @className Waiting
- * @description
+ * @description 等待阶段：依赖 {@link AbstractTableHandle} 的超时逻辑切入
+ *              {@link TableState#WAITING}。
  * @createDate 2025/10/20 16:57
  */
 @ProcessEnum(TableState.WAITING)

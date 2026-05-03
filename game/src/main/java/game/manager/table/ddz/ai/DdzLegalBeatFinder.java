@@ -15,13 +15,26 @@ import game.manager.table.ddz.DdzHand;
 import game.manager.table.ddz.DdzRules;
 
 /**
+ * DdzLegalBeatFinder
  * 枚举能压制上一手的合法牌型（在同类型、炸弹、王炸规则下）。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 public final class DdzLegalBeatFinder {
 
 	private DdzLegalBeatFinder() {
 	}
 
+	/**
+	 * 查找能压制上一手的合法牌型
+	 * 
+	 * @param hand 手牌
+	 * @param last 上一手
+	 * @return 能压制上一手的合法牌型
+	 */
 	public static List<DdzHand> findBeatingHands(List<Card> hand, DdzHand last) {
 		List<DdzHand> out = new ArrayList<>();
 		if (last == null || last.getCards().isEmpty()) {
@@ -107,12 +120,28 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 尝试单牌
+	 * 
+	 * @param hand 手牌
+	 * @param last 上一手
+	 * @param out  输出
+	 * @param seen 已见过
+	 */
 	private static void trySingles(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		for (Card c : hand) {
 			addIfBeats(Collections.singletonList(c), last, out, seen);
 		}
 	}
 
+	/**
+	 * 尝试对牌
+	 * 
+	 * @param hand 手牌
+	 * @param last 上一手
+	 * @param out  输出
+	 * @param seen 已见过
+	 */
 	private static void tryPairs(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		Map<Integer, List<Card>> by = byRank(hand);
 		for (List<Card> lst : by.values()) {
@@ -127,6 +156,14 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 尝试三牌
+	 * 
+	 * @param hand 手牌
+	 * @param last 上一手
+	 * @param out  输出
+	 * @param seen 已见过
+	 */
 	private static void tryTriples(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		Map<Integer, List<Card>> by = byRank(hand);
 		for (List<Card> lst : by.values()) {
@@ -137,6 +174,14 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 尝试顺子
+	 * 
+	 * @param hand 手牌
+	 * @param last 上一手
+	 * @param out  输出
+	 * @param seen 已见过
+	 */
 	private static void tryStraights(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		int len = last.getStraightLen();
 		if (len < 5) {
@@ -148,6 +193,19 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 深度优先搜索顺子
+	 * 
+	 * @param hand      手牌
+	 * @param used      已使用
+	 * @param startRank 开始排名
+	 * @param len       长度
+	 * @param depth     深度
+	 * @param acc       累加器
+	 * @param last      上一手
+	 * @param out       输出
+	 * @param seen      已见过
+	 */
 	private static void dfsStraight(List<Card> hand, boolean[] used, int startRank, int len, int depth,
 			List<Card> acc, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		if (depth == len) {
@@ -174,6 +232,14 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 尝试双顺子
+	 * 
+	 * @param hand 手牌
+	 * @param last 上一手
+	 * @param out  输出
+	 * @param seen 已见过
+	 */
 	private static void tryStraightDoubles(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		int pairs = last.getStraightLen();
 		if (pairs < 3) {
@@ -185,6 +251,19 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 深度优先搜索双顺子
+	 * 
+	 * @param hand      手牌
+	 * @param used      已使用
+	 * @param startRank 开始排名
+	 * @param pairs     对数
+	 * @param depth     深度
+	 * @param acc       累加器
+	 * @param last      上一手
+	 * @param out       输出
+	 * @param seen      已见过
+	 */
 	private static void dfsStraightDouble(List<Card> hand, boolean[] used, int startRank, int pairs, int depth,
 			List<Card> acc, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		if (depth == pairs) {
@@ -218,10 +297,24 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 按排名分组
+	 * 
+	 * @param hand 手牌
+	 * @return 按排名分组
+	 */
 	private static Map<Integer, List<Card>> byRank(List<Card> hand) {
 		return hand.stream().collect(Collectors.groupingBy(Card::getCardVal, TreeMap::new, Collectors.toList()));
 	}
 
+	/**
+	 * 如果牌型能压制上一手，则添加到输出列表中
+	 * 
+	 * @param cards 牌
+	 * @param last  上一手
+	 * @param out   输出
+	 * @param seen  已见过
+	 */
 	private static void addIfBeats(List<Card> cards, DdzHand last, List<DdzHand> out, Set<String> seen) {
 		Optional<DdzHand> o = DdzRules.analyze(cards);
 		if (!o.isPresent()) {
@@ -236,6 +329,12 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
+	/**
+	 * 获取牌型签名
+	 * 
+	 * @param h 牌型
+	 * @return 牌型签名
+	 */
 	public static String signature(DdzHand h) {
 		List<Integer> ids = new ArrayList<>();
 		for (Card c : h.getCards()) {

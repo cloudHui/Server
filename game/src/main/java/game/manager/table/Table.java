@@ -18,53 +18,58 @@ import proto.GameProto;
 import proto.ModelProto;
 
 /**
- * 游戏桌子模型
- * 代表一个游戏桌子的状态和行为
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className Table
+ * @description 游戏桌子模型，负责游戏桌子的状态管理
+ * @createDate 2026-05-03
  */
 public class Table {
 	private static final Logger logger = LoggerFactory.getLogger(Table.class);
 
-	private final long tableId;
+	private final long tableId;// 桌子ID
 
-	private final TableModel tableModel;
+	private final TableModel tableModel;// 桌子模型
 
-	private final ModelProto.RoomRole creator;
+	private final ModelProto.RoomRole creator;// 桌子创建者
 
 	/**
 	 * 桌子上的玩家(玩家id 和玩家数据)
 	 */
-	private final Map<Integer, TableUser> users = new HashMap<>();
+	private final Map<Integer, TableUser> users = new HashMap<>();// 桌子上的玩家(玩家id 和玩家数据)
 
 	/**
 	 * 桌子上的玩家(座位号和玩家id)
 	 */
-	private final Map<Integer, TableUser> seatUsers = new HashMap<>();
+	private final Map<Integer, TableUser> seatUsers = new HashMap<>();// 桌子上的玩家(座位号和玩家id)
 
 	/**
 	 * 牌桌运行状态
 	 */
-	private TableState tableState = TableState.WAITING;
+	private TableState tableState = TableState.WAITING;// 桌子运行状态
 
 	/**
 	 * 状态开始时间
 	 */
-	private long stateStartTime;
+	private long stateStartTime;// 状态开始时间
 
-	private int errorTimes;
+	private int errorTimes;// 最大错误次数
 	/**
 	 * 牌桌牌数据
 	 */
-	private final CardPool cardPool;
+	private final CardPool cardPool;// 牌桌牌数据
 
 	/**
 	 * 抢地主数据
 	 */
-	private final Banner banner;
+	private final Banner banner;// 抢地主数据
 
 	/**
 	 * 操作数据
 	 */
-	private final Operate op;
+	private final Operate op;// 操作数据
 
 	/**
 	 * 斗地主牌局上下文（叫地主、出牌）
@@ -76,6 +81,13 @@ public class Table {
 	 */
 	private static final int MAX_ERROR = 100;
 
+	/**
+	 * 创建一个桌子
+	 * 
+	 * @param tableId 桌子ID
+	 * @param model   桌子模型
+	 * @param creator 桌子创建者
+	 */
 	public Table(long tableId, TableModel model, ModelProto.RoomRole creator) {
 		this.tableId = tableId;
 		this.creator = creator;

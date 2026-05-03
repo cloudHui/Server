@@ -6,18 +6,25 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.protobuf.Message;
+
 import game.Game;
 import game.manager.table.cards.Card;
 import msg.registor.enums.ServerType;
 import net.client.handler.ClientHandler;
 import net.message.TCPMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * 游戏用户模型
- * 代表一个游戏玩家的状态和信息
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className TableUser
+ * @description 游戏用户模型，负责游戏桌子的玩家管理
+ * @createDate 2026-05-03
  */
 public class TableUser {
 	private static final Logger logger = LoggerFactory.getLogger(TableUser.class);
@@ -30,8 +37,16 @@ public class TableUser {
 	private final int gateId;
 	private int seated = -1;
 	private final List<Card> cards;
-	//private long diamond;
+	// private long diamond;
 
+	/**
+	 * 创建一个游戏用户
+	 * 
+	 * @param userId 用户ID
+	 * @param head   用户头像
+	 * @param nick   用户昵称
+	 * @param gateId 用户所在的网关ID
+	 */
 	public TableUser(int userId, String head, String nick, int gateId) {
 		this.userId = userId;
 		this.head = head;
@@ -121,17 +136,18 @@ public class TableUser {
 		}
 		return true;
 	}
-	//public long getDiamond() {
-	//	return diamond;
-	//}
+	// public long getDiamond() {
+	// return diamond;
+	// }
 	//
-	//public void setDiamond(long diamond) {
-	//	long oldValue = this.diamond;
-	//	this.diamond = diamond;
-	//	if (oldValue != diamond) {
-	//		logger.debug("更新用户钻石数量, userId: {}, old: {}, new: {}", userId, oldValue, diamond);
-	//	}
-	//}
+	// public void setDiamond(long diamond) {
+	// long oldValue = this.diamond;
+	// this.diamond = diamond;
+	// if (oldValue != diamond) {
+	// logger.debug("更新用户钻石数量, userId: {}, old: {}, new: {}", userId, oldValue,
+	// diamond);
+	// }
+	// }
 
 	public Set<Long> getTableIds() {
 		return new HashSet<>(tableIds); // 返回副本避免外部修改
@@ -188,7 +204,8 @@ public class TableUser {
 	}
 
 	public void sendRoleMessageBytes(int messageId, byte[] payload, long tableId) {
-		ClientHandler serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate, gateId);
+		ClientHandler serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate,
+				gateId);
 
 		if (serverClient == null) {
 			logger.error("sendRole:{} Message error gate:{} null table:{}", userId, gateId, tableId);
@@ -209,8 +226,10 @@ public class TableUser {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		TableUser tableUser = (TableUser) o;
 		return Objects.equals(tableIds, tableUser.tableIds);
 	}

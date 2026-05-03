@@ -3,16 +3,20 @@ package game.manager.table.state;
 import java.util.HashMap;
 import java.util.Map;
 
-import game.manager.table.Table;
-import msg.registor.HandleTypeRegister;
-import msg.registor.enums.TableState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import game.manager.table.Table;
+import msg.registor.HandleTypeRegister;
+import msg.registor.enums.TableState;
+
 /**
- * @author admin
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  * @className TableStateHandleManager
- * @description
+ * @description 桌子状态处理器管理器
  * @createDate 2025/10/20 16:53
  */
 public class TableStateHandleManager {

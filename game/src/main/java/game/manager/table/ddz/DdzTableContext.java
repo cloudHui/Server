@@ -4,22 +4,30 @@ import proto.GameProto;
 
 /**
  * 斗地主一桌内的运行时状态（与 {@link msg.registor.enums.TableState} 区分）。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className DdzTableContext
+ * @description 斗地主一桌内的运行时状态（与 {@link msg.registor.enums.TableState} 区分）。
+ * @createDate 2026-05-03
  */
 public class DdzTableContext {
 
 	private GameProto.CardInfo lastPlayed = GameProto.CardInfo.getDefaultInstance();
-	private DdzHand lastHand;
-	private int consecutivePasses;
+	private DdzHand lastHand;//上一手出牌
+	private int consecutivePasses;//连续过牌次数
 	private int landlordSeat = -1;
 	/** 上一手出牌者座位（用于两轮「要不起」后仍由其首家） */
-	private int lastPlaySeat = -1;
+	private int lastPlaySeat = -1;//上一手出牌者座位
 
 	/** 叫分底分 1-3 */
-	private int baseScore = 1;
+	private int baseScore = 1;//叫分底分
 	/** 抢地主倍数（每抢×2 后的积） */
-	private int robMultiplier = 1;
-	private boolean farmerEverPlayed;
-	private int landlordPlayCount;
+	private int robMultiplier = 1;//抢地主倍数
+	private boolean farmerEverPlayed;//农民是否出过牌
+	private int landlordPlayCount;//地主出牌次数
 
 	public GameProto.CardInfo getLastPlayed() {
 		return lastPlayed;
