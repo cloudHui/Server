@@ -1,0 +1,9 @@
+web\service\UserService.class
+web\service\GateClient.class
+web\config\WebSocketConfig.class
+web\controller\UserController.class
+web\service\UserService$UserInfo.class
+web\config\AppConfig.class
+web\handler\GameWebSocketHandler.class
+web\Application.class
+web\controller\RoomController.class

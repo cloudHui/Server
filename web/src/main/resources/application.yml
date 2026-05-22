@@ -1,0 +1,27 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: web
+
+gate:
+  host: 127.0.0.1
+  port: 9001
+
+logging:
+  file:
+    name: ./logs/web/app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 30MB
+      file-name-pattern: ./logs/web/archived/app-%d{yyyy-MM-dd-HH}.%i.log.gz
+      max-history: 720
+      total-size-cap: 20GB
+  pattern:
+    file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    web: INFO

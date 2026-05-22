@@ -18,6 +18,7 @@
         <module>robot</module>
         <module>room</module>
         <module>sp</module>
+        <module>web</module>
     </modules>
 
     <dependencies>

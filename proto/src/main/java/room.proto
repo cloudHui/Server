@@ -3,6 +3,8 @@ option java_outer_classname = "RoomProto";
 
 package proto;
 
+import "model.proto";
+
 //请求加入房间
 message ReqJoinRoomTable {
     int32 roomId = 1;
@@ -11,4 +13,13 @@ message ReqJoinRoomTable {
 //加入房间回复
 message AckJoinRoomTable {
     int64 tableId = 1;
+}
+
+//请求房间列表
+message ReqRoomList {
+}
+
+//房间列表回复
+message AckRoomList {
+    repeated Room roomList = 1;
 }

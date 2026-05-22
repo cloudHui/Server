@@ -19,4 +19,10 @@ public class RMsg {
 	@ClassField(value = RoomProto.AckJoinRoomTable.class, des = "加入桌子回复")
 	public static final int ACK_JOIN_ROOM_TABLE_MSG = CMsg.ROOM_TYPE | 2;
 
+	@ClassField(value = RoomProto.ReqRoomList.class, des = "请求房间列表")
+	public static final int REQ_ROOM_LIST_MSG = CMsg.ROOM_TYPE | 3;
+
+	@ClassField(value = RoomProto.AckRoomList.class, des = "房间列表回复")
+	public static final int ACK_ROOM_LIST_MSG = CMsg.ROOM_TYPE | 4;
+
 }
