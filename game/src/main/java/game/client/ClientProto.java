@@ -10,6 +10,7 @@ import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
+import utils.trace.TracedHandler;
 
 /**
  * 游戏客户端协议处理器
@@ -36,6 +37,7 @@ public class ClientProto {
 			HandleTypeRegister.initFactory(ClientProto.class, HANDLER_MAP);
 			// 绑定通用服务器消息处理
 			HandleTypeRegister.initFactory(HANDLER_MAP);
+			TracedHandler.wrapAll(HANDLER_MAP);
 			logger.info("游戏客户端协议处理器初始化完成,注册处理器数量: {}", HANDLER_MAP.size());
 		} catch (Exception e) {
 			logger.error("游戏客户端协议处理器初始化失败", e);

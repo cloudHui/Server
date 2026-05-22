@@ -45,7 +45,8 @@ public class TableStateHandleManager {
 			exit = handle.handle(table);
 		} catch (Exception e) {
 			table.addErrorTime();
-			e.printStackTrace();
+			logger.error("桌子状态处理异常, tableId: {}, state: {}",
+					table.getTableId(), table.getTableState(), e);
 		}
 		if (logger.isDebugEnabled()) {
 			logger.debug("桌子状态处理结束, tableId: {}, state:{}", table.getTableId(), table.getTableState());

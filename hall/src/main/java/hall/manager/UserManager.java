@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.metrics.MetricsCollector;
 
 /**
  * 用户管理器
@@ -29,12 +30,12 @@ public class UserManager {
 	}
 
 	/**
-	 * 根据用户ID获取用户
+	 * 根据设备ID获取用户
 	 */
-	public User getUser(String cert) {
-		User user = usersC.get(cert);
+	public User getUser(String deviceId) {
+		User user = usersC.get(deviceId);
 		if (user == null) {
-			logger.debug("用户不存在, cert: {}", cert);
+			logger.debug("用户不存在, deviceId: {}", deviceId);
 		}
 		return user;
 	}
@@ -57,13 +58,14 @@ public class UserManager {
 		User removedUser = users.remove(userId);
 		if (removedUser != null) {
 			logger.info("移除用户, userId: {}", userId);
-			String cert = removedUser.getCert();
-			removedUser = usersC.remove(cert);
+			String deviceId = removedUser.getDeviceId();
+			removedUser = usersC.remove(deviceId);
 			if (removedUser != null) {
-				logger.info("移除用户, cert: {}", cert);
+				logger.info("移除用户, deviceId: {}", deviceId);
 			} else {
-				logger.warn("用户不存在,无法移除, cert: {}", cert);
+				logger.warn("用户不存在,无法移除, deviceId: {}", deviceId);
 			}
+			MetricsCollector.getInstance().setGauge("hall.online_users", users.size());
 		} else {
 			logger.warn("用户不存在,无法移除, userId: {}", userId);
 		}
@@ -87,15 +89,17 @@ public class UserManager {
 			logger.warn("用户已存在,添加失败, userId: {}", userId);
 		} else {
 			logger.debug("添加新用户, userId: {}", userId);
+			MetricsCollector.getInstance().incrementCounter("hall.login_total");
 		}
 
-		existingUser = usersC.putIfAbsent(user.getCert(), user);
+		existingUser = usersC.putIfAbsent(user.getDeviceId(), user);
 
 		if (existingUser != null) {
 			logger.warn("用户已存在,添加失败, userId: {}", userId);
 		} else {
 			logger.debug("添加新用户, userId: {}", userId);
 		}
+		MetricsCollector.getInstance().setGauge("hall.online_users", users.size());
 	}
 
 	/**

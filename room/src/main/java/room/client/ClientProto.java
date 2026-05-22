@@ -12,6 +12,7 @@ import net.message.Parser;
 import net.message.Transfer;
 import net.message.TCPMessage;
 import net.client.Sender;
+import utils.trace.TracedHandler;
 
 /**
  * 房间客户端协议处理器
@@ -36,6 +37,7 @@ public class ClientProto {
 		try {
 			HandleTypeRegister.initFactory(ClientProto.class, handlers);
 			HandleTypeRegister.initFactory(handlers);
+			TracedHandler.wrapAll(handlers);
 			logger.info("房间客户端协议处理器初始化完成,注册处理器数量: {}", handlers.size());
 		} catch (Exception e) {
 			logger.error("房间客户端协议处理器初始化失败", e);

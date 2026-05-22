@@ -20,7 +20,7 @@ public final class HallProto {
 
     /**
      * <pre>
-     *证书
+     *证书(设备ID)
      * </pre>
      *
      * <code>bytes cert = 1;</code>
@@ -53,6 +53,15 @@ public final class HallProto {
      * <code>int32 channel = 4;</code>
      */
     int getChannel();
+
+    /**
+     * <pre>
+     *认证token(首次登录为空)
+     * </pre>
+     *
+     * <code>bytes token = 5;</code>
+     */
+    com.google.protobuf.ByteString getToken();
   }
   /**
    * <pre>
@@ -75,6 +84,7 @@ public final class HallProto {
       nickName_ = com.google.protobuf.ByteString.EMPTY;
       avatar_ = com.google.protobuf.ByteString.EMPTY;
       channel_ = 0;
+      token_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -125,6 +135,11 @@ public final class HallProto {
               channel_ = input.readInt32();
               break;
             }
+            case 42: {
+
+              token_ = input.readBytes();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -153,7 +168,7 @@ public final class HallProto {
     private com.google.protobuf.ByteString cert_;
     /**
      * <pre>
-     *证书
+     *证书(设备ID)
      * </pre>
      *
      * <code>bytes cert = 1;</code>
@@ -201,6 +216,19 @@ public final class HallProto {
       return channel_;
     }
 
+    public static final int TOKEN_FIELD_NUMBER = 5;
+    private com.google.protobuf.ByteString token_;
+    /**
+     * <pre>
+     *认证token(首次登录为空)
+     * </pre>
+     *
+     * <code>bytes token = 5;</code>
+     */
+    public com.google.protobuf.ByteString getToken() {
+      return token_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -224,6 +252,9 @@ public final class HallProto {
       }
       if (channel_ != 0) {
         output.writeInt32(4, channel_);
+      }
+      if (!token_.isEmpty()) {
+        output.writeBytes(5, token_);
       }
       unknownFields.writeTo(output);
     }
@@ -249,6 +280,10 @@ public final class HallProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, channel_);
       }
+      if (!token_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, token_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -273,6 +308,8 @@ public final class HallProto {
           .equals(other.getAvatar());
       result = result && (getChannel()
           == other.getChannel());
+      result = result && getToken()
+          .equals(other.getToken());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -292,6 +329,8 @@ public final class HallProto {
       hash = (53 * hash) + getAvatar().hashCode();
       hash = (37 * hash) + CHANNEL_FIELD_NUMBER;
       hash = (53 * hash) + getChannel();
+      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
+      hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -433,6 +472,8 @@ public final class HallProto {
 
         channel_ = 0;
 
+        token_ = com.google.protobuf.ByteString.EMPTY;
+
         return this;
       }
 
@@ -459,6 +500,7 @@ public final class HallProto {
         result.nickName_ = nickName_;
         result.avatar_ = avatar_;
         result.channel_ = channel_;
+        result.token_ = token_;
         onBuilt();
         return result;
       }
@@ -512,6 +554,9 @@ public final class HallProto {
         if (other.getChannel() != 0) {
           setChannel(other.getChannel());
         }
+        if (other.getToken() != com.google.protobuf.ByteString.EMPTY) {
+          setToken(other.getToken());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -542,7 +587,7 @@ public final class HallProto {
       private com.google.protobuf.ByteString cert_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <pre>
-       *证书
+       *证书(设备ID)
        * </pre>
        *
        * <code>bytes cert = 1;</code>
@@ -552,7 +597,7 @@ public final class HallProto {
       }
       /**
        * <pre>
-       *证书
+       *证书(设备ID)
        * </pre>
        *
        * <code>bytes cert = 1;</code>
@@ -568,7 +613,7 @@ public final class HallProto {
       }
       /**
        * <pre>
-       *证书
+       *证书(设备ID)
        * </pre>
        *
        * <code>bytes cert = 1;</code>
@@ -699,6 +744,47 @@ public final class HallProto {
         onChanged();
         return this;
       }
+
+      private com.google.protobuf.ByteString token_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       *认证token(首次登录为空)
+       * </pre>
+       *
+       * <code>bytes token = 5;</code>
+       */
+      public com.google.protobuf.ByteString getToken() {
+        return token_;
+      }
+      /**
+       * <pre>
+       *认证token(首次登录为空)
+       * </pre>
+       *
+       * <code>bytes token = 5;</code>
+       */
+      public Builder setToken(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        token_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *认证token(首次登录为空)
+       * </pre>
+       *
+       * <code>bytes token = 5;</code>
+       */
+      public Builder clearToken() {
+        
+        token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
@@ -754,7 +840,7 @@ public final class HallProto {
 
     /**
      * <pre>
-     *证书
+     *证书(设备ID)
      * </pre>
      *
      * <code>bytes cert = 1;</code>
@@ -845,6 +931,15 @@ public final class HallProto {
      */
     proto.ModelProto.RoomOrBuilder getRoomListOrBuilder(
         int index);
+
+    /**
+     * <pre>
+     *认证token
+     * </pre>
+     *
+     * <code>bytes token = 8;</code>
+     */
+    com.google.protobuf.ByteString getToken();
   }
   /**
    * Protobuf type {@code proto.AckLogin}
@@ -866,6 +961,7 @@ public final class HallProto {
       club_ = 0;
       tables_ = java.util.Collections.emptyList();
       roomList_ = java.util.Collections.emptyList();
+      token_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -951,6 +1047,11 @@ public final class HallProto {
                   input.readMessage(proto.ModelProto.Room.parser(), extensionRegistry));
               break;
             }
+            case 66: {
+
+              token_ = input.readBytes();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -986,7 +1087,7 @@ public final class HallProto {
     private com.google.protobuf.ByteString cert_;
     /**
      * <pre>
-     *证书
+     *证书(设备ID)
      * </pre>
      *
      * <code>bytes cert = 1;</code>
@@ -1117,6 +1218,19 @@ public final class HallProto {
       return roomList_.get(index);
     }
 
+    public static final int TOKEN_FIELD_NUMBER = 8;
+    private com.google.protobuf.ByteString token_;
+    /**
+     * <pre>
+     *认证token
+     * </pre>
+     *
+     * <code>bytes token = 8;</code>
+     */
+    public com.google.protobuf.ByteString getToken() {
+      return token_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -1154,6 +1268,9 @@ public final class HallProto {
       }
       for (int i = 0; i < roomList_.size(); i++) {
         output.writeMessage(7, roomList_.get(i));
+      }
+      if (!token_.isEmpty()) {
+        output.writeBytes(8, token_);
       }
       unknownFields.writeTo(output);
     }
@@ -1201,6 +1318,10 @@ public final class HallProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(7, roomList_.get(i));
       }
+      if (!token_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(8, token_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -1231,6 +1352,8 @@ public final class HallProto {
           .equals(other.getTablesList());
       result = result && getRoomListList()
           .equals(other.getRoomListList());
+      result = result && getToken()
+          .equals(other.getToken());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1260,6 +1383,8 @@ public final class HallProto {
         hash = (37 * hash) + ROOMLIST_FIELD_NUMBER;
         hash = (53 * hash) + getRoomListList().hashCode();
       }
+      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
+      hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1408,6 +1533,8 @@ public final class HallProto {
         } else {
           roomListBuilder_.clear();
         }
+        token_ = com.google.protobuf.ByteString.EMPTY;
+
         return this;
       }
 
@@ -1451,6 +1578,7 @@ public final class HallProto {
         } else {
           result.roomList_ = roomListBuilder_.build();
         }
+        result.token_ = token_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1544,6 +1672,9 @@ public final class HallProto {
             }
           }
         }
+        if (other.getToken() != com.google.protobuf.ByteString.EMPTY) {
+          setToken(other.getToken());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -1575,7 +1706,7 @@ public final class HallProto {
       private com.google.protobuf.ByteString cert_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <pre>
-       *证书
+       *证书(设备ID)
        * </pre>
        *
        * <code>bytes cert = 1;</code>
@@ -1585,7 +1716,7 @@ public final class HallProto {
       }
       /**
        * <pre>
-       *证书
+       *证书(设备ID)
        * </pre>
        *
        * <code>bytes cert = 1;</code>
@@ -1601,7 +1732,7 @@ public final class HallProto {
       }
       /**
        * <pre>
-       *证书
+       *证书(设备ID)
        * </pre>
        *
        * <code>bytes cert = 1;</code>
@@ -2100,6 +2231,47 @@ public final class HallProto {
           roomList_ = null;
         }
         return roomListBuilder_;
+      }
+
+      private com.google.protobuf.ByteString token_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       *认证token
+       * </pre>
+       *
+       * <code>bytes token = 8;</code>
+       */
+      public com.google.protobuf.ByteString getToken() {
+        return token_;
+      }
+      /**
+       * <pre>
+       *认证token
+       * </pre>
+       *
+       * <code>bytes token = 8;</code>
+       */
+      public Builder setToken(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        token_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *认证token
+       * </pre>
+       *
+       * <code>bytes token = 8;</code>
+       */
+      public Builder clearToken() {
+        
+        token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -4917,19 +5089,20 @@ public final class HallProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nhall.proto\022\005proto\032\013model.proto\"K\n\010ReqL" +
+      "\n\nhall.proto\022\005proto\032\013model.proto\"Z\n\010ReqL" +
       "ogin\022\014\n\004cert\030\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006" +
-      "avatar\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\"\210\001\n\010AckLog" +
-      "in\022\014\n\004cert\030\001 \001(\014\022\016\n\006userId\030\002 \001(\005\022\020\n\010nick" +
-      "Name\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\022\014\n\004club\030\005 \001(" +
-      "\005\022\016\n\006tables\030\006 \003(\003\022\035\n\010roomList\030\007 \003(\0132\013.pr" +
-      "oto.Room\"\035\n\013ReqJoinClub\022\016\n\006clubId\030\001 \001(\005\"" +
-      ",\n\013AckJoinClub\022\035\n\010joinClub\030\001 \001(\0132\013.proto" +
-      ".Club\"e\n\004Club\022\016\n\006clubId\030\001 \001(\005\022\016\n\006avatar\030" +
-      "\002 \001(\014\022\014\n\004name\030\003 \001(\014\022\013\n\003des\030\004 \001(\014\022\"\n\007memb",
-      "ers\030\005 \003(\0132\021.proto.ClubMember\".\n\nClubMemb" +
-      "er\022\016\n\006roleId\030\001 \001(\005\022\020\n\010position\030\002 \001(\005B\013B\t" +
-      "HallProtob\006proto3"
+      "avatar\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\022\r\n\005token\030\005" +
+      " \001(\014\"\227\001\n\010AckLogin\022\014\n\004cert\030\001 \001(\014\022\016\n\006userI" +
+      "d\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\017\n\007channel\030\004 \001" +
+      "(\005\022\014\n\004club\030\005 \001(\005\022\016\n\006tables\030\006 \003(\003\022\035\n\010room" +
+      "List\030\007 \003(\0132\013.proto.Room\022\r\n\005token\030\010 \001(\014\"\035" +
+      "\n\013ReqJoinClub\022\016\n\006clubId\030\001 \001(\005\",\n\013AckJoin" +
+      "Club\022\035\n\010joinClub\030\001 \001(\0132\013.proto.Club\"e\n\004C" +
+      "lub\022\016\n\006clubId\030\001 \001(\005\022\016\n\006avatar\030\002 \001(\014\022\014\n\004n",
+      "ame\030\003 \001(\014\022\013\n\003des\030\004 \001(\014\022\"\n\007members\030\005 \003(\0132" +
+      "\021.proto.ClubMember\".\n\nClubMember\022\016\n\006role" +
+      "Id\030\001 \001(\005\022\020\n\010position\030\002 \001(\005B\013B\tHallProtob" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4949,13 +5122,13 @@ public final class HallProto {
     internal_static_proto_ReqLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqLogin_descriptor,
-        new java.lang.String[] { "Cert", "NickName", "Avatar", "Channel", });
+        new java.lang.String[] { "Cert", "NickName", "Avatar", "Channel", "Token", });
     internal_static_proto_AckLogin_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_proto_AckLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckLogin_descriptor,
-        new java.lang.String[] { "Cert", "UserId", "NickName", "Channel", "Club", "Tables", "RoomList", });
+        new java.lang.String[] { "Cert", "UserId", "NickName", "Channel", "Club", "Tables", "RoomList", "Token", });
     internal_static_proto_ReqJoinClub_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_ReqJoinClub_fieldAccessorTable = new

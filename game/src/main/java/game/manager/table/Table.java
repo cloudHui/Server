@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
 import proto.ModelProto;
+import utils.metrics.MetricsCollector;
+import utils.trace.TraceContext;
 
 /**
  * 游戏桌子模型
@@ -75,6 +77,11 @@ public class Table {
 	 * 最大错误次数
 	 */
 	private static final int MAX_ERROR = 100;
+
+	/**
+	 * 桌子逻辑循环间隔(毫秒)
+	 */
+	private static final long LOOP_INTERVAL = 500;
 
 	public Table(long tableId, TableModel model, ModelProto.RoomRole creator) {
 		this.tableId = tableId;
@@ -215,7 +222,7 @@ public class Table {
 	public void start() {
 		try {
 			int groupIndex = getGroupIndex();
-			Game.getInstance().registerSerialTimer(groupIndex, 1000, 500, -1, this::tableLoop, this);
+			Game.getInstance().registerSerialTimer(groupIndex, 1000, LOOP_INTERVAL, -1, this::tableLoop, this);
 			logger.info("启动桌子逻辑循环, tableId: {}, groupIndex: {}", tableId, groupIndex);
 		} catch (Exception e) {
 			logger.error("启动桌子逻辑循环失败, tableId: {}", tableId, e);
@@ -224,17 +231,11 @@ public class Table {
 
 	/**
 	 * 获取线程组处理ID
-	 * 根据桌子ID的最后一位数字确定线程组,实现负载均衡
+	 * 使用桌子ID作为分组Key，由ExecutorPool自动分配到对应线程
+	 * 同一张桌子的所有操作（定时器、玩家进入、玩家操作）始终在同一线程串行执行
 	 */
 	public int getGroupIndex() {
-		try {
-			int groupIndex = (int) (tableId % 10);
-			logger.debug("计算线程组索引, tableId: {}, groupIndex: {}", tableId, groupIndex);
-			return groupIndex;
-		} catch (Exception e) {
-			logger.error("计算线程组索引失败, tableId: {}", tableId, e);
-			return 0;
-		}
+		return (int) tableId;
 	}
 
 	/**
@@ -246,6 +247,8 @@ public class Table {
 	 */
 	public boolean tableLoop(Table table) {
 		try {
+			TraceContext.setTableId(tableId);
+			MetricsCollector.getInstance().incrementCounter("game.table_loops");
 			return TableStateHandleManager.handle(this);
 		} catch (Exception e) {
 			logger.error("桌子循环执行异常, tableId: {}", tableId, e);

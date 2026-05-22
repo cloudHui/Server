@@ -11,27 +11,32 @@ public class User {
 	private static final Logger logger = LoggerFactory.getLogger(User.class);
 
 	private final int userId;
-	private final String cert;
+	private String deviceId;
 	private String nick;
 	private int gateId;
 	private long lastActiveTime;
+	private String pendingToken;
 
-	public User(int userId, String nick, int gateId, String cert) {
+	public User(int userId, String nick, int gateId, String deviceId) {
 		this.userId = userId;
 		this.nick = nick;
 		this.gateId = gateId;
-		this.cert = cert;
+		this.deviceId = deviceId;
 		this.lastActiveTime = System.currentTimeMillis();
 
-		logger.debug("创建用户实例, userId: {}, nick: {}, clientId: {}", userId, nick, gateId);
-	}
-
-	public String getCert() {
-		return cert;
+		logger.debug("创建用户实例, userId: {}, nick: {}, gateId: {}", userId, nick, gateId);
 	}
 
 	public int getUserId() {
 		return userId;
+	}
+
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 
 	public String getNick() {
@@ -50,7 +55,7 @@ public class User {
 	public void setGateId(int gateId) {
 		this.gateId = gateId;
 		updateActiveTime();
-		logger.debug("更新用户客户端ID, userId: {}, newClientId: {}", userId, gateId);
+		logger.debug("更新用户网关ID, userId: {}, newGateId: {}", userId, gateId);
 	}
 
 	public long getLastActiveTime() {
@@ -71,9 +76,26 @@ public class User {
 		return (System.currentTimeMillis() - lastActiveTime) < timeoutMillis;
 	}
 
+	public String getPendingToken() {
+		return pendingToken;
+	}
+
+	public void setPendingToken(String pendingToken) {
+		this.pendingToken = pendingToken;
+	}
+
+	/**
+	 * 获取并清除pendingToken（一次性消费）
+	 */
+	public String consumePendingToken() {
+		String token = this.pendingToken;
+		this.pendingToken = null;
+		return token;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("User{userId=%d, nick='%s', clientId=%d, cert='%s'}",
-				userId, nick, gateId, cert);
+		return String.format("User{userId=%d, nick='%s', gateId=%d, deviceId='%s'}",
+				userId, nick, gateId, deviceId);
 	}
 }

@@ -5,6 +5,7 @@ import model.tablemodel.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import utils.metrics.MetricsCollector;
 import utils.other.excel.ExcelUtil;
 
 import java.util.ArrayList;
@@ -83,6 +84,8 @@ public class TableManager {
             logger.warn("桌子已存在,添加失败, tableId: {}", tableId);
         } else {
             tableMap.put(tableId, table);
+            MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
+            MetricsCollector.getInstance().incrementCounter("game.tables_created");
             logger.debug("添加新桌子, tableId: {}", tableId);
         }
     }
@@ -111,6 +114,8 @@ public class TableManager {
     public Table removeTable(long tableId) {
         Table removedTable = tableMap.remove(tableId);
         if (removedTable != null) {
+            MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
+            MetricsCollector.getInstance().incrementCounter("game.tables_destroyed");
             logger.info("删除桌子, tableId: {}", tableId);
         } else {
             logger.warn("桌子不存在,无法删除, tableId: {}", tableId);
@@ -151,6 +156,19 @@ public class TableManager {
      */
     public int getTableCount() {
         return tableMap.size();
+    }
+
+    /**
+     * 查找用户所在的桌子
+     */
+    public List<Table> findTablesByUserId(int userId) {
+        List<Table> result = new ArrayList<>();
+        for (Table table : tableMap.values()) {
+            if (table.getUsers().containsKey(userId)) {
+                result.add(table);
+            }
+        }
+        return result;
     }
 
     /**

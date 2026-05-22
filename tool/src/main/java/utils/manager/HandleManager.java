@@ -1,15 +1,18 @@
 package utils.manager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.protobuf.Message;
 import msg.registor.HandleTypeRegister;
+import msg.registor.enums.ServerType;
 import net.connect.handle.ConnectHandler;
 import net.message.Parser;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ServerClientManager;
 
 /**
  * @author admin
@@ -127,5 +130,35 @@ public class HandleManager {
 			LOGGER.debug("回传错误码给客户端 - 用户ID:{},错误码:{}", userId, errorCode);
 			handler.sendMessage(TCPMessage.newInstance(errorCode));
 		}
+	}
+
+	/**
+	 * 发送消息，支持服务自动切换
+	 * 当目标服务不可用时，自动尝试同类型的其他实例
+	 *
+	 * @param msgId              消息ID
+	 * @param req                消息体
+	 * @param serverClientManager 服务连接管理器
+	 * @param serverType         目标服务类型
+	 * @param parser             消息解析器
+	 * @param sequence           序列号
+	 * @param backError          是否回传错误
+	 */
+	public static void sendMsgWithFallback(int msgId, Message req, ServerClientManager serverClientManager,
+										   ServerType serverType, Parser parser, int sequence, boolean backError) {
+		ConnectHandler handler = serverClientManager.getServerClient(serverType);
+		if (handler == null) {
+			// 尝试获取所有实例中的一个
+			List<ConnectHandler> allHandlers = serverClientManager.getAllTypeServer(serverType);
+			if (allHandlers == null || allHandlers.isEmpty()) {
+				LOGGER.error("没有可用的服务实例 - 服务类型:{},消息ID:0x{}", serverType, Integer.toHexString(msgId));
+				return;
+			}
+			handler = allHandlers.get(0);
+		}
+
+		LOGGER.info("发送消息(带容错) - 服务类型:{},消息ID:0x{},序列号:{}", serverType, Integer.toHexString(msgId), sequence);
+
+		sendMsg(msgId, req, handler, parser, sequence, 0, backError);
 	}
 }

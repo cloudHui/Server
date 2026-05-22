@@ -10,6 +10,7 @@ import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
+import utils.trace.TracedHandler;
 
 /**
  * 中心服务器客户端协议处理器
@@ -36,6 +37,7 @@ public class ClientProto {
 			HandleTypeRegister.initFactory(ClientProto.class, handlers);
 			// 绑定通用服务器消息处理
 			HandleTypeRegister.initFactory(handlers);
+			TracedHandler.wrapAll(handlers);
 			logger.info("中心服务器协议处理器初始化完成,注册处理器数量: {}", handlers.size());
 		} catch (Exception e) {
 			logger.error("中心服务器协议处理器初始化失败", e);

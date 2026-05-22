@@ -23,6 +23,8 @@ import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.manager.HandleManager;
+import utils.metrics.MetricsCollector;
+import utils.metrics.MetricsHttpServer;
 import utils.other.IpUtil;
 
 /**
@@ -43,6 +45,7 @@ public class Hall {
 	private int port;
 	private ModelProto.ServerInfo serverInfo;
 	private ServerManager serverManager;
+	private MetricsHttpServer metricsHttpServer;
 
 	private Hall() {
 		executorPool = new ExecutorPool("Hall");
@@ -126,6 +129,9 @@ public class Hall {
 
 			// 4. 注册到中心服务器
 			registerToCenter();
+
+			// 5. 启动指标HTTP端点
+			startMetricsServer();
 
 			logger.info("大厅服务器启动完成! 服务器ID: {}, 地址: {}:{}", serverId, innerIp, port);
 
@@ -215,5 +221,17 @@ public class Hall {
 		return ServerProto.ReqServerInfo.newBuilder()
 				.addServerType(ServerType.Room.getServerType())
 				.build();
+	}
+
+	/**
+	 * 启动指标HTTP端点
+	 */
+	private void startMetricsServer() {
+		int metricsPort = ConfigurationManager.getInstance().getInt("metrics.port", 0);
+		if (metricsPort > 0) {
+			MetricsCollector.getInstance().setServiceName("hall");
+			metricsHttpServer = new MetricsHttpServer();
+			metricsHttpServer.start(metricsPort);
+		}
 	}
 }

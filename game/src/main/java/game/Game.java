@@ -21,6 +21,8 @@ import threadtutil.timer.Timer;
 import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
+import utils.metrics.MetricsCollector;
+import utils.metrics.MetricsHttpServer;
 
 /**
  * 游戏服务器主类
@@ -38,6 +40,7 @@ public class Game {
 	private ModelProto.ServerInfo serverInfo;
 	private ServerManager serverManager;
 	private TableManager tableManager;
+	private MetricsHttpServer metricsHttpServer;
 
 	private Game() {
 		// 私有构造函数,单例模式
@@ -142,6 +145,7 @@ public class Game {
 
 			// 5. 初始化游戏管理器
 			initializeGameManagers();
+		startMetricsServer();
 
 			logger.info("游戏服务器启动完成! 服务器ID: {}, 地址: {}",
 					serverId, serverInfo.getIpConfig().toStringUtf8());
@@ -224,5 +228,16 @@ public class Game {
 	private void initializeGameManagers() {
 		tableManager = new TableManager();
 		logger.info("游戏管理器初始化完成");
+	}
+	/**
+	 * 启动指标HTTP端点
+	 */
+	private void startMetricsServer() {
+		int metricsPort = ConfigurationManager.getInstance().getInt("metrics.port", 0);
+		if (metricsPort > 0) {
+			MetricsCollector.getInstance().setServiceName("game");
+			metricsHttpServer = new MetricsHttpServer();
+			metricsHttpServer.start(metricsPort);
+		}
 	}
 }

@@ -77,12 +77,19 @@ public class AckRoomTableHandler implements ConnectHandle {
 	 * 构建登录响应
 	 */
 	private HallProto.AckLogin buildLoginResponse(User user, List<Long> tables, List<ModelProto.Room> rooms) {
-		return HallProto.AckLogin.newBuilder()
-				.setCert(ByteString.copyFromUtf8(user.getCert()))
+		HallProto.AckLogin.Builder builder = HallProto.AckLogin.newBuilder()
+				.setCert(ByteString.copyFromUtf8(user.getDeviceId()))
 				.setUserId(user.getUserId())
 				.setNickName(ByteString.copyFromUtf8(user.getNick()))
 				.addAllTables(tables)
-				.addAllRoomList(rooms)
-				.build();
+				.addAllRoomList(rooms);
+
+		// 附带Token
+		String token = user.consumePendingToken();
+		if (token != null) {
+			builder.setToken(ByteString.copyFromUtf8(token));
+		}
+
+		return builder.build();
 	}
 }
