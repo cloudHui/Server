@@ -3,6 +3,15 @@ package game.manager.table.state;
 import game.manager.table.Table;
 import msg.registor.enums.TableState;
 
+/**
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className AbstractTableHandle
+ * @description 桌子状态处理器抽象类
+ * @createDate 2025/10/20 16:53
+ */
 public abstract class AbstractTableHandle {
 
 	/**
@@ -17,6 +26,9 @@ public abstract class AbstractTableHandle {
 
 	/**
 	 * 默认通用处理
+	 * 
+	 * @param table 桌子
+	 * @return 是否退出循环
 	 */
 	public boolean handle(Table table) {
 		TableState currState = table.getTableState();
@@ -39,6 +51,8 @@ public abstract class AbstractTableHandle {
 
 	/**
 	 * 超时处理
+	 * 
+	 * @param table 桌子
 	 */
 	protected void overTime(Table table) {
 	}

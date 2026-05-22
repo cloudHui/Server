@@ -9,10 +9,13 @@ import game.manager.table.Table;
 import proto.GameProto;
 
 /**
- * @author admin
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  * @className Operate
- * @description
- * @createDate 2025/10/21 14:31
+ * @description 操作管理器，负责游戏桌子的操作记录和处理
+ * @createDate 2026-05-03
  */
 public class Operate {
 

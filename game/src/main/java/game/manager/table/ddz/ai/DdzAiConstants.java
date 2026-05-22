@@ -1,7 +1,13 @@
 package game.manager.table.ddz.ai;
 
 /**
+ * DdzAiConstants
  * 简易 AI 可调参数（拆牌权重、阶段阈值、跟牌/炸弹倾向）。后续只改此处即可微调行为。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 public final class DdzAiConstants {
 

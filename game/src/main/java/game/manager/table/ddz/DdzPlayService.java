@@ -4,18 +4,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
 
 /**
  * 出牌阶段：过牌、出牌、比大小、胜负结算。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 public final class DdzPlayService {
 
@@ -24,6 +31,12 @@ public final class DdzPlayService {
 	private DdzPlayService() {
 	}
 
+	/**
+	 * 自动出最小牌
+	 * 
+	 * @param table  桌子
+	 * @param userId 用户ID
+	 */
 	public static void autoPlaySmallest(Table table, int userId) {
 		TableUser user = table.getUsers().get(userId);
 		if (user == null || user.getCards().isEmpty()) {
@@ -42,6 +55,10 @@ public final class DdzPlayService {
 
 	/**
 	 * 托管/超时：走简易 AI（拆牌+合法压制+启发式），失败返回 false。
+	 * 
+	 * @param table  桌子
+	 * @param userId 用户ID
+	 * @return 是否成功
 	 */
 	public static boolean autoPlayAi(Table table, int userId) {
 		TableUser user = table.getUsers().get(userId);
@@ -52,6 +69,14 @@ public final class DdzPlayService {
 		return apply(table, userId, op) == ConstProto.Result.SUCCESS_VALUE;
 	}
 
+	/**
+	 * 应用操作
+	 * 
+	 * @param table  桌子
+	 * @param userId 用户ID
+	 * @param opInfo 操作信息
+	 * @return 结果
+	 */
 	public static int apply(Table table, int userId, GameProto.OpInfo opInfo) {
 		if (table.getTableState() != TableState.IDLE_CARD) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
@@ -70,6 +95,13 @@ public final class DdzPlayService {
 		return ConstProto.Result.OP_CURR_ERROR_VALUE;
 	}
 
+	/**
+	 * 应用过牌
+	 * 
+	 * @param table  桌子
+	 * @param userId 用户ID
+	 * @return 结果
+	 */
 	private static int applyPass(Table table, int userId) {
 		DdzTableContext ctx = table.getDdz();
 		if (ctx.getLastHand() == null) {
@@ -89,6 +121,14 @@ public final class DdzPlayService {
 		return ConstProto.Result.SUCCESS_VALUE;
 	}
 
+	/**
+	 * 应用出牌
+	 * 
+	 * @param table  桌子
+	 * @param user   用户
+	 * @param opInfo 操作信息
+	 * @return 结果
+	 */
 	private static int applyPlay(Table table, TableUser user, GameProto.OpInfo opInfo) {
 		DdzTableContext ctx = table.getDdz();
 		List<Integer> ids = collectPlayedCardIds(opInfo);
@@ -121,6 +161,13 @@ public final class DdzPlayService {
 		return ConstProto.Result.SUCCESS_VALUE;
 	}
 
+	/**
+	 * 成功出牌后处理
+	 * 
+	 * @param table 桌子
+	 * @param user  用户
+	 * @param hand  手牌
+	 */
 	private static void afterSuccessfulPlay(Table table, TableUser user, DdzHand hand) {
 		DdzTableContext ctx = table.getDdz();
 		int landlordSeat = ctx.getLandlordSeat();
@@ -146,6 +193,12 @@ public final class DdzPlayService {
 		table.upNextStateWithTime(TableState.CARD, System.currentTimeMillis());
 	}
 
+	/**
+	 * 结束游戏
+	 * 
+	 * @param table  桌子
+	 * @param winner 赢家
+	 */
 	private static void finishGame(Table table, TableUser winner) {
 		DdzTableContext ctx = table.getDdz();
 		int landlordSeat = ctx.getLandlordSeat();
@@ -198,6 +251,12 @@ public final class DdzPlayService {
 		table.upNextStateWithTime(TableState.TABLE_OVER, System.currentTimeMillis());
 	}
 
+	/**
+	 * 收集出牌的卡片ID
+	 * 
+	 * @param opInfo 操作信息
+	 * @return 卡片ID列表
+	 */
 	private static List<Integer> collectPlayedCardIds(GameProto.OpInfo opInfo) {
 		List<Integer> ids = new ArrayList<>();
 		for (GameProto.CardInfo ci : opInfo.getOpCardsList()) {
@@ -208,6 +267,13 @@ public final class DdzPlayService {
 		return ids;
 	}
 
+	/**
+	 * 从手牌中提取卡片
+	 * 
+	 * @param user 用户
+	 * @param ids  卡片ID列表
+	 * @return 提取的卡片列表
+	 */
 	private static List<Card> pullFromHand(TableUser user, List<Integer> ids) {
 		List<Card> handSnapshot = new ArrayList<>(user.getCards());
 		List<Card> out = new ArrayList<>();
@@ -228,6 +294,13 @@ public final class DdzPlayService {
 		return out;
 	}
 
+	/**
+	 * 广播确认
+	 * 
+	 * @param table       桌子
+	 * @param actorUserId 用户ID
+	 * @param op          操作信息
+	 */
 	private static void broadcastAck(Table table, int actorUserId, GameProto.OpInfo op) {
 		GameProto.AckOp msg = GameProto.AckOp.newBuilder()
 				.setOp(op)

@@ -11,13 +11,18 @@ import org.slf4j.LoggerFactory;
 
 import game.manager.table.Table;
 import game.manager.table.TableUser;
-import game.manager.table.cards.Card;
 import game.manager.table.card.CardSuit;
+import game.manager.table.cards.Card;
 import msg.registor.message.GMsg;
 import proto.GameProto;
 
 /**
- * 斗地主牌池：54 张、三家各 17 张、底牌 3 张。
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className CardPool
+ * @description 斗地主牌池，负责游戏桌子的牌池管理
  */
 public class CardPool {
 
@@ -105,7 +110,8 @@ public class CardPool {
 			GameProto.NotCard.Builder builder = GameProto.NotCard.newBuilder();
 			for (Map.Entry<Integer, TableUser> userEntry : seatUsers.entrySet()) {
 				TableUser otherUser = userEntry.getValue();
-				GameProto.NCardsInfo.Builder nCards = GameProto.NCardsInfo.newBuilder().setRoleId(otherUser.getUserId());
+				GameProto.NCardsInfo.Builder nCards = GameProto.NCardsInfo.newBuilder()
+						.setRoleId(otherUser.getUserId());
 				boolean owner = otherUser.equals(sendUser);
 				for (Card card : otherUser.getCards()) {
 					nCards.addCards(GameProto.Card.newBuilder().setValue(owner ? card.getId() : 0).build());

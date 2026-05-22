@@ -6,11 +6,27 @@ import java.util.function.Consumer;
 
 import game.manager.table.cards.Card;
 
+/**
+ * Combinations
+ * 组合
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ */
 final class Combinations {
 
 	private Combinations() {
 	}
 
+	/**
+	 * 遍历组合
+	 * 
+	 * @param source   源数据
+	 * @param k        组合数量
+	 * @param consumer 消费者
+	 */
 	static void forEachCombination(List<Card> source, int k, Consumer<List<Card>> consumer) {
 		if (k <= 0 || k > source.size()) {
 			return;

@@ -5,14 +5,15 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import game.client.ClientProto;
 import game.client.GameClient;
 import game.manager.TableManager;
 import msg.registor.HandleTypeRegister;
 import msg.registor.enums.ServerType;
 import net.service.ServerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
@@ -25,8 +26,13 @@ import utils.metrics.MetricsCollector;
 import utils.metrics.MetricsHttpServer;
 
 /**
- * 游戏服务器主类
- * 负责游戏逻辑处理、桌子管理和玩家会话
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
+ * @className Game
+ * @description 游戏服务器主类，负责游戏逻辑处理、桌子管理和玩家会话
+ * @createDate 2026-05-03
  */
 public class Game {
 	private static final Logger logger = LoggerFactory.getLogger(Game.class);
@@ -122,7 +128,7 @@ public class Game {
 		logger.debug("提交串行任务");
 	}
 
-	public int getPooSize(){
+	public int getPooSize() {
 		return executorPool.size();
 	}
 

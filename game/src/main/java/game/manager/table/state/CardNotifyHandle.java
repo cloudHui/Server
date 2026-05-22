@@ -9,6 +9,11 @@ import proto.GameProto;
 
 /**
  * 出牌阶段：广播当前座位可操作项（出牌 / 过）。
+ * 
+ * @author cloud
+ * @date 2026-05-03
+ * @version 1.0
+ * @since 1.0
  */
 @ProcessEnum(TableState.CARD)
 public class CardNotifyHandle extends AbstractTableHandle {
