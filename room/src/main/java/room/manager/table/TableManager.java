@@ -116,10 +116,13 @@ public class TableManager {
 	 *
 	 * @param tableId 桌子号
 	 */
-	public void removeTable(String tableId) {
+	public void removeTable(long tableId) {
 		TableInfo tableInfo = tableInfoMap.remove(tableId);
 		if (tableInfo != null) {
-			roomTables.getOrDefault(tableInfo.getModel().getId(), new HashMap<>()).remove(tableId);
+			Map<Long, TableInfo> tables = roomTables.get(tableInfo.getModel().getId());
+			if (tables != null) {
+				tables.remove(tableId);
+			}
 		}
 	}
 

@@ -4,6 +4,8 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import com.google.protobuf.Message;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -100,9 +102,19 @@ public class GateClient {
 					}
 			);
 
-			connect.connect();
+			// 带超时的连接，防止Gate不可达时长时间阻塞
+			CompletableFuture<Void> connectFuture = CompletableFuture.runAsync(connect::connect);
+			try {
+				connectFuture.get(5, TimeUnit.SECONDS);
+			} catch (TimeoutException e) {
+				connections.remove(sessionId);
+				throw new RuntimeException("连接Gate服务器超时", e);
+			}
+
 			logger.info("创建Gate连接成功, sessionId: {} -> {}:{}", sessionId, gateHost, gatePort);
 			return connect;
+		} catch (RuntimeException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error("创建Gate连接失败, sessionId: {}, gate: {}:{}", sessionId, gateHost, gatePort, e);
 			throw new RuntimeException("无法连接Gate服务器", e);

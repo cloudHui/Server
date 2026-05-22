@@ -28,6 +28,8 @@ public class UserService {
 
 	/** sessionId -> UserInfo */
 	private final Map<String, UserInfo> sessions = new ConcurrentHashMap<>();
+	/** token -> UserInfo */
+	private final Map<String, UserInfo> tokenSessions = new ConcurrentHashMap<>();
 	/** userId -> sessionId */
 	private final Map<Integer, String> userSessions = new ConcurrentHashMap<>();
 
@@ -70,6 +72,7 @@ public class UserService {
 				);
 
 				sessions.put(sessionId, userInfo);
+				tokenSessions.put(token, userInfo);
 				userSessions.put(userInfo.getUserId(), sessionId);
 
 				logger.info("用户登录成功, userId: {}, nickname: {}, sessionId: {}",
@@ -90,11 +93,10 @@ public class UserService {
 	 * Token验证（重连）
 	 */
 	public UserInfo validateToken(String token) {
-		for (UserInfo info : sessions.values()) {
-			if (info.getToken().equals(token)) {
-				logger.info("Token验证成功, userId: {}, sessionId: {}", info.getUserId(), info.getSessionId());
-				return info;
-			}
+		UserInfo info = tokenSessions.get(token);
+		if (info != null) {
+			logger.info("Token验证成功, userId: {}, sessionId: {}", info.getUserId(), info.getSessionId());
+			return info;
 		}
 		logger.warn("Token验证失败, token: {}", token);
 		return null;
@@ -113,6 +115,7 @@ public class UserService {
 	public void logout(String sessionId) {
 		UserInfo info = sessions.remove(sessionId);
 		if (info != null) {
+			tokenSessions.remove(info.getToken());
 			userSessions.remove(info.getUserId());
 			gateClient.removeConnection(sessionId);
 			logger.info("用户登出, userId: {}, sessionId: {}", info.getUserId(), sessionId);

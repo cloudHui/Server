@@ -90,7 +90,7 @@ public class TableInfo {
 				.setTableId(tableId)
 				.setOwnerId(ownerId)
 				.setStat(tableState.getNumber())
-				.setCreatorId(ownerId);
+				.setCreatorId(creatorId);
 
 		for (User user : tableRoles) {
 			if (user != null) {
