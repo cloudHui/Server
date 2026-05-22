@@ -73,6 +73,12 @@ public class TableManager {
 				ModelProto.Room.Builder roomBuilder = ModelProto.Room.newBuilder();
 				roomBuilder.setRoomId(roomEntry.getKey());
 
+				// 设置游戏类型
+				TableModel tableModel = tableModelMap.get(roomEntry.getKey());
+				if (tableModel != null) {
+					roomBuilder.setGameType(tableModel.getType());
+				}
+
 				Map<Long, TableInfo> tables = roomEntry.getValue();
 				if (tables != null && !tables.isEmpty()) {
 					for (Map.Entry<Long, TableInfo> entry : tables.entrySet()) {

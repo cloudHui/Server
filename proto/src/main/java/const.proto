@@ -41,6 +41,8 @@ enum Operation{
     CALL_SCORE_1 = 9;//叫一分
     CALL_SCORE_2 = 10;//叫二分
     CALL_SCORE_3 = 11;//叫三分
+    DRAW = 12;//摸牌(麻将)
+    DISCARD = 13;//出牌(麻将)
 }
 
 //牌型

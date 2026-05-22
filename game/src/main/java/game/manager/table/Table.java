@@ -6,7 +6,9 @@ import java.util.Map;
 import com.google.protobuf.Message;
 import game.Game;
 import game.manager.table.banner.Banner;
+import game.manager.table.card.mj.MjTilePool;
 import game.manager.table.card.poll.CardPool;
+import game.manager.table.mj.MjTableContext;
 import game.manager.table.op.Operate;
 import game.manager.table.state.TableStateHandleManager;
 import model.tablemodel.TableModel;
@@ -74,6 +76,16 @@ public class Table {
 	private final game.manager.table.ddz.DdzTableContext ddz = new game.manager.table.ddz.DdzTableContext();
 
 	/**
+	 * 麻将牌墙
+	 */
+	private final MjTilePool mjTilePool;
+
+	/**
+	 * 麻将牌局上下文
+	 */
+	private final MjTableContext mjContext = new MjTableContext();
+
+	/**
 	 * 最大错误次数
 	 */
 	private static final int MAX_ERROR = 100;
@@ -88,6 +100,7 @@ public class Table {
 		this.creator = creator;
 		this.tableModel = model;
 		cardPool = new CardPool(this);
+		mjTilePool = new MjTilePool(this);
 		op = new Operate(this);
 		banner = new Banner();
 		logger.info("创建桌子实例, tableId: {}", tableId);
@@ -185,6 +198,14 @@ public class Table {
 		return ddz;
 	}
 
+	public MjTilePool getMjTilePool() {
+		return mjTilePool;
+	}
+
+	public MjTableContext getMjContext() {
+		return mjContext;
+	}
+
 	public CardPool getCardPool() {
 		return cardPool;
 	}
@@ -257,10 +278,17 @@ public class Table {
 	}
 
 	/**
-	 * 给玩家发牌
+	 * 给玩家发牌(斗地主)
 	 */
 	public void sendCard() {
 		cardPool.dealInitCard();
+	}
+
+	/**
+	 * 给玩家发麻将牌
+	 */
+	public void sendMjCard() {
+		mjTilePool.dealInitTiles();
 	}
 
 	/**

@@ -13,6 +13,7 @@ message ServerInfo{
 message Room{
     int32 roomId = 1;
     repeated RoomTableInfo tables = 2;//桌子
+    int32 gameType = 3;//游戏类型 1=斗地主 2=麻将
 }
 
 message KeyValue {
@@ -29,6 +30,7 @@ message RoomTableInfo{
     int32 ownerId = 4;
     int32 stat = 5;//等待中  已开始
     repeated RoomRole tableRoles = 6;
+    int32 gameType = 7;//游戏类型
 }
 
 //room桌子玩家

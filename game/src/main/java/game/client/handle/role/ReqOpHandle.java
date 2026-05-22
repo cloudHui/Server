@@ -12,6 +12,7 @@ import game.manager.TableManager;
 import game.manager.table.Table;
 import game.manager.table.ddz.DdzBidService;
 import game.manager.table.ddz.DdzPlayService;
+import game.manager.table.mj.MjPlayService;
 import msg.annotation.ProcessType;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -76,7 +77,8 @@ public class ReqOpHandle implements Handler {
 	private int processUserOp(int userId, GameProto.OpInfo op, Table table) {
 		try {
 			TableState ts = table.getTableState();
-			if (ts != TableState.IDLE_ROB && ts != TableState.IDLE_CARD) {
+			if (ts != TableState.IDLE_ROB && ts != TableState.IDLE_CARD
+						&& ts != TableState.MJ_DISCARD) {
 				return ConstProto.Result.OP_CURR_ERROR_VALUE;
 			}
 			if (!table.gaming()) {
@@ -109,10 +111,31 @@ public class ReqOpHandle implements Handler {
 			if (ts == TableState.IDLE_ROB) {
 				return DdzBidService.apply(table, userId, op);
 			}
+			if (ts == TableState.MJ_DISCARD) {
+				return processMjDiscard(table, userId, op);
+			}
 			return DdzPlayService.apply(table, userId, op);
 		} catch (Exception e) {
 			logger.error("处理玩家操作请求失败, userId: {}", userId, e);
 			return ConstProto.Result.SERVER_ERROR_VALUE;
 		}
+	}
+
+	/**
+	 * 处理麻将出牌操作
+	 */
+	private int processMjDiscard(Table table, int userId, GameProto.OpInfo op) {
+		boolean ok = MjPlayService.applyDiscard(table, userId, op);
+		if (!ok) {
+			return ConstProto.Result.OP_CURR_ERROR_VALUE;
+		}
+		// 检查是否有人能碰/杠/胡
+		if (!MjPlayService.checkClaim(table)) {
+			// 无人响应，进入下一个玩家摸牌
+			MjPlayService.nextPlayer(table);
+			long now = System.currentTimeMillis();
+			table.upNextStateWithTime(TableState.MJ_PLAY, now);
+		}
+		return ConstProto.Result.SUCCESS_VALUE;
 	}
 }

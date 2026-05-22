@@ -42,4 +42,7 @@ public class GMsg {
 
 	@ClassField(value = GameProto.NotResult.class, des = "单局结算通知")
 	public static final int NOT_RESULT = CMsg.GAME_TYPE | 10;
+
+	@ClassField(value = GameProto.NotMjState.class, des = "麻将状态通知")
+	public static final int MJ_TILE_NOT = CMsg.GAME_TYPE | 11;
 }

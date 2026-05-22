@@ -52,6 +52,7 @@ public class RoomController {
 				for (ModelProto.Room room : ackRoomList.getRoomListList()) {
 					Map<String, Object> roomData = new HashMap<>();
 					roomData.put("roomId", room.getRoomId());
+					roomData.put("gameType", room.getGameType());
 
 					List<Map<String, Object>> tables = new ArrayList<>();
 					for (ModelProto.RoomTableInfo table : room.getTablesList()) {

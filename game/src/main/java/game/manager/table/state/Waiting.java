@@ -17,8 +17,17 @@ public class Waiting extends AbstractTableHandle {
 	@Override
 	public boolean onTiming(Table table) {
 		if (table.sitFull()) {
-			table.upNextState();
-			table.sendCard();
+			if (table.getTableModel().getType() == 1) {
+				// 麻将：发牌后进入MJ_DEAL
+				table.sendMjCard();
+				table.getMjContext().resetRound();
+				table.getOp().setCurrOpSeat(0);
+				table.upNextState(TableState.MJ_DEAL);
+			} else {
+				// 斗地主：原有逻辑
+				table.upNextState();
+				table.sendCard();
+			}
 			return false;
 		}
 		return table.isEmpty();

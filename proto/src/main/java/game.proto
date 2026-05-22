@@ -112,3 +112,24 @@ message NCardsInfo{
     int32 roleId = 1;
     repeated Card cards = 2;//自己才有值其他人的牌都是牌值都是0
 }
+
+//麻将动作类型
+enum MjAction{
+    MJ_DRAW = 0;//摸牌
+    MJ_DISCARD_TILE = 1;//出牌
+    MJ_CHI = 2;//吃
+    MJ_PENG = 3;//碰
+    MJ_GANG = 4;//杠
+    MJ_HU = 5;//胡
+    MJ_PASS = 6;//过
+}
+
+//麻将状态通知
+message NotMjState{
+    int32 opSeat = 1;//操作座位
+    int32 tileId = 2;//相关牌ID
+    MjAction action = 3;//动作类型
+    int32 wait = 4;//等待时间(秒)
+    repeated OpInfo choice = 5;//可选操作
+    int32 wallLeft = 6;//牌墙剩余
+}

@@ -551,6 +551,22 @@ public final class ConstProto {
      * <code>CALL_SCORE_3 = 11;</code>
      */
     CALL_SCORE_3(11),
+    /**
+     * <pre>
+     *摸牌(麻将)
+     * </pre>
+     *
+     * <code>DRAW = 12;</code>
+     */
+    DRAW(12),
+    /**
+     * <pre>
+     *出牌(麻将)
+     * </pre>
+     *
+     * <code>DISCARD = 13;</code>
+     */
+    DISCARD(13),
     UNRECOGNIZED(-1),
     ;
 
@@ -650,6 +666,22 @@ public final class ConstProto {
      * <code>CALL_SCORE_3 = 11;</code>
      */
     public static final int CALL_SCORE_3_VALUE = 11;
+    /**
+     * <pre>
+     *摸牌(麻将)
+     * </pre>
+     *
+     * <code>DRAW = 12;</code>
+     */
+    public static final int DRAW_VALUE = 12;
+    /**
+     * <pre>
+     *出牌(麻将)
+     * </pre>
+     *
+     * <code>DISCARD = 13;</code>
+     */
+    public static final int DISCARD_VALUE = 13;
 
 
     public final int getNumber() {
@@ -682,6 +714,8 @@ public final class ConstProto {
         case 9: return CALL_SCORE_1;
         case 10: return CALL_SCORE_2;
         case 11: return CALL_SCORE_3;
+        case 12: return DRAW;
+        case 13: return DISCARD;
         default: return null;
       }
     }
@@ -1055,18 +1089,18 @@ public final class ConstProto {
       "ABLE_NULL\020\007\022\016\n\nTABLE_FULL\020\010\022\017\n\013TABLE_ERR" +
       "OR\020\t\022\016\n\nROLE_ERROR\020\n\022\r\n\tROLE_NULL\020\013\022\021\n\rO" +
       "P_CURR_ERROR\020\014\022\025\n\021OP_CARD_NOT_MATCH\020\r*\"\n" +
-      "\nTableState\022\t\n\005WAITE\020\000\022\t\n\005START\020\001*\251\001\n\tOp" +
+      "\nTableState\022\t\n\005WAITE\020\000\022\t\n\005START\020\001*\300\001\n\tOp" +
       "eration\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\007\n\003ROB\020\002\022\014\n\010" +
       "NOT_CALL\020\003\022\013\n\007NOT_ROB\020\004\022\007\n\003TIP\020\005\022\010\n\004PLAY",
       "\020\006\022\013\n\007PREPARE\020\007\022\016\n\nSTART_GAME\020\010\022\020\n\014CALL_" +
       "SCORE_1\020\t\022\020\n\014CALL_SCORE_2\020\n\022\020\n\014CALL_SCOR" +
-      "E_3\020\013*\332\001\n\010CardType\022\n\n\006SINGLE\020\000\022\n\n\006DOUBLE" +
-      "\020\001\022\n\n\006TRIPLE\020\002\022\016\n\nTRIPLE_ONE\020\003\022\021\n\rTRIPLE" +
-      "_DOUBLE\020\004\022\r\n\tPLANE_ONE\020\005\022\020\n\014PLANE_DOUBLE" +
-      "\020\006\022\026\n\022BOOM_DOUBLE_SINGLE\020\007\022\023\n\017BOOM_DOUBL" +
-      "E_CUP\020\010\022\014\n\010STRAIGHT\020\t\022\023\n\017STRAIGHT_DOUBLE" +
-      "\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014B\014B\nConstProto" +
-      "b\006proto3"
+      "E_3\020\013\022\010\n\004DRAW\020\014\022\013\n\007DISCARD\020\r*\332\001\n\010CardTyp" +
+      "e\022\n\n\006SINGLE\020\000\022\n\n\006DOUBLE\020\001\022\n\n\006TRIPLE\020\002\022\016\n" +
+      "\nTRIPLE_ONE\020\003\022\021\n\rTRIPLE_DOUBLE\020\004\022\r\n\tPLAN" +
+      "E_ONE\020\005\022\020\n\014PLANE_DOUBLE\020\006\022\026\n\022BOOM_DOUBLE" +
+      "_SINGLE\020\007\022\023\n\017BOOM_DOUBLE_CUP\020\010\022\014\n\010STRAIG" +
+      "HT\020\t\022\023\n\017STRAIGHT_DOUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010B" +
+      "OOM_MAX\020\014B\014B\nConstProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

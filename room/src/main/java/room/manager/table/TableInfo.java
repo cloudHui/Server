@@ -90,7 +90,8 @@ public class TableInfo {
 				.setTableId(tableId)
 				.setOwnerId(ownerId)
 				.setStat(tableState.getNumber())
-				.setCreatorId(creatorId);
+				.setCreatorId(creatorId)
+				.setGameType(model.getType());
 
 		for (User user : tableRoles) {
 			if (user != null) {

@@ -18,6 +18,18 @@ public class TableModel {
     //额外牌数量
     private int exCardNum;
 
+    //底分
+    private int baseScore;
+
+    //番数上限(麻将用)
+    private int maxFan;
+
+    //允许吃(麻将用 0关1开)
+    private int allowChi;
+
+    //允许点炮(麻将用 0关1开)
+    private int allowDianPao;
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -59,6 +71,38 @@ public class TableModel {
         this.exCardNum = exCardNum;
     }
 
+    public int getBaseScore() {
+        return baseScore;
+    }
+
+    public void setBaseScore(int baseScore) {
+        this.baseScore = baseScore;
+    }
+
+    public int getMaxFan() {
+        return maxFan;
+    }
+
+    public void setMaxFan(int maxFan) {
+        this.maxFan = maxFan;
+    }
+
+    public int getAllowChi() {
+        return allowChi;
+    }
+
+    public void setAllowChi(int allowChi) {
+        this.allowChi = allowChi;
+    }
+
+    public int getAllowDianPao() {
+        return allowDianPao;
+    }
+
+    public void setAllowDianPao(int allowDianPao) {
+        this.allowDianPao = allowDianPao;
+    }
+
 
     @Override
     public String toString() {
@@ -68,6 +112,10 @@ public class TableModel {
                 "     seatNum="+seatNum+
                 "     cardNum="+cardNum+
                 "     exCardNum="+exCardNum+
+                "     baseScore="+baseScore+
+                "     maxFan="+maxFan+
+                "     allowChi="+allowChi+
+                "     allowDianPao="+allowDianPao+
                 '}';
     }
 

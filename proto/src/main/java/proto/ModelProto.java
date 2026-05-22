@@ -643,6 +643,15 @@ public final class ModelProto {
      */
     proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder(
         int index);
+
+    /**
+     * <pre>
+     *游戏类型 1=斗地主 2=麻将
+     * </pre>
+     *
+     * <code>int32 gameType = 3;</code>
+     */
+    int getGameType();
   }
   /**
    * Protobuf type {@code proto.Room}
@@ -659,6 +668,7 @@ public final class ModelProto {
     private Room() {
       roomId_ = 0;
       tables_ = java.util.Collections.emptyList();
+      gameType_ = 0;
     }
 
     @java.lang.Override
@@ -701,6 +711,11 @@ public final class ModelProto {
               }
               tables_.add(
                   input.readMessage(proto.ModelProto.RoomTableInfo.parser(), extensionRegistry));
+              break;
+            }
+            case 24: {
+
+              gameType_ = input.readInt32();
               break;
             }
           }
@@ -795,6 +810,19 @@ public final class ModelProto {
       return tables_.get(index);
     }
 
+    public static final int GAMETYPE_FIELD_NUMBER = 3;
+    private int gameType_;
+    /**
+     * <pre>
+     *游戏类型 1=斗地主 2=麻将
+     * </pre>
+     *
+     * <code>int32 gameType = 3;</code>
+     */
+    public int getGameType() {
+      return gameType_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -813,6 +841,9 @@ public final class ModelProto {
       for (int i = 0; i < tables_.size(); i++) {
         output.writeMessage(2, tables_.get(i));
       }
+      if (gameType_ != 0) {
+        output.writeInt32(3, gameType_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -828,6 +859,10 @@ public final class ModelProto {
       for (int i = 0; i < tables_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, tables_.get(i));
+      }
+      if (gameType_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, gameType_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -849,6 +884,8 @@ public final class ModelProto {
           == other.getRoomId());
       result = result && getTablesList()
           .equals(other.getTablesList());
+      result = result && (getGameType()
+          == other.getGameType());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -866,6 +903,8 @@ public final class ModelProto {
         hash = (37 * hash) + TABLES_FIELD_NUMBER;
         hash = (53 * hash) + getTablesList().hashCode();
       }
+      hash = (37 * hash) + GAMETYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getGameType();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1004,6 +1043,8 @@ public final class ModelProto {
         } else {
           tablesBuilder_.clear();
         }
+        gameType_ = 0;
+
         return this;
       }
 
@@ -1038,6 +1079,7 @@ public final class ModelProto {
         } else {
           result.tables_ = tablesBuilder_.build();
         }
+        result.gameType_ = gameType_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1108,6 +1150,9 @@ public final class ModelProto {
               tablesBuilder_.addAllMessages(other.tables_);
             }
           }
+        }
+        if (other.getGameType() != 0) {
+          setGameType(other.getGameType());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1473,6 +1518,44 @@ public final class ModelProto {
           tables_ = null;
         }
         return tablesBuilder_;
+      }
+
+      private int gameType_ ;
+      /**
+       * <pre>
+       *游戏类型 1=斗地主 2=麻将
+       * </pre>
+       *
+       * <code>int32 gameType = 3;</code>
+       */
+      public int getGameType() {
+        return gameType_;
+      }
+      /**
+       * <pre>
+       *游戏类型 1=斗地主 2=麻将
+       * </pre>
+       *
+       * <code>int32 gameType = 3;</code>
+       */
+      public Builder setGameType(int value) {
+        
+        gameType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *游戏类型 1=斗地主 2=麻将
+       * </pre>
+       *
+       * <code>int32 gameType = 3;</code>
+       */
+      public Builder clearGameType() {
+        
+        gameType_ = 0;
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2096,6 +2179,15 @@ public final class ModelProto {
      */
     proto.ModelProto.RoomRoleOrBuilder getTableRolesOrBuilder(
         int index);
+
+    /**
+     * <pre>
+     *游戏类型
+     * </pre>
+     *
+     * <code>int32 gameType = 7;</code>
+     */
+    int getGameType();
   }
   /**
    * <pre>
@@ -2120,6 +2212,7 @@ public final class ModelProto {
       ownerId_ = 0;
       stat_ = 0;
       tableRoles_ = java.util.Collections.emptyList();
+      gameType_ = 0;
     }
 
     @java.lang.Override
@@ -2182,6 +2275,11 @@ public final class ModelProto {
               }
               tableRoles_.add(
                   input.readMessage(proto.ModelProto.RoomRole.parser(), extensionRegistry));
+              break;
+            }
+            case 56: {
+
+              gameType_ = input.readInt32();
               break;
             }
           }
@@ -2296,6 +2394,19 @@ public final class ModelProto {
       return tableRoles_.get(index);
     }
 
+    public static final int GAMETYPE_FIELD_NUMBER = 7;
+    private int gameType_;
+    /**
+     * <pre>
+     *游戏类型
+     * </pre>
+     *
+     * <code>int32 gameType = 7;</code>
+     */
+    public int getGameType() {
+      return gameType_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -2325,6 +2436,9 @@ public final class ModelProto {
       }
       for (int i = 0; i < tableRoles_.size(); i++) {
         output.writeMessage(6, tableRoles_.get(i));
+      }
+      if (gameType_ != 0) {
+        output.writeInt32(7, gameType_);
       }
       unknownFields.writeTo(output);
     }
@@ -2358,6 +2472,10 @@ public final class ModelProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(6, tableRoles_.get(i));
       }
+      if (gameType_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(7, gameType_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -2386,6 +2504,8 @@ public final class ModelProto {
           == other.getStat());
       result = result && getTableRolesList()
           .equals(other.getTableRolesList());
+      result = result && (getGameType()
+          == other.getGameType());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -2412,6 +2532,8 @@ public final class ModelProto {
         hash = (37 * hash) + TABLEROLES_FIELD_NUMBER;
         hash = (53 * hash) + getTableRolesList().hashCode();
       }
+      hash = (37 * hash) + GAMETYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getGameType();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2562,6 +2684,8 @@ public final class ModelProto {
         } else {
           tableRolesBuilder_.clear();
         }
+        gameType_ = 0;
+
         return this;
       }
 
@@ -2600,6 +2724,7 @@ public final class ModelProto {
         } else {
           result.tableRoles_ = tableRolesBuilder_.build();
         }
+        result.gameType_ = gameType_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2682,6 +2807,9 @@ public final class ModelProto {
               tableRolesBuilder_.addAllMessages(other.tableRoles_);
             }
           }
+        }
+        if (other.getGameType() != 0) {
+          setGameType(other.getGameType());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3091,6 +3219,44 @@ public final class ModelProto {
           tableRoles_ = null;
         }
         return tableRolesBuilder_;
+      }
+
+      private int gameType_ ;
+      /**
+       * <pre>
+       *游戏类型
+       * </pre>
+       *
+       * <code>int32 gameType = 7;</code>
+       */
+      public int getGameType() {
+        return gameType_;
+      }
+      /**
+       * <pre>
+       *游戏类型
+       * </pre>
+       *
+       * <code>int32 gameType = 7;</code>
+       */
+      public Builder setGameType(int value) {
+        
+        gameType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *游戏类型
+       * </pre>
+       *
+       * <code>int32 gameType = 7;</code>
+       */
+      public Builder clearGameType() {
+        
+        gameType_ = 0;
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -3765,15 +3931,16 @@ public final class ModelProto {
     java.lang.String[] descriptorData = {
       "\n\013model.proto\022\005proto\"D\n\nServerInfo\022\022\n\nse" +
       "rverType\030\001 \001(\005\022\020\n\010serverId\030\002 \001(\005\022\020\n\010ipCo" +
-      "nfig\030\003 \001(\014\"<\n\004Room\022\016\n\006roomId\030\001 \001(\005\022$\n\006ta" +
-      "bles\030\002 \003(\0132\024.proto.RoomTableInfo\"&\n\010KeyV" +
-      "alue\022\013\n\003key\030\001 \001(\014\022\r\n\005value\030\002 \001(\014\"\207\001\n\rRoo" +
-      "mTableInfo\022\016\n\006roomId\030\001 \001(\005\022\017\n\007tableId\030\002 " +
-      "\001(\003\022\021\n\tcreatorId\030\003 \001(\005\022\017\n\007ownerId\030\004 \001(\005\022" +
-      "\014\n\004stat\030\005 \001(\005\022#\n\ntableRoles\030\006 \003(\0132\017.prot" +
-      "o.RoomRole\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005\022\016" +
-      "\n\006avatar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014B\014B\nMode",
-      "lProtob\006proto3"
+      "nfig\030\003 \001(\014\"N\n\004Room\022\016\n\006roomId\030\001 \001(\005\022$\n\006ta" +
+      "bles\030\002 \003(\0132\024.proto.RoomTableInfo\022\020\n\010game" +
+      "Type\030\003 \001(\005\"&\n\010KeyValue\022\013\n\003key\030\001 \001(\014\022\r\n\005v" +
+      "alue\030\002 \001(\014\"\231\001\n\rRoomTableInfo\022\016\n\006roomId\030\001" +
+      " \001(\005\022\017\n\007tableId\030\002 \001(\003\022\021\n\tcreatorId\030\003 \001(\005" +
+      "\022\017\n\007ownerId\030\004 \001(\005\022\014\n\004stat\030\005 \001(\005\022#\n\ntable" +
+      "Roles\030\006 \003(\0132\017.proto.RoomRole\022\020\n\010gameType" +
+      "\030\007 \001(\005\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005\022\016\n\006av",
+      "atar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014B\014B\nModelPro" +
+      "tob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3798,7 +3965,7 @@ public final class ModelProto {
     internal_static_proto_Room_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_Room_descriptor,
-        new java.lang.String[] { "RoomId", "Tables", });
+        new java.lang.String[] { "RoomId", "Tables", "GameType", });
     internal_static_proto_KeyValue_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_KeyValue_fieldAccessorTable = new
@@ -3810,7 +3977,7 @@ public final class ModelProto {
     internal_static_proto_RoomTableInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_RoomTableInfo_descriptor,
-        new java.lang.String[] { "RoomId", "TableId", "CreatorId", "OwnerId", "Stat", "TableRoles", });
+        new java.lang.String[] { "RoomId", "TableId", "CreatorId", "OwnerId", "Stat", "TableRoles", "GameType", });
     internal_static_proto_RoomRole_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_proto_RoomRole_fieldAccessorTable = new

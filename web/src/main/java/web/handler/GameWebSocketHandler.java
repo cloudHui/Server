@@ -185,18 +185,18 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		GameProto.OpInfo.Builder opBuilder = GameProto.OpInfo.newBuilder()
 				.setChoice(ConstProto.Operation.forNumber(opChoice.intValue()));
 
-		// 处理出牌
+		// 处理出牌 - 将牌值放入单个CardInfo中
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> cards = (List<Map<String, Object>>) data.get("cards");
 		if (cards != null) {
+			GameProto.CardInfo.Builder cardInfo = GameProto.CardInfo.newBuilder();
 			for (Map<String, Object> card : cards) {
 				Number value = (Number) card.get("value");
 				if (value != null) {
-					opBuilder.addOpCards(GameProto.CardInfo.newBuilder()
-							.addCards(GameProto.Card.newBuilder().setValue(value.intValue()).build())
-							.build());
+					cardInfo.addCards(GameProto.Card.newBuilder().setValue(value.intValue()).build());
 				}
 			}
+			opBuilder.addOpCards(cardInfo.build());
 		}
 
 		GameProto.ReqOp request = GameProto.ReqOp.newBuilder()

@@ -15,6 +15,9 @@ public enum TableState {
 	TABLE_DIS(9, "牌局解散"),
 	TABLE_OVER(10, "牌局结束", 1, TABLE_DIS),
 	ROUND_OVER(11, "等人准备下一局", START_ANI),
+	MJ_DEAL(12, "麻将发牌", 3, MJ_PLAY),
+	MJ_PLAY(13, "麻将摸牌", 15),
+	MJ_DISCARD(14, "麻将出牌", 15),
 	;
 
 	private final int id;
