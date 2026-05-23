@@ -5,7 +5,7 @@ import java.util.List;
 
 import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
 import proto.ModelProto;
 import proto.ServerProto;
 import room.Room;
@@ -32,7 +32,7 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 	}
 
 	@Override
-	protected void scheduleRetry(ConnectHandler serverClient) {
+	protected void scheduleRetry(Sender serverClient) {
 		logger.error("未找到可用服务器,将在 {}ms 后重试", RETRY_DELAY);
 
 		Room.getInstance().registerTimer(RETRY_DELAY, RETRY_INTERVAL, RETRY_COUNT, room -> {

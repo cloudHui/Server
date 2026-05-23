@@ -7,7 +7,8 @@ import java.util.Map;
 import com.google.protobuf.Message;
 import msg.registor.HandleTypeRegister;
 import msg.registor.enums.ServerType;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
+import net.client.handler.ClientHandler;
 import net.message.Parser;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class HandleManager {
 	 * @param serverClient 服务器客户端连接处理器
 	 * @param parser       消息解析器,用于解析返回的消息
 	 */
-	public static void sendMsg(int msgId, Message req, ConnectHandler serverClient, Parser parser) {
+	public static void sendMsg(int msgId, Message req, Sender serverClient, Parser parser) {
 		sendMsg(msgId, req, serverClient, parser, 0, 0, false);
 	}
 
@@ -62,7 +63,7 @@ public class HandleManager {
 	 * @param sequence     序列号,用于消息的排序和匹配
 	 * @param backError    是否在发生错误时回传错误消息给客户端
 	 */
-	public static void sendMsg(int msgId, Message req, ConnectHandler serverClient, Parser parser, int sequence, boolean backError) {
+	public static void sendMsg(int msgId, Message req, Sender serverClient, Parser parser, int sequence, boolean backError) {
 		sendMsg(msgId, req, serverClient, parser, sequence, 0, backError);
 	}
 
@@ -77,7 +78,7 @@ public class HandleManager {
 	 * @param userId    用户ID,标识消息所属的用户
 	 * @param backError 是否在发生错误时回传错误消息给客户端
 	 */
-	public static void sendMsg(int msgId, Message req, ConnectHandler handler, Parser parser, int sequence, int userId, boolean backError) {
+	public static void sendMsg(int msgId, Message req, Sender handler, Parser parser, int sequence, int userId, boolean backError) {
 		LOGGER.info("发送消息 - 消息类型:{},用户ID:{},消息ID:0x{},序列号:{}", req.getClass().getSimpleName(), userId, Integer.toHexString(msgId), sequence);
 
 		long start = System.currentTimeMillis();
@@ -125,7 +126,7 @@ public class HandleManager {
 	 * @param handler   连接处理器,用于可能的错误消息回传
 	 * @param backError 是否将错误码回传给客户端
 	 */
-	private static void handleErrorResponse(int userId, int errorCode, ConnectHandler handler, boolean backError) {
+	private static void handleErrorResponse(int userId, int errorCode, Sender handler, boolean backError) {
 		if (backError) {
 			LOGGER.debug("回传错误码给客户端 - 用户ID:{},错误码:{}", userId, errorCode);
 			handler.sendMessage(TCPMessage.newInstance(errorCode));
@@ -146,10 +147,10 @@ public class HandleManager {
 	 */
 	public static void sendMsgWithFallback(int msgId, Message req, ServerClientManager serverClientManager,
 										   ServerType serverType, Parser parser, int sequence, boolean backError) {
-		ConnectHandler handler = serverClientManager.getServerClient(serverType);
+		ClientHandler handler = serverClientManager.getServerClient(serverType);
 		if (handler == null) {
 			// 尝试获取所有实例中的一个
-			List<ConnectHandler> allHandlers = serverClientManager.getAllTypeServer(serverType);
+			List<ClientHandler> allHandlers = serverClientManager.getAllTypeServer(serverType);
 			if (allHandlers == null || allHandlers.isEmpty()) {
 				LOGGER.error("没有可用的服务实例 - 服务类型:{},消息ID:0x{}", serverType, Integer.toHexString(msgId));
 				return;

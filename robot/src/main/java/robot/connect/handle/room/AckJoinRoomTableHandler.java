@@ -4,7 +4,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
 import msg.registor.message.GMsg;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
 import proto.GameProto;
 import proto.RoomProto;
 import robot.connect.ConnectProcessor;
@@ -18,7 +18,7 @@ import utils.manager.HandleManager;
 public class AckJoinRoomTableHandler implements ConnectHandle {
 
 	@Override
-	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
+	public void handle(Message message, Sender handler, int sequence, int transId) {
 		if (message instanceof RoomProto.AckJoinRoomTable) {
 			RoomProto.AckJoinRoomTable rooms = (RoomProto.AckJoinRoomTable) message;
 			LOGGER.error("AckJoinRoomTable:{}", rooms.toString());

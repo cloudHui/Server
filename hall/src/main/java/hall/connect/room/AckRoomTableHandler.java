@@ -11,7 +11,7 @@ import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
 import msg.registor.message.HMsg;
 import net.client.handler.ClientHandler;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.HallProto;
@@ -28,7 +28,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 	private static final Logger logger = LoggerFactory.getLogger(AckRoomTableHandler.class);
 
 	@Override
-	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
+	public void handle(Message message, Sender handler, int sequence, int transId) {
 		try {
 			if (message instanceof ServerProto.AckRoleRoomTable) {
 				ServerProto.AckRoleRoomTable roomTable = (ServerProto.AckRoleRoomTable) message;

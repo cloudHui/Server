@@ -2,7 +2,7 @@ package robot.connect.handle.hall;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
 import proto.HallProto;
 import utils.manager.ConnectHandle;
 
@@ -13,7 +13,7 @@ import utils.manager.ConnectHandle;
 public class AckLoginHandler implements ConnectHandle {
 
 	@Override
-	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
+	public void handle(Message message, Sender handler, int sequence, int transId) {
 		if (message instanceof HallProto.AckLogin) {
 			HallProto.AckLogin ack = (HallProto.AckLogin) message;
 			LOGGER.error("AckLogin:{}", ack.toString());

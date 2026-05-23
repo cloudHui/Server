@@ -3,7 +3,7 @@ package room.client.handle.server.hall.time;
 
 import com.google.protobuf.Message;
 import msg.annotation.ProcessClass;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ServerProto;
@@ -22,7 +22,7 @@ public class CreateTableHandler implements ConnectHandle {
 	private static final Logger logger = LoggerFactory.getLogger(CreateTableHandler.class);
 
 	@Override
-	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
+	public void handle(Message message, Sender handler, int sequence, int transId) {
 
 		// 处理创建桌子成功的逻辑
 		ServerProto.AckCreateGameTable ackMessage = (ServerProto.AckCreateGameTable) message;

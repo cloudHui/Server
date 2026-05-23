@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.protobuf.Message;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
 import net.message.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public abstract class AbstractAckServerInfoHandle implements ConnectHandle {
 	protected static final int RETRY_COUNT = 1;
 
 	@Override
-	public void handle(Message message, ConnectHandler handler, int sequence, int transId) {
+	public void handle(Message message, Sender handler, int sequence, int transId) {
 		try {
 			if (message instanceof ServerProto.AckServerInfo) {
 				ServerProto.AckServerInfo response = (ServerProto.AckServerInfo) message;
@@ -49,12 +49,12 @@ public abstract class AbstractAckServerInfoHandle implements ConnectHandle {
 	/**
 	 * 调度重试机制 - 由子类实现
 	 */
-	protected abstract void scheduleRetry(ConnectHandler serverClient);
+	protected abstract void scheduleRetry(Sender serverClient);
 
 	/**
 	 * 通用的重试请求构建方法
 	 */
-	protected void sendRetryRequest(ConnectHandler serverClient, List<ServerType> serverTypes,
+	protected void sendRetryRequest(Sender serverClient, List<ServerType> serverTypes,
 									Parser processor) {
 		ServerProto.ReqServerInfo.Builder builder = ServerProto.ReqServerInfo.newBuilder();
 		for (ServerType serverType : serverTypes) {

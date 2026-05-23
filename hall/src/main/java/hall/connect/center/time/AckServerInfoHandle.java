@@ -7,7 +7,7 @@ import hall.Hall;
 import hall.connect.ConnectProcessor;
 import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
-import net.connect.handle.ConnectHandler;
+import net.client.Sender;
 import proto.ModelProto;
 import proto.ServerProto;
 import utils.handle.AbstractAckServerInfoHandle;
@@ -32,7 +32,7 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 	}
 
 	@Override
-	protected void scheduleRetry(ConnectHandler serverClient) {
+	protected void scheduleRetry(Sender serverClient) {
 		logger.warn("未找到可用服务器,将在 {}ms 后重试", RETRY_DELAY);
 
 		Hall.getInstance().registerTimer(RETRY_DELAY, RETRY_INTERVAL, RETRY_COUNT, hall -> {

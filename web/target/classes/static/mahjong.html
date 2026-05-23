@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麻将 - 牌桌</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: #1a3a1a;
+            min-height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+        .table-bg {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, #2a5a2a 0%, #1a3a1a 70%);
+        }
+        /* 顶部信息栏 */
+        .top-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50px;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 14px;
+            z-index: 100;
+        }
+        .top-bar .room-info { color: #ffd700; }
+        .top-bar .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .top-bar .back-btn:hover { background: rgba(255,255,255,0.3); }
+        /* 牌墙剩余 */
+        .wall-info {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            z-index: 50;
+        }
+        /* 玩家区域 */
+        .player-area {
+            position: absolute;
+            text-align: center;
+        }
+        .player-bottom {
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+        }
+        .player-top {
+            top: 80px; left: 50%;
+            transform: translateX(-50%);
+        }
+        .player-left {
+            left: 20px; top: 50%;
+            transform: translateY(-50%);
+        }
+        .player-right {
+            right: 20px; top: 50%;
+            transform: translateY(-50%);
+        }
+        .player-info {
+            color: white;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        .player-info .name { color: #ffd700; font-weight: bold; }
+        .player-info .tile-count {
+            background: rgba(0,0,0,0.5);
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        .player-info.active { color: #ff6b6b; }
+        /* 麻将牌 - 自己的手牌 */
+        .my-tiles {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0 20px;
+            min-height: 120px;
+        }
+        .tile {
+            width: 50px;
+            height: 70px;
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.15s, margin-bottom 0.15s;
+            flex-shrink: 0;
+            background: #f5f0e0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        .tile img {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
+        .tile.selected {
+            transform: translateY(-18px);
+            box-shadow: 0 8px 16px rgba(255,215,0,0.5);
+        }
+        .tile:not(.selected):hover {
+            transform: translateY(-5px);
+        }
+        .my-tiles .tile {
+            margin-left: -18px;
+        }
+        .my-tiles .tile:first-child {
+            margin-left: 0;
+        }
+        /* 对手的牌（竖排/横排） */
+        .opponent-tiles {
+            display: flex;
+            justify-content: center;
+        }
+        .opponent-tiles .tile-back {
+            width: 28px;
+            height: 36px;
+            margin-left: -10px;
+            border-radius: 3px;
+            background: linear-gradient(135deg, #1a6b1a, #2a8b2a);
+            border: 1px solid #4aaa4a;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        .opponent-tiles .tile-back:first-child { margin-left: 0; }
+        /* 侧边玩家牌（竖向排列） */
+        .side-tiles {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .side-tiles .tile-back {
+            width: 36px;
+            height: 14px;
+            margin-top: -4px;
+            border-radius: 2px;
+            background: linear-gradient(135deg, #1a6b1a, #2a8b2a);
+            border: 1px solid #4aaa4a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .side-tiles .tile-back:first-child { margin-top: 0; }
+        /* 打出的牌区域 */
+        .discarded-area {
+            position: absolute;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 300px;
+            gap: 3px;
+        }
+        .discarded-center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            justify-content: center;
+        }
+        .discarded-area .tile {
+            width: 32px;
+            height: 44px;
+            margin-left: 0;
+            cursor: default;
+        }
+        .discarded-area .tile img {
+            width: 100%;
+            height: 100%;
+            border-radius: 3px;
+        }
+        /* 操作按钮 */
+        .action-bar {
+            position: absolute;
+            bottom: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 50;
+        }
+        .action-btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .action-btn:hover { transform: translateY(-2px); }
+        .btn-discard {
+            background: linear-gradient(135deg, #c41e2a, #e63946);
+            color: white;
+        }
+        .btn-pass {
+            background: linear-gradient(135deg, #555, #777);
+            color: white;
+        }
+        .btn-chi {
+            background: linear-gradient(135deg, #e6a817, #ffd700);
+            color: #333;
+        }
+        .btn-peng {
+            background: linear-gradient(135deg, #ff8c00, #ffa500);
+            color: white;
+        }
+        .btn-gang {
+            background: linear-gradient(135deg, #8b008b, #ba55d3);
+            color: white;
+        }
+        .btn-hu {
+            background: linear-gradient(135deg, #ff0000, #ff4444);
+            color: white;
+        }
+        .btn-prepare {
+            background: linear-gradient(135deg, #2196F3, #42A5F5);
+            color: white;
+        }
+        .action-btn:disabled {
+            background: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+        /* 中央提示 */
+        .center-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffd700;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            z-index: 60;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .center-message.show { opacity: 1; }
+        /* 连接状态 */
+        .ws-status {
+            position: absolute;
+            top: 55px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            z-index: 100;
+        }
+        .ws-status.connected { color: #4caf50; }
+        .ws-status.disconnected { color: #f44336; }
+    </style>
+</head>
+<body>
+    <div class="table-bg">
+        <div class="top-bar">
+            <span class="room-info" id="roomInfo">牌桌加载中...</span>
+            <span id="tableState"></span>
+            <button class="back-btn" onclick="leaveTable()">返回大厅</button>
+        </div>
+        <div class="ws-status" id="wsStatus">连接中...</div>
+        <div class="wall-info" id="wallInfo"></div>
+
+        <!-- 对面玩家 -->
+        <div class="player-area player-top">
+            <div class="player-info" id="playerTop">
+                <span class="name">等待加入</span>
+            </div>
+            <div class="opponent-tiles" id="tilesTop"></div>
+        </div>
+
+        <!-- 左边玩家 -->
+        <div class="player-area player-left">
+            <div class="player-info" id="playerLeft">
+                <span class="name">等待加入</span>
+            </div>
+            <div class="side-tiles" id="tilesLeft"></div>
+        </div>
+
+        <!-- 右边玩家 -->
+        <div class="player-area player-right">
+            <div class="player-info" id="playerRight">
+                <span class="name">等待加入</span>
+            </div>
+            <div class="side-tiles" id="tilesRight"></div>
+        </div>
+
+        <!-- 打出的牌（中央） -->
+        <div class="discarded-area discarded-center" id="discardedArea"></div>
+
+        <!-- 中央消息 -->
+        <div class="center-message" id="centerMsg"></div>
+
+        <!-- 操作按钮 -->
+        <div class="action-bar" id="actionBar" style="display:none;"></div>
+
+        <!-- 底部手牌 -->
+        <div class="player-area player-bottom">
+            <div class="player-info" id="playerBottom">
+                <span class="name" id="myName">我</span>
+                <span class="tile-count" id="myTileCount"></span>
+            </div>
+            <div class="my-tiles" id="myTiles"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 状态 ====================
+        var sessionId = localStorage.getItem('sessionId');
+        var userId = parseInt(localStorage.getItem('userId') || '0');
+        var nickname = localStorage.getItem('nickname') || '玩家';
+        var tableId = parseInt(localStorage.getItem('tableId') || '0');
+
+        var ws = null;
+        var seqCounter = 0;
+        var pendingCallbacks = {};
+        var gameState = {
+            myTiles: [],
+            selectedTile: -1, // 选中的牌index
+            players: [],
+            myPosition: -1,
+            discardedTiles: [], // 打出的牌
+            wallLeft: 0
+        };
+
+        // 牌ID到图片名的映射
+        // 编码: suit*100 + value
+        // 万(101-109) -> B_character_1~9
+        // 条(201-209) -> B_bamboo_1~9
+        // 筒(301-309) -> B_dot_1~9
+        // 风(401-404东南西北) -> B_wind_1~4
+        // 箭(501-503中发白) -> B_wind_5~7
+        function getTileImagePath(tileId) {
+            var suit = Math.floor(tileId / 100);
+            var value = tileId % 100;
+            if (suit === 1) return '/img/card/B_character_' + value + '.png';
+            if (suit === 2) return '/img/card/B_bamboo_' + value + '.png';
+            if (suit === 3) return '/img/card/B_dot_' + value + '.png';
+            if (suit === 4) return '/img/card/B_wind_' + value + '.png';
+            if (suit === 5) return '/img/card/B_wind_' + (value + 4) + '.png';
+            return '';
+        }
+
+        // 牌名显示
+        function getTileName(tileId) {
+            var suit = Math.floor(tileId / 100);
+            var value = tileId % 100;
+            var suitNames = ['', '万', '条', '筒', '', ''];
+            var fengNames = ['', '东', '南', '西', '北'];
+            var jianNames = ['', '中', '发', '白'];
+            if (suit === 4) return fengNames[value] || '';
+            if (suit === 5) return jianNames[value] || '';
+            return value + suitNames[suit];
+        }
+
+        if (!sessionId || !tableId) {
+            window.location.href = '/';
+        }
+        document.getElementById('myName').textContent = nickname;
+        document.getElementById('roomInfo').textContent = '桌号: ' + tableId;
+
+        // ==================== WebSocket ====================
+        function connectWebSocket() {
+            var protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(protocol + '//' + location.host + '/ws/game');
+
+            ws.onopen = function() {
+                document.getElementById('wsStatus').textContent = '已连接';
+                document.getElementById('wsStatus').className = 'ws-status connected';
+                sendWsMessage('auth', { sessionId: sessionId }, function(resp) {
+                    if (resp.code === 0) {
+                        enterTable();
+                    }
+                });
+            };
+
+            ws.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                handleWsMessage(data);
+            };
+
+            ws.onclose = function() {
+                document.getElementById('wsStatus').textContent = '已断开';
+                document.getElementById('wsStatus').className = 'ws-status disconnected';
+                setTimeout(connectWebSocket, 3000);
+            };
+
+            ws.onerror = function() {
+                console.log('WebSocket错误');
+            };
+        }
+
+        function sendWsMessage(action, data, callback) {
+            var seq = ++seqCounter;
+            if (callback) {
+                pendingCallbacks[seq] = callback;
+            }
+            var msg = { action: action, seq: seq, data: data || {} };
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify(msg));
+            }
+            return seq;
+        }
+
+        function handleWsMessage(data) {
+            var seq = data.seq;
+            if (seq && pendingCallbacks[seq]) {
+                pendingCallbacks[seq](data);
+                delete pendingCallbacks[seq];
+                return;
+            }
+            switch (data.action) {
+                case 'notCard':
+                    handleNotCard(data.data);
+                    break;
+                case 'notOp':
+                    handleNotOp(data.data);
+                    break;
+                case 'notState':
+                    handleNotState(data.data);
+                    break;
+                case 'notResult':
+                    handleNotResult(data.data);
+                    break;
+                case 'notMjState':
+                    handleNotMjState(data.data);
+                    break;
+            }
+        }
+
+        // ==================== 游戏逻辑 ====================
+        function enterTable() {
+            sendWsMessage('enterTable', { tableId: tableId }, function(resp) {
+                if (resp.code === 0 && resp.data) {
+                    updatePlayers(resp.data.players || []);
+                    if (resp.data.tableInfo) {
+                        document.getElementById('roomInfo').textContent =
+                            '桌号: ' + resp.data.tableInfo.tableId;
+                    }
+                    showActionButtons('prepare');
+                } else {
+                    showCenterMsg(resp.msg || '进入桌子失败');
+                }
+            });
+        }
+
+        function handleNotCard(data) {
+            // 发牌通知
+            if (!data || !data.nCards) return;
+            gameState.myTiles = [];
+            for (var i = 0; i < data.nCards.length; i++) {
+                var nc = data.nCards[i];
+                if (nc.roleId === userId && nc.cards) {
+                    for (var j = 0; j < nc.cards.length; j++) {
+                        gameState.myTiles.push(nc.cards[j].value);
+                    }
+                }
+            }
+            gameState.myTiles.sort(function(a, b) { return a - b; });
+            gameState.selectedTile = -1;
+            renderMyTiles();
+            updateTileCount();
+            showCenterMsg('发牌完成');
+        }
+
+        function handleNotOp(data) {
+            // 操作通知 - 轮到谁操作
+            if (!data) return;
+            var opSeat = data.opSeat;
+            highlightActivePlayer(opSeat);
+
+            if (gameState.myPosition >= 0 && opSeat === gameState.myPosition) {
+                var choices = data.choice || [];
+                showOperationChoices(choices);
+            }
+        }
+
+        function handleNotState(data) {
+            if (data.state === 1) {
+                document.getElementById('tableState').textContent = '游戏进行中';
+            } else {
+                document.getElementById('tableState').textContent = '等待中';
+            }
+        }
+
+        function handleNotMjState(data) {
+            // 麻将状态通知 - 出牌、摸牌等
+            if (!data) return;
+            if (data.action === 1) {
+                // MJ_DISCARD_TILE - 有人出牌
+                if (data.tileId) {
+                    gameState.discardedTiles.push(data.tileId);
+                    renderDiscarded();
+                }
+            }
+            if (data.wallLeft != null) {
+                gameState.wallLeft = data.wallLeft;
+                document.getElementById('wallInfo').textContent = '牌墙剩余: ' + data.wallLeft + '张';
+            }
+        }
+
+        function handleNotResult(data) {
+            var msg = '游戏结束!';
+            if (data.winner && data.winner > 0) {
+                msg = '玩家 ' + data.winner + ' 获胜!';
+            } else {
+                msg = '流局!';
+            }
+            showCenterMsg(msg, 5000);
+            showActionButtons('prepare');
+        }
+
+        function doOp(choice) {
+            var cards = [];
+            if (choice === 13 && gameState.selectedTile >= 0) {
+                // DISCARD - 出选中的牌
+                var tileId = gameState.myTiles[gameState.selectedTile];
+                cards = [{ value: tileId }];
+            }
+
+            sendWsMessage('op', {
+                choice: choice,
+                cards: cards.length > 0 ? cards : undefined
+            }, function(resp) {
+                if (resp.code !== 0) {
+                    showCenterMsg(resp.msg || '操作失败');
+                }
+                if (choice === 13 && gameState.selectedTile >= 0) {
+                    // 出牌成功，从手牌移除
+                    gameState.myTiles.splice(gameState.selectedTile, 1);
+                    gameState.selectedTile = -1;
+                    renderMyTiles();
+                    updateTileCount();
+                }
+            });
+            hideActions();
+        }
+
+        function doPrepare() {
+            sendWsMessage('op', { choice: 7 }, function(resp) {
+                if (resp.code !== 0) {
+                    showCenterMsg(resp.msg || '准备失败');
+                }
+            });
+            hideActions();
+        }
+
+        function leaveTable() {
+            sendWsMessage('leave', {}, function() {});
+            localStorage.removeItem('tableId');
+            window.location.href = '/room.html';
+        }
+
+        // ==================== 渲染 ====================
+        function renderMyTiles() {
+            var container = document.getElementById('myTiles');
+            container.innerHTML = '';
+            for (var i = 0; i < gameState.myTiles.length; i++) {
+                var tileId = gameState.myTiles[i];
+                var tile = document.createElement('div');
+                tile.className = 'tile' + (gameState.selectedTile === i ? ' selected' : '');
+                tile.dataset.index = i;
+
+                var img = document.createElement('img');
+                img.src = getTileImagePath(tileId);
+                img.alt = getTileName(tileId);
+                img.onerror = function() {
+                    // 图片加载失败时显示文字
+                    this.style.display = 'none';
+                    this.parentElement.textContent = getTileName(parseInt(this.alt) || 0);
+                    this.parentElement.style.lineHeight = '70px';
+                    this.parentElement.style.fontSize = '18px';
+                    this.parentElement.style.fontWeight = 'bold';
+                    this.parentElement.style.textAlign = 'center';
+                };
+                tile.appendChild(img);
+
+                tile.onclick = (function(idx) {
+                    return function() {
+                        toggleTile(idx);
+                    };
+                })(i);
+
+                container.appendChild(tile);
+            }
+        }
+
+        function toggleTile(index) {
+            if (gameState.selectedTile === index) {
+                // 再次点击已选中的牌 = 出牌
+                doOp(13); // DISCARD
+            } else {
+                gameState.selectedTile = index;
+                renderMyTiles();
+            }
+        }
+
+        function renderCardBacks(containerId, count, isVertical) {
+            var container = document.getElementById(containerId);
+            container.innerHTML = '';
+            for (var i = 0; i < count; i++) {
+                var back = document.createElement('div');
+                back.className = 'tile-back';
+                container.appendChild(back);
+            }
+        }
+
+        function renderDiscarded() {
+            var container = document.getElementById('discardedArea');
+            container.innerHTML = '';
+            for (var i = 0; i < gameState.discardedTiles.length; i++) {
+                var tileId = gameState.discardedTiles[i];
+                var tile = document.createElement('div');
+                tile.className = 'tile';
+                var img = document.createElement('img');
+                img.src = getTileImagePath(tileId);
+                img.onerror = function() { this.style.display = 'none'; };
+                tile.appendChild(img);
+                container.appendChild(tile);
+            }
+        }
+
+        function updatePlayers(players) {
+            gameState.players = players;
+
+            var elTop = document.getElementById('playerTop');
+            var elLeft = document.getElementById('playerLeft');
+            var elRight = document.getElementById('playerRight');
+
+            elTop.innerHTML = '<span class="name">等待加入</span>';
+            elLeft.innerHTML = '<span class="name">等待加入</span>';
+            elRight.innerHTML = '<span class="name">等待加入</span>';
+            document.getElementById('tilesTop').innerHTML = '';
+            document.getElementById('tilesLeft').innerHTML = '';
+            document.getElementById('tilesRight').innerHTML = '';
+
+            for (var i = 0; i < players.length; i++) {
+                if (players[i].roleId === userId) {
+                    gameState.myPosition = players[i].position;
+                    break;
+                }
+            }
+
+            // 麻将4人: 底部=自己, 对面=+2, 左边=+3, 右边=+1
+            for (var i = 0; i < players.length; i++) {
+                var p = players[i];
+                if (p.roleId === userId) continue;
+
+                var tileCount = p.cardCount || 0;
+                var nameHtml = '<span class="name">' + (p.nickName || '玩家') + '</span>' +
+                    '<span class="tile-count">' + tileCount + '张</span>';
+
+                var relPos = (p.position - gameState.myPosition + 4) % 4;
+                if (relPos === 2) {
+                    elTop.innerHTML = nameHtml;
+                    renderCardBacks('tilesTop', tileCount, false);
+                } else if (relPos === 1) {
+                    elRight.innerHTML = nameHtml;
+                    renderCardBacks('tilesRight', tileCount, true);
+                } else {
+                    elLeft.innerHTML = nameHtml;
+                    renderCardBacks('tilesLeft', tileCount, true);
+                }
+            }
+        }
+
+        function updateTileCount() {
+            document.getElementById('myTileCount').textContent = gameState.myTiles.length + '张';
+        }
+
+        function highlightActivePlayer(position) {
+            document.getElementById('playerTop').className = 'player-info';
+            document.getElementById('playerLeft').className = 'player-info';
+            document.getElementById('playerRight').className = 'player-info';
+            document.getElementById('playerBottom').className = 'player-info';
+
+            if (position === gameState.myPosition) {
+                document.getElementById('playerBottom').className = 'player-info active';
+            } else {
+                var relPos = (position - gameState.myPosition + 4) % 4;
+                if (relPos === 2) {
+                    document.getElementById('playerTop').className = 'player-info active';
+                } else if (relPos === 1) {
+                    document.getElementById('playerRight').className = 'player-info active';
+                } else {
+                    document.getElementById('playerLeft').className = 'player-info active';
+                }
+            }
+        }
+
+        function showOperationChoices(choices) {
+            var bar = document.getElementById('actionBar');
+            bar.innerHTML = '';
+            bar.style.display = 'flex';
+
+            for (var i = 0; i < choices.length; i++) {
+                var choice = choices[i];
+                var btn = document.createElement('button');
+                btn.className = 'action-btn';
+
+                switch (choice.choice) {
+                    case 13: // DISCARD
+                        btn.className += ' btn-discard';
+                        btn.textContent = '出牌';
+                        btn.onclick = function() {
+                            if (gameState.selectedTile >= 0) {
+                                doOp(13);
+                            } else {
+                                showCenterMsg('请先选择一张牌');
+                            }
+                        };
+                        break;
+                    case 6: // PLAY (兼容)
+                        btn.className += ' btn-discard';
+                        btn.textContent = '出牌';
+                        btn.onclick = function() {
+                            if (gameState.selectedTile >= 0) {
+                                doOp(13);
+                            } else {
+                                showCenterMsg('请先选择一张牌');
+                            }
+                        };
+                        break;
+                    case 0: // PASS
+                        btn.className += ' btn-pass';
+                        btn.textContent = '过';
+                        btn.onclick = function() { doOp(0); };
+                        break;
+                    case 2: // CHI (TODO)
+                        btn.className += ' btn-chi';
+                        btn.textContent = '吃';
+                        btn.onclick = function() { doOp(2); };
+                        break;
+                    case 3: // PENG (TODO)
+                        btn.className += ' btn-peng';
+                        btn.textContent = '碰';
+                        btn.onclick = function() { doOp(3); };
+                        break;
+                    case 4: // GANG (TODO)
+                        btn.className += ' btn-gang';
+                        btn.textContent = '杠';
+                        btn.onclick = function() { doOp(4); };
+                        break;
+                    case 5: // HU (TODO)
+                        btn.className += ' btn-hu';
+                        btn.textContent = '胡';
+                        btn.onclick = function() { doOp(5); };
+                        break;
+                    default:
+                        continue;
+                }
+                bar.appendChild(btn);
+            }
+        }
+
+        function showActionButtons(type) {
+            var bar = document.getElementById('actionBar');
+            bar.innerHTML = '';
+            bar.style.display = 'flex';
+            if (type === 'prepare') {
+                var btn = document.createElement('button');
+                btn.className = 'action-btn btn-prepare';
+                btn.textContent = '准备';
+                btn.onclick = doPrepare;
+                bar.appendChild(btn);
+            }
+        }
+
+        function hideActions() {
+            document.getElementById('actionBar').style.display = 'none';
+        }
+
+        function showCenterMsg(msg, duration) {
+            var el = document.getElementById('centerMsg');
+            el.textContent = msg;
+            el.className = 'center-message show';
+            setTimeout(function() {
+                el.className = 'center-message';
+            }, duration || 2000);
+        }
+
+        // ==================== 启动 ====================
+        connectWebSocket();
+    </script>
+</body>
+</html>

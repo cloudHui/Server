@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>斗地主 - 大厅</title>
+    <title>游戏大厅</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -42,9 +42,11 @@
             color: #ffd700;
             font-size: 20px;
             margin-bottom: 16px;
+            margin-top: 30px;
             padding-left: 8px;
             border-left: 4px solid #ffd700;
         }
+        .section-title:first-of-type { margin-top: 0; }
         .room-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -61,9 +63,7 @@
             margin-bottom: 12px;
             font-size: 18px;
         }
-        .table-list {
-            margin-top: 10px;
-        }
+        .table-list { margin-top: 10px; }
         .table-item {
             background: #f5f5f5;
             border-radius: 8px;
@@ -73,10 +73,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        .table-item .info {
-            font-size: 13px;
-            color: #555;
-        }
+        .table-item .info { font-size: 13px; color: #555; }
         .table-item .status {
             font-size: 12px;
             padding: 3px 10px;
@@ -86,7 +83,6 @@
         .status-playing { background: #fff3e0; color: #e65100; }
 
         .join-btn {
-            background: linear-gradient(135deg, #c41e2a, #e63946);
             color: white;
             border: none;
             padding: 10px 24px;
@@ -98,13 +94,14 @@
             transition: transform 0.2s;
         }
         .join-btn:hover { transform: translateY(-2px); }
-        .join-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .join-btn-ddz { background: linear-gradient(135deg, #c41e2a, #e63946); }
+        .join-btn-mj { background: linear-gradient(135deg, #1565c0, #42a5f5); }
 
         .empty-tip {
             text-align: center;
             color: rgba(255,255,255,0.7);
-            padding: 60px 20px;
-            font-size: 16px;
+            padding: 40px 20px;
+            font-size: 14px;
         }
         .refresh-btn {
             background: rgba(255,215,0,0.2);
@@ -114,7 +111,7 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .refresh-btn:hover { background: rgba(255,215,0,0.3); }
         .loading { text-align: center; color: rgba(255,255,255,0.7); padding: 40px; }
@@ -122,7 +119,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>斗地主大厅</h1>
+        <h1>游戏大厅</h1>
         <div class="user-info">
             <span id="userDisplay"></span>
             <button class="logout-btn" onclick="doLogout()">退出</button>
@@ -131,8 +128,14 @@
 
     <div class="content">
         <button class="refresh-btn" onclick="loadRooms()">刷新房间</button>
-        <h2 class="section-title">房间列表</h2>
-        <div id="roomList" class="room-list">
+
+        <h2 class="section-title">斗地主</h2>
+        <div id="ddzRooms" class="room-list">
+            <div class="loading">加载中...</div>
+        </div>
+
+        <h2 class="section-title">麻将</h2>
+        <div id="mjRooms" class="room-list">
             <div class="loading">加载中...</div>
         </div>
     </div>
@@ -141,43 +144,62 @@
         var sessionId = localStorage.getItem('sessionId');
         var nickname = localStorage.getItem('nickname');
 
-        // 未登录跳转
-        if (!sessionId) {
-            window.location.href = '/';
-        }
-
+        if (!sessionId) { window.location.href = '/'; }
         document.getElementById('userDisplay').textContent = '玩家: ' + (nickname || '未知');
 
+        // gameType: 1=斗地主, 2=麻将
+        var GAME_DDZ = 1;
+        var GAME_MJ = 2;
+
         function loadRooms() {
-            document.getElementById('roomList').innerHTML = '<div class="loading">加载中...</div>';
+            document.getElementById('ddzRooms').innerHTML = '<div class="loading">加载中...</div>';
+            document.getElementById('mjRooms').innerHTML = '<div class="loading">加载中...</div>';
 
             fetch('/api/rooms?sessionId=' + encodeURIComponent(sessionId))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
-                    if (data.code === 401) {
-                        window.location.href = '/';
-                        return;
-                    }
+                    if (data.code === 401) { window.location.href = '/'; return; }
                     if (data.code !== 0) {
-                        document.getElementById('roomList').innerHTML =
-                            '<div class="empty-tip">' + (data.msg || '加载失败') + '</div>';
+                        var err = '<div class="empty-tip">' + (data.msg || '加载失败') + '</div>';
+                        document.getElementById('ddzRooms').innerHTML = err;
+                        document.getElementById('mjRooms').innerHTML = err;
                         return;
                     }
-                    renderRooms(data.rooms || []);
+                    renderGrouped(data.rooms || []);
                 })
-                .catch(function(err) {
-                    document.getElementById('roomList').innerHTML =
-                        '<div class="empty-tip">网络错误，请重试</div>';
+                .catch(function() {
+                    var err = '<div class="empty-tip">网络错误，请重试</div>';
+                    document.getElementById('ddzRooms').innerHTML = err;
+                    document.getElementById('mjRooms').innerHTML = err;
                 });
         }
 
-        function renderRooms(rooms) {
-            var container = document.getElementById('roomList');
+        function renderGrouped(rooms) {
+            var ddzList = [];
+            var mjList = [];
+            for (var i = 0; i < rooms.length; i++) {
+                if (rooms[i].gameType === GAME_MJ) {
+                    mjList.push(rooms[i]);
+                } else {
+                    ddzList.push(rooms[i]);
+                }
+            }
+
+            renderRooms('ddzRooms', ddzList, GAME_DDZ);
+            renderRooms('mjRooms', mjList, GAME_MJ);
+        }
+
+        function renderRooms(containerId, rooms, gameType) {
+            var container = document.getElementById(containerId);
+            var btnClass = gameType === GAME_MJ ? 'join-btn-mj' : 'join-btn-ddz';
+            var gamePage = gameType === GAME_MJ ? '/mahjong.html' : '/doudizhu.html';
+            var defaultName = gameType === GAME_MJ ? '经典麻将' : '经典斗地主';
+
             if (rooms.length === 0) {
-                container.innerHTML = '<div class="empty-tip">暂无房间，点击"加入"创建新牌局</div>';
-                // 添加一个默认房间按钮
-                container.innerHTML += '<div style="text-align:center;margin-top:20px;">' +
-                    '<button class="join-btn" style="width:auto;padding:12px 40px;" onclick="joinRoom(1)">创建/加入经典场</button></div>';
+                container.innerHTML = '<div class="empty-tip">暂无房间</div>' +
+                    '<div style="text-align:center;margin-top:10px;">' +
+                    '<button class="join-btn ' + btnClass + '" style="width:auto;padding:12px 40px;" ' +
+                    'onclick="joinRoom(1,' + gameType + ')">创建/加入' + defaultName + '</button></div>';
                 return;
             }
 
@@ -185,7 +207,7 @@
             for (var i = 0; i < rooms.length; i++) {
                 var room = rooms[i];
                 html += '<div class="room-card">';
-                html += '<h3>房间 #' + room.roomId + '</h3>';
+                html += '<h3>' + (room.roomId === 1 ? defaultName : '房间 #' + room.roomId) + '</h3>';
 
                 if (room.tables && room.tables.length > 0) {
                     html += '<div class="table-list">';
@@ -202,20 +224,20 @@
                         html += '<div class="table-item">';
                         html += '<div class="info">桌号 ' + table.tableId + ' | ' +
                             (playerNames.length > 0 ? playerNames.join(', ') : '空桌') +
-                            ' (' + table.playerCount + '/3)</div>';
+                            ' (' + table.playerCount + '人)</div>';
                         html += '<span class="status ' + statusClass + '">' + statusText + '</span>';
                         html += '</div>';
                     }
                     html += '</div>';
                 }
 
-                html += '<button class="join-btn" onclick="joinRoom(' + room.roomId + ')">加入房间</button>';
+                html += '<button class="join-btn ' + btnClass + '" onclick="joinRoom(' + room.roomId + ',' + gameType + ')">加入房间</button>';
                 html += '</div>';
             }
             container.innerHTML = html;
         }
 
-        function joinRoom(roomId) {
+        function joinRoom(roomId, gameType) {
             fetch('/api/rooms/join', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -226,14 +248,14 @@
                 if (data.code === 0) {
                     localStorage.setItem('tableId', data.tableId);
                     localStorage.setItem('roomId', roomId);
-                    window.location.href = '/game.html';
+                    localStorage.setItem('gameType', gameType);
+                    var page = gameType === GAME_MJ ? '/mahjong.html' : '/doudizhu.html';
+                    window.location.href = page;
                 } else {
                     alert(data.msg || '加入房间失败');
                 }
             })
-            .catch(function(err) {
-                alert('网络错误，请重试');
-            });
+            .catch(function() { alert('网络错误，请重试'); });
         }
 
         function doLogout() {
@@ -246,10 +268,7 @@
             window.location.href = '/';
         }
 
-        // 初始加载
         loadRooms();
-
-        // 每10秒自动刷新
         setInterval(loadRooms, 10000);
     </script>
 </body>
