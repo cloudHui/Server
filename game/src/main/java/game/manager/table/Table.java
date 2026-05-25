@@ -91,9 +91,24 @@ public class Table {
 	private static final int MAX_ERROR = 100;
 
 	/**
-	 * 桌子逻辑循环间隔(毫秒)
+	 * 游戏中循环间隔(毫秒)
 	 */
 	private static final long LOOP_INTERVAL = 500;
+
+	/**
+	 * 空闲循环间隔(毫秒) - 等待玩家/结束时使用，减少无用tick
+	 */
+	private static final long IDLE_LOOP_INTERVAL = 2000;
+
+	/**
+	 * 当前定时器节点ID（用于动态替换间隔）
+	 */
+	private int timerNodeId = -1;
+
+	/**
+	 * 当前循环间隔
+	 */
+	private long currentLoopInterval = IDLE_LOOP_INTERVAL;
 
 	public Table(long tableId, TableModel model, ModelProto.RoomRole creator) {
 		this.tableId = tableId;
@@ -149,6 +164,27 @@ public class Table {
 		logger.info("table:{} change state old:{} new:{}", tableId, this.tableState, next);
 		tableState = next;
 		stateStartTime = now;
+
+		// 根据状态自动调整循环间隔
+		adjustLoopInterval(next);
+	}
+
+	/**
+	 * 根据桌子状态调整循环间隔
+	 * 游戏进行中 → 500ms（快速响应玩家操作）
+	 * 等待/结束 → 2000ms（减少无用tick）
+	 */
+	private void adjustLoopInterval(TableState state) {
+		if (state == TableState.TABLE_DIS) {
+			// 解散状态不需要定时器
+			return;
+		}
+		if (state == TableState.WAITING || state == TableState.ROUND_OVER
+				|| state == TableState.TABLE_OVER) {
+			setLoopInterval(IDLE_LOOP_INTERVAL);
+		} else {
+			setLoopInterval(LOOP_INTERVAL);
+		}
 	}
 
 	public long getStateStartTime() {
@@ -243,10 +279,37 @@ public class Table {
 	public void start() {
 		try {
 			int groupIndex = getGroupIndex();
-			Game.getInstance().registerSerialTimer(groupIndex, 1000, LOOP_INTERVAL, -1, this::tableLoop, this);
-			logger.info("启动桌子逻辑循环, tableId: {}, groupIndex: {}", tableId, groupIndex);
+			timerNodeId = Game.getInstance().registerSerialTimerWithId(
+					groupIndex, 1000, IDLE_LOOP_INTERVAL, -1, this::tableLoop, this);
+			currentLoopInterval = IDLE_LOOP_INTERVAL;
+			logger.info("启动桌子逻辑循环, tableId: {}, groupIndex: {}, interval: {}ms",
+					tableId, groupIndex, IDLE_LOOP_INTERVAL);
 		} catch (Exception e) {
 			logger.error("启动桌子逻辑循环失败, tableId: {}", tableId, e);
+		}
+	}
+
+	/**
+	 * 动态调整循环间隔
+	 * 游戏中用500ms快速响应，空闲时用200ms减少tick量
+	 */
+	public void setLoopInterval(long intervalMs) {
+		if (currentLoopInterval == intervalMs) {
+			return;
+		}
+		try {
+			int groupIndex = getGroupIndex();
+			// 注销旧定时器
+			if (timerNodeId > 0) {
+				Game.getInstance().unregisterTimer(timerNodeId);
+			}
+			// 注册新定时器
+			timerNodeId = Game.getInstance().registerSerialTimerWithId(
+					groupIndex, 0, intervalMs, -1, this::tableLoop, this);
+			currentLoopInterval = intervalMs;
+			logger.debug("调整循环间隔, tableId: {}, interval: {}ms", tableId, intervalMs);
+		} catch (Exception e) {
+			logger.error("调整循环间隔失败, tableId: {}", tableId, e);
 		}
 	}
 

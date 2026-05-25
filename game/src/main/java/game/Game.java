@@ -19,6 +19,7 @@ import threadtutil.thread.ExecutorPool;
 import threadtutil.thread.Task;
 import threadtutil.timer.Runner;
 import threadtutil.timer.Timer;
+import threadtutil.utils.TimeUtils;
 import utils.ServerClientManager;
 import utils.ServerManager;
 import utils.config.ConfigurationManager;
@@ -113,6 +114,22 @@ public class Game {
 	}
 
 	/**
+	 * 注册串行定时器并返回ID（用于后续替换间隔）
+	 */
+	public <T> int registerSerialTimerWithId(int groupId, long delay, long interval, int count, Runner<T> runner, T param) {
+		int id = timer.registerSerialWithId(groupId, delay, interval, count, runner, param);
+		logger.debug("注册串行定时器, id: {}, groupId: {}, delay: {}, interval: {}", id, groupId, delay, interval);
+		return id;
+	}
+
+	/**
+	 * 注销定时器
+	 */
+	public void unregisterTimer(int nodeId) {
+		timer.unregister(nodeId);
+	}
+
+	/**
 	 * 直接提交任务到线程池
 	 */
 	public void execute(Runnable task) {
@@ -179,11 +196,15 @@ public class Game {
 	 * 初始化组件
 	 */
 	private void initializeComponents() {
-		executorPool = new ExecutorPool("Game");
+		ConfigurationManager config = ConfigurationManager.getInstance();
+		int poolSize = config.getInt("game.threadPoolSize", Math.max(32, TimeUtils.PROCESS_NUMBER));
+		int queueCap = config.getInt("game.queueCapacity", 100000);
+
+		executorPool = new ExecutorPool("Game", poolSize, queueCap);
 		timer = new Timer().setRunners(executorPool);
 		serverManager = new ServerManager(timer,
-				ConfigurationManager.getInstance().getInt("plant", 0) != 0);
-		logger.info("服务器组件初始化完成");
+				config.getInt("plant", 0) != 0);
+		logger.info("服务器组件初始化完成, 线程数:{}, 队列容量:{}", poolSize, queueCap);
 	}
 
 	/**
