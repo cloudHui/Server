@@ -24,18 +24,36 @@ public class MjTilePool {
 
 	private final List<Integer> wallTiles = new ArrayList<>();
 	private final Table table;
+	/** 允许的花色(null=全花色) */
+	private int[] allowedSuits;
 
 	public MjTilePool(Table table) {
 		this.table = table;
 	}
 
 	/**
-	 * 初始化牌墙并洗牌
+	 * 初始化牌墙并洗牌(全花色136张)
 	 */
 	public void initTiles() {
+		initTiles(null);
+	}
+
+	/**
+	 * 初始化牌墙并洗牌(指定花色)
+	 *
+	 * @param allowedSuits 允许的花色数组, null表示全花色
+	 */
+	public void initTiles(int[] allowedSuits) {
+		this.allowedSuits = allowedSuits;
 		wallTiles.clear();
-		// 万条筒各9种，风牌4种，箭牌3种，每种4张
-		for (int suit = MjConst.SUIT_WAN; suit <= MjConst.SUIT_JIAN; suit++) {
+		int startSuit = MjConst.SUIT_WAN;
+		int endSuit = MjConst.SUIT_JIAN;
+
+		for (int suit = startSuit; suit <= endSuit; suit++) {
+			// 卡五星: 只用指定花色
+			if (allowedSuits != null && !containsSuit(allowedSuits, suit)) {
+				continue;
+			}
 			int maxVal;
 			if (suit <= MjConst.SUIT_TONG) {
 				maxVal = MjConst.NUM_COUNT;
@@ -53,6 +71,24 @@ public class MjTilePool {
 		}
 		Collections.shuffle(wallTiles);
 		logger.info("麻将牌墙初始化完成, 总数: {}", wallTiles.size());
+	}
+
+	private boolean containsSuit(int[] suits, int suit) {
+		for (int s : suits) {
+			if (s == suit) return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 设置允许的花色(在dealInitTiles之前调用)
+	 */
+	public void setAllowedSuits(int[] allowedSuits) {
+		this.allowedSuits = allowedSuits;
+	}
+
+	public int[] getAllowedSuits() {
+		return allowedSuits;
 	}
 
 	/**
@@ -76,7 +112,7 @@ public class MjTilePool {
 	 * 发初始手牌(每人13张)，并通知每个玩家自己的手牌
 	 */
 	public void dealInitTiles() {
-		initTiles();
+		initTiles(allowedSuits);
 		Map<Integer, TableUser> seatUsers = table.getSeatUsers();
 		int seatNum = table.getTableModel().getSeatNum();
 

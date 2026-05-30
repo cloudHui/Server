@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.netty.channel.ChannelHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import msg.annotation.ProcessMethod;
 import msg.registor.HandleTypeRegister;
 import msg.registor.message.GMsg;
@@ -15,6 +17,7 @@ import net.message.TCPMessage;
 import net.message.Transfer;
 
 public class ConnectProcessor {
+	private static final Logger logger = LoggerFactory.getLogger(ConnectProcessor.class);
 
 	private final static Map<Integer, Handler> HANDLER_MAP = new HashMap<>();
 
@@ -63,20 +66,23 @@ public class ConnectProcessor {
 		try {
 			method.invoke(ConnectProcessor.class, connectHandler, tcpMessage);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("处理服务转发消息失败, msgId: {}", Integer.toHexString(tcpMessage.getMessageId()), e);
 		}
 		return true;
 	}
 
 	@ProcessMethod(GMsg.NOT_CARD)
 	private static void handleNotCard(ChannelHandler connectHandler, TCPMessage tcpMessage) {
+		// 有意的空操作：仅拦截消息防止转发，不做额外处理
 	}
 
 	@ProcessMethod(GMsg.NOT_OP)
 	private static void handleNotOp(ChannelHandler connectHandler, TCPMessage tcpMessage) {
+		// 有意的空操作：仅拦截消息防止转发，不做额外处理
 	}
 
 	@ProcessMethod(GMsg.NOT_RESULT)
 	private static void handleNotResult(ChannelHandler connectHandler, TCPMessage tcpMessage) {
+		// 有意的空操作：仅拦截消息防止转发，不做额外处理
 	}
 }

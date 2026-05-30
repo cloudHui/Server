@@ -11,7 +11,6 @@ import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
 import net.message.TCPMessage;
-import net.client.Sender;
 import utils.trace.TracedHandler;
 
 /**

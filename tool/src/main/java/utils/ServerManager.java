@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import com.google.protobuf.ByteString;
@@ -67,6 +66,13 @@ public class ServerManager {
 		}, this);
 	}
 
+	/**
+	 * 关闭服务管理器,释放资源
+	 */
+	public void shutdown() {
+		workerGroup.shutdownGracefully();
+	}
+
 	// ==================== 连接管理 ====================
 
 	/**
@@ -77,7 +83,7 @@ public class ServerManager {
 		ServerType serverType = ServerType.get(connectServer.getServerType());
 
 		Map<Integer, ConnectHandler> connectMap = serverMap.computeIfAbsent(serverType,
-				k -> new ConcurrentHashMap<>());
+				k -> new HashMap<>());
 		connectMap.put(connectServer.getServerId(), client);
 	}
 

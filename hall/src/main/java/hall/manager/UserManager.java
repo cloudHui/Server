@@ -59,18 +59,20 @@ public class UserManager {
 		if (removedUser != null) {
 			logger.info("移除用户, userId: {}", userId);
 			String deviceId = removedUser.getDeviceId();
-			removedUser = usersC.remove(deviceId);
-			if (removedUser != null) {
-				logger.info("移除用户, deviceId: {}", deviceId);
+			if (deviceId != null) {
+				removedUser = usersC.remove(deviceId);
+				if (removedUser != null) {
+					logger.info("移除用户, deviceId: {}", deviceId);
+				} else {
+					logger.warn("用户不存在,无法移除, deviceId: {}", deviceId);
+				}
 			} else {
-				logger.warn("用户不存在,无法移除, deviceId: {}", deviceId);
+				logger.warn("用户deviceId为空,跳过devicesC移除, userId: {}", userId);
 			}
 			MetricsCollector.getInstance().setGauge("hall.online_users", users.size());
 		} else {
 			logger.warn("用户不存在,无法移除, userId: {}", userId);
 		}
-
-
 	}
 
 	/**
@@ -83,22 +85,27 @@ public class UserManager {
 		}
 
 		int userId = user.getUserId();
-		User existingUser = users.putIfAbsent(userId, user);
+		String deviceId = user.getDeviceId();
 
-		if (existingUser != null) {
-			logger.warn("用户已存在,添加失败, userId: {}", userId);
-		} else {
-			logger.debug("添加新用户, userId: {}", userId);
+		synchronized (this) {
+			User existingById = users.putIfAbsent(userId, user);
+			if (existingById != null) {
+				logger.warn("用户已存在,添加失败, userId: {}", userId);
+				return;
+			}
+
+			User existingByDevice = usersC.putIfAbsent(deviceId, user);
+			if (existingByDevice != null) {
+				// Roll back: remove the userId entry we just added
+				users.remove(userId, user);
+				logger.warn("设备已存在,添加失败, deviceId: {}, userId: {}", deviceId, userId);
+				return;
+			}
+
+			logger.debug("添加新用户, userId: {}, deviceId: {}", userId, deviceId);
 			MetricsCollector.getInstance().incrementCounter("hall.login_total");
 		}
 
-		existingUser = usersC.putIfAbsent(user.getDeviceId(), user);
-
-		if (existingUser != null) {
-			logger.warn("用户已存在,添加失败, userId: {}", userId);
-		} else {
-			logger.debug("添加新用户, userId: {}", userId);
-		}
 		MetricsCollector.getInstance().setGauge("hall.online_users", users.size());
 	}
 

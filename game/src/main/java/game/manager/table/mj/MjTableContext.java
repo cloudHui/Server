@@ -1,5 +1,7 @@
 package game.manager.table.mj;
 
+import java.util.*;
+
 /**
  * 麻将一桌内的运行时状态
  */
@@ -22,6 +24,43 @@ public class MjTableContext {
 
 	/** 最后出牌的座位 */
 	private int lastDiscardSeat;
+
+	// --- 新增字段 ---
+
+	/** 每个座位的副露区(碰/杠/吃亮出的牌) */
+	private final Map<Integer, List<MjExposedSet>> exposedSetsMap = new HashMap<>();
+
+	/** 赖子牌ID, 0表示无赖子 */
+	private int laiZiTileId;
+
+	/** 当前赖子牌的显示值(翻牌确定) */
+	private int laiZiFlipTile;
+
+	/** 每个座位是否有副露(开口笑规则用) */
+	private final Map<Integer, Boolean> openedMap = new HashMap<>();
+
+	/** 弃牌堆(每座的出牌历史) */
+	private final Map<Integer, List<Integer>> discardPileMap = new HashMap<>();
+
+	/** claim相关: 等待claim的座位列表 */
+	private final List<Integer> pendingClaimSeats = new ArrayList<>();
+
+	/** claim相关: 当前正在等待claim的牌ID */
+	private int claimTileId;
+
+	/** claim相关: 出牌者的座位 */
+	private int claimFromSeat;
+
+	/** 杠上开花标记(杠后补牌胡) */
+	private boolean gangShangKaiHua;
+
+	/** 抢杠胡标记 */
+	private boolean qiangGangHu;
+
+	/** 海底标记(牌墙最后一张) */
+	private boolean haiDi;
+
+	// --- Getters & Setters ---
 
 	public int getDealerSeat() {
 		return dealerSeat;
@@ -81,6 +120,136 @@ public class MjTableContext {
 		dealerSeat = 0;
 		lastDiscardTile = 0;
 		lastDiscardSeat = -1;
+		exposedSetsMap.clear();
+		openedMap.clear();
+		discardPileMap.clear();
+		laiZiTileId = 0;
+		laiZiFlipTile = 0;
+		gangShangKaiHua = false;
+		qiangGangHu = false;
+		haiDi = false;
 		resetTurn();
+	}
+
+	// --- 副露区管理 ---
+
+	/**
+	 * 获取某个座位的副露区
+	 */
+	public List<MjExposedSet> getExposedSets(int seat) {
+		return exposedSetsMap.computeIfAbsent(seat, k -> new ArrayList<>());
+	}
+
+	/**
+	 * 添加副露
+	 */
+	public void addExposedSet(int seat, MjExposedSet set) {
+		exposedSetsMap.computeIfAbsent(seat, k -> new ArrayList<>()).add(set);
+		openedMap.put(seat, true);
+	}
+
+	/**
+	 * 某座位是否有副露
+	 */
+	public boolean hasOpened(int seat) {
+		return openedMap.getOrDefault(seat, false);
+	}
+
+	// --- 弃牌堆管理 ---
+
+	/**
+	 * 记录出牌
+	 */
+	public void addDiscard(int seat, int tileId) {
+		discardPileMap.computeIfAbsent(seat, k -> new ArrayList<>()).add(tileId);
+	}
+
+	/**
+	 * 获取弃牌堆
+	 */
+	public List<Integer> getDiscardPile(int seat) {
+		return discardPileMap.getOrDefault(seat, Collections.emptyList());
+	}
+
+	// --- 赖子 ---
+
+	public int getLaiZiTileId() {
+		return laiZiTileId;
+	}
+
+	public void setLaiZiTileId(int laiZiTileId) {
+		this.laiZiTileId = laiZiTileId;
+	}
+
+	public int getLaiZiFlipTile() {
+		return laiZiFlipTile;
+	}
+
+	public void setLaiZiFlipTile(int laiZiFlipTile) {
+		this.laiZiFlipTile = laiZiFlipTile;
+	}
+
+	// --- Claim管理 ---
+
+	/**
+	 * 设置claim信息
+	 */
+	public void setClaimInfo(int tileId, int fromSeat, List<Integer> waitingSeats) {
+		this.claimTileId = tileId;
+		this.claimFromSeat = fromSeat;
+		this.pendingClaimSeats.clear();
+		this.pendingClaimSeats.addAll(waitingSeats);
+	}
+
+	/**
+	 * 某座位完成claim(响应或pass)
+	 */
+	public void removeClaimSeat(int seat) {
+		pendingClaimSeats.remove(Integer.valueOf(seat));
+	}
+
+	/**
+	 * 是否还有待响应的claim
+	 */
+	public boolean hasPendingClaims() {
+		return !pendingClaimSeats.isEmpty();
+	}
+
+	public List<Integer> getPendingClaimSeats() {
+		return pendingClaimSeats;
+	}
+
+	public int getClaimTileId() {
+		return claimTileId;
+	}
+
+	public int getClaimFromSeat() {
+		return claimFromSeat;
+	}
+
+	// --- 特殊胡牌标记 ---
+
+	public boolean isGangShangKaiHua() {
+		return gangShangKaiHua;
+	}
+
+	public void setGangShangKaiHua(boolean gangShangKaiHua) {
+		this.gangShangKaiHua = gangShangKaiHua;
+	}
+
+	public boolean isQiangGangHu() {
+		return qiangGangHu;
+	}
+
+	public void setQiangGangHu(boolean qiangGangHu) {
+		this.qiangGangHu = qiangGangHu;
+	}
+
+	public boolean isHaiDi() {
+		return haiDi;
+	}
+
+	public void setHaiDi(boolean haiDi) {
+		this.haiDi = haiDi;
 	}
 }

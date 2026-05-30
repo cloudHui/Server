@@ -11,7 +11,13 @@ import proto.GameProto;
 /**
  * 生成带扩展字段的 {@link proto.GameProto.NotResult} 二进制（字段 3-9），与 game.proto 保持一致。
  * 旧客户端会忽略未知字段；新客户端按更新后的 .proto 解析即可。
- * 
+ *
+ * WARNING: This class uses manual protobuf encoding via {@link CodedOutputStream}.
+ * The field numbers (1-9) used in {@link #encodeNotResultExtended} MUST match the
+ * field numbers defined in the corresponding .proto file (game.proto / NotResult message).
+ * If the .proto definition changes, this encoder must be updated accordingly to avoid
+ * data corruption or silent parsing failures on the client side.
+ *
  * @author cloud
  * @date 2026-05-03
  * @version 1.0

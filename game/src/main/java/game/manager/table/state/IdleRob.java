@@ -1,5 +1,6 @@
 package game.manager.table.state;
 
+import game.manager.table.DdzTable;
 import game.manager.table.Table;
 import game.manager.table.ddz.DdzBidService;
 import msg.annotation.ProcessEnum;
@@ -18,6 +19,7 @@ public class IdleRob extends AbstractTableHandle {
 
 	@Override
 	public void overTime(Table table) {
-		DdzBidService.onBidTimeout(table);
+		DdzTable ddzTable = (DdzTable) table;
+		DdzBidService.onBidTimeout(ddzTable);
 	}
 }

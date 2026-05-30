@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
@@ -153,7 +152,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 				if (response instanceof GameProto.AckEnterTable) {
 					GameProto.AckEnterTable ack = (GameProto.AckEnterTable) response;
 					java.util.Map<String, Object> resultData = new java.util.HashMap<>();
-					resultData.put("players", formatPlayers(ack.getPlayersList()));
+					resultData.put("players", formatPlayers(ack.getPlayersList(), user.getUserId()));
 					resultData.put("tableInfo", formatTableInfo(ack.getTableInfo()));
 					sendResponse(wsSession, "enterTable", seq, 0, "success", resultData);
 				} else {
@@ -280,7 +279,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		sendResponse(session, "error", seq, -1, errorMsg, null);
 	}
 
-	private java.util.List<java.util.Map<String, Object>> formatPlayers(List<GameProto.Player> players) {
+	private java.util.List<java.util.Map<String, Object>> formatPlayers(List<GameProto.Player> players, int currentRoleId) {
 		java.util.List<java.util.Map<String, Object>> result = new java.util.ArrayList<>();
 		for (GameProto.Player player : players) {
 			java.util.Map<String, Object> p = new java.util.HashMap<>();
@@ -289,8 +288,8 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			p.put("nickName", player.getNickName().toStringUtf8());
 			p.put("cardCount", player.getCardsCount());
 
-			// 只有自己的牌有值
-			if (player.getCardsCount() > 0 && player.getCards(0).getValue() > 0) {
+			// 只有自己的牌有值（协议约定：自己的牌是真实值，其他人的牌值为0）
+			if (player.getRoleId() == currentRoleId && player.getCardsCount() > 0) {
 				java.util.List<Integer> cardValues = new java.util.ArrayList<>();
 				for (GameProto.Card card : player.getCardsList()) {
 					cardValues.add(card.getValue());

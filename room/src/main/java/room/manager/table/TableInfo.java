@@ -1,13 +1,12 @@
 package room.manager.table;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-import com.google.protobuf.ByteString;
 import model.tablemodel.TableModel;
 import proto.ConstProto;
 import proto.ModelProto;
-import proto.ServerProto;
 import room.manager.user.User;
 
 /**
@@ -31,7 +30,7 @@ public class TableInfo {
 	 */
 	private ConstProto.TableState tableState = ConstProto.TableState.WAITE;
 
-	private final Set<User> tableRoles = new HashSet<>();
+	private final Set<User> tableRoles = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	public TableInfo(long tableId, int creatorId, TableModel model) {
 		this.tableId = tableId;

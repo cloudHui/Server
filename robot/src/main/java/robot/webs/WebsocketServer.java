@@ -25,13 +25,14 @@ public class WebsocketServer {
 		}
 
 		if (socketServer != null) {
-			BufferedReader sysin = new BufferedReader(new InputStreamReader(System.in));
-			while (true) {
-				String in = sysin.readLine();
-				socketServer.broadcast(in);
-				if (in.equals("exit")) {
-					socketServer.stop(1000);
-					break;
+			try (BufferedReader sysin = new BufferedReader(new InputStreamReader(System.in))) {
+				while (true) {
+					String in = sysin.readLine();
+					socketServer.broadcast(in);
+					if (in.equals("exit")) {
+						socketServer.stop(1000);
+						break;
+					}
 				}
 			}
 		}

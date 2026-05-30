@@ -168,7 +168,9 @@ public class Game {
 
 			// 5. 初始化游戏管理器
 			initializeGameManagers();
-		startMetricsServer();
+
+			// 6. 启动指标服务
+			startMetricsServer();
 
 			logger.info("游戏服务器启动完成! 服务器ID: {}, 地址: {}",
 					serverId, serverInfo.getIpConfig().toStringUtf8());

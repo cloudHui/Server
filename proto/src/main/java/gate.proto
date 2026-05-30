@@ -3,9 +3,15 @@ option java_outer_classname = "GateProto";
 
 package proto;
 
+// 广播类型 type 值说明:
+//   0 = PERSON  (个人, 按 clientId 发送)
+//   1 = ALL     (全服广播)
+//   2 = CHANNEL (全渠道广播, 按 channel 过滤)
+//   3 = CLUB    (全工会广播, 按 club 过滤)
+// 对应 Java 枚举: gate.connect.handle.not.BroadCastHandle.BroadcastType
 message BroadCast{
     bytes message = 1;//消息内容
-    int32 type = 2;//0个人 全服广播1 全渠道广播2 全工会广播3
+    int32 type = 2;
     int32 clientId = 3;
     int32 channel = 4;
     int32 club = 5;

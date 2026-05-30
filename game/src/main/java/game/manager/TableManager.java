@@ -1,6 +1,8 @@
 package game.manager;
 
 import game.manager.table.Table;
+import game.manager.table.MjTable;
+import game.manager.table.DdzTable;
 import model.tablemodel.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,13 +92,6 @@ public class TableManager {
         }
     }
 
-    public static void main(String[] args) {
-        Map<Integer, Integer> map = new HashMap<>();
-        Integer integer = map.putIfAbsent(1, 2);
-
-        System.out.println(integer);
-    }
-
     /**
      * 获取桌子
      */
@@ -145,7 +140,12 @@ public class TableManager {
             if (model == null) {
                 throw new IllegalArgumentException("未知房间模板 roomId=" + roomId);
             }
-            Table table = new Table(getTableId(), model, role);
+            Table table;
+            if (model.getType() == 1) {
+                table = new MjTable(getTableId(), model, role);
+            } else {
+                table = new DdzTable(getTableId(), model, role);
+            }
             addTable(table);
             return table;
         }

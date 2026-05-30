@@ -45,4 +45,13 @@ public class GMsg {
 
 	@ClassField(value = GameProto.NotMjState.class, des = "麻将状态通知")
 	public static final int MJ_TILE_NOT = CMsg.GAME_TYPE | 11;
+
+	@ClassField(value = GameProto.NotRoundResult.class, des = "单局结算通知")
+	public static final int NOT_ROUND_RESULT = CMsg.GAME_TYPE | 12;
+
+	@ClassField(value = GameProto.NotGameResult.class, des = "总结算通知")
+	public static final int NOT_GAME_RESULT = CMsg.GAME_TYPE | 13;
+
+	@ClassField(value = GameProto.NotTableState.class, des = "桌子状态通知")
+	public static final int NOT_TABLE_STATE = CMsg.GAME_TYPE | 14;
 }

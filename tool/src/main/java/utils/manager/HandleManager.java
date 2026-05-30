@@ -1,8 +1,8 @@
 package utils.manager;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.protobuf.Message;
 import msg.registor.HandleTypeRegister;
@@ -23,7 +23,7 @@ import utils.ServerClientManager;
  */
 public class HandleManager {
 	private final static Logger LOGGER = LoggerFactory.getLogger(HandleManager.class);
-	private static final Map<Class<?>, ConnectHandle> handleMap = new HashMap<>();
+	private static final Map<Class<?>, ConnectHandle> handleMap = new ConcurrentHashMap<>();
 
 	private static final int SEND_MESSAGE_TIME_OUT = 3;//发送消息返回超时时间,单位：秒
 

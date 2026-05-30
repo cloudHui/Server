@@ -33,7 +33,7 @@ public class ChannelSupervise {
 
 	public static void removeChannel(Channel channel) {
 		GlobalGroup.remove(channel);
-		Collection values = ChannelMap.values();
+		Collection<ChannelId> values = ChannelMap.values();
 		values.remove(channel.id());
 	}
 
@@ -43,7 +43,7 @@ public class ChannelSupervise {
 			return null;
 		}
 
-		return GlobalGroup.find(ChannelMap.get(apiToken));
+		return GlobalGroup.find(channelId);
 	}
 
 	public static void sendToAll(TextWebSocketFrame tws) {
@@ -51,6 +51,13 @@ public class ChannelSupervise {
 	}
 
 	public static void sendToSimple(String apiToken, TextWebSocketFrame tws) {
-		GlobalGroup.find(ChannelMap.get(apiToken)).writeAndFlush(tws);
+		ChannelId channelId = ChannelMap.get(apiToken);
+		if (channelId == null) {
+			return;
+		}
+		Channel channel = GlobalGroup.find(channelId);
+		if (channel != null) {
+			channel.writeAndFlush(tws);
+		}
 	}
 }

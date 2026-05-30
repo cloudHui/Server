@@ -21,7 +21,7 @@ public class GitJarManager {
 	/**
 	 * git更新版本
 	 */
-	private String REV = "";
+	private volatile String REV = "";
 	/**
 	 * 文件名 和文件修改时间
 	 */
@@ -36,7 +36,7 @@ public class GitJarManager {
 			return;
 		}
 		REV = exeCommands.get(0);
-		logger.error("[fileMap:{} curr git head:{}]", fileMap.size(), REV);
+		logger.info("[fileMap:{} curr git head:{}]", fileMap.size(), REV);
 	}
 
 
@@ -51,6 +51,7 @@ public class GitJarManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return null;
 		}
 		return list.get(0).split("refs")[0].trim();
 	}
@@ -90,18 +91,19 @@ public class GitJarManager {
 		//比较数量不一致直接更新
 		if (newMap.size() != fileMap.size()) {
 			fileMap = newMap;
-			logger.error("checkUpRestart restart: {}", REV);
+			logger.info("checkUpRestart restart: {}", REV);
 			callBat();
 			System.exit(0);
 		} else {
 			//数量一致 看是否只有配置更新了 配置更新值只更新配置 否则重启服务
 			boolean xlsxChange = false;
 			for (Map.Entry<String, Long> entry : newMap.entrySet()) {
-				if (!fileMap.get(entry.getKey()).equals(entry.getValue())) {
+				Long oldValue = fileMap.get(entry.getKey());
+				if (oldValue == null || !oldValue.equals(entry.getValue())) {
 					if (entry.getKey().contains(".xlsx")) {
 						xlsxChange = true;
 					} else if (entry.getKey().contains(".jar")) {
-						logger.error("checkUpRestart restart: {}", REV);
+						logger.info("checkUpRestart restart: {}", REV);
 						callBat();
 						System.exit(0);
 					}
@@ -109,7 +111,7 @@ public class GitJarManager {
 			}
 
 			if (xlsxChange) {
-				logger.error("checkUpRestart update: {}", REV);
+				logger.info("checkUpRestart update: {}", REV);
 				callBat();
 			}
 		}

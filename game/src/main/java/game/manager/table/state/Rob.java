@@ -2,6 +2,7 @@ package game.manager.table.state;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import game.manager.table.DdzTable;
 import game.manager.table.Table;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
@@ -22,16 +23,17 @@ public class Rob extends AbstractTableHandle {
 
 	@Override
 	public boolean onTiming(Table table) {
-		if (table.getBanner().isRobBroadcastDone()) {
+		DdzTable ddzTable = (DdzTable) table;
+		if (ddzTable.getBanner().isRobBroadcastDone()) {
 			return false;
 		}
 		int seats = table.getTableModel().getSeatNum();
 
-		if (!table.getBanner().isRobPhase()) {
-			int first = table.getBanner().getFirstRandomRobSeat();
+		if (!ddzTable.getBanner().isRobPhase()) {
+			int first = ddzTable.getBanner().getFirstRandomRobSeat();
 			if (first < 0) {
 				first = ThreadLocalRandom.current().nextInt(seats);
-				table.getBanner().setFirstRandomRobSeat(first);
+				ddzTable.getBanner().setFirstRandomRobSeat(first);
 			}
 			table.getOp().clearChoiceMap();
 			table.getOp().setCurrOpSeat(first);
@@ -55,7 +57,7 @@ public class Rob extends AbstractTableHandle {
 					.build();
 			table.sendTableMessage(not, GMsg.NOT_OP);
 		} else {
-			int seat = table.getBanner().getCurrentRobSeat();
+			int seat = ddzTable.getBanner().getCurrentRobSeat();
 			if (seat < 0) {
 				return false;
 			}
@@ -76,7 +78,7 @@ public class Rob extends AbstractTableHandle {
 			table.sendTableMessage(not, GMsg.NOT_OP);
 		}
 
-		table.getBanner().setRobBroadcastDone(true);
+		ddzTable.getBanner().setRobBroadcastDone(true);
 		table.upNextState();
 		return false;
 	}

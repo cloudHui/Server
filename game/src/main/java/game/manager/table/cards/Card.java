@@ -83,4 +83,9 @@ public class Card implements Comparable<Card> {
 		}
 		return super.equals(obj);
 	}
+
+	@Override
+	public int hashCode() {
+		return Integer.hashCode(id);
+	}
 }

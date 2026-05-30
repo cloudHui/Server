@@ -102,8 +102,9 @@ public class TableUser {
 	}
 
 	public void setSeated(int seated) {
+		int old = this.seated;
 		this.seated = seated;
-		logger.info("更新用户入座状态, userId: {}, old:{} seated: {}", userId, this.seated, seated);
+		logger.info("更新用户入座状态, userId: {}, old:{} new:{}", userId, old, seated);
 	}
 
 	/**
@@ -174,7 +175,7 @@ public class TableUser {
 	/**
 	 * 检查用户是否在指定桌子中
 	 */
-	public boolean isInTable(String tableId) {
+	public boolean isInTable(long tableId) {
 		return tableIds.contains(tableId);
 	}
 
@@ -231,11 +232,11 @@ public class TableUser {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		TableUser tableUser = (TableUser) o;
-		return Objects.equals(tableIds, tableUser.tableIds);
+		return userId == tableUser.userId;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(tableIds);
+		return Objects.hash(userId);
 	}
 }

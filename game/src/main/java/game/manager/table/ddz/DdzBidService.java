@@ -2,7 +2,7 @@ package game.manager.table.ddz;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import game.manager.table.Table;
+import game.manager.table.DdzTable;
 import game.manager.table.TableUser;
 import game.manager.table.banner.Banner;
 import msg.registor.enums.TableState;
@@ -28,7 +28,7 @@ public final class DdzBidService {
 	 * 
 	 * @param table 桌子
 	 */
-	public static void onBidTimeout(Table table) {
+	public static void onBidTimeout(DdzTable table) {
 		int seat = table.getOp().getCurrOpSeat();
 		TableUser u = table.getSeatUser(seat);
 		if (u == null) {
@@ -52,7 +52,7 @@ public final class DdzBidService {
 	 * @param opInfo 操作信息
 	 * @return 结果
 	 */
-	public static int apply(Table table, int userId, GameProto.OpInfo opInfo) {
+	public static int apply(DdzTable table, int userId, GameProto.OpInfo opInfo) {
 		if (table.getTableState() != TableState.IDLE_ROB) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
@@ -77,7 +77,7 @@ public final class DdzBidService {
 	 * @param banner 横幅
 	 * @return 结果
 	 */
-	private static int applyCall(Table table, int userId, GameProto.OpInfo opInfo, TableUser user, Banner banner) {
+	private static int applyCall(DdzTable table, int userId, GameProto.OpInfo opInfo, TableUser user, Banner banner) {
 		int cv = opInfo.getChoiceValue();
 		if (cv != ConstProto.Operation.NOT_CALL_VALUE && !DdzBidOpcodes.isCallScore(cv)) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
@@ -109,7 +109,7 @@ public final class DdzBidService {
 	 * @param banner  横幅
 	 * @param seatNum 座位数
 	 */
-	private static void completeCallPhase(Table table, Banner banner, int seatNum) {
+	private static void completeCallPhase(DdzTable table, Banner banner, int seatNum) {
 		if (banner.getMaxCallScore() <= 0) {
 			banner.setCandidateSeat(ThreadLocalRandom.current().nextInt(seatNum));
 			banner.setMaxCallScore(1);
@@ -131,7 +131,7 @@ public final class DdzBidService {
 	 * @param banner 横幅
 	 * @return 结果
 	 */
-	private static int applyRob(Table table, int userId, GameProto.OpInfo opInfo, TableUser user, Banner banner) {
+	private static int applyRob(DdzTable table, int userId, GameProto.OpInfo opInfo, TableUser user, Banner banner) {
 		int cv = opInfo.getChoiceValue();
 		if (cv != ConstProto.Operation.ROB_VALUE && cv != ConstProto.Operation.NOT_ROB_VALUE) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
@@ -161,7 +161,7 @@ public final class DdzBidService {
 	 * @param table  桌子
 	 * @param banner 横幅
 	 */
-	private static void finishBidding(Table table, Banner banner) {
+	private static void finishBidding(DdzTable table, Banner banner) {
 		int landlordSeat = banner.getCandidateSeat();
 		int baseScore = Math.max(1, banner.getMaxCallScore());
 		table.getDdz().setLandlordSeat(landlordSeat);
@@ -184,7 +184,7 @@ public final class DdzBidService {
 	 * @param actorUserId 用户ID
 	 * @param op          操作信息
 	 */
-	private static void broadcastAck(Table table, int actorUserId, GameProto.OpInfo op) {
+	private static void broadcastAck(DdzTable table, int actorUserId, GameProto.OpInfo op) {
 		GameProto.AckOp msg = GameProto.AckOp.newBuilder()
 				.setOp(op)
 				.setOpId(actorUserId)

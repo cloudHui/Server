@@ -567,6 +567,46 @@ public final class ConstProto {
      * <code>DISCARD = 13;</code>
      */
     DISCARD(13),
+    /**
+     * <pre>
+     *碰(麻将)
+     * </pre>
+     *
+     * <code>MJ_PENG = 14;</code>
+     */
+    MJ_PENG(14),
+    /**
+     * <pre>
+     *杠(麻将)
+     * </pre>
+     *
+     * <code>MJ_GANG = 15;</code>
+     */
+    MJ_GANG(15),
+    /**
+     * <pre>
+     *吃(麻将)
+     * </pre>
+     *
+     * <code>MJ_CHI = 16;</code>
+     */
+    MJ_CHI(16),
+    /**
+     * <pre>
+     *胡(麻将)
+     * </pre>
+     *
+     * <code>MJ_HU = 17;</code>
+     */
+    MJ_HU(17),
+    /**
+     * <pre>
+     *过(麻将)
+     * </pre>
+     *
+     * <code>MJ_PASS = 18;</code>
+     */
+    MJ_PASS(18),
     UNRECOGNIZED(-1),
     ;
 
@@ -682,6 +722,46 @@ public final class ConstProto {
      * <code>DISCARD = 13;</code>
      */
     public static final int DISCARD_VALUE = 13;
+    /**
+     * <pre>
+     *碰(麻将)
+     * </pre>
+     *
+     * <code>MJ_PENG = 14;</code>
+     */
+    public static final int MJ_PENG_VALUE = 14;
+    /**
+     * <pre>
+     *杠(麻将)
+     * </pre>
+     *
+     * <code>MJ_GANG = 15;</code>
+     */
+    public static final int MJ_GANG_VALUE = 15;
+    /**
+     * <pre>
+     *吃(麻将)
+     * </pre>
+     *
+     * <code>MJ_CHI = 16;</code>
+     */
+    public static final int MJ_CHI_VALUE = 16;
+    /**
+     * <pre>
+     *胡(麻将)
+     * </pre>
+     *
+     * <code>MJ_HU = 17;</code>
+     */
+    public static final int MJ_HU_VALUE = 17;
+    /**
+     * <pre>
+     *过(麻将)
+     * </pre>
+     *
+     * <code>MJ_PASS = 18;</code>
+     */
+    public static final int MJ_PASS_VALUE = 18;
 
 
     public final int getNumber() {
@@ -716,6 +796,11 @@ public final class ConstProto {
         case 11: return CALL_SCORE_3;
         case 12: return DRAW;
         case 13: return DISCARD;
+        case 14: return MJ_PENG;
+        case 15: return MJ_GANG;
+        case 16: return MJ_CHI;
+        case 17: return MJ_HU;
+        case 18: return MJ_PASS;
         default: return null;
       }
     }

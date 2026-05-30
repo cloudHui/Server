@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
@@ -25,6 +26,7 @@ public class UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	private final GateClient gateClient;
+	private final ReentrantLock sessionLock = new ReentrantLock();
 
 	/** sessionId -> UserInfo */
 	private final Map<String, UserInfo> sessions = new ConcurrentHashMap<>();
@@ -71,9 +73,14 @@ public class UserService {
 						token
 				);
 
-				sessions.put(sessionId, userInfo);
-				tokenSessions.put(token, userInfo);
-				userSessions.put(userInfo.getUserId(), sessionId);
+				sessionLock.lock();
+				try {
+					sessions.put(sessionId, userInfo);
+					tokenSessions.put(token, userInfo);
+					userSessions.put(userInfo.getUserId(), sessionId);
+				} finally {
+					sessionLock.unlock();
+				}
 
 				logger.info("用户登录成功, userId: {}, nickname: {}, sessionId: {}",
 						userInfo.getUserId(), userInfo.getNickname(), sessionId);
@@ -113,10 +120,18 @@ public class UserService {
 	 * 用户登出
 	 */
 	public void logout(String sessionId) {
-		UserInfo info = sessions.remove(sessionId);
+		UserInfo info;
+		sessionLock.lock();
+		try {
+			info = sessions.remove(sessionId);
+			if (info != null) {
+				tokenSessions.remove(info.getToken());
+				userSessions.remove(info.getUserId());
+			}
+		} finally {
+			sessionLock.unlock();
+		}
 		if (info != null) {
-			tokenSessions.remove(info.getToken());
-			userSessions.remove(info.getUserId());
 			gateClient.removeConnection(sessionId);
 			logger.info("用户登出, userId: {}, sessionId: {}", info.getUserId(), sessionId);
 		}

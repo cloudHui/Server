@@ -25,6 +25,10 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 
 	@Override
 	protected void processServerInfo(ServerProto.AckServerInfo response) {
+		if (response.getServersList().isEmpty()) {
+			logger.warn("服务器信息列表为空, response:{}", response.toString());
+			return;
+		}
 		ModelProto.ServerInfo serverInfo = response.getServers(0);
 		logger.info("处理请求需要连接的服务器信息返回, response:{}", response.toString());
 

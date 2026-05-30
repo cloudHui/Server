@@ -58,7 +58,7 @@ public class DistributeGateHandle implements Handler<String> {
 
 		// 选择可用的网关服务器（简单的负载均衡）
 		CenterClient gateway = selectAvailableGateway();
-		if (gateway != null) {
+		if (gateway != null && gateway.getServerInfo() != null && gateway.getServerInfo().getIpConfig() != null) {
 			String gateAddress = gateway.getServerInfo().getIpConfig().toStringUtf8();
 			response.setRet(1);
 			response.setMsg(gateAddress);

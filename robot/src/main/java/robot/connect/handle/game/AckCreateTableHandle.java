@@ -16,7 +16,7 @@ public class AckCreateTableHandle implements Handler {
 	@Override
 	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
 		ServerProto.AckCreateGameTable ack = (ServerProto.AckCreateGameTable) msg;
-
+		// TODO: 处理创建桌子回复逻辑
 		return true;
 	}
 }

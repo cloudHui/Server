@@ -87,6 +87,9 @@ public class BroadCastHandle implements Handler {
 
 		for (Map.Entry<Integer, Sender> entry : allClients.entrySet()) {
 			try {
+				if (!(entry.getValue() instanceof GateTcpClient)) {
+					continue;
+				}
 				GateTcpClient client = (GateTcpClient) entry.getValue();
 				client.sendMessage(CMsg.BROAD, broadCast);
 				successCount++;
@@ -108,6 +111,9 @@ public class BroadCastHandle implements Handler {
 
 		for (Map.Entry<Integer, Sender> entry : allClients.entrySet()) {
 			try {
+				if (!(entry.getValue() instanceof GateTcpClient)) {
+					continue;
+				}
 				GateTcpClient client = (GateTcpClient) entry.getValue();
 				if (client.getChannel() == targetChannel) {
 					client.sendMessage(CMsg.BROAD, broadCast);
@@ -132,6 +138,9 @@ public class BroadCastHandle implements Handler {
 
 		for (Map.Entry<Integer, Sender> entry : allClients.entrySet()) {
 			try {
+				if (!(entry.getValue() instanceof GateTcpClient)) {
+					continue;
+				}
 				GateTcpClient client = (GateTcpClient) entry.getValue();
 				if (client.getClubId() == targetClub) {
 					client.sendMessage(CMsg.BROAD, broadCast);

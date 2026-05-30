@@ -1,5 +1,6 @@
 package game.manager.table.state;
 
+import game.manager.table.DdzTable;
 import game.manager.table.Table;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
@@ -20,6 +21,7 @@ public class CardNotifyHandle extends AbstractTableHandle {
 
 	@Override
 	public boolean onTiming(Table table) {
+		DdzTable ddzTable = (DdzTable) table;
 		int seat = table.getOp().getCurrOpSeat();
 		table.getOp().clearChoiceMap();
 
@@ -31,7 +33,7 @@ public class CardNotifyHandle extends AbstractTableHandle {
 				.setOpSeat(seat)
 				.addChoice(play);
 
-		if (table.getDdz().getLastHand() != null) {
+		if (ddzTable.getDdz().getLastHand() != null) {
 			GameProto.OpInfo pass = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.PASS).build();
 			table.getOp().addPosOpInfo(seat, pass);
 			nb.addChoice(pass);

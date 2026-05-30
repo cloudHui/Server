@@ -133,3 +133,57 @@ message NotMjState{
     repeated OpInfo choice = 5;//可选操作
     int32 wallLeft = 6;//牌墙剩余
 }
+
+//单局结算通知
+message NotRoundResult{
+    int32 round = 1;//第几局
+    int32 winnerSeat = 2;//胡牌座位(-1=流局)
+    int32 fan = 3;//番数
+    repeated SeatScore seatScores = 4;//每家得分
+    bytes winType = 5;//胡牌方式
+    repeated SeatExposed seatExposed = 6;//每家副露统计
+    repeated HandInfo hands = 7;//每家手牌(结算展示用)
+    int32 winTile = 8;//胡的那张牌
+}
+
+//玩家手牌信息(结算用)
+message HandInfo{
+    int32 seat = 1;
+    repeated int32 handTiles = 2;//手牌ID列表
+    repeated ExposedInfo exposed = 3;//副露区
+}
+
+//座位得分
+message SeatScore{
+    int32 seat = 1;
+    int32 score = 2;
+}
+
+//座位副露统计
+message SeatExposed{
+    int32 seat = 1;
+    repeated ExposedInfo exposed = 2;
+}
+
+//单条副露信息
+message ExposedInfo{
+    bytes type = 1;//peng/chi/mingGang/anGang/buGang
+    repeated int32 tileIds = 2;
+}
+
+//总结算通知
+message NotGameResult{
+    int32 totalRounds = 1;
+    int32 completedRounds = 2;
+    repeated SeatScore totalScores = 3;//每家总分
+    repeated RoundSummary rounds = 4;//每局摘要
+}
+
+//单局摘要
+message RoundSummary{
+    int32 round = 1;
+    int32 winnerSeat = 2;
+    int32 fan = 3;
+    bytes winType = 4;
+    repeated SeatScore seatScores = 5;
+}

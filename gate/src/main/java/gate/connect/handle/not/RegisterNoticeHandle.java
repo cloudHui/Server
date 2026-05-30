@@ -20,7 +20,7 @@ public class RegisterNoticeHandle implements Handler {
 	public boolean handler(Sender sender, int clientId, Message registerInfo, long mapId, int sequence) {
 		Gate.getInstance().execute(() -> Gate.getInstance().getServerManager().connectToSever(
 				((ServerProto.NotRegisterInfo) registerInfo).getServersList(), Gate.getInstance().getServerId(),
-				(Gate.getInstance().getInnerIp() + "：" + Gate.getInstance().getPort()),
+				(Gate.getInstance().getInnerIp() + ":" + Gate.getInstance().getPort()),
 				null, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate));
 		return true;

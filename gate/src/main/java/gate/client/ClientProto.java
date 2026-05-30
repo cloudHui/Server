@@ -66,6 +66,10 @@ public class ClientProto {
 	 * @return 是否成功处理
 	 */
 	private static boolean transferMessage(ChannelHandler channelHandler, TCPMessage tcpMessage) {
+		if (!(channelHandler instanceof GateTcpClient)) {
+			logger.warn("channelHandler不是GateTcpClient类型, 实际类型: {}", channelHandler.getClass().getName());
+			return false;
+		}
 		GateTcpClient client = (GateTcpClient) channelHandler;
 		int msgId = tcpMessage.getMessageId();
 

@@ -2,7 +2,6 @@ package hall.client.handle.role;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import hall.Hall;
 import hall.connect.ConnectProcessor;

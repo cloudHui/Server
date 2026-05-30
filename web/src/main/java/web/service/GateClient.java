@@ -4,17 +4,17 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import com.google.protobuf.Message;
 import io.netty.channel.nio.NioEventLoopGroup;
+import jakarta.annotation.PreDestroy;
 import net.connect.TCPConnect;
-import net.connect.handle.ConnectHandler;
-import net.handler.Handlers;
 import net.message.Parser;
 import net.message.TCPMessage;
-import net.message.Transfer;
 import msg.registor.HandleTypeRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +29,7 @@ public class GateClient {
 	private final String gateHost;
 	private final int gatePort;
 	private final NioEventLoopGroup eventLoopGroup;
+	private final ExecutorService connectExecutor = Executors.newCachedThreadPool();
 	private final Parser parser = HandleTypeRegister::parseMessage;
 
 	/** sessionId -> TCPConnect */
@@ -83,7 +84,7 @@ public class GateClient {
 	 */
 	public void send(String sessionId, int msgId, Message msg) {
 		TCPConnect conn = getConnection(sessionId);
-		conn.sendMessage(msgId, msg);
+		conn.sendMessage(msg, msgId);
 	}
 
 	private TCPConnect createConnection(String sessionId) {
@@ -103,7 +104,7 @@ public class GateClient {
 			);
 
 			// 带超时的连接，防止Gate不可达时长时间阻塞
-			CompletableFuture<Void> connectFuture = CompletableFuture.runAsync(connect::connect);
+			CompletableFuture<Void> connectFuture = CompletableFuture.runAsync(connect::connect, connectExecutor);
 			try {
 				connectFuture.get(5, TimeUnit.SECONDS);
 			} catch (TimeoutException e) {
@@ -121,6 +122,7 @@ public class GateClient {
 		}
 	}
 
+	@PreDestroy
 	public void shutdown() {
 		for (Map.Entry<String, TCPConnect> entry : connections.entrySet()) {
 			try {
@@ -130,6 +132,7 @@ public class GateClient {
 			}
 		}
 		connections.clear();
+		connectExecutor.shutdownNow();
 		eventLoopGroup.shutdownGracefully();
 		logger.info("Gate客户端已关闭");
 	}

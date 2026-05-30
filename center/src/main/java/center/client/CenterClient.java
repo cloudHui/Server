@@ -33,6 +33,8 @@ public class CenterClient extends ClientHandler {
 
 	/**
 	 * 处理连接关闭事件
+	 *
+	 * @param client 关闭的客户端通道处理器（由setCloseEvent回调接口要求，当前未使用）
 	 */
 	private void handleConnectionClose(ChannelHandler client) {
 		if (serverInfo == null) {

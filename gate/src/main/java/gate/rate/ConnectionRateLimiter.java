@@ -50,6 +50,10 @@ public class ConnectionRateLimiter {
 		}
 
 		timestamps.addLast(now);
+
+		// 清理空deque的条目，防止map无限增长
+		deviceConnections.entrySet().removeIf(e -> e.getValue().isEmpty());
+
 		return true;
 	}
 }

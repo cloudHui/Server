@@ -15,8 +15,11 @@ public class ServerInfoController {
 
 	public static String getIp() {
 		RequestAttributes attrs = RequestContextHolder.getRequestAttributes();
+		if (attrs == null) {
+			return "unknown";
+		}
 		HttpServletRequest request = ((ServletRequestAttributes) attrs).getRequest();
-		return request.getRemoteHost();
+		return request.getRemoteAddr();
 	}
 
 	@GetMapping("/ip")

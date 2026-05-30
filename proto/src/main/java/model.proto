@@ -36,6 +36,7 @@ message RoomTableInfo{
 //room桌子玩家
 message RoomRole {
     int32 roleId = 1;
+    // field 2 reserved (removed)
     bytes avatar = 3;
     bytes nickName = 4;
 }

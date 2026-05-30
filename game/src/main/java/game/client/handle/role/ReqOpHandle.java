@@ -1,7 +1,5 @@
 package game.client.handle.role;
 
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,8 +8,6 @@ import com.google.protobuf.Message;
 import game.Game;
 import game.manager.TableManager;
 import game.manager.table.Table;
-import game.manager.table.ddz.DdzBidService;
-import game.manager.table.ddz.DdzPlayService;
 import game.manager.table.mj.MjPlayService;
 import msg.annotation.ProcessType;
 import msg.registor.enums.TableState;
@@ -25,6 +21,7 @@ import threadtutil.thread.Task;
 
 /**
  * 处理玩家操作请求
+ * 通用校验后调用 table.processOp() 多态分发到具体玩法
  */
 @ProcessType(GMsg.REQ_OP)
 public class ReqOpHandle implements Handler {
@@ -34,107 +31,81 @@ public class ReqOpHandle implements Handler {
 	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
 		try {
 			GameProto.ReqOp request = (GameProto.ReqOp)message;
-
 			logger.info("处理玩家操作请求, userId: {}, tableId: {}", clientId, mapId);
 
-			// 获取桌子管理器
 			TableManager tableManager = Game.getInstance().getTableManager();
-
-			// 查找桌子
 			Table table = tableManager.getTable(mapId);
 			if (table == null) {
 				logger.warn("桌子不存在, tableId: {}", mapId);
 				sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.TABLE_NULL_VALUE));
 				return true;
 			}
+
 			Game.getInstance().serialExecute(new Task() {
 				@Override
-				public int groupId() {
-					return table.getGroupIndex();
-				}
+				public int groupId() { return table.getGroupIndex(); }
 
 				@Override
 				public void run() {
-					// 处理玩家在桌子上的操作逻辑
-					int result = processUserOp(clientId, request.getOp(), table);
+					int result = processUserOp(clientId, request.getOp(), table, sender, mapId, sequence);
 					if (result != ConstProto.Result.SUCCESS_VALUE) {
 						sender.sendMessage(TCPMessage.newInstance(result));
 					}
-
 					logger.info("玩家操作请求处理完成, userId: {}, tableId: {}, success: {}", clientId, mapId, result);
 				}
 			});
-
 		} catch (Exception e) {
-			logger.error("处理进入桌子请求失败, userId: {}", mapId, e);
+			logger.error("处理操作请求失败, userId: {}", mapId, e);
 		}
 		return true;
 	}
 
-	/**
-	 * 处理玩家操作逻辑
-	 */
-	private int processUserOp(int userId, GameProto.OpInfo op, Table table) {
+	private int processUserOp(int userId, GameProto.OpInfo op, Table table, Sender sender, long mapId, int sequence) {
 		try {
 			TableState ts = table.getTableState();
-			if (ts != TableState.IDLE_ROB && ts != TableState.IDLE_CARD
-						&& ts != TableState.MJ_DISCARD) {
-				return ConstProto.Result.OP_CURR_ERROR_VALUE;
+
+			// TABLE_OVER状态: 处理准备下一局
+			if (ts == TableState.TABLE_OVER) {
+				return processPrepare(table, userId, op);
 			}
+
 			if (!table.gaming()) {
-				logger.error("桌子未开始, userId: {}, tableId: {}", userId, table.getTableId());
 				return ConstProto.Result.TABLE_NOT_START_VALUE;
 			}
 
-			Set<GameProto.OpInfo> currChoice = table.getOp().getCurrChoice();
-			if (currChoice == null || currChoice.isEmpty()) {
-				logger.error("当前操作位置没有操作, userId: {}, tableId: {}", userId, table.getTableId());
-				return ConstProto.Result.OP_CURR_ERROR_VALUE;
-			}
-			GameProto.OpInfo currOp = null;
-			for (GameProto.OpInfo temp : currChoice) {
-				if (op.getChoiceValue() == temp.getChoiceValue()) {
-					currOp = temp;
-					break;
-				}
-			}
-			if (currOp == null) {
-				logger.error("当前操作位置没有操作, userId: {}, tableId: {}", userId, table.getTableId());
-				return ConstProto.Result.OP_CURR_ERROR_VALUE;
-			}
-
-			if (currOp.getOpCardsCount() > 0 && currOp.getOpCardsCount() != op.getOpCardsCount()) {
-				logger.error("操作牌数不匹配, userId: {}, tableId: {}", userId, table.getTableId());
-				return ConstProto.Result.OP_CARD_NOT_MATCH_VALUE;
-			}
-
-			if (ts == TableState.IDLE_ROB) {
-				return DdzBidService.apply(table, userId, op);
-			}
-			if (ts == TableState.MJ_DISCARD) {
-				return processMjDiscard(table, userId, op);
-			}
-			return DdzPlayService.apply(table, userId, op);
+			// 多态分发到具体玩法
+			return table.processOp(userId, op, sender, mapId, sequence);
 		} catch (Exception e) {
 			logger.error("处理玩家操作请求失败, userId: {}", userId, e);
 			return ConstProto.Result.SERVER_ERROR_VALUE;
 		}
 	}
 
-	/**
-	 * 处理麻将出牌操作
-	 */
-	private int processMjDiscard(Table table, int userId, GameProto.OpInfo op) {
-		boolean ok = MjPlayService.applyDiscard(table, userId, op);
-		if (!ok) {
+	private int processPrepare(Table table, int userId, GameProto.OpInfo op) {
+		if (op.getChoice() != ConstProto.Operation.PREPARE) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
-		// 检查是否有人能碰/杠/胡
-		if (!MjPlayService.checkClaim(table)) {
-			// 无人响应，进入下一个玩家摸牌
-			MjPlayService.nextPlayer(table);
-			long now = System.currentTimeMillis();
-			table.upNextStateWithTime(TableState.MJ_PLAY, now);
+
+		table.addReady(userId);
+		logger.info("玩家准备下一局, userId: {}, tableId: {}, ready: {}/{}",
+				userId, table.getTableId(), table.getReadyCount(), table.getTableModel().getSeatNum());
+
+		GameProto.AckOp ackOp = GameProto.AckOp.newBuilder()
+				.setOp(GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.PREPARE).build())
+				.setOpId(userId).build();
+		table.sendTableMessage(ackOp, GMsg.ACK_OP);
+
+		if (table.allReady()) {
+			if (table.isLastRound()) {
+				game.manager.table.mj.MjPlayService.sendGameResult(
+						game.manager.table.MjTable.class.cast(table));
+				Game.getInstance().getTableManager().removeTable(table.getTableId());
+				logger.info("最后一局完成, 总结算已发送, tableId: {}", table.getTableId());
+			} else {
+				logger.info("所有玩家已准备, 开始下一局, tableId: {}", table.getTableId());
+				table.resetForNextRound();
+				table.upNextState(TableState.WAITING);
+			}
 		}
 		return ConstProto.Result.SUCCESS_VALUE;
 	}

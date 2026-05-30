@@ -100,7 +100,7 @@ public class TableManager {
 	/**
 	 * 通过模板ID获取房间模板
 	 */
-	public TableModel getTableModel(int modelId) {
+	public synchronized TableModel getTableModel(int modelId) {
 		TableModel model = tableModelMap.get(modelId);
 		if (model == null) {
 			logger.warn("房间模板不存在, modelId: {}", modelId);
@@ -113,7 +113,7 @@ public class TableManager {
 	 *
 	 * @param tableId 桌子号
 	 */
-	public TableInfo getTableById(long tableId) {
+	public synchronized TableInfo getTableById(long tableId) {
 		return tableInfoMap.get(tableId);
 	}
 
@@ -122,7 +122,7 @@ public class TableManager {
 	 *
 	 * @param tableId 桌子号
 	 */
-	public void removeTable(long tableId) {
+	public synchronized void removeTable(long tableId) {
 		TableInfo tableInfo = tableInfoMap.remove(tableId);
 		if (tableInfo != null) {
 			Map<Long, TableInfo> tables = roomTables.get(tableInfo.getModel().getId());
@@ -150,13 +150,13 @@ public class TableManager {
 	}
 
 
-	///**
-	// * 存房间信息
-	// */
-	//public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
-	//	TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
-	//	roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new HashMap<>()).put(tableInfo.getTableId(), tableInfo);
-	//	tableInfoMap.put(tableInfo.getTableId(), tableInfo);
-	//	return tableInfo;
-	//}
+	/**
+	 * 存房间信息
+	 */
+	public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
+		TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
+		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new ConcurrentHashMap<>()).put(tableInfo.getTableId(), tableInfo);
+		tableInfoMap.put(tableInfo.getTableId(), tableInfo);
+		return tableInfo;
+	}
 }

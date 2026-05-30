@@ -8,7 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import game.manager.table.Table;
+import game.manager.table.DdzTable;
 import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
 import msg.registor.enums.TableState;
@@ -37,7 +37,7 @@ public final class DdzPlayService {
 	 * @param table  桌子
 	 * @param userId 用户ID
 	 */
-	public static void autoPlaySmallest(Table table, int userId) {
+	public static void autoPlaySmallest(DdzTable table, int userId) {
 		TableUser user = table.getUsers().get(userId);
 		if (user == null || user.getCards().isEmpty()) {
 			return;
@@ -60,7 +60,7 @@ public final class DdzPlayService {
 	 * @param userId 用户ID
 	 * @return 是否成功
 	 */
-	public static boolean autoPlayAi(Table table, int userId) {
+	public static boolean autoPlayAi(DdzTable table, int userId) {
 		TableUser user = table.getUsers().get(userId);
 		if (user == null) {
 			return false;
@@ -77,7 +77,7 @@ public final class DdzPlayService {
 	 * @param opInfo 操作信息
 	 * @return 结果
 	 */
-	public static int apply(Table table, int userId, GameProto.OpInfo opInfo) {
+	public static int apply(DdzTable table, int userId, GameProto.OpInfo opInfo) {
 		if (table.getTableState() != TableState.IDLE_CARD) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
@@ -102,7 +102,7 @@ public final class DdzPlayService {
 	 * @param userId 用户ID
 	 * @return 结果
 	 */
-	private static int applyPass(Table table, int userId) {
+	private static int applyPass(DdzTable table, int userId) {
 		DdzTableContext ctx = table.getDdz();
 		if (ctx.getLastHand() == null) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
@@ -129,7 +129,7 @@ public final class DdzPlayService {
 	 * @param opInfo 操作信息
 	 * @return 结果
 	 */
-	private static int applyPlay(Table table, TableUser user, GameProto.OpInfo opInfo) {
+	private static int applyPlay(DdzTable table, TableUser user, GameProto.OpInfo opInfo) {
 		DdzTableContext ctx = table.getDdz();
 		List<Integer> ids = collectPlayedCardIds(opInfo);
 		if (ids.isEmpty()) {
@@ -168,7 +168,7 @@ public final class DdzPlayService {
 	 * @param user  用户
 	 * @param hand  手牌
 	 */
-	private static void afterSuccessfulPlay(Table table, TableUser user, DdzHand hand) {
+	private static void afterSuccessfulPlay(DdzTable table, TableUser user, DdzHand hand) {
 		DdzTableContext ctx = table.getDdz();
 		int landlordSeat = ctx.getLandlordSeat();
 		if (user.getSeated() == landlordSeat) {
@@ -199,7 +199,7 @@ public final class DdzPlayService {
 	 * @param table  桌子
 	 * @param winner 赢家
 	 */
-	private static void finishGame(Table table, TableUser winner) {
+	private static void finishGame(DdzTable table, TableUser winner) {
 		DdzTableContext ctx = table.getDdz();
 		int landlordSeat = ctx.getLandlordSeat();
 		TableUser landlordUser = table.getSeatUser(landlordSeat);
@@ -218,6 +218,21 @@ public final class DdzPlayService {
 		if (antiSpring) {
 			settleFactor *= 2;
 		}
+
+		// 计算每家得分(地主赢: 地主+2*settleFactor, 农民各-settleFactor)
+		int seatNum = table.getTableModel().getSeatNum();
+		int[] scores = new int[seatNum];
+		for (int i = 0; i < seatNum; i++) {
+			if (i == landlordSeat) {
+				scores[i] = landlordWin ? settleFactor * (seatNum - 1) : -settleFactor * (seatNum - 1);
+			} else {
+				scores[i] = landlordWin ? -settleFactor : settleFactor;
+			}
+		}
+
+		// 记录到整场结果
+		String winType = spring ? "spring" : (antiSpring ? "antiSpring" : "normal");
+		table.getGameResult().addRound(table.getCurrentRound(), winner.getSeated(), settleFactor, scores, winType);
 
 		List<GameProto.RPlayer> rPlayers = new ArrayList<>();
 		for (TableUser u : table.getSeatUsers().values()) {
@@ -248,6 +263,21 @@ public final class DdzPlayService {
 			}
 			table.sendTableMessage(b.build(), GMsg.NOT_RESULT);
 		}
+
+		// 发送单局结算(多局模式)
+		if (table.isMultiRound()) {
+			GameProto.NotRoundResult.Builder roundResult = GameProto.NotRoundResult.newBuilder()
+					.setRound(table.getCurrentRound())
+					.setWinnerSeat(winner.getSeated())
+					.setFan(settleFactor)
+					.setWinType(com.google.protobuf.ByteString.copyFromUtf8(winType));
+			for (int i = 0; i < seatNum; i++) {
+				roundResult.addSeatScores(GameProto.SeatScore.newBuilder()
+						.setSeat(i).setScore(scores[i]).build());
+			}
+			table.sendTableMessage(roundResult.build(), GMsg.NOT_ROUND_RESULT);
+		}
+
 		table.upNextStateWithTime(TableState.TABLE_OVER, System.currentTimeMillis());
 	}
 
@@ -301,7 +331,7 @@ public final class DdzPlayService {
 	 * @param actorUserId 用户ID
 	 * @param op          操作信息
 	 */
-	private static void broadcastAck(Table table, int actorUserId, GameProto.OpInfo op) {
+	private static void broadcastAck(DdzTable table, int actorUserId, GameProto.OpInfo op) {
 		GameProto.AckOp msg = GameProto.AckOp.newBuilder()
 				.setOp(op)
 				.setOpId(actorUserId)

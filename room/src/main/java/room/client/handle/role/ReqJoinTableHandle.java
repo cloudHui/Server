@@ -1,6 +1,5 @@
 package room.client.handle.role;
 
-import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import model.tablemodel.TableModel;
 import msg.annotation.ProcessType;

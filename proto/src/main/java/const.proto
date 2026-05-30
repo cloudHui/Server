@@ -22,8 +22,9 @@ enum Result{
 }
 
 //room状态
+// TODO: WAITE was renamed to WAIT. Regenerate Java code and update TableInfo.java references (ConstProto.TableState.WAITE -> WAIT)
 enum TableState{
-    WAITE = 0;//等待
+    WAIT = 0;//等待
     START = 1;//开始
 }
 
@@ -43,6 +44,11 @@ enum Operation{
     CALL_SCORE_3 = 11;//叫三分
     DRAW = 12;//摸牌(麻将)
     DISCARD = 13;//出牌(麻将)
+    MJ_PENG = 14;//碰(麻将)
+    MJ_GANG = 15;//杠(麻将)
+    MJ_CHI = 16;//吃(麻将)
+    MJ_HU = 17;//胡(麻将)
+    MJ_PASS = 18;//过(麻将)
 }
 
 //牌型
@@ -55,7 +61,7 @@ enum CardType{
     PLANE_ONE = 5;//飞机带一
     PLANE_DOUBLE = 6;//飞机带二
     BOOM_DOUBLE_SINGLE = 7;//炸弹带二单
-    BOOM_DOUBLE_CUP = 8;//炸弹带二对
+    BOOM_DOUBLE_PAIR = 8;//炸弹带二对  // renamed from BOOM_DOUBLE_CUP (CUP was unclear)
     STRAIGHT = 9;//顺子
     STRAIGHT_DOUBLE = 10;//连对子
     BOOM = 11;//炸弹

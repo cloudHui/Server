@@ -1,6 +1,5 @@
 package gate.client;
 
-import com.google.protobuf.ByteString;
 import gate.rate.ConnectionRateLimiter;
 import io.netty.channel.ChannelHandler;
 import msg.registor.message.HMsg;

@@ -1,5 +1,6 @@
 package game.manager.table.state;
 
+import game.manager.table.DdzTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.ddz.DdzPlayService;
@@ -19,18 +20,19 @@ public class IdleCardPlay extends AbstractTableHandle {
 
 	@Override
 	public void overTime(Table table) {
+		DdzTable ddzTable = (DdzTable) table;
 		int seat = table.getOp().getCurrOpSeat();
 		TableUser u = table.getSeatUser(seat);
 		if (u == null) {
 			return;
 		}
-		if (DdzPlayService.autoPlayAi(table, u.getUserId())) {
+		if (DdzPlayService.autoPlayAi(ddzTable, u.getUserId())) {
 			return;
 		}
-		if (table.getDdz().getLastHand() == null) {
-			DdzPlayService.autoPlaySmallest(table, u.getUserId());
+		if (ddzTable.getDdz().getLastHand() == null) {
+			DdzPlayService.autoPlaySmallest(ddzTable, u.getUserId());
 		} else {
-			DdzPlayService.apply(table, u.getUserId(),
+			DdzPlayService.apply(ddzTable, u.getUserId(),
 					proto.GameProto.OpInfo.newBuilder().setChoice(proto.ConstProto.Operation.PASS).build());
 		}
 	}

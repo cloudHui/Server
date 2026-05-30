@@ -72,7 +72,7 @@ public class User {
 	/**
 	 * 移除用户桌子
 	 */
-	public void removeTable(String tableId) {
+	public void removeTable(long tableId) {
 		boolean removed = tables.remove(tableId);
 		if (removed) {
 			logger.info("用户移除桌子, userId: {}, tableId: {}", userId, tableId);

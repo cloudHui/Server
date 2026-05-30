@@ -16,7 +16,7 @@ public class AckEnterTableHandler implements ConnectHandle {
 	public void handle(Message message, Sender handler, int sequence, int transId) {
 		if (message instanceof GameProto.AckEnterTable) {
 			GameProto.AckEnterTable ack = (GameProto.AckEnterTable) message;
-			LOGGER.error("AckEnterTable:{}", ack.toString());
+			LOGGER.info("AckEnterTable:{}", ack.toString());
 			//Todo 等待开始
 		}
 	}

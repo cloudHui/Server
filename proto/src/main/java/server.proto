@@ -13,6 +13,7 @@ message ReqCreateGameTable {
 
 //创建game房间回复
 message AckCreateGameTable {
+    // field 1 reserved (removed)
     RoomTableInfo tables = 2;//桌子
 }
 

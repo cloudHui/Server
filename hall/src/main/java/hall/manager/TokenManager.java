@@ -38,20 +38,22 @@ public class TokenManager {
 	 * 生成Token并绑定用户
 	 */
 	public String generateToken(int userId) {
-		// 旧token失效
-		String oldToken = userToToken.remove(userId);
-		if (oldToken != null) {
-			tokenToUser.remove(oldToken);
-			tokenActiveTime.remove(oldToken);
+		synchronized (this) {
+			// 旧token失效
+			String oldToken = userToToken.remove(userId);
+			if (oldToken != null) {
+				tokenToUser.remove(oldToken);
+				tokenActiveTime.remove(oldToken);
+			}
+
+			String token = UUID.randomUUID().toString().replace("-", "");
+			tokenToUser.put(token, userId);
+			tokenActiveTime.put(token, System.currentTimeMillis());
+			userToToken.put(userId, token);
+
+			logger.info("生成Token, userId: {}, token: {}", userId, token);
+			return token;
 		}
-
-		String token = UUID.randomUUID().toString().replace("-", "");
-		tokenToUser.put(token, userId);
-		tokenActiveTime.put(token, System.currentTimeMillis());
-		userToToken.put(userId, token);
-
-		logger.info("生成Token, userId: {}, token: {}", userId, token);
-		return token;
 	}
 
 	/**
@@ -89,10 +91,12 @@ public class TokenManager {
 	 */
 	public void invalidateToken(String token) {
 		if (token == null) return;
-		Integer userId = tokenToUser.remove(token);
-		tokenActiveTime.remove(token);
-		if (userId != null) {
-			userToToken.remove(userId);
+		synchronized (this) {
+			Integer userId = tokenToUser.remove(token);
+			tokenActiveTime.remove(token);
+			if (userId != null) {
+				userToToken.remove(userId);
+			}
 		}
 	}
 
@@ -100,10 +104,12 @@ public class TokenManager {
 	 * 使用户的所有Token失效
 	 */
 	public void invalidateUser(int userId) {
-		String token = userToToken.remove(userId);
-		if (token != null) {
-			tokenToUser.remove(token);
-			tokenActiveTime.remove(token);
+		synchronized (this) {
+			String token = userToToken.remove(userId);
+			if (token != null) {
+				tokenToUser.remove(token);
+				tokenActiveTime.remove(token);
+			}
 		}
 	}
 
@@ -111,17 +117,19 @@ public class TokenManager {
 	 * 清理过期Token
 	 */
 	public void cleanupExpired() {
-		long now = System.currentTimeMillis();
-		tokenActiveTime.entrySet().removeIf(entry -> {
-			if (now - entry.getValue() > TOKEN_EXPIRY_MILLIS) {
-				String token = entry.getKey();
-				Integer userId = tokenToUser.remove(token);
-				if (userId != null) {
-					userToToken.remove(userId);
+		synchronized (this) {
+			long now = System.currentTimeMillis();
+			tokenActiveTime.entrySet().removeIf(entry -> {
+				if (now - entry.getValue() > TOKEN_EXPIRY_MILLIS) {
+					String token = entry.getKey();
+					Integer userId = tokenToUser.remove(token);
+					if (userId != null) {
+						userToToken.remove(userId);
+					}
+					return true;
 				}
-				return true;
-			}
-			return false;
-		});
+				return false;
+			});
+		}
 	}
 }
