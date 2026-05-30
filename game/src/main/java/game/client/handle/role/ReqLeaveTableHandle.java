@@ -65,8 +65,12 @@ public class ReqLeaveTableHandle implements Handler {
 		// 游戏中离开: 解散牌局, 发送总结算
 		if (table.gaming()) {
 			logger.info("游戏中玩家离开, 解散牌局, userId: {}, tableId: {}", userId, table.getTableId());
-			if (table.isMultiRound() && table.getGameType() == 1) {
-				MjPlayService.sendGameResult(game.manager.table.MjTable.class.cast(table));
+			if (table.isMultiRound()) {
+				if (table.getGameType() == 1) {
+					MjPlayService.sendGameResult(game.manager.table.MjTable.class.cast(table));
+				} else {
+					game.manager.table.ddz.DdzPlayService.sendGameResult(table);
+				}
 			}
 			table.removeUser(user);
 			Game.getInstance().getTableManager().removeTable(table.getTableId());

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import game.manager.table.Table;
+import game.manager.table.DdzTable;
 import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
 import game.manager.table.ddz.DdzHand;
@@ -36,7 +36,7 @@ public final class DdzSimpleAi {
 	 * @param user  用户
 	 * @return 决定
 	 */
-	public static GameProto.OpInfo decide(Table table, TableUser user) {
+	public static GameProto.OpInfo decide(DdzTable table, TableUser user) {
 		List<Card> hand = new ArrayList<>(user.getCards());
 		if (hand.isEmpty()) {
 			return pass();
@@ -82,7 +82,7 @@ public final class DdzSimpleAi {
 	 * @param user  用户
 	 * @return 是否应该在队友之后出牌
 	 */
-	private static boolean shouldPassAfterTeammate(Table table, TableUser user) {
+	private static boolean shouldPassAfterTeammate(DdzTable table, TableUser user) {
 		if (!DdzAiConstants.AI_PASS_AFTER_TEAMMATE_PLAY) {
 			return false;
 		}

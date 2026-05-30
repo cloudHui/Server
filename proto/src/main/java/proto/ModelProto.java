@@ -3317,6 +3317,10 @@ public final class ModelProto {
     int getRoleId();
 
     /**
+     * <pre>
+     * field 2 reserved (removed)
+     * </pre>
+     *
      * <code>bytes avatar = 3;</code>
      */
     com.google.protobuf.ByteString getAvatar();
@@ -3427,6 +3431,10 @@ public final class ModelProto {
     public static final int AVATAR_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString avatar_;
     /**
+     * <pre>
+     * field 2 reserved (removed)
+     * </pre>
+     *
      * <code>bytes avatar = 3;</code>
      */
     public com.google.protobuf.ByteString getAvatar() {
@@ -3791,12 +3799,20 @@ public final class ModelProto {
 
       private com.google.protobuf.ByteString avatar_ = com.google.protobuf.ByteString.EMPTY;
       /**
+       * <pre>
+       * field 2 reserved (removed)
+       * </pre>
+       *
        * <code>bytes avatar = 3;</code>
        */
       public com.google.protobuf.ByteString getAvatar() {
         return avatar_;
       }
       /**
+       * <pre>
+       * field 2 reserved (removed)
+       * </pre>
+       *
        * <code>bytes avatar = 3;</code>
        */
       public Builder setAvatar(com.google.protobuf.ByteString value) {
@@ -3809,6 +3825,10 @@ public final class ModelProto {
         return this;
       }
       /**
+       * <pre>
+       * field 2 reserved (removed)
+       * </pre>
+       *
        * <code>bytes avatar = 3;</code>
        */
       public Builder clearAvatar() {

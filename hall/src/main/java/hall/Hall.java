@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import hall.client.ClientProto;
 import hall.client.HallClient;
+import hall.manager.TokenManager;
 import hall.connect.ConnectProcessor;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
@@ -163,6 +164,11 @@ public class Hall {
 		serverManager = new ServerManager(timer,
 				ConfigurationManager.getInstance().getInt("plant", 0) != 0);
 		logger.info("服务器管理器初始化完成");
+
+		// 注册Token过期清理定时任务(每小时执行一次)
+		registerTimer(60 * 60 * 1000L, 60 * 60 * 1000L, -1,
+				(param) -> { TokenManager.getInstance().cleanupExpired(); return true; }, null);
+		logger.info("Token过期清理定时任务已注册");
 	}
 
 	/**

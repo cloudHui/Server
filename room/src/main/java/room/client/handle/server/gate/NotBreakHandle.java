@@ -1,5 +1,7 @@
 package room.client.handle.server.gate;
 
+import java.util.List;
+
 import com.google.protobuf.Message;
 import msg.annotation.ProcessType;
 import msg.registor.message.CMsg;
@@ -8,6 +10,8 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ServerProto;
+import room.manager.table.TableInfo;
+import room.manager.table.TableManager;
 import room.manager.user.User;
 import room.manager.user.UserManager;
 
@@ -40,18 +44,38 @@ public class NotBreakHandle implements Handler {
 
 	/**
 	 * 处理用户断开连接
+	 * 1. 标记用户离线
+	 * 2. 从所有桌子移除用户
+	 * 3. 清理空桌子
+	 * 4. 从UserManager移除用户
 	 */
 	private void handleUserDisconnect(int userId) {
 		User user = UserManager.getInstance().getUser(userId);
-		if (user != null) {
-			// 设置用户离线状态
-			user.setOffline(true);
-			logger.info("设置用户离线状态, userId: {}", userId);
-
-			// TODO: 根据业务需求处理离线逻辑
-			// 例如：清理临时数据、通知游戏服务器等
-		} else {
-			logger.warn("用户不存在,无法设置离线状态, userId: {}", userId);
+		if (user == null) {
+			logger.warn("用户不存在,无法处理断线, userId: {}", userId);
+			return;
 		}
+
+		// 标记离线
+		user.setOffline(true);
+		logger.info("设置用户离线状态, userId: {}", userId);
+
+		// 从所有桌子移除用户
+		List<Long> tableIds = user.getAllTables();
+		for (Long tableId : tableIds) {
+			TableInfo tableInfo = TableManager.getInstance().getTableById(tableId);
+			if (tableInfo != null) {
+				tableInfo.removeUser(user);
+				// 如果桌子空了, 清理桌子
+				if (tableInfo.getTableRoles().isEmpty()) {
+					TableManager.getInstance().removeTable(tableId);
+					logger.info("桌子已空, 清理桌子, tableId: {}", tableId);
+				}
+			}
+		}
+
+		// 从UserManager移除
+		UserManager.getInstance().removeUser(userId);
+		logger.info("断线用户已清理, userId: {}, 桌子数: {}", userId, tableIds.size());
 	}
 }

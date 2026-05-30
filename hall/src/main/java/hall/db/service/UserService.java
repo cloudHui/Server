@@ -20,7 +20,7 @@ public class UserService extends DBService<UserDao> {
 		return execute(o -> o.queryUserInfo(userId));
 	}
 
-	public UserInfos insertUserInfo(String plant) {
-		return execute(o -> o.insertUserInfo(plant));
+	public UserInfos queryUserInfoByPlant(String plant) {
+		return execute(o -> o.queryUserInfoByPlant(plant));
 	}
 }

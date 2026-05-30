@@ -8,5 +8,5 @@ public interface UserDao {
 
 	UserInfos queryUserInfo(@Param("userId") int userId);
 
-	UserInfos insertUserInfo(@Param("plant") String plant);
+	UserInfos queryUserInfoByPlant(@Param("plant") String plant);
 }

@@ -331,6 +331,7 @@ public final class ConstProto {
   /**
    * <pre>
    *room状态
+   * TODO: WAITE was renamed to WAIT. Regenerate Java code and update TableInfo.java references (ConstProto.TableState.WAITE -&gt; WAIT)
    * </pre>
    *
    * Protobuf enum {@code proto.TableState}
@@ -342,9 +343,9 @@ public final class ConstProto {
      *等待
      * </pre>
      *
-     * <code>WAITE = 0;</code>
+     * <code>WAIT = 0;</code>
      */
-    WAITE(0),
+    WAIT(0),
     /**
      * <pre>
      *开始
@@ -361,9 +362,9 @@ public final class ConstProto {
      *等待
      * </pre>
      *
-     * <code>WAITE = 0;</code>
+     * <code>WAIT = 0;</code>
      */
-    public static final int WAITE_VALUE = 0;
+    public static final int WAIT_VALUE = 0;
     /**
      * <pre>
      *开始
@@ -392,7 +393,7 @@ public final class ConstProto {
 
     public static TableState forNumber(int value) {
       switch (value) {
-        case 0: return WAITE;
+        case 0: return WAIT;
         case 1: return START;
         default: return null;
       }
@@ -928,12 +929,12 @@ public final class ConstProto {
     BOOM_DOUBLE_SINGLE(7),
     /**
      * <pre>
-     *炸弹带二对
+     *炸弹带二对  // renamed from BOOM_DOUBLE_CUP (CUP was unclear)
      * </pre>
      *
-     * <code>BOOM_DOUBLE_CUP = 8;</code>
+     * <code>BOOM_DOUBLE_PAIR = 8;</code>
      */
-    BOOM_DOUBLE_CUP(8),
+    BOOM_DOUBLE_PAIR(8),
     /**
      * <pre>
      *顺子
@@ -1035,12 +1036,12 @@ public final class ConstProto {
     public static final int BOOM_DOUBLE_SINGLE_VALUE = 7;
     /**
      * <pre>
-     *炸弹带二对
+     *炸弹带二对  // renamed from BOOM_DOUBLE_CUP (CUP was unclear)
      * </pre>
      *
-     * <code>BOOM_DOUBLE_CUP = 8;</code>
+     * <code>BOOM_DOUBLE_PAIR = 8;</code>
      */
-    public static final int BOOM_DOUBLE_CUP_VALUE = 8;
+    public static final int BOOM_DOUBLE_PAIR_VALUE = 8;
     /**
      * <pre>
      *顺子
@@ -1101,7 +1102,7 @@ public final class ConstProto {
         case 5: return PLANE_ONE;
         case 6: return PLANE_DOUBLE;
         case 7: return BOOM_DOUBLE_SINGLE;
-        case 8: return BOOM_DOUBLE_CUP;
+        case 8: return BOOM_DOUBLE_PAIR;
         case 9: return STRAIGHT;
         case 10: return STRAIGHT_DOUBLE;
         case 11: return BOOM;
@@ -1173,19 +1174,21 @@ public final class ConstProto {
       "NOT_START\020\005\022\026\n\022TABLE_CONFIG_ERROR\020\006\022\016\n\nT" +
       "ABLE_NULL\020\007\022\016\n\nTABLE_FULL\020\010\022\017\n\013TABLE_ERR" +
       "OR\020\t\022\016\n\nROLE_ERROR\020\n\022\r\n\tROLE_NULL\020\013\022\021\n\rO" +
-      "P_CURR_ERROR\020\014\022\025\n\021OP_CARD_NOT_MATCH\020\r*\"\n" +
-      "\nTableState\022\t\n\005WAITE\020\000\022\t\n\005START\020\001*\300\001\n\tOp" +
-      "eration\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\007\n\003ROB\020\002\022\014\n\010" +
-      "NOT_CALL\020\003\022\013\n\007NOT_ROB\020\004\022\007\n\003TIP\020\005\022\010\n\004PLAY",
-      "\020\006\022\013\n\007PREPARE\020\007\022\016\n\nSTART_GAME\020\010\022\020\n\014CALL_" +
-      "SCORE_1\020\t\022\020\n\014CALL_SCORE_2\020\n\022\020\n\014CALL_SCOR" +
-      "E_3\020\013\022\010\n\004DRAW\020\014\022\013\n\007DISCARD\020\r*\332\001\n\010CardTyp" +
-      "e\022\n\n\006SINGLE\020\000\022\n\n\006DOUBLE\020\001\022\n\n\006TRIPLE\020\002\022\016\n" +
-      "\nTRIPLE_ONE\020\003\022\021\n\rTRIPLE_DOUBLE\020\004\022\r\n\tPLAN" +
-      "E_ONE\020\005\022\020\n\014PLANE_DOUBLE\020\006\022\026\n\022BOOM_DOUBLE" +
-      "_SINGLE\020\007\022\023\n\017BOOM_DOUBLE_CUP\020\010\022\014\n\010STRAIG" +
-      "HT\020\t\022\023\n\017STRAIGHT_DOUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010B" +
-      "OOM_MAX\020\014B\014B\nConstProtob\006proto3"
+      "P_CURR_ERROR\020\014\022\025\n\021OP_CARD_NOT_MATCH\020\r*!\n" +
+      "\nTableState\022\010\n\004WAIT\020\000\022\t\n\005START\020\001*\376\001\n\tOpe" +
+      "ration\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\007\n\003ROB\020\002\022\014\n\010N" +
+      "OT_CALL\020\003\022\013\n\007NOT_ROB\020\004\022\007\n\003TIP\020\005\022\010\n\004PLAY\020",
+      "\006\022\013\n\007PREPARE\020\007\022\016\n\nSTART_GAME\020\010\022\020\n\014CALL_S" +
+      "CORE_1\020\t\022\020\n\014CALL_SCORE_2\020\n\022\020\n\014CALL_SCORE" +
+      "_3\020\013\022\010\n\004DRAW\020\014\022\013\n\007DISCARD\020\r\022\013\n\007MJ_PENG\020\016" +
+      "\022\013\n\007MJ_GANG\020\017\022\n\n\006MJ_CHI\020\020\022\t\n\005MJ_HU\020\021\022\013\n\007" +
+      "MJ_PASS\020\022*\333\001\n\010CardType\022\n\n\006SINGLE\020\000\022\n\n\006DO" +
+      "UBLE\020\001\022\n\n\006TRIPLE\020\002\022\016\n\nTRIPLE_ONE\020\003\022\021\n\rTR" +
+      "IPLE_DOUBLE\020\004\022\r\n\tPLANE_ONE\020\005\022\020\n\014PLANE_DO" +
+      "UBLE\020\006\022\026\n\022BOOM_DOUBLE_SINGLE\020\007\022\024\n\020BOOM_D" +
+      "OUBLE_PAIR\020\010\022\014\n\010STRAIGHT\020\t\022\023\n\017STRAIGHT_D" +
+      "OUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014B\014B\nConst",
+      "Protob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

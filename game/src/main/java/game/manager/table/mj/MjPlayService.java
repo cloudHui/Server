@@ -1,5 +1,6 @@
 package game.manager.table.mj;
 
+import game.manager.table.GameResult;
 import game.manager.table.MjTable;
 import game.manager.table.TableUser;
 import game.manager.table.card.mj.MjConst;
@@ -111,7 +112,7 @@ public class MjPlayService {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(seat)
 				.setTileId(tileId)
-				.setAction(GameProto.MjAction.MJ_DISCARD_TILE)
+				.setAction(ConstProto.Operation.DISCARD)
 				.setWallLeft(table.getMjTilePool().remaining())
 				.build();
 		table.sendTableMessage(not, GMsg.MJ_TILE_NOT);
@@ -162,7 +163,7 @@ public class MjPlayService {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(seat)
 				.setTileId(tileId)
-				.setAction(GameProto.MjAction.MJ_DISCARD_TILE)
+				.setAction(ConstProto.Operation.DISCARD)
 				.setWallLeft(table.getMjTilePool().remaining())
 				.build();
 		table.sendTableMessage(not, GMsg.MJ_TILE_NOT);
@@ -282,7 +283,7 @@ public class MjPlayService {
 		GameProto.NotMjState.Builder notBuilder = GameProto.NotMjState.newBuilder()
 				.setOpSeat(claim.getSeat())
 				.setTileId(table.getMjContext().getClaimTileId())
-				.setAction(GameProto.MjAction.MJ_DISCARD_TILE)
+				.setAction(ConstProto.Operation.DISCARD)
 				.setWait(TableState.MJ_CLAIM.getOverTime())
 				.setWallLeft(table.getMjTilePool().remaining());
 
@@ -452,7 +453,7 @@ public class MjPlayService {
 		ctx.resetTurn();
 
 		// 广播碰操作 + 副露区同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_PENG);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_PENG);
 		syncExposedSets(table);
 
 		// 回放记录
@@ -503,7 +504,7 @@ public class MjPlayService {
 		ctx.setGangShangKaiHua(true);
 
 		// 广播杠操作 + 副露区同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_GANG);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_GANG);
 		syncExposedSets(table);
 
 		// 回放记录
@@ -575,7 +576,7 @@ public class MjPlayService {
 		ctx.resetTurn();
 
 		// 广播吃操作 + 副露区同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_CHI);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_CHI);
 		syncExposedSets(table);
 
 		// 回放记录
@@ -720,7 +721,7 @@ public class MjPlayService {
 				Arrays.asList(gangTileId, gangTileId, gangTileId, gangTileId), -1));
 
 		// 广播 + 副露同步
-		broadcastMjAction(table, seat, gangTileId, GameProto.MjAction.MJ_GANG);
+		broadcastMjAction(table, seat, gangTileId, ConstProto.Operation.MJ_GANG);
 		syncExposedSets(table);
 
 		// 杠分即时结算
@@ -806,7 +807,7 @@ public class MjPlayService {
 		}
 
 		// 广播 + 副露同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_GANG);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_GANG);
 		syncExposedSets(table);
 
 		// 杠分即时结算
@@ -1095,7 +1096,7 @@ public class MjPlayService {
 			GameProto.RoundSummary.Builder summary = GameProto.RoundSummary.newBuilder()
 					.setRound(entry.getRound())
 					.setWinnerSeat(entry.getWinnerSeat())
-					.setFan(entry.getFan())
+					.setFan(entry.getScore())
 					.setWinType(com.google.protobuf.ByteString.copyFromUtf8(entry.getWinType()));
 			for (int i = 0; i < seatNum; i++) {
 				summary.addSeatScores(GameProto.SeatScore.newBuilder()
@@ -1105,7 +1106,6 @@ public class MjPlayService {
 		}
 
 		table.sendTableMessage(builder.build(), GMsg.NOT_GAME_RESULT);
-	}
 	}
 
 	// ======================== 副露区同步 ========================
@@ -1119,7 +1119,7 @@ public class MjPlayService {
 
 		GameProto.NotMjState.Builder notBuilder = GameProto.NotMjState.newBuilder()
 				.setOpSeat(-1)
-				.setAction(GameProto.MjAction.MJ_PASS)
+				.setAction(ConstProto.Operation.MJ_PASS)
 				.setWallLeft(table.getMjTilePool().remaining());
 
 		// 用choice字段携带副露信息: 每个座位的副露作为一个OpInfo
@@ -1173,7 +1173,7 @@ public class MjPlayService {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(-1)
 				.setTileId(flipTile)
-				.setAction(GameProto.MjAction.MJ_DRAW)
+				.setAction(ConstProto.Operation.DRAW)
 				.setWallLeft(tilePool.remaining())
 				.build();
 		table.sendTableMessage(not, GMsg.MJ_TILE_NOT);
@@ -1206,7 +1206,7 @@ public class MjPlayService {
 	/**
 	 * 广播麻将操作
 	 */
-	private static void broadcastMjAction(MjTable table, int seat, int tileId, GameProto.MjAction action) {
+	private static void broadcastMjAction(MjTable table, int seat, int tileId, ConstProto.Operation action) {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(seat)
 				.setTileId(tileId)

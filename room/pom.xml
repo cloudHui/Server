@@ -66,6 +66,7 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/room/lib
                             </outputDirectory>
+                            <excludeGroupIds>com.cloud</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>

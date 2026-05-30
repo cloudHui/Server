@@ -10,7 +10,6 @@ import net.handler.Handler;
 import net.handler.Handlers;
 import net.message.Parser;
 import net.message.Transfer;
-import net.message.TCPMessage;
 import utils.trace.TracedHandler;
 
 /**

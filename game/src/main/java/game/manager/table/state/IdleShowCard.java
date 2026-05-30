@@ -16,12 +16,14 @@ public class IdleShowCard extends AbstractTableHandle {
 
 	@Override
 	public boolean onTiming(Table table) {
-
+		// IDLE_SHOW_CARD 当前未在标准DDZ流程中使用
+		// 仅用于地主明牌功能, 超时后自动进入下一状态
 		return false;
 	}
 
 	@Override
 	public void overTime(Table table) {
-
+		// 超时自动跳过明牌, 进入出牌阶段
+		table.upNextState(TableState.CARD);
 	}
 }

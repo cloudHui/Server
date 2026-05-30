@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn *)",
+      "Bash(java *)"
+    ],
+    "additionalDirectories": [
+      "D:\\code\\deskcheck"
+    ]
+  }
+}

@@ -69,6 +69,7 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/game/lib
                             </outputDirectory>
+                            <excludeGroupIds>com.cloud</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>

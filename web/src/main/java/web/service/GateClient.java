@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
 
 import com.google.protobuf.Message;
 import io.netty.channel.nio.NioEventLoopGroup;
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;
 import net.connect.TCPConnect;
 import net.message.Parser;
 import net.message.TCPMessage;
@@ -84,7 +84,7 @@ public class GateClient {
 	 */
 	public void send(String sessionId, int msgId, Message msg) {
 		TCPConnect conn = getConnection(sessionId);
-		conn.sendMessage(msg, msgId);
+		conn.sendMessage(msgId, msg);
 	}
 
 	private TCPConnect createConnection(String sessionId) {

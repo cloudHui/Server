@@ -28,10 +28,6 @@ public final class GateProto {
     com.google.protobuf.ByteString getMessage();
 
     /**
-     * <pre>
-     *0个人 全服广播1 全渠道广播2 全工会广播3
-     * </pre>
-     *
      * <code>int32 type = 2;</code>
      */
     int getType();
@@ -52,6 +48,15 @@ public final class GateProto {
     int getClub();
   }
   /**
+   * <pre>
+   * 广播类型 type 值说明:
+   *   0 = PERSON  (个人, 按 clientId 发送)
+   *   1 = ALL     (全服广播)
+   *   2 = CHANNEL (全渠道广播, 按 channel 过滤)
+   *   3 = CLUB    (全工会广播, 按 club 过滤)
+   * 对应 Java 枚举: gate.connect.handle.not.BroadCastHandle.BroadcastType
+   * </pre>
+   *
    * Protobuf type {@code proto.BroadCast}
    */
   public  static final class BroadCast extends
@@ -164,10 +169,6 @@ public final class GateProto {
     public static final int TYPE_FIELD_NUMBER = 2;
     private int type_;
     /**
-     * <pre>
-     *0个人 全服广播1 全渠道广播2 全工会广播3
-     * </pre>
-     *
      * <code>int32 type = 2;</code>
      */
     public int getType() {
@@ -397,6 +398,15 @@ public final class GateProto {
       return builder;
     }
     /**
+     * <pre>
+     * 广播类型 type 值说明:
+     *   0 = PERSON  (个人, 按 clientId 发送)
+     *   1 = ALL     (全服广播)
+     *   2 = CHANNEL (全渠道广播, 按 channel 过滤)
+     *   3 = CLUB    (全工会广播, 按 club 过滤)
+     * 对应 Java 枚举: gate.connect.handle.not.BroadCastHandle.BroadcastType
+     * </pre>
+     *
      * Protobuf type {@code proto.BroadCast}
      */
     public static final class Builder extends
@@ -595,20 +605,12 @@ public final class GateProto {
 
       private int type_ ;
       /**
-       * <pre>
-       *0个人 全服广播1 全渠道广播2 全工会广播3
-       * </pre>
-       *
        * <code>int32 type = 2;</code>
        */
       public int getType() {
         return type_;
       }
       /**
-       * <pre>
-       *0个人 全服广播1 全渠道广播2 全工会广播3
-       * </pre>
-       *
        * <code>int32 type = 2;</code>
        */
       public Builder setType(int value) {
@@ -618,10 +620,6 @@ public final class GateProto {
         return this;
       }
       /**
-       * <pre>
-       *0个人 全服广播1 全渠道广播2 全工会广播3
-       * </pre>
-       *
        * <code>int32 type = 2;</code>
        */
       public Builder clearType() {

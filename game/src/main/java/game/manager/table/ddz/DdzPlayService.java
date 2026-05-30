@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import game.manager.table.DdzTable;
+import game.manager.table.GameResult;
+import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
 import msg.registor.enums.TableState;
@@ -338,5 +340,37 @@ public final class DdzPlayService {
 				.setOpFrom(actorUserId)
 				.build();
 		table.sendTableMessage(msg, GMsg.ACK_OP);
+	}
+
+	/**
+	 * 发送DDZ总结算通知(多局汇总)
+	 */
+	public static void sendGameResult(Table table) {
+		GameResult gameResult = table.getGameResult();
+		int seatNum = table.getTableModel().getSeatNum();
+
+		GameProto.NotGameResult.Builder builder = GameProto.NotGameResult.newBuilder()
+				.setTotalRounds(gameResult.getTotalRounds())
+				.setCompletedRounds(gameResult.getCompletedRounds());
+
+		for (int i = 0; i < seatNum; i++) {
+			builder.addTotalScores(GameProto.SeatScore.newBuilder()
+					.setSeat(i).setScore(gameResult.getTotalScore(i)).build());
+		}
+
+		for (GameResult.RoundEntry entry : gameResult.getRoundEntries()) {
+			GameProto.RoundSummary.Builder summary = GameProto.RoundSummary.newBuilder()
+					.setRound(entry.getRound())
+					.setWinnerSeat(entry.getWinnerSeat())
+					.setFan(entry.getScore())
+					.setWinType(com.google.protobuf.ByteString.copyFromUtf8(entry.getWinType()));
+			for (int i = 0; i < seatNum; i++) {
+				summary.addSeatScores(GameProto.SeatScore.newBuilder()
+						.setSeat(i).setScore(entry.getScores()[i]).build());
+			}
+			builder.addRounds(summary.build());
+		}
+
+		table.sendTableMessage(builder.build(), GMsg.NOT_GAME_RESULT);
 	}
 }

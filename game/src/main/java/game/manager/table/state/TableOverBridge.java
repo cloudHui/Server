@@ -18,7 +18,8 @@ public class TableOverBridge extends AbstractTableHandle {
 
 	@Override
 	public boolean onTiming(Table table) {
-		if (!table.getOp().getCurrChoice().isEmpty()) return false;
+		java.util.Set<GameProto.OpInfo> currChoice = table.getOp().getCurrChoice();
+		if (currChoice != null && !currChoice.isEmpty()) return false;
 
 		if (table.isMultiRound() && !table.isLastRound()) {
 			sendPreparePrompt(table);
@@ -38,8 +39,12 @@ public class TableOverBridge extends AbstractTableHandle {
 
 	@Override
 	protected void overTime(Table table) {
-		if (table.isMultiRound() && table.getGameType() == 1) {
-			MjPlayService.sendGameResult(game.manager.table.MjTable.class.cast(table));
+		if (table.isMultiRound()) {
+			if (table.getGameType() == 1) {
+				MjPlayService.sendGameResult(game.manager.table.MjTable.class.cast(table));
+			} else {
+				game.manager.table.ddz.DdzPlayService.sendGameResult(table);
+			}
 		}
 		Game.getInstance().getTableManager().removeTable(table.getTableId());
 	}

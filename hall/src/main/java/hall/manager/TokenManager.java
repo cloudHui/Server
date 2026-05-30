@@ -63,26 +63,31 @@ public class TokenManager {
 		if (token == null || token.isEmpty()) {
 			return 0;
 		}
-		Integer userId = tokenToUser.get(token);
-		if (userId == null) {
-			return 0;
+		synchronized (this) {
+			Integer userId = tokenToUser.get(token);
+			if (userId == null) {
+				return 0;
+			}
+			// 检查过期
+			Long lastActive = tokenActiveTime.get(token);
+			if (lastActive == null || System.currentTimeMillis() - lastActive > TOKEN_EXPIRY_MILLIS) {
+				invalidateToken(token);
+				logger.info("Token已过期, token: {}", token);
+				return 0;
+			}
+			return userId;
 		}
-		// 检查过期
-		Long lastActive = tokenActiveTime.get(token);
-		if (lastActive == null || System.currentTimeMillis() - lastActive > TOKEN_EXPIRY_MILLIS) {
-			invalidateToken(token);
-			logger.info("Token已过期, token: {}", token);
-			return 0;
-		}
-		return userId;
 	}
 
 	/**
 	 * 刷新Token活跃时间
 	 */
 	public void refreshToken(String token) {
-		if (token != null && tokenToUser.containsKey(token)) {
-			tokenActiveTime.put(token, System.currentTimeMillis());
+		if (token == null) return;
+		synchronized (this) {
+			if (tokenToUser.containsKey(token)) {
+				tokenActiveTime.put(token, System.currentTimeMillis());
+			}
 		}
 	}
 

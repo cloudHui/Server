@@ -63,6 +63,7 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/hall/lib
                             </outputDirectory>
+                            <excludeGroupIds>com.cloud</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>
