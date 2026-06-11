@@ -4,8 +4,10 @@ import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.mj.MjPlayService;
+import game.manager.table.mj.MjExposedSet;
 import game.manager.table.mj.MjTableContext;
 import game.manager.table.mj.MjWinChecker;
+import game.manager.table.mj.ai.MjSimpleAi;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -46,7 +48,36 @@ public class MjDiscard extends AbstractTableHandle {
 			return;
 		}
 
-		// 超时自动出牌(出刚摸到的牌)
+		// 有 AI 等级时使用 AI 决策出牌
+		MjTableContext ctx = mjTable.getMjContext();
+		int aiLevel = ctx.getAiLevel();
+		if (aiLevel >= 0) {
+			int seat = table.getOp().getCurrOpSeat();
+			TableUser user = table.getSeatUser(seat);
+			if (user != null) {
+				int aiTile = MjSimpleAi.decideDiscard(mjTable, user, ctx.getDrawnTile());
+				if (aiTile > 0) {
+					// 用 AI 选出的牌代替默认的"摸什么打什么"
+					GameProto.OpInfo op = GameProto.OpInfo.newBuilder()
+							.setChoice(ConstProto.Operation.DISCARD)
+							.addOpCards(GameProto.CardInfo.newBuilder()
+									.addCards(GameProto.Card.newBuilder().setValue(aiTile).build())
+									.build())
+							.build();
+					boolean success = MjPlayService.applyDiscard(mjTable, user.getUserId(), op);
+					if (success) {
+						if (!MjPlayService.checkClaim(mjTable)) {
+							MjPlayService.nextPlayer(mjTable);
+							long now = System.currentTimeMillis();
+							table.upNextStateWithTime(TableState.MJ_PLAY, now);
+						}
+						return;
+					}
+				}
+			}
+		}
+
+		// fallback: 超时自动出牌(出刚摸到的牌)
 		MjPlayService.autoDiscard(mjTable);
 
 		// 检查是否有人能碰/杠/胡
@@ -95,8 +126,8 @@ public class MjDiscard extends AbstractTableHandle {
 		// 检查补杠(需配置允许)
 		boolean allowBuGang = table.getTableModel().getAllowGangBu() != 0;
 		MjTableContext ctx = table.getMjContext();
-		for (game.manager.table.mj.MjExposedSet set : ctx.getExposedSets(seat)) {
-			if (set.getType() == game.manager.table.mj.MjExposedSet.Type.PENG) {
+		for (MjExposedSet set : ctx.getExposedSets(seat)) {
+			if (set.getType() == MjExposedSet.Type.PENG) {
 				int pengTileId = set.getTileIds().get(0);
 				if (winChecker.canBuGang(user.getCards(), ctx.getExposedSets(seat), pengTileId)) {
 					GameProto.OpInfo buGang = GameProto.OpInfo.newBuilder()

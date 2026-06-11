@@ -60,6 +60,11 @@ public class MjTableContext {
 	/** 海底标记(牌墙最后一张) */
 	private boolean haiDi;
 
+	/** AI 视野等级：0=正常, 1=半透视(知剩余牌池), 2=全透视(知他人手牌) */
+	private int visionLevel;
+	/** AI 智能等级：0=最笨(摸什么打什么/自动过), 1=基础策略, 2=高级策略 */
+	private int aiLevel = 2;
+
 	// --- Getters & Setters ---
 
 	public int getDealerSeat() {
@@ -251,5 +256,21 @@ public class MjTableContext {
 
 	public void setHaiDi(boolean haiDi) {
 		this.haiDi = haiDi;
+	}
+
+	public int getVisionLevel() {
+		return visionLevel;
+	}
+
+	public void setVisionLevel(int visionLevel) {
+		this.visionLevel = visionLevel;
+	}
+
+	public int getAiLevel() {
+		return aiLevel;
+	}
+
+	public void setAiLevel(int aiLevel) {
+		this.aiLevel = aiLevel;
 	}
 }

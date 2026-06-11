@@ -1,5 +1,11 @@
 package game.manager.table.ddz;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import game.manager.table.cards.Card;
+import game.manager.table.ddz.ai.AiVision;
 import proto.GameProto;
 
 /**
@@ -28,6 +34,12 @@ public class DdzTableContext {
 	private int robMultiplier = 1;//抢地主倍数
 	private boolean farmerEverPlayed;//农民是否出过牌
 	private int landlordPlayCount;//地主出牌次数
+	/** 记牌器：本局所有已出牌的 cardId 集合 */
+	private final Set<Integer> playedCardIds = new HashSet<>();
+	/** AI 视野等级：0=正常, 1=半透视(知剩余牌池), 2=全透视(知他人手牌)。支持运行时修改 */
+	private int visionLevel = AiVision.LEVEL_NORMAL;
+	/** AI 智能等级：0=最笨(出最小/pass), 1=基础策略, 2=高级策略。支持运行时修改 */
+	private int aiLevel = AiVision.AI_ADVANCED;
 
 	public GameProto.CardInfo getLastPlayed() {
 		return lastPlayed;
@@ -109,6 +121,36 @@ public class DdzTableContext {
 		this.landlordPlayCount = landlordPlayCount;
 	}
 
+	/** 记录一批已出牌的 cardId */
+	public void recordPlayedCards(List<Card> cards) {
+		for (Card c : cards) {
+			playedCardIds.add(c.getId());
+		}
+	}
+
+	/** 获取所有已出牌 ID 集合（只读） */
+	public Set<Integer> getPlayedCardIds() {
+		return playedCardIds;
+	}
+
+	public int getVisionLevel() {
+		return visionLevel;
+	}
+
+	/** 运行时修改 AI 视野等级（GM/管理台调用） */
+	public void setVisionLevel(int visionLevel) {
+		this.visionLevel = visionLevel;
+	}
+
+	public int getAiLevel() {
+		return aiLevel;
+	}
+
+	/** 运行时修改 AI 智能等级（GM/管理台调用） */
+	public void setAiLevel(int aiLevel) {
+		this.aiLevel = aiLevel;
+	}
+
 	public void resetCurrentTrickCards() {
 		lastPlayed = GameProto.CardInfo.getDefaultInstance();
 		lastHand = null;
@@ -122,6 +164,7 @@ public class DdzTableContext {
 		robMultiplier = 1;
 		farmerEverPlayed = false;
 		landlordPlayCount = 0;
+		playedCardIds.clear();
 		resetCurrentTrickCards();
 	}
 }

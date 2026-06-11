@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import game.manager.table.card.CardConst;
 import game.manager.table.cards.Card;
 import proto.ConstProto;
 
@@ -514,7 +515,7 @@ public final class DdzRules {
 	}
 
 	/** 3 最小，2 仅次于王；小王、大王最高（用于非火箭单牌比较时的扩展，此处炸弹/火箭已单列） */
-	private static int normalizePoint(int cardVal) {
+	public static int normalizePoint(int cardVal) {
 		if (cardVal >= 3 && cardVal <= 13) {
 			return cardVal - 3;
 		}
@@ -536,11 +537,11 @@ public final class DdzRules {
 	/** 避免直接依赖 CardConst 命名冲突的小桥接 */
 	private static final class CardConstBridge {
 		static int smallJoker() {
-			return game.manager.table.card.CardConst.SMALL_JOKER_VAL;
+			return CardConst.SMALL_JOKER_VAL;
 		}
 
 		static int bigJoker() {
-			return game.manager.table.card.CardConst.BIG_JOKER_VAL;
+			return CardConst.BIG_JOKER_VAL;
 		}
 	}
 }

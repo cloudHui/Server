@@ -1,5 +1,7 @@
 package game.manager.table.mj;
 
+import com.google.protobuf.ByteString;
+
 import game.manager.table.MjTable;
 import game.manager.table.TableUser;
 import game.manager.table.card.mj.MjConst;
@@ -15,6 +17,7 @@ import proto.ConstProto;
 import proto.GameProto;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 麻将出牌服务
@@ -185,6 +188,58 @@ public class MjPlayService {
 	 *
 	 * @return true=有人有claim(进入claim状态), false=无人响应(继续下一个玩家)
 	 */
+	/**
+	 * 为指定座位构建 claim 信息（供 AI 决策使用）
+	 */
+	public static MjClaimInfo buildClaimInfo(MjTable table, int seat) {
+		MjTableContext ctx = table.getMjContext();
+		int tileId = ctx.getClaimTileId();
+		if (tileId == 0) {
+			return null;
+		}
+		TableUser user = table.getSeatUser(seat);
+		if (user == null) {
+			return null;
+		}
+		MjWinChecker winChecker = createWinChecker(table);
+		List<Card> handTiles = user.getCards();
+		List<MjExposedSet> exposedSets = ctx.getExposedSets(seat);
+
+		boolean canHu = false, canGang = false, canPeng = false, canChi = false;
+		int gangTileId = 0;
+		List<int[]> chiCombos = new ArrayList<>();
+
+		boolean allowHu = table.getTableModel().getAllowHu() != 0;
+		if (allowHu) {
+			List<Card> testHand = new ArrayList<>(handTiles);
+			testHand.add(new Card(tileId));
+			if (winChecker.canWin(testHand, exposedSets, tileId)) {
+				canHu = true;
+			}
+		}
+		if (table.getTableModel().getAllowPeng() != 0 && winChecker.canPeng(handTiles, tileId)) {
+			canPeng = true;
+		}
+		if (table.getTableModel().getAllowGangMing() != 0 && winChecker.canMingGang(handTiles, tileId)) {
+			canGang = true;
+			gangTileId = tileId;
+		}
+		if (table.getTableModel().getAllowChi() == 1) {
+			int fromSeat = ctx.getClaimFromSeat();
+			int seatNum = table.getTableModel().getSeatNum();
+			int prevSeat = (fromSeat + seatNum - 1) % seatNum;
+			if (seat == prevSeat) {
+				chiCombos = winChecker.getChiCombos(handTiles, tileId);
+				canChi = !chiCombos.isEmpty();
+			}
+		}
+
+		if (!canHu && !canGang && !canPeng && !canChi) {
+			return null;
+		}
+		return new MjClaimInfo(seat, canHu, canGang, canPeng, canChi, gangTileId, chiCombos);
+	}
+
 	public static boolean checkClaim(MjTable table) {
 		MjTableContext ctx = table.getMjContext();
 		int tileId = ctx.getLastDiscardTile();
@@ -582,7 +637,7 @@ public class MjPlayService {
 		ReplayRecorder replay = table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordChi(seat, fromSeat, chiTileIds, user.getCards().stream()
-					.mapToInt(Card::getId).boxed().collect(java.util.stream.Collectors.toList()));
+					.mapToInt(Card::getId).boxed().collect(Collectors.toList()));
 		}
 
 		// 进入出牌阶段
@@ -985,7 +1040,7 @@ public class MjPlayService {
 			TableUser u = table.getSeatUser(i);
 			if (u != null) {
 				finalHands.put(i, u.getCards().stream()
-						.mapToInt(Card::getId).boxed().collect(java.util.stream.Collectors.toList()));
+						.mapToInt(Card::getId).boxed().collect(Collectors.toList()));
 			}
 			exposedMap.put(i, ctx.getExposedSets(i));
 		}
@@ -1008,7 +1063,7 @@ public class MjPlayService {
 				.setWinnerSeat(winnerSeat)
 				.setFan(fan)
 				.setWinTile(winTile)
-				.setWinType(com.google.protobuf.ByteString.copyFromUtf8(winType));
+				.setWinType(ByteString.copyFromUtf8(winType));
 
 		// 每家得分
 		for (int i = 0; i < seatNum; i++) {
@@ -1031,7 +1086,7 @@ public class MjPlayService {
 					default: type = "unknown"; break;
 				}
 				GameProto.ExposedInfo.Builder info = GameProto.ExposedInfo.newBuilder()
-						.setType(com.google.protobuf.ByteString.copyFromUtf8(type));
+						.setType(ByteString.copyFromUtf8(type));
 				for (int tileId : set.getTileIds()) {
 					info.addTileIds(tileId);
 				}
@@ -1061,7 +1116,7 @@ public class MjPlayService {
 					default: type = "unknown"; break;
 				}
 				GameProto.ExposedInfo.Builder info = GameProto.ExposedInfo.newBuilder()
-						.setType(com.google.protobuf.ByteString.copyFromUtf8(type));
+						.setType(ByteString.copyFromUtf8(type));
 				for (int tileId : set.getTileIds()) {
 					info.addTileIds(tileId);
 				}
@@ -1096,7 +1151,7 @@ public class MjPlayService {
 					.setRound(entry.getRound())
 					.setWinnerSeat(entry.getWinnerSeat())
 					.setFan(entry.getFan())
-					.setWinType(com.google.protobuf.ByteString.copyFromUtf8(entry.getWinType()));
+					.setWinType(ByteString.copyFromUtf8(entry.getWinType()));
 			for (int i = 0; i < seatNum; i++) {
 				summary.addSeatScores(GameProto.SeatScore.newBuilder()
 						.setSeat(i).setScore(entry.getScores()[i]).build());

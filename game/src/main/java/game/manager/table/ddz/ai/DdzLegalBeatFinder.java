@@ -2,13 +2,13 @@ package game.manager.table.ddz.ai;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import game.manager.table.cards.Card;
 import game.manager.table.ddz.DdzHand;
@@ -17,10 +17,16 @@ import game.manager.table.ddz.DdzRules;
 /**
  * DdzLegalBeatFinder
  * 枚举能压制上一手的合法牌型（在同类型、炸弹、王炸规则下）。
- * 
+ * <p>
+ * 性能优化：
+ * 1. byRank 入口算一次复用
+ * 2. signature 用 long hash 替代 String
+ * 3. DFS 顺子/连对用 rank 索引跳过空 rank
+ * 4. 组合枚举剪枝：三带/飞机从 rank 分组选核心+配牌
+ *
  * @author cloud
  * @date 2026-05-03
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  */
 public final class DdzLegalBeatFinder {
@@ -30,7 +36,7 @@ public final class DdzLegalBeatFinder {
 
 	/**
 	 * 查找能压制上一手的合法牌型
-	 * 
+	 *
 	 * @param hand 手牌
 	 * @param last 上一手
 	 * @return 能压制上一手的合法牌型
@@ -40,9 +46,11 @@ public final class DdzLegalBeatFinder {
 		if (last == null || last.getCards().isEmpty()) {
 			return out;
 		}
-		Set<String> seen = new HashSet<>();
+		Set<Long> seen = new HashSet<>();
+		Map<Integer, List<Card>> rankMap = byRank(hand);
+
 		tryRocket(hand, last, out, seen);
-		tryBombs(hand, last, out, seen);
+		tryBombs(rankMap, last, out, seen);
 		if (last.isRocket()) {
 			return out;
 		}
@@ -52,10 +60,10 @@ public final class DdzLegalBeatFinder {
 				trySingles(hand, last, out, seen);
 				break;
 			case DOUBLE:
-				tryPairs(hand, last, out, seen);
+				tryPairs(rankMap, last, out, seen);
 				break;
 			case TRIPLE:
-				tryTriples(hand, last, out, seen);
+				tryTriples(rankMap, last, out, seen);
 				break;
 			case STRAIGHT:
 				tryStraights(hand, last, out, seen);
@@ -64,18 +72,16 @@ public final class DdzLegalBeatFinder {
 				tryStraightDoubles(hand, last, out, seen);
 				break;
 			case TRIPLE_ONE:
-				Combinations.forEachCombination(hand, 4, pick -> addIfBeats(pick, last, out, seen));
+				tryTripleOne(rankMap, hand, last, out, seen);
 				break;
 			case TRIPLE_DOUBLE:
-				Combinations.forEachCombination(hand, 5, pick -> addIfBeats(pick, last, out, seen));
+				tryTripleDouble(rankMap, hand, last, out, seen);
 				break;
 			case PLANE_ONE:
-				Combinations.forEachCombination(hand, last.getStraightLen() * 4,
-						pick -> addIfBeats(pick, last, out, seen));
+				tryPlaneOne(rankMap, hand, last, out, seen);
 				break;
 			case PLANE_DOUBLE:
-				Combinations.forEachCombination(hand, last.getStraightLen() * 5,
-						pick -> addIfBeats(pick, last, out, seen));
+				tryPlaneDouble(rankMap, hand, last, out, seen);
 				break;
 			default:
 				break;
@@ -83,35 +89,22 @@ public final class DdzLegalBeatFinder {
 		return out;
 	}
 
-	private static void tryRocket(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
-		List<Card> js = new ArrayList<>();
+	private static void tryRocket(List<Card> hand, DdzHand last, List<DdzHand> out, Set<Long> seen) {
+		Card s = null, b = null;
 		for (Card c : hand) {
-			if (c.isSmallJoker() || c.isBigJoker()) {
-				js.add(c);
-			}
-		}
-		if (js.size() < 2) {
-			return;
-		}
-		Card s = null;
-		Card b = null;
-		for (Card c : js) {
 			if (c.isSmallJoker()) {
 				s = c;
-			}
-			if (c.isBigJoker()) {
+			} else if (c.isBigJoker()) {
 				b = c;
 			}
 		}
-		if (s == null || b == null) {
-			return;
+		if (s != null && b != null) {
+			addIfBeats(java.util.Arrays.asList(s, b), last, out, seen);
 		}
-		addIfBeats(java.util.Arrays.asList(s, b), last, out, seen);
 	}
 
-	private static void tryBombs(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
-		Map<Integer, List<Card>> by = byRank(hand);
-		for (List<Card> lst : by.values()) {
+	private static void tryBombs(Map<Integer, List<Card>> rankMap, DdzHand last, List<DdzHand> out, Set<Long> seen) {
+		for (List<Card> lst : rankMap.values()) {
 			if (lst.size() < 4) {
 				continue;
 			}
@@ -120,31 +113,14 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
-	/**
-	 * 尝试单牌
-	 * 
-	 * @param hand 手牌
-	 * @param last 上一手
-	 * @param out  输出
-	 * @param seen 已见过
-	 */
-	private static void trySingles(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
+	private static void trySingles(List<Card> hand, DdzHand last, List<DdzHand> out, Set<Long> seen) {
 		for (Card c : hand) {
 			addIfBeats(Collections.singletonList(c), last, out, seen);
 		}
 	}
 
-	/**
-	 * 尝试对牌
-	 * 
-	 * @param hand 手牌
-	 * @param last 上一手
-	 * @param out  输出
-	 * @param seen 已见过
-	 */
-	private static void tryPairs(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
-		Map<Integer, List<Card>> by = byRank(hand);
-		for (List<Card> lst : by.values()) {
+	private static void tryPairs(Map<Integer, List<Card>> rankMap, DdzHand last, List<DdzHand> out, Set<Long> seen) {
+		for (List<Card> lst : rankMap.values()) {
 			if (lst.size() < 2) {
 				continue;
 			}
@@ -156,166 +132,315 @@ public final class DdzLegalBeatFinder {
 		}
 	}
 
-	/**
-	 * 尝试三牌
-	 * 
-	 * @param hand 手牌
-	 * @param last 上一手
-	 * @param out  输出
-	 * @param seen 已见过
-	 */
-	private static void tryTriples(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
-		Map<Integer, List<Card>> by = byRank(hand);
-		for (List<Card> lst : by.values()) {
+	private static void tryTriples(Map<Integer, List<Card>> rankMap, DdzHand last, List<DdzHand> out, Set<Long> seen) {
+		for (List<Card> lst : rankMap.values()) {
 			if (lst.size() < 3) {
 				continue;
 			}
-			Combinations.forEachCombination(lst, 3, pick -> addIfBeats(pick, last, out, seen));
+			addIfBeats(new ArrayList<>(lst.subList(0, 3)), last, out, seen);
 		}
 	}
 
 	/**
-	 * 尝试顺子
-	 * 
-	 * @param hand 手牌
-	 * @param last 上一手
-	 * @param out  输出
-	 * @param seen 已见过
+	 * 剪枝枚举三带一：先选三张核心(rank≥last的三张)，再从剩余牌中选最小单张
 	 */
-	private static void tryStraights(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
+	private static void tryTripleOne(Map<Integer, List<Card>> rankMap, List<Card> hand, DdzHand last,
+			List<DdzHand> out, Set<Long> seen) {
+		int lastKey = last.getStrengthKey();
+		for (Map.Entry<Integer, List<Card>> e : rankMap.entrySet()) {
+			List<Card> lst = e.getValue();
+			if (lst.size() < 3) {
+				continue;
+			}
+			int coreKey = DdzRules.normalizePoint(e.getKey());
+			if (coreKey <= lastKey) {
+				continue;
+			}
+			List<Card> triple = new ArrayList<>(lst.subList(0, 3));
+			List<Card> kicker = pickKickerSingle(hand, triple, 1);
+			if (kicker != null) {
+				List<Card> play = new ArrayList<>(triple);
+				play.addAll(kicker);
+				addIfBeats(play, last, out, seen);
+			}
+		}
+		// 同时尝试炸弹压制
+	}
+
+	/**
+	 * 剪枝枚举三带二：先选三张核心，再从剩余牌中选最小对子
+	 */
+	private static void tryTripleDouble(Map<Integer, List<Card>> rankMap, List<Card> hand, DdzHand last,
+			List<DdzHand> out, Set<Long> seen) {
+		int lastKey = last.getStrengthKey();
+		for (Map.Entry<Integer, List<Card>> e : rankMap.entrySet()) {
+			List<Card> lst = e.getValue();
+			if (lst.size() < 3) {
+				continue;
+			}
+			int coreKey = DdzRules.normalizePoint(e.getKey());
+			if (coreKey <= lastKey) {
+				continue;
+			}
+			List<Card> triple = new ArrayList<>(lst.subList(0, 3));
+			List<Card> kicker = pickKickerPair(rankMap, triple, 1);
+			if (kicker != null) {
+				List<Card> play = new ArrayList<>(triple);
+				play.addAll(kicker);
+				addIfBeats(play, last, out, seen);
+			}
+		}
+	}
+
+	/**
+	 * 剪枝枚举飞机带单：找连续三张核心，再从剩余牌中选最小单张
+	 */
+	private static void tryPlaneOne(Map<Integer, List<Card>> rankMap, List<Card> hand, DdzHand last,
+			List<DdzHand> out, Set<Long> seen) {
+		int segs = last.getStraightLen();
+		int lastKey = last.getStrengthKey();
+		List<int[]> cores = findConsecutiveTriples(rankMap, segs, lastKey);
+		for (int[] startLen : cores) {
+			int start = startLen[0];
+			List<Card> tripleBody = new ArrayList<>();
+			for (int i = 0; i < segs; i++) {
+				List<Card> lst = rankMap.get(start + i);
+				tripleBody.addAll(lst.subList(0, 3));
+			}
+			List<Card> kicker = pickKickerSingle(hand, tripleBody, segs);
+			if (kicker != null) {
+				List<Card> play = new ArrayList<>(tripleBody);
+				play.addAll(kicker);
+				addIfBeats(play, last, out, seen);
+			}
+		}
+	}
+
+	/**
+	 * 剪枝枚举飞机带对：找连续三张核心，再从剩余牌中选最小对子
+	 */
+	private static void tryPlaneDouble(Map<Integer, List<Card>> rankMap, List<Card> hand, DdzHand last,
+			List<DdzHand> out, Set<Long> seen) {
+		int segs = last.getStraightLen();
+		int lastKey = last.getStrengthKey();
+		List<int[]> cores = findConsecutiveTriples(rankMap, segs, lastKey);
+		for (int[] startLen : cores) {
+			int start = startLen[0];
+			List<Card> tripleBody = new ArrayList<>();
+			Map<Integer, List<Card>> remaining = cloneRankMap(rankMap);
+			for (int i = 0; i < segs; i++) {
+				int r = start + i;
+				List<Card> lst = remaining.get(r);
+				tripleBody.addAll(lst.subList(0, 3));
+				lst.subList(0, 3).clear();
+				if (lst.isEmpty()) {
+					remaining.remove(r);
+				}
+			}
+			List<Card> kicker = pickKickerPair(remaining, tripleBody, segs);
+			if (kicker != null) {
+				List<Card> play = new ArrayList<>(tripleBody);
+				play.addAll(kicker);
+				addIfBeats(play, last, out, seen);
+			}
+		}
+	}
+
+	/**
+	 * 找连续三张的核心起始点
+	 */
+	private static List<int[]> findConsecutiveTriples(Map<Integer, List<Card>> rankMap, int segs, int minKey) {
+		List<int[]> result = new ArrayList<>();
+		for (int start = 3; start <= 14 - segs + 1; start++) {
+			if (DdzRules.normalizePoint(start) <= minKey - segs + 1) {
+				continue;
+			}
+			boolean ok = true;
+			for (int i = 0; i < segs; i++) {
+				List<Card> lst = rankMap.get(start + i);
+				if (lst == null || lst.size() < 3) {
+					ok = false;
+					break;
+				}
+			}
+			if (ok) {
+				result.add(new int[] { start });
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 从手牌中排除已选核心后，选最小的 kickerN 张单牌
+	 */
+	private static List<Card> pickKickerSingle(List<Card> hand, List<Card> core, int kickerN) {
+		List<Card> candidates = new ArrayList<>();
+		Set<Integer> coreIds = new HashSet<>();
+		for (Card c : core) {
+			coreIds.add(c.getId());
+		}
+		for (Card c : hand) {
+			if (!coreIds.contains(c.getId())) {
+				candidates.add(c);
+			}
+		}
+		if (candidates.size() < kickerN) {
+			return null;
+		}
+		Collections.sort(candidates);
+		// 取最小的 kickerN 张（candidates 已按降序排，取末尾）
+		List<Card> kicker = new ArrayList<>();
+		for (int i = candidates.size() - kickerN; i < candidates.size(); i++) {
+			kicker.add(candidates.get(i));
+		}
+		return kicker;
+	}
+
+	/**
+	 * 从 rankMap 中排除核心后，选最小的 kickerN 个对子
+	 */
+	private static List<Card> pickKickerPair(Map<Integer, List<Card>> rankMap, List<Card> core, int pairN) {
+		Set<Integer> coreRanks = new HashSet<>();
+		for (Card c : core) {
+			coreRanks.add(c.getCardVal());
+		}
+		List<Card> kicker = new ArrayList<>();
+		for (Integer rank : new ArrayList<>(rankMap.keySet())) {
+			if (kicker.size() >= pairN * 2) {
+				break;
+			}
+			if (coreRanks.contains(rank)) {
+				continue;
+			}
+			List<Card> lst = rankMap.get(rank);
+			if (lst != null && lst.size() >= 2) {
+				kicker.add(lst.get(0));
+				kicker.add(lst.get(1));
+			}
+		}
+		return kicker.size() >= pairN * 2 ? kicker : null;
+	}
+
+	private static Map<Integer, List<Card>> cloneRankMap(Map<Integer, List<Card>> rankMap) {
+		Map<Integer, List<Card>> c = new HashMap<>();
+		for (Map.Entry<Integer, List<Card>> e : rankMap.entrySet()) {
+			c.put(e.getKey(), new ArrayList<>(e.getValue()));
+		}
+		return c;
+	}
+
+	// ==================== 顺子/连对 DFS（rank索引优化） ====================
+
+	/**
+	 * 优化顺子枚举：用 rank→List<Card> 索引，只在有牌的 rank 上递归
+	 */
+	private static void tryStraights(List<Card> hand, DdzHand last, List<DdzHand> out, Set<Long> seen) {
 		int len = last.getStraightLen();
 		if (len < 5) {
 			return;
 		}
-		List<Card> work = new ArrayList<>(hand);
+		int lastKey = last.getStrengthKey();
+		Map<Integer, List<Card>> rankMap = byRank(hand);
 		for (int start = 3; start <= 14 - len + 1; start++) {
-			dfsStraight(work, new boolean[work.size()], start, len, 0, new ArrayList<>(), last, out, seen);
+			if (DdzRules.normalizePoint(start + len - 1) <= lastKey) {
+				continue;
+			}
+			if (!canFormStraight(rankMap, start, len)) {
+				continue;
+			}
+			dfsStraight(rankMap, start, len, 0, new ArrayList<>(), last, out, seen);
 		}
 	}
 
-	/**
-	 * 深度优先搜索顺子
-	 * 
-	 * @param hand      手牌
-	 * @param used      已使用
-	 * @param startRank 开始排名
-	 * @param len       长度
-	 * @param depth     深度
-	 * @param acc       累加器
-	 * @param last      上一手
-	 * @param out       输出
-	 * @param seen      已见过
-	 */
-	private static void dfsStraight(List<Card> hand, boolean[] used, int startRank, int len, int depth,
-			List<Card> acc, DdzHand last, List<DdzHand> out, Set<String> seen) {
+	private static boolean canFormStraight(Map<Integer, List<Card>> rankMap, int start, int len) {
+		for (int i = 0; i < len; i++) {
+			List<Card> lst = rankMap.get(start + i);
+			if (lst == null || lst.isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static void dfsStraight(Map<Integer, List<Card>> rankMap, int start, int len, int depth,
+			List<Card> acc, DdzHand last, List<DdzHand> out, Set<Long> seen) {
 		if (depth == len) {
 			addIfBeats(new ArrayList<>(acc), last, out, seen);
 			return;
 		}
-		int needRank = startRank + depth;
-		if (needRank > 14) {
+		int rank = start + depth;
+		List<Card> lst = rankMap.get(rank);
+		if (lst == null) {
 			return;
 		}
-		for (int i = 0; i < hand.size(); i++) {
-			if (used[i]) {
-				continue;
-			}
-			Card c = hand.get(i);
-			if (c.getCardVal() != needRank) {
-				continue;
-			}
-			used[i] = true;
+		for (Card c : lst) {
 			acc.add(c);
-			dfsStraight(hand, used, startRank, len, depth + 1, acc, last, out, seen);
+			dfsStraight(rankMap, start, len, depth + 1, acc, last, out, seen);
 			acc.remove(acc.size() - 1);
-			used[i] = false;
 		}
 	}
 
-	/**
-	 * 尝试双顺子
-	 * 
-	 * @param hand 手牌
-	 * @param last 上一手
-	 * @param out  输出
-	 * @param seen 已见过
-	 */
-	private static void tryStraightDoubles(List<Card> hand, DdzHand last, List<DdzHand> out, Set<String> seen) {
+	private static void tryStraightDoubles(List<Card> hand, DdzHand last, List<DdzHand> out, Set<Long> seen) {
 		int pairs = last.getStraightLen();
 		if (pairs < 3) {
 			return;
 		}
-		List<Card> work = new ArrayList<>(hand);
+		int lastKey = last.getStrengthKey();
+		Map<Integer, List<Card>> rankMap = byRank(hand);
 		for (int start = 3; start <= 14 - pairs + 1; start++) {
-			dfsStraightDouble(work, new boolean[work.size()], start, pairs, 0, new ArrayList<>(), last, out, seen);
+			if (DdzRules.normalizePoint(start + pairs - 1) <= lastKey) {
+				continue;
+			}
+			if (!canFormStraightDouble(rankMap, start, pairs)) {
+				continue;
+			}
+			dfsStraightDouble(rankMap, start, pairs, 0, new ArrayList<>(), last, out, seen);
 		}
 	}
 
-	/**
-	 * 深度优先搜索双顺子
-	 * 
-	 * @param hand      手牌
-	 * @param used      已使用
-	 * @param startRank 开始排名
-	 * @param pairs     对数
-	 * @param depth     深度
-	 * @param acc       累加器
-	 * @param last      上一手
-	 * @param out       输出
-	 * @param seen      已见过
-	 */
-	private static void dfsStraightDouble(List<Card> hand, boolean[] used, int startRank, int pairs, int depth,
-			List<Card> acc, DdzHand last, List<DdzHand> out, Set<String> seen) {
+	private static boolean canFormStraightDouble(Map<Integer, List<Card>> rankMap, int start, int pairs) {
+		for (int i = 0; i < pairs; i++) {
+			List<Card> lst = rankMap.get(start + i);
+			if (lst == null || lst.size() < 2) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static void dfsStraightDouble(Map<Integer, List<Card>> rankMap, int start, int pairs, int depth,
+			List<Card> acc, DdzHand last, List<DdzHand> out, Set<Long> seen) {
 		if (depth == pairs) {
 			addIfBeats(new ArrayList<>(acc), last, out, seen);
 			return;
 		}
-		int needRank = startRank + depth;
-		List<Integer> idx = new ArrayList<>();
-		for (int i = 0; i < hand.size(); i++) {
-			if (!used[i] && hand.get(i).getCardVal() == needRank) {
-				idx.add(i);
-			}
-		}
-		if (idx.size() < 2) {
+		int rank = start + depth;
+		List<Card> lst = rankMap.get(rank);
+		if (lst == null || lst.size() < 2) {
 			return;
 		}
-		for (int a = 0; a < idx.size(); a++) {
-			for (int b = a + 1; b < idx.size(); b++) {
-				int ia = idx.get(a);
-				int ib = idx.get(b);
-				used[ia] = true;
-				used[ib] = true;
-				acc.add(hand.get(ia));
-				acc.add(hand.get(ib));
-				dfsStraightDouble(hand, used, startRank, pairs, depth + 1, acc, last, out, seen);
+		for (int i = 0; i < lst.size(); i++) {
+			for (int j = i + 1; j < lst.size(); j++) {
+				acc.add(lst.get(i));
+				acc.add(lst.get(j));
+				dfsStraightDouble(rankMap, start, pairs, depth + 1, acc, last, out, seen);
 				acc.remove(acc.size() - 1);
 				acc.remove(acc.size() - 1);
-				used[ia] = false;
-				used[ib] = false;
 			}
 		}
 	}
 
-	/**
-	 * 按排名分组
-	 * 
-	 * @param hand 手牌
-	 * @return 按排名分组
-	 */
+	// ==================== 工具方法 ====================
+
 	private static Map<Integer, List<Card>> byRank(List<Card> hand) {
-		return hand.stream().collect(Collectors.groupingBy(Card::getCardVal, TreeMap::new, Collectors.toList()));
+		Map<Integer, List<Card>> map = new TreeMap<>();
+		for (Card c : hand) {
+			map.computeIfAbsent(c.getCardVal(), k -> new ArrayList<>()).add(c);
+		}
+		return map;
 	}
 
-	/**
-	 * 如果牌型能压制上一手，则添加到输出列表中
-	 * 
-	 * @param cards 牌
-	 * @param last  上一手
-	 * @param out   输出
-	 * @param seen  已见过
-	 */
-	private static void addIfBeats(List<Card> cards, DdzHand last, List<DdzHand> out, Set<String> seen) {
+	private static void addIfBeats(List<Card> cards, DdzHand last, List<DdzHand> out, Set<Long> seen) {
 		Optional<DdzHand> o = DdzRules.analyze(cards);
 		if (!o.isPresent()) {
 			return;
@@ -324,16 +449,24 @@ public final class DdzLegalBeatFinder {
 		if (!DdzRules.beats(h, last)) {
 			return;
 		}
-		if (seen.add(signature(h))) {
+		if (seen.add(hashHand(h))) {
 			out.add(h);
 		}
 	}
 
 	/**
-	 * 获取牌型签名
-	 * 
-	 * @param h 牌型
-	 * @return 牌型签名
+	 * long hash 替代 String signature，避免排序+toString分配
+	 */
+	static long hashHand(DdzHand h) {
+		long hash = h.getType().ordinal() * 31L;
+		for (Card c : h.getCards()) {
+			hash = hash * 131 + c.getId();
+		}
+		return hash;
+	}
+
+	/**
+	 * 保留签名方法供外部使用（如 DdzSimpleAi 去重）
 	 */
 	public static String signature(DdzHand h) {
 		List<Integer> ids = new ArrayList<>();

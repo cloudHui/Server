@@ -1,5 +1,7 @@
 package game.manager.table.ddz.ai;
 
+import game.manager.table.card.CardConst;
+
 /**
  * DdzAiConstants
  * 简易 AI 可调参数（拆牌权重、阶段阈值、跟牌/炸弹倾向）。后续只改此处即可微调行为。
@@ -19,6 +21,8 @@ public final class DdzAiConstants {
 	public static final int PHASE_EARLY_MIN_CARDS = 14;
 	/** ≥ 该张数视为中期 */
 	public static final int PHASE_MID_MIN_CARDS = 8;
+	/** ≤ 该张数时启用终局搜索（穷举最快出完方案） */
+	public static final int PHASE_ENDGAME_MAX_CARDS = 5;
 
 	// ========== 拆牌管线分支权重（越大越倾向保留在一起，不轻易拆开首出） ==========
 	public static final int SPLIT_WEIGHT_ROCKET = 5000;
@@ -46,6 +50,8 @@ public final class DdzAiConstants {
 	public static final int LEAD_PENALTY_ROCKET_EARLY = 2000;
 	/** 拆牌保留权重换算进首出成本：权重越高越晚出 */
 	public static final double LEAD_PRESERVE_WEIGHT_SCALE = 0.35;
+	/** 出牌后剩余拆牌组数惩罚系数（组数越多→越差→越不想出） */
+	public static final double LEAD_RESIDUAL_GROUP_PENALTY = 15.0;
 
 	// ========== 跟牌：最小压制偏好 ==========
 	/** strengthKey 差值惩罚系数（略抬高大牌型成本） */
@@ -55,13 +61,21 @@ public final class DdzAiConstants {
 	/** 前期且上一手非炸弹且点数较弱时，不使用炸弹压制的 strengthKey 上限（normalize 后） */
 	public static final int FOLLOW_SOFT_LAST_STRENGTH_MAX = 8;
 	public static final int FOLLOW_BOMB_WHEN_OPP_HAND_AT_MOST = 10;
+	/** 对手剩余牌 ≤ 此张数时视为危险，炸弹成本降低（允许更积极用炸） */
+	public static final int FOLLOW_BOMB_DANGER_OPP_CARDS = 3;
+	/** 危险情况下炸弹成本折扣系数 */
+	public static final double FOLLOW_BOMB_DANGER_DISCOUNT = 0.4;
 
 	// ========== 农民配合（极简） ==========
 	/** true：队友农民刚出过牌时优先 PASS，让队友跑牌 */
 	public static final boolean AI_PASS_AFTER_TEAMMATE_PLAY = true;
+	/** 队友出牌 strengthKey 低于此值视为"太弱"，不应让过 */
+	public static final int FARMER_TEAMMATE_WEAK_THRESHOLD = 4;
+	/** 地主手牌 ≤ 此张数时视为危险，农民必须压制 */
+	public static final int FARMER_DANGER_LANDLORD_CARDS = 3;
 
 	private static boolean isTopRankSingle(int cardVal) {
-		return cardVal >= 13 && cardVal <= 15 || cardVal >= game.manager.table.card.CardConst.SMALL_JOKER_VAL;
+		return cardVal >= 13 && cardVal <= 15 || cardVal >= CardConst.SMALL_JOKER_VAL;
 	}
 
 	public static int splitSingleExtra(int cardVal) {

@@ -8,9 +8,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.protobuf.ByteString;
+
 import game.manager.table.DdzTable;
 import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
+import game.manager.table.ddz.ai.DdzSimpleAi;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import proto.ConstProto;
@@ -65,7 +68,7 @@ public final class DdzPlayService {
 		if (user == null) {
 			return false;
 		}
-		GameProto.OpInfo op = game.manager.table.ddz.ai.DdzSimpleAi.decide(table, user);
+		GameProto.OpInfo op = DdzSimpleAi.decide(table, user);
 		return apply(table, userId, op) == ConstProto.Result.SUCCESS_VALUE;
 	}
 
@@ -176,6 +179,7 @@ public final class DdzPlayService {
 		} else {
 			ctx.setFarmerEverPlayed(true);
 		}
+		ctx.recordPlayedCards(hand.getCards());
 		broadcastAck(table, user.getUserId(), GameProto.OpInfo.newBuilder()
 				.setChoice(ConstProto.Operation.PLAY)
 				.addOpCards(hand.toCardInfo())
@@ -270,7 +274,7 @@ public final class DdzPlayService {
 					.setRound(table.getCurrentRound())
 					.setWinnerSeat(winner.getSeated())
 					.setFan(settleFactor)
-					.setWinType(com.google.protobuf.ByteString.copyFromUtf8(winType));
+					.setWinType(ByteString.copyFromUtf8(winType));
 			for (int i = 0; i < seatNum; i++) {
 				roundResult.addSeatScores(GameProto.SeatScore.newBuilder()
 						.setSeat(i).setScore(scores[i]).build());

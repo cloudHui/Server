@@ -1,10 +1,14 @@
 package game.manager.table.ddz.ai;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
+import game.manager.table.card.CardConst;
 import game.manager.table.cards.Card;
 
 /**
@@ -22,12 +26,90 @@ public final class DdzSplitPlanner {
 	}
 
 	/**
-	 * 计划
-	 * 
+	 * 计划（贪心单一拆法）
+	 *
 	 * @param hand 手牌
 	 * @return 拆牌组
 	 */
 	public static List<CardGroup> plan(List<Card> hand) {
+		return planWithSplitBombs(hand, Collections.emptySet());
+	}
+
+	/**
+	 * 多拆法搜索：尝试默认拆法 + 拆每种炸弹变体，返回最优拆法。
+	 * <p>
+	 * 拆炸弹思路：将 4 张拆成 3+1，三张可能参与飞机/三带，单张填补空缺。
+	 * 总组数更少或总保留分更低的拆法更优。
+	 *
+	 * @param hand 手牌
+	 * @return 最优拆牌组
+	 */
+	public static List<CardGroup> planBest(List<Card> hand) {
+		List<CardGroup> best = plan(hand);
+		double bestCost = splitCost(best);
+
+		// 收集手牌中所有炸弹的 rank
+		TreeMap<Integer, List<Card>> pool = new TreeMap<>();
+		for (Card c : hand) {
+			pool.computeIfAbsent(c.getCardVal(), k -> new ArrayList<>()).add(c);
+		}
+		List<Integer> bombRanks = new ArrayList<>();
+		for (Map.Entry<Integer, List<Card>> e : pool.entrySet()) {
+			if (e.getValue().size() >= 4 && !isJoker(e.getKey())) {
+				bombRanks.add(e.getKey());
+			}
+		}
+
+		// 尝试拆每一种炸弹
+		for (int rank : bombRanks) {
+			Set<Integer> splitSet = new HashSet<>();
+			splitSet.add(rank);
+			List<CardGroup> alt = planWithSplitBombs(hand, splitSet);
+			double cost = splitCost(alt);
+			if (cost < bestCost) {
+				bestCost = cost;
+				best = alt;
+			}
+		}
+
+		// 尝试拆所有炸弹
+		if (bombRanks.size() > 1) {
+			Set<Integer> splitSet = new HashSet<>(bombRanks);
+			List<CardGroup> alt = planWithSplitBombs(hand, splitSet);
+			double cost = splitCost(alt);
+			if (cost < bestCost) {
+				best = alt;
+			}
+		}
+
+		return best;
+	}
+
+	/**
+	 * 拆牌评分：组数 × 惩罚 + 总保留分（越低越好）
+	 */
+	private static double splitCost(List<CardGroup> groups) {
+		double groupPenalty = groups.size() * 20.0;
+		double preserve = 0;
+		for (CardGroup g : groups) {
+			preserve += g.getPreserveScore();
+		}
+		return groupPenalty + preserve * 0.01;
+	}
+
+	private static boolean isJoker(int rank) {
+		return rank == CardConst.SMALL_JOKER_VAL
+				|| rank == CardConst.BIG_JOKER_VAL;
+	}
+
+	/**
+	 * 带炸弹拆分提示的拆牌：splitBombRanks 中的 rank 不提取为炸弹，而是留给后续三张/飞机
+	 *
+	 * @param hand           手牌
+	 * @param splitBombRanks 需要拆分的炸弹 rank 集合
+	 * @return 拆牌组
+	 */
+	private static List<CardGroup> planWithSplitBombs(List<Card> hand, Set<Integer> splitBombRanks) {
 		List<CardGroup> groups = new ArrayList<>();
 		TreeMap<Integer, List<Card>> pool = new TreeMap<>();
 		for (Card c : hand) {
@@ -35,7 +117,11 @@ public final class DdzSplitPlanner {
 		}
 
 		extractRocket(pool, groups);
-		extractBombs(pool, groups);
+		if (splitBombRanks.isEmpty()) {
+			extractBombs(pool, groups);
+		} else {
+			extractBombsExcept(pool, groups, splitBombRanks);
+		}
 		extractPlaneDoubles(pool, groups);
 		extractPlaneOnes(pool, groups);
 		extractTriples(pool, groups);
@@ -47,20 +133,47 @@ public final class DdzSplitPlanner {
 	}
 
 	/**
+	 * 提取炸弹（排除指定 rank）
+	 */
+	private static void extractBombsExcept(TreeMap<Integer, List<Card>> pool, List<CardGroup> groups,
+			Set<Integer> except) {
+		boolean progress = true;
+		while (progress) {
+			progress = false;
+			for (Map.Entry<Integer, List<Card>> e : new ArrayList<>(pool.entrySet())) {
+				int r = e.getKey();
+				if (except.contains(r) || isJoker(r)) {
+					continue;
+				}
+				List<Card> lst = e.getValue();
+				while (lst != null && lst.size() >= 4) {
+					List<Card> bomb = new ArrayList<>();
+					for (int i = 0; i < 4; i++) {
+						bomb.add(lst.remove(lst.size() - 1));
+					}
+					groups.add(new CardGroup(bomb, DdzAiConstants.SPLIT_WEIGHT_BOMB));
+					progress = true;
+				}
+				removeEmpty(pool, r);
+			}
+		}
+	}
+
+	/**
 	 * 提取火箭
 	 * 
 	 * @param pool   牌池
 	 * @param groups 拆牌组
 	 */
 	private static void extractRocket(TreeMap<Integer, List<Card>> pool, List<CardGroup> groups) {
-		List<Card> sj = pool.get(game.manager.table.card.CardConst.SMALL_JOKER_VAL);
-		List<Card> bj = pool.get(game.manager.table.card.CardConst.BIG_JOKER_VAL);
+		List<Card> sj = pool.get(CardConst.SMALL_JOKER_VAL);
+		List<Card> bj = pool.get(CardConst.BIG_JOKER_VAL);
 		if (sj != null && !sj.isEmpty() && bj != null && !bj.isEmpty()) {
 			List<Card> rocket = new ArrayList<>();
 			rocket.add(sj.remove(sj.size() - 1));
 			rocket.add(bj.remove(bj.size() - 1));
-			removeEmpty(pool, game.manager.table.card.CardConst.SMALL_JOKER_VAL);
-			removeEmpty(pool, game.manager.table.card.CardConst.BIG_JOKER_VAL);
+			removeEmpty(pool, CardConst.SMALL_JOKER_VAL);
+			removeEmpty(pool, CardConst.BIG_JOKER_VAL);
 			groups.add(new CardGroup(rocket, DdzAiConstants.SPLIT_WEIGHT_ROCKET));
 		}
 	}
@@ -90,8 +203,8 @@ public final class DdzSplitPlanner {
 			progress = false;
 			for (Map.Entry<Integer, List<Card>> e : new ArrayList<>(pool.entrySet())) {
 				int r = e.getKey();
-				if (r == game.manager.table.card.CardConst.SMALL_JOKER_VAL
-						|| r == game.manager.table.card.CardConst.BIG_JOKER_VAL) {
+				if (r == CardConst.SMALL_JOKER_VAL
+						|| r == CardConst.BIG_JOKER_VAL) {
 					continue;
 				}
 				List<Card> lst = e.getValue();
