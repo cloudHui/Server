@@ -87,7 +87,7 @@ public class User {
 	/**
 	 * 获取并清除pendingToken（一次性消费）
 	 */
-	public String consumePendingToken() {
+	public synchronized String consumePendingToken() {
 		String token = this.pendingToken;
 		this.pendingToken = null;
 		return token;

@@ -47,6 +47,7 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/gate/lib
                             </outputDirectory>
+                            <excludeGroupIds>com.cloud</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>

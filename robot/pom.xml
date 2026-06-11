@@ -69,6 +69,7 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/robot/lib
                             </outputDirectory>
+                            <excludeGroupIds>com.cloud</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>

@@ -104,7 +104,7 @@ public class CardPool {
 		sendInitCardNotice(table.getSeatUsers());
 	}
 
-	private void sendInitCardNotice(Map<Integer, TableUser> seatUsers) {
+	public void sendInitCardNotice(Map<Integer, TableUser> seatUsers) {
 		for (Map.Entry<Integer, TableUser> entry : seatUsers.entrySet()) {
 			TableUser sendUser = entry.getValue();
 			GameProto.NotCard.Builder builder = GameProto.NotCard.newBuilder();

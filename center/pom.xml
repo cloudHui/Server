@@ -61,6 +61,7 @@
                             <outputDirectory>
                                 ${session.executionRootDirectory}/build/center/lib
                             </outputDirectory>
+                            <excludeGroupIds>com.cloud</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>

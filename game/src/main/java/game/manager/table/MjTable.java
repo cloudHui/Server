@@ -1,14 +1,13 @@
 package game.manager.table;
 
-import com.google.protobuf.Message;
 import game.manager.table.card.mj.MjTilePool;
 import game.manager.table.mj.*;
+import game.manager.table.replay.MjReplayRecorder;
 import game.manager.table.replay.ReplayRecorder;
 import model.tablemodel.TableModel;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import net.client.Sender;
-import net.message.TCPMessage;
 import proto.ConstProto;
 import proto.GameProto;
 import proto.ModelProto;
@@ -92,12 +91,12 @@ public class MjTable extends Table {
 			List<MjExposedSet> sets = mjContext.getExposedSets(i);
 			for (MjExposedSet set : sets) {
 				GameProto.NotMjState.Builder notBuilder = GameProto.NotMjState.newBuilder()
-						.setOpSeat(i).setAction(GameProto.MjAction.MJ_PASS)
+						.setOpSeat(i).setAction(ConstProto.Operation.MJ_PASS)
 						.setWallLeft(mjTilePool.remaining());
 				switch (set.getType()) {
-					case PENG: notBuilder.setTileId(set.getTileIds().get(0)); notBuilder.setAction(GameProto.MjAction.MJ_PENG); break;
-					case MING_GANG: case AN_GANG: case BU_GANG: notBuilder.setTileId(set.getGangTileId()); notBuilder.setAction(GameProto.MjAction.MJ_GANG); break;
-					case CHI: notBuilder.setTileId(set.getTileIds().get(0)); notBuilder.setAction(GameProto.MjAction.MJ_CHI); break;
+					case PENG: notBuilder.setTileId(set.getTileIds().get(0)); notBuilder.setAction(ConstProto.Operation.MJ_PENG); break;
+					case MING_GANG: case AN_GANG: case BU_GANG: notBuilder.setTileId(set.getGangTileId()); notBuilder.setAction(ConstProto.Operation.MJ_GANG); break;
+					case CHI: notBuilder.setTileId(set.getTileIds().get(0)); notBuilder.setAction(ConstProto.Operation.MJ_CHI); break;
 				}
 				user.sendRoleMessage(notBuilder.build(), GMsg.MJ_TILE_NOT, getTableId());
 			}
@@ -107,14 +106,14 @@ public class MjTable extends Table {
 		GameProto.NotTableState stateNot = GameProto.NotTableState.newBuilder()
 				.setState(getTableState().getId()).setStateStart(getStateStartTime())
 				.setStateDuration(getTableState().getOverTime()).build();
-		user.sendRoleMessage(stateNot, GMsg.NOT_TABLE_STATE);
+		user.sendRoleMessage(stateNot, GMsg.NOT_TABLE_STATE, getTableId());
 
 		// 4. 同步赖子
 		if (getTableModel().getGameSubType() == 1 && mjContext.getLaiZiTileId() != 0) {
 			GameProto.NotMjState laiZiNot = GameProto.NotMjState.newBuilder()
 					.setOpSeat(-1).setTileId(mjContext.getLaiZiFlipTile())
-					.setAction(GameProto.MjAction.MJ_DRAW).setWallLeft(mjTilePool.remaining()).build();
-			user.sendRoleMessage(laiZiNot, GMsg.MJ_TILE_NOT);
+					.setAction(ConstProto.Operation.DRAW).setWallLeft(mjTilePool.remaining()).build();
+			user.sendRoleMessage(laiZiNot, GMsg.MJ_TILE_NOT, getTableId());
 		}
 	}
 

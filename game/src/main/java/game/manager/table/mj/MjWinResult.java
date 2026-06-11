@@ -3,7 +3,6 @@ package game.manager.table.mj;
 import game.manager.table.cards.Card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -127,30 +126,5 @@ public class MjWinResult {
 
 	public void setExposedSets(List<MjExposedSet> exposedSets) {
 		this.exposedSets = exposedSets;
-	}
-
-	/**
-	 * 副露牌组(碰/杠/吃)
-	 */
-	public static class MjExposedSet {
-		public enum Type {
-			PENG, GANG, CHI, AN_GANG
-		}
-
-		private final Type type;
-		private final List<Integer> tileIds;
-
-		public MjExposedSet(Type type, List<Integer> tileIds) {
-			this.type = type;
-			this.tileIds = Collections.unmodifiableList(new ArrayList<>(tileIds));
-		}
-
-		public Type getType() {
-			return type;
-		}
-
-		public List<Integer> getTileIds() {
-			return tileIds;
-		}
 	}
 }

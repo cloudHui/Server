@@ -730,7 +730,7 @@ public final class ServerProto {
 
     /**
      * <pre>
-     *桌子
+     * field 1 reserved (removed)
      * </pre>
      *
      * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -738,7 +738,7 @@ public final class ServerProto {
     boolean hasTables();
     /**
      * <pre>
-     *桌子
+     * field 1 reserved (removed)
      * </pre>
      *
      * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -746,7 +746,7 @@ public final class ServerProto {
     proto.ModelProto.RoomTableInfo getTables();
     /**
      * <pre>
-     *桌子
+     * field 1 reserved (removed)
      * </pre>
      *
      * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -841,7 +841,7 @@ public final class ServerProto {
     private proto.ModelProto.RoomTableInfo tables_;
     /**
      * <pre>
-     *桌子
+     * field 1 reserved (removed)
      * </pre>
      *
      * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -851,7 +851,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *桌子
+     * field 1 reserved (removed)
      * </pre>
      *
      * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -861,7 +861,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *桌子
+     * field 1 reserved (removed)
      * </pre>
      *
      * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1175,7 +1175,7 @@ public final class ServerProto {
           proto.ModelProto.RoomTableInfo, proto.ModelProto.RoomTableInfo.Builder, proto.ModelProto.RoomTableInfoOrBuilder> tablesBuilder_;
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1185,7 +1185,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1199,7 +1199,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1219,7 +1219,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1237,7 +1237,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1259,7 +1259,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1277,7 +1277,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1289,7 +1289,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>
@@ -1304,7 +1304,7 @@ public final class ServerProto {
       }
       /**
        * <pre>
-       *桌子
+       * field 1 reserved (removed)
        * </pre>
        *
        * <code>.proto.RoomTableInfo tables = 2;</code>

@@ -75,13 +75,9 @@ public class Card implements Comparable<Card> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Card) {
-			Card card = (Card) obj;
-			if (this.getId() == card.getId()) {
-				return true;
-			}
-		}
-		return super.equals(obj);
+		if (this == obj) return true;
+		if (!(obj instanceof Card)) return false;
+		return this.id == ((Card) obj).id;
 	}
 
 	@Override

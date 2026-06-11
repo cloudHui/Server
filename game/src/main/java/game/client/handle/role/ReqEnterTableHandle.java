@@ -1,7 +1,5 @@
 package game.client.handle.role;
 
-import java.util.Map;
-
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
 import game.Game;

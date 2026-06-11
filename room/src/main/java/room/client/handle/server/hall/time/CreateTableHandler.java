@@ -38,7 +38,15 @@ public class CreateTableHandler implements ConnectHandle {
 	 */
 	private void dealCreateSuccessTableJoin(int sequence, ServerProto.AckCreateGameTable ack, int userId) {
 		TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
+		if (tableInfo == null) {
+			logger.warn("创建桌子信息注册失败, userId: {}", userId);
+			return;
+		}
 		User user = UserManager.getInstance().getUser(userId);
+		if (user == null) {
+			logger.warn("创建桌子时用户不存在, userId: {}", userId);
+			return;
+		}
 		tableInfo.joinRole(user);
 		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId(), sequence, user);
 	}

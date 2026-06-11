@@ -5,22 +5,21 @@ import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
 
 /**
- * @author admin
- * @className RoundOver
- * @description 牌局结束阶段：依赖 {@link AbstractTableHandle} 的超时逻辑切入
- *              {@link TableState#ROUND_OVER}。
- * @createDate 2025/10/20 16:57
+ * 牌局结束阶段：等待玩家准备下一局。
+ * 当前多局逻辑由 {@link TableOverBridge} 处理, 此状态为备用。
  */
 @ProcessEnum(TableState.ROUND_OVER)
 public class RoundOver extends AbstractTableHandle {
 
 	@Override
 	public boolean onTiming(Table table) {
+		// 无超时状态, 每tick检查。由 TableOverBridge 的多局逻辑控制转换。
 		return false;
 	}
 
 	@Override
 	protected void overTime(Table table) {
-
+		// 备用: 如果意外进入此状态且设置了超时, 自动进入下一局
+		table.upNextState();
 	}
 }

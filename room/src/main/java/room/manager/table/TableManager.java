@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.RoomProto;
-import proto.ServerProto;
 import utils.other.excel.ExcelUtil;
 
 /**
@@ -153,9 +152,14 @@ public class TableManager {
 	/**
 	 * 存房间信息
 	 */
-	public synchronized TableInfo putRoomInfo(ServerProto.RoomTableInfo roomTable) {
-		TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), tableModelMap.get(roomTable.getRoomId()));
-		roomTables.computeIfAbsent(tableInfo.getModel().getId(), k -> new ConcurrentHashMap<>()).put(tableInfo.getTableId(), tableInfo);
+	public synchronized TableInfo putRoomInfo(ModelProto.RoomTableInfo roomTable) {
+		TableModel model = tableModelMap.get(roomTable.getRoomId());
+		if (model == null) {
+			logger.warn("putRoomInfo失败, 房间模板不存在, roomId: {}", roomTable.getRoomId());
+			return null;
+		}
+		TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), model);
+		roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>()).put(tableInfo.getTableId(), tableInfo);
 		tableInfoMap.put(tableInfo.getTableId(), tableInfo);
 		return tableInfo;
 	}

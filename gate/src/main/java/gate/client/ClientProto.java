@@ -92,7 +92,7 @@ public class ClientProto {
 	 * @param client     链接
 	 */
 	private static void setClientMap(TCPMessage tcpMessage, GateTcpClient client) {
-		tcpMessage.setClientId(client.getRoleId() == -1 ? client.getId() : client.getRoleId());
+		tcpMessage.setClientId(client.getRoleId() == 0 ? client.getId() : client.getRoleId());
 		tcpMessage.setMapId(client.getMapId() == -1 ? client.getRoleId() : client.getMapId());//没登陆是玩家id 登录后是桌子id
 	}
 

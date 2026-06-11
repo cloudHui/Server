@@ -55,23 +55,25 @@ public class UserManager {
 	 * 移除用户
 	 */
 	public void removeUser(int userId) {
-		User removedUser = users.remove(userId);
-		if (removedUser != null) {
-			logger.info("移除用户, userId: {}", userId);
-			String deviceId = removedUser.getDeviceId();
-			if (deviceId != null) {
-				removedUser = usersC.remove(deviceId);
-				if (removedUser != null) {
-					logger.info("移除用户, deviceId: {}", deviceId);
+		synchronized (this) {
+			User removedUser = users.remove(userId);
+			if (removedUser != null) {
+				logger.info("移除用户, userId: {}", userId);
+				String deviceId = removedUser.getDeviceId();
+				if (deviceId != null) {
+					User removedByDevice = usersC.remove(deviceId);
+					if (removedByDevice != null) {
+						logger.info("移除用户, deviceId: {}", deviceId);
+					} else {
+						logger.warn("用户不存在于devicesC, deviceId: {}", deviceId);
+					}
 				} else {
-					logger.warn("用户不存在,无法移除, deviceId: {}", deviceId);
+					logger.warn("用户deviceId为空,跳过devicesC移除, userId: {}", userId);
 				}
+				MetricsCollector.getInstance().setGauge("hall.online_users", users.size());
 			} else {
-				logger.warn("用户deviceId为空,跳过devicesC移除, userId: {}", userId);
+				logger.warn("用户不存在,无法移除, userId: {}", userId);
 			}
-			MetricsCollector.getInstance().setGauge("hall.online_users", users.size());
-		} else {
-			logger.warn("用户不存在,无法移除, userId: {}", userId);
 		}
 	}
 

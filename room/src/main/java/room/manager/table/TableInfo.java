@@ -28,7 +28,7 @@ public class TableInfo {
 	/**
 	 * 桌子状态
 	 */
-	private ConstProto.TableState tableState = ConstProto.TableState.WAITE;
+	private ConstProto.TableState tableState = ConstProto.TableState.WAIT;
 
 	private final Set<User> tableRoles = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
@@ -77,10 +77,11 @@ public class TableInfo {
 
 	public void removeUser(User user) {
 		tableRoles.remove(user);
+		user.removeTable(tableId);
 	}
 
 	public boolean canJoin() {
-		return tableState == ConstProto.TableState.WAITE && tableRoles.size() < model.getSeatNum();
+		return tableState == ConstProto.TableState.WAIT && tableRoles.size() < model.getSeatNum();
 	}
 
 	public ModelProto.RoomTableInfo getTableInfo() {

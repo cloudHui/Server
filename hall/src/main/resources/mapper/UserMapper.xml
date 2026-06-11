@@ -3,18 +3,36 @@
 <mapper namespace="hall.db.dao.UserDao">
 
     <resultMap id="UserInfo" type="hall.db.entity.UserInfos">
-
+        <result column="channel" property="channel"/>
+        <result column="last_login_ip" property="lastLoginIp"/>
+        <result column="device_info" property="deviceInfo"/>
+        <result column="device_system" property="deviceSystem"/>
+        <result column="login_type" property="loginType"/>
+        <result column="login_key" property="loginKey"/>
+        <result column="role_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="sex" property="sex"/>
+        <result column="rank" property="rank"/>
+        <result column="third_party" property="thirdParty"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="invitation_code" property="invitationCode"/>
+        <result column="phone_num" property="phoneNum"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="token" property="token"/>
     </resultMap>
 
     <select id="queryUserInfo" resultMap="UserInfo">
         select *
         from role_info
-        where role_id == #{userId}
+        where role_id = #{userId}
     </select>
 
-    <select id="insertUserInfo" resultMap="UserInfo">
+    <select id="queryUserInfoByPlant" resultMap="UserInfo">
         select *
         from role_info
-        where plant == #{plant}
+        where plant = #{plant}
     </select>
 </mapper>
