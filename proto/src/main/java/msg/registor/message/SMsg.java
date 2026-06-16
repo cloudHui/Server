@@ -24,4 +24,13 @@ public class SMsg {
 
 	@ClassField(value = ServerProto.AckRoleRoomTable.class, des = "hall向room获取桌子列表回复")
 	public static final int ACK_GET_TABLE_MSG = CMsg.SERVER_TYPE | 4;
+
+	@ClassField(value = ServerProto.ReqRoomTables.class, des = "room向game请求桌子列表")
+	public static final int REQ_ROOM_TABLES_MSG = CMsg.SERVER_TYPE | 5;
+
+	@ClassField(value = ServerProto.AckRoomTables.class, des = "game返回桌子列表")
+	public static final int ACK_ROOM_TABLES_MSG = CMsg.SERVER_TYPE | 6;
+
+	@ClassField(value = ServerProto.NotTableDestroyed.class, des = "game通知room桌子销毁")
+	public static final int NOT_TABLE_DESTROYED_MSG = CMsg.SERVER_TYPE | 7;
 }

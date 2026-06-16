@@ -97,15 +97,59 @@ public class UserService {
 	}
 
 	/**
-	 * Token验证（重连）
+	 * Token验证（通过Hall校验）
 	 */
 	public UserInfo validateToken(String token) {
+		// 先查本地缓存
 		UserInfo info = tokenSessions.get(token);
 		if (info != null) {
-			logger.info("Token验证成功, userId: {}, sessionId: {}", info.getUserId(), info.getSessionId());
+			logger.info("Token验证成功(本地), userId: {}", info.getUserId());
 			return info;
 		}
-		logger.warn("Token验证失败, token: {}", token);
+
+		// 走 Hall 校验
+		try {
+			String sessionId = "validate_" + UUID.randomUUID().toString().substring(0, 8);
+			HallProto.ReqLogin reqLogin = HallProto.ReqLogin.newBuilder()
+					.setCert(ByteString.EMPTY)
+					.setNickName(ByteString.EMPTY)
+					.setToken(ByteString.copyFromUtf8(token))
+					.setChannel(0)
+					.build();
+
+			CompletableFuture<Message> future = gateClient.sendAndWait(
+					sessionId, HMsg.REQ_LOGIN_MSG, reqLogin, 5);
+			Message response = future.get(5, TimeUnit.SECONDS);
+
+			if (response instanceof HallProto.AckLogin) {
+				HallProto.AckLogin ack = (HallProto.AckLogin) response;
+				if (ack.getUserId() > 0) {
+					String newToken = ack.getToken().toStringUtf8();
+					UserInfo userInfo = new UserInfo(
+							sessionId,
+							ack.getUserId(),
+							ack.getNickName().toStringUtf8(),
+							newToken
+					);
+
+					sessionLock.lock();
+					try {
+						sessions.put(sessionId, userInfo);
+						tokenSessions.put(newToken, userInfo);
+						userSessions.put(userInfo.getUserId(), sessionId);
+					} finally {
+						sessionLock.unlock();
+					}
+
+					logger.info("Token验证成功(Hall), userId: {}", userInfo.getUserId());
+					return userInfo;
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Token验证失败(Hall), token: {}", token.substring(0, Math.min(8, token.length())), e);
+		}
+
+		logger.warn("Token验证失败");
 		return null;
 	}
 

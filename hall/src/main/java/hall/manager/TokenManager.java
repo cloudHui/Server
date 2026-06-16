@@ -20,13 +20,13 @@ public class TokenManager {
 	private static final long TOKEN_EXPIRY_MILLIS = 14L * 24 * 60 * 60 * 1000;
 
 	/** token -> userId */
-	private final Map<String, Integer> tokenToUser = new ConcurrentHashMap<>();
+	private final Map<String, Long> tokenToUser = new ConcurrentHashMap<>();
 
 	/** token -> 最后活跃时间 */
 	private final Map<String, Long> tokenActiveTime = new ConcurrentHashMap<>();
 
 	/** userId -> token (确保每个用户只有一个有效token) */
-	private final Map<Integer, String> userToToken = new ConcurrentHashMap<>();
+	private final Map<Long, String> userToToken = new ConcurrentHashMap<>();
 
 	private TokenManager() {}
 
@@ -37,7 +37,7 @@ public class TokenManager {
 	/**
 	 * 生成Token并绑定用户
 	 */
-	public String generateToken(int userId) {
+	public String generateToken(long userId) {
 		synchronized (this) {
 			// 旧token失效
 			String oldToken = userToToken.remove(userId);
@@ -51,7 +51,7 @@ public class TokenManager {
 			tokenActiveTime.put(token, System.currentTimeMillis());
 			userToToken.put(userId, token);
 
-			logger.info("生成Token, userId: {}, token: {}", userId, token);
+			logger.info("生成Token, userId: {}, token: {}", userId, maskToken(token));
 			return token;
 		}
 	}
@@ -59,12 +59,12 @@ public class TokenManager {
 	/**
 	 * 根据Token获取用户ID，过期则返回0
 	 */
-	public int getUserIdByToken(String token) {
+	public long getUserIdByToken(String token) {
 		if (token == null || token.isEmpty()) {
 			return 0;
 		}
 		synchronized (this) {
-			Integer userId = tokenToUser.get(token);
+			Long userId = tokenToUser.get(token);
 			if (userId == null) {
 				return 0;
 			}
@@ -72,7 +72,7 @@ public class TokenManager {
 			Long lastActive = tokenActiveTime.get(token);
 			if (lastActive == null || System.currentTimeMillis() - lastActive > TOKEN_EXPIRY_MILLIS) {
 				invalidateToken(token);
-				logger.info("Token已过期, token: {}", token);
+				logger.info("Token已过期, token: {}", maskToken(token));
 				return 0;
 			}
 			return userId;
@@ -97,7 +97,7 @@ public class TokenManager {
 	public void invalidateToken(String token) {
 		if (token == null) return;
 		synchronized (this) {
-			Integer userId = tokenToUser.remove(token);
+			Long userId = tokenToUser.remove(token);
 			tokenActiveTime.remove(token);
 			if (userId != null) {
 				userToToken.remove(userId);
@@ -108,7 +108,7 @@ public class TokenManager {
 	/**
 	 * 使用户的所有Token失效
 	 */
-	public void invalidateUser(int userId) {
+	public void invalidateUser(long userId) {
 		synchronized (this) {
 			String token = userToToken.remove(userId);
 			if (token != null) {
@@ -127,7 +127,7 @@ public class TokenManager {
 			tokenActiveTime.entrySet().removeIf(entry -> {
 				if (now - entry.getValue() > TOKEN_EXPIRY_MILLIS) {
 					String token = entry.getKey();
-					Integer userId = tokenToUser.remove(token);
+					Long userId = tokenToUser.remove(token);
 					if (userId != null) {
 						userToToken.remove(userId);
 					}
@@ -136,5 +136,10 @@ public class TokenManager {
 				return false;
 			});
 		}
+	}
+
+	private static String maskToken(String token) {
+		if (token == null) return "null";
+		return token.length() <= 8 ? token : token.substring(0, 8) + "...";
 	}
 }

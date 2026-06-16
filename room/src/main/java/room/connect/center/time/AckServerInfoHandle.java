@@ -5,12 +5,15 @@ import java.util.List;
 
 import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
+import msg.registor.message.SMsg;
 import net.client.Sender;
+import net.connect.TCPConnect;
 import proto.ModelProto;
 import proto.ServerProto;
 import room.Room;
 import room.connect.ConnectProcessor;
 import utils.handle.AbstractAckServerInfoHandle;
+import utils.manager.HandleManager;
 
 @ProcessClass(ServerProto.AckServerInfo.class)
 public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
@@ -26,13 +29,21 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 		ModelProto.ServerInfo serverInfo = response.getServers(0);
 		logger.info("处理请求需要连接的服务器信息返回, response:{}", response.toString());
 
+		// 连接Game后发送ReqRoomTables拉取桌子列表
+		ServerProto.ReqRoomTables reqRoomTables = ServerProto.ReqRoomTables.newBuilder()
+				.setRoomServerId(Room.getInstance().getServerId())
+				.build();
+		TCPConnect.CallParam callParam = new TCPConnect.CallParam(
+				SMsg.REQ_ROOM_TABLES_MSG, reqRoomTables,
+				HandleManager::sendMsg, ConnectProcessor.PARSER);
+
 		Room.getInstance().execute(() ->
 				Room.getInstance().getServerManager().connectToSingleServer(
 						serverInfo,
 						Room.getInstance().getServerId(),
 						Room.getInstance().getInnerIp() + ":" + Room.getInstance().getPort(),
 						ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-						ConnectProcessor.HANDLERS, ServerType.Room, null));
+						ConnectProcessor.HANDLERS, ServerType.Room, callParam));
 	}
 
 	@Override

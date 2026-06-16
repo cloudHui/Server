@@ -16,6 +16,8 @@ import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
 import game.manager.table.ddz.ai.DdzSimpleAi;
+import game.manager.table.replay.DdzReplayRecorder;
+import game.manager.table.replay.ReplayRecorder;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import proto.ConstProto;
@@ -49,6 +51,12 @@ public final class DdzPlayService {
 		}
 		List<Card> hand = user.getCards();
 		Card smallest = Collections.min(hand);
+
+		ReplayRecorder replay = table.getReplayRecorder();
+		if (replay instanceof DdzReplayRecorder) {
+			((DdzReplayRecorder) replay).recordAutoPlay(user.getSeated(), Collections.singletonList(smallest.getId()));
+		}
+
 		GameProto.OpInfo op = GameProto.OpInfo.newBuilder()
 				.setChoice(ConstProto.Operation.PLAY)
 				.addOpCards(GameProto.CardInfo.newBuilder()
@@ -112,6 +120,13 @@ public final class DdzPlayService {
 		if (ctx.getLastHand() == null) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
+
+		TableUser user = table.getUsers().get(userId);
+		ReplayRecorder replay = table.getReplayRecorder();
+		if (replay instanceof DdzReplayRecorder && user != null) {
+			((DdzReplayRecorder) replay).recordPass(user.getSeated());
+		}
+
 		broadcastAck(table, userId, GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.PASS).build());
 		ctx.addPass();
 		if (ctx.getConsecutivePasses() >= 2) {
@@ -182,6 +197,14 @@ public final class DdzPlayService {
 			ctx.setFarmerEverPlayed(true);
 		}
 		ctx.recordPlayedCards(hand.getCards());
+
+		ReplayRecorder replay = table.getReplayRecorder();
+		if (replay instanceof DdzReplayRecorder) {
+			List<Integer> ids = new ArrayList<>();
+			for (Card c : hand.getCards()) { ids.add(c.getId()); }
+			((DdzReplayRecorder) replay).recordPlay(user.getSeated(), ids);
+		}
+
 		broadcastAck(table, user.getUserId(), GameProto.OpInfo.newBuilder()
 				.setChoice(ConstProto.Operation.PLAY)
 				.addOpCards(hand.toCardInfo())
@@ -239,6 +262,12 @@ public final class DdzPlayService {
 		// 记录到整场结果
 		String winType = spring ? "spring" : (antiSpring ? "antiSpring" : "normal");
 		table.getGameResult().addRound(table.getCurrentRound(), winner.getSeated(), settleFactor, scores, winType);
+
+		ReplayRecorder replay = table.getReplayRecorder();
+		if (replay instanceof DdzReplayRecorder) {
+			replay.writeSettlement(winner.getSeated(), settleFactor, winType, scores);
+			replay.save();
+		}
 
 		List<GameProto.RPlayer> rPlayers = new ArrayList<>();
 		for (TableUser u : table.getSeatUsers().values()) {

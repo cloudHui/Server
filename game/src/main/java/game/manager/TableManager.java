@@ -1,12 +1,18 @@
 package game.manager;
 
+import game.Game;
 import game.manager.table.Table;
+import game.manager.table.TableUser;
 import game.manager.table.MjTable;
 import game.manager.table.DdzTable;
 import model.tablemodel.TableModel;
+import msg.registor.enums.ServerType;
+import msg.registor.message.SMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
+import proto.ServerProto;
+import net.connect.handle.ConnectHandler;
 import utils.metrics.MetricsCollector;
 import utils.other.excel.ExcelUtil;
 
@@ -112,10 +118,29 @@ public class TableManager {
             MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
             MetricsCollector.getInstance().incrementCounter("game.tables_destroyed");
             logger.info("删除桌子, tableId: {}", tableId);
+            notifyRoomTableDestroyed(tableId);
         } else {
             logger.warn("桌子不存在,无法删除, tableId: {}", tableId);
         }
         return removedTable;
+    }
+
+    /**
+     * 通知Room桌子已销毁
+     */
+    private void notifyRoomTableDestroyed(long tableId) {
+        try {
+            ConnectHandler roomServer = Game.getInstance().getServerManager().getServerClient(ServerType.Room);
+            if (roomServer == null) return;
+
+            ServerProto.NotTableDestroyed not = ServerProto.NotTableDestroyed.newBuilder()
+                    .setTableId(tableId)
+                    .build();
+            roomServer.sendMessage(SMsg.NOT_TABLE_DESTROYED_MSG, not);
+            logger.debug("已通知Room桌子销毁, tableId: {}", tableId);
+        } catch (Exception e) {
+            logger.error("通知Room桌子销毁失败, tableId: {}", tableId, e);
+        }
     }
 
     /**
@@ -178,5 +203,31 @@ public class TableManager {
         int count = tableMap.size();
         tableMap.clear();
         logger.info("清理所有桌子,数量: {}", count);
+    }
+
+    /**
+     * 获取所有桌子的RoomTableInfo（用于Room重启恢复）
+     */
+    public List<ModelProto.RoomTableInfo> getAllTableInfo() {
+        List<ModelProto.RoomTableInfo> list = new ArrayList<>();
+        for (Table table : tableMap.values()) {
+            ModelProto.RoomTableInfo.Builder builder = ModelProto.RoomTableInfo.newBuilder()
+                    .setTableId(table.getTableId())
+                    .setRoomId(table.getTableModel().getId())
+                    .setOwnerId(table.getOwnerId())
+                    .setCreatorId(table.getOwnerId())
+                    .setGameType(table.getTableModel().getType());
+
+            for (TableUser user : table.getSeatUsers().values()) {
+                if (user != null) {
+                    builder.addTableRoles(ModelProto.RoomRole.newBuilder()
+                            .setRoleId((int) user.getUserId())
+                            .setNickName(com.google.protobuf.ByteString.copyFromUtf8(user.getNick()))
+                            .build());
+                }
+            }
+            list.add(builder.build());
+        }
+        return list;
     }
 }

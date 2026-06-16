@@ -57,6 +57,8 @@ public abstract class Table {
 		logger.info("创建桌子实例, tableId: {}, type: {}", tableId, model.getType());
 	}
 
+	public int getOwnerId() { return creator != null ? creator.getRoleId() : 0; }
+
 	// ======================== 抽象方法(子类实现) ========================
 
 	/** 玩法类型: 1=麻将, 2=斗地主 */

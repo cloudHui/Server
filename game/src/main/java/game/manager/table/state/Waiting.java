@@ -19,23 +19,17 @@ public class Waiting extends AbstractTableHandle {
 	@Override
 	public boolean onTiming(Table table) {
 		if (table.sitFull()) {
-			// 通用初始化
 			table.initGameConfig();
 			table.dealCards();
 			table.getOp().setCurrOpSeat(0);
 
-			// MJ特殊: 翻赖子 + 初始化回放
+			initReplay(table);
+			recordInitHands(table);
+
 			if (table.getGameType() == 1) {
-				initMjReplay(table);
 				if (table.getTableModel().getGameSubType() == 1) {
 					MjPlayService.flipLaiZi(game.manager.table.MjTable.class.cast(table));
 				}
-				recordInitHands(table);
-			}
-
-			// DDZ: 无特殊初始化
-
-			if (table.getGameType() == 1) {
 				table.upNextState(TableState.MJ_DEAL);
 			} else {
 				table.upNextState();
@@ -49,7 +43,7 @@ public class Waiting extends AbstractTableHandle {
 		return false;
 	}
 
-	private void initMjReplay(Table table) {
+	private void initReplay(Table table) {
 		ReplayRecorder replay = table.createReplayRecorder();
 		if (replay == null) return;
 
@@ -63,10 +57,14 @@ public class Waiting extends AbstractTableHandle {
 		}
 
 		String gameType;
-		switch (table.getTableModel().getGameSubType()) {
-			case 1: gameType = "荆门麻将"; break;
-			case 2: gameType = "卡五星"; break;
-			default: gameType = "麻将"; break;
+		if (table.getGameType() == 1) {
+			switch (table.getTableModel().getGameSubType()) {
+				case 1: gameType = "荆门麻将"; break;
+				case 2: gameType = "卡五星"; break;
+				default: gameType = "麻将"; break;
+			}
+		} else {
+			gameType = "斗地主";
 		}
 
 		replay.writeHeader(gameType, table.getTableModel().getTotalRounds(),
@@ -75,10 +73,12 @@ public class Waiting extends AbstractTableHandle {
 				+ ", 最大番=" + table.getTableModel().getMaxFan()
 				+ ", autoPlay=" + table.getTableModel().getAutoPlay());
 
-		game.manager.table.MjTable mjTable = game.manager.table.MjTable.class.cast(table);
-		replay.writeDealerAndLaiZi(mjTable.getMjContext().getDealerSeat(),
-				mjTable.getMjContext().getLaiZiTileId(),
-				mjTable.getMjContext().getLaiZiFlipTile());
+		if (table.getGameType() == 1) {
+			game.manager.table.MjTable mjTable = game.manager.table.MjTable.class.cast(table);
+			replay.writeDealerAndLaiZi(mjTable.getMjContext().getDealerSeat(),
+					mjTable.getMjContext().getLaiZiTileId(),
+					mjTable.getMjContext().getLaiZiFlipTile());
+		}
 	}
 
 	private void recordInitHands(Table table) {

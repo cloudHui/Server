@@ -19,6 +19,7 @@
         <module>room</module>
         <module>sp</module>
         <module>web</module>
+        <module>mcp</module>
     </modules>
 
     <dependencies>

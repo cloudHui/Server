@@ -16,7 +16,7 @@ public class UserManager {
 	private static final UserManager instance = new UserManager();
 
 	private static final int MAX_CAPACITY = 4096;
-	private final Map<Integer, User> users;
+	private final Map<Long, User> users;
 	private final Map<String, User> usersC;
 
 	private UserManager() {
@@ -43,7 +43,7 @@ public class UserManager {
 	/**
 	 * 根据用户ID获取用户
 	 */
-	public User getUser(int id) {
+	public User getUser(long id) {
 		User user = users.get(id);
 		if (user == null) {
 			logger.debug("用户不存在, id: {}", id);
@@ -54,7 +54,7 @@ public class UserManager {
 	/**
 	 * 移除用户
 	 */
-	public void removeUser(int userId) {
+	public void removeUser(long userId) {
 		synchronized (this) {
 			User removedUser = users.remove(userId);
 			if (removedUser != null) {
@@ -79,29 +79,29 @@ public class UserManager {
 
 	/**
 	 * 添加用户
+	 * @return true=成功, false=失败(用户已存在或设备已存在)
 	 */
-	public void addUser(User user) {
+	public boolean addUser(User user) {
 		if (user == null) {
 			logger.error("无法添加空用户");
-			return;
+			return false;
 		}
 
-		int userId = user.getUserId();
+		long userId = user.getUserId();
 		String deviceId = user.getDeviceId();
 
 		synchronized (this) {
 			User existingById = users.putIfAbsent(userId, user);
 			if (existingById != null) {
 				logger.warn("用户已存在,添加失败, userId: {}", userId);
-				return;
+				return false;
 			}
 
 			User existingByDevice = usersC.putIfAbsent(deviceId, user);
 			if (existingByDevice != null) {
-				// Roll back: remove the userId entry we just added
 				users.remove(userId, user);
 				logger.warn("设备已存在,添加失败, deviceId: {}, userId: {}", deviceId, userId);
-				return;
+				return false;
 			}
 
 			logger.debug("添加新用户, userId: {}, deviceId: {}", userId, deviceId);
@@ -109,6 +109,7 @@ public class UserManager {
 		}
 
 		MetricsCollector.getInstance().setGauge("hall.online_users", users.size());
+		return true;
 	}
 
 	/**
@@ -121,7 +122,7 @@ public class UserManager {
 	/**
 	 * 检查用户是否存在
 	 */
-	public boolean containsUser(int userId) {
+	public boolean containsUser(long userId) {
 		return users.containsKey(userId);
 	}
 }

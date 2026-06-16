@@ -79,7 +79,7 @@ public class AckRoomTableHandler implements ConnectHandle {
 	private HallProto.AckLogin buildLoginResponse(User user, List<Long> tables, List<ModelProto.Room> rooms) {
 		HallProto.AckLogin.Builder builder = HallProto.AckLogin.newBuilder()
 				.setCert(ByteString.copyFromUtf8(user.getDeviceId()))
-				.setUserId(user.getUserId())
+				.setUserId((int) user.getUserId())
 				.setNickName(ByteString.copyFromUtf8(user.getNick()))
 				.addAllTables(tables)
 				.addAllRoomList(rooms);

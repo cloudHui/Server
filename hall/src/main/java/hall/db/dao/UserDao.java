@@ -1,12 +1,17 @@
 package hall.db.dao;
 
-
 import hall.db.entity.UserInfos;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserDao {
 
-	UserInfos queryUserInfo(@Param("userId") int userId);
+	UserInfos queryUserInfo(@Param("userId") long userId);
 
-	UserInfos queryUserInfoByPlant(@Param("plant") String plant);
+	UserInfos queryByDeviceId(@Param("deviceId") String deviceId);
+
+	UserInfos queryByLoginKey(@Param("loginKey") String loginKey);
+
+	int insertUser(UserInfos user);
+
+	int updateLoginInfo(UserInfos user);
 }

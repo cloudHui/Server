@@ -57,13 +57,26 @@ public class UserController {
 
 	/**
 	 * Token验证接口
-	 * GET /api/validate?token=xxx
+	 * Authorization: Bearer <token>
 	 */
 	@GetMapping("/validate")
-	public ResponseEntity<Map<String, Object>> validate(@RequestParam String token) {
-		UserService.UserInfo userInfo = userService.validateToken(token);
-
+	public ResponseEntity<Map<String, Object>> validate(@RequestHeader(value = "Authorization", required = false) String authorization) {
 		Map<String, Object> result = new HashMap<>();
+
+		if (authorization == null || !authorization.startsWith("Bearer ")) {
+			result.put("code", 401);
+			result.put("msg", "缺少Authorization头");
+			return ResponseEntity.status(401).body(result);
+		}
+
+		String token = authorization.substring(7).trim();
+		if (token.isEmpty()) {
+			result.put("code", 401);
+			result.put("msg", "Token为空");
+			return ResponseEntity.status(401).body(result);
+		}
+
+		UserService.UserInfo userInfo = userService.validateToken(token);
 		if (userInfo != null) {
 			result.put("code", 0);
 			result.put("msg", "success");

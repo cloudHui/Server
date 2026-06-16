@@ -4,6 +4,7 @@ import game.manager.table.banner.Banner;
 import game.manager.table.card.poll.CardPool;
 import game.manager.table.cards.Card;
 import game.manager.table.ddz.*;
+import game.manager.table.replay.DdzReplayRecorder;
 import game.manager.table.replay.ReplayRecorder;
 import model.tablemodel.TableModel;
 import msg.registor.enums.TableState;
@@ -54,7 +55,7 @@ public class DdzTable extends Table {
 
 	@Override
 	public ReplayRecorder createReplayRecorder() {
-		return null; // DDZ回放暂不实现
+		return new DdzReplayRecorder(getTableId(), getCurrentRound());
 	}
 
 	@Override

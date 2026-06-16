@@ -12,6 +12,8 @@ message ReqLogin {
     bytes avatar = 3; //头像信息
     int32 channel = 4;//渠道号
     bytes token = 5;//认证token(首次登录为空)
+    int32 loginType = 6;//登录类型: 0=游客(设备ID), 1=账号密码
+    bytes loginKey = 7;//登录密钥(游客为空, 账号密码登录时为密码)
 }
 
 message AckLogin {

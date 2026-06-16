@@ -25,14 +25,28 @@
     </resultMap>
 
     <select id="queryUserInfo" resultMap="UserInfo">
-        select *
-        from role_info
-        where role_id = #{userId}
+        select * from role_info where role_id = #{userId}
     </select>
 
-    <select id="queryUserInfoByPlant" resultMap="UserInfo">
-        select *
-        from role_info
-        where plant = #{plant}
+    <select id="queryByDeviceId" resultMap="UserInfo">
+        select * from role_info where device_id = #{deviceId} limit 1
     </select>
+
+    <select id="queryByLoginKey" resultMap="UserInfo">
+        select * from role_info where login_key = #{loginKey} limit 1
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId">
+        insert into role_info (nick_name, device_id, login_type, login_key, channel, avatar, register_time, last_login_time)
+        values (#{nickName}, #{deviceId}, #{loginType}, #{loginKey}, #{channel}, #{avatar}, NOW(), NOW())
+    </insert>
+
+    <update id="updateLoginInfo">
+        update role_info
+        set last_login_time = NOW(),
+            token = #{token},
+            device_id = #{deviceId},
+            last_login_ip = #{lastLoginIp}
+        where role_id = #{userId}
+    </update>
 </mapper>

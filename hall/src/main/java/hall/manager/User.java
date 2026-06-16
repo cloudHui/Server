@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
 public class User {
 	private static final Logger logger = LoggerFactory.getLogger(User.class);
 
-	private final int userId;
+	private final long userId;
 	private String deviceId;
 	private String nick;
 	private int gateId;
 	private long lastActiveTime;
 	private String pendingToken;
 
-	public User(int userId, String nick, int gateId, String deviceId) {
+	public User(long userId, String nick, int gateId, String deviceId) {
 		this.userId = userId;
 		this.nick = nick;
 		this.gateId = gateId;
@@ -27,7 +27,7 @@ public class User {
 		logger.debug("创建用户实例, userId: {}, nick: {}, gateId: {}", userId, nick, gateId);
 	}
 
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 

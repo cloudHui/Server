@@ -2,12 +2,13 @@ package game.manager.table.mj;
 
 import com.google.protobuf.ByteString;
 
+import game.manager.table.GameResult;
 import game.manager.table.MjTable;
 import game.manager.table.TableUser;
 import game.manager.table.card.mj.MjConst;
 import game.manager.table.card.mj.MjTilePool;
 import game.manager.table.cards.Card;
-import game.manager.table.replay.ReplayRecorder;
+import game.manager.table.replay.MjReplayRecorder;
 import model.tablemodel.TableModel;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -63,7 +64,7 @@ public class MjPlayService {
 		tilePool.sendHandNotice(table.getSeatUsers());
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordDraw(seat, tileId);
 		}
@@ -114,13 +115,13 @@ public class MjPlayService {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(seat)
 				.setTileId(tileId)
-				.setAction(GameProto.MjAction.MJ_DISCARD_TILE)
+				.setAction(ConstProto.Operation.DISCARD)
 				.setWallLeft(table.getMjTilePool().remaining())
 				.build();
 		table.sendTableMessage(not, GMsg.MJ_TILE_NOT);
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordDiscard(seat, tileId);
 		}
@@ -165,13 +166,13 @@ public class MjPlayService {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(seat)
 				.setTileId(tileId)
-				.setAction(GameProto.MjAction.MJ_DISCARD_TILE)
+				.setAction(ConstProto.Operation.DISCARD)
 				.setWallLeft(table.getMjTilePool().remaining())
 				.build();
 		table.sendTableMessage(not, GMsg.MJ_TILE_NOT);
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordAutoDiscard(seat, tileId);
 		}
@@ -237,7 +238,7 @@ public class MjPlayService {
 		if (!canHu && !canGang && !canPeng && !canChi) {
 			return null;
 		}
-		return new MjClaimInfo(seat, canHu, canGang, canPeng, canChi, gangTileId, chiCombos);
+		return new MjClaimInfo(seat, canHu, canGang, canPeng, canChi, tileId, gangTileId, chiCombos);
 	}
 
 	public static boolean checkClaim(MjTable table) {
@@ -305,7 +306,7 @@ public class MjPlayService {
 			}
 
 			if (canHu || canGang || canPeng || canChi) {
-				claims.add(new MjClaimInfo(checkSeat, canHu, canGang, canPeng, canChi, gangTileId, chiCombos));
+				claims.add(new MjClaimInfo(checkSeat, canHu, canGang, canPeng, canChi, tileId, gangTileId, chiCombos));
 				waitingSeats.add(checkSeat);
 			}
 		}
@@ -337,7 +338,7 @@ public class MjPlayService {
 		GameProto.NotMjState.Builder notBuilder = GameProto.NotMjState.newBuilder()
 				.setOpSeat(claim.getSeat())
 				.setTileId(table.getMjContext().getClaimTileId())
-				.setAction(GameProto.MjAction.MJ_DISCARD_TILE)
+				.setAction(ConstProto.Operation.DISCARD)
 				.setWait(TableState.MJ_CLAIM.getOverTime())
 				.setWallLeft(table.getMjTilePool().remaining());
 
@@ -463,7 +464,7 @@ public class MjPlayService {
 		clearClaimState(table);
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordHu(seat, tileId, false);
 		}
@@ -507,11 +508,11 @@ public class MjPlayService {
 		ctx.resetTurn();
 
 		// 广播碰操作 + 副露区同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_PENG);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_PENG);
 		syncExposedSets(table);
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordPeng(seat, fromSeat, tileId);
 		}
@@ -558,11 +559,11 @@ public class MjPlayService {
 		ctx.setGangShangKaiHua(true);
 
 		// 广播杠操作 + 副露区同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_GANG);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_GANG);
 		syncExposedSets(table);
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordMingGang(seat, fromSeat, tileId);
 		}
@@ -630,11 +631,11 @@ public class MjPlayService {
 		ctx.resetTurn();
 
 		// 广播吃操作 + 副露区同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_CHI);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_CHI);
 		syncExposedSets(table);
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordChi(seat, fromSeat, chiTileIds, user.getCards().stream()
 					.mapToInt(Card::getId).boxed().collect(Collectors.toList()));
@@ -672,7 +673,7 @@ public class MjPlayService {
 		List<Integer> pending = new ArrayList<>(ctx.getPendingClaimSeats());
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		for (int seat : pending) {
 			if (replay != null) {
 				replay.recordAutoPass(seat);
@@ -732,7 +733,7 @@ public class MjPlayService {
 		winResult.setHaiDi(ctx.isHaiDi());
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordHu(seat, drawnTile, true);
 		}
@@ -775,7 +776,7 @@ public class MjPlayService {
 				Arrays.asList(gangTileId, gangTileId, gangTileId, gangTileId), -1));
 
 		// 广播 + 副露同步
-		broadcastMjAction(table, seat, gangTileId, GameProto.MjAction.MJ_GANG);
+		broadcastMjAction(table, seat, gangTileId, ConstProto.Operation.MJ_GANG);
 		syncExposedSets(table);
 
 		// 杠分即时结算
@@ -786,7 +787,7 @@ public class MjPlayService {
 		int drawnTile = drawTile(table);
 
 		// 回放记录(暗杠+补牌)
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordAnGang(seat, gangTileId, drawnTile >= 0 ? drawnTile : -1);
 		}
@@ -836,7 +837,7 @@ public class MjPlayService {
 				ctx.setQiangGangHu(true);
 				user.removeCardsByProtoIds(Collections.singletonList(tileId));
 				// 回放记录: 补杠被抢
-				ReplayRecorder replay = table.getReplayRecorder();
+				MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 				if (replay != null) {
 					replay.recordBuGangRobbed(seat, tileId, checkSeat);
 				}
@@ -861,14 +862,14 @@ public class MjPlayService {
 		}
 
 		// 广播 + 副露同步
-		broadcastMjAction(table, seat, tileId, GameProto.MjAction.MJ_GANG);
+		broadcastMjAction(table, seat, tileId, ConstProto.Operation.MJ_GANG);
 		syncExposedSets(table);
 
 		// 杠分即时结算
 		settleGangScore(table, seat, MjExposedSet.Type.BU_GANG);
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			int drawnForReplay = table.getMjTilePool().remaining() > 0 ? 0 : -1; // 补牌在后面
 			replay.recordBuGang(seat, tileId, 0); // drawnTile在drawTile中记录
@@ -968,7 +969,7 @@ public class MjPlayService {
 		int[] scores = new int[seatNum]; // 流局所有人0分
 
 		// 回放记录
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			replay.recordDrawGame();
 			writeFinalState(table, replay);
@@ -1007,7 +1008,7 @@ public class MjPlayService {
 		else winType = "dianPao";
 
 		// 回放记录: 最终状态+结算
-		ReplayRecorder replay = table.getReplayRecorder();
+		MjReplayRecorder replay = (MjReplayRecorder) table.getReplayRecorder();
 		if (replay != null) {
 			writeFinalState(table, replay);
 			replay.writeSettlement(winResult.getWinnerId(), fan, winType, scores);
@@ -1031,7 +1032,7 @@ public class MjPlayService {
 	/**
 	 * 写入回放最终状态
 	 */
-	private static void writeFinalState(MjTable table, ReplayRecorder replay) {
+	private static void writeFinalState(MjTable table, MjReplayRecorder replay) {
 		MjTableContext ctx = table.getMjContext();
 		int seatNum = table.getTableModel().getSeatNum();
 		Map<Integer, List<Integer>> finalHands = new HashMap<>();
@@ -1150,7 +1151,7 @@ public class MjPlayService {
 			GameProto.RoundSummary.Builder summary = GameProto.RoundSummary.newBuilder()
 					.setRound(entry.getRound())
 					.setWinnerSeat(entry.getWinnerSeat())
-					.setFan(entry.getFan())
+					.setFan(entry.getScore())
 					.setWinType(ByteString.copyFromUtf8(entry.getWinType()));
 			for (int i = 0; i < seatNum; i++) {
 				summary.addSeatScores(GameProto.SeatScore.newBuilder()
@@ -1160,7 +1161,6 @@ public class MjPlayService {
 		}
 
 		table.sendTableMessage(builder.build(), GMsg.NOT_GAME_RESULT);
-	}
 	}
 
 	// ======================== 副露区同步 ========================
@@ -1174,7 +1174,7 @@ public class MjPlayService {
 
 		GameProto.NotMjState.Builder notBuilder = GameProto.NotMjState.newBuilder()
 				.setOpSeat(-1)
-				.setAction(GameProto.MjAction.MJ_PASS)
+				.setAction(ConstProto.Operation.MJ_PASS)
 				.setWallLeft(table.getMjTilePool().remaining());
 
 		// 用choice字段携带副露信息: 每个座位的副露作为一个OpInfo
@@ -1228,7 +1228,7 @@ public class MjPlayService {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(-1)
 				.setTileId(flipTile)
-				.setAction(GameProto.MjAction.MJ_DRAW)
+				.setAction(ConstProto.Operation.DRAW)
 				.setWallLeft(tilePool.remaining())
 				.build();
 		table.sendTableMessage(not, GMsg.MJ_TILE_NOT);
@@ -1261,7 +1261,7 @@ public class MjPlayService {
 	/**
 	 * 广播麻将操作
 	 */
-	private static void broadcastMjAction(MjTable table, int seat, int tileId, GameProto.MjAction action) {
+	private static void broadcastMjAction(MjTable table, int seat, int tileId, ConstProto.Operation action) {
 		GameProto.NotMjState not = GameProto.NotMjState.newBuilder()
 				.setOpSeat(seat)
 				.setTileId(tileId)

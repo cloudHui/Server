@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.ServerProto;
 import room.Room;
+import room.manager.table.TableManager;
 import utils.ServerManager;
 
 /**
@@ -38,6 +39,12 @@ public class ServerBreakNoticeHandle implements Handler {
 			if (serverType != null) {
 				serverManager.removeServerClient(serverType, serverInfo.getServerId());
 				LOGGER.error("[room receive server:{} info:{} break]", serverType, serverInfo.toString());
+
+				// Game断线时清理该Game的所有桌子
+				if (serverType == ServerType.Game) {
+					TableManager.getInstance().clearAllTables();
+					LOGGER.warn("Game断线,已清理所有桌子");
+				}
 			}
 		}
 		return true;

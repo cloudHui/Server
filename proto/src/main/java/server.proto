@@ -82,3 +82,18 @@ message NotBreak {
     int32 userId = 1;//用户id
     bytes cert = 2;
 }
+
+//Room向Game请求桌子列表(重启恢复用)
+message ReqRoomTables {
+    int32 roomServerId = 1;
+}
+
+//Game返回桌子列表
+message AckRoomTables {
+    repeated RoomTableInfo tables = 1;
+}
+
+//Game通知Room桌子销毁
+message NotTableDestroyed {
+    int64 tableId = 1;
+}

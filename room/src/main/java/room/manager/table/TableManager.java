@@ -159,8 +159,32 @@ public class TableManager {
 			return null;
 		}
 		TableInfo tableInfo = new TableInfo(roomTable.getTableId(), roomTable.getCreatorId(), model);
+		tableInfo.setOwnerId(roomTable.getOwnerId());
 		roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>()).put(tableInfo.getTableId(), tableInfo);
 		tableInfoMap.put(tableInfo.getTableId(), tableInfo);
 		return tableInfo;
+	}
+
+	/**
+	 * 清空所有桌子（Game断线时调用，保留房间模板）
+	 */
+	public synchronized void clearAllTables() {
+		int count = tableInfoMap.size();
+		tableInfoMap.clear();
+		for (Map<Long, TableInfo> tables : roomTables.values()) {
+			tables.clear();
+		}
+		logger.info("已清空所有桌子,数量: {}", count);
+	}
+
+	/**
+	 * 批量导入桌子信息（Room重启恢复时调用）
+	 */
+	public synchronized void restoreTables(List<ModelProto.RoomTableInfo> tableList) {
+		if (tableList == null || tableList.isEmpty()) return;
+		for (ModelProto.RoomTableInfo info : tableList) {
+			putRoomInfo(info);
+		}
+		logger.info("恢复桌子完成,数量: {}", tableList.size());
 	}
 }

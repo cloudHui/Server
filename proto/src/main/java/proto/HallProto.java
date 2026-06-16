@@ -62,6 +62,24 @@ public final class HallProto {
      * <code>bytes token = 5;</code>
      */
     com.google.protobuf.ByteString getToken();
+
+    /**
+     * <pre>
+     *登录类型: 0=游客(设备ID), 1=账号密码
+     * </pre>
+     *
+     * <code>int32 loginType = 6;</code>
+     */
+    int getLoginType();
+
+    /**
+     * <pre>
+     *登录密钥(游客为空, 账号密码登录时为密码)
+     * </pre>
+     *
+     * <code>bytes loginKey = 7;</code>
+     */
+    com.google.protobuf.ByteString getLoginKey();
   }
   /**
    * <pre>
@@ -85,6 +103,8 @@ public final class HallProto {
       avatar_ = com.google.protobuf.ByteString.EMPTY;
       channel_ = 0;
       token_ = com.google.protobuf.ByteString.EMPTY;
+      loginType_ = 0;
+      loginKey_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -138,6 +158,16 @@ public final class HallProto {
             case 42: {
 
               token_ = input.readBytes();
+              break;
+            }
+            case 48: {
+
+              loginType_ = input.readInt32();
+              break;
+            }
+            case 58: {
+
+              loginKey_ = input.readBytes();
               break;
             }
           }
@@ -229,6 +259,32 @@ public final class HallProto {
       return token_;
     }
 
+    public static final int LOGINTYPE_FIELD_NUMBER = 6;
+    private int loginType_;
+    /**
+     * <pre>
+     *登录类型: 0=游客(设备ID), 1=账号密码
+     * </pre>
+     *
+     * <code>int32 loginType = 6;</code>
+     */
+    public int getLoginType() {
+      return loginType_;
+    }
+
+    public static final int LOGINKEY_FIELD_NUMBER = 7;
+    private com.google.protobuf.ByteString loginKey_;
+    /**
+     * <pre>
+     *登录密钥(游客为空, 账号密码登录时为密码)
+     * </pre>
+     *
+     * <code>bytes loginKey = 7;</code>
+     */
+    public com.google.protobuf.ByteString getLoginKey() {
+      return loginKey_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -255,6 +311,12 @@ public final class HallProto {
       }
       if (!token_.isEmpty()) {
         output.writeBytes(5, token_);
+      }
+      if (loginType_ != 0) {
+        output.writeInt32(6, loginType_);
+      }
+      if (!loginKey_.isEmpty()) {
+        output.writeBytes(7, loginKey_);
       }
       unknownFields.writeTo(output);
     }
@@ -284,6 +346,14 @@ public final class HallProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(5, token_);
       }
+      if (loginType_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, loginType_);
+      }
+      if (!loginKey_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(7, loginKey_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -310,6 +380,10 @@ public final class HallProto {
           == other.getChannel());
       result = result && getToken()
           .equals(other.getToken());
+      result = result && (getLoginType()
+          == other.getLoginType());
+      result = result && getLoginKey()
+          .equals(other.getLoginKey());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -331,6 +405,10 @@ public final class HallProto {
       hash = (53 * hash) + getChannel();
       hash = (37 * hash) + TOKEN_FIELD_NUMBER;
       hash = (53 * hash) + getToken().hashCode();
+      hash = (37 * hash) + LOGINTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getLoginType();
+      hash = (37 * hash) + LOGINKEY_FIELD_NUMBER;
+      hash = (53 * hash) + getLoginKey().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -474,6 +552,10 @@ public final class HallProto {
 
         token_ = com.google.protobuf.ByteString.EMPTY;
 
+        loginType_ = 0;
+
+        loginKey_ = com.google.protobuf.ByteString.EMPTY;
+
         return this;
       }
 
@@ -501,6 +583,8 @@ public final class HallProto {
         result.avatar_ = avatar_;
         result.channel_ = channel_;
         result.token_ = token_;
+        result.loginType_ = loginType_;
+        result.loginKey_ = loginKey_;
         onBuilt();
         return result;
       }
@@ -556,6 +640,12 @@ public final class HallProto {
         }
         if (other.getToken() != com.google.protobuf.ByteString.EMPTY) {
           setToken(other.getToken());
+        }
+        if (other.getLoginType() != 0) {
+          setLoginType(other.getLoginType());
+        }
+        if (other.getLoginKey() != com.google.protobuf.ByteString.EMPTY) {
+          setLoginKey(other.getLoginKey());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -782,6 +872,85 @@ public final class HallProto {
       public Builder clearToken() {
         
         token_ = getDefaultInstance().getToken();
+        onChanged();
+        return this;
+      }
+
+      private int loginType_ ;
+      /**
+       * <pre>
+       *登录类型: 0=游客(设备ID), 1=账号密码
+       * </pre>
+       *
+       * <code>int32 loginType = 6;</code>
+       */
+      public int getLoginType() {
+        return loginType_;
+      }
+      /**
+       * <pre>
+       *登录类型: 0=游客(设备ID), 1=账号密码
+       * </pre>
+       *
+       * <code>int32 loginType = 6;</code>
+       */
+      public Builder setLoginType(int value) {
+        
+        loginType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *登录类型: 0=游客(设备ID), 1=账号密码
+       * </pre>
+       *
+       * <code>int32 loginType = 6;</code>
+       */
+      public Builder clearLoginType() {
+        
+        loginType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString loginKey_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       *登录密钥(游客为空, 账号密码登录时为密码)
+       * </pre>
+       *
+       * <code>bytes loginKey = 7;</code>
+       */
+      public com.google.protobuf.ByteString getLoginKey() {
+        return loginKey_;
+      }
+      /**
+       * <pre>
+       *登录密钥(游客为空, 账号密码登录时为密码)
+       * </pre>
+       *
+       * <code>bytes loginKey = 7;</code>
+       */
+      public Builder setLoginKey(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        loginKey_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *登录密钥(游客为空, 账号密码登录时为密码)
+       * </pre>
+       *
+       * <code>bytes loginKey = 7;</code>
+       */
+      public Builder clearLoginKey() {
+        
+        loginKey_ = getDefaultInstance().getLoginKey();
         onChanged();
         return this;
       }
@@ -5089,20 +5258,21 @@ public final class HallProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nhall.proto\022\005proto\032\013model.proto\"Z\n\010ReqL" +
+      "\n\nhall.proto\022\005proto\032\013model.proto\"\177\n\010ReqL" +
       "ogin\022\014\n\004cert\030\001 \001(\014\022\020\n\010nickName\030\002 \001(\014\022\016\n\006" +
       "avatar\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\022\r\n\005token\030\005" +
-      " \001(\014\"\227\001\n\010AckLogin\022\014\n\004cert\030\001 \001(\014\022\016\n\006userI" +
-      "d\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\017\n\007channel\030\004 \001" +
-      "(\005\022\014\n\004club\030\005 \001(\005\022\016\n\006tables\030\006 \003(\003\022\035\n\010room" +
-      "List\030\007 \003(\0132\013.proto.Room\022\r\n\005token\030\010 \001(\014\"\035" +
-      "\n\013ReqJoinClub\022\016\n\006clubId\030\001 \001(\005\",\n\013AckJoin" +
-      "Club\022\035\n\010joinClub\030\001 \001(\0132\013.proto.Club\"e\n\004C" +
-      "lub\022\016\n\006clubId\030\001 \001(\005\022\016\n\006avatar\030\002 \001(\014\022\014\n\004n",
-      "ame\030\003 \001(\014\022\013\n\003des\030\004 \001(\014\022\"\n\007members\030\005 \003(\0132" +
-      "\021.proto.ClubMember\".\n\nClubMember\022\016\n\006role" +
-      "Id\030\001 \001(\005\022\020\n\010position\030\002 \001(\005B\013B\tHallProtob" +
-      "\006proto3"
+      " \001(\014\022\021\n\tloginType\030\006 \001(\005\022\020\n\010loginKey\030\007 \001(" +
+      "\014\"\227\001\n\010AckLogin\022\014\n\004cert\030\001 \001(\014\022\016\n\006userId\030\002" +
+      " \001(\005\022\020\n\010nickName\030\003 \001(\014\022\017\n\007channel\030\004 \001(\005\022" +
+      "\014\n\004club\030\005 \001(\005\022\016\n\006tables\030\006 \003(\003\022\035\n\010roomLis" +
+      "t\030\007 \003(\0132\013.proto.Room\022\r\n\005token\030\010 \001(\014\"\035\n\013R" +
+      "eqJoinClub\022\016\n\006clubId\030\001 \001(\005\",\n\013AckJoinClu" +
+      "b\022\035\n\010joinClub\030\001 \001(\0132\013.proto.Club\"e\n\004Club",
+      "\022\016\n\006clubId\030\001 \001(\005\022\016\n\006avatar\030\002 \001(\014\022\014\n\004name" +
+      "\030\003 \001(\014\022\013\n\003des\030\004 \001(\014\022\"\n\007members\030\005 \003(\0132\021.p" +
+      "roto.ClubMember\".\n\nClubMember\022\016\n\006roleId\030" +
+      "\001 \001(\005\022\020\n\010position\030\002 \001(\005B\013B\tHallProtob\006pr" +
+      "oto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5122,7 +5292,7 @@ public final class HallProto {
     internal_static_proto_ReqLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqLogin_descriptor,
-        new java.lang.String[] { "Cert", "NickName", "Avatar", "Channel", "Token", });
+        new java.lang.String[] { "Cert", "NickName", "Avatar", "Channel", "Token", "LoginType", "LoginKey", });
     internal_static_proto_AckLogin_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_proto_AckLogin_fieldAccessorTable = new

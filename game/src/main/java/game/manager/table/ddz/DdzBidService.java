@@ -1,10 +1,14 @@
 package game.manager.table.ddz;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import game.manager.table.DdzTable;
 import game.manager.table.TableUser;
 import game.manager.table.banner.Banner;
+import game.manager.table.replay.DdzReplayRecorder;
+import game.manager.table.replay.ReplayRecorder;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import proto.ConstProto;
@@ -83,6 +87,16 @@ public final class DdzBidService {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
 		int score = cv == ConstProto.Operation.NOT_CALL_VALUE ? 0 : DdzBidOpcodes.callScoreFromChoiceValue(cv);
+
+		ReplayRecorder replay = table.getReplayRecorder();
+		if (replay instanceof DdzReplayRecorder) {
+			if (score > 0) {
+				((DdzReplayRecorder) replay).recordBid(user.getSeated(), score);
+			} else {
+				((DdzReplayRecorder) replay).recordNotCall(user.getSeated());
+			}
+		}
+
 		if (score > banner.getMaxCallScore()) {
 			banner.setMaxCallScore(score);
 			banner.setCandidateSeat(user.getSeated());
@@ -139,6 +153,16 @@ public final class DdzBidService {
 		if (user.getSeated() != banner.getCurrentRobSeat()) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
+
+		ReplayRecorder replay = table.getReplayRecorder();
+		if (replay instanceof DdzReplayRecorder) {
+			if (cv == ConstProto.Operation.ROB_VALUE) {
+				((DdzReplayRecorder) replay).recordRob(user.getSeated());
+			} else {
+				((DdzReplayRecorder) replay).recordNotRob(user.getSeated());
+			}
+		}
+
 		if (cv == ConstProto.Operation.ROB_VALUE) {
 			banner.setRobMultiplierAccum(banner.getRobMultiplierAccum() * 2);
 		}
@@ -172,6 +196,19 @@ public final class DdzBidService {
 		table.getDdz().setFarmerEverPlayed(false);
 		table.getDdz().setLandlordPlayCount(0);
 		table.getCardPool().attachBottomToLandlord(table, landlordSeat);
+
+		ReplayRecorder replay = table.getReplayRecorder();
+		if (replay instanceof DdzReplayRecorder) {
+			TableUser landlord = table.getSeatUser(landlordSeat);
+			if (landlord != null) {
+				List<Integer> bottomIds = new ArrayList<>();
+				for (game.manager.table.cards.Card c : landlord.getCards()) {
+					bottomIds.add(c.getId());
+				}
+				((DdzReplayRecorder) replay).recordBottomCards(landlordSeat, bottomIds);
+			}
+		}
+
 		table.getOp().reset();
 		table.getOp().setCurrOpSeat(landlordSeat);
 		table.upNextStateWithTime(TableState.CARD, System.currentTimeMillis());
