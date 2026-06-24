@@ -1,6 +1,6 @@
-package model.tablemodel;
-
-
+package model.tablemodel; 
+ 
+ 
 public class TableModel {
 
     //主键
@@ -30,42 +30,42 @@ public class TableModel {
     //允许点炮(麻将用 0关1开)
     private int allowDianPao;
 
-    //允许碰(麻将用 0关1开)
+    //0.0
     private int allowPeng;
 
-    //允许杠(麻将用 0关1开)
+    //0.0
     private int allowGang;
 
-    //允许胡(麻将用 0关1开)
+    //0.0
     private int allowHu;
 
-    //允许七对胡(麻将用 0关1开)
+    //0.0
     private int allowSevenPairs;
 
-    //玩法子类型(1荆门 2卡五星)
+    //0.0
     private int gameSubType;
 
-    //杠分(杠的基础分值)
+    //0.0
     private int gangScore;
 
-    //允许明杠(0关1开)
+    //allowGangMing
     private int allowGangMing;
 
-    //允许暗杠(0关1开)
+    //allowGangAn
     private int allowGangAn;
 
-    //允许补杠(0关1开)
+    //allowGangBu
     private int allowGangBu;
 
-    //总局数(1=单局, 2/4/8=多局)
+    //totalRounds
     private int totalRounds;
 
-    //下一局方式(0=等同意, 1=自动下一局)
+    //autoNextRound
     private int autoNextRound;
 
-    //超时自动操作(0=不自动, 1=全部自动)
+    //超时自动(0关1开)
     private int autoPlay;
-
+ 
     // Getters and Setters
     public int getId() {
         return id;
@@ -235,32 +235,32 @@ public class TableModel {
         this.autoPlay = autoPlay;
     }
 
-
+ 
     @Override
     public String toString() {
         return "TableModel{"+
-                "     id="+id+
-                "     type="+type+
-                "     seatNum="+seatNum+
-                "     cardNum="+cardNum+
-                "     exCardNum="+exCardNum+
-                "     baseScore="+baseScore+
-                "     maxFan="+maxFan+
-                "     allowChi="+allowChi+
-                "     allowDianPao="+allowDianPao+
-                "     allowPeng="+allowPeng+
-                "     allowGang="+allowGang+
-                "     allowHu="+allowHu+
-                "     allowSevenPairs="+allowSevenPairs+
-                "     gameSubType="+gameSubType+
-                "     gangScore="+gangScore+
-                "     allowGangMing="+allowGangMing+
-                "     allowGangAn="+allowGangAn+
-                "     allowGangBu="+allowGangBu+
-                "     totalRounds="+totalRounds+
-                "     autoNextRound="+autoNextRound+
-                "     autoPlay="+autoPlay+
+                "     id="+id+ 
+                "     type="+type+ 
+                "     seatNum="+seatNum+ 
+                "     cardNum="+cardNum+ 
+                "     exCardNum="+exCardNum+ 
+                "     baseScore="+baseScore+ 
+                "     maxFan="+maxFan+ 
+                "     allowChi="+allowChi+ 
+                "     allowDianPao="+allowDianPao+ 
+                "     allowPeng="+allowPeng+ 
+                "     allowGang="+allowGang+ 
+                "     allowHu="+allowHu+ 
+                "     allowSevenPairs="+allowSevenPairs+ 
+                "     gameSubType="+gameSubType+ 
+                "     gangScore="+gangScore+ 
+                "     allowGangMing="+allowGangMing+ 
+                "     allowGangAn="+allowGangAn+ 
+                "     allowGangBu="+allowGangBu+ 
+                "     totalRounds="+totalRounds+ 
+                "     autoNextRound="+autoNextRound+ 
+                "     autoPlay="+autoPlay+ 
                 '}';
     }
 
-}
+ }

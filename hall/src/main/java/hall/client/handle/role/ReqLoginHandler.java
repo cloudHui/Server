@@ -190,9 +190,13 @@ public class ReqLoginHandler implements Handler {
 		return user;
 	}
 
+	/** 从DB记录构建内存User对象，添加失败返回null */
 	private User loadUserFromDb(UserInfos dbUser, int clientId, String nickname, String deviceId) {
 		User user = new User(dbUser.getUserId(), nickname, clientId, deviceId);
-		UserManager.getInstance().addUser(user);
+		if (!UserManager.getInstance().addUser(user)) {
+			logger.error("loadUserFromDb addUser失败, userId: {}", dbUser.getUserId());
+			return null;
+		}
 		return user;
 	}
 

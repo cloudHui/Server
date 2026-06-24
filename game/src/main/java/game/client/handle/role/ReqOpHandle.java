@@ -8,8 +8,8 @@ import com.google.protobuf.Message;
 import game.Game;
 import game.manager.TableManager;
 import game.manager.table.Table;
-import game.manager.table.ddz.DdzPlayService;
-import game.manager.table.mj.MjPlayService;
+import game.manager.table.ddz.DdzSettleService;
+import game.manager.table.mj.MjSettleService;
 import msg.annotation.ProcessType;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -99,10 +99,10 @@ public class ReqOpHandle implements Handler {
 		if (table.allReady()) {
 			if (table.isLastRound()) {
 				if (table.getGameType() == 1) {
-					MjPlayService.sendGameResult(
+					game.manager.table.mj.MjSettleService.sendGameResult(
 							game.manager.table.MjTable.class.cast(table));
 				} else {
-					DdzPlayService.sendGameResult(table);
+					DdzSettleService.sendGameResult(table);
 				}
 				Game.getInstance().getTableManager().removeTable(table.getTableId());
 				logger.info("最后一局完成, 总结算已发送, tableId: {}", table.getTableId());

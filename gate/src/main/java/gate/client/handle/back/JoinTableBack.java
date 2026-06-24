@@ -1,8 +1,11 @@
 package gate.client.handle.back;
 
+import com.google.protobuf.Message;
 import gate.client.GateTcpClient;
 import msg.annotation.ProcessType;
 import msg.registor.message.GMsg;
+import net.client.Sender;
+import net.handler.Handler;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +18,14 @@ import proto.GameProto;
  * @createDate 2025/10/21 15:41
  */
 @ProcessType(GMsg.ACK_ENTER_TABLE_MSG)
-public class JoinTableBack implements BackHandle {
+public class JoinTableBack implements BackHandle, Handler {
 
 	private static final Logger logger = LoggerFactory.getLogger(JoinTableBack.class);
+
+	@Override
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
+		return false;
+	}
 
 	@Override
 	public void handle(TCPMessage response, GateTcpClient client) {

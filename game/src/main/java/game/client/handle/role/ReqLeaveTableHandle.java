@@ -4,7 +4,7 @@ import com.google.protobuf.Message;
 import game.Game;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
-import game.manager.table.mj.MjPlayService;
+import game.manager.table.mj.MjSettleService;
 import msg.annotation.ProcessType;
 import msg.registor.message.GMsg;
 import net.client.Sender;
@@ -67,9 +67,9 @@ public class ReqLeaveTableHandle implements Handler {
 			logger.info("游戏中玩家离开, 解散牌局, userId: {}, tableId: {}", userId, table.getTableId());
 			if (table.isMultiRound()) {
 				if (table.getGameType() == 1) {
-					MjPlayService.sendGameResult(game.manager.table.MjTable.class.cast(table));
+					game.manager.table.mj.MjSettleService.sendGameResult(game.manager.table.MjTable.class.cast(table));
 				} else {
-					game.manager.table.ddz.DdzPlayService.sendGameResult(table);
+					game.manager.table.ddz.DdzSettleService.sendGameResult(table);
 				}
 			}
 			table.removeUser(user);

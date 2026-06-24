@@ -3,6 +3,7 @@ package game.manager.table.state;
 import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
+import game.manager.table.mj.MjDrawService;
 import game.manager.table.mj.MjPlayService;
 import game.manager.table.mj.MjExposedSet;
 import game.manager.table.mj.MjTableContext;
@@ -13,6 +14,9 @@ import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import proto.ConstProto;
 import proto.GameProto;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +29,8 @@ import java.util.List;
 @ProcessEnum(TableState.MJ_DISCARD)
 public class MjDiscard extends AbstractTableHandle {
 
+	private static final Logger logger = LoggerFactory.getLogger(MjDiscard.class);
+
 	@Override
 	public boolean onTiming(Table table) {
 		MjTable mjTable = (MjTable) table;
@@ -36,19 +42,17 @@ public class MjDiscard extends AbstractTableHandle {
 		return false;
 	}
 
+	/** 出牌超时处理：AI出牌或自动出牌，然后走公共afterDiscard流程 */
 	@Override
 	public void overTime(Table table) {
 		MjTable mjTable = (MjTable) table;
-		// autoPlay=0时不自动出牌, 等待玩家操作(超时pass)
+		logger.info("麻将出牌超时, tableId: {}, seat: {}", table.getTableId(), table.getOp().getCurrOpSeat());
+
 		if (table.getTableModel().getAutoPlay() == 0) {
-			// 不自动: 超时pass, 进入下一个玩家
-			MjPlayService.nextPlayer(mjTable);
-			long now = System.currentTimeMillis();
-			table.upNextStateWithTime(TableState.MJ_PLAY, now);
+			MjPlayService.afterDiscard(mjTable);
 			return;
 		}
 
-		// 有 AI 等级时使用 AI 决策出牌
 		MjTableContext ctx = mjTable.getMjContext();
 		int aiLevel = ctx.getAiLevel();
 		if (aiLevel >= 0) {
@@ -57,37 +61,22 @@ public class MjDiscard extends AbstractTableHandle {
 			if (user != null) {
 				int aiTile = MjSimpleAi.decideDiscard(mjTable, user, ctx.getDrawnTile());
 				if (aiTile > 0) {
-					// 用 AI 选出的牌代替默认的"摸什么打什么"
 					GameProto.OpInfo op = GameProto.OpInfo.newBuilder()
 							.setChoice(ConstProto.Operation.DISCARD)
 							.addOpCards(GameProto.CardInfo.newBuilder()
 									.addCards(GameProto.Card.newBuilder().setValue(aiTile).build())
 									.build())
 							.build();
-					boolean success = MjPlayService.applyDiscard(mjTable, user.getUserId(), op);
-					if (success) {
-						if (!MjPlayService.checkClaim(mjTable)) {
-							MjPlayService.nextPlayer(mjTable);
-							long now = System.currentTimeMillis();
-							table.upNextStateWithTime(TableState.MJ_PLAY, now);
-						}
+					if (MjPlayService.applyDiscard(mjTable, user.getUserId(), op)) {
+						MjPlayService.afterDiscard(mjTable);
 						return;
 					}
 				}
 			}
 		}
 
-		// fallback: 超时自动出牌(出刚摸到的牌)
-		MjPlayService.autoDiscard(mjTable);
-
-		// 检查是否有人能碰/杠/胡
-		if (!MjPlayService.checkClaim(mjTable)) {
-			// 无人响应，进入下一个玩家摸牌
-			MjPlayService.nextPlayer(mjTable);
-			long now = System.currentTimeMillis();
-			table.upNextStateWithTime(TableState.MJ_PLAY, now);
-		}
-		// 如果有人响应，checkClaim内部会进入MJ_CLAIM状态
+		MjDrawService.autoDiscard(mjTable);
+		MjPlayService.afterDiscard(mjTable);
 	}
 
 	private void sendDiscardPrompt(MjTable table) {

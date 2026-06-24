@@ -13,6 +13,9 @@ public abstract class BaseReplayRecorder implements ReplayRecorder {
 
 	private static final Logger logger = LoggerFactory.getLogger(BaseReplayRecorder.class);
 
+	/** 上次清理回放文件的日期，每天只清理一次 */
+	private static volatile String lastCleanupDate = "";
+
 	protected final long tableId;
 	protected final int round;
 	protected final StringBuilder sb = new StringBuilder();
@@ -68,6 +71,7 @@ public abstract class BaseReplayRecorder implements ReplayRecorder {
 		}
 	}
 
+	/** 保存回放文件到磁盘，每天清理一次7天前的旧文件 */
 	@Override
 	public void save() {
 		if (finalized) return;
@@ -75,7 +79,8 @@ public abstract class BaseReplayRecorder implements ReplayRecorder {
 		try {
 			String jarDir = getJarDir();
 			SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
-			String dirPath = jarDir + File.separator + "replay" + File.separator + dateFmt.format(new Date());
+			String today = dateFmt.format(new Date());
+			String dirPath = jarDir + File.separator + "replay" + File.separator + today;
 			File dir = new File(dirPath);
 			if (!dir.exists()) dir.mkdirs();
 			File file = new File(dir, tableId + "_" + round + ".txt");
@@ -83,9 +88,40 @@ public abstract class BaseReplayRecorder implements ReplayRecorder {
 				writer.write(sb.toString());
 			}
 			logger.info("回放文件已保存: {}", file.getAbsolutePath());
+			if (!today.equals(lastCleanupDate)) {
+				lastCleanupDate = today;
+				cleanOldReplays(jarDir);
+			}
 		} catch (Exception e) {
 			logger.error("保存回放文件失败, tableId: {}, round: {}", tableId, round, e);
 		}
+	}
+
+	/** 清理replay目录下超过7天的子目录 */
+	private void cleanOldReplays(String jarDir) {
+		File replayDir = new File(jarDir, "replay");
+		if (!replayDir.exists() || !replayDir.isDirectory()) return;
+		long threshold = System.currentTimeMillis() - 7L * 24 * 60 * 60 * 1000;
+		File[] subDirs = replayDir.listFiles(File::isDirectory);
+		if (subDirs == null) return;
+		for (File sub : subDirs) {
+			if (sub.lastModified() < threshold) {
+				deleteDir(sub);
+				logger.info("清理过期回放目录: {}", sub.getName());
+			}
+		}
+	}
+
+	/** 递归删除目录 */
+	private void deleteDir(File dir) {
+		File[] files = dir.listFiles();
+		if (files != null) {
+			for (File f : files) {
+				if (f.isDirectory()) deleteDir(f);
+				else f.delete();
+			}
+		}
+		dir.delete();
 	}
 
 	protected String getJarDir() {

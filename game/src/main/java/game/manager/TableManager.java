@@ -13,11 +13,10 @@ import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.ServerProto;
 import net.connect.handle.ConnectHandler;
+import utils.config.TableConfigManager;
 import utils.metrics.MetricsCollector;
-import utils.other.excel.ExcelUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,42 +37,26 @@ public class TableManager {
      */
     private int currentIndex = BASE_INDEX;
 
-    private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
+    private final TableConfigManager configManager;
 
     public TableManager() {
         tableMap = new ConcurrentHashMap<>();
-        init();
+        configManager = new TableConfigManager();
+        if (!configManager.load()) {
+            throw new RuntimeException("加载配置文件失败");
+        }
+        configManager.startWatch();
         logger.info("桌子管理器初始化完成");
     }
 
-
     /**
      * 初始化房间管理器
-     * 从Excel文件加载房间配置
      */
     public synchronized void init() {
-        try {
-            List<Object> properties = new ArrayList<>();
-
-            // 读取Excel配置
-            ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties, TableModel.class);
-
-            synchronized (tableModelMap) {
-                //Todo 重新load 以后之前的房间尽量打完删除
-                tableModelMap.clear();
-
-                for (Object object : properties) {
-                    TableModel model = (TableModel) object;
-                    tableModelMap.put(model.getId(), model);
-                    logger.debug("加载房间模板, id: {}", model.getId());
-                }
-            }
-
-            logger.info("房间管理器初始化完成,加载模板数量: {}", tableModelMap.size());
-        } catch (Exception e) {
-            logger.error("房间管理器初始化失败", e);
-            throw new RuntimeException("房间管理器初始化失败", e);
+        if (!configManager.load()) {
+            throw new RuntimeException("加载配置文件失败");
         }
+        logger.info("房间管理器初始化完成,加载模板数量: {}", configManager.getAllTableModels().size());
     }
 
     /**
@@ -144,12 +127,12 @@ public class TableManager {
     }
 
     /**
-     * 获取新的桌子ID
+     * 获取新的桌子ID（基于时间戳+序号，防重启后ID冲突）
      */
     private long getTableId() {
-        logger.info("创建新桌子ID: {}", ++currentIndex);
-        return currentIndex;
-
+        long id = System.currentTimeMillis() % 100000 + (++currentIndex);
+        logger.info("创建新桌子ID: {}", id);
+        return id;
     }
 
     /**
@@ -161,7 +144,7 @@ public class TableManager {
      */
     public Table createTable(int roomId, ModelProto.RoomRole role) {
         synchronized (TableManager.class) {
-            TableModel model = tableModelMap.get(roomId);
+            TableModel model = configManager.getTableModel(roomId);
             if (model == null) {
                 throw new IllegalArgumentException("未知房间模板 roomId=" + roomId);
             }

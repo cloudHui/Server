@@ -1,14 +1,17 @@
 package gate.client.handle.back;
 
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Message;
 import gate.Gate;
 import gate.client.GateTcpClient;
 import msg.annotation.ProcessType;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
 import msg.registor.message.HMsg;
+import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.connect.handle.ConnectHandler;
+import net.handler.Handler;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +25,14 @@ import proto.ServerProto;
  * @createDate 2025/10/21 15:41
  */
 @ProcessType(HMsg.ACK_LOGIN_MSG)
-public class LoginBack implements BackHandle {
+public class LoginBack implements BackHandle, Handler {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginBack.class);
+
+	@Override
+	public boolean handler(Sender sender, int clientId, Message msg, long mapId, int sequence) {
+		return false;
+	}
 
 	@Override
 	public void handle(TCPMessage response, GateTcpClient client) {

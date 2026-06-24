@@ -3,7 +3,7 @@ package game.manager.table.state;
 import game.Game;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
-import game.manager.table.mj.MjPlayService;
+import game.manager.table.mj.MjDrawService;
 import game.manager.table.replay.ReplayRecorder;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
@@ -28,7 +28,7 @@ public class Waiting extends AbstractTableHandle {
 
 			if (table.getGameType() == 1) {
 				if (table.getTableModel().getGameSubType() == 1) {
-					MjPlayService.flipLaiZi(game.manager.table.MjTable.class.cast(table));
+					MjDrawService.flipLaiZi(game.manager.table.MjTable.class.cast(table));
 				}
 				table.upNextState(TableState.MJ_DEAL);
 			} else {

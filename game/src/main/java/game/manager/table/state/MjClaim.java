@@ -7,11 +7,13 @@ import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.mj.MjClaimInfo;
-import game.manager.table.mj.MjPlayService;
+import game.manager.table.mj.MjClaimService;
 import game.manager.table.mj.MjTableContext;
 import game.manager.table.mj.ai.MjSimpleAi;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import proto.GameProto;
 
 /**
@@ -21,11 +23,15 @@ import proto.GameProto;
 @ProcessEnum(TableState.MJ_CLAIM)
 public class MjClaim extends AbstractTableHandle {
 
+	private static final Logger logger = LoggerFactory.getLogger(MjClaim.class);
+
 	@Override
 	public void overTime(Table table) {
 		MjTable mjTable = (MjTable) table;
 		MjTableContext ctx = mjTable.getMjContext();
 		int aiLevel = ctx.getAiLevel();
+		logger.info("麻将claim超时, tableId: {}, pendingSeats: {}, aiLevel: {}",
+				table.getTableId(), ctx.getPendingClaimSeats(), aiLevel);
 
 		if (aiLevel >= 0) {
 			// AI 决策：遍历每个待响应座位，用 AI 判断
@@ -35,18 +41,18 @@ public class MjClaim extends AbstractTableHandle {
 				if (user == null) {
 					continue;
 				}
-				MjClaimInfo claimInfo = MjPlayService.buildClaimInfo(mjTable, seat);
+				MjClaimInfo claimInfo = MjClaimService.buildClaimInfo(mjTable, seat);
 				if (claimInfo == null) {
 					continue;
 				}
 				GameProto.OpInfo decision = MjSimpleAi.decideClaim(mjTable, user, claimInfo);
 				// 执行 AI 决策（胡/碰/杠/吃/过）
-				MjPlayService.applyClaim(mjTable, user.getUserId(), decision);
+				MjClaimService.applyClaim(mjTable, user.getUserId(), decision);
 			}
 			return;
 		}
 
 		// fallback: 超时全部自动pass
-		MjPlayService.timeoutClaim(mjTable);
+		MjClaimService.timeoutClaim(mjTable);
 	}
 }

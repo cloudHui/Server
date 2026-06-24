@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 连接频率限制器
  * 同一设备ID在10秒内最多3次连接，超出静默拒绝
+ * 内部定期清理过期条目，防止内存泄漏
  */
 public class ConnectionRateLimiter {
 	private static final Logger logger = LoggerFactory.getLogger(ConnectionRateLimiter.class);
@@ -21,8 +22,14 @@ public class ConnectionRateLimiter {
 	/** 窗口内最大连接数 */
 	private static final int MAX_CONNECTIONS = 3;
 
+	/** 每N次allow调用触发一次全量清理 */
+	private static final int CLEANUP_INTERVAL = 100;
+
 	/** deviceId -> 连接时间戳队列 */
 	private final Map<String, Deque<Long>> deviceConnections = new ConcurrentHashMap<>();
+
+	/** allow调用计数器，用于触发定期清理 */
+	private int callCount;
 
 	/**
 	 * 检查设备是否允许连接
@@ -51,9 +58,24 @@ public class ConnectionRateLimiter {
 
 		timestamps.addLast(now);
 
-		// 清理空deque的条目，防止map无限增长
-		deviceConnections.entrySet().removeIf(e -> e.getValue().isEmpty());
+		// 定期全量清理过期条目，防止map无限增长
+		if (++callCount >= CLEANUP_INTERVAL) {
+			callCount = 0;
+			cleanupExpired();
+		}
 
 		return true;
+	}
+
+	/** 清理所有过期的时间戳队列和空条目 */
+	private void cleanupExpired() {
+		long now = System.currentTimeMillis();
+		deviceConnections.entrySet().removeIf(entry -> {
+			Deque<Long> timestamps = entry.getValue();
+			while (!timestamps.isEmpty() && now - timestamps.peekFirst() > WINDOW_MILLIS) {
+				timestamps.pollFirst();
+			}
+			return timestamps.isEmpty();
+		});
 	}
 }

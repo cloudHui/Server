@@ -1,10 +1,10 @@
 package room.manager.user;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class User {
 	private boolean joinGame;
 	private boolean offline = false;
 	private final int clientId;
-	private final Set<Long> tables = new HashSet<>();
+	private final Set<Long> tables = ConcurrentHashMap.newKeySet();
 
 	public User(int userId, int clientId) {
 		this.userId = userId;

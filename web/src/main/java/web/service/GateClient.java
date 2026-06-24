@@ -14,7 +14,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import javax.annotation.PreDestroy;
 import net.connect.TCPConnect;
 import net.message.Parser;
-import net.message.TCPMessage;
 import msg.registor.HandleTypeRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,13 +56,13 @@ public class GateClient {
 	}
 
 	/**
-	 * 移除会话连接
+	 * 移除会话连接并关闭底层channel
 	 */
 	public void removeConnection(String sessionId) {
 		TCPConnect conn = connections.remove(sessionId);
 		if (conn != null) {
 			try {
-				conn.sendMessage(new TCPMessage(0));
+				conn.close();
 			} catch (Exception e) {
 				logger.debug("关闭连接异常, sessionId: {}", sessionId);
 			}
@@ -122,11 +121,12 @@ public class GateClient {
 		}
 	}
 
+	/** 关闭所有连接和线程池 */
 	@PreDestroy
 	public void shutdown() {
 		for (Map.Entry<String, TCPConnect> entry : connections.entrySet()) {
 			try {
-				entry.getValue().sendMessage(new TCPMessage(0));
+				entry.getValue().close();
 			} catch (Exception e) {
 				logger.debug("关闭连接异常, sessionId: {}", entry.getKey());
 			}

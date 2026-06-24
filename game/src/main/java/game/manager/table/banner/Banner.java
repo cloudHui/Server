@@ -4,35 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author cloud
- * @date 2026-05-03
- * @version 1.0
- * @since 1.0
- * @className Banner
- * @description 斗地主叫分与抢地主阶段状态，负责游戏桌子的叫分与抢地主阶段状态管理
- * @createDate 2026-05-03
+ * 斗地主叫分与抢地主阶段状态管理
+ * 跟踪叫分阶段（谁叫了多少分）和抢地主阶段（谁抢了、轮次、倍数）
  */
 public class Banner {
 
+	/** 首个被随机选中叫分的座位 */
 	private int firstRandomRobSeat = -1;
+	/** 首个主动抢地主的座位 */
 	private int firstRobSeat = -1;
-
+	/** 抢地主广播是否已完成（防止重复发送） */
 	private boolean robBroadcastDone;
-
-	/** false=叫分阶段 true=抢地主阶段（各农民各决策一次） */
+	/** false=叫分阶段 true=抢地主阶段 */
 	private boolean robPhase;
-
-	private int maxCallScore;//最大叫分
-	private int candidateSeat = -1;//候选人座位
-
-	private int bidResponses;//叫分响应次数
-
-	private final List<Integer> robFarmerSeats = new ArrayList<>();//抢地主座位列表
-	private int robTurnIndex;//抢地主轮次
-	private int robResponses;//抢地主响应次数
-
-	/** 抢地主累积倍数，初始 1，每次「抢」×2 */
-	private int robMultiplierAccum = 1;//抢地主累积倍数
+	/** 当前最大叫分 */
+	private int maxCallScore;
+	/** 当前候选地主座位（叫分最高者） */
+	private int candidateSeat = -1;
+	/** 叫分阶段已响应人数 */
+	private int bidResponses;
+	/** 参与抢地主的农民座位列表（按顺序） */
+	private final List<Integer> robFarmerSeats = new ArrayList<>();
+	/** 抢地主轮次索引 */
+	private int robTurnIndex;
+	/** 抢地主阶段已响应人数 */
+	private int robResponses;
+	/** 抢地主累积倍数，初始1，每次抢×2 */
+	private int robMultiplierAccum = 1;
 
 	public Banner() {
 	}

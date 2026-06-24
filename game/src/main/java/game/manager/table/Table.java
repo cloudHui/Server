@@ -1,6 +1,7 @@
 package game.manager.table;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.protobuf.Message;
 import game.Game;
@@ -29,15 +30,15 @@ public abstract class Table {
 	private final TableModel tableModel;
 	private final ModelProto.RoomRole creator;
 
-	private final Map<Integer, TableUser> users = new HashMap<>();
-	private final Map<Integer, TableUser> seatUsers = new HashMap<>();
+	private final Map<Integer, TableUser> users = new ConcurrentHashMap<>();
+	private final Map<Integer, TableUser> seatUsers = new ConcurrentHashMap<>();
 
 	private TableState tableState = TableState.WAITING;
 	private long stateStartTime;
 	private int errorTimes;
 
 	private final Operate op;
-	private final Set<Integer> readySet = new HashSet<>();
+	private final Set<Integer> readySet = ConcurrentHashMap.newKeySet();
 	private int currentRound = 1;
 	private GameResult gameResult;
 	private ReplayRecorder replayRecorder;
@@ -162,7 +163,8 @@ public abstract class Table {
 		}
 	}
 
-	public int getGroupIndex() { return (int) tableId; }
+	/** 获取定时器分组索引，防溢出 */
+	public int getGroupIndex() { return (int) (tableId % Integer.MAX_VALUE); }
 
 	public boolean tableLoop(Table table) {
 		try {

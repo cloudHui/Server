@@ -29,6 +29,12 @@
             <artifactId>utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -76,40 +82,40 @@
             </plugin>
 
 
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.4</version>
-                <executions>
-                    <execution>
-                        <id>GameAll</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                            <finalName>GameAll</finalName>
-                            <!-- 设置为 false 以在最终文件名中不包含 assembly 插件自动添加的标识（如 'jar-with-dependencies'） -->
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <archive>
-                                <manifest>
-                                    <mainClass>game.Game</mainClass>
-                                </manifest>
-                            </archive>
+<!--            <plugin>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <version>2.4</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>GameAll</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>single</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <descriptorRefs>-->
+<!--                                <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--                            </descriptorRefs>-->
+<!--                            <finalName>GameAll</finalName>-->
+<!--                            &lt;!&ndash; 设置为 false 以在最终文件名中不包含 assembly 插件自动添加的标识（如 'jar-with-dependencies'） &ndash;&gt;-->
+<!--                            <appendAssemblyId>false</appendAssemblyId>-->
+<!--                            <archive>-->
+<!--                                <manifest>-->
+<!--                                    <mainClass>game.Game</mainClass>-->
+<!--                                </manifest>-->
+<!--                            </archive>-->
 
-                            <outputDirectory>
-                                <!--../Tool/-->
-                                ${session.executionRootDirectory}/build/game
-                            </outputDirectory>
-                            <!--                            <excludes>-->
-                            <!--                                <exclude>*.zip</exclude>-->
-                            <!--                            </excludes>-->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--                            <outputDirectory>-->
+<!--                                &lt;!&ndash;../Tool/&ndash;&gt;-->
+<!--                                ${session.executionRootDirectory}/build/game-->
+<!--                            </outputDirectory>-->
+<!--                            &lt;!&ndash;                            <excludes>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                <exclude>*.zip</exclude>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            </excludes>&ndash;&gt;-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

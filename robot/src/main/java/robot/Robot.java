@@ -203,6 +203,7 @@ public class Robot {
 
 			LOGGER.debug("[Initializing HandleManager]");
 			HandleManager.init(ConnectProcessor.class);
+			HandleManager.init(robot.game.handler.NotCardHandler.class);
 
 			String serverAddress = getInnerIp() + ":" + getPort();
 			LOGGER.info("[Registering server - ID: {}, Address: {}, Center: {}]",

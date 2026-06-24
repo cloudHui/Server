@@ -14,6 +14,9 @@ import msg.registor.message.GMsg;
 import proto.ConstProto;
 import proto.GameProto;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 叫分 1/2/3（每人一轮）→ 两名农民各一轮抢地主（每次「抢」倍数×2），再确定地主并入桌出牌。
  * 
@@ -24,11 +27,13 @@ import proto.GameProto;
  */
 public final class DdzBidService {
 
+	private static final Logger logger = LoggerFactory.getLogger(DdzBidService.class);
+
 	private DdzBidService() {
 	}
 
 	/**
-	 * 叫分超时
+	 * 叫分超时，自动视为不叫/不抢
 	 * 
 	 * @param table 桌子
 	 */
@@ -39,6 +44,8 @@ public final class DdzBidService {
 			return;
 		}
 		Banner banner = table.getBanner();
+		logger.info("叫分超时自动处理, tableId: {}, seat: {}, robPhase: {}",
+				table.getTableId(), seat, banner.isRobPhase());
 		if (!banner.isRobPhase()) {
 			apply(table, u.getUserId(), GameProto.OpInfo.newBuilder()
 					.setChoice(ConstProto.Operation.NOT_CALL).build());

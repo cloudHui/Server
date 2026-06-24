@@ -145,7 +145,8 @@ public class Game {
 		logger.debug("提交串行任务");
 	}
 
-	public int getPooSize() {
+	/** 获取线程池当前大小 */
+	public int getPoolSize() {
 		return executorPool.size();
 	}
 

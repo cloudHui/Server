@@ -124,23 +124,19 @@ public class MjTable extends Table {
 		if (choice == ConstProto.Operation.MJ_GANG) {
 			if (op.getOpCardsCount() > 0) {
 				int gangTileId = op.getOpCards(0).getCards(0).getValue();
-				if (MjPlayService.applyAnGang(this, gangTileId)) return ConstProto.Result.SUCCESS_VALUE;
-				if (MjPlayService.applyBuGang(this, gangTileId)) return ConstProto.Result.SUCCESS_VALUE;
+				if (MjGangService.applyAnGang(this, gangTileId)) return ConstProto.Result.SUCCESS_VALUE;
+				if (MjGangService.applyBuGang(this, gangTileId)) return ConstProto.Result.SUCCESS_VALUE;
 			}
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
 		boolean ok = MjPlayService.applyDiscard(this, userId, op);
 		if (!ok) return ConstProto.Result.OP_CURR_ERROR_VALUE;
-		if (!MjPlayService.checkClaim(this)) {
-			MjPlayService.nextPlayer(this);
-			long now = System.currentTimeMillis();
-			upNextStateWithTime(TableState.MJ_PLAY, now);
-		}
+		MjPlayService.afterDiscard(this);
 		return ConstProto.Result.SUCCESS_VALUE;
 	}
 
 	private int processMjClaim(int userId, GameProto.OpInfo op) {
-		boolean ok = MjPlayService.applyClaim(this, userId, op);
+		boolean ok = MjClaimService.applyClaim(this, userId, op);
 		return ok ? ConstProto.Result.SUCCESS_VALUE : ConstProto.Result.OP_CURR_ERROR_VALUE;
 	}
 

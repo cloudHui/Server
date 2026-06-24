@@ -138,18 +138,19 @@ public class MjTableContext {
 
 	// --- 副露区管理 ---
 
-	/**
-	 * 获取某个座位的副露区
-	 */
+	/** 获取某个座位的副露区（只读，不存在返回空list，不创建新对象） */
 	public List<MjExposedSet> getExposedSets(int seat) {
+		return exposedSetsMap.getOrDefault(seat, Collections.emptyList());
+	}
+
+	/** 获取或创建某个座位的副露区（写操作用） */
+	private List<MjExposedSet> getOrCreateExposedSets(int seat) {
 		return exposedSetsMap.computeIfAbsent(seat, k -> new ArrayList<>());
 	}
 
-	/**
-	 * 添加副露
-	 */
+	/** 添加副露 */
 	public void addExposedSet(int seat, MjExposedSet set) {
-		exposedSetsMap.computeIfAbsent(seat, k -> new ArrayList<>()).add(set);
+		getOrCreateExposedSets(seat).add(set);
 		openedMap.put(seat, true);
 	}
 

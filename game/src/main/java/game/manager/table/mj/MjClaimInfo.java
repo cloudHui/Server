@@ -61,22 +61,4 @@ public class MjClaimInfo {
 	public List<int[]> getChiCombos() {
 		return chiCombos;
 	}
-
-	/**
-	 * 是否有任何可执行的操作(不含pass)
-	 */
-	public boolean hasAnyClaim() {
-		return canHu || canGang || canPeng || canChi;
-	}
-
-	/**
-	 * 优先级: 胡 > 杠 > 碰 > 吃
-	 */
-	public int getHighestPriority() {
-		if (canHu) return 4;
-		if (canGang) return 3;
-		if (canPeng) return 2;
-		if (canChi) return 1;
-		return 0;
-	}
 }

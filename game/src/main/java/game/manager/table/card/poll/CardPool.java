@@ -64,14 +64,16 @@ public class CardPool {
 	}
 
 	/**
-	 * 发初始手牌与底牌，并推送 {@link GMsg#NOT_CARD}。
+	 * 发初始手牌与底牌，并推送手牌通知。
+	 * 根据座位数动态计算每人手牌数，保证牌池合理分配。
 	 */
 	public void dealInitCard() {
 		initCards();
 		Map<Integer, TableUser> seatUsers = table.getSeatUsers();
 		int seatNum = table.getTableModel().getSeatNum();
-		int perPlayer = 17;
+		int totalCards = poolCards.size() + bottomCards.size();
 		int bottom = 3;
+		int perPlayer = (totalCards - bottom) / seatNum;
 		TreeMap<Integer, TableUser> ordered = new TreeMap<>(seatUsers);
 		for (int round = 0; round < perPlayer; round++) {
 			for (int s = 0; s < seatNum; s++) {
@@ -82,7 +84,7 @@ public class CardPool {
 			}
 		}
 		bottomCards.clear();
-		for (int i = 0; i < bottom; i++) {
+		for (int i = 0; i < bottom && poolCards.size() > 0; i++) {
 			bottomCards.add(dealCard());
 		}
 		sendInitCardNotice(seatUsers);

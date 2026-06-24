@@ -6,9 +6,11 @@ import java.util.List;
 
 /**
  * 麻将副露牌组(碰/杠/吃)
+ * 记录每个座位亮出的副露信息，包含类型、牌ID列表、来源座位
  */
 public class MjExposedSet {
 
+	/** 副露类型枚举 */
 	public enum Type {
 		/** 明杠(别人出牌, 手里3张) */
 		MING_GANG,
@@ -19,7 +21,19 @@ public class MjExposedSet {
 		/** 碰 */
 		PENG,
 		/** 吃 */
-		CHI
+		CHI;
+
+		/** 转为协议用的小写驼峰名称 */
+		public String toName() {
+			switch (this) {
+				case PENG: return "peng";
+				case MING_GANG: return "mingGang";
+				case AN_GANG: return "anGang";
+				case BU_GANG: return "buGang";
+				case CHI: return "chi";
+				default: return "unknown";
+			}
+		}
 	}
 
 	private final Type type;

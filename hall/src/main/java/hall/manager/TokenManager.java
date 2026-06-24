@@ -57,37 +57,32 @@ public class TokenManager {
 	}
 
 	/**
-	 * 根据Token获取用户ID，过期则返回0
+	 * 根据Token获取用户ID，过期则返回0（无锁读，ConcurrentHashMap本身线程安全）
 	 */
 	public long getUserIdByToken(String token) {
 		if (token == null || token.isEmpty()) {
 			return 0;
 		}
-		synchronized (this) {
-			Long userId = tokenToUser.get(token);
-			if (userId == null) {
-				return 0;
-			}
-			// 检查过期
-			Long lastActive = tokenActiveTime.get(token);
-			if (lastActive == null || System.currentTimeMillis() - lastActive > TOKEN_EXPIRY_MILLIS) {
-				invalidateToken(token);
-				logger.info("Token已过期, token: {}", maskToken(token));
-				return 0;
-			}
-			return userId;
+		Long userId = tokenToUser.get(token);
+		if (userId == null) {
+			return 0;
 		}
+		Long lastActive = tokenActiveTime.get(token);
+		if (lastActive == null || System.currentTimeMillis() - lastActive > TOKEN_EXPIRY_MILLIS) {
+			invalidateToken(token);
+			logger.info("Token已过期, token: {}", maskToken(token));
+			return 0;
+		}
+		return userId;
 	}
 
 	/**
-	 * 刷新Token活跃时间
+	 * 刷新Token活跃时间（ConcurrentHashMap本身线程安全，无需加锁）
 	 */
 	public void refreshToken(String token) {
 		if (token == null) return;
-		synchronized (this) {
-			if (tokenToUser.containsKey(token)) {
-				tokenActiveTime.put(token, System.currentTimeMillis());
-			}
+		if (tokenToUser.containsKey(token)) {
+			tokenActiveTime.put(token, System.currentTimeMillis());
 		}
 	}
 

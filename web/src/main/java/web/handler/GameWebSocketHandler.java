@@ -35,8 +35,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 	private final UserService userService;
 	private final GateClient gateClient;
 
-	/** sessionId -> WebSocketSession */
-	private final Map<String, WebSocketSession> wsSessions = new ConcurrentHashMap<>();
 	/** WebSocketSessionId -> sessionId */
 	private final Map<String, String> sessionMapping = new ConcurrentHashMap<>();
 
@@ -54,21 +52,22 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
 		String sessionId = sessionMapping.remove(session.getId());
 		if (sessionId != null) {
-			wsSessions.remove(sessionId);
 			logger.info("WebSocket连接关闭, sessionId: {}, status: {}", sessionId, status);
 		}
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) {
+		String action = "unknown";
+		int seq = 0;
 		try {
 			Map<String, Object> msg = objectMapper.readValue(message.getPayload(), Map.class);
-			String action = (String) msg.get("action");
-			int seq = msg.get("seq") != null ? ((Number) msg.get("seq")).intValue() : 0;
+			action = (String) msg.get("action");
+			seq = msg.get("seq") != null ? ((Number) msg.get("seq")).intValue() : 0;
 			@SuppressWarnings("unchecked")
 			Map<String, Object> data = (Map<String, Object>) msg.get("data");
 
-			logger.debug("收到WebSocket消息, action: {}, seq: {}", action, seq);
+			logger.debug("收到WebSocket消息, action: {}, seq: {}, sessionId: {}", action, seq, session.getId());
 
 			switch (action) {
 				case "auth":
@@ -81,14 +80,14 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 					handleOp(session, seq, data);
 					break;
 				case "leave":
-					handleLeave(session, seq, data);
+					handleLeave(session, seq);
 					break;
 				default:
 					sendError(session, seq, "未知操作: " + action);
 			}
 		} catch (Exception e) {
-			logger.error("处理WebSocket消息异常", e);
-			sendError(session, 0, "消息处理失败");
+			logger.error("处理WebSocket消息异常, action: {}, seq: {}, sessionId: {}", action, seq, session.getId(), e);
+			sendError(session, seq, "消息处理失败");
 		}
 	}
 
@@ -108,7 +107,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			return;
 		}
 
-		wsSessions.put(sessionId, wsSession);
 		sessionMapping.put(wsSession.getId(), sessionId);
 
 		sendResponse(wsSession, "auth", seq, 0, "认证成功", null);
@@ -181,8 +179,13 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			return;
 		}
 
+		ConstProto.Operation opEnum = ConstProto.Operation.forNumber(opChoice.intValue());
+		if (opEnum == null) {
+			sendError(wsSession, seq, "无效操作类型: " + opChoice);
+			return;
+		}
 		GameProto.OpInfo.Builder opBuilder = GameProto.OpInfo.newBuilder()
-				.setChoice(ConstProto.Operation.forNumber(opChoice.intValue()));
+				.setChoice(opEnum);
 
 		// 处理出牌 - 将牌值放入单个CardInfo中
 		@SuppressWarnings("unchecked")
@@ -231,7 +234,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 	/**
 	 * 离开桌子
 	 */
-	private void handleLeave(WebSocketSession wsSession, int seq, Map<String, Object> data) {
+	private void handleLeave(WebSocketSession wsSession, int seq) {
 		String sessionId = getSessionId(wsSession);
 		if (sessionId == null) {
 			sendError(wsSession, seq, "请先认证");
@@ -258,6 +261,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		return sessionMapping.get(wsSession.getId());
 	}
 
+	/** 发送JSON响应（同步，WebSocketSession.sendMessage非线程安全） */
 	private void sendResponse(WebSocketSession session, String action, int seq, int code, String msg, Object data) {
 		try {
 			java.util.Map<String, Object> response = new java.util.HashMap<>();
@@ -269,9 +273,11 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 				response.put("data", data);
 			}
 			String json = objectMapper.writeValueAsString(response);
-			session.sendMessage(new TextMessage(json));
+			synchronized (session) {
+				session.sendMessage(new TextMessage(json));
+			}
 		} catch (Exception e) {
-			logger.error("发送WebSocket消息失败", e);
+			logger.error("发送WebSocket消息失败, action: {}, sessionId: {}", action, session.getId(), e);
 		}
 	}
 

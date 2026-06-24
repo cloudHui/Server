@@ -46,85 +46,32 @@ public class MjWinResult {
 		this.exposedSets = new ArrayList<>();
 	}
 
-	// --- Getters & Setters ---
+	// --- 基本信息 ---
 
-	public int getWinnerId() {
-		return winnerId;
-	}
+	public int getWinnerId() { return winnerId; }
+	public void setWinnerId(int winnerId) { this.winnerId = winnerId; }
+	public int getWinTile() { return winTile; }
+	public void setWinTile(int winTile) { this.winTile = winTile; }
 
-	public void setWinnerId(int winnerId) {
-		this.winnerId = winnerId;
-	}
+	// --- 胡牌方式标志 ---
 
-	public int getWinTile() {
-		return winTile;
-	}
+	public boolean isZiMo() { return ziMo; }
+	public void setZiMo(boolean ziMo) { this.ziMo = ziMo; }
+	public boolean isGangShangKaiHua() { return gangShangKaiHua; }
+	public void setGangShangKaiHua(boolean gangShangKaiHua) { this.gangShangKaiHua = gangShangKaiHua; }
+	public boolean isQiangGangHu() { return qiangGangHu; }
+	public void setQiangGangHu(boolean qiangGangHu) { this.qiangGangHu = qiangGangHu; }
+	public boolean isHaiDi() { return haiDi; }
+	public void setHaiDi(boolean haiDi) { this.haiDi = haiDi; }
+	public boolean isDianPao() { return dianPao; }
+	public void setDianPao(boolean dianPao) { this.dianPao = dianPao; }
+	public int getDianPaoSeat() { return dianPaoSeat; }
+	public void setDianPaoSeat(int dianPaoSeat) { this.dianPaoSeat = dianPaoSeat; }
 
-	public void setWinTile(int winTile) {
-		this.winTile = winTile;
-	}
+	// --- 手牌与副露 ---
 
-	public boolean isZiMo() {
-		return ziMo;
-	}
-
-	public void setZiMo(boolean ziMo) {
-		this.ziMo = ziMo;
-	}
-
-	public boolean isGangShangKaiHua() {
-		return gangShangKaiHua;
-	}
-
-	public void setGangShangKaiHua(boolean gangShangKaiHua) {
-		this.gangShangKaiHua = gangShangKaiHua;
-	}
-
-	public boolean isQiangGangHu() {
-		return qiangGangHu;
-	}
-
-	public void setQiangGangHu(boolean qiangGangHu) {
-		this.qiangGangHu = qiangGangHu;
-	}
-
-	public boolean isHaiDi() {
-		return haiDi;
-	}
-
-	public void setHaiDi(boolean haiDi) {
-		this.haiDi = haiDi;
-	}
-
-	public boolean isDianPao() {
-		return dianPao;
-	}
-
-	public void setDianPao(boolean dianPao) {
-		this.dianPao = dianPao;
-	}
-
-	public int getDianPaoSeat() {
-		return dianPaoSeat;
-	}
-
-	public void setDianPaoSeat(int dianPaoSeat) {
-		this.dianPaoSeat = dianPaoSeat;
-	}
-
-	public List<Card> getHandTiles() {
-		return handTiles;
-	}
-
-	public void setHandTiles(List<Card> handTiles) {
-		this.handTiles = handTiles;
-	}
-
-	public List<MjExposedSet> getExposedSets() {
-		return exposedSets;
-	}
-
-	public void setExposedSets(List<MjExposedSet> exposedSets) {
-		this.exposedSets = exposedSets;
-	}
+	public List<Card> getHandTiles() { return handTiles; }
+	public void setHandTiles(List<Card> handTiles) { this.handTiles = handTiles; }
+	public List<MjExposedSet> getExposedSets() { return exposedSets; }
+	public void setExposedSets(List<MjExposedSet> exposedSets) { this.exposedSets = exposedSets; }
 }

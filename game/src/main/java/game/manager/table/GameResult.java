@@ -56,8 +56,10 @@ public class GameResult {
 		}
 	}
 
+	/** 是否所有局已完成 */
 	public boolean isComplete() { return completedRounds >= totalRounds; }
 
+	/** 按总分降序返回排名 */
 	public List<Map.Entry<Integer, Integer>> getRanking() {
 		List<Map.Entry<Integer, Integer>> ranking = new ArrayList<>(totalScores.entrySet());
 		ranking.sort((a, b) -> Integer.compare(b.getValue(), a.getValue()));

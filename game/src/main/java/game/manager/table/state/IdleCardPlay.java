@@ -6,6 +6,8 @@ import game.manager.table.TableUser;
 import game.manager.table.ddz.DdzPlayService;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 等待玩家出牌；超时自动处理（首家出最小单张，否则视为过）。
@@ -18,6 +20,8 @@ import msg.registor.enums.TableState;
 @ProcessEnum(TableState.IDLE_CARD)
 public class IdleCardPlay extends AbstractTableHandle {
 
+	private static final Logger logger = LoggerFactory.getLogger(IdleCardPlay.class);
+
 	@Override
 	public void overTime(Table table) {
 		DdzTable ddzTable = (DdzTable) table;
@@ -26,6 +30,7 @@ public class IdleCardPlay extends AbstractTableHandle {
 		if (u == null) {
 			return;
 		}
+		logger.info("出牌超时自动处理, tableId: {}, seat: {}, userId: {}", table.getTableId(), seat, u.getUserId());
 		if (DdzPlayService.autoPlayAi(ddzTable, u.getUserId())) {
 			return;
 		}

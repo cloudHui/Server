@@ -1,7 +1,5 @@
 package room.manager.table;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.RoomProto;
-import utils.other.excel.ExcelUtil;
+import utils.config.TableConfigManager;
 
 /**
  * 房间模板管理器
@@ -21,9 +19,17 @@ public class TableManager {
 	private static final Logger logger = LoggerFactory.getLogger(TableManager.class);
 	private static final TableManager instance = new TableManager();
 
-	private final Map<Integer, TableModel> tableModelMap = new HashMap<>();
-	private final Map<Integer, Map<Long, TableInfo>> roomTables = new HashMap<>();
-	private final Map<Long, TableInfo> tableInfoMap = new HashMap<>();
+	private final TableConfigManager configManager;
+	private final Map<Integer, Map<Long, TableInfo>> roomTables = new ConcurrentHashMap<>();
+	private final Map<Long, TableInfo> tableInfoMap = new ConcurrentHashMap<>();
+
+	private TableManager() {
+		configManager = new TableConfigManager();
+		if (!configManager.load()) {
+			throw new RuntimeException("加载配置文件失败");
+		}
+		configManager.startWatch();
+	}
 
 	public static TableManager getInstance() {
 		return instance;
@@ -31,33 +37,18 @@ public class TableManager {
 
 	/**
 	 * 初始化房间管理器
-	 * 从Excel文件加载房间配置
 	 */
 	public synchronized void init() {
-		try {
-			List<Object> properties = new ArrayList<>();
-
-			// 读取Excel配置
-			ExcelUtil.readExcelJavaValue("TableModel.xlsx", properties, TableModel.class);
-
-			synchronized (tableModelMap) {
-				//Todo 重新load 以后之前的房间尽量打完删除
-				tableModelMap.clear();
-				roomTables.clear();
-
-				for (Object object : properties) {
-					TableModel model = (TableModel) object;
-					tableModelMap.put(model.getId(), model);
-					roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
-					logger.debug("加载房间模板, id: {}", model.getId());
-				}
-			}
-
-			logger.info("房间管理器初始化完成,加载模板数量: {}", tableModelMap.size());
-		} catch (Exception e) {
-			logger.error("房间管理器初始化失败", e);
-			throw new RuntimeException("房间管理器初始化失败", e);
+		if (!configManager.load()) {
+			throw new RuntimeException("加载配置文件失败");
 		}
+
+		roomTables.clear();
+		for (TableModel model : configManager.getAllTableModels().values()) {
+			roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
+		}
+
+		logger.info("房间管理器初始化完成,加载模板数量: {}", configManager.getAllTableModels().size());
 	}
 
 	/**
@@ -73,7 +64,7 @@ public class TableManager {
 				roomBuilder.setRoomId(roomEntry.getKey());
 
 				// 设置游戏类型
-				TableModel tableModel = tableModelMap.get(roomEntry.getKey());
+				TableModel tableModel = configManager.getTableModel(roomEntry.getKey());
 				if (tableModel != null) {
 					roomBuilder.setGameType(tableModel.getType());
 				}
@@ -100,11 +91,7 @@ public class TableManager {
 	 * 通过模板ID获取房间模板
 	 */
 	public synchronized TableModel getTableModel(int modelId) {
-		TableModel model = tableModelMap.get(modelId);
-		if (model == null) {
-			logger.warn("房间模板不存在, modelId: {}", modelId);
-		}
-		return model;
+		return configManager.getTableModel(modelId);
 	}
 
 	/**
@@ -153,7 +140,7 @@ public class TableManager {
 	 * 存房间信息
 	 */
 	public synchronized TableInfo putRoomInfo(ModelProto.RoomTableInfo roomTable) {
-		TableModel model = tableModelMap.get(roomTable.getRoomId());
+		TableModel model = configManager.getTableModel(roomTable.getRoomId());
 		if (model == null) {
 			logger.warn("putRoomInfo失败, 房间模板不存在, roomId: {}", roomTable.getRoomId());
 			return null;
