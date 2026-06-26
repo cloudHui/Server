@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.RoomProto;
-import utils.config.TableConfigManager;
+import tool.config.TableConfigManager;
 
 /**
  * 房间模板管理器
@@ -25,7 +25,7 @@ public class TableManager {
 
 	private TableManager() {
 		configManager = new TableConfigManager();
-		if (!configManager.load()) {
+		if (configManager.loadFail()) {
 			throw new RuntimeException("加载配置文件失败");
 		}
 		configManager.startWatch();
@@ -39,7 +39,7 @@ public class TableManager {
 	 * 初始化房间管理器
 	 */
 	public synchronized void init() {
-		if (!configManager.load()) {
+		if (configManager.loadFail()) {
 			throw new RuntimeException("加载配置文件失败");
 		}
 

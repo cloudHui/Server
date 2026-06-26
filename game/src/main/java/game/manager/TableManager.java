@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.ServerProto;
 import net.connect.handle.ConnectHandler;
-import utils.config.TableConfigManager;
+import tool.config.TableConfigManager;
 import utils.metrics.MetricsCollector;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class TableManager {
     public TableManager() {
         tableMap = new ConcurrentHashMap<>();
         configManager = new TableConfigManager();
-        if (!configManager.load()) {
+        if (configManager.loadFail()) {
             throw new RuntimeException("加载配置文件失败");
         }
         configManager.startWatch();
@@ -53,7 +53,7 @@ public class TableManager {
      * 初始化房间管理器
      */
     public synchronized void init() {
-        if (!configManager.load()) {
+        if (configManager.loadFail()) {
             throw new RuntimeException("加载配置文件失败");
         }
         logger.info("房间管理器初始化完成,加载模板数量: {}", configManager.getAllTableModels().size());

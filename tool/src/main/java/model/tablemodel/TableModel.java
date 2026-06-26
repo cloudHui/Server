@@ -1,7 +1,7 @@
 package model.tablemodel; 
  
  
-public class TableModel {
+public class TableModel implements java.io.Serializable {
 
     //主键
     private int id;
