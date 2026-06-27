@@ -45,7 +45,7 @@ public class GateClient {
 	 * 为会话创建或获取TCP连接
 	 */
 	public TCPConnect getConnection(String sessionId) {
-		return connections.computeIfAbsent(sessionId, id -> createConnection(id));
+		return connections.computeIfAbsent(sessionId, this::createConnection);
 	}
 
 	/**
