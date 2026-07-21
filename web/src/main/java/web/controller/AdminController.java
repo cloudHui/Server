@@ -7,10 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import web.service.ReplayService;
 import web.service.UserService;
 
 /**
- * 邀请管理 API（反代 lobby admin HTTP；仅 admin）
+ * 管理后台 API：邀请 / 玩家 / 桌子 / 回放
  */
 @RestController
 @RequestMapping("/api/admin")
@@ -19,10 +20,12 @@ public class AdminController {
 
 	private final UserService userService;
 	private final LobbyAdminClient lobbyAdminClient;
+	private final ReplayService replayService;
 
-	public AdminController(UserService userService, LobbyAdminClient lobbyAdminClient) {
+	public AdminController(UserService userService, LobbyAdminClient lobbyAdminClient, ReplayService replayService) {
 		this.userService = userService;
 		this.lobbyAdminClient = lobbyAdminClient;
+		this.replayService = replayService;
 	}
 
 	@GetMapping("/invites")
@@ -61,6 +64,63 @@ public class AdminController {
 		payload.put("token", str(body.get("token")));
 		Map<String, Object> result = lobbyAdminClient.revokeInvite(user.getToken(), payload);
 		return ResponseEntity.ok(result != null ? result : error(502, "lobby admin 不可用"));
+	}
+
+	@GetMapping("/users")
+	public ResponseEntity<Map<String, Object>> users(@RequestParam String sessionId) {
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) {
+			return ResponseEntity.ok(error(403, "需要管理员账号"));
+		}
+		Map<String, Object> result = lobbyAdminClient.listUsers(user.getToken());
+		return ResponseEntity.ok(result != null ? result : error(502, "lobby admin 不可用"));
+	}
+
+	@PostMapping("/users/enable")
+	public ResponseEntity<Map<String, Object>> enableUser(@RequestBody Map<String, Object> body) {
+		String sessionId = str(body.get("sessionId"));
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) {
+			return ResponseEntity.ok(error(403, "需要管理员账号"));
+		}
+		Map<String, Object> payload = new HashMap<>();
+		payload.put("userId", body.get("userId"));
+		payload.put("enabled", body.get("enabled"));
+		Map<String, Object> result = lobbyAdminClient.enableUser(user.getToken(), payload);
+		return ResponseEntity.ok(result != null ? result : error(502, "lobby admin 不可用"));
+	}
+
+	@GetMapping("/tables")
+	public ResponseEntity<Map<String, Object>> tables(@RequestParam String sessionId) {
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) {
+			return ResponseEntity.ok(error(403, "需要管理员账号"));
+		}
+		Map<String, Object> result = lobbyAdminClient.listTables(user.getToken());
+		return ResponseEntity.ok(result != null ? result : error(502, "lobby admin 不可用"));
+	}
+
+	@GetMapping("/replays")
+	public ResponseEntity<Map<String, Object>> replays(@RequestParam String sessionId,
+			@RequestParam(required = false, defaultValue = "100") int limit) {
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) {
+			return ResponseEntity.ok(error(403, "需要管理员账号"));
+		}
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 0);
+		result.put("replays", replayService.listReplays(limit));
+		return ResponseEntity.ok(result);
+	}
+
+	@GetMapping("/replays/detail")
+	public ResponseEntity<Map<String, Object>> replayDetail(@RequestParam String sessionId,
+			@RequestParam String date, @RequestParam String name) {
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) {
+			return ResponseEntity.ok(error(403, "需要管理员账号"));
+		}
+		return ResponseEntity.ok(replayService.getReplay(date, name));
 	}
 
 	private UserService.UserInfo requireAdmin(String sessionId) {

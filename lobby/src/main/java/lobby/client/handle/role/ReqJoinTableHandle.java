@@ -2,6 +2,7 @@ package lobby.client.handle.role;
 
 import com.google.protobuf.Message;
 import model.tablemodel.TableModel;
+import model.tablemodel.TableModelJson;
 import msg.annotation.ProcessType;
 import msg.registor.enums.ServerType;
 import msg.registor.message.LMsg;
@@ -82,9 +83,15 @@ public class ReqJoinTableHandle implements Handler {
 	}
 
 	private ServerProto.ReqCreateGameTable buildCreateTableRequest(int roomId, int userId) {
+		ModelProto.RoomRole.Builder role = ModelProto.RoomRole.newBuilder().setRoleId(userId);
+		TableModel model = TableManager.getInstance().getTableModel(roomId);
+		if (model != null && model.getId() >= 10000) {
+			role.setAvatar(com.google.protobuf.ByteString.copyFromUtf8(
+					"TMJSON:" + TableModelJson.toJson(model)));
+		}
 		return ServerProto.ReqCreateGameTable.newBuilder()
 				.setRoomId(roomId)
-				.setRoomRole(ModelProto.RoomRole.newBuilder().setRoleId(userId).build())
+				.setRoomRole(role.build())
 				.build();
 	}
 

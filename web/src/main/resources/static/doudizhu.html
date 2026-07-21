@@ -453,7 +453,7 @@
                         document.getElementById('roomInfo').textContent =
                             '桌号: ' + resp.data.tableInfo.tableId;
                     }
-                    showActionButtons('prepare');
+                    showActionButtons('waiting');
                 } else {
                     showCenterMsg(resp.msg || '进入桌子失败');
                 }
@@ -773,6 +773,11 @@
                 btn.textContent = '准备';
                 btn.onclick = doPrepare;
                 bar.appendChild(btn);
+            } else if (type === 'waiting') {
+                var tip = document.createElement('span');
+                tip.style.cssText = 'color:#fff;font-size:14px;padding:8px 12px;';
+                tip.textContent = '等待玩家坐满后自动开局';
+                bar.appendChild(tip);
             }
         }
 

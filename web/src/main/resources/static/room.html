@@ -127,13 +127,56 @@
         <h1>游戏大厅</h1>
         <div class="user-info">
             <span id="userDisplay"></span>
-            <a id="adminLink" class="header-btn admin" href="/admin.html" style="display:none;">邀请管理</a>
+            <a id="adminLink" class="header-btn admin" href="/admin.html" style="display:none;">管理后台</a>
             <button class="header-btn" onclick="doLogout()">退出</button>
         </div>
     </div>
 
     <div class="content">
         <button class="refresh-btn" onclick="loadRooms()">刷新房间</button>
+
+        <h2 class="section-title">创建房间</h2>
+        <div class="room-list" style="margin-bottom:8px;">
+            <div class="room-card">
+                <h3>固定模板</h3>
+                <p style="font-size:13px;color:#666;margin-bottom:10px;">使用 Excel 配置的经典玩法，直接开桌。</p>
+                <button class="join-btn join-btn-ddz" onclick="createFixed(2)">创建斗地主桌</button>
+                <button class="join-btn join-btn-mj" onclick="createFixed(1)" style="margin-top:8px;">创建麻将桌</button>
+            </div>
+            <div class="room-card">
+                <h3>自定义规则</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;">
+                    <label>玩法
+                        <select id="cGameType" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                            <option value="2">斗地主</option>
+                            <option value="1">麻将</option>
+                        </select>
+                    </label>
+                    <label>底分
+                        <input id="cBaseScore" type="number" min="1" value="1" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                    </label>
+                    <label>总局数
+                        <input id="cRounds" type="number" min="1" value="4" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                    </label>
+                    <label>人数
+                        <input id="cSeat" type="number" min="2" max="4" value="3" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                    </label>
+                    <label id="chiLabel">允许吃
+                        <select id="cAllowChi" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                            <option value="1">开</option>
+                            <option value="0">关</option>
+                        </select>
+                    </label>
+                    <label>点炮
+                        <select id="cAllowDianPao" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                            <option value="1">开</option>
+                            <option value="0">关</option>
+                        </select>
+                    </label>
+                </div>
+                <button class="join-btn join-btn-mj" style="margin-top:12px;background:linear-gradient(135deg,#2e7d32,#66bb6a);" onclick="createCustom()">按规则创建并进入</button>
+            </div>
+        </div>
 
         <h2 class="section-title">斗地主</h2>
         <div id="ddzRooms" class="room-list">
@@ -253,16 +296,71 @@
             .then(function(r) { return r.json(); })
             .then(function(data) {
                 if (data.code === 0) {
-                    localStorage.setItem('tableId', data.tableId);
-                    localStorage.setItem('roomId', roomId);
-                    localStorage.setItem('gameType', gameType);
-                    var page = gameType === GAME_MJ ? '/mahjong.html' : '/doudizhu.html';
-                    window.location.href = page;
+                    goTable(data.tableId, roomId, gameType);
                 } else {
                     alert(data.msg || '加入房间失败');
                 }
             })
             .catch(function() { alert('网络错误，请重试'); });
+        }
+
+        function goTable(tableId, roomId, gameType) {
+            localStorage.setItem('tableId', tableId);
+            localStorage.setItem('roomId', roomId);
+            localStorage.setItem('gameType', gameType);
+            window.location.href = (parseInt(gameType, 10) === GAME_MJ) ? '/mahjong.html' : '/doudizhu.html';
+        }
+
+        function createFixed(gameType) {
+            // 固定模板：麻将 roomId=1，斗地主 roomId=2
+            var roomId = gameType === GAME_MJ ? 1 : 2;
+            fetch('/api/rooms/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionId: sessionId,
+                    mode: 'fixed',
+                    roomId: roomId,
+                    gameType: gameType
+                })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.code === 0) {
+                    goTable(data.tableId, data.roomId || roomId, gameType);
+                } else {
+                    alert(data.msg || '创建失败');
+                }
+            })
+            .catch(function() { alert('网络错误'); });
+        }
+
+        function createCustom() {
+            var gameType = parseInt(document.getElementById('cGameType').value, 10);
+            var body = {
+                sessionId: sessionId,
+                mode: 'custom',
+                gameType: gameType,
+                baseScore: parseInt(document.getElementById('cBaseScore').value, 10) || 1,
+                totalRounds: parseInt(document.getElementById('cRounds').value, 10) || 4,
+                seatNum: parseInt(document.getElementById('cSeat').value, 10) || 3,
+                allowChi: parseInt(document.getElementById('cAllowChi').value, 10),
+                allowDianPao: parseInt(document.getElementById('cAllowDianPao').value, 10)
+            };
+            fetch('/api/rooms/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.code === 0) {
+                    goTable(data.tableId, data.roomId, gameType);
+                } else {
+                    alert(data.msg || '创建失败');
+                }
+            })
+            .catch(function() { alert('网络错误'); });
         }
 
         function doLogout() {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>邀请管理</title>
+    <title>管理后台</title>
     <style>
         :root {
             --bg0: #101820;
@@ -44,11 +44,20 @@
             font-size: 13px;
             margin-left: 8px;
         }
-        .wrap {
-            max-width: 960px;
-            margin: 28px auto;
-            padding: 0 20px 40px;
+        .wrap { max-width: 1100px; margin: 20px auto; padding: 0 20px 40px; }
+        .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .tab {
+            background: rgba(255,255,255,0.08);
+            color: #eee;
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
         }
+        .tab.active { background: var(--accent); color: #1a1408; border-color: var(--accent); font-weight: 600; }
+        .panel { display: none; }
+        .panel.active { display: block; }
         .card {
             background: var(--card);
             border-radius: 14px;
@@ -56,11 +65,7 @@
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.22);
         }
-        .card h2 {
-            font-size: 16px;
-            margin-bottom: 14px;
-            color: #243447;
-        }
+        .card h2 { font-size: 16px; margin-bottom: 14px; color: #243447; }
         .form-row {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr auto;
@@ -87,19 +92,9 @@
             white-space: nowrap;
         }
         .btn:hover { filter: brightness(1.06); }
-        .btn-ghost {
-            background: transparent;
-            color: #334;
-            border: 1px solid #cfc7b8;
-        }
-        .btn-danger {
-            background: #9e3535;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
+        .btn-ghost { background: transparent; color: #334; border: 1px solid #cfc7b8; }
+        .btn-danger { background: #9e3535; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
         th, td {
             text-align: left;
             padding: 10px 8px;
@@ -107,28 +102,26 @@
             vertical-align: middle;
         }
         th { color: var(--muted); font-weight: 600; font-size: 12px; }
-        .token {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 12px;
-            word-break: break-all;
-        }
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 999px;
-            font-size: 11px;
-        }
+        .token { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; word-break: break-all; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; }
         .badge-ok { background: #e5f5ec; color: var(--ok); }
         .badge-bad { background: #f8e8e8; color: var(--bad); }
         .actions button { margin-right: 6px; margin-top: 4px; }
-        .msg {
-            margin-top: 10px;
-            font-size: 13px;
-            color: var(--muted);
-            min-height: 18px;
-        }
+        .msg { margin-top: 10px; font-size: 13px; color: var(--muted); min-height: 18px; }
         .msg.err { color: var(--bad); }
         .msg.ok { color: var(--ok); }
+        .meta { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+        pre.replay {
+            background: #1a222c;
+            color: #e8e2d6;
+            padding: 14px;
+            border-radius: 10px;
+            max-height: 480px;
+            overflow: auto;
+            font-size: 12px;
+            line-height: 1.45;
+            white-space: pre-wrap;
+        }
         @media (max-width: 720px) {
             .form-row { grid-template-columns: 1fr; }
         }
@@ -136,7 +129,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>邀请管理</h1>
+        <h1>管理后台</h1>
         <div>
             <a href="/room.html">回大厅</a>
             <button onclick="doLogout()">退出</button>
@@ -144,49 +137,117 @@
     </div>
 
     <div class="wrap">
-        <div class="card">
-            <h2>创建邀请码</h2>
-            <div class="form-row">
-                <div>
-                    <label>备注</label>
-                    <input id="note" placeholder="例如：朋友局">
-                </div>
-                <div>
-                    <label>可用次数</label>
-                    <input id="maxUses" type="number" min="1" value="5">
-                </div>
-                <div>
-                    <label>有效天数</label>
-                    <input id="expiresDays" type="number" min="0" value="7">
-                </div>
-                <button class="btn" onclick="createInvite()">创建</button>
-            </div>
-            <div class="msg" id="createMsg"></div>
+        <div class="tabs">
+            <button class="tab active" data-tab="invites" onclick="switchTab('invites')">邀请</button>
+            <button class="tab" data-tab="users" onclick="switchTab('users')">玩家</button>
+            <button class="tab" data-tab="tables" onclick="switchTab('tables')">桌子</button>
+            <button class="tab" data-tab="records" onclick="switchTab('records')">战绩/回放</button>
         </div>
 
-        <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <h2 style="margin:0;">邀请列表</h2>
-                <button class="btn btn-ghost" onclick="loadInvites()">刷新</button>
+        <div id="panel-invites" class="panel active">
+            <div class="card">
+                <h2>创建邀请码</h2>
+                <div class="form-row">
+                    <div>
+                        <label>备注</label>
+                        <input id="note" placeholder="例如：朋友局">
+                    </div>
+                    <div>
+                        <label>可用次数</label>
+                        <input id="maxUses" type="number" min="1" value="5">
+                    </div>
+                    <div>
+                        <label>有效天数</label>
+                        <input id="expiresDays" type="number" min="0" value="7">
+                    </div>
+                    <button class="btn" onclick="createInvite()">创建</button>
+                </div>
+                <div class="msg" id="createMsg"></div>
             </div>
-            <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>邀请码</th>
-                            <th>备注</th>
-                            <th>使用</th>
-                            <th>过期</th>
-                            <th>状态</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inviteBody">
-                        <tr><td colspan="6">加载中...</td></tr>
-                    </tbody>
-                </table>
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <h2 style="margin:0;">邀请列表</h2>
+                    <button class="btn btn-ghost" onclick="loadInvites()">刷新</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>邀请码</th><th>备注</th><th>使用</th><th>过期</th><th>状态</th><th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inviteBody"><tr><td colspan="6">加载中...</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="msg" id="listMsg"></div>
             </div>
-            <div class="msg" id="listMsg"></div>
+        </div>
+
+        <div id="panel-users" class="panel">
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <h2 style="margin:0;">玩家列表</h2>
+                    <button class="btn btn-ghost" onclick="loadUsers()">刷新</button>
+                </div>
+                <div class="meta" id="usersMeta"></div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th><th>用户名</th><th>昵称</th><th>在线</th><th>状态</th><th>最近登录</th><th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userBody"><tr><td colspan="7">切换到此页后加载</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="msg" id="usersMsg"></div>
+            </div>
+        </div>
+
+        <div id="panel-tables" class="panel">
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <h2 style="margin:0;">在线桌子</h2>
+                    <button class="btn btn-ghost" onclick="loadTables()">刷新</button>
+                </div>
+                <div class="meta" id="tablesMeta"></div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>桌号</th><th>模板</th><th>玩法</th><th>状态</th><th>人数</th><th>房主</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"><tr><td colspan="6">切换到此页后加载</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="msg" id="tablesMsg"></div>
+            </div>
+        </div>
+
+        <div id="panel-records" class="panel">
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <h2 style="margin:0;">战绩 / 回放记录</h2>
+                    <button class="btn btn-ghost" onclick="loadReplays()">刷新</button>
+                </div>
+                <div class="meta">来自 game 落盘文件（结算后生成）。当前为文本回放，可打开查看。</div>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>日期</th><th>文件</th><th>桌号</th><th>局</th><th>玩法</th><th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="replayBody"><tr><td colspan="6">切换到此页后加载</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="msg" id="replayMsg"></div>
+            </div>
+            <div class="card" id="replayDetailCard" style="display:none;">
+                <h2 id="replayDetailTitle">回放详情</h2>
+                <pre class="replay" id="replayContent"></pre>
+            </div>
         </div>
     </div>
 
@@ -197,6 +258,20 @@
         if (!isAdmin) {
             alert('需要管理员账号');
             window.location.href = '/room.html';
+        }
+
+        function switchTab(name) {
+            var tabs = document.querySelectorAll('.tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].className = 'tab' + (tabs[i].getAttribute('data-tab') === name ? ' active' : '');
+            }
+            var panels = document.querySelectorAll('.panel');
+            for (var j = 0; j < panels.length; j++) {
+                panels[j].className = 'panel' + (panels[j].id === 'panel-' + name ? ' active' : '');
+            }
+            if (name === 'users') loadUsers();
+            if (name === 'tables') loadTables();
+            if (name === 'records') loadReplays();
         }
 
         function setMsg(id, text, ok) {
@@ -238,62 +313,48 @@
             fetch('/api/admin/invites?sessionId=' + encodeURIComponent(sessionId))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
-                    if (data.code === 403) {
-                        alert('需要管理员');
-                        window.location.href = '/room.html';
-                        return;
-                    }
+                    var body = document.getElementById('inviteBody');
                     if (data.code !== 0) {
-                        setMsg('listMsg', data.msg || '加载失败', false);
+                        body.innerHTML = '<tr><td colspan="6">' + (data.msg || '加载失败') + '</td></tr>';
                         return;
                     }
-                    renderInvites(data.invites || []);
-                    setMsg('listMsg', '');
+                    var list = data.invites || [];
+                    if (!list.length) {
+                        body.innerHTML = '<tr><td colspan="6">暂无邀请码</td></tr>';
+                        return;
+                    }
+                    var html = '';
+                    for (var i = 0; i < list.length; i++) {
+                        var it = list[i];
+                        var exp = it.expiresAt ? new Date(it.expiresAt).toLocaleString() : '永久';
+                        var st = it.valid
+                            ? '<span class="badge badge-ok">可用</span>'
+                            : '<span class="badge badge-bad">失效</span>';
+                        html += '<tr><td class="token">' + it.token + '</td><td>' + (it.note || '') + '</td>'
+                            + '<td>' + it.usedCount + '/' + it.maxUses + '</td><td>' + exp + '</td><td>' + st + '</td>'
+                            + '<td class="actions"><button class="btn btn-ghost" onclick="copyInvite(\'' + it.token + '\')">复制链接</button>'
+                            + (it.valid ? '<button class="btn btn-danger" onclick="revokeInvite(\'' + it.token + '\')">作废</button>' : '')
+                            + '</td></tr>';
+                    }
+                    body.innerHTML = html;
+                    setMsg('listMsg', '共 ' + list.length + ' 条', true);
                 })
                 .catch(function() { setMsg('listMsg', '网络错误', false); });
         }
 
-        function renderInvites(list) {
-            var body = document.getElementById('inviteBody');
-            if (!list.length) {
-                body.innerHTML = '<tr><td colspan="6">暂无邀请码</td></tr>';
-                return;
-            }
-            var html = '';
-            for (var i = 0; i < list.length; i++) {
-                var inv = list[i];
-                var exp = inv.expiresAt ? new Date(inv.expiresAt).toLocaleString() : '永久';
-                var valid = inv.valid;
-                html += '<tr>';
-                html += '<td class="token">' + escapeHtml(inv.token) + '</td>';
-                html += '<td>' + escapeHtml(inv.note || '') + '</td>';
-                html += '<td>' + inv.usedCount + ' / ' + inv.maxUses + '</td>';
-                html += '<td>' + escapeHtml(exp) + '</td>';
-                html += '<td><span class="badge ' + (valid ? 'badge-ok' : 'badge-bad') + '">' +
-                    (valid ? '有效' : '无效') + '</span></td>';
-                html += '<td class="actions">';
-                html += '<button class="btn btn-ghost" onclick="copyLink(\'' + inv.token + '\')">复制链接</button>';
-                if (inv.enabled) {
-                    html += '<button class="btn btn-danger" onclick="revoke(\'' + inv.token + '\')">作废</button>';
-                }
-                html += '</td></tr>';
-            }
-            body.innerHTML = html;
-        }
-
-        function copyLink(token) {
-            var link = location.origin + '/?invite=' + encodeURIComponent(token);
+        function copyInvite(token) {
+            var url = location.origin + '/?invite=' + encodeURIComponent(token);
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(link).then(function() {
-                    setMsg('listMsg', '已复制: ' + link, true);
+                navigator.clipboard.writeText(url).then(function() {
+                    setMsg('listMsg', '已复制: ' + url, true);
                 });
             } else {
-                prompt('复制邀请链接', link);
+                prompt('复制链接', url);
             }
         }
 
-        function revoke(token) {
-            if (!confirm('确定作废该邀请码？')) return;
+        function revokeInvite(token) {
+            if (!confirm('作废邀请码 ' + token + ' ?')) return;
             fetch('/api/admin/invites/revoke', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -305,26 +366,140 @@
                     setMsg('listMsg', '已作废', true);
                     loadInvites();
                 } else {
-                    setMsg('listMsg', data.msg || '作废失败', false);
+                    setMsg('listMsg', data.msg || '失败', false);
                 }
+            });
+        }
+
+        function loadUsers() {
+            fetch('/api/admin/users?sessionId=' + encodeURIComponent(sessionId))
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var body = document.getElementById('userBody');
+                    if (data.code !== 0) {
+                        body.innerHTML = '<tr><td colspan="7">' + (data.msg || '加载失败') + '</td></tr>';
+                        return;
+                    }
+                    document.getElementById('usersMeta').textContent = '在线 ' + (data.online || 0) + ' 人';
+                    var list = data.users || [];
+                    if (!list.length) {
+                        body.innerHTML = '<tr><td colspan="7">暂无玩家</td></tr>';
+                        return;
+                    }
+                    var html = '';
+                    for (var i = 0; i < list.length; i++) {
+                        var u = list[i];
+                        var online = u.online
+                            ? '<span class="badge badge-ok">在线</span>'
+                            : '<span class="badge">离线</span>';
+                        var en = u.enabled
+                            ? '<span class="badge badge-ok">启用</span>'
+                            : '<span class="badge badge-bad">禁用</span>';
+                        var login = u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleString() : '-';
+                        html += '<tr><td>' + u.id + '</td><td>' + u.username + '</td><td>' + (u.nickname || '') + '</td>'
+                            + '<td>' + online + '</td><td>' + en + '</td><td>' + login + '</td><td class="actions">'
+                            + (u.username === 'admin' ? '' :
+                                (u.enabled
+                                    ? '<button class="btn btn-danger" onclick="setEnabled(' + u.id + ',false)">禁用</button>'
+                                    : '<button class="btn" onclick="setEnabled(' + u.id + ',true)">启用</button>'))
+                            + '</td></tr>';
+                    }
+                    body.innerHTML = html;
+                    setMsg('usersMsg', '共 ' + list.length + ' 人', true);
+                })
+                .catch(function() { setMsg('usersMsg', '网络错误', false); });
+        }
+
+        function setEnabled(userId, enabled) {
+            fetch('/api/admin/users/enable', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId: sessionId, userId: userId, enabled: enabled })
             })
-            .catch(function() { setMsg('listMsg', '网络错误', false); });
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.code === 0) loadUsers();
+                else setMsg('usersMsg', data.msg || '失败', false);
+            });
+        }
+
+        function loadTables() {
+            fetch('/api/admin/tables?sessionId=' + encodeURIComponent(sessionId))
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var body = document.getElementById('tableBody');
+                    if (data.code !== 0) {
+                        body.innerHTML = '<tr><td colspan="6">' + (data.msg || '加载失败') + '</td></tr>';
+                        return;
+                    }
+                    document.getElementById('tablesMeta').textContent = '在线用户 ' + (data.onlineUsers || 0);
+                    var rooms = data.rooms || [];
+                    var rows = [];
+                    for (var i = 0; i < rooms.length; i++) {
+                        var room = rooms[i];
+                        var tables = room.tables || [];
+                        for (var j = 0; j < tables.length; j++) {
+                            var t = tables[j];
+                            var gt = t.gameType === 1 ? '麻将' : (t.gameType === 2 ? '斗地主' : t.gameType);
+                            rows.push('<tr><td>' + t.tableId + '</td><td>' + t.roomId + '</td><td>' + gt
+                                + '</td><td>' + t.state + '</td><td>' + t.playerCount + '</td><td>'
+                                + t.ownerId + '</td></tr>');
+                        }
+                    }
+                    body.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="6">暂无桌子</td></tr>';
+                    setMsg('tablesMsg', '共 ' + rows.length + ' 桌', true);
+                })
+                .catch(function() { setMsg('tablesMsg', '网络错误', false); });
+        }
+
+        function loadReplays() {
+            fetch('/api/admin/replays?sessionId=' + encodeURIComponent(sessionId))
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var body = document.getElementById('replayBody');
+                    if (data.code !== 0) {
+                        body.innerHTML = '<tr><td colspan="6">' + (data.msg || '加载失败') + '</td></tr>';
+                        return;
+                    }
+                    var list = data.replays || [];
+                    if (!list.length) {
+                        body.innerHTML = '<tr><td colspan="6">暂无回放（对局结算后才会生成）</td></tr>';
+                        setMsg('replayMsg', '0 条', true);
+                        return;
+                    }
+                    var html = '';
+                    for (var i = 0; i < list.length; i++) {
+                        var r = list[i];
+                        html += '<tr><td>' + r.date + '</td><td class="token">' + r.name + '</td><td>'
+                            + (r.tableId || '-') + '</td><td>' + (r.round || '-') + '</td><td>'
+                            + (r.gameType || '-') + '</td><td><button class="btn btn-ghost" onclick="openReplay(\''
+                            + r.date + '\',\'' + r.name + '\')">查看</button></td></tr>';
+                    }
+                    body.innerHTML = html;
+                    setMsg('replayMsg', '共 ' + list.length + ' 条', true);
+                })
+                .catch(function() { setMsg('replayMsg', '网络错误', false); });
+        }
+
+        function openReplay(date, name) {
+            fetch('/api/admin/replays/detail?sessionId=' + encodeURIComponent(sessionId)
+                + '&date=' + encodeURIComponent(date) + '&name=' + encodeURIComponent(name))
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.code !== 0) {
+                        setMsg('replayMsg', data.msg || '读取失败', false);
+                        return;
+                    }
+                    document.getElementById('replayDetailCard').style.display = 'block';
+                    document.getElementById('replayDetailTitle').textContent =
+                        '回放 ' + data.date + '/' + data.name;
+                    document.getElementById('replayContent').textContent = data.content || '';
+                });
         }
 
         function doLogout() {
-            fetch('/api/logout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sessionId: sessionId })
-            }).catch(function() {});
             localStorage.clear();
             window.location.href = '/';
-        }
-
-        function escapeHtml(s) {
-            return String(s).replace(/[&<>"']/g, function(c) {
-                return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
-            });
         }
 
         loadInvites();

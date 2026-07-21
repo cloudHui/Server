@@ -49,9 +49,12 @@ public class ReqEnterTableHandle implements Handler {
 						GameProto.AckEnterTable response = buildEnterTableResponse(table);
 						sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, request.getTableId(), response, sequence);
 					} else {
-						sender.sendMessage(TCPMessage.newInstance(result));
+						// 必须带原 sequence，否则 web sendAndWait 会一直等到超时
+						GameProto.AckEnterTable empty = GameProto.AckEnterTable.newBuilder().build();
+						sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, request.getTableId(), empty, sequence);
+						logger.warn("进入桌子失败, userId: {}, tableId: {}, result: {}", clientId, request.getTableId(), result);
 					}
-					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", clientId, mapId, result);
+					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", clientId, request.getTableId(), result);
 				}
 			});
 		} catch (Exception e) {

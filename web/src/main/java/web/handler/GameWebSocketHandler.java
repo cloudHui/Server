@@ -158,6 +158,10 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			try {
 				if (response instanceof GameProto.AckEnterTable) {
 					GameProto.AckEnterTable ack = (GameProto.AckEnterTable) response;
+					if (!ack.hasTableInfo() || ack.getTableInfo().getTableId() == 0) {
+						sendError(wsSession, seq, "进入桌子失败（座位已满或状态不允许）");
+						return;
+					}
 					Map<String, Object> resultData = new HashMap<>();
 					resultData.put("players", formatPlayers(ack.getPlayersList(), user.getUserId()));
 					resultData.put("tableInfo", formatTableInfo(ack.getTableInfo()));
@@ -341,13 +345,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		Map<String, Object> m = new HashMap<>();
 		m.put("opSeat", n.getOpSeat());
 		m.put("wait", n.getWait());
-		List<Map<String, Object>> choices = new ArrayList<>();
-		for (GameProto.OpInfo op : n.getChoiceList()) {
-			Map<String, Object> c = new HashMap<>();
-			c.put("choice", op.getChoiceValue());
-			choices.add(c);
-		}
-		m.put("choice", choices);
+		m.put("choice", formatOpChoices(n.getChoiceList()));
 		return m;
 	}
 
@@ -383,14 +381,30 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		m.put("action", n.getActionValue());
 		m.put("wait", n.getWait());
 		m.put("wallLeft", n.getWallLeft());
+		m.put("choice", formatOpChoices(n.getChoiceList()));
+		return m;
+	}
+
+	/** 透传操作选项及附属牌（吃 combo / 暗杠补杠目标牌） */
+	private List<Map<String, Object>> formatOpChoices(List<GameProto.OpInfo> ops) {
 		List<Map<String, Object>> choices = new ArrayList<>();
-		for (GameProto.OpInfo op : n.getChoiceList()) {
+		for (GameProto.OpInfo op : ops) {
 			Map<String, Object> c = new HashMap<>();
 			c.put("choice", op.getChoiceValue());
+			List<Map<String, Object>> cards = new ArrayList<>();
+			for (GameProto.CardInfo cardInfo : op.getOpCardsList()) {
+				for (GameProto.Card card : cardInfo.getCardsList()) {
+					Map<String, Object> cv = new HashMap<>();
+					cv.put("value", card.getValue());
+					cards.add(cv);
+				}
+			}
+			if (!cards.isEmpty()) {
+				c.put("cards", cards);
+			}
 			choices.add(c);
 		}
-		m.put("choice", choices);
-		return m;
+		return choices;
 	}
 
 	private Map<String, Object> formatNotRoundResult(GameProto.NotRoundResult n) {

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -138,6 +140,37 @@ public class UserRepository {
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
 			logger.error("clearToken 失败, userId={}", userId, e);
+			return false;
+		}
+	}
+
+	public List<UserEntity> listAll(int limit) {
+		List<UserEntity> list = new ArrayList<>();
+		int lim = limit <= 0 ? 200 : Math.min(limit, 500);
+		String sql = "SELECT * FROM user ORDER BY id DESC LIMIT ?";
+		try (Connection conn = database.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, lim);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					list.add(map(rs));
+				}
+			}
+		} catch (SQLException e) {
+			logger.error("listAll 失败", e);
+		}
+		return list;
+	}
+
+	public boolean setEnabled(long userId, boolean enabled) {
+		String sql = "UPDATE user SET enabled = ? WHERE id = ?";
+		try (Connection conn = database.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, enabled ? 1 : 0);
+			ps.setLong(2, userId);
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			logger.error("setEnabled 失败, userId={}", userId, e);
 			return false;
 		}
 	}

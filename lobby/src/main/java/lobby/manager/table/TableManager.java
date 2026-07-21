@@ -48,6 +48,10 @@ public class TableManager {
 	public synchronized LobbyProto.AckRoomList getAllRoomTable() {
 		LobbyProto.AckRoomList.Builder response = LobbyProto.AckRoomList.newBuilder();
 		try {
+			// 确保配置里的模板都有房间桶（热更/运行时模板）
+			for (TableModel model : configManager.getAllTableModels().values()) {
+				roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
+			}
 			int totalRooms = 0;
 			for (Map.Entry<Integer, Map<Long, TableInfo>> roomEntry : roomTables.entrySet()) {
 				ModelProto.Room.Builder roomBuilder = ModelProto.Room.newBuilder();
@@ -74,6 +78,19 @@ public class TableManager {
 
 	public synchronized TableModel getTableModel(int modelId) {
 		return configManager.getTableModel(modelId);
+	}
+
+	public synchronized void putRuntimeModel(TableModel model) {
+		configManager.putRuntimeModel(model);
+		roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
+	}
+
+	public synchronized int nextRuntimeModelId() {
+		int max = 10000;
+		for (Integer id : configManager.getAllTableModels().keySet()) {
+			if (id >= max) max = id + 1;
+		}
+		return max;
 	}
 
 	public synchronized TableInfo getTableById(long tableId) {

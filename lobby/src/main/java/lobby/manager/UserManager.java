@@ -78,4 +78,8 @@ public class UserManager {
 	public int getUserCount() {
 		return users.size();
 	}
+
+	public Map<Long, User> getAllUsers() {
+		return users;
+	}
 }

@@ -368,13 +368,26 @@
         var ws = null;
         var seqCounter = 0;
         var pendingCallbacks = {};
+        // 与 const.proto Operation 对齐
+        var OP = {
+            PASS: 0,
+            PREPARE: 7,
+            DISCARD: 13,
+            MJ_PENG: 14,
+            MJ_GANG: 15,
+            MJ_CHI: 16,
+            MJ_HU: 17,
+            MJ_PASS: 18
+        };
+
         var gameState = {
             myTiles: [],
             selectedTile: -1, // 选中的牌index
             players: [],
             myPosition: -1,
             discardedTiles: [], // 打出的牌
-            wallLeft: 0
+            wallLeft: 0,
+            lastClaimTile: 0
         };
 
         // 牌ID到图片名的映射
@@ -497,7 +510,7 @@
                         document.getElementById('roomInfo').textContent =
                             '桌号: ' + resp.data.tableInfo.tableId;
                     }
-                    showActionButtons('prepare');
+                    showActionButtons('waiting');
                 } else {
                     showCenterMsg(resp.msg || '进入桌子失败');
                 }
@@ -524,14 +537,15 @@
         }
 
         function handleNotOp(data) {
-            // 操作通知 - 轮到谁操作
+            // 操作通知 - 轮到谁出牌/暗杠等（NotOperation）
             if (!data) return;
             var opSeat = data.opSeat;
             highlightActivePlayer(opSeat);
 
             if (gameState.myPosition >= 0 && opSeat === gameState.myPosition) {
-                var choices = data.choice || [];
-                showOperationChoices(choices);
+                showOperationChoices(data.choice || []);
+            } else {
+                hideActions();
             }
         }
 
@@ -544,11 +558,15 @@
         }
 
         function handleNotMjState(data) {
-            // 麻将状态通知 - 出牌、摸牌等
+            // 麻将状态：弃牌广播 + claim（吃碰杠胡）选项
             if (!data) return;
-            if (data.action === 1) {
-                // MJ_DISCARD_TILE - 有人出牌
-                if (data.tileId) {
+            if (data.tileId) {
+                gameState.lastClaimTile = data.tileId;
+            }
+            // action=DISCARD(13) 时多为有人刚出牌；同步弃牌区（去重末尾）
+            if (data.tileId && data.action === OP.DISCARD) {
+                var last = gameState.discardedTiles[gameState.discardedTiles.length - 1];
+                if (last !== data.tileId) {
                     gameState.discardedTiles.push(data.tileId);
                     renderDiscarded();
                 }
@@ -556,6 +574,11 @@
             if (data.wallLeft != null) {
                 gameState.wallLeft = data.wallLeft;
                 document.getElementById('wallInfo').textContent = '牌墙剩余: ' + data.wallLeft + '张';
+            }
+            var choices = data.choice || [];
+            if (choices.length > 0 && gameState.myPosition >= 0 && data.opSeat === gameState.myPosition) {
+                highlightActivePlayer(data.opSeat);
+                showOperationChoices(choices);
             }
         }
 
@@ -613,12 +636,30 @@
             document.getElementById('settleOverlay').className = 'settle-overlay';
         }
 
-        function doOp(choice) {
-            var cards = [];
-            if (choice === 13 && gameState.selectedTile >= 0) {
-                // DISCARD - 出选中的牌
-                var tileId = gameState.myTiles[gameState.selectedTile];
-                cards = [{ value: tileId }];
+        function choiceCards(choiceObj) {
+            var cards = choiceObj && choiceObj.cards ? choiceObj.cards : [];
+            var out = [];
+            for (var i = 0; i < cards.length; i++) {
+                var v = typeof cards[i] === 'object' ? cards[i].value : cards[i];
+                if (v != null) out.push({ value: v });
+            }
+            return out;
+        }
+
+        function removeTilesFromHand(tileValues) {
+            for (var i = 0; i < tileValues.length; i++) {
+                var idx = gameState.myTiles.indexOf(tileValues[i]);
+                if (idx >= 0) gameState.myTiles.splice(idx, 1);
+            }
+            gameState.selectedTile = -1;
+            renderMyTiles();
+            updateTileCount();
+        }
+
+        function doOp(choice, cards) {
+            cards = cards || [];
+            if (choice === OP.DISCARD && cards.length === 0 && gameState.selectedTile >= 0) {
+                cards = [{ value: gameState.myTiles[gameState.selectedTile] }];
             }
 
             sendWsMessage('op', {
@@ -627,20 +668,40 @@
             }, function(resp) {
                 if (resp.code !== 0) {
                     showCenterMsg(resp.msg || '操作失败');
+                    return;
                 }
-                if (choice === 13 && gameState.selectedTile >= 0) {
-                    // 出牌成功，从手牌移除
-                    gameState.myTiles.splice(gameState.selectedTile, 1);
-                    gameState.selectedTile = -1;
-                    renderMyTiles();
-                    updateTileCount();
+                if (choice === OP.DISCARD && cards.length > 0) {
+                    removeTilesFromHand([cards[0].value]);
+                    gameState.discardedTiles.push(cards[0].value);
+                    renderDiscarded();
+                } else if (choice === OP.MJ_CHI || choice === OP.MJ_PENG || choice === OP.MJ_GANG) {
+                    var vals = [];
+                    for (var i = 0; i < cards.length; i++) vals.push(cards[i].value);
+                    // 碰/明杠手牌只扣自己那几张；吃扣 combo 里非弃牌
+                    if (choice === OP.MJ_PENG) {
+                        removeTilesFromHand([gameState.lastClaimTile, gameState.lastClaimTile]);
+                    } else if (choice === OP.MJ_GANG && vals.length === 1) {
+                        // 暗杠/补杠：目标牌；明杠 claim 时手牌 3 张
+                        var g = vals[0];
+                        var cnt = 0;
+                        for (var j = 0; j < gameState.myTiles.length; j++) {
+                            if (gameState.myTiles[j] === g) cnt++;
+                        }
+                        var need = [];
+                        for (var k = 0; k < Math.min(cnt, 4); k++) need.push(g);
+                        removeTilesFromHand(need);
+                    } else if (choice === OP.MJ_CHI) {
+                        var vals = [];
+                        for (var c = 0; c < cards.length; c++) vals.push(cards[c].value);
+                        removeTilesFromHand(vals);
+                    }
                 }
             });
             hideActions();
         }
 
         function doPrepare() {
-            sendWsMessage('op', { choice: 7 }, function(resp) {
+            sendWsMessage('op', { choice: OP.PREPARE }, function(resp) {
                 if (resp.code !== 0) {
                     showCenterMsg(resp.msg || '准备失败');
                 }
@@ -797,62 +858,55 @@
             bar.style.display = 'flex';
 
             for (var i = 0; i < choices.length; i++) {
-                var choice = choices[i];
-                var btn = document.createElement('button');
-                btn.className = 'action-btn';
+                (function(choiceObj) {
+                    var code = choiceObj.choice;
+                    var cards = choiceCards(choiceObj);
+                    var btn = document.createElement('button');
+                    btn.className = 'action-btn';
 
-                switch (choice.choice) {
-                    case 13: // DISCARD
+                    if (code === OP.DISCARD || code === 6) {
                         btn.className += ' btn-discard';
                         btn.textContent = '出牌';
                         btn.onclick = function() {
                             if (gameState.selectedTile >= 0) {
-                                doOp(13);
+                                doOp(OP.DISCARD);
                             } else {
                                 showCenterMsg('请先选择一张牌');
                             }
                         };
-                        break;
-                    case 6: // PLAY (兼容)
-                        btn.className += ' btn-discard';
-                        btn.textContent = '出牌';
-                        btn.onclick = function() {
-                            if (gameState.selectedTile >= 0) {
-                                doOp(13);
-                            } else {
-                                showCenterMsg('请先选择一张牌');
-                            }
-                        };
-                        break;
-                    case 0: // PASS
+                    } else if (code === OP.PASS || code === OP.MJ_PASS) {
                         btn.className += ' btn-pass';
                         btn.textContent = '过';
-                        btn.onclick = function() { doOp(0); };
-                        break;
-                    case 2: // CHI (TODO)
+                        btn.onclick = function() { doOp(OP.MJ_PASS); };
+                    } else if (code === OP.MJ_CHI) {
                         btn.className += ' btn-chi';
-                        btn.textContent = '吃';
-                        btn.onclick = function() { doOp(2); };
-                        break;
-                    case 3: // PENG (TODO)
+                        var chiLabel = '吃';
+                        if (cards.length > 0) {
+                            var names = [];
+                            for (var n = 0; n < cards.length; n++) names.push(getTileName(cards[n].value));
+                            chiLabel = '吃(' + names.join('') + ')';
+                        }
+                        btn.textContent = chiLabel;
+                        btn.onclick = function() { doOp(OP.MJ_CHI, cards); };
+                    } else if (code === OP.MJ_PENG) {
                         btn.className += ' btn-peng';
                         btn.textContent = '碰';
-                        btn.onclick = function() { doOp(3); };
-                        break;
-                    case 4: // GANG (TODO)
+                        btn.onclick = function() { doOp(OP.MJ_PENG, cards); };
+                    } else if (code === OP.MJ_GANG) {
                         btn.className += ' btn-gang';
-                        btn.textContent = '杠';
-                        btn.onclick = function() { doOp(4); };
-                        break;
-                    case 5: // HU (TODO)
+                        btn.textContent = cards.length === 1
+                            ? ('杠(' + getTileName(cards[0].value) + ')')
+                            : '杠';
+                        btn.onclick = function() { doOp(OP.MJ_GANG, cards); };
+                    } else if (code === OP.MJ_HU) {
                         btn.className += ' btn-hu';
                         btn.textContent = '胡';
-                        btn.onclick = function() { doOp(5); };
-                        break;
-                    default:
-                        continue;
-                }
-                bar.appendChild(btn);
+                        btn.onclick = function() { doOp(OP.MJ_HU, cards); };
+                    } else {
+                        return;
+                    }
+                    bar.appendChild(btn);
+                })(choices[i]);
             }
         }
 
@@ -866,6 +920,11 @@
                 btn.textContent = '准备';
                 btn.onclick = doPrepare;
                 bar.appendChild(btn);
+            } else if (type === 'waiting') {
+                var tip = document.createElement('span');
+                tip.style.cssText = 'color:#fff;font-size:14px;padding:8px 12px;';
+                tip.textContent = '等待玩家坐满后自动开局';
+                bar.appendChild(tip);
             }
         }
 

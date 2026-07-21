@@ -6,6 +6,7 @@ import game.manager.table.TableUser;
 import game.manager.table.MjTable;
 import game.manager.table.DdzTable;
 import model.tablemodel.TableModel;
+import model.tablemodel.TableModelJson;
 import msg.registor.enums.ServerType;
 import msg.registor.message.SMsg;
 import org.slf4j.Logger;
@@ -139,12 +140,12 @@ public class TableManager {
      * 创建桌子
      *
      * @param roomId 桌子类型
-     * @param role   创建的玩家
+     * @param role   创建的玩家（avatar 若以 TMJSON: 开头则为自定义模板覆盖）
      * @return 桌子实例
      */
     public Table createTable(int roomId, ModelProto.RoomRole role) {
         synchronized (TableManager.class) {
-            TableModel model = configManager.getTableModel(roomId);
+            TableModel model = resolveModel(roomId, role);
             if (model == null) {
                 throw new IllegalArgumentException("未知房间模板 roomId=" + roomId);
             }
@@ -157,6 +158,27 @@ public class TableManager {
             addTable(table);
             return table;
         }
+    }
+
+    private TableModel resolveModel(int roomId, ModelProto.RoomRole role) {
+        if (role != null && !role.getAvatar().isEmpty()) {
+            String avatar = role.getAvatar().toStringUtf8();
+            if (avatar.startsWith("TMJSON:")) {
+                TableModel custom = TableModelJson.parse(avatar.substring("TMJSON:".length()));
+                if (custom != null) {
+                    if (custom.getId() <= 0) {
+                        custom.setId(roomId > 0 ? roomId : (10000 + (int) (System.currentTimeMillis() % 100000)));
+                    }
+                    configManager.putRuntimeModel(custom);
+                    return custom;
+                }
+            }
+        }
+        return configManager.getTableModel(roomId);
+    }
+
+    public TableConfigManager getConfigManager() {
+        return configManager;
     }
 
     /**

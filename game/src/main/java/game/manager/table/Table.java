@@ -99,7 +99,7 @@ public abstract class Table {
 	public int nextSeat(int seat) { return ++seat >= tableModel.getSeatNum() ? 0 : seat; }
 	public TableUser getNextSeatUser(int seat) { return seatUsers.get(nextSeat(seat)); }
 
-	public boolean sitFull() { return users.size() >= tableModel.getSeatNum(); }
+	public boolean sitFull() { return seatUsers.size() >= tableModel.getSeatNum(); }
 	public boolean isEmpty() { return users.isEmpty(); }
 	public boolean gaming() {
 		return tableState != TableState.WAITING && tableState != TableState.TABLE_OVER
@@ -182,8 +182,8 @@ public abstract class Table {
 	public TableUser getUser(int userId, int gateId, GameProto.ReqEnterTable req) {
 		TableUser tableUser = users.get(userId);
 		if (tableUser == null) {
+			// 先不写入 users：避免 addUser 前 sitFull 被预占导致第三人 TABLE_FULL
 			tableUser = new TableUser(userId, req.getHead().toStringUtf8(), req.getNick().toStringUtf8(), gateId);
-			users.put(userId, tableUser);
 		}
 		return tableUser;
 	}
@@ -192,13 +192,18 @@ public abstract class Table {
 		try {
 			if (user == null) return ConstProto.Result.ROLE_NULL_VALUE;
 			int prevSeat = user.getSeated();
-			if (prevSeat >= 0 && seatUsers.get(prevSeat) == user) return ConstProto.Result.SUCCESS_VALUE;
+			if (prevSeat >= 0 && seatUsers.get(prevSeat) == user) {
+				users.put(user.getUserId(), user);
+				return ConstProto.Result.SUCCESS_VALUE;
+			}
 			if (prevSeat >= 0) user.setSeated(-1);
 			if (sitFull()) return ConstProto.Result.TABLE_FULL_VALUE;
 			if (isEmpty()) start();
 			int seat = occupySeat(user);
+			if (seat == -1) return ConstProto.Result.TABLE_FULL_VALUE;
+			users.put(user.getUserId(), user);
 			logger.info("玩家加入桌子, userId: {}, tableId: {} seat:{}", user.getUserId(), tableId, seat);
-			return seat == -1 ? ConstProto.Result.TABLE_FULL_VALUE : ConstProto.Result.SUCCESS_VALUE;
+			return ConstProto.Result.SUCCESS_VALUE;
 		} catch (Exception e) {
 			logger.error("添加玩家到桌子失败, userId: {}, tableId: {}", user != null ? user.getUserId() : "null", tableId, e);
 			return ConstProto.Result.ROLE_ERROR_VALUE;

@@ -66,33 +66,49 @@ public class TableConfigManager {
         configLoader.stopWatch();
     }
 
-    /**
-     * 获取房间模板
-     */
-    public TableModel getTableModel(int modelId) {
-        return tableModelMap.get(modelId);
-    }
+	/**
+	 * 获取房间模板
+	 */
+	public TableModel getTableModel(int modelId) {
+		return tableModelMap.get(modelId);
+	}
 
-    /**
-     * 获取所有房间模板
-     */
-    public Map<Integer, TableModel> getAllTableModels() {
-        return tableModelMap;
-    }
+	/**
+	 * 运行时注册/覆盖模板（自定义创房），不写入 Excel，热更文件时会与文件合并保留高 id
+	 */
+	public void putRuntimeModel(TableModel model) {
+		if (model == null) return;
+		tableModelMap.put(model.getId(), model);
+		logger.info("注册运行时房间模板, id: {}, type: {}", model.getId(), model.getType());
+	}
 
-    /**
-     * 配置变更回调
-     */
-    private void onConfigChange(List<TableModel> newConfigs) {
-        logger.info("检测到配置变更，重新加载房间模板...");
-        tableModelMap.clear();
-        for (TableModel model : newConfigs) {
-            tableModelMap.put(model.getId(), model);
-        }
-        logger.info("房间模板更新完成, 数量: {}", tableModelMap.size());
+	/**
+	 * 获取所有房间模板
+	 */
+	public Map<Integer, TableModel> getAllTableModels() {
+		return tableModelMap;
+	}
 
-        if (onChangeCallback != null) {
-            onChangeCallback.accept(tableModelMap);
-        }
-    }
+	/**
+	 * 配置变更回调
+	 */
+	private void onConfigChange(List<TableModel> newConfigs) {
+		logger.info("检测到配置变更，重新加载房间模板...");
+		Map<Integer, TableModel> runtimeKeep = new ConcurrentHashMap<>();
+		for (Map.Entry<Integer, TableModel> e : tableModelMap.entrySet()) {
+			if (e.getKey() >= 10000) {
+				runtimeKeep.put(e.getKey(), e.getValue());
+			}
+		}
+		tableModelMap.clear();
+		for (TableModel model : newConfigs) {
+			tableModelMap.put(model.getId(), model);
+		}
+		tableModelMap.putAll(runtimeKeep);
+		logger.info("房间模板更新完成, 数量: {}", tableModelMap.size());
+
+		if (onChangeCallback != null) {
+			onChangeCallback.accept(tableModelMap);
+		}
+	}
 }

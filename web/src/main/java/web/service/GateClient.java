@@ -84,13 +84,17 @@ public class GateClient {
 	private TCPConnect createConnection(String sessionId) {
 		try {
 			InetSocketAddress addr = new InetSocketAddress(gateHost, gatePort);
+			java.util.concurrent.CountDownLatch activeLatch = new java.util.concurrent.CountDownLatch(1);
 
 			TCPConnect connect = new TCPConnect(
 					eventLoopGroup, addr,
 					(connectHandler, tcpMessage) -> handleIncoming(sessionId, tcpMessage),
 					parser,
 					msgId -> null,
-					client -> logger.info("Gate连接建立, sessionId: {}", sessionId),
+					client -> {
+						activeLatch.countDown();
+						logger.info("Gate连接建立, sessionId: {}", sessionId);
+					},
 					client -> {
 						logger.info("Gate连接断开, sessionId: {}", sessionId);
 						connections.remove(sessionId);
@@ -103,6 +107,16 @@ public class GateClient {
 			} catch (TimeoutException e) {
 				connections.remove(sessionId);
 				throw new RuntimeException("连接Gate服务器超时", e);
+			}
+
+			// connect().sync() 返回时 channelActive 可能尚未设置 completerGroup，需等到激活回调
+			if (!activeLatch.await(3, TimeUnit.SECONDS)) {
+				connections.remove(sessionId);
+				try {
+					connect.close();
+				} catch (Exception ignored) {
+				}
+				throw new RuntimeException("Gate通道激活超时");
 			}
 
 			logger.info("创建Gate连接成功, sessionId: {} -> {}:{}", sessionId, gateHost, gatePort);

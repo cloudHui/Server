@@ -46,6 +46,26 @@ public class LobbyAdminClient {
 		return post("/invites/revoke", token, body);
 	}
 
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> listUsers(String token) {
+		return get("/users", token);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> enableUser(String token, Map<String, Object> body) {
+		return post("/users/enable", token, body);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> listTables(String token) {
+		return get("/tables", token);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> createCustomRoom(String token, Map<String, Object> body) {
+		return post("/rooms/custom", token, body);
+	}
+
 	private Map<String, Object> get(String path, String token) {
 		try {
 			HttpURLConnection conn = open(path, "GET", token);

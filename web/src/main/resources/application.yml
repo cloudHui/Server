@@ -14,6 +14,10 @@ gate:
 lobby:
   admin-http: http://127.0.0.1:5701
 
+game:
+  # 相对 web 启动目录；若从 repos/Server 起服可用此路径
+  replay-dir: build/game/replay
+
 logging:
   file:
     name: ./logs/web/app.log

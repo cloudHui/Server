@@ -25,9 +25,11 @@ public class RoomController {
 	private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
 
 	private final UserService userService;
+	private final LobbyAdminClient lobbyAdminClient;
 
-	public RoomController(UserService userService) {
+	public RoomController(UserService userService, LobbyAdminClient lobbyAdminClient) {
 		this.userService = userService;
+		this.lobbyAdminClient = lobbyAdminClient;
 	}
 
 	/**
@@ -129,6 +131,97 @@ public class RoomController {
 			logger.error("加入桌子异常, userId: {}, roomId: {}", user.getUserId(), roomId, e);
 			return ResponseEntity.ok(errorResponse(500, "加入桌子异常: " + e.getMessage()));
 		}
+	}
+
+	/**
+	 * 创建房间：固定模板 或 自定义规则
+	 * POST /api/rooms/create
+	 * fixed:  { sessionId, mode:"fixed", roomId }
+	 * custom: { sessionId, mode:"custom", gameType, baseScore?, totalRounds?, allowChi?, ... }
+	 */
+	@PostMapping("/rooms/create")
+	public ResponseEntity<Map<String, Object>> createRoom(@RequestBody Map<String, Object> request) {
+		String sessionId = str(request.get("sessionId"));
+		UserService.UserInfo user = userService.getSession(sessionId);
+		if (user == null) {
+			return ResponseEntity.ok(errorResponse(401, "会话无效，请重新登录"));
+		}
+		String mode = str(request.get("mode"));
+		if (mode.isEmpty()) mode = "fixed";
+
+		try {
+			int roomId;
+			int gameType;
+			if ("custom".equalsIgnoreCase(mode)) {
+				Number gt = (Number) request.get("gameType");
+				if (gt == null) {
+					return ResponseEntity.ok(errorResponse(400, "自定义创房需要 gameType"));
+				}
+				gameType = gt.intValue();
+				Map<String, Object> payload = new HashMap<>();
+				payload.put("gameType", gameType);
+				copyInt(request, payload, "seatNum");
+				copyInt(request, payload, "baseScore");
+				copyInt(request, payload, "totalRounds");
+				copyInt(request, payload, "maxFan");
+				copyInt(request, payload, "allowChi");
+				copyInt(request, payload, "allowDianPao");
+				copyInt(request, payload, "allowPeng");
+				copyInt(request, payload, "allowGang");
+				copyInt(request, payload, "allowHu");
+				copyInt(request, payload, "autoPlay");
+				copyInt(request, payload, "cardNum");
+				copyInt(request, payload, "exCardNum");
+				Map<String, Object> prepared = lobbyAdminClient.createCustomRoom(user.getToken(), payload);
+				if (prepared == null || !Integer.valueOf(0).equals(asInt(prepared.get("code")))) {
+					return ResponseEntity.ok(prepared != null ? prepared : errorResponse(502, "lobby 不可用"));
+				}
+				roomId = asInt(prepared.get("roomId"));
+			} else {
+				Number roomIdNum = (Number) request.get("roomId");
+				if (roomIdNum == null) {
+					return ResponseEntity.ok(errorResponse(400, "固定模板创房需要 roomId"));
+				}
+				roomId = roomIdNum.intValue();
+				Number gt = (Number) request.get("gameType");
+				gameType = gt != null ? gt.intValue() : 0;
+			}
+
+			CompletableFuture<Message> future = userService.joinTable(sessionId, roomId);
+			Message response = future.get(10, TimeUnit.SECONDS);
+			if (!(response instanceof LobbyProto.AckJoinRoomTable)) {
+				return ResponseEntity.ok(errorResponse(500, "创建/加入失败"));
+			}
+			LobbyProto.AckJoinRoomTable ack = (LobbyProto.AckJoinRoomTable) response;
+			Map<String, Object> result = new HashMap<>();
+			result.put("code", 0);
+			result.put("msg", "success");
+			result.put("tableId", ack.getTableId());
+			result.put("roomId", roomId);
+			result.put("gameType", gameType);
+			result.put("mode", mode);
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			logger.error("创建房间异常, userId: {}", user.getUserId(), e);
+			return ResponseEntity.ok(errorResponse(500, "创建房间异常: " + e.getMessage()));
+		}
+	}
+
+	private static void copyInt(Map<String, Object> from, Map<String, Object> to, String key) {
+		Object v = from.get(key);
+		if (v instanceof Number) {
+			to.put(key, ((Number) v).intValue());
+		}
+	}
+
+	private static int asInt(Object o) {
+		if (o instanceof Number) return ((Number) o).intValue();
+		if (o == null) return 0;
+		try { return Integer.parseInt(String.valueOf(o)); } catch (Exception e) { return 0; }
+	}
+
+	private static String str(Object o) {
+		return o == null ? "" : String.valueOf(o);
 	}
 
 	private Map<String, Object> errorResponse(int code, String msg) {
