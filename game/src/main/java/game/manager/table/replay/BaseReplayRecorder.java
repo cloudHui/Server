@@ -97,18 +97,30 @@ public abstract class BaseReplayRecorder implements ReplayRecorder {
 		}
 	}
 
-	/** 清理replay目录下超过7天的子目录 */
+	/** 仅在回放总量超过上限时，从最旧文件开始清理。展示层只取最近七天。 */
 	private void cleanOldReplays(String jarDir) {
 		File replayDir = new File(jarDir, "replay");
 		if (!replayDir.exists() || !replayDir.isDirectory()) return;
-		long threshold = System.currentTimeMillis() - 7L * 24 * 60 * 60 * 1000;
-		File[] subDirs = replayDir.listFiles(File::isDirectory);
-		if (subDirs == null) return;
-		for (File sub : subDirs) {
-			if (sub.lastModified() < threshold) {
-				deleteDir(sub);
-				logger.info("清理过期回放目录: {}", sub.getName());
-			}
+		List<File> files = new ArrayList<>();
+		collectReplayFiles(replayDir, files);
+		long bytes = 0;
+		for (File file : files) bytes += file.length();
+		if (bytes <= 2L * 1024 * 1024 * 1024) return;
+		files.sort(Comparator.comparingLong(File::lastModified));
+		for (Iterator<File> it = files.iterator(); it.hasNext();) {
+			File file = it.next();
+			if (bytes <= 200L * 1024 * 1024) break;
+			long length = file.length();
+			if (file.delete()) { bytes -= length; it.remove(); }
+		}
+	}
+
+	private void collectReplayFiles(File dir, List<File> files) {
+		File[] children = dir.listFiles();
+		if (children == null) return;
+		for (File child : children) {
+			if (child.isDirectory()) collectReplayFiles(child, files);
+			else if (child.getName().endsWith(".txt")) files.add(child);
 		}
 	}
 

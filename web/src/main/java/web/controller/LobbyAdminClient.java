@@ -66,6 +66,11 @@ public class LobbyAdminClient {
 		return post("/rooms/custom", token, body);
 	}
 
+	public Object listRecords(String token, int page, int size) {
+		Map<String, Object> result = get("/records?page=" + page + "&size=" + size, token);
+		return result == null ? java.util.Collections.emptyList() : result.get("records");
+	}
+
 	private Map<String, Object> get(String path, String token) {
 		try {
 			HttpURLConnection conn = open(path, "GET", token);

@@ -231,7 +231,12 @@
                     <h2 style="margin:0;">战绩 / 回放记录</h2>
                     <button class="btn btn-ghost" onclick="loadReplays()">刷新</button>
                 </div>
-                <div class="meta">来自 game 落盘文件（结算后生成）。当前为文本回放，可打开查看。</div>
+                <div class="form-row">
+                    <input id="replayCode" placeholder="输入回放码，例如 2026-07-21/90001_1.txt">
+                    <button class="btn btn-ghost" onclick="openReplayCode()">打开回放</button>
+                    <button class="btn btn-ghost" onclick="loadReplays(1)">刷新全部</button>
+                </div>
+                <div class="meta">管理员列表展示全部回放并分页；回放码由日期和文件名组成。</div>
                 <div style="overflow-x:auto;">
                     <table>
                         <thead>
@@ -242,7 +247,18 @@
                         <tbody id="replayBody"><tr><td colspan="6">切换到此页后加载</td></tr></tbody>
                     </table>
                 </div>
+                <div class="form-row" style="justify-content:flex-end;">
+                    <button class="btn btn-ghost" onclick="loadReplays(replayPage - 1)">上一页</button>
+                    <span id="replayPageLabel" class="meta"></span>
+                    <button class="btn btn-ghost" onclick="loadReplays(replayPage + 1)">下一页</button>
+                </div>
                 <div class="msg" id="replayMsg"></div>
+            </div>
+            <div class="card">
+                <h2>落库战绩</h2>
+                <div class="meta">游戏结算后按玩家、局次和累计分数保存到 SQLite。</div>
+                <div style="overflow-x:auto;"><table><thead><tr><th>桌号</th><th>局</th><th>玩家</th><th>本局</th><th>累计</th><th>结果</th></tr></thead>
+                    <tbody id="recordBody"><tr><td colspan="6">切换到此页后加载</td></tr></tbody></table></div>
             </div>
             <div class="card" id="replayDetailCard" style="display:none;">
                 <h2 id="replayDetailTitle">回放详情</h2>
@@ -452,8 +468,10 @@
                 .catch(function() { setMsg('tablesMsg', '网络错误', false); });
         }
 
-        function loadReplays() {
-            fetch('/api/admin/replays?sessionId=' + encodeURIComponent(sessionId))
+        var replayPage = 1;
+        function loadReplays(page) {
+            replayPage = Math.max(page || 1, 1);
+            fetch('/api/admin/replays?sessionId=' + encodeURIComponent(sessionId) + '&page=' + replayPage + '&size=20')
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     var body = document.getElementById('replayBody');
@@ -465,6 +483,7 @@
                     if (!list.length) {
                         body.innerHTML = '<tr><td colspan="6">暂无回放（对局结算后才会生成）</td></tr>';
                         setMsg('replayMsg', '0 条', true);
+                        loadRecords();
                         return;
                     }
                     var html = '';
@@ -476,9 +495,34 @@
                             + r.date + '\',\'' + r.name + '\')">查看</button></td></tr>';
                     }
                     body.innerHTML = html;
-                    setMsg('replayMsg', '共 ' + list.length + ' 条', true);
+                    document.getElementById('replayPageLabel').textContent = '第 ' + data.page + ' 页 / 共 ' + data.total + ' 条';
+                    setMsg('replayMsg', '本页 ' + list.length + ' 条', true);
+                    loadRecords();
                 })
                 .catch(function() { setMsg('replayMsg', '网络错误', false); });
+        }
+
+        function openReplayCode() {
+            var code = document.getElementById('replayCode').value.trim();
+            if (!code) return;
+            fetch('/api/admin/replays/code?sessionId=' + encodeURIComponent(sessionId) + '&code=' + encodeURIComponent(code))
+                .then(function(r) { return r.json(); }).then(function(data) {
+                    if (data.code !== 0) { setMsg('replayMsg', data.msg || '读取失败', false); return; }
+                    document.getElementById('replayDetailCard').style.display = 'block';
+                    document.getElementById('replayDetailTitle').textContent = '回放 ' + data.date + '/' + data.name;
+                    document.getElementById('replayContent').textContent = data.content || '';
+                });
+        }
+
+        function loadRecords() {
+            fetch('/api/admin/records?sessionId=' + encodeURIComponent(sessionId) + '&page=1&size=20')
+                .then(function(r) { return r.json(); }).then(function(data) {
+                    var body = document.getElementById('recordBody'), rows = data.records || [];
+                    body.innerHTML = rows.length ? rows.map(function(r) {
+                        return '<tr><td>' + r.tableId + '</td><td>' + r.round + '</td><td>' + r.userId
+                            + '</td><td>' + r.score + '</td><td>' + r.totalScore + '</td><td>' + r.winType + '</td></tr>';
+                    }).join('') : '<tr><td colspan="6">暂无落库战绩</td></tr>';
+                });
         }
 
         function openReplay(date, name) {

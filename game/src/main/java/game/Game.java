@@ -25,6 +25,7 @@ import utils.ServerManager;
 import utils.config.ConfigurationManager;
 import utils.metrics.MetricsCollector;
 import utils.metrics.MetricsHttpServer;
+import game.db.ScoreRepository;
 
 /**
  * @author cloud
@@ -208,6 +209,8 @@ public class Game {
 		serverManager = new ServerManager(timer,
 				config.getInt("plant", 0) != 0);
 		logger.info("服务器组件初始化完成, 线程数:{}, 队列容量:{}", poolSize, queueCap);
+		String scoreDb = config.getProperty("game.score-db");
+		ScoreRepository.initialize(scoreDb == null || scoreDb.isEmpty() ? "../lobby/data/lobby.db" : scoreDb);
 	}
 
 	/**

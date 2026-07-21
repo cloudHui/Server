@@ -265,7 +265,6 @@ public abstract class Table {
 		op.reset();
 		for (TableUser user : seatUsers.values()) user.getCards().clear();
 		resetGameContext(); // 子类实现: 重置MJ/DDZ上下文
-		gameResult = createGameResult(); // 重新创建
 		tableState = TableState.WAITING;
 		stateStartTime = System.currentTimeMillis();
 		logger.info("牌桌重置准备下一局, tableId: {}, round: {}", tableId, currentRound);

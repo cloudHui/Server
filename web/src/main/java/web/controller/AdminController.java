@@ -102,14 +102,28 @@ public class AdminController {
 
 	@GetMapping("/replays")
 	public ResponseEntity<Map<String, Object>> replays(@RequestParam String sessionId,
-			@RequestParam(required = false, defaultValue = "100") int limit) {
+			@RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "20") int size) {
 		UserService.UserInfo user = requireAdmin(sessionId);
 		if (user == null) {
 			return ResponseEntity.ok(error(403, "需要管理员账号"));
 		}
+		Map<String, Object> result = replayService.page(page, size);
+		result.put("code", 0);
+		return ResponseEntity.ok(result);
+	}
+
+	@GetMapping("/records")
+	public ResponseEntity<Map<String, Object>> records(@RequestParam String sessionId,
+			@RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "20") int size) {
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) return ResponseEntity.ok(error(403, "需要管理员账号"));
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 0);
-		result.put("replays", replayService.listReplays(limit));
+		result.put("page", page);
+		result.put("size", size);
+		result.put("records", lobbyAdminClient.listRecords(user.getToken(), page, size));
 		return ResponseEntity.ok(result);
 	}
 
@@ -121,6 +135,16 @@ public class AdminController {
 			return ResponseEntity.ok(error(403, "需要管理员账号"));
 		}
 		return ResponseEntity.ok(replayService.getReplay(date, name));
+	}
+
+	@GetMapping("/replays/code")
+	public ResponseEntity<Map<String, Object>> replayByCode(@RequestParam String sessionId,
+			@RequestParam String code) {
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) return ResponseEntity.ok(error(403, "需要管理员账号"));
+		int slash = code == null ? -1 : code.indexOf('/');
+		if (slash <= 0 || slash == code.length() - 1) return ResponseEntity.ok(error(400, "回放码格式为 日期/文件名"));
+		return ResponseEntity.ok(replayService.getReplay(code.substring(0, slash), code.substring(slash + 1)));
 	}
 
 	private UserService.UserInfo requireAdmin(String sessionId) {

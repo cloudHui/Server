@@ -20,12 +20,16 @@ public class SqliteDatabase {
 	private final String jdbcUrl;
 
 	private SqliteDatabase() {
+		this(DB_PATH);
+	}
+
+	SqliteDatabase(String path) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("sqlite-jdbc 未找到", e);
 		}
-		File dbFile = new File(DB_PATH);
+		File dbFile = new File(path);
 		File parent = dbFile.getParentFile();
 		if (parent != null && !parent.exists() && !parent.mkdirs()) {
 			throw new RuntimeException("无法创建数据库目录: " + parent.getAbsolutePath());
@@ -67,9 +71,22 @@ public class SqliteDatabase {
 				+ "used_count INTEGER NOT NULL DEFAULT 0,"
 				+ "enabled INTEGER NOT NULL DEFAULT 1"
 				+ ")";
+		String customRoomSql = "CREATE TABLE IF NOT EXISTS custom_room ("
+				+ "model_id INTEGER PRIMARY KEY, model_json TEXT NOT NULL, game_type INTEGER NOT NULL,"
+				+ "created_by TEXT, created_at INTEGER NOT NULL, enabled INTEGER NOT NULL DEFAULT 1"
+				+ ")";
+		String scoreSql = "CREATE TABLE IF NOT EXISTS score_record ("
+				+ "table_id INTEGER NOT NULL, room_id INTEGER NOT NULL, game_type INTEGER NOT NULL,"
+				+ "round INTEGER NOT NULL, user_id INTEGER NOT NULL, seat INTEGER NOT NULL,"
+				+ "score INTEGER NOT NULL, total_score INTEGER NOT NULL, winner_seat INTEGER NOT NULL,"
+				+ "score_value INTEGER NOT NULL, win_type TEXT NOT NULL, created_at INTEGER NOT NULL,"
+				+ "PRIMARY KEY(table_id, round, user_id)"
+				+ ")";
 		try (Connection conn = getConnection(); Statement st = conn.createStatement()) {
 			st.execute(userSql);
 			st.execute(inviteSql);
+			st.execute(customRoomSql);
+			st.execute(scoreSql);
 			logger.info("SQLite 表结构初始化完成");
 		} catch (SQLException e) {
 			throw new RuntimeException("初始化 SQLite 表失败", e);

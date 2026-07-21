@@ -6,6 +6,7 @@ import game.manager.table.MjTable;
 import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
 import game.manager.table.replay.MjReplayRecorder;
+import game.db.ScoreRepository;
 import model.tablemodel.TableModel;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -45,6 +46,7 @@ public class MjSettleService {
 		}
 
 		table.getGameResult().addRound(table.getCurrentRound(), -1, 0, scores, "liuJu");
+		ScoreRepository.getInstance().saveRound(table);
 		sendRoundResult(table, -1, 0, scores, "liuJu");
 		table.upNextState(TableState.TABLE_OVER);
 	}
@@ -71,6 +73,7 @@ public class MjSettleService {
 		}
 
 		table.getGameResult().addRound(table.getCurrentRound(), winResult.getWinnerId(), fan, scores, winType);
+		ScoreRepository.getInstance().saveRound(table);
 		sendRoundResult(table, winResult.getWinnerId(), fan, scores, winType, winResult.getWinTile());
 
 		logger.info("麻将胡牌, table: {}, round: {}, winner: {}, fan: {}, type: {}, scores: {}",

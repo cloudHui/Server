@@ -16,6 +16,7 @@ import game.manager.table.TableUser;
 import game.manager.table.cards.Card;
 import game.manager.table.replay.DdzReplayRecorder;
 import game.manager.table.replay.ReplayRecorder;
+import game.db.ScoreRepository;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import proto.GameProto;
@@ -55,6 +56,7 @@ public final class DdzSettleService {
 
 		String winType = spring ? "spring" : (antiSpring ? "antiSpring" : "normal");
 		table.getGameResult().addRound(table.getCurrentRound(), winner.getSeated(), settleFactor, scores, winType);
+		ScoreRepository.getInstance().saveRound(table);
 
 		saveReplay(table, winner, settleFactor, winType, scores);
 		sendResultMessage(table, winner, rPlayers(table), landlordUserId, winTeam, ctx, spring, antiSpring, settleFactor, seatNum, scores, winType);

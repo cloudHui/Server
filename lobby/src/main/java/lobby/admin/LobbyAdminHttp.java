@@ -18,6 +18,7 @@ import com.sun.net.httpserver.HttpServer;
 import lobby.Lobby;
 import lobby.db.InviteEntity;
 import lobby.db.InviteRepository;
+import lobby.db.SqliteDatabase;
 import lobby.db.UserEntity;
 import lobby.db.UserRepository;
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ public class LobbyAdminHttp {
 		server.createContext("/registration", this::handleRegistration);
 		server.createContext("/users", this::handleUsers);
 		server.createContext("/tables", this::handleTables);
+		server.createContext("/records", this::handleRecords);
 		server.createContext("/rooms/custom", this::handleCustomRoom);
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
@@ -166,6 +168,30 @@ public class LobbyAdminHttp {
 		writeJson(ex, 200, sb.toString());
 	}
 
+	private void handleRecords(HttpExchange ex) throws IOException {
+		if (!authenticateAdmin(ex).isPresent()) {
+			writeJson(ex, 401, jsonError(401, "需要 admin 登录"));
+			return;
+		}
+		if (!"GET".equalsIgnoreCase(ex.getRequestMethod())) {
+			writeJson(ex, 405, jsonError(405, "method not allowed"));
+			return;
+		}
+		Map<String, String> query = parseQuery(ex.getRequestURI().getRawQuery());
+		int page = Math.max(parseInt(query.get("page"), 1), 1);
+		int size = Math.min(Math.max(parseInt(query.get("size"), 20), 1), 100);
+		List<Map<String, Object>> rows = new lobby.db.ScoreQueryRepository(SqliteDatabase.getInstance())
+				.list((page - 1) * size, size);
+		StringBuilder sb = new StringBuilder("{\"code\":0,\"page\":").append(page)
+				.append(",\"size\":").append(size).append(",\"records\":[");
+		for (int i = 0; i < rows.size(); i++) {
+			if (i > 0) sb.append(',');
+			sb.append(mapJson(rows.get(i)));
+		}
+		sb.append("]}");
+		writeJson(ex, 200, sb.toString());
+	}
+
 	private void handleInvites(HttpExchange ex) throws IOException {
 		Optional<UserEntity> admin = authenticateAdmin(ex);
 		if (!admin.isPresent()) {
@@ -259,7 +285,7 @@ public class LobbyAdminHttp {
 		}
 		tableModel.setId(modelId);
 		tableModel.setType(gameType);
-		tm.putRuntimeModel(tableModel);
+		tm.putRuntimeModel(tableModel, user.get().getUsername());
 		writeJson(ex, 200, "{\"code\":0,\"roomId\":" + modelId
 				+ ",\"gameType\":" + gameType
 				+ ",\"msg\":\"ok\"}");
@@ -351,6 +377,29 @@ public class LobbyAdminHttp {
 
 	private static String jsonError(int code, String msg) {
 		return "{\"code\":" + code + ",\"msg\":\"" + escape(msg) + "\"}";
+	}
+
+	private static String mapJson(Map<String, Object> map) {
+		StringBuilder sb = new StringBuilder("{");
+		int i = 0;
+		for (Map.Entry<String, Object> e : map.entrySet()) {
+			if (i++ > 0) sb.append(',');
+			sb.append('"').append(escape(e.getKey())).append("\":");
+			Object value = e.getValue();
+			if (value instanceof Number || value instanceof Boolean) sb.append(value);
+			else sb.append('"').append(escape(String.valueOf(value))).append('"');
+		}
+		return sb.append('}').toString();
+	}
+
+	private static Map<String, String> parseQuery(String raw) {
+		Map<String, String> result = new LinkedHashMap<>();
+		if (raw == null) return result;
+		for (String item : raw.split("&")) {
+			int i = item.indexOf('=');
+			if (i > 0) result.put(item.substring(0, i), item.substring(i + 1));
+		}
+		return result;
 	}
 
 	private static void writeJson(HttpExchange ex, int status, String body) throws IOException {

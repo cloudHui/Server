@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import lobby.db.CustomRoomRepository;
+import lobby.db.SqliteDatabase;
 import model.tablemodel.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +21,18 @@ public class TableManager {
 	private static final TableManager instance = new TableManager();
 
 	private final TableConfigManager configManager;
+	private final CustomRoomRepository customRoomRepository;
 	private final Map<Integer, Map<Long, TableInfo>> roomTables = new ConcurrentHashMap<>();
 	private final Map<Long, TableInfo> tableInfoMap = new ConcurrentHashMap<>();
 
 	private TableManager() {
 		configManager = new TableConfigManager();
+		customRoomRepository = new CustomRoomRepository(SqliteDatabase.getInstance());
 		if (configManager.loadFail()) {
 			throw new RuntimeException("加载配置文件失败");
+		}
+		for (TableModel model : customRoomRepository.listEnabled()) {
+			configManager.putRuntimeModel(model);
 		}
 		configManager.startWatch();
 	}
@@ -81,7 +88,12 @@ public class TableManager {
 	}
 
 	public synchronized void putRuntimeModel(TableModel model) {
+		putRuntimeModel(model, "system");
+	}
+
+	public synchronized void putRuntimeModel(TableModel model, String createdBy) {
 		configManager.putRuntimeModel(model);
+		customRoomRepository.save(model, createdBy);
 		roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
 	}
 

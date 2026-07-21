@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.time.LocalDate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class ReplayService {
 		if (!Files.isDirectory(root)) {
 			return items;
 		}
-		int lim = limit <= 0 ? 100 : Math.min(limit, 300);
+		int lim = limit <= 0 ? 100 : Math.min(limit, 100000);
 		try (Stream<Path> days = Files.list(root)) {
 			List<Path> dayDirs = days.filter(Files::isDirectory)
 					.sorted(Comparator.reverseOrder())
@@ -56,6 +57,83 @@ public class ReplayService {
 		} catch (IOException e) {
 			logger.warn("列出回放失败: {}", e.getMessage());
 		}
+		return items;
+	}
+
+	public Map<String, Object> page(int page, int pageSize) {
+		int safePage = Math.max(page, 1);
+		int safeSize = Math.min(Math.max(pageSize, 1), 100);
+		List<Map<String, Object>> all = listReplays(100000);
+		int from = Math.min((safePage - 1) * safeSize, all.size());
+		int to = Math.min(from + safeSize, all.size());
+		Map<String, Object> result = new HashMap<>();
+		result.put("page", safePage);
+		result.put("pageSize", safeSize);
+		result.put("total", all.size());
+		result.put("hasNext", to < all.size());
+		result.put("replays", all.subList(from, to));
+		return result;
+	}
+
+	public Map<String, Object> pageForUser(int userId, int page, int pageSize) {
+		Map<String, Object> result = page(page, pageSize);
+		List<Map<String, Object>> visible = new ArrayList<>();
+		for (Map<String, Object> item : listRecentReplays()) {
+			Path file = resolveRoot().resolve(String.valueOf(item.get("date"))).resolve(String.valueOf(item.get("name")));
+			if (containsUser(file, userId)) visible.add(item);
+		}
+		int safePage = Math.max(page, 1);
+		int safeSize = Math.min(Math.max(pageSize, 1), 100);
+		int from = Math.min((safePage - 1) * safeSize, visible.size());
+		int to = Math.min(from + safeSize, visible.size());
+		result.put("total", visible.size());
+		result.put("hasNext", to < visible.size());
+		result.put("replays", visible.subList(from, to));
+		return result;
+	}
+
+	public Map<String, Object> getReplayForUser(int userId, String date, String name) {
+		Map<String, Object> result = getReplay(date, name);
+		if (Integer.valueOf(0).equals(result.get("code"))) {
+			String actualName = name.endsWith(".txt") ? name : name + ".txt";
+			Path file = resolveRoot().resolve(date).resolve(actualName).normalize();
+			if (!containsUser(file, userId)) {
+				result.clear(); result.put("code", 403); result.put("msg", "无权查看该回放");
+			}
+		}
+		return result;
+	}
+
+	private boolean containsUser(Path file, int userId) {
+		try {
+			for (String line : Files.readAllLines(file, StandardCharsets.UTF_8)) {
+				if (line.contains("userId=" + userId + ",")) return true;
+			}
+		} catch (IOException ignored) { }
+		return false;
+	}
+
+	private List<Map<String, Object>> listRecentReplays() {
+		Path root = resolveRoot();
+		List<Map<String, Object>> items = new ArrayList<>();
+		if (!Files.isDirectory(root)) return items;
+		LocalDate today = LocalDate.now();
+		try (Stream<Path> days = Files.list(root)) {
+			days.filter(Files::isDirectory).forEach(day -> {
+				try {
+					LocalDate date = LocalDate.parse(day.getFileName().toString());
+					if (date.isBefore(today.minusDays(6)) || date.isAfter(today)) return;
+					try (Stream<Path> files = Files.list(day)) {
+						files.filter(p -> p.getFileName().toString().endsWith(".txt"))
+							.forEach(file -> items.add(summarize(day.getFileName().toString(), file)));
+					}
+				} catch (Exception ignored) {
+				}
+			});
+		} catch (IOException e) {
+			logger.warn("列出最近回放失败: {}", e.getMessage());
+		}
+		items.sort((a, b) -> Long.compare((Long) b.get("mtime"), (Long) a.get("mtime")));
 		return items;
 	}
 
@@ -101,6 +179,7 @@ public class ReplayService {
 		Map<String, Object> m = new HashMap<>();
 		String name = file.getFileName().toString();
 		m.put("id", date + "/" + name);
+		m.put("replayCode", date + "/" + name);
 		m.put("date", date);
 		m.put("name", name);
 		m.put("mtime", file.toFile().lastModified());
