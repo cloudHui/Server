@@ -86,10 +86,3 @@ mvn install -DskipTests -pl '!mcp,!sp'
 ```
 
 起服最短路径：`center + gate + lobby + game (+ web)`
-
-## 明确不做
-
-- game 与 lobby 合并
-- 旧 Hall/Room 双进程兼容
-- 外仓 utils 继续维护（内容已进本仓，远端仓库可删）
-- Redis/MySQL 账号中台
