@@ -7156,6 +7156,16 @@ public final class ServerProto {
      * @return The cert.
      */
     com.google.protobuf.ByteString getCert();
+
+    /**
+     * <pre>
+     * gate 上该玩家连接 id；用于忽略被顶号后的旧连接断线
+     * </pre>
+     *
+     * <code>int32 gateClientId = 3;</code>
+     * @return The gateClientId.
+     */
+    int getGateClientId();
   }
   /**
    * <pre>
@@ -7224,6 +7234,21 @@ public final class ServerProto {
       return cert_;
     }
 
+    public static final int GATECLIENTID_FIELD_NUMBER = 3;
+    private int gateClientId_;
+    /**
+     * <pre>
+     * gate 上该玩家连接 id；用于忽略被顶号后的旧连接断线
+     * </pre>
+     *
+     * <code>int32 gateClientId = 3;</code>
+     * @return The gateClientId.
+     */
+    @java.lang.Override
+    public int getGateClientId() {
+      return gateClientId_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -7244,6 +7269,9 @@ public final class ServerProto {
       if (!cert_.isEmpty()) {
         output.writeBytes(2, cert_);
       }
+      if (gateClientId_ != 0) {
+        output.writeInt32(3, gateClientId_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -7260,6 +7288,10 @@ public final class ServerProto {
       if (!cert_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, cert_);
+      }
+      if (gateClientId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, gateClientId_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -7280,6 +7312,8 @@ public final class ServerProto {
           != other.getUserId()) return false;
       if (!getCert()
           .equals(other.getCert())) return false;
+      if (getGateClientId()
+          != other.getGateClientId()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -7295,6 +7329,8 @@ public final class ServerProto {
       hash = (53 * hash) + getUserId();
       hash = (37 * hash) + CERT_FIELD_NUMBER;
       hash = (53 * hash) + getCert().hashCode();
+      hash = (37 * hash) + GATECLIENTID_FIELD_NUMBER;
+      hash = (53 * hash) + getGateClientId();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7431,6 +7467,8 @@ public final class ServerProto {
 
         cert_ = com.google.protobuf.ByteString.EMPTY;
 
+        gateClientId_ = 0;
+
         return this;
       }
 
@@ -7459,6 +7497,7 @@ public final class ServerProto {
         proto.ServerProto.NotBreak result = new proto.ServerProto.NotBreak(this);
         result.userId_ = userId_;
         result.cert_ = cert_;
+        result.gateClientId_ = gateClientId_;
         onBuilt();
         return result;
       }
@@ -7513,6 +7552,9 @@ public final class ServerProto {
         if (other.getCert() != com.google.protobuf.ByteString.EMPTY) {
           setCert(other.getCert());
         }
+        if (other.getGateClientId() != 0) {
+          setGateClientId(other.getGateClientId());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -7549,6 +7591,11 @@ public final class ServerProto {
 
                 break;
               } // case 18
+              case 24: {
+                gateClientId_ = input.readInt32();
+
+                break;
+              } // case 24
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -7626,6 +7673,49 @@ public final class ServerProto {
       public Builder clearCert() {
         
         cert_ = getDefaultInstance().getCert();
+        onChanged();
+        return this;
+      }
+
+      private int gateClientId_ ;
+      /**
+       * <pre>
+       * gate 上该玩家连接 id；用于忽略被顶号后的旧连接断线
+       * </pre>
+       *
+       * <code>int32 gateClientId = 3;</code>
+       * @return The gateClientId.
+       */
+      @java.lang.Override
+      public int getGateClientId() {
+        return gateClientId_;
+      }
+      /**
+       * <pre>
+       * gate 上该玩家连接 id；用于忽略被顶号后的旧连接断线
+       * </pre>
+       *
+       * <code>int32 gateClientId = 3;</code>
+       * @param value The gateClientId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGateClientId(int value) {
+        
+        gateClientId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * gate 上该玩家连接 id；用于忽略被顶号后的旧连接断线
+       * </pre>
+       *
+       * <code>int32 gateClientId = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGateClientId() {
+        
+        gateClientId_ = 0;
         onChanged();
         return this;
       }
@@ -9524,12 +9614,13 @@ public final class ServerProto {
       "\014\n\004gate\030\002 \001(\014\"#\n\rReqServerInfo\022\022\n\nserver" +
       "Type\030\001 \003(\005\"3\n\rAckServerInfo\022\"\n\007servers\030\001" +
       " \003(\0132\021.proto.ServerInfo\"4\n\016NotServerBrea" +
-      "k\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo\"(\n" +
-      "\010NotBreak\022\016\n\006userId\030\001 \001(\005\022\014\n\004cert\030\002 \001(\014\"" +
-      "%\n\rReqRoomTables\022\024\n\014roomServerId\030\001 \001(\005\"5" +
-      "\n\rAckRoomTables\022$\n\006tables\030\001 \003(\0132\024.proto." +
-      "RoomTableInfo\"$\n\021NotTableDestroyed\022\017\n\007ta" +
-      "bleId\030\001 \001(\003B\rB\013ServerProtob\006proto3"
+      "k\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo\">\n" +
+      "\010NotBreak\022\016\n\006userId\030\001 \001(\005\022\014\n\004cert\030\002 \001(\014\022" +
+      "\024\n\014gateClientId\030\003 \001(\005\"%\n\rReqRoomTables\022\024" +
+      "\n\014roomServerId\030\001 \001(\005\"5\n\rAckRoomTables\022$\n" +
+      "\006tables\030\001 \003(\0132\024.proto.RoomTableInfo\"$\n\021N" +
+      "otTableDestroyed\022\017\n\007tableId\030\001 \001(\003B\rB\013Ser" +
+      "verProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -9607,7 +9698,7 @@ public final class ServerProto {
     internal_static_proto_NotBreak_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotBreak_descriptor,
-        new java.lang.String[] { "UserId", "Cert", });
+        new java.lang.String[] { "UserId", "Cert", "GateClientId", });
     internal_static_proto_ReqRoomTables_descriptor =
       getDescriptor().getMessageTypes().get(12);
     internal_static_proto_ReqRoomTables_fieldAccessorTable = new

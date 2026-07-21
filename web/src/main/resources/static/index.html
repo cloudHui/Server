@@ -3,167 +3,546 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>斗地主 - 登录</title>
+    <title>牌友大厅 · 登录</title>
     <style>
+        :root {
+            --bg0: #0f2a1c;
+            --bg1: #1a472a;
+            --accent: #c9a227;
+            --danger: #d64545;
+            --ink: #1b1b1b;
+            --muted: #6b7280;
+            --card: rgba(255,252,245,0.96);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #1a472a 0%, #2d5a27 50%, #1a472a 100%);
+            font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
             min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 20% 10%, rgba(201,162,39,0.18), transparent 45%),
+                radial-gradient(ellipse at 80% 90%, rgba(45,106,58,0.5), transparent 50%),
+                linear-gradient(160deg, var(--bg0), var(--bg1) 55%, #12301f);
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 24px;
+            color: var(--ink);
         }
-        .login-box {
-            background: rgba(255,255,255,0.95);
-            border-radius: 16px;
-            padding: 40px;
-            width: 380px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        .shell {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card);
+            border-radius: 18px;
+            padding: 36px 32px 28px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
+        }
+        .shell::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 4px;
+            background: linear-gradient(90deg, #8b6914, var(--accent), #8b6914);
+        }
+        .brand {
             text-align: center;
+            margin-bottom: 28px;
         }
-        .login-box h1 {
-            color: #c41e2a;
-            font-size: 32px;
-            margin-bottom: 8px;
+        .brand h1 {
+            font-size: 30px;
+            letter-spacing: 0.08em;
+            color: #1f3d2a;
+            font-weight: 700;
         }
-        .login-box .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+        .brand p {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 13px;
         }
-        .login-box input {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s;
+        .tabs {
+            display: flex;
+            gap: 8px;
             margin-bottom: 20px;
+            background: #eef2ec;
+            border-radius: 10px;
+            padding: 4px;
         }
-        .login-box input:focus {
-            border-color: #c41e2a;
+        .tabs button {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--muted);
         }
-        .login-box button {
+        .tabs button.active {
+            background: #fff;
+            color: #1f3d2a;
+            font-weight: 600;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .field { margin-bottom: 14px; }
+        input {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #c41e2a, #e63946);
-            color: white;
+            padding: 12px 14px;
+            border: 1px solid #d7ddd4;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background: #fff;
+        }
+        input:focus { border-color: #2d6a3a; }
+        .primary {
+            width: 100%;
+            margin-top: 8px;
+            padding: 13px;
             border: none;
             border-radius: 10px;
-            font-size: 18px;
+            background: linear-gradient(135deg, #1f5c36, #2d8a4e);
+            color: #fff;
+            font-size: 16px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 0.04em;
         }
-        .login-box button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(196,30,42,0.4);
-        }
-        .login-box button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        .error-msg {
-            color: #e63946;
-            margin-top: 12px;
-            font-size: 14px;
+        .primary:disabled { opacity: 0.55; cursor: not-allowed; }
+        .primary:hover:not(:disabled) { filter: brightness(1.05); }
+        .error {
             min-height: 20px;
+            margin-top: 12px;
+            color: var(--danger);
+            font-size: 13px;
+            text-align: center;
         }
-        .saved-info {
-            background: #f8f9fa;
+        .hint {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .panel { display: none; }
+        .panel.show { display: block; }
+
+        /* 拉回桌子 */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 18, 12, 0.62);
+            z-index: 20;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .overlay.show { display: flex; }
+        .modal {
+            width: 100%;
+            max-width: 420px;
+            background: #fffaf0;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+        }
+        .modal h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1f3d2a;
+        }
+        .modal .sub {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+        .table-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background: #f3f6f1;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        .table-item button {
+            border: none;
+            background: #1f5c36;
+            color: #fff;
+            padding: 7px 14px;
             border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #555;
+            cursor: pointer;
+            font-size: 13px;
         }
+        .skip-btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 11px;
+            border: 1px solid #cfd7cb;
+            background: transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #445;
+        }
+        .resume-box {
+            display: none;
+            background: #eef5ea;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .resume-box.show { display: block; }
+        .resume-box p { font-size: 13px; color: #334; margin-bottom: 10px; }
+        .resume-actions { display: flex; gap: 8px; }
+        .resume-actions button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .resume-go { background: #1f5c36; color: #fff; }
+        .resume-clear { background: #fff; border: 1px solid #cfd7cb !important; color: #445; }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <h1>斗地主</h1>
-        <p class="subtitle">经典三人棋牌对战</p>
-        <div id="savedInfo" class="saved-info" style="display:none;">
-            欢迎回来, <span id="savedNick"></span>!
+    <div class="shell">
+        <div class="brand">
+            <h1>牌友大厅</h1>
+            <p>登录 · 注册 · 邀请入局</p>
         </div>
-        <input type="text" id="nickname" placeholder="请输入昵称" maxlength="12" autofocus>
-        <button id="loginBtn" onclick="doLogin()">进入游戏</button>
-        <div class="error-msg" id="errorMsg"></div>
+        <div class="resume-box" id="resumeBox">
+            <p>检测到已登录账号：<strong id="resumeName"></strong></p>
+            <div class="resume-actions">
+                <button type="button" class="resume-go" onclick="resumeSession()">继续进入</button>
+                <button type="button" class="resume-clear" onclick="clearSession()">换号登录</button>
+            </div>
+        </div>
+        <div class="tabs">
+            <button type="button" id="tabLogin" class="active" onclick="switchTab('login')">登录</button>
+            <button type="button" id="tabRegister" onclick="switchTab('register')">注册</button>
+        </div>
+
+        <div id="loginPanel" class="panel show">
+            <div class="field">
+                <label>用户名</label>
+                <input id="loginUser" autocomplete="username" placeholder="用户名">
+            </div>
+            <div class="field">
+                <label>密码</label>
+                <input id="loginPass" type="password" autocomplete="current-password" placeholder="密码">
+            </div>
+            <button class="primary" id="loginBtn" onclick="doLogin()">进入大厅</button>
+        </div>
+
+        <div id="registerPanel" class="panel">
+            <div class="field">
+                <label>用户名</label>
+                <input id="regUser" autocomplete="username" placeholder="用户名">
+            </div>
+            <div class="field">
+                <label>昵称（可选）</label>
+                <input id="regNick" placeholder="默认同用户名">
+            </div>
+            <div class="field">
+                <label>密码</label>
+                <input id="regPass" type="password" autocomplete="new-password" placeholder="密码">
+            </div>
+            <div class="field" id="inviteField">
+                <label>邀请码</label>
+                <input id="regInvite" placeholder="邀请码">
+            </div>
+            <button class="primary" id="regBtn" onclick="doRegister()">注册并进入</button>
+        </div>
+
+        <div class="error" id="errorMsg"></div>
+        <div class="hint" id="regHint">默认需邀请码注册</div>
+    </div>
+
+    <div class="overlay" id="tableOverlay">
+        <div class="modal">
+            <h2>你还有未结束的牌桌</h2>
+            <p class="sub">选择一张回到对局，或暂不进入去大厅</p>
+            <div id="tableList"></div>
+            <button class="skip-btn" onclick="skipTables()">暂不进入</button>
+        </div>
     </div>
 
     <script>
-        // 检查是否有保存的Token
+        var inviteRequired = true;
+        var pendingAuth = null;
+        var savedToken = null;
+
         window.onload = function() {
-            var token = localStorage.getItem('token');
-            var nickname = localStorage.getItem('nickname');
-            if (token && nickname) {
-                document.getElementById('savedInfo').style.display = 'block';
-                document.getElementById('savedNick').textContent = nickname;
-                document.getElementById('nickname').value = nickname;
-                // 自动验证Token
-                validateToken(token);
+            var params = new URLSearchParams(window.location.search);
+            var invite = params.get('invite');
+            if (invite) {
+                switchTab('register');
+                document.getElementById('regInvite').value = invite;
+            }
+            loadRegistration();
+            savedToken = localStorage.getItem('token');
+            var nick = localStorage.getItem('nickname') || localStorage.getItem('username');
+            if (savedToken && nick) {
+                document.getElementById('resumeName').textContent = nick;
+                document.getElementById('resumeBox').className = 'resume-box show';
             }
         };
 
-        function validateToken(token) {
-            fetch('/api/validate?token=' + encodeURIComponent(token))
-                .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    if (data.code === 0) {
-                        localStorage.setItem('sessionId', data.sessionId);
-                        localStorage.setItem('userId', data.userId);
-                        localStorage.setItem('nickname', data.nickname);
-                        localStorage.setItem('token', data.token);
-                        window.location.href = '/room.html';
-                    }
-                })
-                .catch(function(err) { console.log('Token验证失败', err); });
+        function resumeSession() {
+            if (!savedToken) return;
+            document.getElementById('resumeBox').className = 'resume-box';
+            setError('恢复登录中...');
+            restoreToken(savedToken);
         }
 
-        function doLogin() {
-            var nickname = document.getElementById('nickname').value.trim();
-            if (!nickname) {
-                document.getElementById('errorMsg').textContent = '请输入昵称';
-                return;
-            }
+        function clearSession() {
+            localStorage.clear();
+            savedToken = null;
+            document.getElementById('resumeBox').className = 'resume-box';
+            setError('');
+        }
 
-            var btn = document.getElementById('loginBtn');
-            btn.disabled = true;
-            btn.textContent = '登录中...';
+        function loadRegistration() {
+            fetch('/api/auth/registration')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    inviteRequired = !!data.inviteRequired;
+                    document.getElementById('regHint').textContent = inviteRequired
+                        ? '当前需邀请码注册'
+                        : '开放注册，邀请码可选';
+                    document.getElementById('inviteField').style.display =
+                        inviteRequired ? 'block' : 'block';
+                })
+                .catch(function() {});
+        }
+
+        function switchTab(name) {
+            document.getElementById('tabLogin').className = name === 'login' ? 'active' : '';
+            document.getElementById('tabRegister').className = name === 'register' ? 'active' : '';
+            document.getElementById('loginPanel').className = 'panel' + (name === 'login' ? ' show' : '');
+            document.getElementById('registerPanel').className = 'panel' + (name === 'register' ? ' show' : '');
             document.getElementById('errorMsg').textContent = '';
+        }
 
-            fetch('/api/login', {
+        function setError(msg) {
+            document.getElementById('errorMsg').textContent = msg || '';
+        }
+
+        function restoreToken(token) {
+            fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nickname: nickname })
+                body: JSON.stringify({ token: token })
             })
             .then(function(r) { return r.json(); })
             .then(function(data) {
                 if (data.code === 0) {
-                    localStorage.setItem('sessionId', data.sessionId);
-                    localStorage.setItem('userId', data.userId);
-                    localStorage.setItem('nickname', data.nickname);
-                    localStorage.setItem('token', data.token);
-                    window.location.href = '/room.html';
+                    onAuthSuccess(data);
                 } else {
-                    document.getElementById('errorMsg').textContent = data.msg || '登录失败';
-                    btn.disabled = false;
-                    btn.textContent = '进入游戏';
+                    setError(data.msg || '登录已失效，请重新登录');
+                    clearSession();
                 }
             })
-            .catch(function(err) {
-                document.getElementById('errorMsg').textContent = '网络错误，请重试';
-                btn.disabled = false;
-                btn.textContent = '进入游戏';
+            .catch(function() {
+                setError('网络错误，请重试');
             });
         }
 
-        // 回车登录
-        document.getElementById('nickname').addEventListener('keypress', function(e) {
+        function doLogin() {
+            var username = document.getElementById('loginUser').value.trim();
+            var password = document.getElementById('loginPass').value;
+            if (!username || !password) {
+                setError('请输入用户名和密码');
+                return;
+            }
+            var btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.textContent = '登录中...';
+            setError('');
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: username, password: password })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                btn.disabled = false;
+                btn.textContent = '进入大厅';
+                if (data.code === 0) {
+                    onAuthSuccess(data);
+                } else {
+                    setError(data.msg || '登录失败');
+                }
+            })
+            .catch(function() {
+                btn.disabled = false;
+                btn.textContent = '进入大厅';
+                setError('网络错误，请重试');
+            });
+        }
+
+        function doRegister() {
+            var username = document.getElementById('regUser').value.trim();
+            var password = document.getElementById('regPass').value;
+            var nickname = document.getElementById('regNick').value.trim();
+            var invite = document.getElementById('regInvite').value.trim();
+            if (!username || !password) {
+                setError('请输入用户名和密码');
+                return;
+            }
+            if (inviteRequired && !invite) {
+                setError('请填写邀请码');
+                return;
+            }
+            var btn = document.getElementById('regBtn');
+            btn.disabled = true;
+            btn.textContent = '注册中...';
+            setError('');
+            fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    nickname: nickname || username,
+                    invite: invite
+                })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                btn.disabled = false;
+                btn.textContent = '注册并进入';
+                if (data.code === 0) {
+                    onAuthSuccess(data);
+                } else {
+                    setError(data.msg || '注册失败');
+                }
+            })
+            .catch(function() {
+                btn.disabled = false;
+                btn.textContent = '注册并进入';
+                setError('网络错误，请重试');
+            });
+        }
+
+        function onAuthSuccess(data) {
+            localStorage.setItem('sessionId', data.sessionId);
+            localStorage.setItem('userId', data.userId);
+            localStorage.setItem('username', data.username || '');
+            localStorage.setItem('nickname', data.nickname || '');
+            localStorage.setItem('token', data.token || '');
+            localStorage.setItem('isAdmin', data.isAdmin ? '1' : '0');
+            pendingAuth = data;
+            var tableInfos = data.tableInfos || [];
+            var tables = data.tables || [];
+            if (tableInfos.length > 0) {
+                showTablePickerFromInfos(tableInfos);
+            } else if (tables.length > 0) {
+                showTablePicker(tables);
+            } else {
+                goHall();
+            }
+        }
+
+        function showTablePickerFromInfos(infos) {
+            var list = document.getElementById('tableList');
+            list.innerHTML = '';
+            for (var i = 0; i < infos.length; i++) {
+                (function(info) {
+                    var name = info.gameType === 1 ? '麻将' : (info.gameType === 2 ? '斗地主' : '牌桌');
+                    var row = document.createElement('div');
+                    row.className = 'table-item';
+                    row.innerHTML = '<span>' + name + ' · 桌号 ' + info.tableId + '</span>';
+                    var btn = document.createElement('button');
+                    btn.textContent = '进入';
+                    btn.onclick = function() { enterTableDirect(info); };
+                    row.appendChild(btn);
+                    list.appendChild(row);
+                })(infos[i]);
+            }
+            document.getElementById('tableOverlay').className = 'overlay show';
+        }
+
+        function showTablePicker(tables) {
+            var list = document.getElementById('tableList');
+            list.innerHTML = '';
+            for (var i = 0; i < tables.length; i++) {
+                (function(tid) {
+                    var row = document.createElement('div');
+                    row.className = 'table-item';
+                    row.innerHTML = '<span>桌号 ' + tid + '</span>';
+                    var btn = document.createElement('button');
+                    btn.textContent = '进入';
+                    btn.onclick = function() { enterTable(tid); };
+                    row.appendChild(btn);
+                    list.appendChild(row);
+                })(tables[i]);
+            }
+            document.getElementById('tableOverlay').className = 'overlay show';
+        }
+
+        function skipTables() {
+            document.getElementById('tableOverlay').className = 'overlay';
+            goHall();
+        }
+
+        function enterTableDirect(info) {
+            localStorage.setItem('tableId', info.tableId);
+            localStorage.setItem('roomId', info.roomId || 0);
+            localStorage.setItem('gameType', info.gameType || 2);
+            var page = info.gameType === 1 ? '/mahjong.html' : '/doudizhu.html';
+            window.location.href = page;
+        }
+
+        function enterTable(tableId) {
+            var sessionId = localStorage.getItem('sessionId');
+            fetch('/api/rooms?sessionId=' + encodeURIComponent(sessionId))
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var gameType = 2;
+                    var roomId = 0;
+                    if (data.code === 0 && data.rooms) {
+                        for (var i = 0; i < data.rooms.length; i++) {
+                            var room = data.rooms[i];
+                            var tables = room.tables || [];
+                            for (var j = 0; j < tables.length; j++) {
+                                if (String(tables[j].tableId) === String(tableId)) {
+                                    gameType = room.gameType;
+                                    roomId = room.roomId;
+                                }
+                            }
+                        }
+                    }
+                    localStorage.setItem('tableId', tableId);
+                    localStorage.setItem('roomId', roomId);
+                    localStorage.setItem('gameType', gameType);
+                    var page = gameType === 1 ? '/mahjong.html' : '/doudizhu.html';
+                    window.location.href = page;
+                })
+                .catch(function() {
+                    localStorage.setItem('tableId', tableId);
+                    localStorage.setItem('gameType', 2);
+                    window.location.href = '/doudizhu.html';
+                });
+        }
+
+        function goHall() {
+            window.location.href = '/room.html';
+        }
+
+        document.getElementById('loginPass').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') doLogin();
+        });
+        document.getElementById('regPass').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') doRegister();
         });
     </script>
 </body>

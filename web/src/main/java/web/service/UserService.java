@@ -1,11 +1,16 @@
 package web.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.BiConsumer;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
@@ -33,9 +38,6 @@ public class UserService {
 		this.gateClient = gateClient;
 	}
 
-	/**
-	 * 用户名密码登录
-	 */
 	public UserInfo login(String username, String password) {
 		String sessionId = UUID.randomUUID().toString();
 		logger.info("用户登录请求, username: {}, sessionId: {}", username, sessionId);
@@ -57,8 +59,13 @@ public class UserService {
 					gateClient.removeConnection(sessionId);
 					return null;
 				}
-				return storeSession(sessionId, ack.getUserId(),
-						ack.getNickName().toStringUtf8(), ack.getToken().toStringUtf8());
+				String uname = ack.getUsername().toStringUtf8();
+				if (uname.isEmpty()) {
+					uname = username;
+				}
+				return storeSession(sessionId, ack.getUserId(), uname,
+						ack.getNickName().toStringUtf8(), ack.getToken().toStringUtf8(),
+						ack.getTablesList(), toTableInfos(ack.getTableInfosList()));
 			}
 			logger.error("登录响应类型错误, response: {}", response);
 			return null;
@@ -69,9 +76,6 @@ public class UserService {
 		}
 	}
 
-	/**
-	 * 注册
-	 */
 	public UserInfo register(String username, String password, String nickname, String invite) {
 		String sessionId = UUID.randomUUID().toString();
 		logger.info("用户注册请求, username: {}, sessionId: {}", username, sessionId);
@@ -93,12 +97,18 @@ public class UserService {
 				if (ack.getCode() != 0 || ack.getUserId() <= 0) {
 					logger.warn("注册失败, code: {}", ack.getCode());
 					gateClient.removeConnection(sessionId);
-					UserInfo fail = new UserInfo(sessionId, 0, "", "");
+					UserInfo fail = new UserInfo(sessionId, 0, username, "", "",
+							Collections.emptyList(), Collections.emptyList());
 					fail.setErrorCode(ack.getCode());
 					return fail;
 				}
-				return storeSession(sessionId, ack.getUserId(),
-						ack.getNickName().toStringUtf8(), ack.getToken().toStringUtf8());
+				String uname = ack.getUsername().toStringUtf8();
+				if (uname.isEmpty()) {
+					uname = username;
+				}
+				return storeSession(sessionId, ack.getUserId(), uname,
+						ack.getNickName().toStringUtf8(), ack.getToken().toStringUtf8(),
+						ack.getTablesList(), toTableInfos(ack.getTableInfosList()));
 			}
 			return null;
 		} catch (Exception e) {
@@ -128,8 +138,14 @@ public class UserService {
 			if (response instanceof LobbyProto.AckLogin) {
 				LobbyProto.AckLogin ack = (LobbyProto.AckLogin) response;
 				if (ack.getCode() == 0 && ack.getUserId() > 0) {
-					return storeSession(sessionId, ack.getUserId(),
-							ack.getNickName().toStringUtf8(), ack.getToken().toStringUtf8());
+					String uname = ack.getUsername().toStringUtf8();
+					String nick = ack.getNickName().toStringUtf8();
+					if (uname.isEmpty()) {
+						uname = nick;
+					}
+					return storeSession(sessionId, ack.getUserId(), uname, nick,
+							ack.getToken().toStringUtf8(), ack.getTablesList(),
+							toTableInfos(ack.getTableInfosList()));
 				}
 			}
 		} catch (Exception e) {
@@ -138,17 +154,44 @@ public class UserService {
 		return null;
 	}
 
-	private UserInfo storeSession(String sessionId, int userId, String nickname, String token) {
-		UserInfo userInfo = new UserInfo(sessionId, userId, nickname, token);
+	private static List<TableInfoView> toTableInfos(List<LobbyProto.TableSeatInfo> list) {
+		if (list == null || list.isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<TableInfoView> out = new ArrayList<>();
+		for (LobbyProto.TableSeatInfo t : list) {
+			out.add(new TableInfoView(t.getTableId(), t.getRoomId(), t.getGameType()));
+		}
+		return out;
+	}
+
+	private UserInfo storeSession(String sessionId, int userId, String username,
+								  String nickname, String token, List<Long> tables,
+								  List<TableInfoView> tableInfos) {
+		List<Long> tableList = tables == null ? Collections.emptyList() : new ArrayList<>(tables);
+		List<TableInfoView> infos = tableInfos == null ? Collections.emptyList() : tableInfos;
+		if (infos.isEmpty() && !tableList.isEmpty()) {
+			infos = new ArrayList<>();
+			for (Long id : tableList) {
+				infos.add(new TableInfoView(id, 0, 0));
+			}
+		}
+		UserInfo userInfo = new UserInfo(sessionId, userId, username, nickname, token, tableList, infos);
 		sessionLock.lock();
 		try {
+			String oldSession = userSessions.put(userId, sessionId);
+			if (oldSession != null && !oldSession.equals(sessionId)) {
+				sessions.remove(oldSession);
+				gateClient.removeConnection(oldSession);
+				logger.info("踢掉同用户旧会话, userId: {}, oldSession: {}", userId, oldSession);
+			}
 			sessions.put(sessionId, userInfo);
 			tokenSessions.put(token, userInfo);
-			userSessions.put(userId, sessionId);
 		} finally {
 			sessionLock.unlock();
 		}
-		logger.info("会话建立, userId: {}, nickname: {}, sessionId: {}", userId, nickname, sessionId);
+		logger.info("会话建立, userId: {}, username: {}, tables: {}, sessionId: {}",
+				userId, username, tableList.size(), sessionId);
 		return userInfo;
 	}
 
@@ -163,7 +206,7 @@ public class UserService {
 			info = sessions.remove(sessionId);
 			if (info != null) {
 				tokenSessions.remove(info.getToken());
-				userSessions.remove(info.getUserId());
+				userSessions.remove(info.getUserId(), sessionId);
 			}
 		} finally {
 			sessionLock.unlock();
@@ -172,6 +215,10 @@ public class UserService {
 			gateClient.removeConnection(sessionId);
 			logger.info("用户登出, userId: {}, sessionId: {}", info.getUserId(), sessionId);
 		}
+	}
+
+	public void setPushListener(BiConsumer<String, net.message.TCPMessage> listener) {
+		gateClient.setPushListener(listener);
 	}
 
 	public CompletableFuture<Message> getRoomList(String sessionId) {
@@ -186,24 +233,59 @@ public class UserService {
 		return gateClient.sendAndWait(sessionId, LMsg.REQ_JOIN_ROOM_TABLE_MSG, request, 5);
 	}
 
+	public static class TableInfoView {
+		private final long tableId;
+		private final int roomId;
+		private final int gameType;
+
+		public TableInfoView(long tableId, int roomId, int gameType) {
+			this.tableId = tableId;
+			this.roomId = roomId;
+			this.gameType = gameType;
+		}
+
+		public long getTableId() { return tableId; }
+		public int getRoomId() { return roomId; }
+		public int getGameType() { return gameType; }
+
+		public Map<String, Object> toMap() {
+			Map<String, Object> m = new HashMap<>();
+			m.put("tableId", tableId);
+			m.put("roomId", roomId);
+			m.put("gameType", gameType);
+			return m;
+		}
+	}
+
 	public static class UserInfo {
 		private final String sessionId;
 		private final int userId;
+		private final String username;
 		private final String nickname;
 		private final String token;
+		private final List<Long> tables;
+		private final List<TableInfoView> tableInfos;
 		private int errorCode;
 
-		public UserInfo(String sessionId, int userId, String nickname, String token) {
+		public UserInfo(String sessionId, int userId, String username, String nickname,
+						String token, List<Long> tables, List<TableInfoView> tableInfos) {
 			this.sessionId = sessionId;
 			this.userId = userId;
+			this.username = username == null ? "" : username;
 			this.nickname = nickname;
 			this.token = token;
+			this.tables = tables == null ? Collections.emptyList() : tables;
+			this.tableInfos = tableInfos == null ? Collections.emptyList() : tableInfos;
 		}
 
 		public String getSessionId() { return sessionId; }
 		public int getUserId() { return userId; }
+		public String getUsername() { return username; }
 		public String getNickname() { return nickname; }
 		public String getToken() { return token; }
+		public List<Long> getTables() { return tables; }
+		public List<TableInfoView> getTableInfos() { return tableInfos; }
+		public boolean isAdmin() { return "admin".equals(username); }
 		public int getErrorCode() { return errorCode; }
 		public void setErrorCode(int errorCode) { this.errorCode = errorCode; }
 	}

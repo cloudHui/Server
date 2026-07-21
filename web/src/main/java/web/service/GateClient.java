@@ -8,13 +8,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.BiConsumer;
 
 import com.google.protobuf.Message;
 import io.netty.channel.nio.NioEventLoopGroup;
 import javax.annotation.PreDestroy;
+import msg.registor.HandleTypeRegister;
+import msg.registor.message.GMsg;
 import net.connect.TCPConnect;
 import net.message.Parser;
-import msg.registor.HandleTypeRegister;
+import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +37,9 @@ public class GateClient {
 	/** sessionId -> TCPConnect */
 	private final Map<String, TCPConnect> connections = new ConcurrentHashMap<>();
 
+	/** 游戏推送监听 (sessionId, tcpMessage) */
+	private volatile BiConsumer<String, TCPMessage> pushListener;
+
 	public GateClient(String gateHost, int gatePort) {
 		this.gateHost = gateHost;
 		this.gatePort = gatePort;
@@ -41,23 +47,18 @@ public class GateClient {
 		logger.info("Gate客户端初始化完成, gate: {}:{}", gateHost, gatePort);
 	}
 
-	/**
-	 * 为会话创建或获取TCP连接
-	 */
+	public void setPushListener(BiConsumer<String, TCPMessage> pushListener) {
+		this.pushListener = pushListener;
+	}
+
 	public TCPConnect getConnection(String sessionId) {
 		return connections.computeIfAbsent(sessionId, this::createConnection);
 	}
 
-	/**
-	 * 获取已有连接
-	 */
 	public TCPConnect getExistingConnection(String sessionId) {
 		return connections.get(sessionId);
 	}
 
-	/**
-	 * 移除会话连接并关闭底层channel
-	 */
 	public void removeConnection(String sessionId) {
 		TCPConnect conn = connections.remove(sessionId);
 		if (conn != null) {
@@ -70,17 +71,11 @@ public class GateClient {
 		logger.info("移除Gate连接, sessionId: {}", sessionId);
 	}
 
-	/**
-	 * 发送消息并等待响应
-	 */
 	public CompletableFuture<Message> sendAndWait(String sessionId, int msgId, Message msg, int timeoutSeconds) {
 		TCPConnect conn = getConnection(sessionId);
 		return conn.sendMessage(msg, msgId, timeoutSeconds);
 	}
 
-	/**
-	 * 发送消息（不等待响应）
-	 */
 	public void send(String sessionId, int msgId, Message msg) {
 		TCPConnect conn = getConnection(sessionId);
 		conn.sendMessage(msgId, msg);
@@ -92,9 +87,9 @@ public class GateClient {
 
 			TCPConnect connect = new TCPConnect(
 					eventLoopGroup, addr,
-					(connectHandler, tcpMessage) -> false, // 不转发，全部走回调
+					(connectHandler, tcpMessage) -> handleIncoming(sessionId, tcpMessage),
 					parser,
-					msgId -> null, // 不注册处理器，全部走CompletableFuture回调
+					msgId -> null,
 					client -> logger.info("Gate连接建立, sessionId: {}", sessionId),
 					client -> {
 						logger.info("Gate连接断开, sessionId: {}", sessionId);
@@ -102,7 +97,6 @@ public class GateClient {
 					}
 			);
 
-			// 带超时的连接，防止Gate不可达时长时间阻塞
 			CompletableFuture<Void> connectFuture = CompletableFuture.runAsync(connect::connect, connectExecutor);
 			try {
 				connectFuture.get(5, TimeUnit.SECONDS);
@@ -121,7 +115,36 @@ public class GateClient {
 		}
 	}
 
-	/** 关闭所有连接和线程池 */
+	/**
+	 * 推送类消息转给 WebSocket；请求响应（非推送）返回 false 走 CompletableFuture
+	 */
+	private boolean handleIncoming(String sessionId, TCPMessage tcpMessage) {
+		if (!isPushMessage(tcpMessage.getMessageId())) {
+			return false;
+		}
+		BiConsumer<String, TCPMessage> listener = pushListener;
+		if (listener != null) {
+			try {
+				listener.accept(sessionId, tcpMessage);
+			} catch (Exception e) {
+				logger.error("推送转发失败, sessionId: {}, msgId: 0x{}",
+						sessionId, Integer.toHexString(tcpMessage.getMessageId()), e);
+			}
+		}
+		return true;
+	}
+
+	private static boolean isPushMessage(int msgId) {
+		return msgId == GMsg.NOT_CARD
+				|| msgId == GMsg.NOT_OP
+				|| msgId == GMsg.NOT_STATE
+				|| msgId == GMsg.NOT_RESULT
+				|| msgId == GMsg.MJ_TILE_NOT
+				|| msgId == GMsg.NOT_ROUND_RESULT
+				|| msgId == GMsg.NOT_GAME_RESULT
+				|| msgId == GMsg.NOT_TABLE_STATE;
+	}
+
 	@PreDestroy
 	public void shutdown() {
 		for (Map.Entry<String, TCPConnect> entry : connections.entrySet()) {

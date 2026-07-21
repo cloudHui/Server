@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import lobby.admin.LobbyAdminHttp;
 import lobby.client.ClientProto;
 import lobby.client.LobbyClient;
 import lobby.connect.ConnectProcessor;
@@ -55,6 +56,7 @@ public class Lobby {
 	private MetricsHttpServer metricsHttpServer;
 	private UserRepository userRepository;
 	private InviteRepository inviteRepository;
+	private LobbyAdminHttp adminHttp;
 
 	private Lobby() {
 		executorPool = new ExecutorPool("Lobby");
@@ -143,8 +145,19 @@ public class Lobby {
 		registerToCenter();
 		initializeRoomManager();
 		startMetricsServer();
+		startAdminHttp();
 		logger.info("Lobby 启动完成! 服务器ID: {}, 地址: {}:{}, openRegister: {}",
 				serverId, innerIp, port, openRegister);
+	}
+
+	private void startAdminHttp() {
+		int adminPort = ConfigurationManager.getInstance().getInt("lobby.admin-http-port", 5701);
+		try {
+			adminHttp = new LobbyAdminHttp();
+			adminHttp.start(adminPort);
+		} catch (Exception e) {
+			logger.error("Lobby admin HTTP 启动失败, port={}", adminPort, e);
+		}
 	}
 
 	private void loadConfiguration() {

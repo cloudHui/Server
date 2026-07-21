@@ -1,5 +1,6 @@
 package lobby.client.handle.role;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.protobuf.ByteString;
@@ -9,6 +10,8 @@ import lobby.db.UserEntity;
 import lobby.db.UserRepository;
 import lobby.manager.User;
 import lobby.manager.UserManager;
+import lobby.manager.table.TableInfo;
+import lobby.manager.table.TableManager;
 import msg.annotation.ProcessType;
 import msg.registor.message.LMsg;
 import net.client.Sender;
@@ -37,7 +40,7 @@ public class ReqLoginHandler implements Handler {
 			String password = request.getPassword().toStringUtf8();
 			String token = request.getToken().toStringUtf8();
 
-			logger.info("登录请求, gateId: {}, username: {}, hasToken: {}",
+			logger.info("登录请求, gateClientId: {}, username: {}, hasToken: {}",
 					clientId, username, !token.isEmpty());
 
 			UserEntity entity = null;
@@ -46,7 +49,7 @@ public class ReqLoginHandler implements Handler {
 			if (!token.isEmpty()) {
 				entity = repo.findByToken(token).orElse(null);
 				if (entity == null || !entity.isEnabled()) {
-					sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "");
+					sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "", "", null);
 					return true;
 				}
 			} else if (!username.isEmpty() && !password.isEmpty()) {
@@ -55,22 +58,20 @@ public class ReqLoginHandler implements Handler {
 				if (entity == null || !entity.isEnabled()
 						|| entity.getPasswordHash() == null
 						|| !entity.getPasswordHash().equals(hash)) {
-					sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "");
+					sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "", "", null);
 					return true;
 				}
 			} else {
-				sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "");
+				sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "", "", null);
 				return true;
 			}
 
 			String newToken = Lobby.newToken();
 			repo.updateLogin(entity.getId(), newToken, System.currentTimeMillis());
 
-			User user = UserManager.getInstance().getUser(entity.getId());
+			// clientId = gate 上玩家连接 id（用于顶号后忽略旧 NotBreak）
 			int gateConnId = clientId;
-			if (sender instanceof net.client.handler.ClientHandler) {
-				gateConnId = ((net.client.handler.ClientHandler) sender).getId();
-			}
+			User user = UserManager.getInstance().getUser(entity.getId());
 			if (user == null) {
 				user = new User(entity.getId(), entity.getUsername(), entity.getNickname(), gateConnId);
 				UserManager.getInstance().putOrUpdate(user);
@@ -80,35 +81,65 @@ public class ReqLoginHandler implements Handler {
 				user.setUsername(entity.getUsername());
 				user.updateActiveTime();
 			}
+			user.setOffline(false);
 			user.setPendingToken(newToken);
 
 			TraceContext.setUserId((int) user.getUserId());
 			List<Long> tables = user.getAllTables();
+			List<LobbyProto.TableSeatInfo> tableInfos = buildTableInfos(tables);
 			sendAck(sender, clientId, sequence, CODE_OK, user.getUserIdInt(),
-					user.getNick(), newToken, tables);
-			logger.info("登录成功, userId: {}, tables: {}", user.getUserId(), tables.size());
+					entity.getUsername(), user.getNick(), newToken, tables, tableInfos);
+			logger.info("登录成功, userId: {}, username: {}, tables: {}",
+					user.getUserId(), entity.getUsername(), tables.size());
 		} catch (Exception e) {
-			logger.error("处理登录失败, gateId: {}", clientId, e);
-			sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "");
+			logger.error("处理登录失败, gateClientId: {}", clientId, e);
+			sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "", "", null);
 		}
 		return true;
 	}
 
-	private void sendAck(Sender sender, int clientId, int sequence, int code,
-						 int userId, String nick, String token) {
-		sendAck(sender, clientId, sequence, code, userId, nick, token, null);
+	static List<LobbyProto.TableSeatInfo> buildTableInfos(List<Long> tables) {
+		List<LobbyProto.TableSeatInfo> list = new ArrayList<>();
+		if (tables == null) {
+			return list;
+		}
+		for (Long tableId : tables) {
+			if (tableId == null) {
+				continue;
+			}
+			LobbyProto.TableSeatInfo.Builder b = LobbyProto.TableSeatInfo.newBuilder()
+					.setTableId(tableId);
+			TableInfo info = TableManager.getInstance().getTableById(tableId);
+			if (info != null && info.getModel() != null) {
+				b.setRoomId(info.getModel().getId());
+				b.setGameType(info.getModel().getType());
+			}
+			list.add(b.build());
+		}
+		return list;
 	}
 
 	private void sendAck(Sender sender, int clientId, int sequence, int code,
-						 int userId, String nick, String token, List<Long> tables) {
+						 int userId, String username, String nick, String token,
+						 List<Long> tables) {
+		sendAck(sender, clientId, sequence, code, userId, username, nick, token, tables, null);
+	}
+
+	private void sendAck(Sender sender, int clientId, int sequence, int code,
+						 int userId, String username, String nick, String token,
+						 List<Long> tables, List<LobbyProto.TableSeatInfo> tableInfos) {
 		try {
 			LobbyProto.AckLogin.Builder builder = LobbyProto.AckLogin.newBuilder()
 					.setCode(code)
 					.setUserId(userId)
 					.setNickName(ByteString.copyFromUtf8(nick == null ? "" : nick))
-					.setToken(ByteString.copyFromUtf8(token == null ? "" : token));
+					.setToken(ByteString.copyFromUtf8(token == null ? "" : token))
+					.setUsername(ByteString.copyFromUtf8(username == null ? "" : username));
 			if (tables != null) {
 				builder.addAllTables(tables);
+			}
+			if (tableInfos != null) {
+				builder.addAllTableInfos(tableInfos);
 			}
 			sender.sendMessage(clientId, LMsg.ACK_LOGIN_MSG, 0, builder.build(), sequence);
 		} catch (Exception e) {

@@ -1,13 +1,20 @@
 package web.handler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.PostConstruct;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
+import msg.registor.HandleTypeRegister;
 import msg.registor.message.GMsg;
+import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,8 +26,6 @@ import proto.ConstProto;
 import proto.GameProto;
 import web.service.GateClient;
 import web.service.UserService;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 游戏WebSocket处理器
@@ -37,10 +42,17 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 
 	/** WebSocketSessionId -> sessionId */
 	private final Map<String, String> sessionMapping = new ConcurrentHashMap<>();
+	/** sessionId -> WebSocketSession（推送用） */
+	private final Map<String, WebSocketSession> wsBySession = new ConcurrentHashMap<>();
 
 	public GameWebSocketHandler(UserService userService, GateClient gateClient) {
 		this.userService = userService;
 		this.gateClient = gateClient;
+	}
+
+	@PostConstruct
+	public void init() {
+		gateClient.setPushListener(this::onGatePush);
 	}
 
 	@Override
@@ -52,6 +64,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
 		String sessionId = sessionMapping.remove(session.getId());
 		if (sessionId != null) {
+			wsBySession.remove(sessionId, session);
 			logger.info("WebSocket连接关闭, sessionId: {}, status: {}", sessionId, status);
 		}
 	}
@@ -61,6 +74,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		String action = "unknown";
 		int seq = 0;
 		try {
+			@SuppressWarnings("unchecked")
 			Map<String, Object> msg = objectMapper.readValue(message.getPayload(), Map.class);
 			action = (String) msg.get("action");
 			seq = msg.get("seq") != null ? ((Number) msg.get("seq")).intValue() : 0;
@@ -91,9 +105,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		}
 	}
 
-	/**
-	 * 认证 - 绑定WebSocket到用户会话
-	 */
 	private void handleAuth(WebSocketSession wsSession, int seq, Map<String, Object> data) {
 		String sessionId = (String) data.get("sessionId");
 		if (sessionId == null) {
@@ -108,14 +119,12 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		}
 
 		sessionMapping.put(wsSession.getId(), sessionId);
+		wsBySession.put(sessionId, wsSession);
 
 		sendResponse(wsSession, "auth", seq, 0, "认证成功", null);
 		logger.info("WebSocket认证成功, userId: {}, sessionId: {}", user.getUserId(), sessionId);
 	}
 
-	/**
-	 * 进入桌子
-	 */
 	private void handleEnterTable(WebSocketSession wsSession, int seq, Map<String, Object> data) {
 		String sessionId = getSessionId(wsSession);
 		if (sessionId == null) {
@@ -149,7 +158,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			try {
 				if (response instanceof GameProto.AckEnterTable) {
 					GameProto.AckEnterTable ack = (GameProto.AckEnterTable) response;
-					java.util.Map<String, Object> resultData = new java.util.HashMap<>();
+					Map<String, Object> resultData = new HashMap<>();
 					resultData.put("players", formatPlayers(ack.getPlayersList(), user.getUserId()));
 					resultData.put("tableInfo", formatTableInfo(ack.getTableInfo()));
 					sendResponse(wsSession, "enterTable", seq, 0, "success", resultData);
@@ -163,9 +172,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		});
 	}
 
-	/**
-	 * 游戏操作（出牌、叫地主等）
-	 */
 	private void handleOp(WebSocketSession wsSession, int seq, Map<String, Object> data) {
 		String sessionId = getSessionId(wsSession);
 		if (sessionId == null) {
@@ -187,7 +193,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		GameProto.OpInfo.Builder opBuilder = GameProto.OpInfo.newBuilder()
 				.setChoice(opEnum);
 
-		// 处理出牌 - 将牌值放入单个CardInfo中
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> cards = (List<Map<String, Object>>) data.get("cards");
 		if (cards != null) {
@@ -217,7 +222,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			try {
 				if (response instanceof GameProto.AckOp) {
 					GameProto.AckOp ack = (GameProto.AckOp) response;
-					java.util.Map<String, Object> resultData = new java.util.HashMap<>();
+					Map<String, Object> resultData = new HashMap<>();
 					resultData.put("opId", ack.getOpId());
 					resultData.put("choice", ack.getOp().getChoiceValue());
 					sendResponse(wsSession, "op", seq, 0, "success", resultData);
@@ -231,9 +236,6 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		});
 	}
 
-	/**
-	 * 离开桌子
-	 */
 	private void handleLeave(WebSocketSession wsSession, int seq) {
 		String sessionId = getSessionId(wsSession);
 		if (sessionId == null) {
@@ -255,16 +257,200 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		});
 	}
 
-	// ==================== 辅助方法 ====================
+	/** Gate 推送 → WebSocket */
+	private void onGatePush(String sessionId, TCPMessage tcpMessage) {
+		WebSocketSession ws = wsBySession.get(sessionId);
+		if (ws == null || !ws.isOpen()) {
+			return;
+		}
+		try {
+			int msgId = tcpMessage.getMessageId();
+			Message proto = HandleTypeRegister.parseMessage(msgId,
+					tcpMessage.getMessage() == null ? new byte[0] : tcpMessage.getMessage());
+			String action = pushAction(msgId);
+			if (action == null) {
+				return;
+			}
+			Object data = formatPush(msgId, proto);
+			sendResponse(ws, action, 0, 0, "push", data);
+		} catch (Exception e) {
+			logger.error("转发推送失败, sessionId: {}, msgId: 0x{}",
+					sessionId, Integer.toHexString(tcpMessage.getMessageId()), e);
+		}
+	}
+
+	private static String pushAction(int msgId) {
+		if (msgId == GMsg.NOT_CARD) return "notCard";
+		if (msgId == GMsg.NOT_OP) return "notOp";
+		if (msgId == GMsg.NOT_STATE || msgId == GMsg.NOT_TABLE_STATE) return "notState";
+		if (msgId == GMsg.NOT_RESULT) return "notResult";
+		if (msgId == GMsg.MJ_TILE_NOT) return "notMjState";
+		if (msgId == GMsg.NOT_ROUND_RESULT) return "notRoundResult";
+		if (msgId == GMsg.NOT_GAME_RESULT) return "notGameResult";
+		return null;
+	}
+
+	private Object formatPush(int msgId, Message proto) {
+		if (proto instanceof GameProto.NotCard) {
+			return formatNotCard((GameProto.NotCard) proto);
+		}
+		if (proto instanceof GameProto.NotOperation) {
+			return formatNotOp((GameProto.NotOperation) proto);
+		}
+		if (proto instanceof GameProto.NotTableState) {
+			GameProto.NotTableState n = (GameProto.NotTableState) proto;
+			Map<String, Object> m = new HashMap<>();
+			m.put("state", n.getState());
+			return m;
+		}
+		if (proto instanceof GameProto.NotResult) {
+			return formatNotResult((GameProto.NotResult) proto);
+		}
+		if (proto instanceof GameProto.NotMjState) {
+			return formatNotMjState((GameProto.NotMjState) proto);
+		}
+		if (proto instanceof GameProto.NotRoundResult) {
+			return formatNotRoundResult((GameProto.NotRoundResult) proto);
+		}
+		if (proto instanceof GameProto.NotGameResult) {
+			return formatNotGameResult((GameProto.NotGameResult) proto);
+		}
+		return new HashMap<>();
+	}
+
+	private Map<String, Object> formatNotCard(GameProto.NotCard n) {
+		Map<String, Object> m = new HashMap<>();
+		List<Map<String, Object>> nCards = new ArrayList<>();
+		for (GameProto.NCardsInfo info : n.getNCardsList()) {
+			Map<String, Object> c = new HashMap<>();
+			c.put("roleId", info.getRoleId());
+			List<Map<String, Object>> cards = new ArrayList<>();
+			for (GameProto.Card card : info.getCardsList()) {
+				Map<String, Object> cv = new HashMap<>();
+				cv.put("value", card.getValue());
+				cards.add(cv);
+			}
+			c.put("cards", cards);
+			nCards.add(c);
+		}
+		m.put("nCards", nCards);
+		return m;
+	}
+
+	private Map<String, Object> formatNotOp(GameProto.NotOperation n) {
+		Map<String, Object> m = new HashMap<>();
+		m.put("opSeat", n.getOpSeat());
+		m.put("wait", n.getWait());
+		List<Map<String, Object>> choices = new ArrayList<>();
+		for (GameProto.OpInfo op : n.getChoiceList()) {
+			Map<String, Object> c = new HashMap<>();
+			c.put("choice", op.getChoiceValue());
+			choices.add(c);
+		}
+		m.put("choice", choices);
+		return m;
+	}
+
+	private Map<String, Object> formatNotResult(GameProto.NotResult n) {
+		Map<String, Object> m = new HashMap<>();
+		m.put("winner", n.getWinner());
+		m.put("landlord_id", n.getLandlordId());
+		m.put("win_team", n.getWinTeam());
+		m.put("base_score", n.getBaseScore());
+		m.put("rob_multiplier", n.getRobMultiplier());
+		m.put("spring", n.getSpring());
+		m.put("anti_spring", n.getAntiSpring());
+		m.put("settle_factor", n.getSettleFactor());
+		List<Map<String, Object>> players = new ArrayList<>();
+		for (GameProto.RPlayer p : n.getRPlayersList()) {
+			Map<String, Object> rp = new HashMap<>();
+			rp.put("roleId", p.getRoleId());
+			List<Integer> cards = new ArrayList<>();
+			for (GameProto.Card c : p.getCardsList()) {
+				cards.add(c.getValue());
+			}
+			rp.put("cards", cards);
+			players.add(rp);
+		}
+		m.put("rPlayers", players);
+		return m;
+	}
+
+	private Map<String, Object> formatNotMjState(GameProto.NotMjState n) {
+		Map<String, Object> m = new HashMap<>();
+		m.put("opSeat", n.getOpSeat());
+		m.put("tileId", n.getTileId());
+		m.put("action", n.getActionValue());
+		m.put("wait", n.getWait());
+		m.put("wallLeft", n.getWallLeft());
+		List<Map<String, Object>> choices = new ArrayList<>();
+		for (GameProto.OpInfo op : n.getChoiceList()) {
+			Map<String, Object> c = new HashMap<>();
+			c.put("choice", op.getChoiceValue());
+			choices.add(c);
+		}
+		m.put("choice", choices);
+		return m;
+	}
+
+	private Map<String, Object> formatNotRoundResult(GameProto.NotRoundResult n) {
+		Map<String, Object> m = new HashMap<>();
+		m.put("round", n.getRound());
+		m.put("winnerSeat", n.getWinnerSeat());
+		m.put("fan", n.getFan());
+		m.put("winType", n.getWinType().toStringUtf8());
+		m.put("winTile", n.getWinTile());
+		List<Map<String, Object>> scores = new ArrayList<>();
+		for (GameProto.SeatScore s : n.getSeatScoresList()) {
+			Map<String, Object> sc = new HashMap<>();
+			sc.put("seat", s.getSeat());
+			sc.put("score", s.getScore());
+			scores.add(sc);
+		}
+		m.put("seatScores", scores);
+		List<Map<String, Object>> hands = new ArrayList<>();
+		for (GameProto.HandInfo h : n.getHandsList()) {
+			Map<String, Object> hi = new HashMap<>();
+			hi.put("seat", h.getSeat());
+			hi.put("handTiles", h.getHandTilesList());
+			hands.add(hi);
+		}
+		m.put("hands", hands);
+		return m;
+	}
+
+	private Map<String, Object> formatNotGameResult(GameProto.NotGameResult n) {
+		Map<String, Object> m = new HashMap<>();
+		m.put("totalRounds", n.getTotalRounds());
+		m.put("completedRounds", n.getCompletedRounds());
+		List<Map<String, Object>> totals = new ArrayList<>();
+		for (GameProto.SeatScore s : n.getTotalScoresList()) {
+			Map<String, Object> sc = new HashMap<>();
+			sc.put("seat", s.getSeat());
+			sc.put("score", s.getScore());
+			totals.add(sc);
+		}
+		m.put("totalScores", totals);
+		List<Map<String, Object>> rounds = new ArrayList<>();
+		for (GameProto.RoundSummary r : n.getRoundsList()) {
+			Map<String, Object> rs = new HashMap<>();
+			rs.put("round", r.getRound());
+			rs.put("winnerSeat", r.getWinnerSeat());
+			rs.put("fan", r.getFan());
+			rs.put("winType", r.getWinType().toStringUtf8());
+			rounds.add(rs);
+		}
+		m.put("rounds", rounds);
+		return m;
+	}
 
 	private String getSessionId(WebSocketSession wsSession) {
 		return sessionMapping.get(wsSession.getId());
 	}
 
-	/** 发送JSON响应（同步，WebSocketSession.sendMessage非线程安全） */
 	private void sendResponse(WebSocketSession session, String action, int seq, int code, String msg, Object data) {
 		try {
-			java.util.Map<String, Object> response = new java.util.HashMap<>();
+			Map<String, Object> response = new HashMap<>();
 			response.put("action", action);
 			response.put("seq", seq);
 			response.put("code", code);
@@ -285,18 +471,16 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		sendResponse(session, "error", seq, -1, errorMsg, null);
 	}
 
-	private java.util.List<java.util.Map<String, Object>> formatPlayers(List<GameProto.Player> players, int currentRoleId) {
-		java.util.List<java.util.Map<String, Object>> result = new java.util.ArrayList<>();
+	private List<Map<String, Object>> formatPlayers(List<GameProto.Player> players, int currentRoleId) {
+		List<Map<String, Object>> result = new ArrayList<>();
 		for (GameProto.Player player : players) {
-			java.util.Map<String, Object> p = new java.util.HashMap<>();
+			Map<String, Object> p = new HashMap<>();
 			p.put("roleId", player.getRoleId());
 			p.put("position", player.getPosition());
 			p.put("nickName", player.getNickName().toStringUtf8());
 			p.put("cardCount", player.getCardsCount());
-
-			// 只有自己的牌有值（协议约定：自己的牌是真实值，其他人的牌值为0）
 			if (player.getRoleId() == currentRoleId && player.getCardsCount() > 0) {
-				java.util.List<Integer> cardValues = new java.util.ArrayList<>();
+				List<Integer> cardValues = new ArrayList<>();
 				for (GameProto.Card card : player.getCardsList()) {
 					cardValues.add(card.getValue());
 				}
@@ -307,8 +491,8 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 		return result;
 	}
 
-	private java.util.Map<String, Object> formatTableInfo(GameProto.TableInfo tableInfo) {
-		java.util.Map<String, Object> result = new java.util.HashMap<>();
+	private Map<String, Object> formatTableInfo(GameProto.TableInfo tableInfo) {
+		Map<String, Object> result = new HashMap<>();
 		result.put("roomId", tableInfo.getRoomId());
 		result.put("tableId", tableInfo.getTableId());
 		result.put("landlord", tableInfo.getLandlord());

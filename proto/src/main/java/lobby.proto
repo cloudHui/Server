@@ -17,7 +17,9 @@ message AckLogin {
     int32 userId = 2;
     bytes nickName = 3;
     bytes token = 4;
-    repeated int64 tables = 5; // 已加入的桌子（本地查询）
+    repeated int64 tables = 5; // 已加入的桌子（兼容）
+    bytes username = 6; // 登录名（admin 识别等）
+    repeated TableSeatInfo tableInfos = 7; // 桌子详情（含玩法）
 }
 
 // 用户注册（与 server.proto 的服务注册 ReqRegister 区分）
@@ -34,6 +36,15 @@ message AckUserRegister {
     bytes nickName = 3;
     bytes token = 4;
     repeated int64 tables = 5;
+    bytes username = 6;
+    repeated TableSeatInfo tableInfos = 7;
+}
+
+// 登录回包中的桌子座位信息
+message TableSeatInfo {
+    int64 tableId = 1;
+    int32 roomId = 2;
+    int32 gameType = 3; // 1麻将 2斗地主
 }
 
 // 请求加入房间桌子

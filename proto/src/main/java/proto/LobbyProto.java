@@ -698,7 +698,7 @@ public final class LobbyProto {
 
     /**
      * <pre>
-     * 已加入的桌子（本地查询）
+     * 已加入的桌子（兼容）
      * </pre>
      *
      * <code>repeated int64 tables = 5;</code>
@@ -707,7 +707,7 @@ public final class LobbyProto {
     java.util.List<java.lang.Long> getTablesList();
     /**
      * <pre>
-     * 已加入的桌子（本地查询）
+     * 已加入的桌子（兼容）
      * </pre>
      *
      * <code>repeated int64 tables = 5;</code>
@@ -716,7 +716,7 @@ public final class LobbyProto {
     int getTablesCount();
     /**
      * <pre>
-     * 已加入的桌子（本地查询）
+     * 已加入的桌子（兼容）
      * </pre>
      *
      * <code>repeated int64 tables = 5;</code>
@@ -724,6 +724,60 @@ public final class LobbyProto {
      * @return The tables at the given index.
      */
     long getTables(int index);
+
+    /**
+     * <pre>
+     * 登录名（admin 识别等）
+     * </pre>
+     *
+     * <code>bytes username = 6;</code>
+     * @return The username.
+     */
+    com.google.protobuf.ByteString getUsername();
+
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    java.util.List<proto.LobbyProto.TableSeatInfo> 
+        getTableInfosList();
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    proto.LobbyProto.TableSeatInfo getTableInfos(int index);
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    int getTableInfosCount();
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    java.util.List<? extends proto.LobbyProto.TableSeatInfoOrBuilder> 
+        getTableInfosOrBuilderList();
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    proto.LobbyProto.TableSeatInfoOrBuilder getTableInfosOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code proto.AckLogin}
@@ -741,6 +795,8 @@ public final class LobbyProto {
       nickName_ = com.google.protobuf.ByteString.EMPTY;
       token_ = com.google.protobuf.ByteString.EMPTY;
       tables_ = emptyLongList();
+      username_ = com.google.protobuf.ByteString.EMPTY;
+      tableInfos_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -820,7 +876,7 @@ public final class LobbyProto {
     private com.google.protobuf.Internal.LongList tables_;
     /**
      * <pre>
-     * 已加入的桌子（本地查询）
+     * 已加入的桌子（兼容）
      * </pre>
      *
      * <code>repeated int64 tables = 5;</code>
@@ -833,7 +889,7 @@ public final class LobbyProto {
     }
     /**
      * <pre>
-     * 已加入的桌子（本地查询）
+     * 已加入的桌子（兼容）
      * </pre>
      *
      * <code>repeated int64 tables = 5;</code>
@@ -844,7 +900,7 @@ public final class LobbyProto {
     }
     /**
      * <pre>
-     * 已加入的桌子（本地查询）
+     * 已加入的桌子（兼容）
      * </pre>
      *
      * <code>repeated int64 tables = 5;</code>
@@ -855,6 +911,81 @@ public final class LobbyProto {
       return tables_.getLong(index);
     }
     private int tablesMemoizedSerializedSize = -1;
+
+    public static final int USERNAME_FIELD_NUMBER = 6;
+    private com.google.protobuf.ByteString username_;
+    /**
+     * <pre>
+     * 登录名（admin 识别等）
+     * </pre>
+     *
+     * <code>bytes username = 6;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getUsername() {
+      return username_;
+    }
+
+    public static final int TABLEINFOS_FIELD_NUMBER = 7;
+    private java.util.List<proto.LobbyProto.TableSeatInfo> tableInfos_;
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public java.util.List<proto.LobbyProto.TableSeatInfo> getTableInfosList() {
+      return tableInfos_;
+    }
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends proto.LobbyProto.TableSeatInfoOrBuilder> 
+        getTableInfosOrBuilderList() {
+      return tableInfos_;
+    }
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public int getTableInfosCount() {
+      return tableInfos_.size();
+    }
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public proto.LobbyProto.TableSeatInfo getTableInfos(int index) {
+      return tableInfos_.get(index);
+    }
+    /**
+     * <pre>
+     * 桌子详情（含玩法）
+     * </pre>
+     *
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public proto.LobbyProto.TableSeatInfoOrBuilder getTableInfosOrBuilder(
+        int index) {
+      return tableInfos_.get(index);
+    }
 
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
@@ -889,6 +1020,12 @@ public final class LobbyProto {
       }
       for (int i = 0; i < tables_.size(); i++) {
         output.writeInt64NoTag(tables_.getLong(i));
+      }
+      if (!username_.isEmpty()) {
+        output.writeBytes(6, username_);
+      }
+      for (int i = 0; i < tableInfos_.size(); i++) {
+        output.writeMessage(7, tableInfos_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -929,6 +1066,14 @@ public final class LobbyProto {
         }
         tablesMemoizedSerializedSize = dataSize;
       }
+      if (!username_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, username_);
+      }
+      for (int i = 0; i < tableInfos_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, tableInfos_.get(i));
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
@@ -954,6 +1099,10 @@ public final class LobbyProto {
           .equals(other.getToken())) return false;
       if (!getTablesList()
           .equals(other.getTablesList())) return false;
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
+      if (!getTableInfosList()
+          .equals(other.getTableInfosList())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -976,6 +1125,12 @@ public final class LobbyProto {
       if (getTablesCount() > 0) {
         hash = (37 * hash) + TABLES_FIELD_NUMBER;
         hash = (53 * hash) + getTablesList().hashCode();
+      }
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
+      if (getTableInfosCount() > 0) {
+        hash = (37 * hash) + TABLEINFOS_FIELD_NUMBER;
+        hash = (53 * hash) + getTableInfosList().hashCode();
       }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
@@ -1115,6 +1270,15 @@ public final class LobbyProto {
 
         tables_ = emptyLongList();
         bitField0_ = (bitField0_ & ~0x00000001);
+        username_ = com.google.protobuf.ByteString.EMPTY;
+
+        if (tableInfosBuilder_ == null) {
+          tableInfos_ = java.util.Collections.emptyList();
+        } else {
+          tableInfos_ = null;
+          tableInfosBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -1151,6 +1315,16 @@ public final class LobbyProto {
           bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.tables_ = tables_;
+        result.username_ = username_;
+        if (tableInfosBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            tableInfos_ = java.util.Collections.unmodifiableList(tableInfos_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.tableInfos_ = tableInfos_;
+        } else {
+          result.tableInfos_ = tableInfosBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -1221,6 +1395,35 @@ public final class LobbyProto {
           }
           onChanged();
         }
+        if (other.getUsername() != com.google.protobuf.ByteString.EMPTY) {
+          setUsername(other.getUsername());
+        }
+        if (tableInfosBuilder_ == null) {
+          if (!other.tableInfos_.isEmpty()) {
+            if (tableInfos_.isEmpty()) {
+              tableInfos_ = other.tableInfos_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureTableInfosIsMutable();
+              tableInfos_.addAll(other.tableInfos_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.tableInfos_.isEmpty()) {
+            if (tableInfosBuilder_.isEmpty()) {
+              tableInfosBuilder_.dispose();
+              tableInfosBuilder_ = null;
+              tableInfos_ = other.tableInfos_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              tableInfosBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getTableInfosFieldBuilder() : null;
+            } else {
+              tableInfosBuilder_.addAllMessages(other.tableInfos_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -1283,6 +1486,24 @@ public final class LobbyProto {
                 input.popLimit(limit);
                 break;
               } // case 42
+              case 50: {
+                username_ = input.readBytes();
+
+                break;
+              } // case 50
+              case 58: {
+                proto.LobbyProto.TableSeatInfo m =
+                    input.readMessage(
+                        proto.LobbyProto.TableSeatInfo.parser(),
+                        extensionRegistry);
+                if (tableInfosBuilder_ == null) {
+                  ensureTableInfosIsMutable();
+                  tableInfos_.add(m);
+                } else {
+                  tableInfosBuilder_.addMessage(m);
+                }
+                break;
+              } // case 58
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1451,7 +1672,7 @@ public final class LobbyProto {
       }
       /**
        * <pre>
-       * 已加入的桌子（本地查询）
+       * 已加入的桌子（兼容）
        * </pre>
        *
        * <code>repeated int64 tables = 5;</code>
@@ -1464,7 +1685,7 @@ public final class LobbyProto {
       }
       /**
        * <pre>
-       * 已加入的桌子（本地查询）
+       * 已加入的桌子（兼容）
        * </pre>
        *
        * <code>repeated int64 tables = 5;</code>
@@ -1475,7 +1696,7 @@ public final class LobbyProto {
       }
       /**
        * <pre>
-       * 已加入的桌子（本地查询）
+       * 已加入的桌子（兼容）
        * </pre>
        *
        * <code>repeated int64 tables = 5;</code>
@@ -1487,7 +1708,7 @@ public final class LobbyProto {
       }
       /**
        * <pre>
-       * 已加入的桌子（本地查询）
+       * 已加入的桌子（兼容）
        * </pre>
        *
        * <code>repeated int64 tables = 5;</code>
@@ -1504,7 +1725,7 @@ public final class LobbyProto {
       }
       /**
        * <pre>
-       * 已加入的桌子（本地查询）
+       * 已加入的桌子（兼容）
        * </pre>
        *
        * <code>repeated int64 tables = 5;</code>
@@ -1519,7 +1740,7 @@ public final class LobbyProto {
       }
       /**
        * <pre>
-       * 已加入的桌子（本地查询）
+       * 已加入的桌子（兼容）
        * </pre>
        *
        * <code>repeated int64 tables = 5;</code>
@@ -1536,7 +1757,7 @@ public final class LobbyProto {
       }
       /**
        * <pre>
-       * 已加入的桌子（本地查询）
+       * 已加入的桌子（兼容）
        * </pre>
        *
        * <code>repeated int64 tables = 5;</code>
@@ -1547,6 +1768,364 @@ public final class LobbyProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
+      }
+
+      private com.google.protobuf.ByteString username_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <pre>
+       * 登录名（admin 识别等）
+       * </pre>
+       *
+       * <code>bytes username = 6;</code>
+       * @return The username.
+       */
+      @java.lang.Override
+      public com.google.protobuf.ByteString getUsername() {
+        return username_;
+      }
+      /**
+       * <pre>
+       * 登录名（admin 识别等）
+       * </pre>
+       *
+       * <code>bytes username = 6;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        username_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 登录名（admin 识别等）
+       * </pre>
+       *
+       * <code>bytes username = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        
+        username_ = getDefaultInstance().getUsername();
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.LobbyProto.TableSeatInfo> tableInfos_ =
+        java.util.Collections.emptyList();
+      private void ensureTableInfosIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          tableInfos_ = new java.util.ArrayList<proto.LobbyProto.TableSeatInfo>(tableInfos_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.LobbyProto.TableSeatInfo, proto.LobbyProto.TableSeatInfo.Builder, proto.LobbyProto.TableSeatInfoOrBuilder> tableInfosBuilder_;
+
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public java.util.List<proto.LobbyProto.TableSeatInfo> getTableInfosList() {
+        if (tableInfosBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(tableInfos_);
+        } else {
+          return tableInfosBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public int getTableInfosCount() {
+        if (tableInfosBuilder_ == null) {
+          return tableInfos_.size();
+        } else {
+          return tableInfosBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo getTableInfos(int index) {
+        if (tableInfosBuilder_ == null) {
+          return tableInfos_.get(index);
+        } else {
+          return tableInfosBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder setTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo value) {
+        if (tableInfosBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableInfosIsMutable();
+          tableInfos_.set(index, value);
+          onChanged();
+        } else {
+          tableInfosBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder setTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo.Builder builderForValue) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          tableInfosBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(proto.LobbyProto.TableSeatInfo value) {
+        if (tableInfosBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableInfosIsMutable();
+          tableInfos_.add(value);
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo value) {
+        if (tableInfosBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableInfosIsMutable();
+          tableInfos_.add(index, value);
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(
+          proto.LobbyProto.TableSeatInfo.Builder builderForValue) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.add(builderForValue.build());
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo.Builder builderForValue) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addAllTableInfos(
+          java.lang.Iterable<? extends proto.LobbyProto.TableSeatInfo> values) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, tableInfos_);
+          onChanged();
+        } else {
+          tableInfosBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder clearTableInfos() {
+        if (tableInfosBuilder_ == null) {
+          tableInfos_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          tableInfosBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder removeTableInfos(int index) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.remove(index);
+          onChanged();
+        } else {
+          tableInfosBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo.Builder getTableInfosBuilder(
+          int index) {
+        return getTableInfosFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfoOrBuilder getTableInfosOrBuilder(
+          int index) {
+        if (tableInfosBuilder_ == null) {
+          return tableInfos_.get(index);  } else {
+          return tableInfosBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public java.util.List<? extends proto.LobbyProto.TableSeatInfoOrBuilder> 
+           getTableInfosOrBuilderList() {
+        if (tableInfosBuilder_ != null) {
+          return tableInfosBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(tableInfos_);
+        }
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo.Builder addTableInfosBuilder() {
+        return getTableInfosFieldBuilder().addBuilder(
+            proto.LobbyProto.TableSeatInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo.Builder addTableInfosBuilder(
+          int index) {
+        return getTableInfosFieldBuilder().addBuilder(
+            index, proto.LobbyProto.TableSeatInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * 桌子详情（含玩法）
+       * </pre>
+       *
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public java.util.List<proto.LobbyProto.TableSeatInfo.Builder> 
+           getTableInfosBuilderList() {
+        return getTableInfosFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.LobbyProto.TableSeatInfo, proto.LobbyProto.TableSeatInfo.Builder, proto.LobbyProto.TableSeatInfoOrBuilder> 
+          getTableInfosFieldBuilder() {
+        if (tableInfosBuilder_ == null) {
+          tableInfosBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.LobbyProto.TableSeatInfo, proto.LobbyProto.TableSeatInfo.Builder, proto.LobbyProto.TableSeatInfoOrBuilder>(
+                  tableInfos_,
+                  ((bitField0_ & 0x00000002) != 0),
+                  getParentForChildren(),
+                  isClean());
+          tableInfos_ = null;
+        }
+        return tableInfosBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -2380,6 +2959,36 @@ public final class LobbyProto {
      * @return The tables at the given index.
      */
     long getTables(int index);
+
+    /**
+     * <code>bytes username = 6;</code>
+     * @return The username.
+     */
+    com.google.protobuf.ByteString getUsername();
+
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    java.util.List<proto.LobbyProto.TableSeatInfo> 
+        getTableInfosList();
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    proto.LobbyProto.TableSeatInfo getTableInfos(int index);
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    int getTableInfosCount();
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    java.util.List<? extends proto.LobbyProto.TableSeatInfoOrBuilder> 
+        getTableInfosOrBuilderList();
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    proto.LobbyProto.TableSeatInfoOrBuilder getTableInfosOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code proto.AckUserRegister}
@@ -2397,6 +3006,8 @@ public final class LobbyProto {
       nickName_ = com.google.protobuf.ByteString.EMPTY;
       token_ = com.google.protobuf.ByteString.EMPTY;
       tables_ = emptyLongList();
+      username_ = com.google.protobuf.ByteString.EMPTY;
+      tableInfos_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -2496,6 +3107,57 @@ public final class LobbyProto {
     }
     private int tablesMemoizedSerializedSize = -1;
 
+    public static final int USERNAME_FIELD_NUMBER = 6;
+    private com.google.protobuf.ByteString username_;
+    /**
+     * <code>bytes username = 6;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getUsername() {
+      return username_;
+    }
+
+    public static final int TABLEINFOS_FIELD_NUMBER = 7;
+    private java.util.List<proto.LobbyProto.TableSeatInfo> tableInfos_;
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public java.util.List<proto.LobbyProto.TableSeatInfo> getTableInfosList() {
+      return tableInfos_;
+    }
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends proto.LobbyProto.TableSeatInfoOrBuilder> 
+        getTableInfosOrBuilderList() {
+      return tableInfos_;
+    }
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public int getTableInfosCount() {
+      return tableInfos_.size();
+    }
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public proto.LobbyProto.TableSeatInfo getTableInfos(int index) {
+      return tableInfos_.get(index);
+    }
+    /**
+     * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+     */
+    @java.lang.Override
+    public proto.LobbyProto.TableSeatInfoOrBuilder getTableInfosOrBuilder(
+        int index) {
+      return tableInfos_.get(index);
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2529,6 +3191,12 @@ public final class LobbyProto {
       }
       for (int i = 0; i < tables_.size(); i++) {
         output.writeInt64NoTag(tables_.getLong(i));
+      }
+      if (!username_.isEmpty()) {
+        output.writeBytes(6, username_);
+      }
+      for (int i = 0; i < tableInfos_.size(); i++) {
+        output.writeMessage(7, tableInfos_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -2569,6 +3237,14 @@ public final class LobbyProto {
         }
         tablesMemoizedSerializedSize = dataSize;
       }
+      if (!username_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, username_);
+      }
+      for (int i = 0; i < tableInfos_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, tableInfos_.get(i));
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
@@ -2594,6 +3270,10 @@ public final class LobbyProto {
           .equals(other.getToken())) return false;
       if (!getTablesList()
           .equals(other.getTablesList())) return false;
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
+      if (!getTableInfosList()
+          .equals(other.getTableInfosList())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -2616,6 +3296,12 @@ public final class LobbyProto {
       if (getTablesCount() > 0) {
         hash = (37 * hash) + TABLES_FIELD_NUMBER;
         hash = (53 * hash) + getTablesList().hashCode();
+      }
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
+      if (getTableInfosCount() > 0) {
+        hash = (37 * hash) + TABLEINFOS_FIELD_NUMBER;
+        hash = (53 * hash) + getTableInfosList().hashCode();
       }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
@@ -2755,6 +3441,15 @@ public final class LobbyProto {
 
         tables_ = emptyLongList();
         bitField0_ = (bitField0_ & ~0x00000001);
+        username_ = com.google.protobuf.ByteString.EMPTY;
+
+        if (tableInfosBuilder_ == null) {
+          tableInfos_ = java.util.Collections.emptyList();
+        } else {
+          tableInfos_ = null;
+          tableInfosBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -2791,6 +3486,16 @@ public final class LobbyProto {
           bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.tables_ = tables_;
+        result.username_ = username_;
+        if (tableInfosBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            tableInfos_ = java.util.Collections.unmodifiableList(tableInfos_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.tableInfos_ = tableInfos_;
+        } else {
+          result.tableInfos_ = tableInfosBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -2861,6 +3566,35 @@ public final class LobbyProto {
           }
           onChanged();
         }
+        if (other.getUsername() != com.google.protobuf.ByteString.EMPTY) {
+          setUsername(other.getUsername());
+        }
+        if (tableInfosBuilder_ == null) {
+          if (!other.tableInfos_.isEmpty()) {
+            if (tableInfos_.isEmpty()) {
+              tableInfos_ = other.tableInfos_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensureTableInfosIsMutable();
+              tableInfos_.addAll(other.tableInfos_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.tableInfos_.isEmpty()) {
+            if (tableInfosBuilder_.isEmpty()) {
+              tableInfosBuilder_.dispose();
+              tableInfosBuilder_ = null;
+              tableInfos_ = other.tableInfos_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              tableInfosBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getTableInfosFieldBuilder() : null;
+            } else {
+              tableInfosBuilder_.addAllMessages(other.tableInfos_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -2923,6 +3657,24 @@ public final class LobbyProto {
                 input.popLimit(limit);
                 break;
               } // case 42
+              case 50: {
+                username_ = input.readBytes();
+
+                break;
+              } // case 50
+              case 58: {
+                proto.LobbyProto.TableSeatInfo m =
+                    input.readMessage(
+                        proto.LobbyProto.TableSeatInfo.parser(),
+                        extensionRegistry);
+                if (tableInfosBuilder_ == null) {
+                  ensureTableInfosIsMutable();
+                  tableInfos_.add(m);
+                } else {
+                  tableInfosBuilder_.addMessage(m);
+                }
+                break;
+              } // case 58
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -3148,6 +3900,280 @@ public final class LobbyProto {
         onChanged();
         return this;
       }
+
+      private com.google.protobuf.ByteString username_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes username = 6;</code>
+       * @return The username.
+       */
+      @java.lang.Override
+      public com.google.protobuf.ByteString getUsername() {
+        return username_;
+      }
+      /**
+       * <code>bytes username = 6;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        username_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes username = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        
+        username_ = getDefaultInstance().getUsername();
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<proto.LobbyProto.TableSeatInfo> tableInfos_ =
+        java.util.Collections.emptyList();
+      private void ensureTableInfosIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          tableInfos_ = new java.util.ArrayList<proto.LobbyProto.TableSeatInfo>(tableInfos_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.LobbyProto.TableSeatInfo, proto.LobbyProto.TableSeatInfo.Builder, proto.LobbyProto.TableSeatInfoOrBuilder> tableInfosBuilder_;
+
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public java.util.List<proto.LobbyProto.TableSeatInfo> getTableInfosList() {
+        if (tableInfosBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(tableInfos_);
+        } else {
+          return tableInfosBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public int getTableInfosCount() {
+        if (tableInfosBuilder_ == null) {
+          return tableInfos_.size();
+        } else {
+          return tableInfosBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo getTableInfos(int index) {
+        if (tableInfosBuilder_ == null) {
+          return tableInfos_.get(index);
+        } else {
+          return tableInfosBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder setTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo value) {
+        if (tableInfosBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableInfosIsMutable();
+          tableInfos_.set(index, value);
+          onChanged();
+        } else {
+          tableInfosBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder setTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo.Builder builderForValue) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          tableInfosBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(proto.LobbyProto.TableSeatInfo value) {
+        if (tableInfosBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableInfosIsMutable();
+          tableInfos_.add(value);
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo value) {
+        if (tableInfosBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTableInfosIsMutable();
+          tableInfos_.add(index, value);
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(
+          proto.LobbyProto.TableSeatInfo.Builder builderForValue) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.add(builderForValue.build());
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addTableInfos(
+          int index, proto.LobbyProto.TableSeatInfo.Builder builderForValue) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          tableInfosBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder addAllTableInfos(
+          java.lang.Iterable<? extends proto.LobbyProto.TableSeatInfo> values) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, tableInfos_);
+          onChanged();
+        } else {
+          tableInfosBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder clearTableInfos() {
+        if (tableInfosBuilder_ == null) {
+          tableInfos_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          tableInfosBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public Builder removeTableInfos(int index) {
+        if (tableInfosBuilder_ == null) {
+          ensureTableInfosIsMutable();
+          tableInfos_.remove(index);
+          onChanged();
+        } else {
+          tableInfosBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo.Builder getTableInfosBuilder(
+          int index) {
+        return getTableInfosFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfoOrBuilder getTableInfosOrBuilder(
+          int index) {
+        if (tableInfosBuilder_ == null) {
+          return tableInfos_.get(index);  } else {
+          return tableInfosBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public java.util.List<? extends proto.LobbyProto.TableSeatInfoOrBuilder> 
+           getTableInfosOrBuilderList() {
+        if (tableInfosBuilder_ != null) {
+          return tableInfosBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(tableInfos_);
+        }
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo.Builder addTableInfosBuilder() {
+        return getTableInfosFieldBuilder().addBuilder(
+            proto.LobbyProto.TableSeatInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public proto.LobbyProto.TableSeatInfo.Builder addTableInfosBuilder(
+          int index) {
+        return getTableInfosFieldBuilder().addBuilder(
+            index, proto.LobbyProto.TableSeatInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .proto.TableSeatInfo tableInfos = 7;</code>
+       */
+      public java.util.List<proto.LobbyProto.TableSeatInfo.Builder> 
+           getTableInfosBuilderList() {
+        return getTableInfosFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          proto.LobbyProto.TableSeatInfo, proto.LobbyProto.TableSeatInfo.Builder, proto.LobbyProto.TableSeatInfoOrBuilder> 
+          getTableInfosFieldBuilder() {
+        if (tableInfosBuilder_ == null) {
+          tableInfosBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              proto.LobbyProto.TableSeatInfo, proto.LobbyProto.TableSeatInfo.Builder, proto.LobbyProto.TableSeatInfoOrBuilder>(
+                  tableInfos_,
+                  ((bitField0_ & 0x00000002) != 0),
+                  getParentForChildren(),
+                  isClean());
+          tableInfos_ = null;
+        }
+        return tableInfosBuilder_;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -3207,6 +4233,645 @@ public final class LobbyProto {
 
     @java.lang.Override
     public proto.LobbyProto.AckUserRegister getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TableSeatInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.TableSeatInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 tableId = 1;</code>
+     * @return The tableId.
+     */
+    long getTableId();
+
+    /**
+     * <code>int32 roomId = 2;</code>
+     * @return The roomId.
+     */
+    int getRoomId();
+
+    /**
+     * <pre>
+     * 1麻将 2斗地主
+     * </pre>
+     *
+     * <code>int32 gameType = 3;</code>
+     * @return The gameType.
+     */
+    int getGameType();
+  }
+  /**
+   * <pre>
+   * 登录回包中的桌子座位信息
+   * </pre>
+   *
+   * Protobuf type {@code proto.TableSeatInfo}
+   */
+  public static final class TableSeatInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.TableSeatInfo)
+      TableSeatInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TableSeatInfo.newBuilder() to construct.
+    private TableSeatInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TableSeatInfo() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new TableSeatInfo();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.LobbyProto.internal_static_proto_TableSeatInfo_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.LobbyProto.internal_static_proto_TableSeatInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.LobbyProto.TableSeatInfo.class, proto.LobbyProto.TableSeatInfo.Builder.class);
+    }
+
+    public static final int TABLEID_FIELD_NUMBER = 1;
+    private long tableId_;
+    /**
+     * <code>int64 tableId = 1;</code>
+     * @return The tableId.
+     */
+    @java.lang.Override
+    public long getTableId() {
+      return tableId_;
+    }
+
+    public static final int ROOMID_FIELD_NUMBER = 2;
+    private int roomId_;
+    /**
+     * <code>int32 roomId = 2;</code>
+     * @return The roomId.
+     */
+    @java.lang.Override
+    public int getRoomId() {
+      return roomId_;
+    }
+
+    public static final int GAMETYPE_FIELD_NUMBER = 3;
+    private int gameType_;
+    /**
+     * <pre>
+     * 1麻将 2斗地主
+     * </pre>
+     *
+     * <code>int32 gameType = 3;</code>
+     * @return The gameType.
+     */
+    @java.lang.Override
+    public int getGameType() {
+      return gameType_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (tableId_ != 0L) {
+        output.writeInt64(1, tableId_);
+      }
+      if (roomId_ != 0) {
+        output.writeInt32(2, roomId_);
+      }
+      if (gameType_ != 0) {
+        output.writeInt32(3, gameType_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (tableId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, tableId_);
+      }
+      if (roomId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, roomId_);
+      }
+      if (gameType_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, gameType_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.LobbyProto.TableSeatInfo)) {
+        return super.equals(obj);
+      }
+      proto.LobbyProto.TableSeatInfo other = (proto.LobbyProto.TableSeatInfo) obj;
+
+      if (getTableId()
+          != other.getTableId()) return false;
+      if (getRoomId()
+          != other.getRoomId()) return false;
+      if (getGameType()
+          != other.getGameType()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TABLEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTableId());
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
+      hash = (37 * hash) + GAMETYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getGameType();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.LobbyProto.TableSeatInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.LobbyProto.TableSeatInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 登录回包中的桌子座位信息
+     * </pre>
+     *
+     * Protobuf type {@code proto.TableSeatInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.TableSeatInfo)
+        proto.LobbyProto.TableSeatInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.LobbyProto.internal_static_proto_TableSeatInfo_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.LobbyProto.internal_static_proto_TableSeatInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.LobbyProto.TableSeatInfo.class, proto.LobbyProto.TableSeatInfo.Builder.class);
+      }
+
+      // Construct using proto.LobbyProto.TableSeatInfo.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        tableId_ = 0L;
+
+        roomId_ = 0;
+
+        gameType_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.LobbyProto.internal_static_proto_TableSeatInfo_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.LobbyProto.TableSeatInfo getDefaultInstanceForType() {
+        return proto.LobbyProto.TableSeatInfo.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.LobbyProto.TableSeatInfo build() {
+        proto.LobbyProto.TableSeatInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.LobbyProto.TableSeatInfo buildPartial() {
+        proto.LobbyProto.TableSeatInfo result = new proto.LobbyProto.TableSeatInfo(this);
+        result.tableId_ = tableId_;
+        result.roomId_ = roomId_;
+        result.gameType_ = gameType_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.LobbyProto.TableSeatInfo) {
+          return mergeFrom((proto.LobbyProto.TableSeatInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.LobbyProto.TableSeatInfo other) {
+        if (other == proto.LobbyProto.TableSeatInfo.getDefaultInstance()) return this;
+        if (other.getTableId() != 0L) {
+          setTableId(other.getTableId());
+        }
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
+        }
+        if (other.getGameType() != 0) {
+          setGameType(other.getGameType());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                tableId_ = input.readInt64();
+
+                break;
+              } // case 8
+              case 16: {
+                roomId_ = input.readInt32();
+
+                break;
+              } // case 16
+              case 24: {
+                gameType_ = input.readInt32();
+
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+
+      private long tableId_ ;
+      /**
+       * <code>int64 tableId = 1;</code>
+       * @return The tableId.
+       */
+      @java.lang.Override
+      public long getTableId() {
+        return tableId_;
+      }
+      /**
+       * <code>int64 tableId = 1;</code>
+       * @param value The tableId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTableId(long value) {
+        
+        tableId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 tableId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTableId() {
+        
+        tableId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int roomId_ ;
+      /**
+       * <code>int32 roomId = 2;</code>
+       * @return The roomId.
+       */
+      @java.lang.Override
+      public int getRoomId() {
+        return roomId_;
+      }
+      /**
+       * <code>int32 roomId = 2;</code>
+       * @param value The roomId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRoomId(int value) {
+        
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roomId = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRoomId() {
+        
+        roomId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int gameType_ ;
+      /**
+       * <pre>
+       * 1麻将 2斗地主
+       * </pre>
+       *
+       * <code>int32 gameType = 3;</code>
+       * @return The gameType.
+       */
+      @java.lang.Override
+      public int getGameType() {
+        return gameType_;
+      }
+      /**
+       * <pre>
+       * 1麻将 2斗地主
+       * </pre>
+       *
+       * <code>int32 gameType = 3;</code>
+       * @param value The gameType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGameType(int value) {
+        
+        gameType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 1麻将 2斗地主
+       * </pre>
+       *
+       * <code>int32 gameType = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGameType() {
+        
+        gameType_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.TableSeatInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:proto.TableSeatInfo)
+    private static final proto.LobbyProto.TableSeatInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.LobbyProto.TableSeatInfo();
+    }
+
+    public static proto.LobbyProto.TableSeatInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TableSeatInfo>
+        PARSER = new com.google.protobuf.AbstractParser<TableSeatInfo>() {
+      @java.lang.Override
+      public TableSeatInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<TableSeatInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TableSeatInfo> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.LobbyProto.TableSeatInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5365,6 +7030,11 @@ public final class LobbyProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckUserRegister_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_TableSeatInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_TableSeatInfo_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ReqJoinRoomTable_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -5395,18 +7065,22 @@ public final class LobbyProto {
     java.lang.String[] descriptorData = {
       "\n\013lobby.proto\022\005proto\032\013model.proto\"=\n\010Req" +
       "Login\022\020\n\010username\030\001 \001(\014\022\020\n\010password\030\002 \001(" +
-      "\014\022\r\n\005token\030\003 \001(\014\"Y\n\010AckLogin\022\014\n\004code\030\001 \001" +
-      "(\005\022\016\n\006userId\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\r\n\005" +
-      "token\030\004 \001(\014\022\016\n\006tables\030\005 \003(\003\"W\n\017ReqUserRe" +
-      "gister\022\020\n\010username\030\001 \001(\014\022\020\n\010password\030\002 \001" +
-      "(\014\022\020\n\010nickName\030\003 \001(\014\022\016\n\006invite\030\004 \001(\014\"`\n\017" +
-      "AckUserRegister\022\014\n\004code\030\001 \001(\005\022\016\n\006userId\030" +
-      "\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\r\n\005token\030\004 \001(\014\022\016" +
-      "\n\006tables\030\005 \003(\003\"\"\n\020ReqJoinRoomTable\022\016\n\006ro" +
-      "omId\030\001 \001(\005\"#\n\020AckJoinRoomTable\022\017\n\007tableI" +
-      "d\030\001 \001(\003\"\r\n\013ReqRoomList\",\n\013AckRoomList\022\035\n" +
-      "\010roomList\030\001 \003(\0132\013.proto.RoomB\014B\nLobbyPro" +
-      "tob\006proto3"
+      "\014\022\r\n\005token\030\003 \001(\014\"\225\001\n\010AckLogin\022\014\n\004code\030\001 " +
+      "\001(\005\022\016\n\006userId\030\002 \001(\005\022\020\n\010nickName\030\003 \001(\014\022\r\n" +
+      "\005token\030\004 \001(\014\022\016\n\006tables\030\005 \003(\003\022\020\n\010username" +
+      "\030\006 \001(\014\022(\n\ntableInfos\030\007 \003(\0132\024.proto.Table" +
+      "SeatInfo\"W\n\017ReqUserRegister\022\020\n\010username\030" +
+      "\001 \001(\014\022\020\n\010password\030\002 \001(\014\022\020\n\010nickName\030\003 \001(" +
+      "\014\022\016\n\006invite\030\004 \001(\014\"\234\001\n\017AckUserRegister\022\014\n" +
+      "\004code\030\001 \001(\005\022\016\n\006userId\030\002 \001(\005\022\020\n\010nickName\030" +
+      "\003 \001(\014\022\r\n\005token\030\004 \001(\014\022\016\n\006tables\030\005 \003(\003\022\020\n\010" +
+      "username\030\006 \001(\014\022(\n\ntableInfos\030\007 \003(\0132\024.pro" +
+      "to.TableSeatInfo\"B\n\rTableSeatInfo\022\017\n\007tab" +
+      "leId\030\001 \001(\003\022\016\n\006roomId\030\002 \001(\005\022\020\n\010gameType\030\003" +
+      " \001(\005\"\"\n\020ReqJoinRoomTable\022\016\n\006roomId\030\001 \001(\005" +
+      "\"#\n\020AckJoinRoomTable\022\017\n\007tableId\030\001 \001(\003\"\r\n" +
+      "\013ReqRoomList\",\n\013AckRoomList\022\035\n\010roomList\030" +
+      "\001 \003(\0132\013.proto.RoomB\014B\nLobbyProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -5424,7 +7098,7 @@ public final class LobbyProto {
     internal_static_proto_AckLogin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckLogin_descriptor,
-        new java.lang.String[] { "Code", "UserId", "NickName", "Token", "Tables", });
+        new java.lang.String[] { "Code", "UserId", "NickName", "Token", "Tables", "Username", "TableInfos", });
     internal_static_proto_ReqUserRegister_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_proto_ReqUserRegister_fieldAccessorTable = new
@@ -5436,27 +7110,33 @@ public final class LobbyProto {
     internal_static_proto_AckUserRegister_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckUserRegister_descriptor,
-        new java.lang.String[] { "Code", "UserId", "NickName", "Token", "Tables", });
-    internal_static_proto_ReqJoinRoomTable_descriptor =
+        new java.lang.String[] { "Code", "UserId", "NickName", "Token", "Tables", "Username", "TableInfos", });
+    internal_static_proto_TableSeatInfo_descriptor =
       getDescriptor().getMessageTypes().get(4);
+    internal_static_proto_TableSeatInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_TableSeatInfo_descriptor,
+        new java.lang.String[] { "TableId", "RoomId", "GameType", });
+    internal_static_proto_ReqJoinRoomTable_descriptor =
+      getDescriptor().getMessageTypes().get(5);
     internal_static_proto_ReqJoinRoomTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqJoinRoomTable_descriptor,
         new java.lang.String[] { "RoomId", });
     internal_static_proto_AckJoinRoomTable_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_proto_AckJoinRoomTable_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckJoinRoomTable_descriptor,
         new java.lang.String[] { "TableId", });
     internal_static_proto_ReqRoomList_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_proto_ReqRoomList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqRoomList_descriptor,
         new java.lang.String[] { });
     internal_static_proto_AckRoomList_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_proto_AckRoomList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRoomList_descriptor,

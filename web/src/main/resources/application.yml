@@ -9,7 +9,10 @@ spring:
 
 gate:
   host: 127.0.0.1
-  port: 9001
+  port: 5600
+
+lobby:
+  admin-http: http://127.0.0.1:5701
 
 logging:
   file:

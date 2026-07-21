@@ -191,6 +191,11 @@ public class ClientProto {
 
 		ServerProto.NotBreak.Builder disconnectNotify = ServerProto.NotBreak.newBuilder();
 		disconnectNotify.setUserId(userId);
+		if (handler instanceof GateTcpClient) {
+			disconnectNotify.setGateClientId(((GateTcpClient) handler).getId());
+		} else if (handler instanceof GateWsClient) {
+			disconnectNotify.setGateClientId(((GateWsClient) handler).getId());
+		}
 
 		ServerManager serverManager = Gate.getInstance().getServerManager();
 		if (serverManager == null) {

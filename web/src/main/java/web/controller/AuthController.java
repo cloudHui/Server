@@ -1,10 +1,10 @@
 package web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.service.UserService;
@@ -15,12 +15,12 @@ import web.service.UserService;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
 	private final UserService userService;
+	private final LobbyAdminClient lobbyAdminClient;
 
-	public AuthController(UserService userService) {
+	public AuthController(UserService userService, LobbyAdminClient lobbyAdminClient) {
 		this.userService = userService;
+		this.lobbyAdminClient = lobbyAdminClient;
 	}
 
 	/**
@@ -80,15 +80,19 @@ public class AuthController {
 	}
 
 	/**
-	 * GET /api/auth/registration — 注册策略提示（默认需邀请）
+	 * GET /api/auth/registration — 注册策略提示
 	 */
 	@GetMapping("/registration")
 	public ResponseEntity<Map<String, Object>> registration() {
+		Map<String, Object> fromLobby = lobbyAdminClient.getRegistration();
+		if (fromLobby != null && fromLobby.containsKey("openRegister")) {
+			return ResponseEntity.ok(fromLobby);
+		}
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 0);
 		result.put("openRegister", false);
 		result.put("inviteRequired", true);
-		result.put("msg", "默认关闭开放注册，需邀请码；以 Lobby 配置 lobby.open-register 为准");
+		result.put("msg", "默认关闭开放注册，需邀请码");
 		return ResponseEntity.ok(result);
 	}
 
@@ -98,8 +102,16 @@ public class AuthController {
 		result.put("msg", "success");
 		result.put("sessionId", userInfo.getSessionId());
 		result.put("userId", userInfo.getUserId());
+		result.put("username", userInfo.getUsername());
 		result.put("nickname", userInfo.getNickname());
 		result.put("token", userInfo.getToken());
+		result.put("tables", userInfo.getTables());
+		List<Map<String, Object>> infos = new ArrayList<>();
+		for (UserService.TableInfoView t : userInfo.getTableInfos()) {
+			infos.add(t.toMap());
+		}
+		result.put("tableInfos", infos);
+		result.put("isAdmin", userInfo.isAdmin());
 		return result;
 	}
 

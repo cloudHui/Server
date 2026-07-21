@@ -66,8 +66,10 @@ public class ReqEnterTableHandle implements Handler {
 			if (table.gaming()) {
 				TableUser existingUser = table.getUsers().get(userId);
 				if (existingUser != null) {
-					logger.info("玩家断线重连, userId: {}, tableId: {}", userId, tableId);
+					logger.info("玩家断线重连, userId: {}, tableId: {}, gateId: {} -> {}",
+							userId, tableId, existingUser.getGateId(), gateId);
 					existingUser.setOnLine(true);
+					existingUser.setGateId(gateId);
 					table.syncGameState(existingUser); // 多态调用
 					return ConstProto.Result.SUCCESS_VALUE;
 				}

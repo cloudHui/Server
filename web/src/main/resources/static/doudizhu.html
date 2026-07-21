@@ -207,6 +207,36 @@
         }
         .center-message.show { opacity: 1; }
 
+        .settle-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.62);
+            z-index: 80;
+            align-items: center;
+            justify-content: center;
+        }
+        .settle-overlay.show { display: flex; }
+        .settle-panel {
+            width: min(420px, 92vw);
+            background: #fffaf0;
+            border-radius: 14px;
+            padding: 22px 20px 16px;
+            color: #1c2430;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+            text-align: center;
+        }
+        .settle-panel h3 { font-size: 20px; margin-bottom: 8px; color: #8b1e1e; }
+        .settle-panel .meta { font-size: 13px; color: #666; margin-bottom: 12px; line-height: 1.5; }
+        .settle-panel .row {
+            display: flex; justify-content: space-between;
+            padding: 6px 4px; border-bottom: 1px solid #eee; font-size: 13px;
+        }
+        .settle-panel button {
+            margin-top: 14px; border: none; background: #1f5c36; color: #fff;
+            padding: 9px 22px; border-radius: 8px; cursor: pointer;
+        }
+
         /* 底牌区域 */
         .dizhu-cards {
             position: absolute;
@@ -293,6 +323,15 @@
 
         <!-- 中央消息 -->
         <div class="center-message" id="centerMsg"></div>
+
+        <div class="settle-overlay" id="settleOverlay">
+            <div class="settle-panel">
+                <h3 id="settleTitle">本局结算</h3>
+                <div class="meta" id="settleMeta"></div>
+                <div id="settleRows"></div>
+                <button onclick="closeSettle()">继续</button>
+            </div>
+        </div>
 
         <!-- 操作按钮 -->
         <div class="action-bar" id="actionBar" style="display:none;"></div>
@@ -399,6 +438,9 @@
                 case 'notResult':
                     handleNotResult(data.data);
                     break;
+                case 'notGameResult':
+                    handleNotGameResult(data.data);
+                    break;
             }
         }
 
@@ -459,17 +501,49 @@
         }
 
         function handleNotResult(data) {
-            // 结算通知
-            var msg = '';
-            if (data.win_team === 0) {
-                msg = '地主获胜!';
-            } else {
-                msg = '农民获胜!';
+            if (!data) return;
+            var title = data.win_team === 0 ? '地主获胜' : '农民获胜';
+            if (data.spring) title += ' · 春天';
+            if (data.anti_spring) title += ' · 反春';
+            var meta = '底分 ' + (data.base_score || 0)
+                + ' · 抢地主×' + (data.rob_multiplier || 1)
+                + ' · 结算系数 ' + (data.settle_factor || 0);
+            var rows = '';
+            var players = data.rPlayers || [];
+            for (var i = 0; i < players.length; i++) {
+                var p = players[i];
+                var tag = (p.roleId === data.landlord_id) ? '地主' : '农民';
+                rows += '<div class="row"><span>玩家 ' + p.roleId + '（' + tag + '）</span>'
+                    + '<span>余牌 ' + ((p.cards && p.cards.length) || 0) + '</span></div>';
             }
-            if (data.spring) msg += ' (春天!)';
-            if (data.anti_spring) msg += ' (反春!)';
-            showCenterMsg(msg, 5000);
+            showSettle(title, meta, rows);
+            showCenterMsg(title, 2500);
             showActionButtons('prepare');
+        }
+
+        function handleNotGameResult(data) {
+            if (!data) return;
+            var title = '总结算';
+            var meta = '完成 ' + (data.completedRounds || 0) + ' / ' + (data.totalRounds || 0) + ' 局';
+            var rows = '';
+            var totals = data.totalScores || [];
+            for (var i = 0; i < totals.length; i++) {
+                rows += '<div class="row"><span>座位 ' + totals[i].seat + '</span><span>'
+                    + totals[i].score + ' 分</span></div>';
+            }
+            showSettle(title, meta, rows);
+            showActionButtons('prepare');
+        }
+
+        function showSettle(title, meta, rowsHtml) {
+            document.getElementById('settleTitle').textContent = title || '结算';
+            document.getElementById('settleMeta').textContent = meta || '';
+            document.getElementById('settleRows').innerHTML = rowsHtml || '';
+            document.getElementById('settleOverlay').className = 'settle-overlay show';
+        }
+
+        function closeSettle() {
+            document.getElementById('settleOverlay').className = 'settle-overlay';
         }
 
         function doOp(choice) {

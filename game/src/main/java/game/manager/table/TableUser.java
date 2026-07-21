@@ -34,7 +34,7 @@ public class TableUser {
 	private boolean online;
 	private String head;
 	private String nick;
-	private final int gateId;
+	private int gateId;
 	private int seated = -1;
 	private final List<Card> cards;
 	// private long diamond;
@@ -95,6 +95,10 @@ public class TableUser {
 
 	public int getGateId() {
 		return gateId;
+	}
+
+	public void setGateId(int gateId) {
+		this.gateId = gateId;
 	}
 
 	public int getSeated() {

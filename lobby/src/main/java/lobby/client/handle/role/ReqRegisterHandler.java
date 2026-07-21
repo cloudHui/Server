@@ -44,7 +44,7 @@ public class ReqRegisterHandler implements Handler {
 			String invite = request.getInvite().toStringUtf8().trim();
 
 			if (username.isEmpty() || password.isEmpty()) {
-				sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "");
+				sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "", "");
 				return true;
 			}
 			if (nickname.isEmpty()) {
@@ -56,7 +56,7 @@ public class ReqRegisterHandler implements Handler {
 			InviteRepository inviteRepo = lobby.getInviteRepository();
 
 			if (userRepo.findByUsername(username).isPresent()) {
-				sendAck(sender, clientId, sequence, CODE_USERNAME_EXISTS, 0, "", "");
+				sendAck(sender, clientId, sequence, CODE_USERNAME_EXISTS, 0, "", "", "");
 				return true;
 			}
 
@@ -64,7 +64,7 @@ public class ReqRegisterHandler implements Handler {
 			if (needInvite) {
 				if (invite.isEmpty() || !inviteRepo.peekValid(invite).isPresent()) {
 					sendAck(sender, clientId, sequence,
-							invite.isEmpty() ? CODE_INVITE_REQUIRED : CODE_INVITE_INVALID, 0, "", "");
+							invite.isEmpty() ? CODE_INVITE_REQUIRED : CODE_INVITE_INVALID, 0, "", "", "");
 					return true;
 				}
 			}
@@ -77,50 +77,50 @@ public class ReqRegisterHandler implements Handler {
 			entity.setCreatedAt(System.currentTimeMillis());
 			long userId = userRepo.insert(entity);
 			if (userId <= 0) {
-				sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "");
+				sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "", "");
 				return true;
 			}
 
 			if (needInvite && !inviteRepo.consume(invite)) {
 				logger.warn("邀请码消费失败(可能并发), username={}", username);
-				sendAck(sender, clientId, sequence, CODE_INVITE_INVALID, 0, "", "");
+				sendAck(sender, clientId, sequence, CODE_INVITE_INVALID, 0, "", "", "");
 				return true;
 			}
 
 			String token = Lobby.newToken();
 			userRepo.updateLogin(userId, token, System.currentTimeMillis());
 
+			// clientId = gate 玩家连接 id
 			User user = new User(userId, username, nickname, clientId);
-			if (sender instanceof net.client.handler.ClientHandler) {
-				user.setGateId(((net.client.handler.ClientHandler) sender).getId());
-			}
 			user.setPendingToken(token);
+			user.setOffline(false);
 			UserManager.getInstance().putOrUpdate(user);
 			TraceContext.setUserId((int) userId);
 
 			List<Long> tables = Collections.emptyList();
-			sendAck(sender, clientId, sequence, CODE_OK, (int) userId, nickname, token, tables);
+			sendAck(sender, clientId, sequence, CODE_OK, (int) userId, username, nickname, token, tables);
 			logger.info("注册成功, userId: {}, username: {}", userId, username);
 		} catch (Exception e) {
 			logger.error("处理注册失败, gateId: {}", clientId, e);
-			sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "");
+			sendAck(sender, clientId, sequence, CODE_FAIL, 0, "", "", "");
 		}
 		return true;
 	}
 
 	private void sendAck(Sender sender, int clientId, int sequence, int code,
-						 int userId, String nick, String token) {
-		sendAck(sender, clientId, sequence, code, userId, nick, token, null);
+						 int userId, String username, String nick, String token) {
+		sendAck(sender, clientId, sequence, code, userId, username, nick, token, null);
 	}
 
 	private void sendAck(Sender sender, int clientId, int sequence, int code,
-						 int userId, String nick, String token, List<Long> tables) {
+						 int userId, String username, String nick, String token, List<Long> tables) {
 		try {
 			LobbyProto.AckUserRegister.Builder builder = LobbyProto.AckUserRegister.newBuilder()
 					.setCode(code)
 					.setUserId(userId)
 					.setNickName(ByteString.copyFromUtf8(nick == null ? "" : nick))
-					.setToken(ByteString.copyFromUtf8(token == null ? "" : token));
+					.setToken(ByteString.copyFromUtf8(token == null ? "" : token))
+					.setUsername(ByteString.copyFromUtf8(username == null ? "" : username));
 			if (tables != null) {
 				builder.addAllTables(tables);
 			}

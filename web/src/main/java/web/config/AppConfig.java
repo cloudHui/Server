@@ -17,7 +17,7 @@ public class AppConfig {
 	@Value("${gate.host:127.0.0.1}")
 	private String gateHost;
 
-	@Value("${gate.port:9001}")
+	@Value("${gate.port:5600}")
 	private int gatePort;
 
 	@Bean

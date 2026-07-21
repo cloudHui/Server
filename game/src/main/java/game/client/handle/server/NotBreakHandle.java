@@ -29,11 +29,12 @@ public class NotBreakHandle implements Handler {
 		try {
 			ServerProto.NotBreak notification = (ServerProto.NotBreak) message;
 			int userId = notification.getUserId();
+			int gateClientId = notification.getGateClientId();
 
 			TraceContext.setUserId(userId);
-			logger.info("处理玩家断线通知, userId: {}", userId);
+			logger.info("处理玩家断线通知, userId: {}, gateClientId: {}", userId, gateClientId);
 
-			processUserDisconnect(userId);
+			processUserDisconnect(userId, gateClientId);
 
 			return true;
 		} catch (Exception e) {
@@ -42,10 +43,7 @@ public class NotBreakHandle implements Handler {
 		}
 	}
 
-	/**
-	 * 处理玩家断线逻辑
-	 */
-	private void processUserDisconnect(int userId) {
+	private void processUserDisconnect(int userId, int gateClientId) {
 		List<Table> tables = Game.getInstance().getTableManager().findTablesByUserId(userId);
 
 		if (tables.isEmpty()) {
@@ -59,20 +57,22 @@ public class NotBreakHandle implements Handler {
 				continue;
 			}
 
-			// 标记离线
+			// 已被新连接顶替：忽略旧连接断线
+			if (gateClientId != 0 && user.getGateId() != 0 && user.getGateId() != gateClientId) {
+				logger.info("忽略旧连接断线, userId: {}, tableId: {}, noticeGate: {}, currentGate: {}",
+						userId, table.getTableId(), gateClientId, user.getGateId());
+				continue;
+			}
+
 			user.setOnLine(false);
 			TraceContext.setTableId(table.getTableId());
 			logger.info("玩家标记离线, userId: {}, tableId: {}", userId, table.getTableId());
 
-			// 如果游戏进行中，通知同桌其他玩家
 			if (table.gaming()) {
 				logger.info("游戏进行中玩家断线, userId: {}, tableId: {}，等待超时自动处理",
 						userId, table.getTableId());
-				// 游戏进行中的断线不做特殊处理
-				// 玩家超时会由 IDLE_CARD / IDLE_ROB 等状态的 overTime 自动出牌
 			}
 
-			// 如果桌子在等待阶段且只剩这个玩家，清理桌子
 			if (table.getTableState() == TableState.WAITING && table.isEmpty()) {
 				table.upNextState(TableState.TABLE_DIS);
 				logger.info("等待阶段玩家全部离开，解散桌子, tableId: {}", table.getTableId());

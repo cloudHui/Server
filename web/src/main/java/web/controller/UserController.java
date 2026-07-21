@@ -1,6 +1,8 @@
 package web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -28,7 +30,6 @@ public class UserController {
 		String username = request.get("username");
 		String password = request.get("password");
 		if (username == null || username.trim().isEmpty()) {
-			// 兼容旧 nickname 字段：不再支持游客开号
 			Map<String, Object> error = new HashMap<>();
 			error.put("code", 400);
 			error.put("msg", "请使用 username/password 登录，或改用 /api/auth/login");
@@ -48,39 +49,31 @@ public class UserController {
 			error.put("msg", "登录失败");
 			return ResponseEntity.status(401).body(error);
 		}
-
-		Map<String, Object> result = new HashMap<>();
-		result.put("code", 0);
-		result.put("msg", "success");
-		result.put("sessionId", userInfo.getSessionId());
-		result.put("userId", userInfo.getUserId());
-		result.put("nickname", userInfo.getNickname());
-		result.put("token", userInfo.getToken());
-		return ResponseEntity.ok(result);
+		return ResponseEntity.ok(toSuccess(userInfo));
 	}
 
 	@GetMapping("/validate")
 	public ResponseEntity<Map<String, Object>> validate(
+			@RequestParam(value = "token", required = false) String tokenParam,
 			@RequestHeader(value = "Authorization", required = false) String authorization) {
+		String token = null;
+		if (tokenParam != null && !tokenParam.trim().isEmpty()) {
+			token = tokenParam.trim();
+		} else if (authorization != null && authorization.startsWith("Bearer ")) {
+			token = authorization.substring(7).trim();
+		}
 		Map<String, Object> result = new HashMap<>();
-		if (authorization == null || !authorization.startsWith("Bearer ")) {
+		if (token == null || token.isEmpty()) {
 			result.put("code", 401);
-			result.put("msg", "缺少Authorization头");
+			result.put("msg", "缺少token");
 			return ResponseEntity.status(401).body(result);
 		}
-		String token = authorization.substring(7).trim();
 		UserService.UserInfo userInfo = userService.validateToken(token);
 		if (userInfo != null) {
-			result.put("code", 0);
-			result.put("msg", "success");
-			result.put("sessionId", userInfo.getSessionId());
-			result.put("userId", userInfo.getUserId());
-			result.put("nickname", userInfo.getNickname());
-			result.put("token", userInfo.getToken());
-		} else {
-			result.put("code", 401);
-			result.put("msg", "Token无效或已过期");
+			return ResponseEntity.ok(toSuccess(userInfo));
 		}
+		result.put("code", 401);
+		result.put("msg", "Token无效或已过期");
 		return ResponseEntity.ok(result);
 	}
 
@@ -94,5 +87,24 @@ public class UserController {
 		result.put("code", 0);
 		result.put("msg", "success");
 		return ResponseEntity.ok(result);
+	}
+
+	private Map<String, Object> toSuccess(UserService.UserInfo userInfo) {
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 0);
+		result.put("msg", "success");
+		result.put("sessionId", userInfo.getSessionId());
+		result.put("userId", userInfo.getUserId());
+		result.put("username", userInfo.getUsername());
+		result.put("nickname", userInfo.getNickname());
+		result.put("token", userInfo.getToken());
+		result.put("tables", userInfo.getTables());
+		List<Map<String, Object>> infos = new ArrayList<>();
+		for (UserService.TableInfoView t : userInfo.getTableInfos()) {
+			infos.add(t.toMap());
+		}
+		result.put("tableInfos", infos);
+		result.put("isAdmin", userInfo.isAdmin());
+		return result;
 	}
 }

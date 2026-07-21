@@ -62,6 +62,7 @@ message NotServerBreak {
 message NotBreak {
     int32 userId = 1;
     bytes cert = 2;
+    int32 gateClientId = 3; // gate 上该玩家连接 id；用于忽略被顶号后的旧连接断线
 }
 
 // Lobby 向 Game 请求桌子列表(重启恢复用)
