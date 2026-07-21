@@ -14,7 +14,7 @@ while true; do
         sleep 1
         # 启动新的服务
         echo "启动 ${server} 服务..."
-        nohup java -jar -Dfile.encoding=UTF-8 -Xms512m -Xmx1g -XX:+UseG1GC "$(pwd)/${server}.jar" >/dev/null 2>&1 &
+        nohup java -jar -Dfile.encoding=UTF-8 -Xms128m -Xmx128m -XX:+UseG1GC "$(pwd)/${server}.jar" >/dev/null 2>&1 &
         # 输出启动完成信息
         echo "${server} 服务已启动。"
         break

@@ -253,6 +253,7 @@
         .ws-status.connected { color: #4caf50; }
         .ws-status.disconnected { color: #f44336; }
     </style>
+    <script src="app-base.js"></script>
 </head>
 <body>
     <div class="table-bg">
@@ -326,7 +327,7 @@
 
         // 未登录跳转
         if (!sessionId || !tableId) {
-            window.location.href = '/';
+            window.location.href = appUrl('/');
         }
 
         document.getElementById('myName').textContent = nickname;
@@ -335,7 +336,7 @@
         // ==================== WebSocket ====================
         function connectWebSocket() {
             var protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            ws = new WebSocket(protocol + '//' + location.host + '/ws/game');
+            ws = new WebSocket(protocol + '//' + location.host + appUrl('/ws/game'));
 
             ws.onopen = function() {
                 document.getElementById('wsStatus').textContent = '已连接';
@@ -502,7 +503,7 @@
         function leaveTable() {
             sendWsMessage('leave', {}, function() {});
             localStorage.removeItem('tableId');
-            window.location.href = '/room.html';
+            window.location.href = appUrl('/room.html');
         }
 
         // ==================== 渲染 ====================

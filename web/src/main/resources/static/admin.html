@@ -126,12 +126,13 @@
             .form-row { grid-template-columns: 1fr; }
         }
     </style>
+    <script src="app-base.js"></script>
 </head>
 <body>
     <div class="header">
         <h1>管理后台</h1>
         <div>
-            <a href="/room.html">回大厅</a>
+            <a href="room.html">回大厅</a>
             <button onclick="doLogout()">退出</button>
         </div>
     </div>
@@ -270,10 +271,10 @@
     <script>
         var sessionId = localStorage.getItem('sessionId');
         var isAdmin = localStorage.getItem('isAdmin') === '1';
-        if (!sessionId) { window.location.href = '/'; }
+        if (!sessionId) { window.location.href = appUrl('/'); }
         if (!isAdmin) {
             alert('需要管理员账号');
-            window.location.href = '/room.html';
+            window.location.href = appUrl('/room.html');
         }
 
         function switchTab(name) {
@@ -302,7 +303,7 @@
             var expiresDays = parseInt(document.getElementById('expiresDays').value, 10);
             if (isNaN(expiresDays)) expiresDays = 7;
             setMsg('createMsg', '创建中...');
-            fetch('/api/admin/invites', {
+            fetch(appUrl('/api/admin/invites'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -326,7 +327,7 @@
         }
 
         function loadInvites() {
-            fetch('/api/admin/invites?sessionId=' + encodeURIComponent(sessionId))
+            fetch(appUrl('/api/admin/invites?sessionId=' + encodeURIComponent(sessionId)))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     var body = document.getElementById('inviteBody');
@@ -359,7 +360,7 @@
         }
 
         function copyInvite(token) {
-            var url = location.origin + '/?invite=' + encodeURIComponent(token);
+            var url = location.origin + appUrl('/?invite=' + encodeURIComponent(token));
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(url).then(function() {
                     setMsg('listMsg', '已复制: ' + url, true);
@@ -371,7 +372,7 @@
 
         function revokeInvite(token) {
             if (!confirm('作废邀请码 ' + token + ' ?')) return;
-            fetch('/api/admin/invites/revoke', {
+            fetch(appUrl('/api/admin/invites/revoke'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sessionId: sessionId, token: token })
@@ -388,7 +389,7 @@
         }
 
         function loadUsers() {
-            fetch('/api/admin/users?sessionId=' + encodeURIComponent(sessionId))
+            fetch(appUrl('/api/admin/users?sessionId=' + encodeURIComponent(sessionId)))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     var body = document.getElementById('userBody');
@@ -427,7 +428,7 @@
         }
 
         function setEnabled(userId, enabled) {
-            fetch('/api/admin/users/enable', {
+            fetch(appUrl('/api/admin/users/enable'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sessionId: sessionId, userId: userId, enabled: enabled })
@@ -440,7 +441,7 @@
         }
 
         function loadTables() {
-            fetch('/api/admin/tables?sessionId=' + encodeURIComponent(sessionId))
+            fetch(appUrl('/api/admin/tables?sessionId=' + encodeURIComponent(sessionId)))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     var body = document.getElementById('tableBody');
@@ -471,7 +472,7 @@
         var replayPage = 1;
         function loadReplays(page) {
             replayPage = Math.max(page || 1, 1);
-            fetch('/api/admin/replays?sessionId=' + encodeURIComponent(sessionId) + '&page=' + replayPage + '&size=20')
+            fetch(appUrl('/api/admin/replays?sessionId=' + encodeURIComponent(sessionId) + '&page=' + replayPage + '&size=20'))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     var body = document.getElementById('replayBody');
@@ -505,7 +506,7 @@
         function openReplayCode() {
             var code = document.getElementById('replayCode').value.trim();
             if (!code) return;
-            fetch('/api/admin/replays/code?sessionId=' + encodeURIComponent(sessionId) + '&code=' + encodeURIComponent(code))
+            fetch(appUrl('/api/admin/replays/code?sessionId=' + encodeURIComponent(sessionId) + '&code=' + encodeURIComponent(code)))
                 .then(function(r) { return r.json(); }).then(function(data) {
                     if (data.code !== 0) { setMsg('replayMsg', data.msg || '读取失败', false); return; }
                     document.getElementById('replayDetailCard').style.display = 'block';
@@ -515,7 +516,7 @@
         }
 
         function loadRecords() {
-            fetch('/api/admin/records?sessionId=' + encodeURIComponent(sessionId) + '&page=1&size=20')
+            fetch(appUrl('/api/admin/records?sessionId=' + encodeURIComponent(sessionId) + '&page=1&size=20'))
                 .then(function(r) { return r.json(); }).then(function(data) {
                     var body = document.getElementById('recordBody'), rows = data.records || [];
                     body.innerHTML = rows.length ? rows.map(function(r) {
@@ -526,8 +527,8 @@
         }
 
         function openReplay(date, name) {
-            fetch('/api/admin/replays/detail?sessionId=' + encodeURIComponent(sessionId)
-                + '&date=' + encodeURIComponent(date) + '&name=' + encodeURIComponent(name))
+            fetch(appUrl('/api/admin/replays/detail?sessionId=' + encodeURIComponent(sessionId)
+                + '&date=' + encodeURIComponent(date) + '&name=' + encodeURIComponent(name)))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     if (data.code !== 0) {
@@ -543,7 +544,7 @@
 
         function doLogout() {
             localStorage.clear();
-            window.location.href = '/';
+            window.location.href = appUrl('/');
         }
 
         loadInvites();

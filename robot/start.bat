@@ -13,7 +13,7 @@ if %errorlevel% neq 0 (
 
     :: 启动新的服务
     echo 启动 %server% 服务...
-    start "" java -jar -Dfile.encoding=UTF-8 -Xms256m -Xmx512m -XX:+UseG1GC "%cd%\%server%.jar" >nul 2>&1
+    start "" java -jar -Dfile.encoding=UTF-8 -Xms64m -Xmx64m -XX:+UseG1GC "%cd%\%server%.jar" >nul 2>&1
 
     :: 输出启动完成信息
     echo %server% 服务已启动。

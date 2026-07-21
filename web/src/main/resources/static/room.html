@@ -121,14 +121,15 @@
         }
         .loading { text-align: center; color: rgba(255,255,255,0.7); padding: 40px; }
     </style>
+    <script src="app-base.js"></script>
 </head>
 <body>
     <div class="header">
         <h1>游戏大厅</h1>
         <div class="user-info">
             <span id="userDisplay"></span>
-            <a id="adminLink" class="header-btn admin" href="/admin.html" style="display:none;">管理后台</a>
-            <a class="header-btn" href="/replays.html">我的回放</a>
+            <a id="adminLink" class="header-btn admin" href="admin.html" style="display:none;">管理后台</a>
+            <a class="header-btn" href="replays.html">我的回放</a>
             <button class="header-btn" onclick="doLogout()">退出</button>
         </div>
     </div>
@@ -196,7 +197,7 @@
         var username = localStorage.getItem('username');
         var isAdmin = localStorage.getItem('isAdmin') === '1';
 
-        if (!sessionId) { window.location.href = '/'; }
+        if (!sessionId) { window.location.href = appUrl('/'); }
         document.getElementById('userDisplay').textContent =
             (nickname || username || '玩家') + (isAdmin ? ' · 管理' : '');
         if (isAdmin) {
@@ -211,10 +212,10 @@
             document.getElementById('ddzRooms').innerHTML = '<div class="loading">加载中...</div>';
             document.getElementById('mjRooms').innerHTML = '<div class="loading">加载中...</div>';
 
-            fetch('/api/rooms?sessionId=' + encodeURIComponent(sessionId))
+            fetch(appUrl('/api/rooms?sessionId=' + encodeURIComponent(sessionId)))
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
-                    if (data.code === 401) { window.location.href = '/'; return; }
+                    if (data.code === 401) { window.location.href = appUrl('/'); return; }
                     if (data.code !== 0) {
                         var err = '<div class="empty-tip">' + (data.msg || '加载失败') + '</div>';
                         document.getElementById('ddzRooms').innerHTML = err;
@@ -289,7 +290,7 @@
         }
 
         function joinRoom(roomId, gameType) {
-            fetch('/api/rooms/join', {
+            fetch(appUrl('/api/rooms/join'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sessionId: sessionId, roomId: roomId })
@@ -309,13 +310,13 @@
             localStorage.setItem('tableId', tableId);
             localStorage.setItem('roomId', roomId);
             localStorage.setItem('gameType', gameType);
-            window.location.href = (parseInt(gameType, 10) === GAME_MJ) ? '/mahjong.html' : '/doudizhu.html';
+            window.location.href = (parseInt(gameType, 10) === GAME_MJ) ? appUrl('/mahjong.html') : appUrl('/doudizhu.html');
         }
 
         function createFixed(gameType) {
             // 固定模板：麻将 roomId=1，斗地主 roomId=2
             var roomId = gameType === GAME_MJ ? 1 : 2;
-            fetch('/api/rooms/create', {
+            fetch(appUrl('/api/rooms/create'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -348,7 +349,7 @@
                 allowChi: parseInt(document.getElementById('cAllowChi').value, 10),
                 allowDianPao: parseInt(document.getElementById('cAllowDianPao').value, 10)
             };
-            fetch('/api/rooms/create', {
+            fetch(appUrl('/api/rooms/create'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
@@ -365,13 +366,13 @@
         }
 
         function doLogout() {
-            fetch('/api/logout', {
+            fetch(appUrl('/api/logout'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sessionId: sessionId })
             }).catch(function() {});
             localStorage.clear();
-            window.location.href = '/';
+            window.location.href = appUrl('/');
         }
 
         loadRooms();

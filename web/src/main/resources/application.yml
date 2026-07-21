@@ -25,8 +25,8 @@ logging:
     rollingpolicy:
       max-file-size: 30MB
       file-name-pattern: ./logs/web/archived/app-%d{yyyy-MM-dd-HH}.%i.log.gz
-      max-history: 720
-      total-size-cap: 20GB
+      max-history: 168
+      total-size-cap: 2GB
   pattern:
     file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
