@@ -5,42 +5,75 @@ import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.mj.MjDrawService;
 import game.manager.table.replay.ReplayRecorder;
+import model.tablemodel.TableModel;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 /**
- * 等待阶段：坐满后调用 table.initGameConfig() + dealCards()，由子类各自实现
+ * 等待阶段：坐满后开局；支持等人超时解散/补机器人；全机器人可删桌不开局。
  */
 @ProcessEnum(TableState.WAITING)
 public class Waiting extends AbstractTableHandle {
+	private static final Logger logger = LoggerFactory.getLogger(Waiting.class);
 
 	@Override
 	public boolean onTiming(Table table) {
 		if (table.sitFull()) {
-			table.initGameConfig();
-			table.dealCards();
-			table.getOp().setCurrOpSeat(0);
-
-			initReplay(table);
-			recordInitHands(table);
-
-			if (table.getGameType() == 1) {
-				if (table.getTableModel().getGameSubType() == 1) {
-					MjDrawService.flipLaiZi(game.manager.table.MjTable.class.cast(table));
-				}
-				table.upNextState(TableState.MJ_DEAL);
-			} else {
-				table.upNextState();
+			if (table.getTableModel().getDisbandIfAllRobot() == 1 && table.isAllRobot()) {
+				logger.info("全机器人不开局，解散桌子, tableId: {}", table.getTableId());
+				table.upNextState(TableState.TABLE_DIS);
+				return false;
 			}
+			startGame(table);
 			return false;
 		}
 		if (table.isEmpty()) {
 			Game.getInstance().getTableManager().removeTable(table.getTableId());
 			return true;
 		}
+
+		TableModel model = table.getTableModel();
+		int waitSec = model.getWaitTimeoutSec();
+		if (waitSec > 0) {
+			long deadline = table.getStateStartTime() + waitSec * 1000L;
+			if (System.currentTimeMillis() >= deadline) {
+				if (model.getWaitTimeoutAction() == 1) {
+					logger.info("等人超时，补机器人, tableId: {}, waitSec: {}", table.getTableId(), waitSec);
+					int added = table.fillRobotSeats();
+					if (added <= 0 && !table.sitFull()) {
+						logger.warn("补机器人失败，回退解散, tableId: {}", table.getTableId());
+						table.upNextState(TableState.TABLE_DIS);
+					}
+					// 坐满后下一 tick 走开局 / 全机解散
+				} else {
+					logger.info("等人超时，解散桌子, tableId: {}, waitSec: {}", table.getTableId(), waitSec);
+					table.upNextState(TableState.TABLE_DIS);
+				}
+			}
+		}
 		return false;
+	}
+
+	private void startGame(Table table) {
+		table.initGameConfig();
+		table.dealCards();
+		table.getOp().setCurrOpSeat(0);
+
+		initReplay(table);
+		recordInitHands(table);
+
+		if (table.getGameType() == 1) {
+			if (table.getTableModel().getGameSubType() == 1) {
+				MjDrawService.flipLaiZi(game.manager.table.MjTable.class.cast(table));
+			}
+			table.upNextState(TableState.MJ_DEAL);
+		} else {
+			table.upNextState();
+		}
 	}
 
 	private void initReplay(Table table) {
@@ -71,7 +104,10 @@ public class Waiting extends AbstractTableHandle {
 				table.getTableModel().getSeatNum(), userIds, nicknames);
 		replay.writeConfig("底分=" + table.getTableModel().getBaseScore()
 				+ ", 最大番=" + table.getTableModel().getMaxFan()
-				+ ", autoPlay=" + table.getTableModel().getAutoPlay());
+				+ ", autoPlay=" + table.getTableModel().getAutoPlay()
+				+ ", waitTimeoutSec=" + table.getTableModel().getWaitTimeoutSec()
+				+ ", waitTimeoutAction=" + table.getTableModel().getWaitTimeoutAction()
+				+ ", disbandIfAllRobot=" + table.getTableModel().getDisbandIfAllRobot());
 
 		if (table.getGameType() == 1) {
 			game.manager.table.MjTable mjTable = game.manager.table.MjTable.class.cast(table);

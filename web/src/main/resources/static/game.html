@@ -261,7 +261,8 @@
         <div class="top-bar">
             <span class="room-info" id="roomInfo">牌桌加载中...</span>
             <span id="tableState"></span>
-            <button class="back-btn" onclick="leaveTable()">返回大厅</button>
+            <button class="back-btn" onclick="backToLobby()">回大厅</button>
+            <button class="back-btn" onclick="exitRoom()" style="margin-left:8px;background:rgba(198,40,40,0.85);">退出房间</button>
         </div>
 
         <!-- WebSocket状态 -->
@@ -500,7 +501,11 @@
             hideActions();
         }
 
-        function leaveTable() {
+        function backToLobby() {
+            window.location.href = appUrl('/room.html');
+        }
+
+        function exitRoom() {
             sendWsMessage('leave', {}, function() {});
             localStorage.removeItem('tableId');
             window.location.href = appUrl('/room.html');

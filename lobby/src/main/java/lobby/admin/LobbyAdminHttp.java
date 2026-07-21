@@ -315,8 +315,24 @@ public class LobbyAdminHttp {
 		sb.append(",\"totalRounds\":").append(parseInt(body.get("totalRounds"), 4));
 		sb.append(",\"autoNextRound\":").append(parseInt(body.get("autoNextRound"), 0));
 		sb.append(",\"autoPlay\":").append(parseInt(body.get("autoPlay"), 0));
+		sb.append(",\"waitTimeoutSec\":").append(parseInt(body.get("waitTimeoutSec"), 120));
+		sb.append(",\"waitTimeoutAction\":").append(parseWaitAction(body.get("waitTimeoutAction")));
+		sb.append(",\"disbandIfAllRobot\":").append(parseInt(body.get("disbandIfAllRobot"), 1));
 		sb.append('}');
 		return sb.toString();
+	}
+
+	/** 0=dissolve 1=fillRobot */
+	private static int parseWaitAction(String raw) {
+		if (raw == null || raw.isEmpty()) return 0;
+		String s = raw.trim().toLowerCase();
+		if ("1".equals(s) || "fillrobot".equals(s)) return 1;
+		if ("0".equals(s) || "dissolve".equals(s)) return 0;
+		try {
+			return Integer.parseInt(s) == 1 ? 1 : 0;
+		} catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 
 	private Optional<UserEntity> authenticateUser(HttpExchange ex) {

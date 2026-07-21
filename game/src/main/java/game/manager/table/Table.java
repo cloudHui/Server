@@ -2,6 +2,7 @@ package game.manager.table;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.protobuf.Message;
 import game.Game;
@@ -46,6 +47,7 @@ public abstract class Table {
 	private static final int MAX_ERROR = 100;
 	private static final long LOOP_INTERVAL = 500;
 	private static final long IDLE_LOOP_INTERVAL = 2000;
+	private static final AtomicInteger ROBOT_ID_SEQ = new AtomicInteger(-100000);
 	private int timerNodeId = -1;
 	private long currentLoopInterval = IDLE_LOOP_INTERVAL;
 
@@ -104,6 +106,47 @@ public abstract class Table {
 	public boolean gaming() {
 		return tableState != TableState.WAITING && tableState != TableState.TABLE_OVER
 				&& tableState != TableState.TABLE_DIS;
+	}
+
+	public boolean hasHumanPlayer() {
+		for (TableUser u : users.values()) {
+			if (!u.isRobot()) return true;
+		}
+		return false;
+	}
+
+	public boolean isAllRobot() {
+		if (users.isEmpty()) return false;
+		for (TableUser u : users.values()) {
+			if (!u.isRobot()) return false;
+		}
+		return true;
+	}
+
+	/** 补齐空位为机器人；成功补位后打开 autoPlay 以便超时代打 */
+	public int fillRobotSeats() {
+		int added = 0;
+		while (!sitFull()) {
+			int botId = ROBOT_ID_SEQ.decrementAndGet();
+			if (botId >= 0) {
+				ROBOT_ID_SEQ.set(-100000);
+				botId = ROBOT_ID_SEQ.decrementAndGet();
+			}
+			TableUser bot = new TableUser(botId, "", "机器人" + Math.abs(botId % 1000), 0);
+			bot.setRobot(true);
+			int result = addUser(bot);
+			if (result != ConstProto.Result.SUCCESS_VALUE) {
+				logger.warn("补机器人失败, tableId: {}, result: {}", tableId, result);
+				break;
+			}
+			added++;
+		}
+		if (added > 0) {
+			tableModel.setAutoPlay(1);
+			logger.info("桌子补机器人完成, tableId: {}, added: {}, seats: {}/{}",
+					tableId, added, seatUsers.size(), tableModel.getSeatNum());
+		}
+		return added;
 	}
 
 	// ======================== 状态转换 ========================

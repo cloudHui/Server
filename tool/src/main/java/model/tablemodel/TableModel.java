@@ -65,6 +65,15 @@ public class TableModel implements java.io.Serializable {
 
     //超时自动(0关1开)
     private int autoPlay;
+
+    /** 等人超时秒数；0=不启用 */
+    private int waitTimeoutSec = 120;
+
+    /** 等人超时动作：0=解散 dissolve，1=补机器人 fillRobot */
+    private int waitTimeoutAction = 0;
+
+    /** 全机器人则删桌不开局：0关1开 */
+    private int disbandIfAllRobot = 1;
  
     // Getters and Setters
     public int getId() {
@@ -235,6 +244,30 @@ public class TableModel implements java.io.Serializable {
         this.autoPlay = autoPlay;
     }
 
+    public int getWaitTimeoutSec() {
+        return waitTimeoutSec;
+    }
+
+    public void setWaitTimeoutSec(int waitTimeoutSec) {
+        this.waitTimeoutSec = waitTimeoutSec;
+    }
+
+    public int getWaitTimeoutAction() {
+        return waitTimeoutAction;
+    }
+
+    public void setWaitTimeoutAction(int waitTimeoutAction) {
+        this.waitTimeoutAction = waitTimeoutAction;
+    }
+
+    public int getDisbandIfAllRobot() {
+        return disbandIfAllRobot;
+    }
+
+    public void setDisbandIfAllRobot(int disbandIfAllRobot) {
+        this.disbandIfAllRobot = disbandIfAllRobot;
+    }
+
  
     @Override
     public String toString() {
@@ -259,7 +292,10 @@ public class TableModel implements java.io.Serializable {
                 "     allowGangBu="+allowGangBu+ 
                 "     totalRounds="+totalRounds+ 
                 "     autoNextRound="+autoNextRound+ 
-                "     autoPlay="+autoPlay+ 
+                "     autoPlay="+autoPlay+
+                "     waitTimeoutSec="+waitTimeoutSec+
+                "     waitTimeoutAction="+waitTimeoutAction+
+                "     disbandIfAllRobot="+disbandIfAllRobot+
                 '}';
     }
 

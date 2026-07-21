@@ -175,6 +175,21 @@
                             <option value="0">关</option>
                         </select>
                     </label>
+                    <label>等人超时(秒)
+                        <input id="cWaitTimeout" type="number" min="0" value="120" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;" title="0=不启用">
+                    </label>
+                    <label>超时动作
+                        <select id="cWaitAction" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                            <option value="0">解散房间</option>
+                            <option value="1">补机器人开局</option>
+                        </select>
+                    </label>
+                    <label>全机器人删桌
+                        <select id="cDisbandAllRobot" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+                            <option value="1">开（不开局）</option>
+                            <option value="0">关</option>
+                        </select>
+                    </label>
                 </div>
                 <button class="join-btn join-btn-mj" style="margin-top:12px;background:linear-gradient(135deg,#2e7d32,#66bb6a);" onclick="createCustom()">按规则创建并进入</button>
             </div>
@@ -347,8 +362,12 @@
                 totalRounds: parseInt(document.getElementById('cRounds').value, 10) || 4,
                 seatNum: parseInt(document.getElementById('cSeat').value, 10) || 3,
                 allowChi: parseInt(document.getElementById('cAllowChi').value, 10),
-                allowDianPao: parseInt(document.getElementById('cAllowDianPao').value, 10)
+                allowDianPao: parseInt(document.getElementById('cAllowDianPao').value, 10),
+                waitTimeoutSec: parseInt(document.getElementById('cWaitTimeout').value, 10),
+                waitTimeoutAction: parseInt(document.getElementById('cWaitAction').value, 10),
+                disbandIfAllRobot: parseInt(document.getElementById('cDisbandAllRobot').value, 10)
             };
+            if (isNaN(body.waitTimeoutSec) || body.waitTimeoutSec < 0) body.waitTimeoutSec = 120;
             fetch(appUrl('/api/rooms/create'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

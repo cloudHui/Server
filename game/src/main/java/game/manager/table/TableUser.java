@@ -36,6 +36,7 @@ public class TableUser {
 	private String nick;
 	private int gateId;
 	private int seated = -1;
+	private boolean robot;
 	private final List<Card> cards;
 	// private long diamond;
 
@@ -54,6 +55,14 @@ public class TableUser {
 		this.gateId = gateId;
 		online = true;
 		cards = new ArrayList<>();
+	}
+
+	public boolean isRobot() {
+		return robot;
+	}
+
+	public void setRobot(boolean robot) {
+		this.robot = robot;
 	}
 
 	public int getUserId() {
@@ -209,6 +218,10 @@ public class TableUser {
 	}
 
 	public void sendRoleMessageBytes(int messageId, byte[] payload, long tableId) {
+		if (robot) {
+			logger.debug("跳过机器人消息, userId: {}, msgId: 0x{}, table:{}", userId, Integer.toHexString(messageId), tableId);
+			return;
+		}
 		ClientHandler serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate,
 				gateId);
 

@@ -38,6 +38,9 @@ public final class TableModelJson {
 			m.setTotalRounds(intVal(json, "totalRounds", 4));
 			m.setAutoNextRound(intVal(json, "autoNextRound", 0));
 			m.setAutoPlay(intVal(json, "autoPlay", 0));
+			m.setWaitTimeoutSec(intVal(json, "waitTimeoutSec", 120));
+			m.setWaitTimeoutAction(actionVal(json, "waitTimeoutAction", 0));
+			m.setDisbandIfAllRobot(intVal(json, "disbandIfAllRobot", 1));
 			return m;
 		} catch (Exception e) {
 			logger.warn("解析自定义 TableModel 失败: {}", e.getMessage());
@@ -68,9 +71,32 @@ public final class TableModelJson {
 		sb.append("\"allowGangBu\":").append(m.getAllowGangBu()).append(',');
 		sb.append("\"totalRounds\":").append(m.getTotalRounds()).append(',');
 		sb.append("\"autoNextRound\":").append(m.getAutoNextRound()).append(',');
-		sb.append("\"autoPlay\":").append(m.getAutoPlay());
+		sb.append("\"autoPlay\":").append(m.getAutoPlay()).append(',');
+		sb.append("\"waitTimeoutSec\":").append(m.getWaitTimeoutSec()).append(',');
+		sb.append("\"waitTimeoutAction\":").append(m.getWaitTimeoutAction()).append(',');
+		sb.append("\"disbandIfAllRobot\":").append(m.getDisbandIfAllRobot());
 		sb.append('}');
 		return sb.toString();
+	}
+
+	/** 0=dissolve / 1=fillRobot，兼容数字或字符串 */
+	private static int actionVal(String json, String key, int def) {
+		String pattern = "\"" + key + "\"";
+		int idx = json.indexOf(pattern);
+		if (idx < 0) return def;
+		int colon = json.indexOf(':', idx + pattern.length());
+		if (colon < 0) return def;
+		int i = colon + 1;
+		while (i < json.length() && Character.isWhitespace(json.charAt(i))) i++;
+		if (i < json.length() && json.charAt(i) == '"') {
+			int end = json.indexOf('"', i + 1);
+			if (end < 0) return def;
+			String s = json.substring(i + 1, end).trim().toLowerCase();
+			if ("fillrobot".equals(s) || "1".equals(s)) return 1;
+			if ("dissolve".equals(s) || "0".equals(s)) return 0;
+			return def;
+		}
+		return intVal(json, key, def);
 	}
 
 	private static int intVal(String json, String key, int def) {

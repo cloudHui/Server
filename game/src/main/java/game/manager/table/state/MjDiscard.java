@@ -48,7 +48,11 @@ public class MjDiscard extends AbstractTableHandle {
 		MjTable mjTable = (MjTable) table;
 		logger.info("麻将出牌超时, tableId: {}, seat: {}", table.getTableId(), table.getOp().getCurrOpSeat());
 
-		if (table.getTableModel().getAutoPlay() == 0) {
+		int seat = table.getOp().getCurrOpSeat();
+		TableUser seatUser = table.getSeatUser(seat);
+		boolean allowAi = table.getTableModel().getAutoPlay() != 0
+				|| (seatUser != null && seatUser.isRobot());
+		if (!allowAi) {
 			MjPlayService.afterDiscard(mjTable);
 			return;
 		}
@@ -56,8 +60,7 @@ public class MjDiscard extends AbstractTableHandle {
 		MjTableContext ctx = mjTable.getMjContext();
 		int aiLevel = ctx.getAiLevel();
 		if (aiLevel >= 0) {
-			int seat = table.getOp().getCurrOpSeat();
-			TableUser user = table.getSeatUser(seat);
+			TableUser user = seatUser;
 			if (user != null) {
 				int aiTile = MjSimpleAi.decideDiscard(mjTable, user, ctx.getDrawnTile());
 				if (aiTile > 0) {

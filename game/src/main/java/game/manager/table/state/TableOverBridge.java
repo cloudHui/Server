@@ -25,6 +25,11 @@ public class TableOverBridge extends AbstractTableHandle {
 			sendPreparePrompt(table);
 			if (table.getTableModel().getAutoNextRound() == 1) {
 				for (int userId : table.getUsers().keySet()) table.addReady(userId);
+			} else {
+				// 机器人自动准备，避免卡在等人准备
+				for (TableUser u : table.getSeatUsers().values()) {
+					if (u.isRobot()) table.addReady(u.getUserId());
+				}
 			}
 			table.getOp().setCurrOpSeat(-1); // 标记已发送
 		}
