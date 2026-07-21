@@ -93,16 +93,11 @@ public class ReqRegisterHandle extends AbstractRegisterHandler<Center> {
 
 		switch (serverType) {
 			case Game:
-				// 游戏服务器上线,通知网关和房间服务器
+				// 游戏服务器上线,通知网关和大厅
 				notifyServerConnect(serverInfo, ServerType.Gate);
-				notifyServerConnect(serverInfo, ServerType.Room);
+				notifyServerConnect(serverInfo, ServerType.Lobby);
 				break;
-			case Room:
-				// 房间服务器上线,通知网关和大厅服务器
-				notifyServerConnect(serverInfo, ServerType.Gate);
-				notifyServerConnect(serverInfo, ServerType.Hall);
-				break;
-			case Hall:
+			case Lobby:
 				// 大厅服务器上线,通知网关
 				notifyServerConnect(serverInfo, ServerType.Gate);
 				break;

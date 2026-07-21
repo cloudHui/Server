@@ -6,10 +6,9 @@ import java.util.Map;
 public enum ServerType {
 	Gate(1, "网关"),
 	Game(2, "游戏"),
-	Hall(3, "大厅"),
+	Lobby(3, "大厅"),
 	Center(4, "注册中心"),
 	Robot(5, "机器人"),
-	Room(6, "房间"),
 	;
 
 	private static final Map<Integer, ServerType> es = new HashMap<>();

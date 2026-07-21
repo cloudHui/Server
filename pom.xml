@@ -9,26 +9,18 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>center</module>
-        <module>gate</module>
-        <module>hall</module>
-        <module>game</module>
+        <module>utils</module>
         <module>proto</module>
         <module>tool</module>
+        <module>center</module>
+        <module>gate</module>
+        <module>lobby</module>
+        <module>game</module>
         <module>robot</module>
-        <module>room</module>
-        <module>sp</module>
         <module>web</module>
+        <module>sp</module>
         <module>mcp</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.cloud</groupId>
-            <artifactId>utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>

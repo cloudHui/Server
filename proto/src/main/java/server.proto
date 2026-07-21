@@ -5,66 +5,47 @@ package proto;
 
 import "model.proto";
 
-//请求创建game房间
+// 请求创建 game 桌子
 message ReqCreateGameTable {
     int32 roomId = 1;
-    RoomRole roomRole = 2;//房间创建者
+    RoomRole roomRole = 2;
 }
 
-//创建game房间回复
 message AckCreateGameTable {
-    // field 1 reserved (removed)
-    RoomTableInfo tables = 2;//桌子
+    RoomTableInfo tables = 2;
 }
 
-
-//请求玩家房间列表
-message ReqRoleRoomTable {
-    int32 roleId = 1;
-}
-
-//玩家房间列表回复
-message AckRoleRoomTable {
-    int32 roleId = 1;
-    repeated int64 tables = 2;//桌子可能有多张后面再看
-    repeated Room roomList = 3;
-}
-
-
-//心跳
+// 心跳
 message ReqHeart {
     int32 serverType = 1;
     int32 serverId = 2;
     int64 reqTime = 3;
-    //    int32 retryTime = 4;//重试次数
 }
 message AckHeart {
     int32 serverId = 1;
     int64 reqTime = 2;
-    //    int32 retryTime = 3;//重试次数
 }
 
-
-//服务在路由注册信息
+// 服务在路由注册信息
 message ReqRegister {
-    ServerInfo serverInfo = 1;//要注册的请求方信息
+    ServerInfo serverInfo = 1;
 }
 message AckRegister {
-    ServerInfo serverInfo = 1;//服务器信息
+    ServerInfo serverInfo = 1;
 }
 
-//服务变更通知
+// 服务变更通知
 message NotRegisterInfo {
     repeated ServerInfo servers = 1;
 }
 
-//client链接通知
+// client 链接通知
 message NotRegisterClient {
     bytes cert = 1;
     bytes gate = 2;
 }
 
-//获取服务信息
+// 获取服务信息
 message ReqServerInfo {
     repeated int32 serverType = 1;
 }
@@ -72,28 +53,27 @@ message AckServerInfo {
     repeated ServerInfo servers = 1;
 }
 
-//通知服务掉线
+// 通知服务掉线
 message NotServerBreak {
     repeated ServerInfo servers = 1;
 }
 
-//通知玩家掉线
+// 通知玩家掉线
 message NotBreak {
-    int32 userId = 1;//用户id
+    int32 userId = 1;
     bytes cert = 2;
 }
 
-//Room向Game请求桌子列表(重启恢复用)
+// Lobby 向 Game 请求桌子列表(重启恢复用)
 message ReqRoomTables {
     int32 roomServerId = 1;
 }
 
-//Game返回桌子列表
 message AckRoomTables {
     repeated RoomTableInfo tables = 1;
 }
 
-//Game通知Room桌子销毁
+// Game 通知 Lobby 桌子销毁
 message NotTableDestroyed {
     int64 tableId = 1;
 }

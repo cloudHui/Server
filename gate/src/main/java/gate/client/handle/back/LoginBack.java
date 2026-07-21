@@ -7,7 +7,7 @@ import gate.client.GateTcpClient;
 import msg.annotation.ProcessType;
 import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
-import msg.registor.message.HMsg;
+import msg.registor.message.LMsg;
 import net.client.Sender;
 import net.client.handler.ClientHandler;
 import net.connect.handle.ConnectHandler;
@@ -15,16 +15,10 @@ import net.handler.Handler;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.HallProto;
+import proto.LobbyProto;
 import proto.ServerProto;
 
-/**
- * @author admin
- * @className LoginBack
- * @description
- * @createDate 2025/10/21 15:41
- */
-@ProcessType(HMsg.ACK_LOGIN_MSG)
+@ProcessType(LMsg.ACK_LOGIN_MSG)
 public class LoginBack implements BackHandle, Handler {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginBack.class);
@@ -37,21 +31,20 @@ public class LoginBack implements BackHandle, Handler {
 	@Override
 	public void handle(TCPMessage response, GateTcpClient client) {
 		try {
-			HallProto.AckLogin res = HallProto.AckLogin.parseFrom(response.getMessage());
-			client.setRoleId(res.getUserId());
-			client.setClubId(res.getClub());
-			client.setChannel(res.getChannel());
-
-			notifyCenterLoginSuccess(ClientHandler.getRemoteIP(client).getHostString());
-			logger.info("用户登录成功, userId: {}, channel: {}, club: {}", res.getUserId(), res.getChannel(), res.getClub());
+			LobbyProto.AckLogin res = LobbyProto.AckLogin.parseFrom(response.getMessage());
+			if (res.getCode() == 0 && res.getUserId() > 0) {
+				client.setRoleId(res.getUserId());
+				notifyCenterLoginSuccess(ClientHandler.getRemoteIP(client).getHostString());
+				logger.info("用户登录成功, userId: {}", res.getUserId());
+			} else {
+				logger.warn("登录失败, code: {}, userId: {}", res.getCode(), res.getUserId());
+			}
 		} catch (Exception e) {
-			logger.error("解析登录响应失败, msgId: {}, userId: {}", Integer.toHexString(response.getMessageId()), client.getRoleId(), e);
+			logger.error("解析登录响应失败, msgId: {}, userId: {}",
+					Integer.toHexString(response.getMessageId()), client.getRoleId(), e);
 		}
 	}
 
-	/**
-	 * 通知中心服务器登录成功
-	 */
 	private void notifyCenterLoginSuccess(String certificate) {
 		ServerProto.NotRegisterClient.Builder loginNotify = ServerProto.NotRegisterClient.newBuilder();
 		loginNotify.setCert(ByteString.copyFromUtf8(certificate));

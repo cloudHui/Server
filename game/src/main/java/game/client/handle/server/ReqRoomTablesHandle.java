@@ -29,9 +29,9 @@ public class ReqRoomTablesHandle implements Handler {
 					.build();
 
 			sender.sendMessage(clientId, SMsg.ACK_ROOM_TABLES_MSG, mapId, ack, sequence);
-			logger.info("返回桌子列表给Room, count: {}, clientId: {}", tables.size(), clientId);
+			logger.info("返回桌子列表给Lobby, count: {}, clientId: {}", tables.size(), clientId);
 		} catch (Exception e) {
-			logger.error("处理Room桌子列表请求失败, clientId: {}", clientId, e);
+			logger.error("处理Lobby桌子列表请求失败, clientId: {}", clientId, e);
 		}
 		return true;
 	}

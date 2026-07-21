@@ -3,24 +3,21 @@ package gate.client;
 import gate.rate.ConnectionRateLimiter;
 import io.netty.channel.ChannelHandler;
 import msg.registor.message.CMsg;
-import msg.registor.message.HMsg;
+import msg.registor.message.LMsg;
 import net.client.handler.ClientHandler;
 import net.message.TCPMaker;
 import net.message.TCPMessage;
 import net.message.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proto.HallProto;
+import proto.LobbyProto;
 
 /**
  * TCP客户端处理器
- * 管理TCP连接的客户端状态和行为
- * 包含设备ID连接频率限制
  */
 public class GateTcpClient extends ClientHandler {
 	private static final Logger logger = LoggerFactory.getLogger(GateTcpClient.class);
 
-	/** 全局连接限频器(与WsClient共享) */
 	private static final ConnectionRateLimiter rateLimiter = new ConnectionRateLimiter();
 
 	private int roleId;
@@ -37,7 +34,8 @@ public class GateTcpClient extends ClientHandler {
 		});
 
 		setSafe((msgId) ->
-				msgId == HMsg.REQ_LOGIN_MSG ||
+				msgId == LMsg.REQ_LOGIN_MSG ||
+						msgId == LMsg.REQ_REGISTER_MSG ||
 						msgId == CMsg.REQ_REGISTER ||
 						msgId == CMsg.HEART ||
 						roleId != 0
@@ -46,20 +44,26 @@ public class GateTcpClient extends ClientHandler {
 		logger.debug("创建新的TCP客户端处理器");
 	}
 
-	/**
-	 * 创建带限频的Transfer
-	 * 在消息转发前检查登录消息的设备ID连接频率
-	 */
 	private static Transfer createRateLimitedTransfer() {
 		return (ChannelHandler connectHandler, TCPMessage tcpMessage) -> {
-			if (tcpMessage.getMessageId() == HMsg.REQ_LOGIN_MSG) {
+			if (tcpMessage.getMessageId() == LMsg.REQ_LOGIN_MSG
+					|| tcpMessage.getMessageId() == LMsg.REQ_REGISTER_MSG) {
 				try {
 					byte[] data = tcpMessage.getMessage();
 					if (data != null && data.length > 0) {
-						HallProto.ReqLogin login = HallProto.ReqLogin.parseFrom(data);
-						String deviceId = login.getCert().toStringUtf8();
-						if (!deviceId.isEmpty() && !rateLimiter.allow(deviceId)) {
-							logger.warn("设备连接频率超限，静默拒绝, deviceId: {}", deviceId);
+						String key = "";
+						if (tcpMessage.getMessageId() == LMsg.REQ_LOGIN_MSG) {
+							LobbyProto.ReqLogin login = LobbyProto.ReqLogin.parseFrom(data);
+							key = login.getUsername().toStringUtf8();
+							if (key.isEmpty()) {
+								key = login.getToken().toStringUtf8();
+							}
+						} else {
+							LobbyProto.ReqUserRegister reg = LobbyProto.ReqUserRegister.parseFrom(data);
+							key = reg.getUsername().toStringUtf8();
+						}
+						if (!key.isEmpty() && !rateLimiter.allow(key)) {
+							logger.warn("连接频率超限，静默拒绝, key: {}", key);
 							if (connectHandler instanceof ClientHandler) {
 								((ClientHandler) connectHandler).closeChannel();
 							}

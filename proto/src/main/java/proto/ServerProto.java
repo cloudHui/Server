@@ -20,42 +20,33 @@ public final class ServerProto {
 
     /**
      * <code>int32 roomId = 1;</code>
+     * @return The roomId.
      */
     int getRoomId();
 
     /**
-     * <pre>
-     *房间创建者
-     * </pre>
-     *
      * <code>.proto.RoomRole roomRole = 2;</code>
+     * @return Whether the roomRole field is set.
      */
     boolean hasRoomRole();
     /**
-     * <pre>
-     *房间创建者
-     * </pre>
-     *
      * <code>.proto.RoomRole roomRole = 2;</code>
+     * @return The roomRole.
      */
     proto.ModelProto.RoomRole getRoomRole();
     /**
-     * <pre>
-     *房间创建者
-     * </pre>
-     *
      * <code>.proto.RoomRole roomRole = 2;</code>
      */
     proto.ModelProto.RoomRoleOrBuilder getRoomRoleOrBuilder();
   }
   /**
    * <pre>
-   *请求创建game房间
+   * 请求创建 game 桌子
    * </pre>
    *
    * Protobuf type {@code proto.ReqCreateGameTable}
    */
-  public  static final class ReqCreateGameTable extends
+  public static final class ReqCreateGameTable extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.ReqCreateGameTable)
       ReqCreateGameTableOrBuilder {
@@ -65,7 +56,13 @@ public final class ServerProto {
       super(builder);
     }
     private ReqCreateGameTable() {
-      roomId_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ReqCreateGameTable();
     }
 
     @java.lang.Override
@@ -73,64 +70,12 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqCreateGameTable(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roomId_ = input.readInt32();
-              break;
-            }
-            case 18: {
-              proto.ModelProto.RoomRole.Builder subBuilder = null;
-              if (roomRole_ != null) {
-                subBuilder = roomRole_.toBuilder();
-              }
-              roomRole_ = input.readMessage(proto.ModelProto.RoomRole.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(roomRole_);
-                roomRole_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_ReqCreateGameTable_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_ReqCreateGameTable_fieldAccessorTable
@@ -142,7 +87,9 @@ public final class ServerProto {
     private int roomId_;
     /**
      * <code>int32 roomId = 1;</code>
+     * @return The roomId.
      */
+    @java.lang.Override
     public int getRoomId() {
       return roomId_;
     }
@@ -150,37 +97,31 @@ public final class ServerProto {
     public static final int ROOMROLE_FIELD_NUMBER = 2;
     private proto.ModelProto.RoomRole roomRole_;
     /**
-     * <pre>
-     *房间创建者
-     * </pre>
-     *
      * <code>.proto.RoomRole roomRole = 2;</code>
+     * @return Whether the roomRole field is set.
      */
+    @java.lang.Override
     public boolean hasRoomRole() {
       return roomRole_ != null;
     }
     /**
-     * <pre>
-     *房间创建者
-     * </pre>
-     *
      * <code>.proto.RoomRole roomRole = 2;</code>
+     * @return The roomRole.
      */
+    @java.lang.Override
     public proto.ModelProto.RoomRole getRoomRole() {
       return roomRole_ == null ? proto.ModelProto.RoomRole.getDefaultInstance() : roomRole_;
     }
     /**
-     * <pre>
-     *房间创建者
-     * </pre>
-     *
      * <code>.proto.RoomRole roomRole = 2;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomRoleOrBuilder getRoomRoleOrBuilder() {
       return getRoomRole();
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -190,6 +131,7 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (roomId_ != 0) {
@@ -198,9 +140,10 @@ public final class ServerProto {
       if (roomRole_ != null) {
         output.writeMessage(2, getRoomRole());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -214,7 +157,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getRoomRole());
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -229,16 +172,15 @@ public final class ServerProto {
       }
       proto.ServerProto.ReqCreateGameTable other = (proto.ServerProto.ReqCreateGameTable) obj;
 
-      boolean result = true;
-      result = result && (getRoomId()
-          == other.getRoomId());
-      result = result && (hasRoomRole() == other.hasRoomRole());
+      if (getRoomId()
+          != other.getRoomId()) return false;
+      if (hasRoomRole() != other.hasRoomRole()) return false;
       if (hasRoomRole()) {
-        result = result && getRoomRole()
-            .equals(other.getRoomRole());
+        if (!getRoomRole()
+            .equals(other.getRoomRole())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -254,7 +196,7 @@ public final class ServerProto {
         hash = (37 * hash) + ROOMROLE_FIELD_NUMBER;
         hash = (53 * hash) + getRoomRole().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -329,6 +271,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -336,6 +279,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.ReqCreateGameTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -349,7 +293,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *请求创建game房间
+     * 请求创建 game 桌子
      * </pre>
      *
      * Protobuf type {@code proto.ReqCreateGameTable}
@@ -363,6 +307,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_ReqCreateGameTable_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_ReqCreateGameTable_fieldAccessorTable
@@ -372,19 +317,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.ReqCreateGameTable.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         roomId_ = 0;
@@ -398,15 +339,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_ReqCreateGameTable_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqCreateGameTable getDefaultInstanceForType() {
         return proto.ServerProto.ReqCreateGameTable.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqCreateGameTable build() {
         proto.ServerProto.ReqCreateGameTable result = buildPartial();
         if (!result.isInitialized()) {
@@ -415,6 +359,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqCreateGameTable buildPartial() {
         proto.ServerProto.ReqCreateGameTable result = new proto.ServerProto.ReqCreateGameTable(this);
         result.roomId_ = roomId_;
@@ -427,32 +372,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.ReqCreateGameTable) {
           return mergeFrom((proto.ServerProto.ReqCreateGameTable)other);
@@ -470,42 +422,73 @@ public final class ServerProto {
         if (other.hasRoomRole()) {
           mergeRoomRole(other.getRoomRole());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.ReqCreateGameTable parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                roomId_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 18: {
+                input.readMessage(
+                    getRoomRoleFieldBuilder().getBuilder(),
+                    extensionRegistry);
+
+                break;
+              } // case 18
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.ReqCreateGameTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private int roomId_ ;
       /**
        * <code>int32 roomId = 1;</code>
+       * @return The roomId.
        */
+      @java.lang.Override
       public int getRoomId() {
         return roomId_;
       }
       /**
        * <code>int32 roomId = 1;</code>
+       * @param value The roomId to set.
+       * @return This builder for chaining.
        */
       public Builder setRoomId(int value) {
         
@@ -515,6 +498,7 @@ public final class ServerProto {
       }
       /**
        * <code>int32 roomId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRoomId() {
         
@@ -523,25 +507,19 @@ public final class ServerProto {
         return this;
       }
 
-      private proto.ModelProto.RoomRole roomRole_ = null;
+      private proto.ModelProto.RoomRole roomRole_;
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.ModelProto.RoomRole, proto.ModelProto.RoomRole.Builder, proto.ModelProto.RoomRoleOrBuilder> roomRoleBuilder_;
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
+       * @return Whether the roomRole field is set.
        */
       public boolean hasRoomRole() {
         return roomRoleBuilder_ != null || roomRole_ != null;
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
+       * @return The roomRole.
        */
       public proto.ModelProto.RoomRole getRoomRole() {
         if (roomRoleBuilder_ == null) {
@@ -551,10 +529,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
        */
       public Builder setRoomRole(proto.ModelProto.RoomRole value) {
@@ -571,10 +545,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
        */
       public Builder setRoomRole(
@@ -589,10 +559,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
        */
       public Builder mergeRoomRole(proto.ModelProto.RoomRole value) {
@@ -611,10 +577,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
        */
       public Builder clearRoomRole() {
@@ -629,10 +591,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
        */
       public proto.ModelProto.RoomRole.Builder getRoomRoleBuilder() {
@@ -641,10 +599,6 @@ public final class ServerProto {
         return getRoomRoleFieldBuilder().getBuilder();
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
        */
       public proto.ModelProto.RoomRoleOrBuilder getRoomRoleOrBuilder() {
@@ -656,10 +610,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       *房间创建者
-       * </pre>
-       *
        * <code>.proto.RoomRole roomRole = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -675,11 +625,13 @@ public final class ServerProto {
         }
         return roomRoleBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -701,11 +653,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<ReqCreateGameTable>
         PARSER = new com.google.protobuf.AbstractParser<ReqCreateGameTable>() {
+      @java.lang.Override
       public ReqCreateGameTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqCreateGameTable(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -718,6 +682,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.ReqCreateGameTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -729,38 +694,24 @@ public final class ServerProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     * field 1 reserved (removed)
-     * </pre>
-     *
      * <code>.proto.RoomTableInfo tables = 2;</code>
+     * @return Whether the tables field is set.
      */
     boolean hasTables();
     /**
-     * <pre>
-     * field 1 reserved (removed)
-     * </pre>
-     *
      * <code>.proto.RoomTableInfo tables = 2;</code>
+     * @return The tables.
      */
     proto.ModelProto.RoomTableInfo getTables();
     /**
-     * <pre>
-     * field 1 reserved (removed)
-     * </pre>
-     *
      * <code>.proto.RoomTableInfo tables = 2;</code>
      */
     proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder();
   }
   /**
-   * <pre>
-   *创建game房间回复
-   * </pre>
-   *
    * Protobuf type {@code proto.AckCreateGameTable}
    */
-  public  static final class AckCreateGameTable extends
+  public static final class AckCreateGameTable extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.AckCreateGameTable)
       AckCreateGameTableOrBuilder {
@@ -773,63 +724,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AckCreateGameTable();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private AckCreateGameTable(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 18: {
-              proto.ModelProto.RoomTableInfo.Builder subBuilder = null;
-              if (tables_ != null) {
-                subBuilder = tables_.toBuilder();
-              }
-              tables_ = input.readMessage(proto.ModelProto.RoomTableInfo.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(tables_);
-                tables_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_AckCreateGameTable_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_AckCreateGameTable_fieldAccessorTable
@@ -840,37 +751,31 @@ public final class ServerProto {
     public static final int TABLES_FIELD_NUMBER = 2;
     private proto.ModelProto.RoomTableInfo tables_;
     /**
-     * <pre>
-     * field 1 reserved (removed)
-     * </pre>
-     *
      * <code>.proto.RoomTableInfo tables = 2;</code>
+     * @return Whether the tables field is set.
      */
+    @java.lang.Override
     public boolean hasTables() {
       return tables_ != null;
     }
     /**
-     * <pre>
-     * field 1 reserved (removed)
-     * </pre>
-     *
      * <code>.proto.RoomTableInfo tables = 2;</code>
+     * @return The tables.
      */
+    @java.lang.Override
     public proto.ModelProto.RoomTableInfo getTables() {
       return tables_ == null ? proto.ModelProto.RoomTableInfo.getDefaultInstance() : tables_;
     }
     /**
-     * <pre>
-     * field 1 reserved (removed)
-     * </pre>
-     *
      * <code>.proto.RoomTableInfo tables = 2;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder() {
       return getTables();
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -880,14 +785,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (tables_ != null) {
         output.writeMessage(2, getTables());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -897,7 +804,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getTables());
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -912,14 +819,13 @@ public final class ServerProto {
       }
       proto.ServerProto.AckCreateGameTable other = (proto.ServerProto.AckCreateGameTable) obj;
 
-      boolean result = true;
-      result = result && (hasTables() == other.hasTables());
+      if (hasTables() != other.hasTables()) return false;
       if (hasTables()) {
-        result = result && getTables()
-            .equals(other.getTables());
+        if (!getTables()
+            .equals(other.getTables())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -933,7 +839,7 @@ public final class ServerProto {
         hash = (37 * hash) + TABLES_FIELD_NUMBER;
         hash = (53 * hash) + getTables().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -1008,6 +914,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -1015,6 +922,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.AckCreateGameTable prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1027,10 +935,6 @@ public final class ServerProto {
       return builder;
     }
     /**
-     * <pre>
-     *创建game房间回复
-     * </pre>
-     *
      * Protobuf type {@code proto.AckCreateGameTable}
      */
     public static final class Builder extends
@@ -1042,6 +946,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_AckCreateGameTable_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_AckCreateGameTable_fieldAccessorTable
@@ -1051,19 +956,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.AckCreateGameTable.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (tablesBuilder_ == null) {
@@ -1075,15 +976,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_AckCreateGameTable_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckCreateGameTable getDefaultInstanceForType() {
         return proto.ServerProto.AckCreateGameTable.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckCreateGameTable build() {
         proto.ServerProto.AckCreateGameTable result = buildPartial();
         if (!result.isInitialized()) {
@@ -1092,6 +996,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckCreateGameTable buildPartial() {
         proto.ServerProto.AckCreateGameTable result = new proto.ServerProto.AckCreateGameTable(this);
         if (tablesBuilder_ == null) {
@@ -1103,32 +1008,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.AckCreateGameTable) {
           return mergeFrom((proto.ServerProto.AckCreateGameTable)other);
@@ -1143,52 +1055,68 @@ public final class ServerProto {
         if (other.hasTables()) {
           mergeTables(other.getTables());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.AckCreateGameTable parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 18: {
+                input.readMessage(
+                    getTablesFieldBuilder().getBuilder(),
+                    extensionRegistry);
+
+                break;
+              } // case 18
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.AckCreateGameTable) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
-      private proto.ModelProto.RoomTableInfo tables_ = null;
+      private proto.ModelProto.RoomTableInfo tables_;
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.ModelProto.RoomTableInfo, proto.ModelProto.RoomTableInfo.Builder, proto.ModelProto.RoomTableInfoOrBuilder> tablesBuilder_;
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
+       * @return Whether the tables field is set.
        */
       public boolean hasTables() {
         return tablesBuilder_ != null || tables_ != null;
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
+       * @return The tables.
        */
       public proto.ModelProto.RoomTableInfo getTables() {
         if (tablesBuilder_ == null) {
@@ -1198,10 +1126,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
        */
       public Builder setTables(proto.ModelProto.RoomTableInfo value) {
@@ -1218,10 +1142,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
        */
       public Builder setTables(
@@ -1236,10 +1156,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
        */
       public Builder mergeTables(proto.ModelProto.RoomTableInfo value) {
@@ -1258,10 +1174,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
        */
       public Builder clearTables() {
@@ -1276,10 +1188,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
        */
       public proto.ModelProto.RoomTableInfo.Builder getTablesBuilder() {
@@ -1288,10 +1196,6 @@ public final class ServerProto {
         return getTablesFieldBuilder().getBuilder();
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
        */
       public proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder() {
@@ -1303,10 +1207,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       * field 1 reserved (removed)
-       * </pre>
-       *
        * <code>.proto.RoomTableInfo tables = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -1322,11 +1222,13 @@ public final class ServerProto {
         }
         return tablesBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1348,11 +1250,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<AckCreateGameTable>
         PARSER = new com.google.protobuf.AbstractParser<AckCreateGameTable>() {
+      @java.lang.Override
       public AckCreateGameTable parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckCreateGameTable(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -1365,1515 +1279,8 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.AckCreateGameTable getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface ReqRoleRoomTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.ReqRoleRoomTable)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    int getRoleId();
-  }
-  /**
-   * <pre>
-   *请求玩家房间列表
-   * </pre>
-   *
-   * Protobuf type {@code proto.ReqRoleRoomTable}
-   */
-  public  static final class ReqRoleRoomTable extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.ReqRoleRoomTable)
-      ReqRoleRoomTableOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use ReqRoleRoomTable.newBuilder() to construct.
-    private ReqRoleRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private ReqRoleRoomTable() {
-      roleId_ = 0;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private ReqRoleRoomTable(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roleId_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ServerProto.ReqRoleRoomTable.class, proto.ServerProto.ReqRoleRoomTable.Builder.class);
-    }
-
-    public static final int ROLEID_FIELD_NUMBER = 1;
-    private int roleId_;
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    public int getRoleId() {
-      return roleId_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (roleId_ != 0) {
-        output.writeInt32(1, roleId_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (roleId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, roleId_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ServerProto.ReqRoleRoomTable)) {
-        return super.equals(obj);
-      }
-      proto.ServerProto.ReqRoleRoomTable other = (proto.ServerProto.ReqRoleRoomTable) obj;
-
-      boolean result = true;
-      result = result && (getRoleId()
-          == other.getRoleId());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getRoleId();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ServerProto.ReqRoleRoomTable parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ServerProto.ReqRoleRoomTable prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *请求玩家房间列表
-     * </pre>
-     *
-     * Protobuf type {@code proto.ReqRoleRoomTable}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.ReqRoleRoomTable)
-        proto.ServerProto.ReqRoleRoomTableOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ServerProto.ReqRoleRoomTable.class, proto.ServerProto.ReqRoleRoomTable.Builder.class);
-      }
-
-      // Construct using proto.ServerProto.ReqRoleRoomTable.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        roleId_ = 0;
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ServerProto.internal_static_proto_ReqRoleRoomTable_descriptor;
-      }
-
-      public proto.ServerProto.ReqRoleRoomTable getDefaultInstanceForType() {
-        return proto.ServerProto.ReqRoleRoomTable.getDefaultInstance();
-      }
-
-      public proto.ServerProto.ReqRoleRoomTable build() {
-        proto.ServerProto.ReqRoleRoomTable result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ServerProto.ReqRoleRoomTable buildPartial() {
-        proto.ServerProto.ReqRoleRoomTable result = new proto.ServerProto.ReqRoleRoomTable(this);
-        result.roleId_ = roleId_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ServerProto.ReqRoleRoomTable) {
-          return mergeFrom((proto.ServerProto.ReqRoleRoomTable)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ServerProto.ReqRoleRoomTable other) {
-        if (other == proto.ServerProto.ReqRoleRoomTable.getDefaultInstance()) return this;
-        if (other.getRoleId() != 0) {
-          setRoleId(other.getRoleId());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ServerProto.ReqRoleRoomTable parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.ReqRoleRoomTable) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int roleId_ ;
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public int getRoleId() {
-        return roleId_;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder setRoleId(int value) {
-        
-        roleId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder clearRoleId() {
-        
-        roleId_ = 0;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.ReqRoleRoomTable)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.ReqRoleRoomTable)
-    private static final proto.ServerProto.ReqRoleRoomTable DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ServerProto.ReqRoleRoomTable();
-    }
-
-    public static proto.ServerProto.ReqRoleRoomTable getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ReqRoleRoomTable>
-        PARSER = new com.google.protobuf.AbstractParser<ReqRoleRoomTable>() {
-      public ReqRoleRoomTable parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqRoleRoomTable(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ReqRoleRoomTable> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ReqRoleRoomTable> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ServerProto.ReqRoleRoomTable getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface AckRoleRoomTableOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:proto.AckRoleRoomTable)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    int getRoleId();
-
-    /**
-     * <pre>
-     *桌子可能有多张后面再看
-     * </pre>
-     *
-     * <code>repeated int64 tables = 2;</code>
-     */
-    java.util.List<java.lang.Long> getTablesList();
-    /**
-     * <pre>
-     *桌子可能有多张后面再看
-     * </pre>
-     *
-     * <code>repeated int64 tables = 2;</code>
-     */
-    int getTablesCount();
-    /**
-     * <pre>
-     *桌子可能有多张后面再看
-     * </pre>
-     *
-     * <code>repeated int64 tables = 2;</code>
-     */
-    long getTables(int index);
-
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    java.util.List<proto.ModelProto.Room> 
-        getRoomListList();
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    proto.ModelProto.Room getRoomList(int index);
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    int getRoomListCount();
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    java.util.List<? extends proto.ModelProto.RoomOrBuilder> 
-        getRoomListOrBuilderList();
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    proto.ModelProto.RoomOrBuilder getRoomListOrBuilder(
-        int index);
-  }
-  /**
-   * <pre>
-   *玩家房间列表回复
-   * </pre>
-   *
-   * Protobuf type {@code proto.AckRoleRoomTable}
-   */
-  public  static final class AckRoleRoomTable extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:proto.AckRoleRoomTable)
-      AckRoleRoomTableOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use AckRoleRoomTable.newBuilder() to construct.
-    private AckRoleRoomTable(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private AckRoleRoomTable() {
-      roleId_ = 0;
-      tables_ = java.util.Collections.emptyList();
-      roomList_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private AckRoleRoomTable(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roleId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                tables_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              tables_.add(input.readInt64());
-              break;
-            }
-            case 18: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
-                tables_ = new java.util.ArrayList<java.lang.Long>();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              while (input.getBytesUntilLimit() > 0) {
-                tables_.add(input.readInt64());
-              }
-              input.popLimit(limit);
-              break;
-            }
-            case 26: {
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                roomList_ = new java.util.ArrayList<proto.ModelProto.Room>();
-                mutable_bitField0_ |= 0x00000004;
-              }
-              roomList_.add(
-                  input.readMessage(proto.ModelProto.Room.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          tables_ = java.util.Collections.unmodifiableList(tables_);
-        }
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          roomList_ = java.util.Collections.unmodifiableList(roomList_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return proto.ServerProto.internal_static_proto_AckRoleRoomTable_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return proto.ServerProto.internal_static_proto_AckRoleRoomTable_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              proto.ServerProto.AckRoleRoomTable.class, proto.ServerProto.AckRoleRoomTable.Builder.class);
-    }
-
-    private int bitField0_;
-    public static final int ROLEID_FIELD_NUMBER = 1;
-    private int roleId_;
-    /**
-     * <code>int32 roleId = 1;</code>
-     */
-    public int getRoleId() {
-      return roleId_;
-    }
-
-    public static final int TABLES_FIELD_NUMBER = 2;
-    private java.util.List<java.lang.Long> tables_;
-    /**
-     * <pre>
-     *桌子可能有多张后面再看
-     * </pre>
-     *
-     * <code>repeated int64 tables = 2;</code>
-     */
-    public java.util.List<java.lang.Long>
-        getTablesList() {
-      return tables_;
-    }
-    /**
-     * <pre>
-     *桌子可能有多张后面再看
-     * </pre>
-     *
-     * <code>repeated int64 tables = 2;</code>
-     */
-    public int getTablesCount() {
-      return tables_.size();
-    }
-    /**
-     * <pre>
-     *桌子可能有多张后面再看
-     * </pre>
-     *
-     * <code>repeated int64 tables = 2;</code>
-     */
-    public long getTables(int index) {
-      return tables_.get(index);
-    }
-    private int tablesMemoizedSerializedSize = -1;
-
-    public static final int ROOMLIST_FIELD_NUMBER = 3;
-    private java.util.List<proto.ModelProto.Room> roomList_;
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    public java.util.List<proto.ModelProto.Room> getRoomListList() {
-      return roomList_;
-    }
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    public java.util.List<? extends proto.ModelProto.RoomOrBuilder> 
-        getRoomListOrBuilderList() {
-      return roomList_;
-    }
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    public int getRoomListCount() {
-      return roomList_.size();
-    }
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    public proto.ModelProto.Room getRoomList(int index) {
-      return roomList_.get(index);
-    }
-    /**
-     * <code>repeated .proto.Room roomList = 3;</code>
-     */
-    public proto.ModelProto.RoomOrBuilder getRoomListOrBuilder(
-        int index) {
-      return roomList_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (roleId_ != 0) {
-        output.writeInt32(1, roleId_);
-      }
-      if (getTablesList().size() > 0) {
-        output.writeUInt32NoTag(18);
-        output.writeUInt32NoTag(tablesMemoizedSerializedSize);
-      }
-      for (int i = 0; i < tables_.size(); i++) {
-        output.writeInt64NoTag(tables_.get(i));
-      }
-      for (int i = 0; i < roomList_.size(); i++) {
-        output.writeMessage(3, roomList_.get(i));
-      }
-      unknownFields.writeTo(output);
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (roleId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, roleId_);
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < tables_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt64SizeNoTag(tables_.get(i));
-        }
-        size += dataSize;
-        if (!getTablesList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        tablesMemoizedSerializedSize = dataSize;
-      }
-      for (int i = 0; i < roomList_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, roomList_.get(i));
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof proto.ServerProto.AckRoleRoomTable)) {
-        return super.equals(obj);
-      }
-      proto.ServerProto.AckRoleRoomTable other = (proto.ServerProto.AckRoleRoomTable) obj;
-
-      boolean result = true;
-      result = result && (getRoleId()
-          == other.getRoleId());
-      result = result && getTablesList()
-          .equals(other.getTablesList());
-      result = result && getRoomListList()
-          .equals(other.getRoomListList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ROLEID_FIELD_NUMBER;
-      hash = (53 * hash) + getRoleId();
-      if (getTablesCount() > 0) {
-        hash = (37 * hash) + TABLES_FIELD_NUMBER;
-        hash = (53 * hash) + getTablesList().hashCode();
-      }
-      if (getRoomListCount() > 0) {
-        hash = (37 * hash) + ROOMLIST_FIELD_NUMBER;
-        hash = (53 * hash) + getRoomListList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static proto.ServerProto.AckRoleRoomTable parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(proto.ServerProto.AckRoleRoomTable prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     *玩家房间列表回复
-     * </pre>
-     *
-     * Protobuf type {@code proto.AckRoleRoomTable}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:proto.AckRoleRoomTable)
-        proto.ServerProto.AckRoleRoomTableOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return proto.ServerProto.internal_static_proto_AckRoleRoomTable_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return proto.ServerProto.internal_static_proto_AckRoleRoomTable_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                proto.ServerProto.AckRoleRoomTable.class, proto.ServerProto.AckRoleRoomTable.Builder.class);
-      }
-
-      // Construct using proto.ServerProto.AckRoleRoomTable.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getRoomListFieldBuilder();
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        roleId_ = 0;
-
-        tables_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        if (roomListBuilder_ == null) {
-          roomList_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-        } else {
-          roomListBuilder_.clear();
-        }
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return proto.ServerProto.internal_static_proto_AckRoleRoomTable_descriptor;
-      }
-
-      public proto.ServerProto.AckRoleRoomTable getDefaultInstanceForType() {
-        return proto.ServerProto.AckRoleRoomTable.getDefaultInstance();
-      }
-
-      public proto.ServerProto.AckRoleRoomTable build() {
-        proto.ServerProto.AckRoleRoomTable result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public proto.ServerProto.AckRoleRoomTable buildPartial() {
-        proto.ServerProto.AckRoleRoomTable result = new proto.ServerProto.AckRoleRoomTable(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        result.roleId_ = roleId_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          tables_ = java.util.Collections.unmodifiableList(tables_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.tables_ = tables_;
-        if (roomListBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            roomList_ = java.util.Collections.unmodifiableList(roomList_);
-            bitField0_ = (bitField0_ & ~0x00000004);
-          }
-          result.roomList_ = roomList_;
-        } else {
-          result.roomList_ = roomListBuilder_.build();
-        }
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.ServerProto.AckRoleRoomTable) {
-          return mergeFrom((proto.ServerProto.AckRoleRoomTable)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(proto.ServerProto.AckRoleRoomTable other) {
-        if (other == proto.ServerProto.AckRoleRoomTable.getDefaultInstance()) return this;
-        if (other.getRoleId() != 0) {
-          setRoleId(other.getRoleId());
-        }
-        if (!other.tables_.isEmpty()) {
-          if (tables_.isEmpty()) {
-            tables_ = other.tables_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureTablesIsMutable();
-            tables_.addAll(other.tables_);
-          }
-          onChanged();
-        }
-        if (roomListBuilder_ == null) {
-          if (!other.roomList_.isEmpty()) {
-            if (roomList_.isEmpty()) {
-              roomList_ = other.roomList_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-            } else {
-              ensureRoomListIsMutable();
-              roomList_.addAll(other.roomList_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.roomList_.isEmpty()) {
-            if (roomListBuilder_.isEmpty()) {
-              roomListBuilder_.dispose();
-              roomListBuilder_ = null;
-              roomList_ = other.roomList_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-              roomListBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getRoomListFieldBuilder() : null;
-            } else {
-              roomListBuilder_.addAllMessages(other.roomList_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        proto.ServerProto.AckRoleRoomTable parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.AckRoleRoomTable) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private int roleId_ ;
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public int getRoleId() {
-        return roleId_;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder setRoleId(int value) {
-        
-        roleId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 roleId = 1;</code>
-       */
-      public Builder clearRoleId() {
-        
-        roleId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<java.lang.Long> tables_ = java.util.Collections.emptyList();
-      private void ensureTablesIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          tables_ = new java.util.ArrayList<java.lang.Long>(tables_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-      /**
-       * <pre>
-       *桌子可能有多张后面再看
-       * </pre>
-       *
-       * <code>repeated int64 tables = 2;</code>
-       */
-      public java.util.List<java.lang.Long>
-          getTablesList() {
-        return java.util.Collections.unmodifiableList(tables_);
-      }
-      /**
-       * <pre>
-       *桌子可能有多张后面再看
-       * </pre>
-       *
-       * <code>repeated int64 tables = 2;</code>
-       */
-      public int getTablesCount() {
-        return tables_.size();
-      }
-      /**
-       * <pre>
-       *桌子可能有多张后面再看
-       * </pre>
-       *
-       * <code>repeated int64 tables = 2;</code>
-       */
-      public long getTables(int index) {
-        return tables_.get(index);
-      }
-      /**
-       * <pre>
-       *桌子可能有多张后面再看
-       * </pre>
-       *
-       * <code>repeated int64 tables = 2;</code>
-       */
-      public Builder setTables(
-          int index, long value) {
-        ensureTablesIsMutable();
-        tables_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *桌子可能有多张后面再看
-       * </pre>
-       *
-       * <code>repeated int64 tables = 2;</code>
-       */
-      public Builder addTables(long value) {
-        ensureTablesIsMutable();
-        tables_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *桌子可能有多张后面再看
-       * </pre>
-       *
-       * <code>repeated int64 tables = 2;</code>
-       */
-      public Builder addAllTables(
-          java.lang.Iterable<? extends java.lang.Long> values) {
-        ensureTablesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, tables_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *桌子可能有多张后面再看
-       * </pre>
-       *
-       * <code>repeated int64 tables = 2;</code>
-       */
-      public Builder clearTables() {
-        tables_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<proto.ModelProto.Room> roomList_ =
-        java.util.Collections.emptyList();
-      private void ensureRoomListIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          roomList_ = new java.util.ArrayList<proto.ModelProto.Room>(roomList_);
-          bitField0_ |= 0x00000004;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.Room, proto.ModelProto.Room.Builder, proto.ModelProto.RoomOrBuilder> roomListBuilder_;
-
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public java.util.List<proto.ModelProto.Room> getRoomListList() {
-        if (roomListBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(roomList_);
-        } else {
-          return roomListBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public int getRoomListCount() {
-        if (roomListBuilder_ == null) {
-          return roomList_.size();
-        } else {
-          return roomListBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public proto.ModelProto.Room getRoomList(int index) {
-        if (roomListBuilder_ == null) {
-          return roomList_.get(index);
-        } else {
-          return roomListBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder setRoomList(
-          int index, proto.ModelProto.Room value) {
-        if (roomListBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureRoomListIsMutable();
-          roomList_.set(index, value);
-          onChanged();
-        } else {
-          roomListBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder setRoomList(
-          int index, proto.ModelProto.Room.Builder builderForValue) {
-        if (roomListBuilder_ == null) {
-          ensureRoomListIsMutable();
-          roomList_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          roomListBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder addRoomList(proto.ModelProto.Room value) {
-        if (roomListBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureRoomListIsMutable();
-          roomList_.add(value);
-          onChanged();
-        } else {
-          roomListBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder addRoomList(
-          int index, proto.ModelProto.Room value) {
-        if (roomListBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureRoomListIsMutable();
-          roomList_.add(index, value);
-          onChanged();
-        } else {
-          roomListBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder addRoomList(
-          proto.ModelProto.Room.Builder builderForValue) {
-        if (roomListBuilder_ == null) {
-          ensureRoomListIsMutable();
-          roomList_.add(builderForValue.build());
-          onChanged();
-        } else {
-          roomListBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder addRoomList(
-          int index, proto.ModelProto.Room.Builder builderForValue) {
-        if (roomListBuilder_ == null) {
-          ensureRoomListIsMutable();
-          roomList_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          roomListBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder addAllRoomList(
-          java.lang.Iterable<? extends proto.ModelProto.Room> values) {
-        if (roomListBuilder_ == null) {
-          ensureRoomListIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, roomList_);
-          onChanged();
-        } else {
-          roomListBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder clearRoomList() {
-        if (roomListBuilder_ == null) {
-          roomList_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-          onChanged();
-        } else {
-          roomListBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public Builder removeRoomList(int index) {
-        if (roomListBuilder_ == null) {
-          ensureRoomListIsMutable();
-          roomList_.remove(index);
-          onChanged();
-        } else {
-          roomListBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public proto.ModelProto.Room.Builder getRoomListBuilder(
-          int index) {
-        return getRoomListFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public proto.ModelProto.RoomOrBuilder getRoomListOrBuilder(
-          int index) {
-        if (roomListBuilder_ == null) {
-          return roomList_.get(index);  } else {
-          return roomListBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public java.util.List<? extends proto.ModelProto.RoomOrBuilder> 
-           getRoomListOrBuilderList() {
-        if (roomListBuilder_ != null) {
-          return roomListBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(roomList_);
-        }
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public proto.ModelProto.Room.Builder addRoomListBuilder() {
-        return getRoomListFieldBuilder().addBuilder(
-            proto.ModelProto.Room.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public proto.ModelProto.Room.Builder addRoomListBuilder(
-          int index) {
-        return getRoomListFieldBuilder().addBuilder(
-            index, proto.ModelProto.Room.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .proto.Room roomList = 3;</code>
-       */
-      public java.util.List<proto.ModelProto.Room.Builder> 
-           getRoomListBuilderList() {
-        return getRoomListFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          proto.ModelProto.Room, proto.ModelProto.Room.Builder, proto.ModelProto.RoomOrBuilder> 
-          getRoomListFieldBuilder() {
-        if (roomListBuilder_ == null) {
-          roomListBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              proto.ModelProto.Room, proto.ModelProto.Room.Builder, proto.ModelProto.RoomOrBuilder>(
-                  roomList_,
-                  ((bitField0_ & 0x00000004) == 0x00000004),
-                  getParentForChildren(),
-                  isClean());
-          roomList_ = null;
-        }
-        return roomListBuilder_;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:proto.AckRoleRoomTable)
-    }
-
-    // @@protoc_insertion_point(class_scope:proto.AckRoleRoomTable)
-    private static final proto.ServerProto.AckRoleRoomTable DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new proto.ServerProto.AckRoleRoomTable();
-    }
-
-    public static proto.ServerProto.AckRoleRoomTable getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<AckRoleRoomTable>
-        PARSER = new com.google.protobuf.AbstractParser<AckRoleRoomTable>() {
-      public AckRoleRoomTable parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckRoleRoomTable(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AckRoleRoomTable> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AckRoleRoomTable> getParserForType() {
-      return PARSER;
-    }
-
-    public proto.ServerProto.AckRoleRoomTable getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2885,31 +1292,30 @@ public final class ServerProto {
 
     /**
      * <code>int32 serverType = 1;</code>
+     * @return The serverType.
      */
     int getServerType();
 
     /**
      * <code>int32 serverId = 2;</code>
+     * @return The serverId.
      */
     int getServerId();
 
     /**
-     * <pre>
-     *    int32 retryTime = 4;//重试次数
-     * </pre>
-     *
      * <code>int64 reqTime = 3;</code>
+     * @return The reqTime.
      */
     long getReqTime();
   }
   /**
    * <pre>
-   *心跳
+   * 心跳
    * </pre>
    *
    * Protobuf type {@code proto.ReqHeart}
    */
-  public  static final class ReqHeart extends
+  public static final class ReqHeart extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.ReqHeart)
       ReqHeartOrBuilder {
@@ -2919,9 +1325,13 @@ public final class ServerProto {
       super(builder);
     }
     private ReqHeart() {
-      serverType_ = 0;
-      serverId_ = 0;
-      reqTime_ = 0L;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ReqHeart();
     }
 
     @java.lang.Override
@@ -2929,61 +1339,12 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqHeart(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              serverType_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              serverId_ = input.readInt32();
-              break;
-            }
-            case 24: {
-
-              reqTime_ = input.readInt64();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_ReqHeart_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_ReqHeart_fieldAccessorTable
@@ -2995,7 +1356,9 @@ public final class ServerProto {
     private int serverType_;
     /**
      * <code>int32 serverType = 1;</code>
+     * @return The serverType.
      */
+    @java.lang.Override
     public int getServerType() {
       return serverType_;
     }
@@ -3004,7 +1367,9 @@ public final class ServerProto {
     private int serverId_;
     /**
      * <code>int32 serverId = 2;</code>
+     * @return The serverId.
      */
+    @java.lang.Override
     public int getServerId() {
       return serverId_;
     }
@@ -3012,17 +1377,16 @@ public final class ServerProto {
     public static final int REQTIME_FIELD_NUMBER = 3;
     private long reqTime_;
     /**
-     * <pre>
-     *    int32 retryTime = 4;//重试次数
-     * </pre>
-     *
      * <code>int64 reqTime = 3;</code>
+     * @return The reqTime.
      */
+    @java.lang.Override
     public long getReqTime() {
       return reqTime_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3032,6 +1396,7 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (serverType_ != 0) {
@@ -3043,9 +1408,10 @@ public final class ServerProto {
       if (reqTime_ != 0L) {
         output.writeInt64(3, reqTime_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3063,7 +1429,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, reqTime_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -3078,15 +1444,14 @@ public final class ServerProto {
       }
       proto.ServerProto.ReqHeart other = (proto.ServerProto.ReqHeart) obj;
 
-      boolean result = true;
-      result = result && (getServerType()
-          == other.getServerType());
-      result = result && (getServerId()
-          == other.getServerId());
-      result = result && (getReqTime()
-          == other.getReqTime());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getServerType()
+          != other.getServerType()) return false;
+      if (getServerId()
+          != other.getServerId()) return false;
+      if (getReqTime()
+          != other.getReqTime()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3103,7 +1468,7 @@ public final class ServerProto {
       hash = (37 * hash) + REQTIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getReqTime());
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -3178,6 +1543,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3185,6 +1551,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.ReqHeart prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3198,7 +1565,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *心跳
+     * 心跳
      * </pre>
      *
      * Protobuf type {@code proto.ReqHeart}
@@ -3212,6 +1579,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_ReqHeart_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_ReqHeart_fieldAccessorTable
@@ -3221,19 +1589,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.ReqHeart.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         serverType_ = 0;
@@ -3245,15 +1609,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_ReqHeart_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqHeart getDefaultInstanceForType() {
         return proto.ServerProto.ReqHeart.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqHeart build() {
         proto.ServerProto.ReqHeart result = buildPartial();
         if (!result.isInitialized()) {
@@ -3262,6 +1629,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqHeart buildPartial() {
         proto.ServerProto.ReqHeart result = new proto.ServerProto.ReqHeart(this);
         result.serverType_ = serverType_;
@@ -3271,32 +1639,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.ReqHeart) {
           return mergeFrom((proto.ServerProto.ReqHeart)other);
@@ -3317,42 +1692,76 @@ public final class ServerProto {
         if (other.getReqTime() != 0L) {
           setReqTime(other.getReqTime());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.ReqHeart parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                serverType_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 16: {
+                serverId_ = input.readInt32();
+
+                break;
+              } // case 16
+              case 24: {
+                reqTime_ = input.readInt64();
+
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.ReqHeart) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private int serverType_ ;
       /**
        * <code>int32 serverType = 1;</code>
+       * @return The serverType.
        */
+      @java.lang.Override
       public int getServerType() {
         return serverType_;
       }
       /**
        * <code>int32 serverType = 1;</code>
+       * @param value The serverType to set.
+       * @return This builder for chaining.
        */
       public Builder setServerType(int value) {
         
@@ -3362,6 +1771,7 @@ public final class ServerProto {
       }
       /**
        * <code>int32 serverType = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearServerType() {
         
@@ -3373,12 +1783,16 @@ public final class ServerProto {
       private int serverId_ ;
       /**
        * <code>int32 serverId = 2;</code>
+       * @return The serverId.
        */
+      @java.lang.Override
       public int getServerId() {
         return serverId_;
       }
       /**
        * <code>int32 serverId = 2;</code>
+       * @param value The serverId to set.
+       * @return This builder for chaining.
        */
       public Builder setServerId(int value) {
         
@@ -3388,6 +1802,7 @@ public final class ServerProto {
       }
       /**
        * <code>int32 serverId = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearServerId() {
         
@@ -3398,21 +1813,17 @@ public final class ServerProto {
 
       private long reqTime_ ;
       /**
-       * <pre>
-       *    int32 retryTime = 4;//重试次数
-       * </pre>
-       *
        * <code>int64 reqTime = 3;</code>
+       * @return The reqTime.
        */
+      @java.lang.Override
       public long getReqTime() {
         return reqTime_;
       }
       /**
-       * <pre>
-       *    int32 retryTime = 4;//重试次数
-       * </pre>
-       *
        * <code>int64 reqTime = 3;</code>
+       * @param value The reqTime to set.
+       * @return This builder for chaining.
        */
       public Builder setReqTime(long value) {
         
@@ -3421,11 +1832,8 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *    int32 retryTime = 4;//重试次数
-       * </pre>
-       *
        * <code>int64 reqTime = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearReqTime() {
         
@@ -3433,11 +1841,13 @@ public final class ServerProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3459,11 +1869,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<ReqHeart>
         PARSER = new com.google.protobuf.AbstractParser<ReqHeart>() {
+      @java.lang.Override
       public ReqHeart parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqHeart(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -3476,6 +1898,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.ReqHeart getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3488,22 +1911,20 @@ public final class ServerProto {
 
     /**
      * <code>int32 serverId = 1;</code>
+     * @return The serverId.
      */
     int getServerId();
 
     /**
-     * <pre>
-     *    int32 retryTime = 3;//重试次数
-     * </pre>
-     *
      * <code>int64 reqTime = 2;</code>
+     * @return The reqTime.
      */
     long getReqTime();
   }
   /**
    * Protobuf type {@code proto.AckHeart}
    */
-  public  static final class AckHeart extends
+  public static final class AckHeart extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.AckHeart)
       AckHeartOrBuilder {
@@ -3513,8 +1934,13 @@ public final class ServerProto {
       super(builder);
     }
     private AckHeart() {
-      serverId_ = 0;
-      reqTime_ = 0L;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AckHeart();
     }
 
     @java.lang.Override
@@ -3522,56 +1948,12 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private AckHeart(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              serverId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              reqTime_ = input.readInt64();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_AckHeart_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_AckHeart_fieldAccessorTable
@@ -3583,7 +1965,9 @@ public final class ServerProto {
     private int serverId_;
     /**
      * <code>int32 serverId = 1;</code>
+     * @return The serverId.
      */
+    @java.lang.Override
     public int getServerId() {
       return serverId_;
     }
@@ -3591,17 +1975,16 @@ public final class ServerProto {
     public static final int REQTIME_FIELD_NUMBER = 2;
     private long reqTime_;
     /**
-     * <pre>
-     *    int32 retryTime = 3;//重试次数
-     * </pre>
-     *
      * <code>int64 reqTime = 2;</code>
+     * @return The reqTime.
      */
+    @java.lang.Override
     public long getReqTime() {
       return reqTime_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3611,6 +1994,7 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (serverId_ != 0) {
@@ -3619,9 +2003,10 @@ public final class ServerProto {
       if (reqTime_ != 0L) {
         output.writeInt64(2, reqTime_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3635,7 +2020,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(2, reqTime_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -3650,13 +2035,12 @@ public final class ServerProto {
       }
       proto.ServerProto.AckHeart other = (proto.ServerProto.AckHeart) obj;
 
-      boolean result = true;
-      result = result && (getServerId()
-          == other.getServerId());
-      result = result && (getReqTime()
-          == other.getReqTime());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getServerId()
+          != other.getServerId()) return false;
+      if (getReqTime()
+          != other.getReqTime()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3671,7 +2055,7 @@ public final class ServerProto {
       hash = (37 * hash) + REQTIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getReqTime());
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -3746,6 +2130,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3753,6 +2138,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.AckHeart prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3776,6 +2162,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_AckHeart_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_AckHeart_fieldAccessorTable
@@ -3785,19 +2172,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.AckHeart.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         serverId_ = 0;
@@ -3807,15 +2190,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_AckHeart_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckHeart getDefaultInstanceForType() {
         return proto.ServerProto.AckHeart.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckHeart build() {
         proto.ServerProto.AckHeart result = buildPartial();
         if (!result.isInitialized()) {
@@ -3824,6 +2210,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckHeart buildPartial() {
         proto.ServerProto.AckHeart result = new proto.ServerProto.AckHeart(this);
         result.serverId_ = serverId_;
@@ -3832,32 +2219,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.AckHeart) {
           return mergeFrom((proto.ServerProto.AckHeart)other);
@@ -3875,42 +2269,71 @@ public final class ServerProto {
         if (other.getReqTime() != 0L) {
           setReqTime(other.getReqTime());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.AckHeart parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                serverId_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 16: {
+                reqTime_ = input.readInt64();
+
+                break;
+              } // case 16
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.AckHeart) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private int serverId_ ;
       /**
        * <code>int32 serverId = 1;</code>
+       * @return The serverId.
        */
+      @java.lang.Override
       public int getServerId() {
         return serverId_;
       }
       /**
        * <code>int32 serverId = 1;</code>
+       * @param value The serverId to set.
+       * @return This builder for chaining.
        */
       public Builder setServerId(int value) {
         
@@ -3920,6 +2343,7 @@ public final class ServerProto {
       }
       /**
        * <code>int32 serverId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearServerId() {
         
@@ -3930,21 +2354,17 @@ public final class ServerProto {
 
       private long reqTime_ ;
       /**
-       * <pre>
-       *    int32 retryTime = 3;//重试次数
-       * </pre>
-       *
        * <code>int64 reqTime = 2;</code>
+       * @return The reqTime.
        */
+      @java.lang.Override
       public long getReqTime() {
         return reqTime_;
       }
       /**
-       * <pre>
-       *    int32 retryTime = 3;//重试次数
-       * </pre>
-       *
        * <code>int64 reqTime = 2;</code>
+       * @param value The reqTime to set.
+       * @return This builder for chaining.
        */
       public Builder setReqTime(long value) {
         
@@ -3953,11 +2373,8 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *    int32 retryTime = 3;//重试次数
-       * </pre>
-       *
        * <code>int64 reqTime = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearReqTime() {
         
@@ -3965,11 +2382,13 @@ public final class ServerProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3991,11 +2410,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<AckHeart>
         PARSER = new com.google.protobuf.AbstractParser<AckHeart>() {
+      @java.lang.Override
       public AckHeart parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckHeart(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -4008,6 +2439,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.AckHeart getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -4019,38 +2451,28 @@ public final class ServerProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return Whether the serverInfo field is set.
      */
     boolean hasServerInfo();
     /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return The serverInfo.
      */
     proto.ModelProto.ServerInfo getServerInfo();
     /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder();
   }
   /**
    * <pre>
-   *服务在路由注册信息
+   * 服务在路由注册信息
    * </pre>
    *
    * Protobuf type {@code proto.ReqRegister}
    */
-  public  static final class ReqRegister extends
+  public static final class ReqRegister extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.ReqRegister)
       ReqRegisterOrBuilder {
@@ -4063,63 +2485,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ReqRegister();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private ReqRegister(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              proto.ModelProto.ServerInfo.Builder subBuilder = null;
-              if (serverInfo_ != null) {
-                subBuilder = serverInfo_.toBuilder();
-              }
-              serverInfo_ = input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(serverInfo_);
-                serverInfo_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_ReqRegister_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_ReqRegister_fieldAccessorTable
@@ -4130,37 +2512,31 @@ public final class ServerProto {
     public static final int SERVERINFO_FIELD_NUMBER = 1;
     private proto.ModelProto.ServerInfo serverInfo_;
     /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return Whether the serverInfo field is set.
      */
+    @java.lang.Override
     public boolean hasServerInfo() {
       return serverInfo_ != null;
     }
     /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return The serverInfo.
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfo getServerInfo() {
       return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
     }
     /**
-     * <pre>
-     *要注册的请求方信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
       return getServerInfo();
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -4170,14 +2546,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (serverInfo_ != null) {
         output.writeMessage(1, getServerInfo());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -4187,7 +2565,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getServerInfo());
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -4202,14 +2580,13 @@ public final class ServerProto {
       }
       proto.ServerProto.ReqRegister other = (proto.ServerProto.ReqRegister) obj;
 
-      boolean result = true;
-      result = result && (hasServerInfo() == other.hasServerInfo());
+      if (hasServerInfo() != other.hasServerInfo()) return false;
       if (hasServerInfo()) {
-        result = result && getServerInfo()
-            .equals(other.getServerInfo());
+        if (!getServerInfo()
+            .equals(other.getServerInfo())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -4223,7 +2600,7 @@ public final class ServerProto {
         hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
         hash = (53 * hash) + getServerInfo().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -4298,6 +2675,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -4305,6 +2683,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.ReqRegister prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -4318,7 +2697,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *服务在路由注册信息
+     * 服务在路由注册信息
      * </pre>
      *
      * Protobuf type {@code proto.ReqRegister}
@@ -4332,6 +2711,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_ReqRegister_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_ReqRegister_fieldAccessorTable
@@ -4341,19 +2721,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.ReqRegister.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (serverInfoBuilder_ == null) {
@@ -4365,15 +2741,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_ReqRegister_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqRegister getDefaultInstanceForType() {
         return proto.ServerProto.ReqRegister.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqRegister build() {
         proto.ServerProto.ReqRegister result = buildPartial();
         if (!result.isInitialized()) {
@@ -4382,6 +2761,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqRegister buildPartial() {
         proto.ServerProto.ReqRegister result = new proto.ServerProto.ReqRegister(this);
         if (serverInfoBuilder_ == null) {
@@ -4393,32 +2773,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.ReqRegister) {
           return mergeFrom((proto.ServerProto.ReqRegister)other);
@@ -4433,52 +2820,68 @@ public final class ServerProto {
         if (other.hasServerInfo()) {
           mergeServerInfo(other.getServerInfo());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.ReqRegister parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                input.readMessage(
+                    getServerInfoFieldBuilder().getBuilder(),
+                    extensionRegistry);
+
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.ReqRegister) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
-      private proto.ModelProto.ServerInfo serverInfo_ = null;
+      private proto.ModelProto.ServerInfo serverInfo_;
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serverInfoBuilder_;
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
+       * @return Whether the serverInfo field is set.
        */
       public boolean hasServerInfo() {
         return serverInfoBuilder_ != null || serverInfo_ != null;
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
+       * @return The serverInfo.
        */
       public proto.ModelProto.ServerInfo getServerInfo() {
         if (serverInfoBuilder_ == null) {
@@ -4488,10 +2891,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(proto.ModelProto.ServerInfo value) {
@@ -4508,10 +2907,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(
@@ -4526,10 +2921,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder mergeServerInfo(proto.ModelProto.ServerInfo value) {
@@ -4548,10 +2939,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder clearServerInfo() {
@@ -4566,10 +2953,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfo.Builder getServerInfoBuilder() {
@@ -4578,10 +2961,6 @@ public final class ServerProto {
         return getServerInfoFieldBuilder().getBuilder();
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
@@ -4593,10 +2972,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       *要注册的请求方信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -4612,11 +2987,13 @@ public final class ServerProto {
         }
         return serverInfoBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -4638,11 +3015,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<ReqRegister>
         PARSER = new com.google.protobuf.AbstractParser<ReqRegister>() {
+      @java.lang.Override
       public ReqRegister parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqRegister(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -4655,6 +3044,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.ReqRegister getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -4666,26 +3056,16 @@ public final class ServerProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *服务器信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return Whether the serverInfo field is set.
      */
     boolean hasServerInfo();
     /**
-     * <pre>
-     *服务器信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return The serverInfo.
      */
     proto.ModelProto.ServerInfo getServerInfo();
     /**
-     * <pre>
-     *服务器信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
     proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder();
@@ -4693,7 +3073,7 @@ public final class ServerProto {
   /**
    * Protobuf type {@code proto.AckRegister}
    */
-  public  static final class AckRegister extends
+  public static final class AckRegister extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.AckRegister)
       AckRegisterOrBuilder {
@@ -4706,63 +3086,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AckRegister();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private AckRegister(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              proto.ModelProto.ServerInfo.Builder subBuilder = null;
-              if (serverInfo_ != null) {
-                subBuilder = serverInfo_.toBuilder();
-              }
-              serverInfo_ = input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(serverInfo_);
-                serverInfo_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_AckRegister_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_AckRegister_fieldAccessorTable
@@ -4773,37 +3113,31 @@ public final class ServerProto {
     public static final int SERVERINFO_FIELD_NUMBER = 1;
     private proto.ModelProto.ServerInfo serverInfo_;
     /**
-     * <pre>
-     *服务器信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return Whether the serverInfo field is set.
      */
+    @java.lang.Override
     public boolean hasServerInfo() {
       return serverInfo_ != null;
     }
     /**
-     * <pre>
-     *服务器信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
+     * @return The serverInfo.
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfo getServerInfo() {
       return serverInfo_ == null ? proto.ModelProto.ServerInfo.getDefaultInstance() : serverInfo_;
     }
     /**
-     * <pre>
-     *服务器信息
-     * </pre>
-     *
      * <code>.proto.ServerInfo serverInfo = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
       return getServerInfo();
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -4813,14 +3147,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (serverInfo_ != null) {
         output.writeMessage(1, getServerInfo());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -4830,7 +3166,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getServerInfo());
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -4845,14 +3181,13 @@ public final class ServerProto {
       }
       proto.ServerProto.AckRegister other = (proto.ServerProto.AckRegister) obj;
 
-      boolean result = true;
-      result = result && (hasServerInfo() == other.hasServerInfo());
+      if (hasServerInfo() != other.hasServerInfo()) return false;
       if (hasServerInfo()) {
-        result = result && getServerInfo()
-            .equals(other.getServerInfo());
+        if (!getServerInfo()
+            .equals(other.getServerInfo())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -4866,7 +3201,7 @@ public final class ServerProto {
         hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
         hash = (53 * hash) + getServerInfo().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -4941,6 +3276,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -4948,6 +3284,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.AckRegister prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -4971,6 +3308,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_AckRegister_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_AckRegister_fieldAccessorTable
@@ -4980,19 +3318,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.AckRegister.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (serverInfoBuilder_ == null) {
@@ -5004,15 +3338,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_AckRegister_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckRegister getDefaultInstanceForType() {
         return proto.ServerProto.AckRegister.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckRegister build() {
         proto.ServerProto.AckRegister result = buildPartial();
         if (!result.isInitialized()) {
@@ -5021,6 +3358,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckRegister buildPartial() {
         proto.ServerProto.AckRegister result = new proto.ServerProto.AckRegister(this);
         if (serverInfoBuilder_ == null) {
@@ -5032,32 +3370,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.AckRegister) {
           return mergeFrom((proto.ServerProto.AckRegister)other);
@@ -5072,52 +3417,68 @@ public final class ServerProto {
         if (other.hasServerInfo()) {
           mergeServerInfo(other.getServerInfo());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.AckRegister parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                input.readMessage(
+                    getServerInfoFieldBuilder().getBuilder(),
+                    extensionRegistry);
+
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.AckRegister) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
-      private proto.ModelProto.ServerInfo serverInfo_ = null;
+      private proto.ModelProto.ServerInfo serverInfo_;
       private com.google.protobuf.SingleFieldBuilderV3<
           proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder> serverInfoBuilder_;
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
+       * @return Whether the serverInfo field is set.
        */
       public boolean hasServerInfo() {
         return serverInfoBuilder_ != null || serverInfo_ != null;
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
+       * @return The serverInfo.
        */
       public proto.ModelProto.ServerInfo getServerInfo() {
         if (serverInfoBuilder_ == null) {
@@ -5127,10 +3488,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(proto.ModelProto.ServerInfo value) {
@@ -5147,10 +3504,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder setServerInfo(
@@ -5165,10 +3518,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder mergeServerInfo(proto.ModelProto.ServerInfo value) {
@@ -5187,10 +3536,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public Builder clearServerInfo() {
@@ -5205,10 +3550,6 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfo.Builder getServerInfoBuilder() {
@@ -5217,10 +3558,6 @@ public final class ServerProto {
         return getServerInfoFieldBuilder().getBuilder();
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       public proto.ModelProto.ServerInfoOrBuilder getServerInfoOrBuilder() {
@@ -5232,10 +3569,6 @@ public final class ServerProto {
         }
       }
       /**
-       * <pre>
-       *服务器信息
-       * </pre>
-       *
        * <code>.proto.ServerInfo serverInfo = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -5251,11 +3584,13 @@ public final class ServerProto {
         }
         return serverInfoBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -5277,11 +3612,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<AckRegister>
         PARSER = new com.google.protobuf.AbstractParser<AckRegister>() {
+      @java.lang.Override
       public AckRegister parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckRegister(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -5294,6 +3641,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.AckRegister getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -5330,12 +3678,12 @@ public final class ServerProto {
   }
   /**
    * <pre>
-   *服务变更通知
+   * 服务变更通知
    * </pre>
    *
    * Protobuf type {@code proto.NotRegisterInfo}
    */
-  public  static final class NotRegisterInfo extends
+  public static final class NotRegisterInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.NotRegisterInfo)
       NotRegisterInfoOrBuilder {
@@ -5349,62 +3697,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new NotRegisterInfo();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private NotRegisterInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              servers_.add(
-                  input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = java.util.Collections.unmodifiableList(servers_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_NotRegisterInfo_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_NotRegisterInfo_fieldAccessorTable
@@ -5417,12 +3726,14 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
       return servers_;
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
         getServersOrBuilderList() {
       return servers_;
@@ -5430,24 +3741,28 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public int getServersCount() {
       return servers_.size();
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfo getServers(int index) {
       return servers_.get(index);
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
         int index) {
       return servers_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -5457,14 +3772,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < servers_.size(); i++) {
         output.writeMessage(1, servers_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -5474,7 +3791,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, servers_.get(i));
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -5489,11 +3806,10 @@ public final class ServerProto {
       }
       proto.ServerProto.NotRegisterInfo other = (proto.ServerProto.NotRegisterInfo) obj;
 
-      boolean result = true;
-      result = result && getServersList()
-          .equals(other.getServersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getServersList()
+          .equals(other.getServersList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -5507,7 +3823,7 @@ public final class ServerProto {
         hash = (37 * hash) + SERVERS_FIELD_NUMBER;
         hash = (53 * hash) + getServersList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -5582,6 +3898,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -5589,6 +3906,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.NotRegisterInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -5602,7 +3920,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *服务变更通知
+     * 服务变更通知
      * </pre>
      *
      * Protobuf type {@code proto.NotRegisterInfo}
@@ -5616,6 +3934,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_NotRegisterInfo_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_NotRegisterInfo_fieldAccessorTable
@@ -5625,40 +3944,39 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.NotRegisterInfo.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getServersFieldBuilder();
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (serversBuilder_ == null) {
           servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
+          servers_ = null;
           serversBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_NotRegisterInfo_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotRegisterInfo getDefaultInstanceForType() {
         return proto.ServerProto.NotRegisterInfo.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotRegisterInfo build() {
         proto.ServerProto.NotRegisterInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -5667,11 +3985,12 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotRegisterInfo buildPartial() {
         proto.ServerProto.NotRegisterInfo result = new proto.ServerProto.NotRegisterInfo(this);
         int from_bitField0_ = bitField0_;
         if (serversBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             servers_ = java.util.Collections.unmodifiableList(servers_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -5683,32 +4002,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.NotRegisterInfo) {
           return mergeFrom((proto.ServerProto.NotRegisterInfo)other);
@@ -5746,30 +4072,58 @@ public final class ServerProto {
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.NotRegisterInfo parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                proto.ModelProto.ServerInfo m =
+                    input.readMessage(
+                        proto.ModelProto.ServerInfo.parser(),
+                        extensionRegistry);
+                if (serversBuilder_ == null) {
+                  ensureServersIsMutable();
+                  servers_.add(m);
+                } else {
+                  serversBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.NotRegisterInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
       private int bitField0_;
@@ -5777,7 +4131,7 @@ public final class ServerProto {
       private java.util.List<proto.ModelProto.ServerInfo> servers_ =
         java.util.Collections.emptyList();
       private void ensureServersIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>(servers_);
           bitField0_ |= 0x00000001;
          }
@@ -6006,18 +4360,20 @@ public final class ServerProto {
           serversBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
                   servers_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           servers_ = null;
         }
         return serversBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -6039,11 +4395,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<NotRegisterInfo>
         PARSER = new com.google.protobuf.AbstractParser<NotRegisterInfo>() {
+      @java.lang.Override
       public NotRegisterInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotRegisterInfo(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -6056,6 +4424,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.NotRegisterInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -6068,22 +4437,24 @@ public final class ServerProto {
 
     /**
      * <code>bytes cert = 1;</code>
+     * @return The cert.
      */
     com.google.protobuf.ByteString getCert();
 
     /**
      * <code>bytes gate = 2;</code>
+     * @return The gate.
      */
     com.google.protobuf.ByteString getGate();
   }
   /**
    * <pre>
-   *client链接通知
+   * client 链接通知
    * </pre>
    *
    * Protobuf type {@code proto.NotRegisterClient}
    */
-  public  static final class NotRegisterClient extends
+  public static final class NotRegisterClient extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.NotRegisterClient)
       NotRegisterClientOrBuilder {
@@ -6098,60 +4469,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new NotRegisterClient();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private NotRegisterClient(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-
-              cert_ = input.readBytes();
-              break;
-            }
-            case 18: {
-
-              gate_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_NotRegisterClient_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_NotRegisterClient_fieldAccessorTable
@@ -6163,7 +4497,9 @@ public final class ServerProto {
     private com.google.protobuf.ByteString cert_;
     /**
      * <code>bytes cert = 1;</code>
+     * @return The cert.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCert() {
       return cert_;
     }
@@ -6172,12 +4508,15 @@ public final class ServerProto {
     private com.google.protobuf.ByteString gate_;
     /**
      * <code>bytes gate = 2;</code>
+     * @return The gate.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getGate() {
       return gate_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -6187,6 +4526,7 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!cert_.isEmpty()) {
@@ -6195,9 +4535,10 @@ public final class ServerProto {
       if (!gate_.isEmpty()) {
         output.writeBytes(2, gate_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -6211,7 +4552,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, gate_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -6226,13 +4567,12 @@ public final class ServerProto {
       }
       proto.ServerProto.NotRegisterClient other = (proto.ServerProto.NotRegisterClient) obj;
 
-      boolean result = true;
-      result = result && getCert()
-          .equals(other.getCert());
-      result = result && getGate()
-          .equals(other.getGate());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getCert()
+          .equals(other.getCert())) return false;
+      if (!getGate()
+          .equals(other.getGate())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -6246,7 +4586,7 @@ public final class ServerProto {
       hash = (53 * hash) + getCert().hashCode();
       hash = (37 * hash) + GATE_FIELD_NUMBER;
       hash = (53 * hash) + getGate().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -6321,6 +4661,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -6328,6 +4669,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.NotRegisterClient prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -6341,7 +4683,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *client链接通知
+     * client 链接通知
      * </pre>
      *
      * Protobuf type {@code proto.NotRegisterClient}
@@ -6355,6 +4697,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_NotRegisterClient_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_NotRegisterClient_fieldAccessorTable
@@ -6364,19 +4707,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.NotRegisterClient.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         cert_ = com.google.protobuf.ByteString.EMPTY;
@@ -6386,15 +4725,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_NotRegisterClient_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotRegisterClient getDefaultInstanceForType() {
         return proto.ServerProto.NotRegisterClient.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotRegisterClient build() {
         proto.ServerProto.NotRegisterClient result = buildPartial();
         if (!result.isInitialized()) {
@@ -6403,6 +4745,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotRegisterClient buildPartial() {
         proto.ServerProto.NotRegisterClient result = new proto.ServerProto.NotRegisterClient(this);
         result.cert_ = cert_;
@@ -6411,32 +4754,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.NotRegisterClient) {
           return mergeFrom((proto.ServerProto.NotRegisterClient)other);
@@ -6454,42 +4804,71 @@ public final class ServerProto {
         if (other.getGate() != com.google.protobuf.ByteString.EMPTY) {
           setGate(other.getGate());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.NotRegisterClient parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                cert_ = input.readBytes();
+
+                break;
+              } // case 10
+              case 18: {
+                gate_ = input.readBytes();
+
+                break;
+              } // case 18
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.NotRegisterClient) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private com.google.protobuf.ByteString cert_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes cert = 1;</code>
+       * @return The cert.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getCert() {
         return cert_;
       }
       /**
        * <code>bytes cert = 1;</code>
+       * @param value The cert to set.
+       * @return This builder for chaining.
        */
       public Builder setCert(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -6502,6 +4881,7 @@ public final class ServerProto {
       }
       /**
        * <code>bytes cert = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCert() {
         
@@ -6513,12 +4893,16 @@ public final class ServerProto {
       private com.google.protobuf.ByteString gate_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes gate = 2;</code>
+       * @return The gate.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getGate() {
         return gate_;
       }
       /**
        * <code>bytes gate = 2;</code>
+       * @param value The gate to set.
+       * @return This builder for chaining.
        */
       public Builder setGate(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -6531,6 +4915,7 @@ public final class ServerProto {
       }
       /**
        * <code>bytes gate = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearGate() {
         
@@ -6538,11 +4923,13 @@ public final class ServerProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -6564,11 +4951,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<NotRegisterClient>
         PARSER = new com.google.protobuf.AbstractParser<NotRegisterClient>() {
+      @java.lang.Override
       public NotRegisterClient parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotRegisterClient(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -6581,6 +4980,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.NotRegisterClient getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -6593,25 +4993,29 @@ public final class ServerProto {
 
     /**
      * <code>repeated int32 serverType = 1;</code>
+     * @return A list containing the serverType.
      */
     java.util.List<java.lang.Integer> getServerTypeList();
     /**
      * <code>repeated int32 serverType = 1;</code>
+     * @return The count of serverType.
      */
     int getServerTypeCount();
     /**
      * <code>repeated int32 serverType = 1;</code>
+     * @param index The index of the element to return.
+     * @return The serverType at the given index.
      */
     int getServerType(int index);
   }
   /**
    * <pre>
-   *获取服务信息
+   * 获取服务信息
    * </pre>
    *
    * Protobuf type {@code proto.ReqServerInfo}
    */
-  public  static final class ReqServerInfo extends
+  public static final class ReqServerInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.ReqServerInfo)
       ReqServerInfoOrBuilder {
@@ -6621,7 +5025,14 @@ public final class ServerProto {
       super(builder);
     }
     private ReqServerInfo() {
-      serverType_ = java.util.Collections.emptyList();
+      serverType_ = emptyIntList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ReqServerInfo();
     }
 
     @java.lang.Override
@@ -6629,70 +5040,12 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqServerInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                serverType_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              serverType_.add(input.readInt32());
-              break;
-            }
-            case 10: {
-              int length = input.readRawVarint32();
-              int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001) && input.getBytesUntilLimit() > 0) {
-                serverType_ = new java.util.ArrayList<java.lang.Integer>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              while (input.getBytesUntilLimit() > 0) {
-                serverType_.add(input.readInt32());
-              }
-              input.popLimit(limit);
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          serverType_ = java.util.Collections.unmodifiableList(serverType_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_ReqServerInfo_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_ReqServerInfo_fieldAccessorTable
@@ -6701,29 +5054,35 @@ public final class ServerProto {
     }
 
     public static final int SERVERTYPE_FIELD_NUMBER = 1;
-    private java.util.List<java.lang.Integer> serverType_;
+    private com.google.protobuf.Internal.IntList serverType_;
     /**
      * <code>repeated int32 serverType = 1;</code>
+     * @return A list containing the serverType.
      */
+    @java.lang.Override
     public java.util.List<java.lang.Integer>
         getServerTypeList() {
       return serverType_;
     }
     /**
      * <code>repeated int32 serverType = 1;</code>
+     * @return The count of serverType.
      */
     public int getServerTypeCount() {
       return serverType_.size();
     }
     /**
      * <code>repeated int32 serverType = 1;</code>
+     * @param index The index of the element to return.
+     * @return The serverType at the given index.
      */
     public int getServerType(int index) {
-      return serverType_.get(index);
+      return serverType_.getInt(index);
     }
     private int serverTypeMemoizedSerializedSize = -1;
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -6733,6 +5092,7 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -6741,11 +5101,12 @@ public final class ServerProto {
         output.writeUInt32NoTag(serverTypeMemoizedSerializedSize);
       }
       for (int i = 0; i < serverType_.size(); i++) {
-        output.writeInt32NoTag(serverType_.get(i));
+        output.writeInt32NoTag(serverType_.getInt(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -6755,7 +5116,7 @@ public final class ServerProto {
         int dataSize = 0;
         for (int i = 0; i < serverType_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(serverType_.get(i));
+            .computeInt32SizeNoTag(serverType_.getInt(i));
         }
         size += dataSize;
         if (!getServerTypeList().isEmpty()) {
@@ -6765,7 +5126,7 @@ public final class ServerProto {
         }
         serverTypeMemoizedSerializedSize = dataSize;
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -6780,11 +5141,10 @@ public final class ServerProto {
       }
       proto.ServerProto.ReqServerInfo other = (proto.ServerProto.ReqServerInfo) obj;
 
-      boolean result = true;
-      result = result && getServerTypeList()
-          .equals(other.getServerTypeList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getServerTypeList()
+          .equals(other.getServerTypeList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -6798,7 +5158,7 @@ public final class ServerProto {
         hash = (37 * hash) + SERVERTYPE_FIELD_NUMBER;
         hash = (53 * hash) + getServerTypeList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -6873,6 +5233,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -6880,6 +5241,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.ReqServerInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -6893,7 +5255,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *获取服务信息
+     * 获取服务信息
      * </pre>
      *
      * Protobuf type {@code proto.ReqServerInfo}
@@ -6907,6 +5269,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_ReqServerInfo_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_ReqServerInfo_fieldAccessorTable
@@ -6916,35 +5279,34 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.ReqServerInfo.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
-        serverType_ = java.util.Collections.emptyList();
+        serverType_ = emptyIntList();
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_ReqServerInfo_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqServerInfo getDefaultInstanceForType() {
         return proto.ServerProto.ReqServerInfo.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqServerInfo build() {
         proto.ServerProto.ReqServerInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -6953,11 +5315,12 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqServerInfo buildPartial() {
         proto.ServerProto.ReqServerInfo result = new proto.ServerProto.ReqServerInfo(this);
         int from_bitField0_ = bitField0_;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          serverType_ = java.util.Collections.unmodifiableList(serverType_);
+        if (((bitField0_ & 0x00000001) != 0)) {
+          serverType_.makeImmutable();
           bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.serverType_ = serverType_;
@@ -6965,32 +5328,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.ReqServerInfo) {
           return mergeFrom((proto.ServerProto.ReqServerInfo)other);
@@ -7012,81 +5382,124 @@ public final class ServerProto {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.ReqServerInfo parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                int v = input.readInt32();
+                ensureServerTypeIsMutable();
+                serverType_.addInt(v);
+                break;
+              } // case 8
+              case 10: {
+                int length = input.readRawVarint32();
+                int limit = input.pushLimit(length);
+                ensureServerTypeIsMutable();
+                while (input.getBytesUntilLimit() > 0) {
+                  serverType_.addInt(input.readInt32());
+                }
+                input.popLimit(limit);
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.ReqServerInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
       private int bitField0_;
 
-      private java.util.List<java.lang.Integer> serverType_ = java.util.Collections.emptyList();
+      private com.google.protobuf.Internal.IntList serverType_ = emptyIntList();
       private void ensureServerTypeIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          serverType_ = new java.util.ArrayList<java.lang.Integer>(serverType_);
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          serverType_ = mutableCopy(serverType_);
           bitField0_ |= 0x00000001;
          }
       }
       /**
        * <code>repeated int32 serverType = 1;</code>
+       * @return A list containing the serverType.
        */
       public java.util.List<java.lang.Integer>
           getServerTypeList() {
-        return java.util.Collections.unmodifiableList(serverType_);
+        return ((bitField0_ & 0x00000001) != 0) ?
+                 java.util.Collections.unmodifiableList(serverType_) : serverType_;
       }
       /**
        * <code>repeated int32 serverType = 1;</code>
+       * @return The count of serverType.
        */
       public int getServerTypeCount() {
         return serverType_.size();
       }
       /**
        * <code>repeated int32 serverType = 1;</code>
+       * @param index The index of the element to return.
+       * @return The serverType at the given index.
        */
       public int getServerType(int index) {
-        return serverType_.get(index);
+        return serverType_.getInt(index);
       }
       /**
        * <code>repeated int32 serverType = 1;</code>
+       * @param index The index to set the value at.
+       * @param value The serverType to set.
+       * @return This builder for chaining.
        */
       public Builder setServerType(
           int index, int value) {
         ensureServerTypeIsMutable();
-        serverType_.set(index, value);
+        serverType_.setInt(index, value);
         onChanged();
         return this;
       }
       /**
        * <code>repeated int32 serverType = 1;</code>
+       * @param value The serverType to add.
+       * @return This builder for chaining.
        */
       public Builder addServerType(int value) {
         ensureServerTypeIsMutable();
-        serverType_.add(value);
+        serverType_.addInt(value);
         onChanged();
         return this;
       }
       /**
        * <code>repeated int32 serverType = 1;</code>
+       * @param values The serverType to add.
+       * @return This builder for chaining.
        */
       public Builder addAllServerType(
           java.lang.Iterable<? extends java.lang.Integer> values) {
@@ -7098,18 +5511,21 @@ public final class ServerProto {
       }
       /**
        * <code>repeated int32 serverType = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearServerType() {
-        serverType_ = java.util.Collections.emptyList();
+        serverType_ = emptyIntList();
         bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -7131,11 +5547,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<ReqServerInfo>
         PARSER = new com.google.protobuf.AbstractParser<ReqServerInfo>() {
+      @java.lang.Override
       public ReqServerInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqServerInfo(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -7148,6 +5576,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.ReqServerInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -7185,7 +5614,7 @@ public final class ServerProto {
   /**
    * Protobuf type {@code proto.AckServerInfo}
    */
-  public  static final class AckServerInfo extends
+  public static final class AckServerInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.AckServerInfo)
       AckServerInfoOrBuilder {
@@ -7199,62 +5628,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AckServerInfo();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private AckServerInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              servers_.add(
-                  input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = java.util.Collections.unmodifiableList(servers_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_AckServerInfo_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_AckServerInfo_fieldAccessorTable
@@ -7267,12 +5657,14 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
       return servers_;
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
         getServersOrBuilderList() {
       return servers_;
@@ -7280,24 +5672,28 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public int getServersCount() {
       return servers_.size();
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfo getServers(int index) {
       return servers_.get(index);
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
         int index) {
       return servers_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -7307,14 +5703,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < servers_.size(); i++) {
         output.writeMessage(1, servers_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -7324,7 +5722,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, servers_.get(i));
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -7339,11 +5737,10 @@ public final class ServerProto {
       }
       proto.ServerProto.AckServerInfo other = (proto.ServerProto.AckServerInfo) obj;
 
-      boolean result = true;
-      result = result && getServersList()
-          .equals(other.getServersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getServersList()
+          .equals(other.getServersList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -7357,7 +5754,7 @@ public final class ServerProto {
         hash = (37 * hash) + SERVERS_FIELD_NUMBER;
         hash = (53 * hash) + getServersList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -7432,6 +5829,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -7439,6 +5837,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.AckServerInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -7462,6 +5861,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_AckServerInfo_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_AckServerInfo_fieldAccessorTable
@@ -7471,40 +5871,39 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.AckServerInfo.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getServersFieldBuilder();
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (serversBuilder_ == null) {
           servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
+          servers_ = null;
           serversBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_AckServerInfo_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckServerInfo getDefaultInstanceForType() {
         return proto.ServerProto.AckServerInfo.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckServerInfo build() {
         proto.ServerProto.AckServerInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -7513,11 +5912,12 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckServerInfo buildPartial() {
         proto.ServerProto.AckServerInfo result = new proto.ServerProto.AckServerInfo(this);
         int from_bitField0_ = bitField0_;
         if (serversBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             servers_ = java.util.Collections.unmodifiableList(servers_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -7529,32 +5929,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.AckServerInfo) {
           return mergeFrom((proto.ServerProto.AckServerInfo)other);
@@ -7592,30 +5999,58 @@ public final class ServerProto {
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.AckServerInfo parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                proto.ModelProto.ServerInfo m =
+                    input.readMessage(
+                        proto.ModelProto.ServerInfo.parser(),
+                        extensionRegistry);
+                if (serversBuilder_ == null) {
+                  ensureServersIsMutable();
+                  servers_.add(m);
+                } else {
+                  serversBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.AckServerInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
       private int bitField0_;
@@ -7623,7 +6058,7 @@ public final class ServerProto {
       private java.util.List<proto.ModelProto.ServerInfo> servers_ =
         java.util.Collections.emptyList();
       private void ensureServersIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>(servers_);
           bitField0_ |= 0x00000001;
          }
@@ -7852,18 +6287,20 @@ public final class ServerProto {
           serversBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
                   servers_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           servers_ = null;
         }
         return serversBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -7885,11 +6322,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<AckServerInfo>
         PARSER = new com.google.protobuf.AbstractParser<AckServerInfo>() {
+      @java.lang.Override
       public AckServerInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckServerInfo(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -7902,6 +6351,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.AckServerInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -7938,12 +6388,12 @@ public final class ServerProto {
   }
   /**
    * <pre>
-   *通知服务掉线
+   * 通知服务掉线
    * </pre>
    *
    * Protobuf type {@code proto.NotServerBreak}
    */
-  public  static final class NotServerBreak extends
+  public static final class NotServerBreak extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.NotServerBreak)
       NotServerBreakOrBuilder {
@@ -7957,62 +6407,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new NotServerBreak();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private NotServerBreak(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              servers_.add(
-                  input.readMessage(proto.ModelProto.ServerInfo.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          servers_ = java.util.Collections.unmodifiableList(servers_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_NotServerBreak_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_NotServerBreak_fieldAccessorTable
@@ -8025,12 +6436,14 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<proto.ModelProto.ServerInfo> getServersList() {
       return servers_;
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends proto.ModelProto.ServerInfoOrBuilder> 
         getServersOrBuilderList() {
       return servers_;
@@ -8038,24 +6451,28 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public int getServersCount() {
       return servers_.size();
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfo getServers(int index) {
       return servers_.get(index);
     }
     /**
      * <code>repeated .proto.ServerInfo servers = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.ServerInfoOrBuilder getServersOrBuilder(
         int index) {
       return servers_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -8065,14 +6482,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < servers_.size(); i++) {
         output.writeMessage(1, servers_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -8082,7 +6501,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, servers_.get(i));
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -8097,11 +6516,10 @@ public final class ServerProto {
       }
       proto.ServerProto.NotServerBreak other = (proto.ServerProto.NotServerBreak) obj;
 
-      boolean result = true;
-      result = result && getServersList()
-          .equals(other.getServersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getServersList()
+          .equals(other.getServersList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -8115,7 +6533,7 @@ public final class ServerProto {
         hash = (37 * hash) + SERVERS_FIELD_NUMBER;
         hash = (53 * hash) + getServersList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -8190,6 +6608,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -8197,6 +6616,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.NotServerBreak prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -8210,7 +6630,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *通知服务掉线
+     * 通知服务掉线
      * </pre>
      *
      * Protobuf type {@code proto.NotServerBreak}
@@ -8224,6 +6644,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_NotServerBreak_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_NotServerBreak_fieldAccessorTable
@@ -8233,40 +6654,39 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.NotServerBreak.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getServersFieldBuilder();
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (serversBuilder_ == null) {
           servers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
+          servers_ = null;
           serversBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_NotServerBreak_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotServerBreak getDefaultInstanceForType() {
         return proto.ServerProto.NotServerBreak.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotServerBreak build() {
         proto.ServerProto.NotServerBreak result = buildPartial();
         if (!result.isInitialized()) {
@@ -8275,11 +6695,12 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotServerBreak buildPartial() {
         proto.ServerProto.NotServerBreak result = new proto.ServerProto.NotServerBreak(this);
         int from_bitField0_ = bitField0_;
         if (serversBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             servers_ = java.util.Collections.unmodifiableList(servers_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -8291,32 +6712,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.NotServerBreak) {
           return mergeFrom((proto.ServerProto.NotServerBreak)other);
@@ -8354,30 +6782,58 @@ public final class ServerProto {
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.NotServerBreak parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                proto.ModelProto.ServerInfo m =
+                    input.readMessage(
+                        proto.ModelProto.ServerInfo.parser(),
+                        extensionRegistry);
+                if (serversBuilder_ == null) {
+                  ensureServersIsMutable();
+                  servers_.add(m);
+                } else {
+                  serversBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.NotServerBreak) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
       private int bitField0_;
@@ -8385,7 +6841,7 @@ public final class ServerProto {
       private java.util.List<proto.ModelProto.ServerInfo> servers_ =
         java.util.Collections.emptyList();
       private void ensureServersIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           servers_ = new java.util.ArrayList<proto.ModelProto.ServerInfo>(servers_);
           bitField0_ |= 0x00000001;
          }
@@ -8614,18 +7070,20 @@ public final class ServerProto {
           serversBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.ModelProto.ServerInfo, proto.ModelProto.ServerInfo.Builder, proto.ModelProto.ServerInfoOrBuilder>(
                   servers_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           servers_ = null;
         }
         return serversBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -8647,11 +7105,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<NotServerBreak>
         PARSER = new com.google.protobuf.AbstractParser<NotServerBreak>() {
+      @java.lang.Override
       public NotServerBreak parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotServerBreak(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -8664,6 +7134,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.NotServerBreak getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -8675,27 +7146,25 @@ public final class ServerProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     *用户id
-     * </pre>
-     *
      * <code>int32 userId = 1;</code>
+     * @return The userId.
      */
     int getUserId();
 
     /**
      * <code>bytes cert = 2;</code>
+     * @return The cert.
      */
     com.google.protobuf.ByteString getCert();
   }
   /**
    * <pre>
-   *通知玩家掉线
+   * 通知玩家掉线
    * </pre>
    *
    * Protobuf type {@code proto.NotBreak}
    */
-  public  static final class NotBreak extends
+  public static final class NotBreak extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.NotBreak)
       NotBreakOrBuilder {
@@ -8705,8 +7174,14 @@ public final class ServerProto {
       super(builder);
     }
     private NotBreak() {
-      userId_ = 0;
       cert_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new NotBreak();
     }
 
     @java.lang.Override
@@ -8714,56 +7189,12 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private NotBreak(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              userId_ = input.readInt32();
-              break;
-            }
-            case 18: {
-
-              cert_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_NotBreak_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_NotBreak_fieldAccessorTable
@@ -8774,12 +7205,10 @@ public final class ServerProto {
     public static final int USERID_FIELD_NUMBER = 1;
     private int userId_;
     /**
-     * <pre>
-     *用户id
-     * </pre>
-     *
      * <code>int32 userId = 1;</code>
+     * @return The userId.
      */
+    @java.lang.Override
     public int getUserId() {
       return userId_;
     }
@@ -8788,12 +7217,15 @@ public final class ServerProto {
     private com.google.protobuf.ByteString cert_;
     /**
      * <code>bytes cert = 2;</code>
+     * @return The cert.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getCert() {
       return cert_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -8803,6 +7235,7 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (userId_ != 0) {
@@ -8811,9 +7244,10 @@ public final class ServerProto {
       if (!cert_.isEmpty()) {
         output.writeBytes(2, cert_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -8827,7 +7261,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, cert_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -8842,13 +7276,12 @@ public final class ServerProto {
       }
       proto.ServerProto.NotBreak other = (proto.ServerProto.NotBreak) obj;
 
-      boolean result = true;
-      result = result && (getUserId()
-          == other.getUserId());
-      result = result && getCert()
-          .equals(other.getCert());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getUserId()
+          != other.getUserId()) return false;
+      if (!getCert()
+          .equals(other.getCert())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -8862,7 +7295,7 @@ public final class ServerProto {
       hash = (53 * hash) + getUserId();
       hash = (37 * hash) + CERT_FIELD_NUMBER;
       hash = (53 * hash) + getCert().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -8937,6 +7370,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -8944,6 +7378,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.NotBreak prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -8957,7 +7392,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *通知玩家掉线
+     * 通知玩家掉线
      * </pre>
      *
      * Protobuf type {@code proto.NotBreak}
@@ -8971,6 +7406,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_NotBreak_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_NotBreak_fieldAccessorTable
@@ -8980,19 +7416,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.NotBreak.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         userId_ = 0;
@@ -9002,15 +7434,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_NotBreak_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotBreak getDefaultInstanceForType() {
         return proto.ServerProto.NotBreak.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotBreak build() {
         proto.ServerProto.NotBreak result = buildPartial();
         if (!result.isInitialized()) {
@@ -9019,6 +7454,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotBreak buildPartial() {
         proto.ServerProto.NotBreak result = new proto.ServerProto.NotBreak(this);
         result.userId_ = userId_;
@@ -9027,32 +7463,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.NotBreak) {
           return mergeFrom((proto.ServerProto.NotBreak)other);
@@ -9070,50 +7513,71 @@ public final class ServerProto {
         if (other.getCert() != com.google.protobuf.ByteString.EMPTY) {
           setCert(other.getCert());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.NotBreak parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                userId_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 18: {
+                cert_ = input.readBytes();
+
+                break;
+              } // case 18
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.NotBreak) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private int userId_ ;
       /**
-       * <pre>
-       *用户id
-       * </pre>
-       *
        * <code>int32 userId = 1;</code>
+       * @return The userId.
        */
+      @java.lang.Override
       public int getUserId() {
         return userId_;
       }
       /**
-       * <pre>
-       *用户id
-       * </pre>
-       *
        * <code>int32 userId = 1;</code>
+       * @param value The userId to set.
+       * @return This builder for chaining.
        */
       public Builder setUserId(int value) {
         
@@ -9122,11 +7586,8 @@ public final class ServerProto {
         return this;
       }
       /**
-       * <pre>
-       *用户id
-       * </pre>
-       *
        * <code>int32 userId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearUserId() {
         
@@ -9138,12 +7599,16 @@ public final class ServerProto {
       private com.google.protobuf.ByteString cert_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes cert = 2;</code>
+       * @return The cert.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getCert() {
         return cert_;
       }
       /**
        * <code>bytes cert = 2;</code>
+       * @param value The cert to set.
+       * @return This builder for chaining.
        */
       public Builder setCert(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -9156,6 +7621,7 @@ public final class ServerProto {
       }
       /**
        * <code>bytes cert = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCert() {
         
@@ -9163,11 +7629,13 @@ public final class ServerProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -9189,11 +7657,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<NotBreak>
         PARSER = new com.google.protobuf.AbstractParser<NotBreak>() {
+      @java.lang.Override
       public NotBreak parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotBreak(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -9206,6 +7686,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.NotBreak getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -9218,17 +7699,18 @@ public final class ServerProto {
 
     /**
      * <code>int32 roomServerId = 1;</code>
+     * @return The roomServerId.
      */
     int getRoomServerId();
   }
   /**
    * <pre>
-   *Room向Game请求桌子列表(重启恢复用)
+   * Lobby 向 Game 请求桌子列表(重启恢复用)
    * </pre>
    *
    * Protobuf type {@code proto.ReqRoomTables}
    */
-  public  static final class ReqRoomTables extends
+  public static final class ReqRoomTables extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.ReqRoomTables)
       ReqRoomTablesOrBuilder {
@@ -9238,7 +7720,13 @@ public final class ServerProto {
       super(builder);
     }
     private ReqRoomTables() {
-      roomServerId_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ReqRoomTables();
     }
 
     @java.lang.Override
@@ -9246,51 +7734,12 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ReqRoomTables(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roomServerId_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_ReqRoomTables_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_ReqRoomTables_fieldAccessorTable
@@ -9302,12 +7751,15 @@ public final class ServerProto {
     private int roomServerId_;
     /**
      * <code>int32 roomServerId = 1;</code>
+     * @return The roomServerId.
      */
+    @java.lang.Override
     public int getRoomServerId() {
       return roomServerId_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -9317,14 +7769,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (roomServerId_ != 0) {
         output.writeInt32(1, roomServerId_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -9334,7 +7788,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, roomServerId_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -9349,11 +7803,10 @@ public final class ServerProto {
       }
       proto.ServerProto.ReqRoomTables other = (proto.ServerProto.ReqRoomTables) obj;
 
-      boolean result = true;
-      result = result && (getRoomServerId()
-          == other.getRoomServerId());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getRoomServerId()
+          != other.getRoomServerId()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -9365,7 +7818,7 @@ public final class ServerProto {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ROOMSERVERID_FIELD_NUMBER;
       hash = (53 * hash) + getRoomServerId();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -9440,6 +7893,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -9447,6 +7901,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.ReqRoomTables prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -9460,7 +7915,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *Room向Game请求桌子列表(重启恢复用)
+     * Lobby 向 Game 请求桌子列表(重启恢复用)
      * </pre>
      *
      * Protobuf type {@code proto.ReqRoomTables}
@@ -9474,6 +7929,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_ReqRoomTables_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_ReqRoomTables_fieldAccessorTable
@@ -9483,19 +7939,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.ReqRoomTables.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         roomServerId_ = 0;
@@ -9503,15 +7955,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_ReqRoomTables_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqRoomTables getDefaultInstanceForType() {
         return proto.ServerProto.ReqRoomTables.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqRoomTables build() {
         proto.ServerProto.ReqRoomTables result = buildPartial();
         if (!result.isInitialized()) {
@@ -9520,6 +7975,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.ReqRoomTables buildPartial() {
         proto.ServerProto.ReqRoomTables result = new proto.ServerProto.ReqRoomTables(this);
         result.roomServerId_ = roomServerId_;
@@ -9527,32 +7983,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.ReqRoomTables) {
           return mergeFrom((proto.ServerProto.ReqRoomTables)other);
@@ -9567,42 +8030,66 @@ public final class ServerProto {
         if (other.getRoomServerId() != 0) {
           setRoomServerId(other.getRoomServerId());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.ReqRoomTables parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                roomServerId_ = input.readInt32();
+
+                break;
+              } // case 8
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.ReqRoomTables) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private int roomServerId_ ;
       /**
        * <code>int32 roomServerId = 1;</code>
+       * @return The roomServerId.
        */
+      @java.lang.Override
       public int getRoomServerId() {
         return roomServerId_;
       }
       /**
        * <code>int32 roomServerId = 1;</code>
+       * @param value The roomServerId to set.
+       * @return This builder for chaining.
        */
       public Builder setRoomServerId(int value) {
         
@@ -9612,6 +8099,7 @@ public final class ServerProto {
       }
       /**
        * <code>int32 roomServerId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRoomServerId() {
         
@@ -9619,11 +8107,13 @@ public final class ServerProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -9645,11 +8135,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<ReqRoomTables>
         PARSER = new com.google.protobuf.AbstractParser<ReqRoomTables>() {
+      @java.lang.Override
       public ReqRoomTables parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ReqRoomTables(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -9662,6 +8164,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.ReqRoomTables getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -9697,13 +8200,9 @@ public final class ServerProto {
         int index);
   }
   /**
-   * <pre>
-   *Game返回桌子列表
-   * </pre>
-   *
    * Protobuf type {@code proto.AckRoomTables}
    */
-  public  static final class AckRoomTables extends
+  public static final class AckRoomTables extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.AckRoomTables)
       AckRoomTablesOrBuilder {
@@ -9717,62 +8216,23 @@ public final class ServerProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AckRoomTables();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private AckRoomTables(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                tables_ = new java.util.ArrayList<proto.ModelProto.RoomTableInfo>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              tables_.add(
-                  input.readMessage(proto.ModelProto.RoomTableInfo.parser(), extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          tables_ = java.util.Collections.unmodifiableList(tables_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_AckRoomTables_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_AckRoomTables_fieldAccessorTable
@@ -9785,12 +8245,14 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.RoomTableInfo tables = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<proto.ModelProto.RoomTableInfo> getTablesList() {
       return tables_;
     }
     /**
      * <code>repeated .proto.RoomTableInfo tables = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends proto.ModelProto.RoomTableInfoOrBuilder> 
         getTablesOrBuilderList() {
       return tables_;
@@ -9798,24 +8260,28 @@ public final class ServerProto {
     /**
      * <code>repeated .proto.RoomTableInfo tables = 1;</code>
      */
+    @java.lang.Override
     public int getTablesCount() {
       return tables_.size();
     }
     /**
      * <code>repeated .proto.RoomTableInfo tables = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomTableInfo getTables(int index) {
       return tables_.get(index);
     }
     /**
      * <code>repeated .proto.RoomTableInfo tables = 1;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder(
         int index) {
       return tables_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -9825,14 +8291,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < tables_.size(); i++) {
         output.writeMessage(1, tables_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -9842,7 +8310,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, tables_.get(i));
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -9857,11 +8325,10 @@ public final class ServerProto {
       }
       proto.ServerProto.AckRoomTables other = (proto.ServerProto.AckRoomTables) obj;
 
-      boolean result = true;
-      result = result && getTablesList()
-          .equals(other.getTablesList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getTablesList()
+          .equals(other.getTablesList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -9875,7 +8342,7 @@ public final class ServerProto {
         hash = (37 * hash) + TABLES_FIELD_NUMBER;
         hash = (53 * hash) + getTablesList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -9950,6 +8417,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -9957,6 +8425,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.AckRoomTables prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -9969,10 +8438,6 @@ public final class ServerProto {
       return builder;
     }
     /**
-     * <pre>
-     *Game返回桌子列表
-     * </pre>
-     *
      * Protobuf type {@code proto.AckRoomTables}
      */
     public static final class Builder extends
@@ -9984,6 +8449,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_AckRoomTables_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_AckRoomTables_fieldAccessorTable
@@ -9993,40 +8459,39 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.AckRoomTables.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getTablesFieldBuilder();
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (tablesBuilder_ == null) {
           tables_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
+          tables_ = null;
           tablesBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_AckRoomTables_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckRoomTables getDefaultInstanceForType() {
         return proto.ServerProto.AckRoomTables.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckRoomTables build() {
         proto.ServerProto.AckRoomTables result = buildPartial();
         if (!result.isInitialized()) {
@@ -10035,11 +8500,12 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.AckRoomTables buildPartial() {
         proto.ServerProto.AckRoomTables result = new proto.ServerProto.AckRoomTables(this);
         int from_bitField0_ = bitField0_;
         if (tablesBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             tables_ = java.util.Collections.unmodifiableList(tables_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -10051,32 +8517,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.AckRoomTables) {
           return mergeFrom((proto.ServerProto.AckRoomTables)other);
@@ -10114,30 +8587,58 @@ public final class ServerProto {
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.AckRoomTables parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                proto.ModelProto.RoomTableInfo m =
+                    input.readMessage(
+                        proto.ModelProto.RoomTableInfo.parser(),
+                        extensionRegistry);
+                if (tablesBuilder_ == null) {
+                  ensureTablesIsMutable();
+                  tables_.add(m);
+                } else {
+                  tablesBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.AckRoomTables) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
       private int bitField0_;
@@ -10145,7 +8646,7 @@ public final class ServerProto {
       private java.util.List<proto.ModelProto.RoomTableInfo> tables_ =
         java.util.Collections.emptyList();
       private void ensureTablesIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           tables_ = new java.util.ArrayList<proto.ModelProto.RoomTableInfo>(tables_);
           bitField0_ |= 0x00000001;
          }
@@ -10374,18 +8875,20 @@ public final class ServerProto {
           tablesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.ModelProto.RoomTableInfo, proto.ModelProto.RoomTableInfo.Builder, proto.ModelProto.RoomTableInfoOrBuilder>(
                   tables_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           tables_ = null;
         }
         return tablesBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -10407,11 +8910,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<AckRoomTables>
         PARSER = new com.google.protobuf.AbstractParser<AckRoomTables>() {
+      @java.lang.Override
       public AckRoomTables parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new AckRoomTables(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -10424,6 +8939,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.AckRoomTables getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -10436,17 +8952,18 @@ public final class ServerProto {
 
     /**
      * <code>int64 tableId = 1;</code>
+     * @return The tableId.
      */
     long getTableId();
   }
   /**
    * <pre>
-   *Game通知Room桌子销毁
+   * Game 通知 Lobby 桌子销毁
    * </pre>
    *
    * Protobuf type {@code proto.NotTableDestroyed}
    */
-  public  static final class NotTableDestroyed extends
+  public static final class NotTableDestroyed extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.NotTableDestroyed)
       NotTableDestroyedOrBuilder {
@@ -10456,7 +8973,13 @@ public final class ServerProto {
       super(builder);
     }
     private NotTableDestroyed() {
-      tableId_ = 0L;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new NotTableDestroyed();
     }
 
     @java.lang.Override
@@ -10464,51 +8987,12 @@ public final class ServerProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private NotTableDestroyed(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              tableId_ = input.readInt64();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ServerProto.internal_static_proto_NotTableDestroyed_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ServerProto.internal_static_proto_NotTableDestroyed_fieldAccessorTable
@@ -10520,12 +9004,15 @@ public final class ServerProto {
     private long tableId_;
     /**
      * <code>int64 tableId = 1;</code>
+     * @return The tableId.
      */
+    @java.lang.Override
     public long getTableId() {
       return tableId_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -10535,14 +9022,16 @@ public final class ServerProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (tableId_ != 0L) {
         output.writeInt64(1, tableId_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -10552,7 +9041,7 @@ public final class ServerProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, tableId_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -10567,11 +9056,10 @@ public final class ServerProto {
       }
       proto.ServerProto.NotTableDestroyed other = (proto.ServerProto.NotTableDestroyed) obj;
 
-      boolean result = true;
-      result = result && (getTableId()
-          == other.getTableId());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getTableId()
+          != other.getTableId()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -10584,7 +9072,7 @@ public final class ServerProto {
       hash = (37 * hash) + TABLEID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTableId());
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -10659,6 +9147,7 @@ public final class ServerProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -10666,6 +9155,7 @@ public final class ServerProto {
     public static Builder newBuilder(proto.ServerProto.NotTableDestroyed prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -10679,7 +9169,7 @@ public final class ServerProto {
     }
     /**
      * <pre>
-     *Game通知Room桌子销毁
+     * Game 通知 Lobby 桌子销毁
      * </pre>
      *
      * Protobuf type {@code proto.NotTableDestroyed}
@@ -10693,6 +9183,7 @@ public final class ServerProto {
         return proto.ServerProto.internal_static_proto_NotTableDestroyed_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ServerProto.internal_static_proto_NotTableDestroyed_fieldAccessorTable
@@ -10702,19 +9193,15 @@ public final class ServerProto {
 
       // Construct using proto.ServerProto.NotTableDestroyed.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         tableId_ = 0L;
@@ -10722,15 +9209,18 @@ public final class ServerProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ServerProto.internal_static_proto_NotTableDestroyed_descriptor;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotTableDestroyed getDefaultInstanceForType() {
         return proto.ServerProto.NotTableDestroyed.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotTableDestroyed build() {
         proto.ServerProto.NotTableDestroyed result = buildPartial();
         if (!result.isInitialized()) {
@@ -10739,6 +9229,7 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ServerProto.NotTableDestroyed buildPartial() {
         proto.ServerProto.NotTableDestroyed result = new proto.ServerProto.NotTableDestroyed(this);
         result.tableId_ = tableId_;
@@ -10746,32 +9237,39 @@ public final class ServerProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ServerProto.NotTableDestroyed) {
           return mergeFrom((proto.ServerProto.NotTableDestroyed)other);
@@ -10786,42 +9284,66 @@ public final class ServerProto {
         if (other.getTableId() != 0L) {
           setTableId(other.getTableId());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ServerProto.NotTableDestroyed parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                tableId_ = input.readInt64();
+
+                break;
+              } // case 8
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ServerProto.NotTableDestroyed) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private long tableId_ ;
       /**
        * <code>int64 tableId = 1;</code>
+       * @return The tableId.
        */
+      @java.lang.Override
       public long getTableId() {
         return tableId_;
       }
       /**
        * <code>int64 tableId = 1;</code>
+       * @param value The tableId to set.
+       * @return This builder for chaining.
        */
       public Builder setTableId(long value) {
         
@@ -10831,6 +9353,7 @@ public final class ServerProto {
       }
       /**
        * <code>int64 tableId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearTableId() {
         
@@ -10838,11 +9361,13 @@ public final class ServerProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -10864,11 +9389,23 @@ public final class ServerProto {
 
     private static final com.google.protobuf.Parser<NotTableDestroyed>
         PARSER = new com.google.protobuf.AbstractParser<NotTableDestroyed>() {
+      @java.lang.Override
       public NotTableDestroyed parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new NotTableDestroyed(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -10881,6 +9418,7 @@ public final class ServerProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ServerProto.NotTableDestroyed getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -10897,16 +9435,6 @@ public final class ServerProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_AckCreateGameTable_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_ReqRoleRoomTable_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_ReqRoleRoomTable_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_proto_AckRoleRoomTable_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_proto_AckRoleRoomTable_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_ReqHeart_descriptor;
   private static final 
@@ -10985,40 +9513,29 @@ public final class ServerProto {
       "qCreateGameTable\022\016\n\006roomId\030\001 \001(\005\022!\n\010room" +
       "Role\030\002 \001(\0132\017.proto.RoomRole\":\n\022AckCreate" +
       "GameTable\022$\n\006tables\030\002 \001(\0132\024.proto.RoomTa" +
-      "bleInfo\"\"\n\020ReqRoleRoomTable\022\016\n\006roleId\030\001 " +
-      "\001(\005\"Q\n\020AckRoleRoomTable\022\016\n\006roleId\030\001 \001(\005\022" +
-      "\016\n\006tables\030\002 \003(\003\022\035\n\010roomList\030\003 \003(\0132\013.prot" +
-      "o.Room\"A\n\010ReqHeart\022\022\n\nserverType\030\001 \001(\005\022\020" +
-      "\n\010serverId\030\002 \001(\005\022\017\n\007reqTime\030\003 \001(\003\"-\n\010Ack" +
-      "Heart\022\020\n\010serverId\030\001 \001(\005\022\017\n\007reqTime\030\002 \001(\003",
-      "\"4\n\013ReqRegister\022%\n\nserverInfo\030\001 \001(\0132\021.pr" +
-      "oto.ServerInfo\"4\n\013AckRegister\022%\n\nserverI" +
-      "nfo\030\001 \001(\0132\021.proto.ServerInfo\"5\n\017NotRegis" +
-      "terInfo\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerI" +
-      "nfo\"/\n\021NotRegisterClient\022\014\n\004cert\030\001 \001(\014\022\014" +
-      "\n\004gate\030\002 \001(\014\"#\n\rReqServerInfo\022\022\n\nserverT" +
-      "ype\030\001 \003(\005\"3\n\rAckServerInfo\022\"\n\007servers\030\001 " +
-      "\003(\0132\021.proto.ServerInfo\"4\n\016NotServerBreak" +
-      "\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo\"(\n\010" +
-      "NotBreak\022\016\n\006userId\030\001 \001(\005\022\014\n\004cert\030\002 \001(\014\"%",
-      "\n\rReqRoomTables\022\024\n\014roomServerId\030\001 \001(\005\"5\n" +
-      "\rAckRoomTables\022$\n\006tables\030\001 \003(\0132\024.proto.R" +
-      "oomTableInfo\"$\n\021NotTableDestroyed\022\017\n\007tab" +
-      "leId\030\001 \001(\003B\rB\013ServerProtob\006proto3"
+      "bleInfo\"A\n\010ReqHeart\022\022\n\nserverType\030\001 \001(\005\022" +
+      "\020\n\010serverId\030\002 \001(\005\022\017\n\007reqTime\030\003 \001(\003\"-\n\010Ac" +
+      "kHeart\022\020\n\010serverId\030\001 \001(\005\022\017\n\007reqTime\030\002 \001(" +
+      "\003\"4\n\013ReqRegister\022%\n\nserverInfo\030\001 \001(\0132\021.p" +
+      "roto.ServerInfo\"4\n\013AckRegister\022%\n\nserver" +
+      "Info\030\001 \001(\0132\021.proto.ServerInfo\"5\n\017NotRegi" +
+      "sterInfo\022\"\n\007servers\030\001 \003(\0132\021.proto.Server" +
+      "Info\"/\n\021NotRegisterClient\022\014\n\004cert\030\001 \001(\014\022" +
+      "\014\n\004gate\030\002 \001(\014\"#\n\rReqServerInfo\022\022\n\nserver" +
+      "Type\030\001 \003(\005\"3\n\rAckServerInfo\022\"\n\007servers\030\001" +
+      " \003(\0132\021.proto.ServerInfo\"4\n\016NotServerBrea" +
+      "k\022\"\n\007servers\030\001 \003(\0132\021.proto.ServerInfo\"(\n" +
+      "\010NotBreak\022\016\n\006userId\030\001 \001(\005\022\014\n\004cert\030\002 \001(\014\"" +
+      "%\n\rReqRoomTables\022\024\n\014roomServerId\030\001 \001(\005\"5" +
+      "\n\rAckRoomTables\022$\n\006tables\030\001 \003(\0132\024.proto." +
+      "RoomTableInfo\"$\n\021NotTableDestroyed\022\017\n\007ta" +
+      "bleId\030\001 \001(\003B\rB\013ServerProtob\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           proto.ModelProto.getDescriptor(),
-        }, assigner);
+        });
     internal_static_proto_ReqCreateGameTable_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_proto_ReqCreateGameTable_fieldAccessorTable = new
@@ -11031,92 +9548,80 @@ public final class ServerProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckCreateGameTable_descriptor,
         new java.lang.String[] { "Tables", });
-    internal_static_proto_ReqRoleRoomTable_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_proto_ReqRoleRoomTable_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ReqRoleRoomTable_descriptor,
-        new java.lang.String[] { "RoleId", });
-    internal_static_proto_AckRoleRoomTable_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_proto_AckRoleRoomTable_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_AckRoleRoomTable_descriptor,
-        new java.lang.String[] { "RoleId", "Tables", "RoomList", });
     internal_static_proto_ReqHeart_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_proto_ReqHeart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqHeart_descriptor,
         new java.lang.String[] { "ServerType", "ServerId", "ReqTime", });
     internal_static_proto_AckHeart_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_proto_AckHeart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckHeart_descriptor,
         new java.lang.String[] { "ServerId", "ReqTime", });
     internal_static_proto_ReqRegister_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_proto_ReqRegister_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqRegister_descriptor,
         new java.lang.String[] { "ServerInfo", });
     internal_static_proto_AckRegister_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_proto_AckRegister_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRegister_descriptor,
         new java.lang.String[] { "ServerInfo", });
     internal_static_proto_NotRegisterInfo_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_proto_NotRegisterInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotRegisterInfo_descriptor,
         new java.lang.String[] { "Servers", });
     internal_static_proto_NotRegisterClient_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_proto_NotRegisterClient_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotRegisterClient_descriptor,
         new java.lang.String[] { "Cert", "Gate", });
     internal_static_proto_ReqServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_proto_ReqServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqServerInfo_descriptor,
         new java.lang.String[] { "ServerType", });
     internal_static_proto_AckServerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_proto_AckServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckServerInfo_descriptor,
         new java.lang.String[] { "Servers", });
     internal_static_proto_NotServerBreak_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_proto_NotServerBreak_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotServerBreak_descriptor,
         new java.lang.String[] { "Servers", });
     internal_static_proto_NotBreak_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_proto_NotBreak_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotBreak_descriptor,
         new java.lang.String[] { "UserId", "Cert", });
     internal_static_proto_ReqRoomTables_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_proto_ReqRoomTables_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ReqRoomTables_descriptor,
         new java.lang.String[] { "RoomServerId", });
     internal_static_proto_AckRoomTables_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_proto_AckRoomTables_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_AckRoomTables_descriptor,
         new java.lang.String[] { "Tables", });
     internal_static_proto_NotTableDestroyed_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_proto_NotTableDestroyed_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_NotTableDestroyed_descriptor,

@@ -17,7 +17,7 @@ import utils.handle.AbstractAckServerInfoHandle;
 public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 	private static final Logger logger = LoggerFactory.getLogger(AckServerInfoHandle.class);
 
-	private static final List<ServerType> RETRY_SERVER_TYPES = Arrays.asList(ServerType.Room, ServerType.Game, ServerType.Hall);
+	private static final List<ServerType> RETRY_SERVER_TYPES = Arrays.asList(ServerType.Lobby, ServerType.Game);
 
 	@Override
 	protected void processServerInfo(ServerProto.AckServerInfo response) {

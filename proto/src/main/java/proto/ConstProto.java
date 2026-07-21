@@ -253,6 +253,8 @@ public final class ConstProto {
     }
 
     /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -260,6 +262,10 @@ public final class ConstProto {
       return forNumber(value);
     }
 
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
     public static Result forNumber(int value) {
       switch (value) {
         case 0: return SUCCESS;
@@ -294,6 +300,10 @@ public final class ConstProto {
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
@@ -384,6 +394,8 @@ public final class ConstProto {
     }
 
     /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -391,6 +403,10 @@ public final class ConstProto {
       return forNumber(value);
     }
 
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
     public static TableState forNumber(int value) {
       switch (value) {
         case 0: return WAIT;
@@ -413,6 +429,10 @@ public final class ConstProto {
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
@@ -774,6 +794,8 @@ public final class ConstProto {
     }
 
     /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -781,6 +803,10 @@ public final class ConstProto {
       return forNumber(value);
     }
 
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
     public static Operation forNumber(int value) {
       switch (value) {
         case 0: return PASS;
@@ -820,6 +846,10 @@ public final class ConstProto {
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
@@ -1085,6 +1115,8 @@ public final class ConstProto {
     }
 
     /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -1092,6 +1124,10 @@ public final class ConstProto {
       return forNumber(value);
     }
 
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
     public static CardType forNumber(int value) {
       switch (value) {
         case 0: return SINGLE;
@@ -1125,6 +1161,10 @@ public final class ConstProto {
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
@@ -1177,7 +1217,7 @@ public final class ConstProto {
       "P_CURR_ERROR\020\014\022\025\n\021OP_CARD_NOT_MATCH\020\r*!\n" +
       "\nTableState\022\010\n\004WAIT\020\000\022\t\n\005START\020\001*\376\001\n\tOpe" +
       "ration\022\010\n\004PASS\020\000\022\010\n\004CALL\020\001\022\007\n\003ROB\020\002\022\014\n\010N" +
-      "OT_CALL\020\003\022\013\n\007NOT_ROB\020\004\022\007\n\003TIP\020\005\022\010\n\004PLAY\020",
+      "OT_CALL\020\003\022\013\n\007NOT_ROB\020\004\022\007\n\003TIP\020\005\022\010\n\004PLAY\020" +
       "\006\022\013\n\007PREPARE\020\007\022\016\n\nSTART_GAME\020\010\022\020\n\014CALL_S" +
       "CORE_1\020\t\022\020\n\014CALL_SCORE_2\020\n\022\020\n\014CALL_SCORE" +
       "_3\020\013\022\010\n\004DRAW\020\014\022\013\n\007DISCARD\020\r\022\013\n\007MJ_PENG\020\016" +
@@ -1187,21 +1227,13 @@ public final class ConstProto {
       "IPLE_DOUBLE\020\004\022\r\n\tPLANE_ONE\020\005\022\020\n\014PLANE_DO" +
       "UBLE\020\006\022\026\n\022BOOM_DOUBLE_SINGLE\020\007\022\024\n\020BOOM_D" +
       "OUBLE_PAIR\020\010\022\014\n\010STRAIGHT\020\t\022\023\n\017STRAIGHT_D" +
-      "OUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014B\014B\nConst",
+      "OUBLE\020\n\022\010\n\004BOOM\020\013\022\014\n\010BOOM_MAX\020\014B\014B\nConst" +
       "Protob\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

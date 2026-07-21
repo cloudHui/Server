@@ -7,15 +7,13 @@ import proto.ServerProto;
 
 /**
  * BASE_ID_INDEX 以下 的是通用消息
- * 发个哪个服务的 用 msgId / BASE_ID_INDEX  得到该服务的类型
- * 客户端回复消息都是 大于 BASE_ID_INDEX
+ * 发给哪个服务的 用 msgId 位掩码判断
  */
 @ClassType
 public class CMsg {
 
 	public static final int GAME_TYPE = 0x2000;
-	public static final int HALL_TYPE = 0x4000;
-	public static final int ROOM_TYPE = 0x8000;
+	public static final int LOBBY_TYPE = 0x4000;
 	public static final int SERVER_TYPE = 0x16000;
 
 	@ClassField(value = ServerProto.ReqHeart.class, des = "心跳")

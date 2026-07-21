@@ -113,16 +113,16 @@ public class TableManager {
      */
     private void notifyRoomTableDestroyed(long tableId) {
         try {
-            ConnectHandler roomServer = Game.getInstance().getServerManager().getServerClient(ServerType.Room);
-            if (roomServer == null) return;
+            ConnectHandler lobbyServer = Game.getInstance().getServerManager().getServerClient(ServerType.Lobby);
+            if (lobbyServer == null) return;
 
             ServerProto.NotTableDestroyed not = ServerProto.NotTableDestroyed.newBuilder()
                     .setTableId(tableId)
                     .build();
-            roomServer.sendMessage(SMsg.NOT_TABLE_DESTROYED_MSG, not);
-            logger.debug("已通知Room桌子销毁, tableId: {}", tableId);
+            lobbyServer.sendMessage(SMsg.NOT_TABLE_DESTROYED_MSG, not);
+            logger.debug("已通知Lobby桌子销毁, tableId: {}", tableId);
         } catch (Exception e) {
-            logger.error("通知Room桌子销毁失败, tableId: {}", tableId, e);
+            logger.error("通知Lobby桌子销毁失败, tableId: {}", tableId, e);
         }
     }
 

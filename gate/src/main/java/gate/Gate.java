@@ -209,8 +209,7 @@ public class Gate {
 	private ServerProto.ReqServerInfo buildServerInfoRequest() {
 		return ServerProto.ReqServerInfo.newBuilder()
 				.addServerType(ServerType.Game.getServerType())
-				.addServerType(ServerType.Hall.getServerType())
-				.addServerType(ServerType.Room.getServerType())
+				.addServerType(ServerType.Lobby.getServerType())
 				.build();
 	}
 }

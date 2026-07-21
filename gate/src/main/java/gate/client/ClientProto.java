@@ -175,10 +175,8 @@ public class ClientProto {
 	private static ServerType getServerTypeByMessageId(int msgId) {
 		if ((msgId & CMsg.GAME_TYPE) != 0) {
 			return ServerType.Game;
-		} else if ((msgId & CMsg.HALL_TYPE) != 0) {
-			return ServerType.Hall;
-		} else if ((msgId & CMsg.ROOM_TYPE) != 0) {
-			return ServerType.Room;
+		} else if ((msgId & CMsg.LOBBY_TYPE) != 0) {
+			return ServerType.Lobby;
 		}
 
 		logger.debug("未知消息类型, msgId: {}", Integer.toHexString(msgId));
@@ -209,8 +207,7 @@ public class ClientProto {
 	 */
 	private static void notifyAllServersDisconnect(ServerProto.NotBreak disconnectNotify, ChannelHandler handler) {
 		sendDisconnectNotify(ServerType.Game, disconnectNotify);
-		sendDisconnectNotify(ServerType.Hall, disconnectNotify);
-		sendDisconnectNotify(ServerType.Room, disconnectNotify);
+		sendDisconnectNotify(ServerType.Lobby, disconnectNotify);
 
 		// 通知中心服务器
 		notifyCenterServerDisconnect(disconnectNotify, handler);

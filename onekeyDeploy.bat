@@ -40,13 +40,9 @@ call :process_git_changes "game" "Game" "%to_path%"
 echo copy gate
 call :process_git_changes "gate" "Gate" "%to_path%"
 
-::hall
-echo copy hall
-call :process_git_changes "hall" "Hall" "%to_path%"
-
-::room
-echo copy room
-call :process_git_changes "room" "Room" "%to_path%"
+::lobby
+echo copy lobby
+call :process_git_changes "lobby" "Lobby" "%to_path%"
 
 echo 成功复制所有配置文件
 

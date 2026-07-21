@@ -20,23 +20,26 @@ public final class ModelProto {
 
     /**
      * <code>int32 serverType = 1;</code>
+     * @return The serverType.
      */
     int getServerType();
 
     /**
      * <code>int32 serverId = 2;</code>
+     * @return The serverId.
      */
     int getServerId();
 
     /**
      * <code>bytes ipConfig = 3;</code>
+     * @return The ipConfig.
      */
     com.google.protobuf.ByteString getIpConfig();
   }
   /**
    * Protobuf type {@code proto.ServerInfo}
    */
-  public  static final class ServerInfo extends
+  public static final class ServerInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.ServerInfo)
       ServerInfoOrBuilder {
@@ -46,9 +49,14 @@ public final class ModelProto {
       super(builder);
     }
     private ServerInfo() {
-      serverType_ = 0;
-      serverId_ = 0;
       ipConfig_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ServerInfo();
     }
 
     @java.lang.Override
@@ -56,61 +64,12 @@ public final class ModelProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private ServerInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              serverType_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              serverId_ = input.readInt32();
-              break;
-            }
-            case 26: {
-
-              ipConfig_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ModelProto.internal_static_proto_ServerInfo_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ModelProto.internal_static_proto_ServerInfo_fieldAccessorTable
@@ -122,7 +81,9 @@ public final class ModelProto {
     private int serverType_;
     /**
      * <code>int32 serverType = 1;</code>
+     * @return The serverType.
      */
+    @java.lang.Override
     public int getServerType() {
       return serverType_;
     }
@@ -131,7 +92,9 @@ public final class ModelProto {
     private int serverId_;
     /**
      * <code>int32 serverId = 2;</code>
+     * @return The serverId.
      */
+    @java.lang.Override
     public int getServerId() {
       return serverId_;
     }
@@ -140,12 +103,15 @@ public final class ModelProto {
     private com.google.protobuf.ByteString ipConfig_;
     /**
      * <code>bytes ipConfig = 3;</code>
+     * @return The ipConfig.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getIpConfig() {
       return ipConfig_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -155,6 +121,7 @@ public final class ModelProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (serverType_ != 0) {
@@ -166,9 +133,10 @@ public final class ModelProto {
       if (!ipConfig_.isEmpty()) {
         output.writeBytes(3, ipConfig_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -186,7 +154,7 @@ public final class ModelProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, ipConfig_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -201,15 +169,14 @@ public final class ModelProto {
       }
       proto.ModelProto.ServerInfo other = (proto.ModelProto.ServerInfo) obj;
 
-      boolean result = true;
-      result = result && (getServerType()
-          == other.getServerType());
-      result = result && (getServerId()
-          == other.getServerId());
-      result = result && getIpConfig()
-          .equals(other.getIpConfig());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getServerType()
+          != other.getServerType()) return false;
+      if (getServerId()
+          != other.getServerId()) return false;
+      if (!getIpConfig()
+          .equals(other.getIpConfig())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -225,7 +192,7 @@ public final class ModelProto {
       hash = (53 * hash) + getServerId();
       hash = (37 * hash) + IPCONFIG_FIELD_NUMBER;
       hash = (53 * hash) + getIpConfig().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -300,6 +267,7 @@ public final class ModelProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -307,6 +275,7 @@ public final class ModelProto {
     public static Builder newBuilder(proto.ModelProto.ServerInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -330,6 +299,7 @@ public final class ModelProto {
         return proto.ModelProto.internal_static_proto_ServerInfo_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ModelProto.internal_static_proto_ServerInfo_fieldAccessorTable
@@ -339,19 +309,15 @@ public final class ModelProto {
 
       // Construct using proto.ModelProto.ServerInfo.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         serverType_ = 0;
@@ -363,15 +329,18 @@ public final class ModelProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ModelProto.internal_static_proto_ServerInfo_descriptor;
       }
 
+      @java.lang.Override
       public proto.ModelProto.ServerInfo getDefaultInstanceForType() {
         return proto.ModelProto.ServerInfo.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ModelProto.ServerInfo build() {
         proto.ModelProto.ServerInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -380,6 +349,7 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ModelProto.ServerInfo buildPartial() {
         proto.ModelProto.ServerInfo result = new proto.ModelProto.ServerInfo(this);
         result.serverType_ = serverType_;
@@ -389,32 +359,39 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ModelProto.ServerInfo) {
           return mergeFrom((proto.ModelProto.ServerInfo)other);
@@ -435,42 +412,76 @@ public final class ModelProto {
         if (other.getIpConfig() != com.google.protobuf.ByteString.EMPTY) {
           setIpConfig(other.getIpConfig());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.ServerInfo parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                serverType_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 16: {
+                serverId_ = input.readInt32();
+
+                break;
+              } // case 16
+              case 26: {
+                ipConfig_ = input.readBytes();
+
+                break;
+              } // case 26
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.ServerInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private int serverType_ ;
       /**
        * <code>int32 serverType = 1;</code>
+       * @return The serverType.
        */
+      @java.lang.Override
       public int getServerType() {
         return serverType_;
       }
       /**
        * <code>int32 serverType = 1;</code>
+       * @param value The serverType to set.
+       * @return This builder for chaining.
        */
       public Builder setServerType(int value) {
         
@@ -480,6 +491,7 @@ public final class ModelProto {
       }
       /**
        * <code>int32 serverType = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearServerType() {
         
@@ -491,12 +503,16 @@ public final class ModelProto {
       private int serverId_ ;
       /**
        * <code>int32 serverId = 2;</code>
+       * @return The serverId.
        */
+      @java.lang.Override
       public int getServerId() {
         return serverId_;
       }
       /**
        * <code>int32 serverId = 2;</code>
+       * @param value The serverId to set.
+       * @return This builder for chaining.
        */
       public Builder setServerId(int value) {
         
@@ -506,6 +522,7 @@ public final class ModelProto {
       }
       /**
        * <code>int32 serverId = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearServerId() {
         
@@ -517,12 +534,16 @@ public final class ModelProto {
       private com.google.protobuf.ByteString ipConfig_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes ipConfig = 3;</code>
+       * @return The ipConfig.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getIpConfig() {
         return ipConfig_;
       }
       /**
        * <code>bytes ipConfig = 3;</code>
+       * @param value The ipConfig to set.
+       * @return This builder for chaining.
        */
       public Builder setIpConfig(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -535,6 +556,7 @@ public final class ModelProto {
       }
       /**
        * <code>bytes ipConfig = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearIpConfig() {
         
@@ -542,11 +564,13 @@ public final class ModelProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -568,11 +592,23 @@ public final class ModelProto {
 
     private static final com.google.protobuf.Parser<ServerInfo>
         PARSER = new com.google.protobuf.AbstractParser<ServerInfo>() {
+      @java.lang.Override
       public ServerInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new ServerInfo(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -585,6 +621,7 @@ public final class ModelProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ModelProto.ServerInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -597,6 +634,7 @@ public final class ModelProto {
 
     /**
      * <code>int32 roomId = 1;</code>
+     * @return The roomId.
      */
     int getRoomId();
 
@@ -650,13 +688,14 @@ public final class ModelProto {
      * </pre>
      *
      * <code>int32 gameType = 3;</code>
+     * @return The gameType.
      */
     int getGameType();
   }
   /**
    * Protobuf type {@code proto.Room}
    */
-  public  static final class Room extends
+  public static final class Room extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.Room)
       RoomOrBuilder {
@@ -666,9 +705,14 @@ public final class ModelProto {
       super(builder);
     }
     private Room() {
-      roomId_ = 0;
       tables_ = java.util.Collections.emptyList();
-      gameType_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Room();
     }
 
     @java.lang.Override
@@ -676,68 +720,12 @@ public final class ModelProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private Room(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roomId_ = input.readInt32();
-              break;
-            }
-            case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                tables_ = new java.util.ArrayList<proto.ModelProto.RoomTableInfo>();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              tables_.add(
-                  input.readMessage(proto.ModelProto.RoomTableInfo.parser(), extensionRegistry));
-              break;
-            }
-            case 24: {
-
-              gameType_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          tables_ = java.util.Collections.unmodifiableList(tables_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ModelProto.internal_static_proto_Room_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ModelProto.internal_static_proto_Room_fieldAccessorTable
@@ -745,12 +733,13 @@ public final class ModelProto {
               proto.ModelProto.Room.class, proto.ModelProto.Room.Builder.class);
     }
 
-    private int bitField0_;
     public static final int ROOMID_FIELD_NUMBER = 1;
     private int roomId_;
     /**
      * <code>int32 roomId = 1;</code>
+     * @return The roomId.
      */
+    @java.lang.Override
     public int getRoomId() {
       return roomId_;
     }
@@ -764,6 +753,7 @@ public final class ModelProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<proto.ModelProto.RoomTableInfo> getTablesList() {
       return tables_;
     }
@@ -774,6 +764,7 @@ public final class ModelProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends proto.ModelProto.RoomTableInfoOrBuilder> 
         getTablesOrBuilderList() {
       return tables_;
@@ -785,6 +776,7 @@ public final class ModelProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
+    @java.lang.Override
     public int getTablesCount() {
       return tables_.size();
     }
@@ -795,6 +787,7 @@ public final class ModelProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomTableInfo getTables(int index) {
       return tables_.get(index);
     }
@@ -805,6 +798,7 @@ public final class ModelProto {
      *
      * <code>repeated .proto.RoomTableInfo tables = 2;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomTableInfoOrBuilder getTablesOrBuilder(
         int index) {
       return tables_.get(index);
@@ -818,12 +812,15 @@ public final class ModelProto {
      * </pre>
      *
      * <code>int32 gameType = 3;</code>
+     * @return The gameType.
      */
+    @java.lang.Override
     public int getGameType() {
       return gameType_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -833,6 +830,7 @@ public final class ModelProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (roomId_ != 0) {
@@ -844,9 +842,10 @@ public final class ModelProto {
       if (gameType_ != 0) {
         output.writeInt32(3, gameType_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -864,7 +863,7 @@ public final class ModelProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, gameType_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -879,15 +878,14 @@ public final class ModelProto {
       }
       proto.ModelProto.Room other = (proto.ModelProto.Room) obj;
 
-      boolean result = true;
-      result = result && (getRoomId()
-          == other.getRoomId());
-      result = result && getTablesList()
-          .equals(other.getTablesList());
-      result = result && (getGameType()
-          == other.getGameType());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getRoomId()
+          != other.getRoomId()) return false;
+      if (!getTablesList()
+          .equals(other.getTablesList())) return false;
+      if (getGameType()
+          != other.getGameType()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -905,7 +903,7 @@ public final class ModelProto {
       }
       hash = (37 * hash) + GAMETYPE_FIELD_NUMBER;
       hash = (53 * hash) + getGameType();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -980,6 +978,7 @@ public final class ModelProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -987,6 +986,7 @@ public final class ModelProto {
     public static Builder newBuilder(proto.ModelProto.Room prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1010,6 +1010,7 @@ public final class ModelProto {
         return proto.ModelProto.internal_static_proto_Room_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ModelProto.internal_static_proto_Room_fieldAccessorTable
@@ -1019,44 +1020,43 @@ public final class ModelProto {
 
       // Construct using proto.ModelProto.Room.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getTablesFieldBuilder();
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         roomId_ = 0;
 
         if (tablesBuilder_ == null) {
           tables_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
+          tables_ = null;
           tablesBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
         gameType_ = 0;
 
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ModelProto.internal_static_proto_Room_descriptor;
       }
 
+      @java.lang.Override
       public proto.ModelProto.Room getDefaultInstanceForType() {
         return proto.ModelProto.Room.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ModelProto.Room build() {
         proto.ModelProto.Room result = buildPartial();
         if (!result.isInitialized()) {
@@ -1065,52 +1065,58 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ModelProto.Room buildPartial() {
         proto.ModelProto.Room result = new proto.ModelProto.Room(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.roomId_ = roomId_;
         if (tablesBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             tables_ = java.util.Collections.unmodifiableList(tables_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.tables_ = tables_;
         } else {
           result.tables_ = tablesBuilder_.build();
         }
         result.gameType_ = gameType_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ModelProto.Room) {
           return mergeFrom((proto.ModelProto.Room)other);
@@ -1129,7 +1135,7 @@ public final class ModelProto {
           if (!other.tables_.isEmpty()) {
             if (tables_.isEmpty()) {
               tables_ = other.tables_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensureTablesIsMutable();
               tables_.addAll(other.tables_);
@@ -1142,7 +1148,7 @@ public final class ModelProto {
               tablesBuilder_.dispose();
               tablesBuilder_ = null;
               tables_ = other.tables_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
               tablesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getTablesFieldBuilder() : null;
@@ -1154,30 +1160,68 @@ public final class ModelProto {
         if (other.getGameType() != 0) {
           setGameType(other.getGameType());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.Room parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                roomId_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 18: {
+                proto.ModelProto.RoomTableInfo m =
+                    input.readMessage(
+                        proto.ModelProto.RoomTableInfo.parser(),
+                        extensionRegistry);
+                if (tablesBuilder_ == null) {
+                  ensureTablesIsMutable();
+                  tables_.add(m);
+                } else {
+                  tablesBuilder_.addMessage(m);
+                }
+                break;
+              } // case 18
+              case 24: {
+                gameType_ = input.readInt32();
+
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.Room) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
       private int bitField0_;
@@ -1185,12 +1229,16 @@ public final class ModelProto {
       private int roomId_ ;
       /**
        * <code>int32 roomId = 1;</code>
+       * @return The roomId.
        */
+      @java.lang.Override
       public int getRoomId() {
         return roomId_;
       }
       /**
        * <code>int32 roomId = 1;</code>
+       * @param value The roomId to set.
+       * @return This builder for chaining.
        */
       public Builder setRoomId(int value) {
         
@@ -1200,6 +1248,7 @@ public final class ModelProto {
       }
       /**
        * <code>int32 roomId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRoomId() {
         
@@ -1211,9 +1260,9 @@ public final class ModelProto {
       private java.util.List<proto.ModelProto.RoomTableInfo> tables_ =
         java.util.Collections.emptyList();
       private void ensureTablesIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           tables_ = new java.util.ArrayList<proto.ModelProto.RoomTableInfo>(tables_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -1407,7 +1456,7 @@ public final class ModelProto {
       public Builder clearTables() {
         if (tablesBuilder_ == null) {
           tables_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           tablesBuilder_.clear();
@@ -1512,7 +1561,7 @@ public final class ModelProto {
           tablesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.ModelProto.RoomTableInfo, proto.ModelProto.RoomTableInfo.Builder, proto.ModelProto.RoomTableInfoOrBuilder>(
                   tables_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           tables_ = null;
@@ -1527,7 +1576,9 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 gameType = 3;</code>
+       * @return The gameType.
        */
+      @java.lang.Override
       public int getGameType() {
         return gameType_;
       }
@@ -1537,6 +1588,8 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 gameType = 3;</code>
+       * @param value The gameType to set.
+       * @return This builder for chaining.
        */
       public Builder setGameType(int value) {
         
@@ -1550,6 +1603,7 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 gameType = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearGameType() {
         
@@ -1557,11 +1611,13 @@ public final class ModelProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1583,11 +1639,23 @@ public final class ModelProto {
 
     private static final com.google.protobuf.Parser<Room>
         PARSER = new com.google.protobuf.AbstractParser<Room>() {
+      @java.lang.Override
       public Room parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Room(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -1600,6 +1668,7 @@ public final class ModelProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ModelProto.Room getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -1612,18 +1681,20 @@ public final class ModelProto {
 
     /**
      * <code>bytes key = 1;</code>
+     * @return The key.
      */
     com.google.protobuf.ByteString getKey();
 
     /**
      * <code>bytes value = 2;</code>
+     * @return The value.
      */
     com.google.protobuf.ByteString getValue();
   }
   /**
    * Protobuf type {@code proto.KeyValue}
    */
-  public  static final class KeyValue extends
+  public static final class KeyValue extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.KeyValue)
       KeyValueOrBuilder {
@@ -1638,60 +1709,23 @@ public final class ModelProto {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new KeyValue();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
-    }
-    private KeyValue(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-
-              key_ = input.readBytes();
-              break;
-            }
-            case 18: {
-
-              value_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ModelProto.internal_static_proto_KeyValue_fieldAccessorTable
@@ -1703,7 +1737,9 @@ public final class ModelProto {
     private com.google.protobuf.ByteString key_;
     /**
      * <code>bytes key = 1;</code>
+     * @return The key.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getKey() {
       return key_;
     }
@@ -1712,12 +1748,15 @@ public final class ModelProto {
     private com.google.protobuf.ByteString value_;
     /**
      * <code>bytes value = 2;</code>
+     * @return The value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getValue() {
       return value_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1727,6 +1766,7 @@ public final class ModelProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!key_.isEmpty()) {
@@ -1735,9 +1775,10 @@ public final class ModelProto {
       if (!value_.isEmpty()) {
         output.writeBytes(2, value_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1751,7 +1792,7 @@ public final class ModelProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, value_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -1766,13 +1807,12 @@ public final class ModelProto {
       }
       proto.ModelProto.KeyValue other = (proto.ModelProto.KeyValue) obj;
 
-      boolean result = true;
-      result = result && getKey()
-          .equals(other.getKey());
-      result = result && getValue()
-          .equals(other.getValue());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getKey()
+          .equals(other.getKey())) return false;
+      if (!getValue()
+          .equals(other.getValue())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -1786,7 +1826,7 @@ public final class ModelProto {
       hash = (53 * hash) + getKey().hashCode();
       hash = (37 * hash) + VALUE_FIELD_NUMBER;
       hash = (53 * hash) + getValue().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -1861,6 +1901,7 @@ public final class ModelProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -1868,6 +1909,7 @@ public final class ModelProto {
     public static Builder newBuilder(proto.ModelProto.KeyValue prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1891,6 +1933,7 @@ public final class ModelProto {
         return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ModelProto.internal_static_proto_KeyValue_fieldAccessorTable
@@ -1900,19 +1943,15 @@ public final class ModelProto {
 
       // Construct using proto.ModelProto.KeyValue.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         key_ = com.google.protobuf.ByteString.EMPTY;
@@ -1922,15 +1961,18 @@ public final class ModelProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ModelProto.internal_static_proto_KeyValue_descriptor;
       }
 
+      @java.lang.Override
       public proto.ModelProto.KeyValue getDefaultInstanceForType() {
         return proto.ModelProto.KeyValue.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ModelProto.KeyValue build() {
         proto.ModelProto.KeyValue result = buildPartial();
         if (!result.isInitialized()) {
@@ -1939,6 +1981,7 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ModelProto.KeyValue buildPartial() {
         proto.ModelProto.KeyValue result = new proto.ModelProto.KeyValue(this);
         result.key_ = key_;
@@ -1947,32 +1990,39 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ModelProto.KeyValue) {
           return mergeFrom((proto.ModelProto.KeyValue)other);
@@ -1990,42 +2040,71 @@ public final class ModelProto {
         if (other.getValue() != com.google.protobuf.ByteString.EMPTY) {
           setValue(other.getValue());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.KeyValue parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                key_ = input.readBytes();
+
+                break;
+              } // case 10
+              case 18: {
+                value_ = input.readBytes();
+
+                break;
+              } // case 18
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.KeyValue) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private com.google.protobuf.ByteString key_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes key = 1;</code>
+       * @return The key.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getKey() {
         return key_;
       }
       /**
        * <code>bytes key = 1;</code>
+       * @param value The key to set.
+       * @return This builder for chaining.
        */
       public Builder setKey(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -2038,6 +2117,7 @@ public final class ModelProto {
       }
       /**
        * <code>bytes key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearKey() {
         
@@ -2049,12 +2129,16 @@ public final class ModelProto {
       private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes value = 2;</code>
+       * @return The value.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getValue() {
         return value_;
       }
       /**
        * <code>bytes value = 2;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -2067,6 +2151,7 @@ public final class ModelProto {
       }
       /**
        * <code>bytes value = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         
@@ -2074,11 +2159,13 @@ public final class ModelProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -2100,11 +2187,23 @@ public final class ModelProto {
 
     private static final com.google.protobuf.Parser<KeyValue>
         PARSER = new com.google.protobuf.AbstractParser<KeyValue>() {
+      @java.lang.Override
       public KeyValue parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new KeyValue(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -2117,6 +2216,7 @@ public final class ModelProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ModelProto.KeyValue getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -2129,21 +2229,25 @@ public final class ModelProto {
 
     /**
      * <code>int32 roomId = 1;</code>
+     * @return The roomId.
      */
     int getRoomId();
 
     /**
      * <code>int64 tableId = 2;</code>
+     * @return The tableId.
      */
     long getTableId();
 
     /**
      * <code>int32 creatorId = 3;</code>
+     * @return The creatorId.
      */
     int getCreatorId();
 
     /**
      * <code>int32 ownerId = 4;</code>
+     * @return The ownerId.
      */
     int getOwnerId();
 
@@ -2153,6 +2257,7 @@ public final class ModelProto {
      * </pre>
      *
      * <code>int32 stat = 5;</code>
+     * @return The stat.
      */
     int getStat();
 
@@ -2186,6 +2291,7 @@ public final class ModelProto {
      * </pre>
      *
      * <code>int32 gameType = 7;</code>
+     * @return The gameType.
      */
     int getGameType();
   }
@@ -2196,7 +2302,7 @@ public final class ModelProto {
    *
    * Protobuf type {@code proto.RoomTableInfo}
    */
-  public  static final class RoomTableInfo extends
+  public static final class RoomTableInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.RoomTableInfo)
       RoomTableInfoOrBuilder {
@@ -2206,13 +2312,14 @@ public final class ModelProto {
       super(builder);
     }
     private RoomTableInfo() {
-      roomId_ = 0;
-      tableId_ = 0L;
-      creatorId_ = 0;
-      ownerId_ = 0;
-      stat_ = 0;
       tableRoles_ = java.util.Collections.emptyList();
-      gameType_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new RoomTableInfo();
     }
 
     @java.lang.Override
@@ -2220,88 +2327,12 @@ public final class ModelProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private RoomTableInfo(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roomId_ = input.readInt32();
-              break;
-            }
-            case 16: {
-
-              tableId_ = input.readInt64();
-              break;
-            }
-            case 24: {
-
-              creatorId_ = input.readInt32();
-              break;
-            }
-            case 32: {
-
-              ownerId_ = input.readInt32();
-              break;
-            }
-            case 40: {
-
-              stat_ = input.readInt32();
-              break;
-            }
-            case 50: {
-              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-                tableRoles_ = new java.util.ArrayList<proto.ModelProto.RoomRole>();
-                mutable_bitField0_ |= 0x00000020;
-              }
-              tableRoles_.add(
-                  input.readMessage(proto.ModelProto.RoomRole.parser(), extensionRegistry));
-              break;
-            }
-            case 56: {
-
-              gameType_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-          tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ModelProto.internal_static_proto_RoomTableInfo_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ModelProto.internal_static_proto_RoomTableInfo_fieldAccessorTable
@@ -2309,12 +2340,13 @@ public final class ModelProto {
               proto.ModelProto.RoomTableInfo.class, proto.ModelProto.RoomTableInfo.Builder.class);
     }
 
-    private int bitField0_;
     public static final int ROOMID_FIELD_NUMBER = 1;
     private int roomId_;
     /**
      * <code>int32 roomId = 1;</code>
+     * @return The roomId.
      */
+    @java.lang.Override
     public int getRoomId() {
       return roomId_;
     }
@@ -2323,7 +2355,9 @@ public final class ModelProto {
     private long tableId_;
     /**
      * <code>int64 tableId = 2;</code>
+     * @return The tableId.
      */
+    @java.lang.Override
     public long getTableId() {
       return tableId_;
     }
@@ -2332,7 +2366,9 @@ public final class ModelProto {
     private int creatorId_;
     /**
      * <code>int32 creatorId = 3;</code>
+     * @return The creatorId.
      */
+    @java.lang.Override
     public int getCreatorId() {
       return creatorId_;
     }
@@ -2341,7 +2377,9 @@ public final class ModelProto {
     private int ownerId_;
     /**
      * <code>int32 ownerId = 4;</code>
+     * @return The ownerId.
      */
+    @java.lang.Override
     public int getOwnerId() {
       return ownerId_;
     }
@@ -2354,7 +2392,9 @@ public final class ModelProto {
      * </pre>
      *
      * <code>int32 stat = 5;</code>
+     * @return The stat.
      */
+    @java.lang.Override
     public int getStat() {
       return stat_;
     }
@@ -2364,12 +2404,14 @@ public final class ModelProto {
     /**
      * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<proto.ModelProto.RoomRole> getTableRolesList() {
       return tableRoles_;
     }
     /**
      * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends proto.ModelProto.RoomRoleOrBuilder> 
         getTableRolesOrBuilderList() {
       return tableRoles_;
@@ -2377,18 +2419,21 @@ public final class ModelProto {
     /**
      * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
+    @java.lang.Override
     public int getTableRolesCount() {
       return tableRoles_.size();
     }
     /**
      * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomRole getTableRoles(int index) {
       return tableRoles_.get(index);
     }
     /**
      * <code>repeated .proto.RoomRole tableRoles = 6;</code>
      */
+    @java.lang.Override
     public proto.ModelProto.RoomRoleOrBuilder getTableRolesOrBuilder(
         int index) {
       return tableRoles_.get(index);
@@ -2402,12 +2447,15 @@ public final class ModelProto {
      * </pre>
      *
      * <code>int32 gameType = 7;</code>
+     * @return The gameType.
      */
+    @java.lang.Override
     public int getGameType() {
       return gameType_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -2417,6 +2465,7 @@ public final class ModelProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (roomId_ != 0) {
@@ -2440,9 +2489,10 @@ public final class ModelProto {
       if (gameType_ != 0) {
         output.writeInt32(7, gameType_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -2476,7 +2526,7 @@ public final class ModelProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(7, gameType_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -2491,23 +2541,22 @@ public final class ModelProto {
       }
       proto.ModelProto.RoomTableInfo other = (proto.ModelProto.RoomTableInfo) obj;
 
-      boolean result = true;
-      result = result && (getRoomId()
-          == other.getRoomId());
-      result = result && (getTableId()
-          == other.getTableId());
-      result = result && (getCreatorId()
-          == other.getCreatorId());
-      result = result && (getOwnerId()
-          == other.getOwnerId());
-      result = result && (getStat()
-          == other.getStat());
-      result = result && getTableRolesList()
-          .equals(other.getTableRolesList());
-      result = result && (getGameType()
-          == other.getGameType());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getRoomId()
+          != other.getRoomId()) return false;
+      if (getTableId()
+          != other.getTableId()) return false;
+      if (getCreatorId()
+          != other.getCreatorId()) return false;
+      if (getOwnerId()
+          != other.getOwnerId()) return false;
+      if (getStat()
+          != other.getStat()) return false;
+      if (!getTableRolesList()
+          .equals(other.getTableRolesList())) return false;
+      if (getGameType()
+          != other.getGameType()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -2534,7 +2583,7 @@ public final class ModelProto {
       }
       hash = (37 * hash) + GAMETYPE_FIELD_NUMBER;
       hash = (53 * hash) + getGameType();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -2609,6 +2658,7 @@ public final class ModelProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -2616,6 +2666,7 @@ public final class ModelProto {
     public static Builder newBuilder(proto.ModelProto.RoomTableInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -2643,6 +2694,7 @@ public final class ModelProto {
         return proto.ModelProto.internal_static_proto_RoomTableInfo_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ModelProto.internal_static_proto_RoomTableInfo_fieldAccessorTable
@@ -2652,20 +2704,15 @@ public final class ModelProto {
 
       // Construct using proto.ModelProto.RoomTableInfo.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getTableRolesFieldBuilder();
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         roomId_ = 0;
@@ -2680,24 +2727,28 @@ public final class ModelProto {
 
         if (tableRolesBuilder_ == null) {
           tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
         } else {
+          tableRoles_ = null;
           tableRolesBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000001);
         gameType_ = 0;
 
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ModelProto.internal_static_proto_RoomTableInfo_descriptor;
       }
 
+      @java.lang.Override
       public proto.ModelProto.RoomTableInfo getDefaultInstanceForType() {
         return proto.ModelProto.RoomTableInfo.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ModelProto.RoomTableInfo build() {
         proto.ModelProto.RoomTableInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -2706,56 +2757,62 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ModelProto.RoomTableInfo buildPartial() {
         proto.ModelProto.RoomTableInfo result = new proto.ModelProto.RoomTableInfo(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.roomId_ = roomId_;
         result.tableId_ = tableId_;
         result.creatorId_ = creatorId_;
         result.ownerId_ = ownerId_;
         result.stat_ = stat_;
         if (tableRolesBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             tableRoles_ = java.util.Collections.unmodifiableList(tableRoles_);
-            bitField0_ = (bitField0_ & ~0x00000020);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.tableRoles_ = tableRoles_;
         } else {
           result.tableRoles_ = tableRolesBuilder_.build();
         }
         result.gameType_ = gameType_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ModelProto.RoomTableInfo) {
           return mergeFrom((proto.ModelProto.RoomTableInfo)other);
@@ -2786,7 +2843,7 @@ public final class ModelProto {
           if (!other.tableRoles_.isEmpty()) {
             if (tableRoles_.isEmpty()) {
               tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000020);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensureTableRolesIsMutable();
               tableRoles_.addAll(other.tableRoles_);
@@ -2799,7 +2856,7 @@ public final class ModelProto {
               tableRolesBuilder_.dispose();
               tableRolesBuilder_ = null;
               tableRoles_ = other.tableRoles_;
-              bitField0_ = (bitField0_ & ~0x00000020);
+              bitField0_ = (bitField0_ & ~0x00000001);
               tableRolesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getTableRolesFieldBuilder() : null;
@@ -2811,30 +2868,88 @@ public final class ModelProto {
         if (other.getGameType() != 0) {
           setGameType(other.getGameType());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.RoomTableInfo parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                roomId_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 16: {
+                tableId_ = input.readInt64();
+
+                break;
+              } // case 16
+              case 24: {
+                creatorId_ = input.readInt32();
+
+                break;
+              } // case 24
+              case 32: {
+                ownerId_ = input.readInt32();
+
+                break;
+              } // case 32
+              case 40: {
+                stat_ = input.readInt32();
+
+                break;
+              } // case 40
+              case 50: {
+                proto.ModelProto.RoomRole m =
+                    input.readMessage(
+                        proto.ModelProto.RoomRole.parser(),
+                        extensionRegistry);
+                if (tableRolesBuilder_ == null) {
+                  ensureTableRolesIsMutable();
+                  tableRoles_.add(m);
+                } else {
+                  tableRolesBuilder_.addMessage(m);
+                }
+                break;
+              } // case 50
+              case 56: {
+                gameType_ = input.readInt32();
+
+                break;
+              } // case 56
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.RoomTableInfo) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
       private int bitField0_;
@@ -2842,12 +2957,16 @@ public final class ModelProto {
       private int roomId_ ;
       /**
        * <code>int32 roomId = 1;</code>
+       * @return The roomId.
        */
+      @java.lang.Override
       public int getRoomId() {
         return roomId_;
       }
       /**
        * <code>int32 roomId = 1;</code>
+       * @param value The roomId to set.
+       * @return This builder for chaining.
        */
       public Builder setRoomId(int value) {
         
@@ -2857,6 +2976,7 @@ public final class ModelProto {
       }
       /**
        * <code>int32 roomId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRoomId() {
         
@@ -2868,12 +2988,16 @@ public final class ModelProto {
       private long tableId_ ;
       /**
        * <code>int64 tableId = 2;</code>
+       * @return The tableId.
        */
+      @java.lang.Override
       public long getTableId() {
         return tableId_;
       }
       /**
        * <code>int64 tableId = 2;</code>
+       * @param value The tableId to set.
+       * @return This builder for chaining.
        */
       public Builder setTableId(long value) {
         
@@ -2883,6 +3007,7 @@ public final class ModelProto {
       }
       /**
        * <code>int64 tableId = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearTableId() {
         
@@ -2894,12 +3019,16 @@ public final class ModelProto {
       private int creatorId_ ;
       /**
        * <code>int32 creatorId = 3;</code>
+       * @return The creatorId.
        */
+      @java.lang.Override
       public int getCreatorId() {
         return creatorId_;
       }
       /**
        * <code>int32 creatorId = 3;</code>
+       * @param value The creatorId to set.
+       * @return This builder for chaining.
        */
       public Builder setCreatorId(int value) {
         
@@ -2909,6 +3038,7 @@ public final class ModelProto {
       }
       /**
        * <code>int32 creatorId = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCreatorId() {
         
@@ -2920,12 +3050,16 @@ public final class ModelProto {
       private int ownerId_ ;
       /**
        * <code>int32 ownerId = 4;</code>
+       * @return The ownerId.
        */
+      @java.lang.Override
       public int getOwnerId() {
         return ownerId_;
       }
       /**
        * <code>int32 ownerId = 4;</code>
+       * @param value The ownerId to set.
+       * @return This builder for chaining.
        */
       public Builder setOwnerId(int value) {
         
@@ -2935,6 +3069,7 @@ public final class ModelProto {
       }
       /**
        * <code>int32 ownerId = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearOwnerId() {
         
@@ -2950,7 +3085,9 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 stat = 5;</code>
+       * @return The stat.
        */
+      @java.lang.Override
       public int getStat() {
         return stat_;
       }
@@ -2960,6 +3097,8 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 stat = 5;</code>
+       * @param value The stat to set.
+       * @return This builder for chaining.
        */
       public Builder setStat(int value) {
         
@@ -2973,6 +3112,7 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 stat = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearStat() {
         
@@ -2984,9 +3124,9 @@ public final class ModelProto {
       private java.util.List<proto.ModelProto.RoomRole> tableRoles_ =
         java.util.Collections.emptyList();
       private void ensureTableRolesIsMutable() {
-        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           tableRoles_ = new java.util.ArrayList<proto.ModelProto.RoomRole>(tableRoles_);
-          bitField0_ |= 0x00000020;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -3136,7 +3276,7 @@ public final class ModelProto {
       public Builder clearTableRoles() {
         if (tableRolesBuilder_ == null) {
           tableRoles_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           tableRolesBuilder_.clear();
@@ -3213,7 +3353,7 @@ public final class ModelProto {
           tableRolesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               proto.ModelProto.RoomRole, proto.ModelProto.RoomRole.Builder, proto.ModelProto.RoomRoleOrBuilder>(
                   tableRoles_,
-                  ((bitField0_ & 0x00000020) == 0x00000020),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           tableRoles_ = null;
@@ -3228,7 +3368,9 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 gameType = 7;</code>
+       * @return The gameType.
        */
+      @java.lang.Override
       public int getGameType() {
         return gameType_;
       }
@@ -3238,6 +3380,8 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 gameType = 7;</code>
+       * @param value The gameType to set.
+       * @return This builder for chaining.
        */
       public Builder setGameType(int value) {
         
@@ -3251,6 +3395,7 @@ public final class ModelProto {
        * </pre>
        *
        * <code>int32 gameType = 7;</code>
+       * @return This builder for chaining.
        */
       public Builder clearGameType() {
         
@@ -3258,11 +3403,13 @@ public final class ModelProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3284,11 +3431,23 @@ public final class ModelProto {
 
     private static final com.google.protobuf.Parser<RoomTableInfo>
         PARSER = new com.google.protobuf.AbstractParser<RoomTableInfo>() {
+      @java.lang.Override
       public RoomTableInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new RoomTableInfo(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -3301,6 +3460,7 @@ public final class ModelProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ModelProto.RoomTableInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3313,6 +3473,7 @@ public final class ModelProto {
 
     /**
      * <code>int32 roleId = 1;</code>
+     * @return The roleId.
      */
     int getRoleId();
 
@@ -3322,11 +3483,13 @@ public final class ModelProto {
      * </pre>
      *
      * <code>bytes avatar = 3;</code>
+     * @return The avatar.
      */
     com.google.protobuf.ByteString getAvatar();
 
     /**
      * <code>bytes nickName = 4;</code>
+     * @return The nickName.
      */
     com.google.protobuf.ByteString getNickName();
   }
@@ -3337,7 +3500,7 @@ public final class ModelProto {
    *
    * Protobuf type {@code proto.RoomRole}
    */
-  public  static final class RoomRole extends
+  public static final class RoomRole extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.RoomRole)
       RoomRoleOrBuilder {
@@ -3347,9 +3510,15 @@ public final class ModelProto {
       super(builder);
     }
     private RoomRole() {
-      roleId_ = 0;
       avatar_ = com.google.protobuf.ByteString.EMPTY;
       nickName_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new RoomRole();
     }
 
     @java.lang.Override
@@ -3357,61 +3526,12 @@ public final class ModelProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private RoomRole(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-
-              roleId_ = input.readInt32();
-              break;
-            }
-            case 26: {
-
-              avatar_ = input.readBytes();
-              break;
-            }
-            case 34: {
-
-              nickName_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.ModelProto.internal_static_proto_RoomRole_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.ModelProto.internal_static_proto_RoomRole_fieldAccessorTable
@@ -3423,7 +3543,9 @@ public final class ModelProto {
     private int roleId_;
     /**
      * <code>int32 roleId = 1;</code>
+     * @return The roleId.
      */
+    @java.lang.Override
     public int getRoleId() {
       return roleId_;
     }
@@ -3436,7 +3558,9 @@ public final class ModelProto {
      * </pre>
      *
      * <code>bytes avatar = 3;</code>
+     * @return The avatar.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getAvatar() {
       return avatar_;
     }
@@ -3445,12 +3569,15 @@ public final class ModelProto {
     private com.google.protobuf.ByteString nickName_;
     /**
      * <code>bytes nickName = 4;</code>
+     * @return The nickName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNickName() {
       return nickName_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3460,6 +3587,7 @@ public final class ModelProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (roleId_ != 0) {
@@ -3471,9 +3599,10 @@ public final class ModelProto {
       if (!nickName_.isEmpty()) {
         output.writeBytes(4, nickName_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3491,7 +3620,7 @@ public final class ModelProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(4, nickName_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -3506,15 +3635,14 @@ public final class ModelProto {
       }
       proto.ModelProto.RoomRole other = (proto.ModelProto.RoomRole) obj;
 
-      boolean result = true;
-      result = result && (getRoleId()
-          == other.getRoleId());
-      result = result && getAvatar()
-          .equals(other.getAvatar());
-      result = result && getNickName()
-          .equals(other.getNickName());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getRoleId()
+          != other.getRoleId()) return false;
+      if (!getAvatar()
+          .equals(other.getAvatar())) return false;
+      if (!getNickName()
+          .equals(other.getNickName())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3530,7 +3658,7 @@ public final class ModelProto {
       hash = (53 * hash) + getAvatar().hashCode();
       hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
       hash = (53 * hash) + getNickName().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -3605,6 +3733,7 @@ public final class ModelProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3612,6 +3741,7 @@ public final class ModelProto {
     public static Builder newBuilder(proto.ModelProto.RoomRole prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3639,6 +3769,7 @@ public final class ModelProto {
         return proto.ModelProto.internal_static_proto_RoomRole_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.ModelProto.internal_static_proto_RoomRole_fieldAccessorTable
@@ -3648,19 +3779,15 @@ public final class ModelProto {
 
       // Construct using proto.ModelProto.RoomRole.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         roleId_ = 0;
@@ -3672,15 +3799,18 @@ public final class ModelProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.ModelProto.internal_static_proto_RoomRole_descriptor;
       }
 
+      @java.lang.Override
       public proto.ModelProto.RoomRole getDefaultInstanceForType() {
         return proto.ModelProto.RoomRole.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.ModelProto.RoomRole build() {
         proto.ModelProto.RoomRole result = buildPartial();
         if (!result.isInitialized()) {
@@ -3689,6 +3819,7 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.ModelProto.RoomRole buildPartial() {
         proto.ModelProto.RoomRole result = new proto.ModelProto.RoomRole(this);
         result.roleId_ = roleId_;
@@ -3698,32 +3829,39 @@ public final class ModelProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.ModelProto.RoomRole) {
           return mergeFrom((proto.ModelProto.RoomRole)other);
@@ -3744,42 +3882,76 @@ public final class ModelProto {
         if (other.getNickName() != com.google.protobuf.ByteString.EMPTY) {
           setNickName(other.getNickName());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.ModelProto.RoomRole parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                roleId_ = input.readInt32();
+
+                break;
+              } // case 8
+              case 26: {
+                avatar_ = input.readBytes();
+
+                break;
+              } // case 26
+              case 34: {
+                nickName_ = input.readBytes();
+
+                break;
+              } // case 34
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.ModelProto.RoomRole) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
       private int roleId_ ;
       /**
        * <code>int32 roleId = 1;</code>
+       * @return The roleId.
        */
+      @java.lang.Override
       public int getRoleId() {
         return roleId_;
       }
       /**
        * <code>int32 roleId = 1;</code>
+       * @param value The roleId to set.
+       * @return This builder for chaining.
        */
       public Builder setRoleId(int value) {
         
@@ -3789,6 +3961,7 @@ public final class ModelProto {
       }
       /**
        * <code>int32 roleId = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRoleId() {
         
@@ -3804,7 +3977,9 @@ public final class ModelProto {
        * </pre>
        *
        * <code>bytes avatar = 3;</code>
+       * @return The avatar.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getAvatar() {
         return avatar_;
       }
@@ -3814,6 +3989,8 @@ public final class ModelProto {
        * </pre>
        *
        * <code>bytes avatar = 3;</code>
+       * @param value The avatar to set.
+       * @return This builder for chaining.
        */
       public Builder setAvatar(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -3830,6 +4007,7 @@ public final class ModelProto {
        * </pre>
        *
        * <code>bytes avatar = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearAvatar() {
         
@@ -3841,12 +4019,16 @@ public final class ModelProto {
       private com.google.protobuf.ByteString nickName_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes nickName = 4;</code>
+       * @return The nickName.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getNickName() {
         return nickName_;
       }
       /**
        * <code>bytes nickName = 4;</code>
+       * @param value The nickName to set.
+       * @return This builder for chaining.
        */
       public Builder setNickName(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -3859,6 +4041,7 @@ public final class ModelProto {
       }
       /**
        * <code>bytes nickName = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearNickName() {
         
@@ -3866,11 +4049,13 @@ public final class ModelProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3892,11 +4077,23 @@ public final class ModelProto {
 
     private static final com.google.protobuf.Parser<RoomRole>
         PARSER = new com.google.protobuf.AbstractParser<RoomRole>() {
+      @java.lang.Override
       public RoomRole parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new RoomRole(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -3909,6 +4106,7 @@ public final class ModelProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.ModelProto.RoomRole getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3958,22 +4156,14 @@ public final class ModelProto {
       " \001(\005\022\017\n\007tableId\030\002 \001(\003\022\021\n\tcreatorId\030\003 \001(\005" +
       "\022\017\n\007ownerId\030\004 \001(\005\022\014\n\004stat\030\005 \001(\005\022#\n\ntable" +
       "Roles\030\006 \003(\0132\017.proto.RoomRole\022\020\n\010gameType" +
-      "\030\007 \001(\005\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005\022\016\n\006av",
+      "\030\007 \001(\005\"<\n\010RoomRole\022\016\n\006roleId\030\001 \001(\005\022\016\n\006av" +
       "atar\030\003 \001(\014\022\020\n\010nickName\030\004 \001(\014B\014B\nModelPro" +
       "tob\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
     internal_static_proto_ServerInfo_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_proto_ServerInfo_fieldAccessorTable = new

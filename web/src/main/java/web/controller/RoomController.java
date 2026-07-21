@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import proto.ModelProto;
-import proto.RoomProto;
+import proto.LobbyProto;
 import web.service.UserService;
 
 /**
@@ -45,8 +45,8 @@ public class RoomController {
 			CompletableFuture<Message> future = userService.getRoomList(sessionId);
 			Message response = future.get(5, TimeUnit.SECONDS);
 
-			if (response instanceof RoomProto.AckRoomList) {
-				RoomProto.AckRoomList ackRoomList = (RoomProto.AckRoomList) response;
+			if (response instanceof LobbyProto.AckRoomList) {
+				LobbyProto.AckRoomList ackRoomList = (LobbyProto.AckRoomList) response;
 				List<Map<String, Object>> rooms = new ArrayList<>();
 
 				for (ModelProto.Room room : ackRoomList.getRoomListList()) {
@@ -114,8 +114,8 @@ public class RoomController {
 			CompletableFuture<Message> future = userService.joinTable(sessionId, roomId);
 			Message response = future.get(10, TimeUnit.SECONDS);
 
-			if (response instanceof RoomProto.AckJoinRoomTable) {
-				RoomProto.AckJoinRoomTable ack = (RoomProto.AckJoinRoomTable) response;
+			if (response instanceof LobbyProto.AckJoinRoomTable) {
+				LobbyProto.AckJoinRoomTable ack = (LobbyProto.AckJoinRoomTable) response;
 
 				Map<String, Object> result = new HashMap<>();
 				result.put("code", 0);

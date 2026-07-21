@@ -1,0 +1,54 @@
+syntax = "proto3";
+option java_outer_classname = "LobbyProto";
+
+package proto;
+
+import "model.proto";
+
+// 登录（用户名+密码，或 token 重连）
+message ReqLogin {
+    bytes username = 1;
+    bytes password = 2;
+    bytes token = 3; // 重连时带 token；账号密码登录可空
+}
+
+message AckLogin {
+    int32 code = 1; // 0=成功，非0失败
+    int32 userId = 2;
+    bytes nickName = 3;
+    bytes token = 4;
+    repeated int64 tables = 5; // 已加入的桌子（本地查询）
+}
+
+// 用户注册（与 server.proto 的服务注册 ReqRegister 区分）
+message ReqUserRegister {
+    bytes username = 1;
+    bytes password = 2;
+    bytes nickName = 3;
+    bytes invite = 4; // 可选邀请码
+}
+
+message AckUserRegister {
+    int32 code = 1;
+    int32 userId = 2;
+    bytes nickName = 3;
+    bytes token = 4;
+    repeated int64 tables = 5;
+}
+
+// 请求加入房间桌子
+message ReqJoinRoomTable {
+    int32 roomId = 1;
+}
+
+message AckJoinRoomTable {
+    int64 tableId = 1;
+}
+
+// 请求房间列表
+message ReqRoomList {
+}
+
+message AckRoomList {
+    repeated Room roomList = 1;
+}

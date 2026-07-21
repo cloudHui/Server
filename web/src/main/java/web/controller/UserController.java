@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import web.service.UserService;
 
 /**
- * 用户登录和认证接口
+ * 兼容旧路径；推荐使用 /api/auth/*
  */
 @RestController
 @RequestMapping("/api")
@@ -23,26 +23,30 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	/**
-	 * 登录接口
-	 * POST /api/login { "nickname": "玩家名" }
-	 */
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> request) {
-		String nickname = request.get("nickname");
-		if (nickname == null || nickname.trim().isEmpty()) {
+		String username = request.get("username");
+		String password = request.get("password");
+		if (username == null || username.trim().isEmpty()) {
+			// 兼容旧 nickname 字段：不再支持游客开号
 			Map<String, Object> error = new HashMap<>();
 			error.put("code", 400);
-			error.put("msg", "昵称不能为空");
+			error.put("msg", "请使用 username/password 登录，或改用 /api/auth/login");
+			return ResponseEntity.badRequest().body(error);
+		}
+		if (password == null || password.isEmpty()) {
+			Map<String, Object> error = new HashMap<>();
+			error.put("code", 400);
+			error.put("msg", "密码不能为空");
 			return ResponseEntity.badRequest().body(error);
 		}
 
-		UserService.UserInfo userInfo = userService.login(nickname.trim());
+		UserService.UserInfo userInfo = userService.login(username.trim(), password);
 		if (userInfo == null) {
 			Map<String, Object> error = new HashMap<>();
-			error.put("code", 500);
-			error.put("msg", "登录失败，请重试");
-			return ResponseEntity.status(500).body(error);
+			error.put("code", 401);
+			error.put("msg", "登录失败");
+			return ResponseEntity.status(401).body(error);
 		}
 
 		Map<String, Object> result = new HashMap<>();
@@ -55,27 +59,16 @@ public class UserController {
 		return ResponseEntity.ok(result);
 	}
 
-	/**
-	 * Token验证接口
-	 * Authorization: Bearer <token>
-	 */
 	@GetMapping("/validate")
-	public ResponseEntity<Map<String, Object>> validate(@RequestHeader(value = "Authorization", required = false) String authorization) {
+	public ResponseEntity<Map<String, Object>> validate(
+			@RequestHeader(value = "Authorization", required = false) String authorization) {
 		Map<String, Object> result = new HashMap<>();
-
 		if (authorization == null || !authorization.startsWith("Bearer ")) {
 			result.put("code", 401);
 			result.put("msg", "缺少Authorization头");
 			return ResponseEntity.status(401).body(result);
 		}
-
 		String token = authorization.substring(7).trim();
-		if (token.isEmpty()) {
-			result.put("code", 401);
-			result.put("msg", "Token为空");
-			return ResponseEntity.status(401).body(result);
-		}
-
 		UserService.UserInfo userInfo = userService.validateToken(token);
 		if (userInfo != null) {
 			result.put("code", 0);
@@ -91,17 +84,12 @@ public class UserController {
 		return ResponseEntity.ok(result);
 	}
 
-	/**
-	 * 登出接口
-	 * POST /api/logout { "sessionId": "xxx" }
-	 */
 	@PostMapping("/logout")
 	public ResponseEntity<Map<String, Object>> logout(@RequestBody Map<String, String> request) {
 		String sessionId = request.get("sessionId");
 		if (sessionId != null) {
 			userService.logout(sessionId);
 		}
-
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 0);
 		result.put("msg", "success");

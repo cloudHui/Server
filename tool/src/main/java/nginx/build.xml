@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="NginxServer" basedir="." default="build">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir" value="${build.dir}/"/>
+    <property name="main-class" value="NginxServer"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" encoding="UTF-8"/>
+    </target>
+
+    <target name="build" depends="compile">
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+        <echo message="打包成功！JAR 文件位于：${jar.dir}/${ant.project.name}.jar" />
+    </target>
+
+</project>

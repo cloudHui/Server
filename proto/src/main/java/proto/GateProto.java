@@ -24,26 +24,31 @@ public final class GateProto {
      * </pre>
      *
      * <code>bytes message = 1;</code>
+     * @return The message.
      */
     com.google.protobuf.ByteString getMessage();
 
     /**
      * <code>int32 type = 2;</code>
+     * @return The type.
      */
     int getType();
 
     /**
      * <code>int32 clientId = 3;</code>
+     * @return The clientId.
      */
     int getClientId();
 
     /**
      * <code>int32 channel = 4;</code>
+     * @return The channel.
      */
     int getChannel();
 
     /**
      * <code>int32 club = 5;</code>
+     * @return The club.
      */
     int getClub();
   }
@@ -59,7 +64,7 @@ public final class GateProto {
    *
    * Protobuf type {@code proto.BroadCast}
    */
-  public  static final class BroadCast extends
+  public static final class BroadCast extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:proto.BroadCast)
       BroadCastOrBuilder {
@@ -70,10 +75,13 @@ public final class GateProto {
     }
     private BroadCast() {
       message_ = com.google.protobuf.ByteString.EMPTY;
-      type_ = 0;
-      clientId_ = 0;
-      channel_ = 0;
-      club_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BroadCast();
     }
 
     @java.lang.Override
@@ -81,71 +89,12 @@ public final class GateProto {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private BroadCast(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-
-              message_ = input.readBytes();
-              break;
-            }
-            case 16: {
-
-              type_ = input.readInt32();
-              break;
-            }
-            case 24: {
-
-              clientId_ = input.readInt32();
-              break;
-            }
-            case 32: {
-
-              channel_ = input.readInt32();
-              break;
-            }
-            case 40: {
-
-              club_ = input.readInt32();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return proto.GateProto.internal_static_proto_BroadCast_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return proto.GateProto.internal_static_proto_BroadCast_fieldAccessorTable
@@ -161,7 +110,9 @@ public final class GateProto {
      * </pre>
      *
      * <code>bytes message = 1;</code>
+     * @return The message.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getMessage() {
       return message_;
     }
@@ -170,7 +121,9 @@ public final class GateProto {
     private int type_;
     /**
      * <code>int32 type = 2;</code>
+     * @return The type.
      */
+    @java.lang.Override
     public int getType() {
       return type_;
     }
@@ -179,7 +132,9 @@ public final class GateProto {
     private int clientId_;
     /**
      * <code>int32 clientId = 3;</code>
+     * @return The clientId.
      */
+    @java.lang.Override
     public int getClientId() {
       return clientId_;
     }
@@ -188,7 +143,9 @@ public final class GateProto {
     private int channel_;
     /**
      * <code>int32 channel = 4;</code>
+     * @return The channel.
      */
+    @java.lang.Override
     public int getChannel() {
       return channel_;
     }
@@ -197,12 +154,15 @@ public final class GateProto {
     private int club_;
     /**
      * <code>int32 club = 5;</code>
+     * @return The club.
      */
+    @java.lang.Override
     public int getClub() {
       return club_;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -212,6 +172,7 @@ public final class GateProto {
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!message_.isEmpty()) {
@@ -229,9 +190,10 @@ public final class GateProto {
       if (club_ != 0) {
         output.writeInt32(5, club_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -257,7 +219,7 @@ public final class GateProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, club_);
       }
-      size += unknownFields.getSerializedSize();
+      size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
       return size;
     }
@@ -272,19 +234,18 @@ public final class GateProto {
       }
       proto.GateProto.BroadCast other = (proto.GateProto.BroadCast) obj;
 
-      boolean result = true;
-      result = result && getMessage()
-          .equals(other.getMessage());
-      result = result && (getType()
-          == other.getType());
-      result = result && (getClientId()
-          == other.getClientId());
-      result = result && (getChannel()
-          == other.getChannel());
-      result = result && (getClub()
-          == other.getClub());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getMessage()
+          .equals(other.getMessage())) return false;
+      if (getType()
+          != other.getType()) return false;
+      if (getClientId()
+          != other.getClientId()) return false;
+      if (getChannel()
+          != other.getChannel()) return false;
+      if (getClub()
+          != other.getClub()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -304,7 +265,7 @@ public final class GateProto {
       hash = (53 * hash) + getChannel();
       hash = (37 * hash) + CLUB_FIELD_NUMBER;
       hash = (53 * hash) + getClub();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
@@ -379,6 +340,7 @@ public final class GateProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -386,6 +348,7 @@ public final class GateProto {
     public static Builder newBuilder(proto.GateProto.BroadCast prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -418,6 +381,7 @@ public final class GateProto {
         return proto.GateProto.internal_static_proto_BroadCast_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return proto.GateProto.internal_static_proto_BroadCast_fieldAccessorTable
@@ -427,19 +391,15 @@ public final class GateProto {
 
       // Construct using proto.GateProto.BroadCast.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
+
       }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         message_ = com.google.protobuf.ByteString.EMPTY;
@@ -455,15 +415,18 @@ public final class GateProto {
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return proto.GateProto.internal_static_proto_BroadCast_descriptor;
       }
 
+      @java.lang.Override
       public proto.GateProto.BroadCast getDefaultInstanceForType() {
         return proto.GateProto.BroadCast.getDefaultInstance();
       }
 
+      @java.lang.Override
       public proto.GateProto.BroadCast build() {
         proto.GateProto.BroadCast result = buildPartial();
         if (!result.isInitialized()) {
@@ -472,6 +435,7 @@ public final class GateProto {
         return result;
       }
 
+      @java.lang.Override
       public proto.GateProto.BroadCast buildPartial() {
         proto.GateProto.BroadCast result = new proto.GateProto.BroadCast(this);
         result.message_ = message_;
@@ -483,32 +447,39 @@ public final class GateProto {
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof proto.GateProto.BroadCast) {
           return mergeFrom((proto.GateProto.BroadCast)other);
@@ -535,30 +506,70 @@ public final class GateProto {
         if (other.getClub() != 0) {
           setClub(other.getClub());
         }
-        this.mergeUnknownFields(other.unknownFields);
+        this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.GateProto.BroadCast parsedMessage = null;
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
         try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                message_ = input.readBytes();
+
+                break;
+              } // case 10
+              case 16: {
+                type_ = input.readInt32();
+
+                break;
+              } // case 16
+              case 24: {
+                clientId_ = input.readInt32();
+
+                break;
+              } // case 24
+              case 32: {
+                channel_ = input.readInt32();
+
+                break;
+              } // case 32
+              case 40: {
+                club_ = input.readInt32();
+
+                break;
+              } // case 40
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.GateProto.BroadCast) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
+          onChanged();
+        } // finally
         return this;
       }
 
@@ -569,7 +580,9 @@ public final class GateProto {
        * </pre>
        *
        * <code>bytes message = 1;</code>
+       * @return The message.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getMessage() {
         return message_;
       }
@@ -579,6 +592,8 @@ public final class GateProto {
        * </pre>
        *
        * <code>bytes message = 1;</code>
+       * @param value The message to set.
+       * @return This builder for chaining.
        */
       public Builder setMessage(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -595,6 +610,7 @@ public final class GateProto {
        * </pre>
        *
        * <code>bytes message = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMessage() {
         
@@ -606,12 +622,16 @@ public final class GateProto {
       private int type_ ;
       /**
        * <code>int32 type = 2;</code>
+       * @return The type.
        */
+      @java.lang.Override
       public int getType() {
         return type_;
       }
       /**
        * <code>int32 type = 2;</code>
+       * @param value The type to set.
+       * @return This builder for chaining.
        */
       public Builder setType(int value) {
         
@@ -621,6 +641,7 @@ public final class GateProto {
       }
       /**
        * <code>int32 type = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearType() {
         
@@ -632,12 +653,16 @@ public final class GateProto {
       private int clientId_ ;
       /**
        * <code>int32 clientId = 3;</code>
+       * @return The clientId.
        */
+      @java.lang.Override
       public int getClientId() {
         return clientId_;
       }
       /**
        * <code>int32 clientId = 3;</code>
+       * @param value The clientId to set.
+       * @return This builder for chaining.
        */
       public Builder setClientId(int value) {
         
@@ -647,6 +672,7 @@ public final class GateProto {
       }
       /**
        * <code>int32 clientId = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearClientId() {
         
@@ -658,12 +684,16 @@ public final class GateProto {
       private int channel_ ;
       /**
        * <code>int32 channel = 4;</code>
+       * @return The channel.
        */
+      @java.lang.Override
       public int getChannel() {
         return channel_;
       }
       /**
        * <code>int32 channel = 4;</code>
+       * @param value The channel to set.
+       * @return This builder for chaining.
        */
       public Builder setChannel(int value) {
         
@@ -673,6 +703,7 @@ public final class GateProto {
       }
       /**
        * <code>int32 channel = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearChannel() {
         
@@ -684,12 +715,16 @@ public final class GateProto {
       private int club_ ;
       /**
        * <code>int32 club = 5;</code>
+       * @return The club.
        */
+      @java.lang.Override
       public int getClub() {
         return club_;
       }
       /**
        * <code>int32 club = 5;</code>
+       * @param value The club to set.
+       * @return This builder for chaining.
        */
       public Builder setClub(int value) {
         
@@ -699,6 +734,7 @@ public final class GateProto {
       }
       /**
        * <code>int32 club = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearClub() {
         
@@ -706,11 +742,13 @@ public final class GateProto {
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -732,11 +770,23 @@ public final class GateProto {
 
     private static final com.google.protobuf.Parser<BroadCast>
         PARSER = new com.google.protobuf.AbstractParser<BroadCast>() {
+      @java.lang.Override
       public BroadCast parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-          return new BroadCast(input, extensionRegistry);
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
       }
     };
 
@@ -749,6 +799,7 @@ public final class GateProto {
       return PARSER;
     }
 
+    @java.lang.Override
     public proto.GateProto.BroadCast getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -774,18 +825,10 @@ public final class GateProto {
       "\005\022\017\n\007channel\030\004 \001(\005\022\014\n\004club\030\005 \001(\005B\013B\tGate" +
       "Protob\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
     internal_static_proto_BroadCast_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_proto_BroadCast_fieldAccessorTable = new

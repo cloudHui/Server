@@ -2,15 +2,14 @@ package robot.connect.handle.center;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import com.google.protobuf.ByteString;
 import msg.annotation.ProcessClass;
 import msg.registor.enums.ServerType;
-import msg.registor.message.HMsg;
+import msg.registor.message.LMsg;
 import net.connect.TCPConnect;
 import net.client.Sender;
-import proto.HallProto;
+import proto.LobbyProto;
 import proto.ModelProto;
 import proto.ServerProto;
 import robot.Robot;
@@ -37,11 +36,12 @@ public class AckServerInfoHandle extends AbstractAckServerInfoHandle {
 				Robot.getInstance().getServerId(),
 				Robot.getInstance().getInnerIp() + ":" + Robot.getInstance().getPort(),
 				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
-				//Todo 这里后面测多个机器人的时候需要改成登录多个机器人
-				ConnectProcessor.HANDLERS, ServerType.Robot, new TCPConnect.CallParam(HMsg.REQ_LOGIN_MSG, HallProto.ReqLogin.newBuilder()
-						.setNickName(ByteString.copyFromUtf8(UUID.randomUUID().toString()))
-						.setCert(ByteString.copyFromUtf8(Robot.getId()))
-						.build(), HandleManager::sendMsg, ConnectProcessor.PARSER)));
+				ConnectProcessor.HANDLERS, ServerType.Robot, new TCPConnect.CallParam(LMsg.REQ_LOGIN_MSG,
+						LobbyProto.ReqLogin.newBuilder()
+								.setUsername(ByteString.copyFromUtf8("admin"))
+								.setPassword(ByteString.copyFromUtf8("admin123"))
+								.build(),
+						HandleManager::sendMsg, ConnectProcessor.PARSER)));
 	}
 
 	@Override
