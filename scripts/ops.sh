@@ -6,6 +6,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SCRIPTS="$ROOT/scripts"
 NGINX_DIR="$SCRIPTS/nginx"
 BUILD="$ROOT/build"
+LOG_HOME="$ROOT/logs"
 PATH_FILE="$SCRIPTS/web-path.txt"
 # 仅作 status 展示；nginx-apply 必须显式传入域名
 DOMAIN="${SERVER_DOMAIN:-}"
@@ -126,9 +127,16 @@ start_one() {
   fi
 
   mkdir -p "$dir"
-  mkdir -p "$ROOT/build/logs/$svc" 2>/dev/null || true
+  mkdir -p "$LOG_HOME/$svc"
 
-  local jvm=(java -Dfile.encoding=UTF-8 "-Xms${heap}" "-Xmx${heap}" -XX:+UseG1GC)
+  local jvm=(
+    java
+    -Dfile.encoding=UTF-8
+    "-DLOG_HOME=${LOG_HOME}"
+    "-Xms${heap}"
+    "-Xmx${heap}"
+    -XX:+UseG1GC
+  )
   local workdir="$dir"
   if [[ "$svc" == "web" ]]; then
     local ctx
@@ -136,20 +144,21 @@ start_one() {
     jvm+=("-Dserver.servlet.context-path=${ctx}")
     # 保持仓库根为工作目录，使 application.yml 中 build/game/replay 路径有效
     workdir="$ROOT"
-    echo "[$svc] 启动 context-path=${ctx} heap=${heap}"
+    echo "[$svc] 启动 context-path=${ctx} heap=${heap} log=${LOG_HOME}/${svc}"
   else
-    echo "[$svc] 启动 heap=${heap}"
+    echo "[$svc] 启动 heap=${heap} log=${LOG_HOME}/${svc}"
   fi
 
+  local console_out="$LOG_HOME/$svc/console.out"
   (
     cd "$workdir"
-    nohup "${jvm[@]}" -jar "$jar" >/dev/null 2>&1 &
+    nohup "${jvm[@]}" -jar "$jar" >>"$console_out" 2>&1 &
   )
   sleep 1
   if [[ -n "$(pids_of "$svc")" ]]; then
     echo "[$svc] 已启动 PID $(pids_of "$svc" | tr '\n' ' ')"
   else
-    echo "[$svc] 启动失败，请检查 jar / 依赖"
+    echo "[$svc] 启动失败，请检查 $console_out 与 jar / 依赖"
     return 1
   fi
 }
@@ -220,6 +229,7 @@ cmd_status() {
   else
     echo "外网入口: 设置 SERVER_DOMAIN 或使用 nginx-apply 时的域名 + /${wp}/"
   fi
+  echo "日志目录: $LOG_HOME/<服务>/{日期日志, error-*.log, console.out}"
   if [[ -f /etc/nginx/snippets/game-web.conf ]] && grep -q "/${wp}/" /etc/nginx/snippets/game-web.conf 2>/dev/null; then
     echo "Nginx 反代: snippets/game-web.conf 已是当前路径"
   elif [[ -n "$DOMAIN" && -f "/etc/nginx/conf.d/${DOMAIN}.conf" ]] && grep -q "/${wp}/" "/etc/nginx/conf.d/${DOMAIN}.conf" 2>/dev/null; then
@@ -252,7 +262,7 @@ cmd_clean_logs() {
   local days=7
   local removed=0
   local dirs=(
-    "$ROOT/logs"
+    "$LOG_HOME"
     "$ROOT/build/logs"
     "$BUILD/web/logs"
     "$ROOT/web/logs"
@@ -263,9 +273,9 @@ cmd_clean_logs() {
     while IFS= read -r -d '' f; do
       rm -f "$f"
       removed=$((removed + 1))
-    done < <(find "$d" -type f \( -name '*.log' -o -name '*.log.gz' -o -name '*.zip' \) -mtime +$((days - 1)) -print0 2>/dev/null)
+    done < <(find "$d" -type f \( -name '*.log' -o -name '*.log.gz' -o -name '*.zip' -o -name 'console.out' \) -mtime +$((days - 1)) -print0 2>/dev/null)
   done
-  echo "已清理超过 ${days} 天的日志文件，删除 ${removed} 个"
+  echo "已清理超过 ${days} 天的日志文件，删除 ${removed} 个（统一目录: $LOG_HOME）"
 }
 
 find_domain_conf() {

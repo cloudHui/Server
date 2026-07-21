@@ -18,17 +18,4 @@ game:
   # 相对 web 启动目录；若从 repos/Server 起服可用此路径
   replay-dir: build/game/replay
 
-logging:
-  file:
-    name: ./logs/web/app.log
-  logback:
-    rollingpolicy:
-      max-file-size: 30MB
-      file-name-pattern: ./logs/web/archived/app-%d{yyyy-MM-dd-HH}.%i.log.gz
-      max-history: 168
-      total-size-cap: 2GB
-  pattern:
-    file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-  level:
-    web: INFO
+# 日志级别与滚动见 logback-spring.xml（勿在此写 logging.level.web，会命中 Spring Boot web 日志组）
