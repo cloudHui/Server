@@ -4,9 +4,11 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SCRIPTS="$ROOT/scripts"
+NGINX_DIR="$SCRIPTS/nginx"
 BUILD="$ROOT/build"
 PATH_FILE="$SCRIPTS/web-path.txt"
-DOMAIN="${SERVER_DOMAIN:-www.cloudhui.cc.cd}"
+# 仅作 status 展示；nginx-apply 必须显式传入域名
+DOMAIN="${SERVER_DOMAIN:-}"
 
 ORDER=(center gate lobby game web)
 
@@ -28,16 +30,20 @@ declare -A HEAP=(
 
 usage() {
   cat <<EOF
-用法: $0 {start|stop|restart|status|build|clean-logs} [服务|all]
+用法:
+  $0 {start|stop|restart|status} [服务|all]
+  $0 build
+  $0 clean-logs
+  $0 nginx-apply <域名>
 
 服务: center | gate | lobby | game | web | all
-默认服务: all（start/stop/restart/status）
 
 示例:
   $0 start
   $0 restart web
   $0 build
   $0 clean-logs
+  $0 nginx-apply www.example.com
 EOF
 }
 
@@ -159,7 +165,13 @@ cmd_start() {
     sleep 1
   done
   if [[ "${1:-all}" == "all" || "${1:-}" == "web" ]]; then
-    echo "外网入口: https://${DOMAIN}/$(web_path)/"
+    local wp
+    wp="$(web_path)"
+    if [[ -n "$DOMAIN" ]]; then
+      echo "外网入口: https://${DOMAIN}/${wp}/"
+    else
+      echo "Web 路径: /${wp}/ （外网域名请用 nginx-apply <域名> 或 SERVER_DOMAIN）"
+    fi
   fi
 }
 
@@ -202,14 +214,18 @@ cmd_status() {
   done
   local wp
   wp="$(web_path)"
-  echo "外网入口: https://${DOMAIN}/${wp}/"
   echo "本机 web:  http://127.0.0.1:8081/${wp}/"
-  if [[ -f /etc/nginx/conf.d/www.cloudhui.cc.cd.conf ]]; then
-    if grep -q "/${wp}/" /etc/nginx/conf.d/www.cloudhui.cc.cd.conf 2>/dev/null; then
-      echo "Nginx 反代: 已配置随机路径"
-    else
-      echo "警告: Nginx 配置中未找到路径 /${wp}/ ，请同步 conf 后 reload"
-    fi
+  if [[ -n "$DOMAIN" ]]; then
+    echo "外网入口: https://${DOMAIN}/${wp}/"
+  else
+    echo "外网入口: 设置 SERVER_DOMAIN 或使用 nginx-apply 时的域名 + /${wp}/"
+  fi
+  if [[ -f /etc/nginx/snippets/game-web.conf ]] && grep -q "/${wp}/" /etc/nginx/snippets/game-web.conf 2>/dev/null; then
+    echo "Nginx 反代: snippets/game-web.conf 已是当前路径"
+  elif [[ -n "$DOMAIN" && -f "/etc/nginx/conf.d/${DOMAIN}.conf" ]] && grep -q "/${wp}/" "/etc/nginx/conf.d/${DOMAIN}.conf" 2>/dev/null; then
+    echo "Nginx 反代: 域名 conf 内已含当前路径（建议改用 nginx-apply）"
+  else
+    echo "Nginx 反代: 未检测到当前路径，可执行: $0 nginx-apply <域名>"
   fi
 }
 
@@ -252,6 +268,76 @@ cmd_clean_logs() {
   echo "已清理超过 ${days} 天的日志文件，删除 ${removed} 个"
 }
 
+find_domain_conf() {
+  local domain="$1"
+  local candidate="/etc/nginx/conf.d/${domain}.conf"
+  if [[ -f "$candidate" ]]; then
+    echo "$candidate"
+    return 0
+  fi
+  local f
+  for f in /etc/nginx/conf.d/*.conf; do
+    [[ -f "$f" ]] || continue
+    if grep -qE "server_name[[:space:]]+.*${domain}" "$f" 2>/dev/null; then
+      echo "$f"
+      return 0
+    fi
+  done
+  return 1
+}
+
+cmd_nginx_apply() {
+  local domain="${1:-}"
+  if [[ -z "$domain" ]]; then
+    echo "请传入域名，例如: $0 nginx-apply www.example.com" >&2
+    exit 1
+  fi
+  command -v sudo >/dev/null 2>&1 || { echo "需要 sudo"; exit 1; }
+  command -v python3 >/dev/null 2>&1 || { echo "需要 python3"; exit 1; }
+
+  local wp conf map_src snippet_in snippet_out
+  wp="$(web_path)"
+  map_src="$NGINX_DIR/00-websocket-map.conf"
+  snippet_in="$NGINX_DIR/game-web.snippet.conf.in"
+  snippet_out="/etc/nginx/snippets/game-web.conf"
+
+  [[ -f "$map_src" && -f "$snippet_in" ]] || { echo "缺少 nginx 模板，请确认 $NGINX_DIR"; exit 1; }
+
+  if ! conf="$(find_domain_conf "$domain")"; then
+    echo "未找到域名 $domain 的 Nginx conf（期望 /etc/nginx/conf.d/${domain}.conf）" >&2
+    exit 1
+  fi
+  echo "域名 conf: $conf"
+  echo "随机路径: /$wp/"
+
+  sudo mkdir -p /etc/nginx/snippets
+  local tmp
+  tmp="$(mktemp)"
+  sed "s/@WEB_PATH@/${wp}/g" "$snippet_in" >"$tmp"
+  sudo install -m 644 "$tmp" "$snippet_out"
+  rm -f "$tmp"
+
+  sudo install -m 644 "$map_src" /etc/nginx/conf.d/00-websocket-map.conf
+
+  # 域名 conf：去掉旧 8081 location，写入 include（幂等替换）
+  sudo cp -a "$conf" "${conf}.bak.$(date +%Y%m%d%H%M%S)"
+  tmp="$(mktemp)"
+  cp -a "$conf" "$tmp" 2>/dev/null || sudo cat "$conf" >"$tmp"
+  chmod u+w "$tmp"
+  python3 "$NGINX_DIR/apply_game_web.py" "$tmp"
+  sudo install -m 644 "$tmp" "$conf"
+  rm -f "$tmp"
+
+  if sudo nginx -t; then
+    sudo systemctl reload nginx
+    echo "Nginx 已应用并 reload"
+    echo "外网入口: https://${domain}/${wp}/"
+  else
+    echo "nginx -t 失败，已保留 .bak；请检查 $conf" >&2
+    exit 1
+  fi
+}
+
 main() {
   local cmd="${1:-}"
   local arg="${2:-all}"
@@ -262,6 +348,7 @@ main() {
     status) cmd_status "$arg" ;;
     build) cmd_build ;;
     clean-logs) cmd_clean_logs ;;
+    nginx-apply) cmd_nginx_apply "${2:-}" ;;
     -h|--help|help|"") usage; [[ -n "$cmd" ]] || exit 1 ;;
     *) echo "未知命令: $cmd"; usage; exit 1 ;;
   esac
