@@ -3,6 +3,7 @@ package web.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,7 +25,7 @@ public class AppConfig implements WebMvcConfigurer {
 
 	private final AuthInterceptor authInterceptor;
 
-	public AppConfig(AuthInterceptor authInterceptor) {
+	public AppConfig(@Lazy AuthInterceptor authInterceptor) {
 		this.authInterceptor = authInterceptor;
 	}
 
