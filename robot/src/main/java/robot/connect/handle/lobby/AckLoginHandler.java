@@ -6,7 +6,7 @@ import net.client.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.LobbyProto;
-import utils.manager.ConnectHandle;
+import tools.manager.ConnectHandle;
 
 @ProcessClass(LobbyProto.AckLogin.class)
 public class AckLoginHandler implements ConnectHandle {

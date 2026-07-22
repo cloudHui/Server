@@ -7,7 +7,7 @@ import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
 import net.client.Sender;
 import proto.ModelProto;
-import utils.handle.AbstractRegisterHandler;
+import tools.handle.AbstractRegisterHandler;
 
 @ProcessType(CMsg.REQ_REGISTER)
 public class ReqRegisterHandler extends AbstractRegisterHandler<Lobby> {

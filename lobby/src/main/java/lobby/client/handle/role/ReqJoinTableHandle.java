@@ -24,7 +24,7 @@ import lobby.manager.User;
 import lobby.manager.UserManager;
 import lobby.manager.table.TableInfo;
 import lobby.manager.table.TableManager;
-import utils.manager.HandleManager;
+import tools.manager.HandleManager;
 
 @ProcessType(LMsg.REQ_JOIN_ROOM_TABLE_MSG)
 public class ReqJoinTableHandle implements Handler {

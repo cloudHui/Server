@@ -40,7 +40,6 @@ public final class TableModelJson {
 			m.setAutoPlay(intVal(json, "autoPlay", 0));
 			m.setWaitTimeoutSec(intVal(json, "waitTimeoutSec", 120));
 			m.setWaitTimeoutAction(actionVal(json, "waitTimeoutAction", 0));
-			m.setDisbandIfAllRobot(intVal(json, "disbandIfAllRobot", 1));
 			return m;
 		} catch (Exception e) {
 			logger.warn("解析自定义 TableModel 失败: {}", e.getMessage());
@@ -49,34 +48,31 @@ public final class TableModelJson {
 	}
 
 	public static String toJson(TableModel m) {
-		StringBuilder sb = new StringBuilder();
-		sb.append('{');
-		sb.append("\"id\":").append(m.getId()).append(',');
-		sb.append("\"type\":").append(m.getType()).append(',');
-		sb.append("\"seatNum\":").append(m.getSeatNum()).append(',');
-		sb.append("\"cardNum\":").append(m.getCardNum()).append(',');
-		sb.append("\"exCardNum\":").append(m.getExCardNum()).append(',');
-		sb.append("\"baseScore\":").append(m.getBaseScore()).append(',');
-		sb.append("\"maxFan\":").append(m.getMaxFan()).append(',');
-		sb.append("\"allowChi\":").append(m.getAllowChi()).append(',');
-		sb.append("\"allowDianPao\":").append(m.getAllowDianPao()).append(',');
-		sb.append("\"allowPeng\":").append(m.getAllowPeng()).append(',');
-		sb.append("\"allowGang\":").append(m.getAllowGang()).append(',');
-		sb.append("\"allowHu\":").append(m.getAllowHu()).append(',');
-		sb.append("\"allowSevenPairs\":").append(m.getAllowSevenPairs()).append(',');
-		sb.append("\"gameSubType\":").append(m.getGameSubType()).append(',');
-		sb.append("\"gangScore\":").append(m.getGangScore()).append(',');
-		sb.append("\"allowGangMing\":").append(m.getAllowGangMing()).append(',');
-		sb.append("\"allowGangAn\":").append(m.getAllowGangAn()).append(',');
-		sb.append("\"allowGangBu\":").append(m.getAllowGangBu()).append(',');
-		sb.append("\"totalRounds\":").append(m.getTotalRounds()).append(',');
-		sb.append("\"autoNextRound\":").append(m.getAutoNextRound()).append(',');
-		sb.append("\"autoPlay\":").append(m.getAutoPlay()).append(',');
-		sb.append("\"waitTimeoutSec\":").append(m.getWaitTimeoutSec()).append(',');
-		sb.append("\"waitTimeoutAction\":").append(m.getWaitTimeoutAction()).append(',');
-		sb.append("\"disbandIfAllRobot\":").append(m.getDisbandIfAllRobot());
-		sb.append('}');
-		return sb.toString();
+        return '{' +
+                "\"id\":" + m.getId() + ',' +
+                "\"type\":" + m.getType() + ',' +
+                "\"seatNum\":" + m.getSeatNum() + ',' +
+                "\"cardNum\":" + m.getCardNum() + ',' +
+                "\"exCardNum\":" + m.getExCardNum() + ',' +
+                "\"baseScore\":" + m.getBaseScore() + ',' +
+                "\"maxFan\":" + m.getMaxFan() + ',' +
+                "\"allowChi\":" + m.getAllowChi() + ',' +
+                "\"allowDianPao\":" + m.getAllowDianPao() + ',' +
+                "\"allowPeng\":" + m.getAllowPeng() + ',' +
+                "\"allowGang\":" + m.getAllowGang() + ',' +
+                "\"allowHu\":" + m.getAllowHu() + ',' +
+                "\"allowSevenPairs\":" + m.getAllowSevenPairs() + ',' +
+                "\"gameSubType\":" + m.getGameSubType() + ',' +
+                "\"gangScore\":" + m.getGangScore() + ',' +
+                "\"allowGangMing\":" + m.getAllowGangMing() + ',' +
+                "\"allowGangAn\":" + m.getAllowGangAn() + ',' +
+                "\"allowGangBu\":" + m.getAllowGangBu() + ',' +
+                "\"totalRounds\":" + m.getTotalRounds() + ',' +
+                "\"autoNextRound\":" + m.getAutoNextRound() + ',' +
+                "\"autoPlay\":" + m.getAutoPlay() + ',' +
+                "\"waitTimeoutSec\":" + m.getWaitTimeoutSec() + ',' +
+                "\"waitTimeoutAction\":" + m.getWaitTimeoutAction() + ',' +
+                '}';
 	}
 
 	/** 0=dissolve / 1=fillRobot，兼容数字或字符串 */

@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.GameProto;
 import robot.game.RobotGameSession;
-import utils.manager.ConnectHandle;
+import tools.manager.ConnectHandle;
 
 /**
  * 桌子状态通知处理器

@@ -23,7 +23,7 @@ public class Waiting extends AbstractTableHandle {
 	@Override
 	public boolean onTiming(Table table) {
 		if (table.sitFull()) {
-			if (table.getTableModel().getDisbandIfAllRobot() == 1 && table.isAllRobot()) {
+			if (table.isAllRobot()) {
 				logger.info("全机器人不开局，解散桌子, tableId: {}", table.getTableId());
 				table.upNextState(TableState.TABLE_DIS);
 				return false;
@@ -50,7 +50,7 @@ public class Waiting extends AbstractTableHandle {
 						logger.warn("补机器人失败，回退解散, tableId: {}", table.getTableId());
 						table.upNextState(TableState.TABLE_DIS);
 					} else if (table.sitFull()) {
-						if (table.getTableModel().getDisbandIfAllRobot() == 1 && table.isAllRobot()) {
+						if (table.isAllRobot()) {
 							logger.info("补机器人后全机桌，解散, tableId: {}", table.getTableId());
 							table.upNextState(TableState.TABLE_DIS);
 						} else {
@@ -117,11 +117,10 @@ public class Waiting extends AbstractTableHandle {
 				+ ", 最大番=" + table.getTableModel().getMaxFan()
 				+ ", autoPlay=" + table.getTableModel().getAutoPlay()
 				+ ", waitTimeoutSec=" + table.getTableModel().getWaitTimeoutSec()
-				+ ", waitTimeoutAction=" + table.getTableModel().getWaitTimeoutAction()
-				+ ", disbandIfAllRobot=" + table.getTableModel().getDisbandIfAllRobot());
+				+ ", waitTimeoutAction=" + table.getTableModel().getWaitTimeoutAction());
 
 		if (table.getGameType() == 1) {
-			game.manager.table.MjTable mjTable = game.manager.table.MjTable.class.cast(table);
+			game.manager.table.MjTable mjTable = (game.manager.table.MjTable) table;
 			replay.writeDealerAndLaiZi(mjTable.getMjContext().getDealerSeat(),
 					mjTable.getMjContext().getLaiZiTileId(),
 					mjTable.getMjContext().getLaiZiFlipTile());

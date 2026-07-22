@@ -11,7 +11,7 @@ import net.client.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ServerProto;
-import utils.handle.AbstractAckServerInfoHandle;
+import tools.handle.AbstractAckServerInfoHandle;
 
 @ProcessClass(ServerProto.AckServerInfo.class)
 public class AckServerInfoHandle extends AbstractAckServerInfoHandle {

@@ -12,8 +12,8 @@ import net.client.Sender;
 import net.connect.TCPConnect;
 import proto.ModelProto;
 import proto.ServerProto;
-import utils.handle.AbstractAckServerInfoHandle;
-import utils.manager.HandleManager;
+import tools.handle.AbstractAckServerInfoHandle;
+import tools.manager.HandleManager;
 
 @ProcessClass(ServerProto.AckServerInfo.class)
 public class AckServerInfoHandle extends AbstractAckServerInfoHandle {

@@ -14,7 +14,7 @@ import net.handler.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ServerProto;
-import utils.ServerClientManager;
+import tools.ServerClientManager;
 
 /**
  * 处理服务信息查询请求

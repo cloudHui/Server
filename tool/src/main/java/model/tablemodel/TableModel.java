@@ -72,9 +72,6 @@ public class TableModel implements java.io.Serializable {
     /** 等人超时动作：0=解散 dissolve，1=补机器人 fillRobot */
     private int waitTimeoutAction = 0;
 
-    /** 全机器人则删桌不开局：0关1开 */
-    private int disbandIfAllRobot = 1;
- 
     // Getters and Setters
     public int getId() {
         return id;
@@ -260,15 +257,6 @@ public class TableModel implements java.io.Serializable {
         this.waitTimeoutAction = waitTimeoutAction;
     }
 
-    public int getDisbandIfAllRobot() {
-        return disbandIfAllRobot;
-    }
-
-    public void setDisbandIfAllRobot(int disbandIfAllRobot) {
-        this.disbandIfAllRobot = disbandIfAllRobot;
-    }
-
- 
     @Override
     public String toString() {
         return "TableModel{"+
@@ -295,7 +283,6 @@ public class TableModel implements java.io.Serializable {
                 "     autoPlay="+autoPlay+
                 "     waitTimeoutSec="+waitTimeoutSec+
                 "     waitTimeoutAction="+waitTimeoutAction+
-                "     disbandIfAllRobot="+disbandIfAllRobot+
                 '}';
     }
 

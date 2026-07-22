@@ -11,8 +11,8 @@ import proto.LobbyProto;
 import robot.connect.ConnectProcessor;
 import robot.game.RobotGameSession;
 import robot.game.handler.RobotSessionHolder;
-import utils.manager.ConnectHandle;
-import utils.manager.HandleManager;
+import tools.manager.ConnectHandle;
+import tools.manager.HandleManager;
 
 @ProcessClass(LobbyProto.AckJoinRoomTable.class)
 public class AckJoinRoomTableHandler implements ConnectHandle {

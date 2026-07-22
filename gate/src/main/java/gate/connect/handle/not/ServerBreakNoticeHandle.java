@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.ServerProto;
-import utils.ServerManager;
+import tools.ServerManager;
 
 /**
  * 服务掉线通知

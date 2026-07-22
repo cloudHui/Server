@@ -11,8 +11,8 @@ import net.client.Sender;
 import net.client.handler.ClientHandler;
 import proto.ModelProto;
 import proto.ServerProto;
-import utils.ServerClientManager;
-import utils.handle.AbstractRegisterHandler;
+import tools.ServerClientManager;
+import tools.handle.AbstractRegisterHandler;
 
 /**
  * 处理服务注册请求

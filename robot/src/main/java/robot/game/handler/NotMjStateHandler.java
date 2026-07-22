@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
 import robot.game.RobotGameSession;
-import utils.manager.ConnectHandle;
+import tools.manager.ConnectHandle;
 
 /**
  * 麻将状态通知处理器

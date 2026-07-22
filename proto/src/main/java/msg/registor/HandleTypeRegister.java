@@ -32,7 +32,7 @@ public class HandleTypeRegister {
     private static final Logger logger = LoggerFactory.getLogger(HandleTypeRegister.class);
 
     // 配置常量
-    private static final String DEFAULT_HANDLE_PACKAGE = "utils.handle";
+    private static final String DEFAULT_HANDLE_PACKAGE = "tools.handle";
 
     private static final Map<Integer, Class<?>> TRANS_MAP = new ConcurrentHashMap<>();
     private static final Map<Class<?>, Integer> MSG_TRANS_MAP = new ConcurrentHashMap<>();

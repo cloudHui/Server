@@ -1,6 +1,6 @@
 package tool;
 
-import utils.other.excel.ExcelUtil;
+import tools.other.excel.ExcelUtil;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;

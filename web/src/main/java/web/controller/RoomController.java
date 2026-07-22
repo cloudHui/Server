@@ -182,7 +182,6 @@ public class RoomController {
 				copyInt(request, payload, "exCardNum");
 				copyInt(request, payload, "waitTimeoutSec");
 				copyInt(request, payload, "waitTimeoutAction");
-				copyInt(request, payload, "disbandIfAllRobot");
 				Map<String, Object> prepared = lobbyAdminClient.createCustomRoom(user.getToken(), payload);
 				if (prepared == null || !Integer.valueOf(0).equals(asInt(prepared.get("code")))) {
 					return ResponseEntity.ok(prepared != null ? prepared : errorResponse(502, "lobby 不可用"));

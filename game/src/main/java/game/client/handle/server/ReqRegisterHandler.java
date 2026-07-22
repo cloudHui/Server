@@ -7,7 +7,7 @@ import msg.registor.enums.ServerType;
 import msg.registor.message.CMsg;
 import net.client.Sender;
 import proto.ModelProto;
-import utils.handle.AbstractRegisterHandler;
+import tools.handle.AbstractRegisterHandler;
 
 /**
  * 注册服务信息请求

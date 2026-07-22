@@ -12,8 +12,8 @@ import net.service.ServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
-import utils.ServerClientManager;
-import utils.ServerManager;
+import tools.ServerClientManager;
+import tools.ServerManager;
 import utils.config.ConfigurationManager;
 
 /**
