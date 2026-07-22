@@ -21,7 +21,7 @@ public class RegisterNoticeHandle implements Handler {
 		Gate.getInstance().execute(() -> Gate.getInstance().getServerManager().connectToSever(
 				((ServerProto.NotRegisterInfo) registerInfo).getServersList(), Gate.getInstance().getServerId(),
 				(Gate.getInstance().getInnerIp() + ":" + Gate.getInstance().getPort()),
-				null, ConnectProcessor.PARSER,
+				ConnectProcessor.TRANSFER, ConnectProcessor.PARSER,
 				ConnectProcessor.HANDLERS, ServerType.Gate));
 		return true;
 	}

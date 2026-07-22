@@ -224,13 +224,19 @@ public class TableUser {
 		}
 		ClientHandler serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate,
 				gateId);
+		if (serverClient == null) {
+			// 入桌时可能误存了 roleId；单网关场景回退到任意 Gate 连接
+			serverClient = Game.getInstance().getServerClientManager().getServerClient(ServerType.Gate);
+		}
 
 		if (serverClient == null) {
 			logger.error("sendRole:{} Message error gate:{} null table:{}", userId, gateId, tableId);
 			return;
 		}
-		serverClient.sendMessage(TCPMessage.newInstance(messageId, payload));
-		logger.info("sendRole:{} Message success gate:{} table:{}", userId, gateId, tableId);
+		// clientId=玩家 roleId，mapId=桌号，供 gate 转发到对应客户端
+		serverClient.sendMessage(TCPMessage.newInstance(0, messageId, userId, payload, tableId, 0));
+		logger.info("sendRole:{} Message success gate:{} table:{} msgId:0x{}",
+				userId, gateId, tableId, Integer.toHexString(messageId));
 	}
 
 	@Override

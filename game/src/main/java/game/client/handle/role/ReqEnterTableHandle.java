@@ -9,6 +9,7 @@ import game.manager.table.TableUser;
 import msg.annotation.ProcessType;
 import msg.registor.message.GMsg;
 import net.client.Sender;
+import net.client.handler.ClientHandler;
 import net.handler.Handler;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
@@ -38,13 +39,15 @@ public class ReqEnterTableHandle implements Handler {
 				return true;
 			}
 
+			// gateId 用 Gate→Game 连接 id，便于后续推送找对网关
+			final int gateConnId = (sender instanceof ClientHandler) ? ((ClientHandler) sender).getId() : 0;
 			Game.getInstance().serialExecute(new Task() {
 				@Override
 				public int groupId() { return table.getGroupIndex(); }
 
 				@Override
 				public void run() {
-					int result = processEnterTable(clientId, request.getTableId(), clientId, request, table);
+					int result = processEnterTable(clientId, request.getTableId(), gateConnId, request, table);
 					if (result == ConstProto.Result.SUCCESS_VALUE) {
 						GameProto.AckEnterTable response = buildEnterTableResponse(table);
 						sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, request.getTableId(), response, sequence);
@@ -54,7 +57,8 @@ public class ReqEnterTableHandle implements Handler {
 						sender.sendMessage(clientId, GMsg.ACK_ENTER_TABLE_MSG, request.getTableId(), empty, sequence);
 						logger.warn("进入桌子失败, userId: {}, tableId: {}, result: {}", clientId, request.getTableId(), result);
 					}
-					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}", clientId, request.getTableId(), result);
+					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}, gateConnId: {}",
+							clientId, request.getTableId(), result, gateConnId);
 				}
 			});
 		} catch (Exception e) {

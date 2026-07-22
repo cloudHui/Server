@@ -428,6 +428,9 @@
             }
             // 处理推送消息
             switch (data.action) {
+                case 'seatUpdate':
+                    if (data.data && data.data.players) updatePlayers(data.data.players);
+                    break;
                 case 'notCard':
                     handleNotCard(data.data);
                     break;
@@ -680,7 +683,8 @@
                 if (p.roleId === userId) continue;
 
                 var cardCount = p.cardCount || 0;
-                var nameHtml = '<span class="name">' + (p.nickName || '玩家') + '</span>' +
+                var displayName = p.nickName || (p.robot || p.roleId < 0 ? '机器人' : '玩家');
+                var nameHtml = '<span class="name">' + displayName + '</span>' +
                     '<span class="card-count">' + cardCount + '张</span>';
 
                 // 根据相对位置分配到左边或右边

@@ -152,8 +152,27 @@ public abstract class Table {
 			runtimeAutoPlay = true;
 			logger.info("桌子补机器人完成, tableId: {}, added: {}, seats: {}/{}",
 					tableId, added, seatUsers.size(), tableModel.getSeatNum());
+			notifySeatPlayers();
 		}
 		return added;
+	}
+
+	/** 推送当前座位名单（补机器人后刷新前端显示） */
+	public void notifySeatPlayers() {
+		GameProto.AckEnterTable.Builder response = GameProto.AckEnterTable.newBuilder();
+		response.setTableInfo(GameProto.TableInfo.newBuilder()
+				.setTableId(tableId).setRoomId(getRoomId()).build());
+		for (TableUser tableUser : users.values()) {
+			response.addPlayers(GameProto.Player.newBuilder()
+					.setPosition(tableUser.getSeated())
+					.setRoleId(tableUser.getUserId())
+					.setNickName(com.google.protobuf.ByteString.copyFromUtf8(
+							tableUser.getNick() == null ? "" : tableUser.getNick()))
+					.setAvatar(com.google.protobuf.ByteString.copyFromUtf8(
+							tableUser.getHead() == null ? "" : tableUser.getHead()))
+					.build());
+		}
+		sendTableMessage(response.build(), msg.registor.message.GMsg.ACK_ENTER_TABLE_MSG);
 	}
 
 	// ======================== 状态转换 ========================

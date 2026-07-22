@@ -479,6 +479,9 @@
                 return;
             }
             switch (data.action) {
+                case 'seatUpdate':
+                    if (data.data && data.data.players) updatePlayers(data.data.players);
+                    break;
                 case 'notCard':
                     handleNotCard(data.data);
                     break;

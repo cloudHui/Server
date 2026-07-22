@@ -133,7 +133,12 @@ public class GateClient {
 	 * 推送类消息转给 WebSocket；请求响应（非推送）返回 false 走 CompletableFuture
 	 */
 	private boolean handleIncoming(String sessionId, TCPMessage tcpMessage) {
-		if (!isPushMessage(tcpMessage.getMessageId())) {
+		int msgId = tcpMessage.getMessageId();
+		// 入桌回复带 sequence，必须走 sendAndWait；仅无 sequence 的座位刷新当推送
+		if (msgId == GMsg.ACK_ENTER_TABLE_MSG && tcpMessage.getSequence() != 0) {
+			return false;
+		}
+		if (!isPushMessage(msgId)) {
 			return false;
 		}
 		BiConsumer<String, TCPMessage> listener = pushListener;
@@ -151,12 +156,14 @@ public class GateClient {
 	private static boolean isPushMessage(int msgId) {
 		return msgId == GMsg.NOT_CARD
 				|| msgId == GMsg.NOT_OP
+				|| msgId == GMsg.ACK_OP
 				|| msgId == GMsg.NOT_STATE
 				|| msgId == GMsg.NOT_RESULT
 				|| msgId == GMsg.MJ_TILE_NOT
 				|| msgId == GMsg.NOT_ROUND_RESULT
 				|| msgId == GMsg.NOT_GAME_RESULT
-				|| msgId == GMsg.NOT_TABLE_STATE;
+				|| msgId == GMsg.NOT_TABLE_STATE
+				|| msgId == GMsg.ACK_ENTER_TABLE_MSG;
 	}
 
 	@PreDestroy

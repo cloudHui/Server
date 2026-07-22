@@ -291,20 +291,41 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 	private static String pushAction(int msgId) {
 		if (msgId == GMsg.NOT_CARD) return "notCard";
 		if (msgId == GMsg.NOT_OP) return "notOp";
+		if (msgId == GMsg.ACK_OP) return "ackOp";
 		if (msgId == GMsg.NOT_STATE || msgId == GMsg.NOT_TABLE_STATE) return "notState";
 		if (msgId == GMsg.NOT_RESULT) return "notResult";
 		if (msgId == GMsg.MJ_TILE_NOT) return "notMjState";
 		if (msgId == GMsg.NOT_ROUND_RESULT) return "notRoundResult";
 		if (msgId == GMsg.NOT_GAME_RESULT) return "notGameResult";
+		if (msgId == GMsg.ACK_ENTER_TABLE_MSG) return "seatUpdate";
 		return null;
 	}
 
 	private Object formatPush(int msgId, Message proto) {
+		if (proto instanceof GameProto.AckEnterTable) {
+			GameProto.AckEnterTable ack = (GameProto.AckEnterTable) proto;
+			Map<String, Object> m = new HashMap<>();
+			m.put("players", formatPlayers(ack.getPlayersList(), 0));
+			if (ack.hasTableInfo()) {
+				m.put("tableInfo", formatTableInfo(ack.getTableInfo()));
+			}
+			return m;
+		}
 		if (proto instanceof GameProto.NotCard) {
 			return formatNotCard((GameProto.NotCard) proto);
 		}
 		if (proto instanceof GameProto.NotOperation) {
 			return formatNotOp((GameProto.NotOperation) proto);
+		}
+		if (proto instanceof GameProto.AckOp) {
+			GameProto.AckOp ack = (GameProto.AckOp) proto;
+			Map<String, Object> m = new HashMap<>();
+			m.put("opId", ack.getOpId());
+			m.put("opFrom", ack.getOpFrom());
+			if (ack.hasOp()) {
+				m.put("choice", ack.getOp().getChoiceValue());
+			}
+			return m;
 		}
 		if (proto instanceof GameProto.NotTableState) {
 			GameProto.NotTableState n = (GameProto.NotTableState) proto;
@@ -498,7 +519,8 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			p.put("position", player.getPosition());
 			p.put("nickName", player.getNickName().toStringUtf8());
 			p.put("cardCount", player.getCardsCount());
-			if (player.getRoleId() == currentRoleId && player.getCardsCount() > 0) {
+			p.put("robot", player.getRoleId() < 0);
+			if (currentRoleId != 0 && player.getRoleId() == currentRoleId && player.getCardsCount() > 0) {
 				List<Integer> cardValues = new ArrayList<>();
 				for (GameProto.Card card : player.getCardsList()) {
 					cardValues.add(card.getValue());
