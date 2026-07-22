@@ -48,7 +48,7 @@ public class TableManager {
      *
      * @return 按顺序线程下表
      */
-    public synchronized int getThreadIndex() {
+    private int getThreadIndex() {
         if (++threadIndex >= Game.getInstance().getPoolSize()) {
             threadIndex = 0;
         }
@@ -176,8 +176,8 @@ public class TableManager {
     /**
      * 创建桌子
      *
-     * @param roomId     桌子类型
-     * @param role       创建的玩家（avatar 若以 TMJSON: 开头则为自定义模板覆盖）
+     * @param roomId 桌子类型
+     * @param role   创建的玩家（avatar 若以 TMJSON: 开头则为自定义模板覆盖）
      * @return 桌子实例
      */
     public Table createTable(int roomId, ModelProto.RoomRole role) {
@@ -189,9 +189,9 @@ public class TableManager {
             Table table;
             int threadIndex = getThreadIndex();
             if (model.getType() == 1) {
-                table = new MjTable(getTableId(), model, role,threadIndex);
+                table = new MjTable(getTableId(), model, role, threadIndex);
             } else {
-                table = new DdzTable(getTableId(), model, role,threadIndex);
+                table = new DdzTable(getTableId(), model, role, threadIndex);
             }
             addTable(table);
             return table;
