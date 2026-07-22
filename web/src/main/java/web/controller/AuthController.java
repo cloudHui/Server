@@ -66,6 +66,9 @@ public class AuthController {
 				|| password == null || password.isEmpty()) {
 			return ResponseEntity.badRequest().body(error(400, "用户名和密码不能为空"));
 		}
+		if (invite == null || invite.trim().isEmpty()) {
+			return ResponseEntity.ok(error(3, "需要邀请码"));
+		}
 
 		UserService.UserInfo userInfo = userService.register(
 				username.trim(), password,
@@ -84,23 +87,6 @@ public class AuthController {
 		ResponseCookie cookie = ResponseCookie.from("sessionId", userInfo.getSessionId())
 				.path("/").httpOnly(true).sameSite("Lax").build();
 		return ResponseEntity.ok().header("Set-Cookie", cookie.toString()).body(success(userInfo));
-	}
-
-	/**
-	 * GET /api/auth/registration — 注册策略提示
-	 */
-	@GetMapping("/registration")
-	public ResponseEntity<Map<String, Object>> registration() {
-		Map<String, Object> fromLobby = lobbyAdminClient.getRegistration();
-		if (fromLobby != null && fromLobby.containsKey("openRegister")) {
-			return ResponseEntity.ok(fromLobby);
-		}
-		Map<String, Object> result = new HashMap<>();
-		result.put("code", 0);
-		result.put("openRegister", false);
-		result.put("inviteRequired", true);
-		result.put("msg", "默认关闭开放注册，需邀请码");
-		return ResponseEntity.ok(result);
 	}
 
 	private Map<String, Object> success(UserService.UserInfo userInfo) {

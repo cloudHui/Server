@@ -217,7 +217,7 @@
     <div class="shell">
         <div class="brand">
             <h1>牌友大厅</h1>
-            <p>登录 · 注册 · 邀请入局</p>
+            <p id="brandHint">登录 · 邀请入局</p>
         </div>
         <div class="resume-box" id="resumeBox">
             <p>检测到已登录账号：<strong id="resumeName"></strong></p>
@@ -228,7 +228,7 @@
         </div>
         <div class="tabs">
             <button type="button" id="tabLogin" class="active" onclick="switchTab('login')">登录</button>
-            <button type="button" id="tabRegister" onclick="switchTab('register')">注册</button>
+            <button type="button" id="tabRegister" style="display:none" onclick="switchTab('register')">注册</button>
         </div>
 
         <div id="loginPanel" class="panel show">
@@ -243,7 +243,7 @@
             <button class="primary" id="loginBtn" onclick="doLogin()">进入大厅</button>
         </div>
 
-        <div id="registerPanel" class="panel">
+        <div id="registerPanel" class="panel" style="display:none">
             <div class="field">
                 <label>用户名</label>
                 <input id="regUser" autocomplete="username" placeholder="用户名">
@@ -264,7 +264,7 @@
         </div>
 
         <div class="error" id="errorMsg"></div>
-        <div class="hint" id="regHint">默认需邀请码注册</div>
+        <div class="hint" id="regHint" style="display:none">邀请码已带入，可注册</div>
     </div>
 
     <div class="overlay" id="tableOverlay">
@@ -277,18 +277,24 @@
     </div>
 
     <script>
-        var inviteRequired = true;
+        var registrationAvailable = false;
         var pendingAuth = null;
         var savedToken = null;
 
         window.onload = function() {
             var params = new URLSearchParams(window.location.search);
             var invite = params.get('invite');
-            if (invite) {
+            if (invite && invite.trim()) {
+                registrationAvailable = true;
+                document.getElementById('tabRegister').style.display = '';
+                document.getElementById('registerPanel').style.display = '';
+                document.getElementById('regHint').style.display = '';
+                document.getElementById('brandHint').textContent = '登录 · 注册 · 邀请入局';
                 switchTab('register');
-                document.getElementById('regInvite').value = invite;
+                document.getElementById('regInvite').value = invite.trim();
+            } else {
+                switchTab('login');
             }
-            loadRegistration();
             savedToken = localStorage.getItem('token');
             var nick = localStorage.getItem('nickname') || localStorage.getItem('username');
             if (savedToken && nick) {
@@ -311,21 +317,8 @@
             setError('');
         }
 
-        function loadRegistration() {
-            fetch(appUrl('/api/auth/registration'))
-                .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    inviteRequired = !!data.inviteRequired;
-                    document.getElementById('regHint').textContent = inviteRequired
-                        ? '当前需邀请码注册'
-                        : '开放注册，邀请码可选';
-                    document.getElementById('inviteField').style.display =
-                        inviteRequired ? 'block' : 'block';
-                })
-                .catch(function() {});
-        }
-
         function switchTab(name) {
+            if (name === 'register' && !registrationAvailable) name = 'login';
             document.getElementById('tabLogin').className = name === 'login' ? 'active' : '';
             document.getElementById('tabRegister').className = name === 'register' ? 'active' : '';
             document.getElementById('loginPanel').className = 'panel' + (name === 'login' ? ' show' : '');
@@ -391,6 +384,7 @@
         }
 
         function doRegister() {
+            if (!registrationAvailable) return;
             var username = document.getElementById('regUser').value.trim();
             var password = document.getElementById('regPass').value;
             var nickname = document.getElementById('regNick').value.trim();
@@ -399,7 +393,7 @@
                 setError('请输入用户名和密码');
                 return;
             }
-            if (inviteRequired && !invite) {
+            if (!invite) {
                 setError('请填写邀请码');
                 return;
             }

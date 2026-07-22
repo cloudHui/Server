@@ -27,11 +27,6 @@ public class LobbyAdminClient {
 	private String adminBase;
 
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> getRegistration() {
-		return get("/registration", null);
-	}
-
-	@SuppressWarnings("unchecked")
 	public Map<String, Object> listInvites(String token) {
 		return get("/invites", token);
 	}

@@ -112,7 +112,7 @@ Spring Boot，默认 HTTP **8081**。
 
 主要接口：
 
-- `POST /api/auth/login`、`POST /api/auth/register`、`GET /api/auth/registration`
+- `POST /api/auth/login`、`POST /api/auth/register`（仅邀请码链接可注册）
 - `GET /api/rooms`、`POST /api/rooms/join`
 - `GET|POST /api/admin/invites*`（反代 lobby 邀请管理）
 - WebSocket `/ws/game`：认证、进桌、操作；服务端转发游戏推送与结算

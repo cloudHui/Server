@@ -39,7 +39,6 @@ public class LobbyAdminHttp {
 		}
 		server = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
 		server.createContext("/invites", this::handleInvites);
-		server.createContext("/registration", this::handleRegistration);
 		server.createContext("/users", this::handleUsers);
 		server.createContext("/tables", this::handleTables);
 		server.createContext("/records", this::handleRecords);
@@ -54,16 +53,6 @@ public class LobbyAdminHttp {
 			server.stop(0);
 			server = null;
 		}
-	}
-
-	private void handleRegistration(HttpExchange ex) throws IOException {
-		if (!"GET".equalsIgnoreCase(ex.getRequestMethod())) {
-			writeJson(ex, 405, jsonError(405, "method not allowed"));
-			return;
-		}
-		boolean open = Lobby.getInstance().isOpenRegister();
-		writeJson(ex, 200, "{\"code\":0,\"openRegister\":" + open
-				+ ",\"inviteRequired\":" + (!open) + "}");
 	}
 
 	private void handleUsers(HttpExchange ex) throws IOException {
