@@ -244,10 +244,6 @@ cmd_build() {
   cd "$ROOT"
   echo "打包中（跳过 mcp/sp，跳过测试）..."
   mvn -q install -DskipTests -pl '!mcp,!sp'
-  if [[ -f "$ROOT/web/target/Web.jar" ]]; then
-    mkdir -p "$BUILD/web"
-    cp -f "$ROOT/web/target/Web.jar" "$BUILD/web/Web.jar"
-  fi
   # 同步 proto（SMsg 等）；tool/utils 含序列化模型，勿盲拷以免与 .dat 不兼容
   if [[ -f "$ROOT/proto/target/proto-1.0-SNAPSHOT.jar" ]]; then
     for svc in center gate lobby game; do
@@ -261,21 +257,6 @@ cmd_build() {
     (cd "$ROOT" && java -cp "tool/target/tool-1.0-SNAPSHOT.jar:$BUILD/game/lib/*" tool.ConfigPacker >/dev/null 2>&1 || true)
     [[ -f "$ROOT/config/tablemodel_models.dat" ]] && mkdir -p "$BUILD/config" && cp -f "$ROOT/config/tablemodel_models.dat" "$BUILD/config/tablemodel_models.dat"
   fi
-  # 主 jar：优先用模块 target 产物覆盖
-  for svc in center gate lobby game; do
-    local name="${JAR_NAME[$svc]}"
-    local built=""
-    case "$svc" in
-      center) built="$ROOT/center/target/Center.jar" ;;
-      gate) built="$ROOT/gate/target/Gate.jar" ;;
-      lobby) built="$ROOT/lobby/target/Lobby.jar" ;;
-      game) built="$ROOT/game/target/Game.jar" ;;
-    esac
-    if [[ -n "$built" && -f "$built" ]]; then
-      mkdir -p "$BUILD/$svc"
-      cp -f "$built" "$BUILD/$svc/$name"
-    fi
-  done
   echo "打包完成。产物目录: $BUILD"
   for svc in "${ORDER[@]}"; do
     if [[ -f "$(svc_jar "$svc")" ]]; then
