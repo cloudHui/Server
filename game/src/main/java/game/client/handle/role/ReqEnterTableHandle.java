@@ -43,7 +43,7 @@ public class ReqEnterTableHandle implements Handler {
 			final int gateConnId = (sender instanceof ClientHandler) ? ((ClientHandler) sender).getId() : 0;
 			Game.getInstance().serialExecute(new Task() {
 				@Override
-				public int groupId() { return table.getGroupIndex(); }
+				public int groupId() { return table.getThreadIndex(); }
 
 				@Override
 				public void run() {

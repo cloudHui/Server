@@ -19,9 +19,4 @@ public class TableDis extends AbstractTableHandle {
 		Game.getInstance().getTableManager().removeTable(table.getTableId());
 		return true;
 	}
-
-	@Override
-	protected void overTime(Table table) {
-
-	}
 }

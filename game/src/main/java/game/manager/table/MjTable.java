@@ -23,8 +23,8 @@ public class MjTable extends Table {
 	private final MjTilePool mjTilePool;
 	private final MjTableContext mjContext = new MjTableContext();
 
-	public MjTable(long tableId, TableModel model, ModelProto.RoomRole creator) {
-		super(tableId, model, creator);
+	public MjTable(long tableId, TableModel model, ModelProto.RoomRole creator,int threadIndex) {
+		super(tableId, model, creator,threadIndex);
 		this.mjTilePool = new MjTilePool(this);
 	}
 

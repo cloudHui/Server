@@ -1,5 +1,7 @@
 package game.client.handle.role;
 
+import game.manager.table.MjTable;
+import game.manager.table.mj.MjSettleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +11,6 @@ import game.Game;
 import game.manager.TableManager;
 import game.manager.table.Table;
 import game.manager.table.ddz.DdzSettleService;
-import game.manager.table.mj.MjSettleService;
 import msg.annotation.ProcessType;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -44,7 +45,7 @@ public class ReqOpHandle implements Handler {
 
 			Game.getInstance().serialExecute(new Task() {
 				@Override
-				public int groupId() { return table.getGroupIndex(); }
+				public int groupId() { return table.getThreadIndex(); }
 
 				@Override
 				public void run() {
@@ -99,8 +100,8 @@ public class ReqOpHandle implements Handler {
 		if (table.allReady()) {
 			if (table.isLastRound()) {
 				if (table.getGameType() == 1) {
-					game.manager.table.mj.MjSettleService.sendGameResult(
-							game.manager.table.MjTable.class.cast(table));
+					MjSettleService.sendGameResult(
+                            (MjTable) table);
 				} else {
 					DdzSettleService.sendGameResult(table);
 				}

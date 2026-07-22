@@ -1,8 +1,10 @@
 package game.manager.table.state;
 
 import game.Game;
+import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
+import game.manager.table.ddz.DdzSettleService;
 import game.manager.table.mj.MjSettleService;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
@@ -46,9 +48,9 @@ public class TableOverBridge extends AbstractTableHandle {
 	protected void overTime(Table table) {
 		if (table.isMultiRound()) {
 			if (table.getGameType() == 1) {
-				MjSettleService.sendGameResult(game.manager.table.MjTable.class.cast(table));
+				MjSettleService.sendGameResult((MjTable) table);
 			} else {
-				game.manager.table.ddz.DdzSettleService.sendGameResult(table);
+				DdzSettleService.sendGameResult(table);
 			}
 		}
 		Game.getInstance().getTableManager().removeTable(table.getTableId());

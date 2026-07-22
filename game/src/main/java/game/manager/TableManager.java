@@ -1,19 +1,19 @@
 package game.manager;
 
 import game.Game;
+import game.manager.table.DdzTable;
+import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
-import game.manager.table.MjTable;
-import game.manager.table.DdzTable;
 import model.tablemodel.TableModel;
 import model.tablemodel.TableModelJson;
 import msg.registor.enums.ServerType;
 import msg.registor.message.SMsg;
+import net.client.handler.ClientHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.ServerProto;
-import net.client.handler.ClientHandler;
 import tool.config.TableConfigManager;
 import utils.metrics.MetricsCollector;
 
@@ -31,10 +31,29 @@ public class TableManager {
     private static final Logger logger = LoggerFactory.getLogger(TableManager.class);
 
     private final Map<Long, Table> tableMap;
-    /** 桌号：时间戳毫秒 + 序号，避免短时间撞号 */
+    /**
+     * 桌号：时间戳毫秒 + 序号，避免短时间撞号
+     */
     private final AtomicLong tableIdSeq = new AtomicLong(System.currentTimeMillis());
 
     private final TableConfigManager configManager;
+
+    /**
+     * 线程下表
+     **/
+    private int threadIndex = 0;
+
+    /**
+     * 获取线程下表
+     *
+     * @return 按顺序线程下表
+     */
+    public synchronized int getThreadIndex() {
+        if (++threadIndex >= Game.getInstance().getPoolSize()) {
+            threadIndex = 0;
+        }
+        return threadIndex;
+    }
 
     public TableManager() {
         tableMap = new ConcurrentHashMap<>();
@@ -44,16 +63,6 @@ public class TableManager {
         }
         configManager.startWatch();
         logger.info("桌子管理器初始化完成");
-    }
-
-    /**
-     * 初始化房间管理器
-     */
-    public synchronized void init() {
-        if (configManager.loadFail()) {
-            throw new RuntimeException("加载配置文件失败");
-        }
-        logger.info("房间管理器初始化完成,加载模板数量: {}", configManager.getAllTableModels().size());
     }
 
     /**
@@ -92,7 +101,7 @@ public class TableManager {
     /**
      * 删除桌子
      */
-    public Table removeTable(long tableId) {
+    public void removeTable(long tableId) {
         Table removedTable = tableMap.remove(tableId);
         if (removedTable != null) {
             removedTable.stop();
@@ -103,10 +112,11 @@ public class TableManager {
         } else {
             logger.warn("桌子不存在,无法删除, tableId: {}", tableId);
         }
-        return removedTable;
     }
 
-    /** Lobby 连入 game 后注册在 ServerClientManager，不能用 ServerManager（那是 game 主动外连） */
+    /**
+     * Lobby 连入 game 后注册在 ServerClientManager，不能用 ServerManager（那是 game 主动外连）
+     */
     private ClientHandler lobbyClient() {
         return Game.getInstance().getServerClientManager().getServerClient(ServerType.Lobby);
     }
@@ -166,8 +176,8 @@ public class TableManager {
     /**
      * 创建桌子
      *
-     * @param roomId 桌子类型
-     * @param role   创建的玩家（avatar 若以 TMJSON: 开头则为自定义模板覆盖）
+     * @param roomId     桌子类型
+     * @param role       创建的玩家（avatar 若以 TMJSON: 开头则为自定义模板覆盖）
      * @return 桌子实例
      */
     public Table createTable(int roomId, ModelProto.RoomRole role) {
@@ -177,10 +187,11 @@ public class TableManager {
                 throw new IllegalArgumentException("未知房间模板 roomId=" + roomId);
             }
             Table table;
+            int threadIndex = getThreadIndex();
             if (model.getType() == 1) {
-                table = new MjTable(getTableId(), model, role);
+                table = new MjTable(getTableId(), model, role,threadIndex);
             } else {
-                table = new DdzTable(getTableId(), model, role);
+                table = new DdzTable(getTableId(), model, role,threadIndex);
             }
             addTable(table);
             return table;
@@ -204,17 +215,6 @@ public class TableManager {
         return configManager.getTableModel(roomId);
     }
 
-    public TableConfigManager getConfigManager() {
-        return configManager;
-    }
-
-    /**
-     * 获取当前桌子数量
-     */
-    public int getTableCount() {
-        return tableMap.size();
-    }
-
     /**
      * 查找用户所在的桌子
      */
@@ -226,15 +226,6 @@ public class TableManager {
             }
         }
         return result;
-    }
-
-    /**
-     * 清理所有桌子（用于服务器关闭时）
-     */
-    public void clearAllTables() {
-        int count = tableMap.size();
-        tableMap.clear();
-        logger.info("清理所有桌子,数量: {}", count);
     }
 
     /**
@@ -253,7 +244,7 @@ public class TableManager {
             for (TableUser user : table.getSeatUsers().values()) {
                 if (user != null) {
                     builder.addTableRoles(ModelProto.RoomRole.newBuilder()
-                            .setRoleId((int) user.getUserId())
+                            .setRoleId(user.getUserId())
                             .setNickName(com.google.protobuf.ByteString.copyFromUtf8(user.getNick()))
                             .build());
                 }

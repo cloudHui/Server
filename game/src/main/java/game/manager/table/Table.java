@@ -51,16 +51,18 @@ public abstract class Table {
     private static final AtomicInteger ROBOT_ID_SEQ = new AtomicInteger(-100000);
     private int timerNodeId = -1;
     private long currentLoopInterval = IDLE_LOOP_INTERVAL;
+    private int threadIndex;
     /**
      * 本桌运行时托管（补机器人后开启，勿改共享 TableModel）
      */
     private boolean runtimeAutoPlay;
 
-    protected Table(long tableId, TableModel model, ModelProto.RoomRole creator) {
+    protected Table(long tableId, TableModel model, ModelProto.RoomRole creator,int threadIndex) {
         this.tableId = tableId;
         this.creator = creator;
         this.tableModel = model;
         this.op = new Operate(this);
+        this.threadIndex = threadIndex;
         this.gameResult = createGameResult();
         this.stateStartTime = System.currentTimeMillis();
         logger.info("创建桌子实例, tableId: {}, type: {}", tableId, model.getType());
@@ -68,6 +70,10 @@ public abstract class Table {
 
     public int getOwnerId() {
         return creator != null ? creator.getRoleId() : 0;
+    }
+
+    public int getThreadIndex() {
+        return threadIndex;
     }
 
     // ======================== 抽象方法(子类实现) ========================
@@ -278,11 +284,10 @@ public abstract class Table {
     public void start() {
         try {
             if (timerNodeId > 0) return;
-            int groupIndex = getGroupIndex();
             timerNodeId = Game.getInstance().registerSerialTimerWithId(
-                    groupIndex, 1000, IDLE_LOOP_INTERVAL, -1, this::tableLoop, this);
+                    threadIndex, 1000, IDLE_LOOP_INTERVAL, -1, this::tableLoop, this);
             currentLoopInterval = IDLE_LOOP_INTERVAL;
-            logger.info("启动桌子逻辑循环, tableId: {}, groupIndex: {}", tableId, groupIndex);
+            logger.info("启动桌子逻辑循环, tableId: {}, groupIndex: {}", tableId, threadIndex);
         } catch (Exception e) {
             logger.error("启动桌子逻辑循环失败, tableId: {}", tableId, e);
         }
@@ -306,21 +311,13 @@ public abstract class Table {
     public void setLoopInterval(long intervalMs) {
         if (currentLoopInterval == intervalMs) return;
         try {
-            int groupIndex = getGroupIndex();
             if (timerNodeId > 0) Game.getInstance().unregisterTimer(timerNodeId);
             timerNodeId = Game.getInstance().registerSerialTimerWithId(
-                    groupIndex, 0, intervalMs, -1, this::tableLoop, this);
+                    threadIndex, 0, intervalMs, -1, this::tableLoop, this);
             currentLoopInterval = intervalMs;
         } catch (Exception e) {
             logger.error("调整循环间隔失败, tableId: {}", tableId, e);
         }
-    }
-
-    /**
-     * 获取定时器分组索引，防溢出
-     */
-    public int getGroupIndex() {
-        return (int) tableId;
     }
 
     public boolean tableLoop(Table table) {

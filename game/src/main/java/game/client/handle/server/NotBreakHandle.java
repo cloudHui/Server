@@ -7,7 +7,6 @@ import game.Game;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import msg.annotation.ProcessType;
-import msg.registor.enums.TableState;
 import msg.registor.message.CMsg;
 import net.client.Sender;
 import net.handler.Handler;

@@ -79,7 +79,7 @@ public class Waiting extends AbstractTableHandle {
 
 		if (table.getGameType() == 1) {
 			if (table.getTableModel().getGameSubType() == 1) {
-				MjDrawService.flipLaiZi(game.manager.table.MjTable.class.cast(table));
+				MjDrawService.flipLaiZi((game.manager.table.MjTable) table);
 			}
 			table.upNextState(TableState.MJ_DEAL);
 		} else {
