@@ -4,8 +4,8 @@ import com.google.protobuf.Message;
 import game.Game;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
-import game.manager.table.mj.MjSettleService;
 import msg.annotation.ProcessType;
+import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
 import net.client.Sender;
 import net.handler.Handler;
@@ -62,9 +62,11 @@ public class ReqLeaveTableHandle implements Handler {
 		TableUser user = table.getUsers().get(userId);
 		if (user == null) return ConstProto.Result.ROLE_NULL_VALUE;
 
+		long tableId = table.getTableId();
+
 		// 游戏中离开: 解散牌局, 发送总结算
 		if (table.gaming()) {
-			logger.info("游戏中玩家离开, 解散牌局, userId: {}, tableId: {}", userId, table.getTableId());
+			logger.info("游戏中玩家离开, 解散牌局, userId: {}, tableId: {}", userId, tableId);
 			if (table.isMultiRound()) {
 				if (table.getGameType() == 1) {
 					game.manager.table.mj.MjSettleService.sendGameResult(game.manager.table.MjTable.class.cast(table));
@@ -73,11 +75,22 @@ public class ReqLeaveTableHandle implements Handler {
 				}
 			}
 			table.removeUser(user);
-			Game.getInstance().getTableManager().removeTable(table.getTableId());
+			Game.getInstance().getTableManager().removeTable(tableId);
 			return ConstProto.Result.SUCCESS_VALUE;
 		}
 
 		table.removeUser(user);
+		logger.info("等待阶段玩家离桌, userId: {}, tableId: {}, remain: {}, human: {}",
+				userId, tableId, table.getUsers().size(), table.hasHumanPlayer());
+
+		// 空桌或只剩机器人：立即销毁，并通知大厅
+		if (table.isEmpty() || !table.hasHumanPlayer()
+				|| table.getTableState() == TableState.TABLE_DIS) {
+			Game.getInstance().getTableManager().removeTable(tableId);
+		} else {
+			// 仍有真人：同步大厅名单
+			Game.getInstance().getTableManager().notifyRoomPlayerLeft(tableId, userId);
+		}
 		return ConstProto.Result.SUCCESS_VALUE;
 	}
 }

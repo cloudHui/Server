@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.ServerProto;
-import net.connect.handle.ConnectHandler;
+import net.client.handler.ClientHandler;
 import tool.config.TableConfigManager;
 import utils.metrics.MetricsCollector;
 
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 桌子管理器
@@ -29,14 +30,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TableManager {
     private static final Logger logger = LoggerFactory.getLogger(TableManager.class);
 
-    // 初始桌子序号
-    private static final int BASE_INDEX = 100000;
     private final Map<Long, Table> tableMap;
-
-    /**
-     * 当前初始化桌子号
-     */
-    private int currentIndex = BASE_INDEX;
+    /** 桌号：时间戳毫秒 + 序号，避免短时间撞号 */
+    private final AtomicLong tableIdSeq = new AtomicLong(System.currentTimeMillis());
 
     private final TableConfigManager configManager;
 
@@ -99,6 +95,7 @@ public class TableManager {
     public Table removeTable(long tableId) {
         Table removedTable = tableMap.remove(tableId);
         if (removedTable != null) {
+            removedTable.stop();
             MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
             MetricsCollector.getInstance().incrementCounter("game.tables_destroyed");
             logger.info("删除桌子, tableId: {}", tableId);
@@ -109,29 +106,59 @@ public class TableManager {
         return removedTable;
     }
 
+    /** Lobby 连入 game 后注册在 ServerClientManager，不能用 ServerManager（那是 game 主动外连） */
+    private ClientHandler lobbyClient() {
+        return Game.getInstance().getServerClientManager().getServerClient(ServerType.Lobby);
+    }
+
     /**
-     * 通知Room桌子已销毁
+     * 通知Lobby桌子已销毁
      */
     private void notifyRoomTableDestroyed(long tableId) {
         try {
-            ConnectHandler lobbyServer = Game.getInstance().getServerManager().getServerClient(ServerType.Lobby);
-            if (lobbyServer == null) return;
+            ClientHandler lobbyServer = lobbyClient();
+            if (lobbyServer == null) {
+                logger.warn("通知Lobby桌子销毁失败：无 Lobby 连接, tableId: {}", tableId);
+                return;
+            }
 
             ServerProto.NotTableDestroyed not = ServerProto.NotTableDestroyed.newBuilder()
                     .setTableId(tableId)
                     .build();
             lobbyServer.sendMessage(SMsg.NOT_TABLE_DESTROYED_MSG, not);
-            logger.debug("已通知Lobby桌子销毁, tableId: {}", tableId);
+            logger.info("已通知Lobby桌子销毁, tableId: {}", tableId);
         } catch (Exception e) {
             logger.error("通知Lobby桌子销毁失败, tableId: {}", tableId, e);
         }
     }
 
     /**
-     * 获取新的桌子ID（基于时间戳+序号，防重启后ID冲突）
+     * 通知Lobby玩家离桌（桌子仍保留）
+     */
+    public void notifyRoomPlayerLeft(long tableId, int roleId) {
+        try {
+            ClientHandler lobbyServer = lobbyClient();
+            if (lobbyServer == null) {
+                logger.warn("通知Lobby玩家离桌失败：无 Lobby 连接, tableId: {}, roleId: {}", tableId, roleId);
+                return;
+            }
+
+            ServerProto.NotTablePlayerLeft not = ServerProto.NotTablePlayerLeft.newBuilder()
+                    .setTableId(tableId)
+                    .setRoleId(roleId)
+                    .build();
+            lobbyServer.sendMessage(SMsg.NOT_TABLE_PLAYER_LEFT_MSG, not);
+            logger.info("已通知Lobby玩家离桌, tableId: {}, roleId: {}", tableId, roleId);
+        } catch (Exception e) {
+            logger.error("通知Lobby玩家离桌失败, tableId: {}, roleId: {}", tableId, roleId, e);
+        }
+    }
+
+    /**
+     * 获取新的桌子ID（单调递增，防撞号）
      */
     private long getTableId() {
-        long id = System.currentTimeMillis() % 100000 + (++currentIndex);
+        long id = tableIdSeq.incrementAndGet();
         logger.info("创建新桌子ID: {}", id);
         return id;
     }

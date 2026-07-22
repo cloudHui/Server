@@ -72,11 +72,7 @@ public class NotBreakHandle implements Handler {
 				logger.info("游戏进行中玩家断线, userId: {}, tableId: {}，等待超时自动处理",
 						userId, table.getTableId());
 			}
-
-			if (table.getTableState() == TableState.WAITING && table.isEmpty()) {
-				table.upNextState(TableState.TABLE_DIS);
-				logger.info("等待阶段玩家全部离开，解散桌子, tableId: {}", table.getTableId());
-			}
+			// 等待阶段断线：保留座位（支持「回大厅」再进），真正退桌走 REQ_LEAVE
 		}
 	}
 }

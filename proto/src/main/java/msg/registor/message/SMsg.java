@@ -24,4 +24,7 @@ public class SMsg {
 
 	@ClassField(value = ServerProto.NotTableDestroyed.class, des = "game通知lobby桌子销毁")
 	public static final int NOT_TABLE_DESTROYED_MSG = CMsg.SERVER_TYPE | 7;
+
+	@ClassField(value = ServerProto.NotTablePlayerLeft.class, des = "game通知lobby玩家离桌")
+	public static final int NOT_TABLE_PLAYER_LEFT_MSG = CMsg.SERVER_TYPE | 8;
 }

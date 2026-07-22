@@ -78,3 +78,9 @@ message AckRoomTables {
 message NotTableDestroyed {
     int64 tableId = 1;
 }
+
+// Game 通知 Lobby 玩家离桌（等待阶段退桌，桌子仍保留）
+message NotTablePlayerLeft {
+    int64 tableId = 1;
+    int32 roleId = 2;
+}

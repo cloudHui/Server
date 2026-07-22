@@ -1,11 +1,13 @@
 package lobby.manager.table;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import lobby.db.CustomRoomRepository;
 import lobby.db.SqliteDatabase;
+import lobby.manager.User;
 import model.tablemodel.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,10 +114,17 @@ public class TableManager {
 	public synchronized void removeTable(long tableId) {
 		TableInfo tableInfo = tableInfoMap.remove(tableId);
 		if (tableInfo != null) {
+			// 清理玩家归属，避免登录/大厅仍挂着幽灵桌
+			for (User user : new ArrayList<>(tableInfo.getTableRoles())) {
+				if (user != null) {
+					tableInfo.removeUser(user);
+				}
+			}
 			Map<Long, TableInfo> tables = roomTables.get(tableInfo.getModel().getId());
 			if (tables != null) {
 				tables.remove(tableId);
 			}
+			logger.info("大厅移除桌子, tableId: {}", tableId);
 		}
 	}
 

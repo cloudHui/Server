@@ -506,9 +506,14 @@
         }
 
         function exitRoom() {
-            sendWsMessage('leave', {}, function() {});
-            localStorage.removeItem('tableId');
-            window.location.href = appUrl('/room.html');
+            sendWsMessage('leave', {}, function(resp) {
+                if (resp && resp.code === 0) {
+                    localStorage.removeItem('tableId');
+                    window.location.href = appUrl('/room.html');
+                } else {
+                    alert((resp && resp.msg) || '退出房间失败');
+                }
+            });
         }
 
         // ==================== 渲染 ====================

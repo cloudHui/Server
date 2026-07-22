@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>坦克大战 · 休闲</title>
+    <script src="app-base.js"></script>
+    <script src="mini-base.js"></script>
+    <style>
+        :root { --bg0:#0f2a1c; --bg1:#1a472a; --card:rgba(255,252,245,0.96); }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+            min-height:100vh;
+            background: radial-gradient(ellipse at 20% 10%,rgba(201,162,39,.18),transparent 45%),
+                linear-gradient(160deg,var(--bg0),var(--bg1) 55%,#12301f);
+            color:#fff;
+            overflow-x:hidden;
+        }
+        .header {
+            background:rgba(0,0,0,.3); padding:14px 24px; display:flex;
+            justify-content:space-between; align-items:center;
+        }
+        .header h1 { font-size:20px; color:#ffd700; }
+        .header-btn {
+            background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28);
+            color:#fff; padding:6px 14px; border-radius:6px; text-decoration:none; font-size:13px;
+        }
+        .wrap { max-width:720px; margin:16px auto; padding:0 12px 32px; }
+        .panel {
+            background:var(--card); border-radius:14px; padding:14px 16px; color:#222;
+            box-shadow:0 10px 30px rgba(0,0,0,.25); margin-bottom:12px;
+        }
+        .hud {
+            display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+            color:#ffd700; font-size:14px; margin-bottom:10px; min-height:22px;
+        }
+        .board-wrap {
+            display:flex; justify-content:center;
+            background:rgba(0,0,0,.35); border-radius:12px; padding:8px;
+        }
+        canvas {
+            display:block; max-width:100%; background:#1b2e1f;
+            border-radius:8px; touch-action:none;
+            box-shadow:inset 0 0 0 2px #5c4033;
+        }
+        .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+        .actions button {
+            border:none; border-radius:10px; padding:12px 18px; cursor:pointer;
+            color:#fff; font-size:14px; background:linear-gradient(135deg,#1f5c36,#2d8a4e); min-width:110px;
+        }
+        .actions button.secondary { background:rgba(0,0,0,.55); }
+        .hint { font-size:12px; color:#666; text-align:center; margin-top:8px; line-height:1.5; }
+        .pad {
+            display:none; margin-top:12px; user-select:none;
+            grid-template-columns:72px 72px 72px; gap:8px; justify-content:center;
+        }
+        .pad button {
+            width:72px; height:52px; border:none; border-radius:10px;
+            background:rgba(255,255,255,.12); color:#fff; font-size:18px;
+        }
+        .pad .fire { grid-column:2; background:linear-gradient(135deg,#c41e2a,#e63946); }
+        @media (max-width:720px) {
+            .pad { display:grid; }
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>坦克大战</h1>
+    <div>
+        <span id="userDisplay" style="margin-right:10px;font-size:13px;"></span>
+        <a class="header-btn" id="backLink" href="room.html">返回大厅</a>
+    </div>
+</div>
+<div class="wrap">
+    <div class="panel">
+        <div class="hud">
+            <span id="status">按开始进入战斗</span>
+            <span id="scoreHud">得分 0 · 关卡 1</span>
+        </div>
+        <div class="board-wrap"><canvas id="game" width="520" height="520"></canvas></div>
+        <div class="actions">
+            <button type="button" id="startBtn" onclick="startGame()">开始游戏</button>
+            <button type="button" class="secondary" onclick="resetMenu()">重来</button>
+        </div>
+        <div class="pad" id="pad">
+            <span></span><button type="button" data-dir="0">↑</button><span></span>
+            <button type="button" data-dir="3">←</button>
+            <button type="button" class="fire" data-fire="1">开火</button>
+            <button type="button" data-dir="1">→</button>
+            <span></span><button type="button" data-dir="2">↓</button><span></span>
+        </div>
+        <p class="hint">键盘：方向键 / WASD 移动，空格开火。消灭敌方坦克过关，撞墙或被击中会损血。</p>
+    </div>
+</div>
+<script>
+(function () {
+    var user = MiniGames.requireLogin();
+    if (!user) return;
+    document.getElementById('userDisplay').textContent = user.nickname;
+    document.getElementById('backLink').href = appUrl('/room.html');
+
+    var canvas = document.getElementById('game');
+    var ctx = canvas.getContext('2d');
+    var TILE = 40, COLS = 13, ROWS = 13;
+    var DIR = [[0,-1],[1,0],[0,1],[-1,0]]; // U R D L
+    var keys = {};
+    var running = false, over = false;
+    var player, enemies, bullets, walls, score, level, lives, lastTs, spawnAcc;
+
+    function setStatus(t) { document.getElementById('status').textContent = t; }
+    function setHud() {
+        document.getElementById('scoreHud').textContent =
+            '得分 ' + score + ' · 关卡 ' + level + ' · 生命 ' + lives;
+    }
+
+    function makeMap(lv) {
+        var w = [];
+        for (var r = 0; r < ROWS; r++) {
+            w[r] = [];
+            for (var c = 0; c < COLS; c++) {
+                var edge = r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1;
+                var brick = (!edge && ((r + c + lv) % 5 === 0 || (r * 3 + c) % 11 === 0))
+                    && !(r > ROWS - 4 && c > 4 && c < 8);
+                w[r][c] = edge ? 2 : (brick ? 1 : 0); // 0空 1砖 2钢
+            }
+        }
+        // 出生点清空
+        [[ROWS-2,6],[1,2],[1,COLS-3],[1,6]].forEach(function (p) {
+            w[p[0]][p[1]] = 0;
+            w[p[0]][p[1]-1] = 0; w[p[0]][p[1]+1] = 0;
+        });
+        return w;
+    }
+
+    function tank(x, y, dir, enemy) {
+        return { x:x, y:y, dir:dir, enemy:!!enemy, cool:0, speed: enemy ? 70 : 95, hp:1 };
+    }
+
+    function resetLevel() {
+        walls = makeMap(level);
+        player = tank((COLS/2|0)*TILE + TILE/2, (ROWS-2)*TILE + TILE/2, 0, false);
+        enemies = [];
+        bullets = [];
+        spawnAcc = 0;
+        for (var i = 0; i < Math.min(2 + level, 5); i++) spawnEnemy();
+    }
+
+    function spawnEnemy() {
+        var spots = [[1.5*TILE,1.5*TILE],[ (COLS-1.5)*TILE,1.5*TILE],[ (COLS/2)*TILE,1.5*TILE]];
+        var s = spots[enemies.length % spots.length];
+        var e = tank(s[0], s[1], 2, true);
+        e.think = 0;
+        enemies.push(e);
+    }
+
+    function startGame() {
+        score = 0; level = 1; lives = 3; over = false; running = true;
+        resetLevel(); setHud(); setStatus('战斗中 · 消灭敌军');
+        lastTs = performance.now();
+        requestAnimationFrame(loop);
+    }
+    function resetMenu() {
+        running = false; over = false;
+        score = 0; level = 1; lives = 3;
+        walls = makeMap(1); player = null; enemies = []; bullets = [];
+        setHud(); setStatus('按开始进入战斗');
+        draw();
+    }
+
+    function blocked(nx, ny, self) {
+        var r = 14;
+        var pts = [[nx-r,ny-r],[nx+r,ny-r],[nx-r,ny+r],[nx+r,ny+r]];
+        for (var i = 0; i < pts.length; i++) {
+            var c = (pts[i][0] / TILE) | 0, row = (pts[i][1] / TILE) | 0;
+            if (row < 0 || c < 0 || row >= ROWS || c >= COLS) return true;
+            if (walls[row][c]) return true;
+        }
+        var list = enemies.concat(player ? [player] : []);
+        for (var j = 0; j < list.length; j++) {
+            var t = list[j];
+            if (!t || t === self) continue;
+            if (Math.abs(t.x - nx) < 28 && Math.abs(t.y - ny) < 28) return true;
+        }
+        return false;
+    }
+
+    function moveTank(t, dt) {
+        var d = DIR[t.dir];
+        var nx = t.x + d[0] * t.speed * dt;
+        var ny = t.y + d[1] * t.speed * dt;
+        if (!blocked(nx, t.y, t)) t.x = nx;
+        if (!blocked(t.x, ny, t)) t.y = ny;
+    }
+
+    function fire(t) {
+        if (t.cool > 0) return;
+        t.cool = t.enemy ? 0.9 : 0.35;
+        var d = DIR[t.dir];
+        bullets.push({
+            x: t.x + d[0]*18, y: t.y + d[1]*18,
+            vx: d[0]*220, vy: d[1]*220,
+            enemy: t.enemy, life: 2.2
+        });
+    }
+
+    function ai(e, dt) {
+        e.think -= dt;
+        if (e.think <= 0) {
+            e.think = 0.4 + Math.random() * 0.8;
+            if (player && Math.random() < 0.55) {
+                var dx = player.x - e.x, dy = player.y - e.y;
+                e.dir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0);
+            } else {
+                e.dir = (Math.random() * 4) | 0;
+            }
+            if (Math.random() < 0.45) fire(e);
+        }
+        moveTank(e, dt);
+        if (e.cool > 0) e.cool -= dt;
+    }
+
+    function update(dt) {
+        if (!running || over) return;
+        // player input
+        if (keys[38] || keys[87]) player.dir = 0;
+        else if (keys[39] || keys[68]) player.dir = 1;
+        else if (keys[40] || keys[83]) player.dir = 2;
+        else if (keys[37] || keys[65]) player.dir = 3;
+        var moving = keys[37]||keys[38]||keys[39]||keys[40]||keys[65]||keys[87]||keys[68]||keys[83];
+        if (moving) moveTank(player, dt);
+        if (keys[32]) fire(player);
+        if (player.cool > 0) player.cool -= dt;
+
+        for (var i = 0; i < enemies.length; i++) ai(enemies[i], dt);
+
+        // bullets
+        for (var b = bullets.length - 1; b >= 0; b--) {
+            var bul = bullets[b];
+            bul.x += bul.vx * dt; bul.y += bul.vy * dt; bul.life -= dt;
+            var c = (bul.x / TILE) | 0, r = (bul.y / TILE) | 0;
+            var hitWall = false;
+            if (r < 0 || c < 0 || r >= ROWS || c >= COLS) { bullets.splice(b,1); continue; }
+            if (walls[r][c] === 1) { walls[r][c] = 0; hitWall = true; }
+            else if (walls[r][c] === 2) hitWall = true;
+            if (hitWall || bul.life <= 0) { bullets.splice(b,1); continue; }
+
+            if (!bul.enemy && player) {
+                // hit enemies
+                for (var ei = enemies.length - 1; ei >= 0; ei--) {
+                    var en = enemies[ei];
+                    if (Math.abs(en.x - bul.x) < 16 && Math.abs(en.y - bul.y) < 16) {
+                        enemies.splice(ei,1); bullets.splice(b,1);
+                        score += 100; setHud();
+                        break;
+                    }
+                }
+            } else if (bul.enemy && player) {
+                if (Math.abs(player.x - bul.x) < 16 && Math.abs(player.y - bul.y) < 16) {
+                    bullets.splice(b,1);
+                    lives -= 1; setHud();
+                    if (lives <= 0) { over = true; running = false; setStatus('战败 · 得分 ' + score); }
+                    else {
+                        player.x = (COLS/2|0)*TILE + TILE/2;
+                        player.y = (ROWS-2)*TILE + TILE/2;
+                        setStatus('被击中，剩余生命 ' + lives);
+                    }
+                }
+            }
+        }
+
+        if (enemies.length === 0) {
+            level += 1; score += 200; setHud();
+            setStatus('过关！进入第 ' + level + ' 关');
+            resetLevel();
+        }
+    }
+
+    function drawTank(t) {
+        ctx.save();
+        ctx.translate(t.x, t.y);
+        ctx.rotate(t.dir * Math.PI / 2);
+        ctx.fillStyle = t.enemy ? '#c62828' : '#f9a825';
+        ctx.fillRect(-14, -14, 28, 28);
+        ctx.fillStyle = t.enemy ? '#ff8a80' : '#fff59d';
+        ctx.fillRect(-4, -22, 8, 16);
+        ctx.fillStyle = '#333';
+        ctx.fillRect(-16, -10, 6, 20);
+        ctx.fillRect(10, -10, 6, 20);
+        ctx.restore();
+    }
+
+    function draw() {
+        var w = canvas.width, h = canvas.height;
+        ctx.clearRect(0,0,w,h);
+        ctx.fillStyle = '#243528';
+        ctx.fillRect(0,0,w,h);
+        if (!walls) return;
+        for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) {
+            if (!walls[r][c]) continue;
+            ctx.fillStyle = walls[r][c] === 2 ? '#78909c' : '#8d6e63';
+            ctx.fillRect(c*TILE+1, r*TILE+1, TILE-2, TILE-2);
+            if (walls[r][c] === 1) {
+                ctx.strokeStyle = 'rgba(0,0,0,.25)';
+                ctx.strokeRect(c*TILE+1, r*TILE+1, TILE-2, TILE-2);
+            }
+        }
+        if (player) drawTank(player);
+        enemies.forEach(drawTank);
+        bullets.forEach(function (b) {
+            ctx.beginPath();
+            ctx.fillStyle = b.enemy ? '#ff5252' : '#ffee58';
+            ctx.arc(b.x, b.y, 3.5, 0, Math.PI*2);
+            ctx.fill();
+        });
+    }
+
+    function loop(ts) {
+        if (!running) { draw(); return; }
+        var dt = Math.min(0.033, (ts - lastTs) / 1000);
+        lastTs = ts;
+        update(dt);
+        draw();
+        if (running) requestAnimationFrame(loop);
+    }
+
+    function resize() {
+        var side = Math.min(520, window.innerWidth - 36);
+        canvas.style.width = side + 'px';
+        canvas.style.height = side + 'px';
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    window.addEventListener('keydown', function (e) {
+        keys[e.keyCode] = true;
+        if ([32,37,38,39,40].indexOf(e.keyCode) >= 0) e.preventDefault();
+    });
+    window.addEventListener('keyup', function (e) { keys[e.keyCode] = false; });
+
+    document.getElementById('pad').addEventListener('pointerdown', function (e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+        e.preventDefault();
+        if (btn.dataset.fire) { keys[32] = true; return; }
+        var d = parseInt(btn.dataset.dir, 10);
+        keys[37]=keys[38]=keys[39]=keys[40]=false;
+        keys[[38,39,40,37][d]] = true;
+    });
+    document.getElementById('pad').addEventListener('pointerup', function () {
+        keys[32]=keys[37]=keys[38]=keys[39]=keys[40]=false;
+    });
+    document.getElementById('pad').addEventListener('pointerleave', function () {
+        keys[32]=keys[37]=keys[38]=keys[39]=keys[40]=false;
+    });
+
+    window.startGame = startGame;
+    window.resetMenu = resetMenu;
+    resetMenu();
+})();
+</script>
+</body>
+</html>

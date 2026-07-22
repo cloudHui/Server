@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国象棋 · 休闲</title>
+    <script src="app-base.js"></script>
+    <script src="mini-base.js"></script>
+    <style>
+        :root { --bg0:#0f2a1c; --bg1:#1a472a; --card:rgba(255,252,245,0.96); }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+            min-height:100vh;
+            background: radial-gradient(ellipse at 20% 10%,rgba(201,162,39,.18),transparent 45%),
+                linear-gradient(160deg,var(--bg0),var(--bg1) 55%,#12301f);
+        }
+        .header {
+            background:rgba(0,0,0,.3); padding:14px 24px; display:flex;
+            justify-content:space-between; align-items:center; color:#fff;
+        }
+        .header h1 { font-size:20px; color:#ffd700; }
+        .header-btn {
+            background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28);
+            color:#fff; padding:6px 14px; border-radius:6px; text-decoration:none; font-size:13px;
+        }
+        .wrap { max-width:640px; margin:20px auto; padding:0 12px 36px; }
+        .panel {
+            background:var(--card); border-radius:14px; padding:16px;
+            box-shadow:0 10px 30px rgba(0,0,0,.25); margin-bottom:12px;
+        }
+        .modes { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .modes button, .actions button {
+            border:none; border-radius:10px; padding:12px; cursor:pointer; color:#fff; font-size:14px;
+        }
+        .modes button:first-child { background:linear-gradient(135deg,#1f5c36,#2d8a4e); }
+        .modes button:last-child { background:linear-gradient(135deg,#c41e2a,#e63946); }
+        .status { text-align:center; color:#ffd700; margin:10px 0; min-height:22px; font-size:15px; }
+        .board-wrap { display:flex; justify-content:center; }
+        canvas { background:#f3d19c; border-radius:8px; max-width:100%; touch-action:none; box-shadow:inset 0 0 0 2px #8b6914; }
+        .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+        .actions button { background:rgba(0,0,0,.55); min-width:96px; }
+        .hint { font-size:12px; color:#666; text-align:center; margin-top:8px; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>中国象棋</h1>
+    <div>
+        <span id="userDisplay" style="margin-right:10px;font-size:13px;"></span>
+        <a class="header-btn" id="backLink" href="room.html">返回大厅</a>
+    </div>
+</div>
+<div class="wrap">
+    <div class="panel">
+        <div class="modes">
+            <button type="button" onclick="startLocal()">人机对战（你执红）</button>
+            <button type="button" onclick="startOnline()">联机匹配</button>
+        </div>
+        <p class="hint">红在下方 · 吃将判胜 · 联机为人对人</p>
+    </div>
+    <div class="status" id="status">请选择模式</div>
+    <div class="board-wrap"><canvas id="board" width="450" height="500"></canvas></div>
+    <div class="actions">
+        <button type="button" id="resignBtn" onclick="resignGame()" disabled>认输</button>
+        <button type="button" id="cancelBtn" onclick="cancelOnline()" style="display:none;">取消匹配</button>
+        <button type="button" onclick="resetToMenu()">重选模式</button>
+    </div>
+</div>
+<script>
+(function () {
+    var user = MiniGames.requireLogin();
+    if (!user) return;
+    document.getElementById('userDisplay').textContent = user.nickname;
+    document.getElementById('backLink').href = appUrl('/room.html');
+
+    var ROWS = 10, COLS = 9;
+    var NAMES = {
+        K:'帅', A:'仕', B:'相', N:'马', R:'车', C:'炮', P:'兵',
+        k:'将', a:'士', b:'象', n:'马', r:'车', c:'炮', p:'卒'
+    };
+    var canvas = document.getElementById('board');
+    var ctx = canvas.getContext('2d');
+    var board = [];
+    var redTurn = true;
+    var finished = false;
+    var mode = null;
+    var selected = null;
+    var iAmRed = true;
+    var sock = null;
+    var PADX, PADY, CW, CH;
+
+    function initBoard() {
+        board = [];
+        for (var r = 0; r < ROWS; r++) {
+            board[r] = [];
+            for (var c = 0; c < COLS; c++) board[r][c] = '.';
+        }
+        var black = 'rnbakabnr', red = 'RNBAKABNR';
+        for (var c = 0; c < COLS; c++) { board[0][c] = black[c]; board[9][c] = red[c]; }
+        board[2][1] = 'c'; board[2][7] = 'c'; board[7][1] = 'C'; board[7][7] = 'C';
+        for (var c = 0; c < COLS; c += 2) { board[3][c] = 'p'; board[6][c] = 'P'; }
+        redTurn = true; finished = false; selected = null;
+    }
+
+    function fromString(s) {
+        board = [];
+        for (var r = 0; r < ROWS; r++) {
+            board[r] = [];
+            for (var c = 0; c < COLS; c++) board[r][c] = s[r * COLS + c] || '.';
+        }
+    }
+
+    function isRed(p) { return p >= 'A' && p <= 'Z'; }
+    function inBoard(r,c){ return r>=0&&r<ROWS&&c>=0&&c<COLS; }
+    function inPalace(r,c,red){ return c>=3&&c<=5 && (red ? r>=7&&r<=9 : r>=0&&r<=2); }
+    function countBlocks(fr,fc,tr,tc){
+        var dr = Math.sign(tr-fr), dc = Math.sign(tc-fc), n=0, r=fr+dr, c=fc+dc;
+        while (r!==tr || c!==tc) { if (board[r][c] !== '.') n++; r+=dr; c+=dc; }
+        return n;
+    }
+    function faceToFace(){
+        var rk=-1,rc=-1,bk=-1,bc=-1;
+        for (var r=0;r<ROWS;r++) for (var c=0;c<COLS;c++) {
+            if (board[r][c]==='K'){rk=r;rc=c;} if (board[r][c]==='k'){bk=r;bc=c;}
+        }
+        if (rk<0||bk<0||rc!==bc) return false;
+        return countBlocks(rk,rc,bk,bc)===0;
+    }
+    function isLegal(fr,fc,tr,tc){
+        var p=board[fr][fc], t=board[tr][tc];
+        if (p==='.'||!inBoard(tr,tc)) return false;
+        if (t!=='.' && isRed(t)===isRed(p)) return false;
+        var dr=tr-fr, dc=tc-fc, type=p.toLowerCase();
+        if (type==='k') return inPalace(tr,tc,isRed(p)) && Math.abs(dr)+Math.abs(dc)===1;
+        if (type==='a') return inPalace(tr,tc,isRed(p)) && Math.abs(dr)===1 && Math.abs(dc)===1;
+        if (type==='b') return Math.abs(dr)===2&&Math.abs(dc)===2&&board[fr+dr/2][fc+dc/2]==='.'&&(isRed(p)?tr>=5:tr<=4);
+        if (type==='n') {
+            if (!((Math.abs(dr)===2&&Math.abs(dc)===1)||(Math.abs(dr)===1&&Math.abs(dc)===2))) return false;
+            var br=Math.abs(dr)===2?fr+dr/2:fr, bc=Math.abs(dc)===2?fc+dc/2:fc;
+            return board[br][bc]==='.';
+        }
+        if (type==='r') return (dr===0||dc===0)&&countBlocks(fr,fc,tr,tc)===0;
+        if (type==='c') {
+            if (dr!==0&&dc!==0) return false;
+            var b=countBlocks(fr,fc,tr,tc);
+            return t==='.' ? b===0 : b===1;
+        }
+        if (type==='p') {
+            if (isRed(p)) {
+                if (fr>=5) return dr===-1&&dc===0;
+                return (dr===-1&&dc===0)||(dr===0&&Math.abs(dc)===1);
+            }
+            if (fr<=4) return dr===1&&dc===0;
+            return (dr===1&&dc===0)||(dr===0&&Math.abs(dc)===1);
+        }
+        return false;
+    }
+    function tryMove(fr,fc,tr,tc){
+        if (!isLegal(fr,fc,tr,tc)) return false;
+        var p=board[fr][fc], cap=board[tr][tc];
+        board[tr][tc]=p; board[fr][fc]='.';
+        if (faceToFace()){ board[fr][fc]=p; board[tr][tc]=cap; return false; }
+        if (cap==='K'||cap==='k'){ finished=true; }
+        else redTurn=!redTurn;
+        return true;
+    }
+    function legalFrom(r,c){
+        var list=[];
+        for (var tr=0;tr<ROWS;tr++) for (var tc=0;tc<COLS;tc++) {
+            if (!isLegal(r,c,tr,tc)) continue;
+            var p=board[r][c], cap=board[tr][tc];
+            board[tr][tc]=p; board[r][c]='.';
+            var bad=faceToFace();
+            board[r][c]=p; board[tr][tc]=cap;
+            if (!bad) list.push([tr,tc]);
+        }
+        return list;
+    }
+
+    function material(p){
+        var t=p.toLowerCase();
+        return {k:10000,r:500,c:300,n:250,b:150,a:150,p:60}[t]||0;
+    }
+    function evalBoard(){
+        var s=0;
+        for (var r=0;r<ROWS;r++) for (var c=0;c<COLS;c++) {
+            var p=board[r][c]; if (p==='.') continue;
+            s += isRed(p) ? material(p) : -material(p);
+        }
+        return s;
+    }
+    function genMoves(forRed){
+        var moves=[];
+        for (var r=0;r<ROWS;r++) for (var c=0;c<COLS;c++) {
+            if (board[r][c]==='.'||isRed(board[r][c])!==forRed) continue;
+            legalFrom(r,c).forEach(function(t){ moves.push([r,c,t[0],t[1]]); });
+        }
+        return moves;
+    }
+    function aiMove(){
+        if (finished||mode!=='ai'||redTurn) return;
+        var moves=genMoves(false);
+        var best=-1e15, pick=null;
+        for (var i=0;i<moves.length;i++){
+            var m=moves[i], p=board[m[0]][m[1]], cap=board[m[2]][m[3]];
+            board[m[2]][m[3]]=p; board[m[0]][m[1]]='.';
+            var score=-evalBoard();
+            // one-ply reply peek
+            var replies=genMoves(true);
+            var worst=1e15;
+            for (var j=0;j<Math.min(replies.length,40);j++){
+                var rm=replies[j], rp=board[rm[0]][rm[1]], rc=board[rm[2]][rm[3]];
+                board[rm[2]][rm[3]]=rp; board[rm[0]][rm[1]]='.';
+                worst=Math.min(worst,-evalBoard());
+                board[rm[0]][rm[1]]=rp; board[rm[2]][rm[3]]=rc;
+            }
+            if (replies.length) score=Math.min(score, worst);
+            board[m[0]][m[1]]=p; board[m[2]][m[3]]=cap;
+            if (score>best){ best=score; pick=m; }
+        }
+        if (pick) {
+            var cap = board[pick[2]][pick[3]];
+            tryMove(pick[0],pick[1],pick[2],pick[3]);
+            draw();
+            if (finished) setStatus(cap==='K'?'电脑获胜':'对局结束');
+            else setStatus('轮到你（红方）');
+        }
+    }
+
+    function layout(){
+        var w=Math.min(450, window.innerWidth-36);
+        var h=w*(10/9);
+        canvas.width=w; canvas.height=h;
+        PADX=w*0.08; PADY=h*0.06; CW=(w-PADX*2)/(COLS-1); CH=(h-PADY*2)/(ROWS-1);
+        draw();
+    }
+    function cellCenter(r,c){ return [PADX+c*CW, PADY+r*CH]; }
+    function draw(){
+        var w=canvas.width, h=canvas.height;
+        ctx.clearRect(0,0,w,h);
+        ctx.fillStyle='#f3d19c'; ctx.fillRect(0,0,w,h);
+        ctx.strokeStyle='#5c4033'; ctx.lineWidth=1.5;
+        for (var r=0;r<ROWS;r++){
+            ctx.beginPath(); ctx.moveTo(PADX,PADY+r*CH); ctx.lineTo(PADX+(COLS-1)*CW,PADY+r*CH); ctx.stroke();
+        }
+        for (var c=0;c<COLS;c++){
+            ctx.beginPath(); ctx.moveTo(PADX+c*CW,PADY); ctx.lineTo(PADX+c*CW,PADY+4*CH); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(PADX+c*CW,PADY+5*CH); ctx.lineTo(PADX+c*CW,PADY+9*CH); ctx.stroke();
+        }
+        ctx.beginPath(); ctx.moveTo(PADX,PADY+4*CH); ctx.lineTo(PADX+(COLS-1)*CW,PADY+4*CH); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(PADX,PADY+5*CH); ctx.lineTo(PADX+(COLS-1)*CW,PADY+5*CH); ctx.stroke();
+        // palace X
+        [[0,3],[0,5],[7,3],[7,5]].forEach(function(){});
+        function cross(r0,c0){
+            ctx.beginPath();
+            ctx.moveTo(PADX+c0*CW,PADY+r0*CH); ctx.lineTo(PADX+(c0+2)*CW,PADY+(r0+2)*CH); ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(PADX+(c0+2)*CW,PADY+r0*CH); ctx.lineTo(PADX+c0*CW,PADY+(r0+2)*CH); ctx.stroke();
+        }
+        cross(0,3); cross(7,3);
+        ctx.fillStyle='#8b6914'; ctx.font='12px sans-serif'; ctx.textAlign='center';
+        ctx.fillText('楚 河', PADX+2*CW, PADY+4.55*CH);
+        ctx.fillText('汉 界', PADX+6*CW, PADY+4.55*CH);
+
+        if (selected) {
+            var sc=cellCenter(selected[0],selected[1]);
+            ctx.beginPath(); ctx.arc(sc[0],sc[1], Math.min(CW,CH)*0.42,0,Math.PI*2);
+            ctx.strokeStyle='#c9a227'; ctx.lineWidth=3; ctx.stroke();
+            legalFrom(selected[0],selected[1]).forEach(function(t){
+                var p=cellCenter(t[0],t[1]);
+                ctx.beginPath(); ctx.arc(p[0],p[1],5,0,Math.PI*2);
+                ctx.fillStyle='rgba(46,125,50,.55)'; ctx.fill();
+            });
+        }
+        for (var r=0;r<ROWS;r++) for (var c=0;c<COLS;c++){
+            var p=board[r][c]; if (p==='.') continue;
+            var pos=cellCenter(r,c), rad=Math.min(CW,CH)*0.4;
+            ctx.beginPath(); ctx.arc(pos[0],pos[1],rad,0,Math.PI*2);
+            ctx.fillStyle=isRed(p)?'#fff5e6':'#2a2a2a'; ctx.fill();
+            ctx.strokeStyle=isRed(p)?'#c41e2a':'#111'; ctx.lineWidth=2; ctx.stroke();
+            ctx.fillStyle=isRed(p)?'#c41e2a':'#f0f0f0';
+            ctx.font='bold ' + Math.floor(rad*1.1) + 'px "Songti SC","SimSun",serif';
+            ctx.textAlign='center'; ctx.textBaseline='middle';
+            ctx.fillText(NAMES[p]||p, pos[0], pos[1]+1);
+        }
+    }
+
+    function setStatus(t){ document.getElementById('status').textContent=t; }
+
+    function startLocal(){
+        closeSock(); mode='ai'; iAmRed=true; initBoard(); draw();
+        document.getElementById('resignBtn').disabled=false;
+        document.getElementById('cancelBtn').style.display='none';
+        setStatus('你执红，请走棋');
+    }
+    function startOnline(){
+        initBoard(); draw(); mode='online'; finished=true;
+        document.getElementById('resignBtn').disabled=true;
+        document.getElementById('cancelBtn').style.display='inline-block';
+        setStatus('连接中…');
+        closeSock();
+        sock=new MiniGames.MiniSocket(onSockEvent);
+        sock.connect(user.sessionId).then(function(){
+            setStatus('匹配中…');
+            return sock.send('match',{game:'chess'});
+        }).then(function(msg){
+            if (msg.data&&msg.data.status==='queued') setStatus('排队等待对手…');
+        }).catch(function(e){ setStatus(e.message||'失败'); });
+    }
+    function onSockEvent(msg){
+        if (!msg) return;
+        if (msg.action==='matched'&&msg.data){
+            iAmRed = msg.data.side==='red';
+            fromString(msg.data.board);
+            redTurn = !!msg.data.redTurn;
+            finished=false; selected=null;
+            document.getElementById('resignBtn').disabled=false;
+            document.getElementById('cancelBtn').style.display='none';
+            setStatus('对阵 '+(msg.data.opponent||'对手')+' · 你执'+(iAmRed?'红':'黑')
+                +( (redTurn===iAmRed)?' · 轮到你':' · 等待对手'));
+            draw();
+        } else if (msg.action==='move'&&msg.data){
+            fromString(msg.data.board);
+            redTurn=!!msg.data.redTurn;
+            finished=!!msg.data.finished;
+            selected=null; draw();
+            if (!finished) setStatus(redTurn===iAmRed?'轮到你':'等待对手');
+        } else if (msg.action==='gameOver'&&msg.data){
+            finished=true; document.getElementById('resignBtn').disabled=true;
+            if (msg.data.board) fromString(msg.data.board);
+            draw();
+            var win=msg.data.winner;
+            var mine=iAmRed?'red':'black';
+            setStatus((win===mine?'你赢了':(win?'你输了':'和棋'))+(msg.data.reason?'（'+msg.data.reason+'）':''));
+        }
+    }
+    function cancelOnline(){
+        if (sock) sock.send('cancelMatch',{}).catch(function(){});
+        closeSock(); mode=null; setStatus('已取消匹配');
+        document.getElementById('cancelBtn').style.display='none';
+    }
+    function resignGame(){
+        if (finished) return;
+        if (mode==='online'&&sock){ sock.send('resign',{}).catch(function(){}); return; }
+        finished=true; document.getElementById('resignBtn').disabled=true;
+        setStatus('你认输，电脑获胜');
+    }
+    function resetToMenu(){
+        closeSock(); mode=null; initBoard(); draw();
+        setStatus('请选择模式');
+        document.getElementById('resignBtn').disabled=true;
+        document.getElementById('cancelBtn').style.display='none';
+    }
+    function closeSock(){
+        if (sock){ try{sock.send('leave',{});}catch(e){} sock.close(); sock=null; }
+    }
+
+    canvas.addEventListener('click', function(e){
+        if (finished||!mode) return;
+        var rect=canvas.getBoundingClientRect();
+        var sx=canvas.width/rect.width, sy=canvas.height/rect.height;
+        var mx=(e.clientX-rect.left)*sx, my=(e.clientY-rect.top)*sy;
+        var c=Math.round((mx-PADX)/CW), r=Math.round((my-PADY)/CH);
+        if (!inBoard(r,c)) return;
+
+        var myTurn = mode==='online' ? (redTurn===iAmRed) : redTurn;
+        if (!myTurn) return;
+
+        if (!selected) {
+            var p=board[r][c];
+            if (p==='.'||isRed(p)!== (mode==='online'?iAmRed:true)) return;
+            selected=[r,c]; draw(); return;
+        }
+        if (selected[0]===r&&selected[1]===c){ selected=null; draw(); return; }
+
+        if (mode==='online') {
+            var fr=selected[0], fc=selected[1];
+            selected=null;
+            sock.send('move',{fr:fr,fc:fc,tr:r,tc:c}).catch(function(err){
+                setStatus(err.message||'走法无效'); draw();
+            });
+            return;
+        }
+        var cap=board[r][c];
+        if (tryMove(selected[0],selected[1],r,c)) {
+            selected=null; draw();
+            if (finished) setStatus(cap==='k'?'你赢了':'对局结束');
+            else { setStatus('电脑思考中…'); setTimeout(aiMove, 180); }
+        } else {
+            var p=board[r][c];
+            if (p!=='.'&&isRed(p)) selected=[r,c];
+            else selected=null;
+            draw();
+        }
+    });
+
+    initBoard(); layout();
+    window.addEventListener('resize', layout);
+    window.addEventListener('beforeunload', closeSock);
+})();
+</script>
+</body>
+</html>

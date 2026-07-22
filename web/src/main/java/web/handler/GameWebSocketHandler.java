@@ -257,7 +257,12 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 				sendError(wsSession, seq, "离开桌子超时");
 				return;
 			}
-			sendResponse(wsSession, "leave", seq, 0, "success", null);
+			if (response instanceof GameProto.AckLeaveTable) {
+				sendResponse(wsSession, "leave", seq, 0, "success", null);
+				return;
+			}
+			// 失败时常为 Result 枚举数值消息
+			sendError(wsSession, seq, "离开桌子失败");
 		});
 	}
 

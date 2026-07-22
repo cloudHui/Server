@@ -31,7 +31,9 @@ public class Waiting extends AbstractTableHandle {
 			startGame(table);
 			return false;
 		}
-		if (table.isEmpty()) {
+		if (table.isEmpty() || !table.hasHumanPlayer()) {
+			logger.info("等待阶段无真人，解散桌子, tableId: {}, empty: {}, allRobot: {}",
+					table.getTableId(), table.isEmpty(), table.isAllRobot());
 			Game.getInstance().getTableManager().removeTable(table.getTableId());
 			return true;
 		}
@@ -47,8 +49,17 @@ public class Waiting extends AbstractTableHandle {
 					if (added <= 0 && !table.sitFull()) {
 						logger.warn("补机器人失败，回退解散, tableId: {}", table.getTableId());
 						table.upNextState(TableState.TABLE_DIS);
+					} else if (table.sitFull()) {
+						if (table.getTableModel().getDisbandIfAllRobot() == 1 && table.isAllRobot()) {
+							logger.info("补机器人后全机桌，解散, tableId: {}", table.getTableId());
+							table.upNextState(TableState.TABLE_DIS);
+						} else {
+							startGame(table);
+						}
+					} else {
+						// 未坐满：重置计时，避免每个 tick 反复补位
+						table.upNextStateWithTime(TableState.WAITING, System.currentTimeMillis());
 					}
-					// 坐满后下一 tick 走开局 / 全机解散
 				} else {
 					logger.info("等人超时，解散桌子, tableId: {}, waitSec: {}", table.getTableId(), waitSec);
 					table.upNextState(TableState.TABLE_DIS);

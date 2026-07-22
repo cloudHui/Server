@@ -23,6 +23,18 @@ public class IdleCardPlay extends AbstractTableHandle {
 	private static final Logger logger = LoggerFactory.getLogger(IdleCardPlay.class);
 
 	@Override
+	public boolean handle(Table table) {
+		int seat = table.getOp().getCurrOpSeat();
+		TableUser u = table.getSeatUser(seat);
+		if (u != null && u.isRobot()
+				&& System.currentTimeMillis() >= table.getStateStartTime() + 500) {
+			overTime(table);
+			return false;
+		}
+		return super.handle(table);
+	}
+
+	@Override
 	public void overTime(Table table) {
 		DdzTable ddzTable = (DdzTable) table;
 		int seat = table.getOp().getCurrOpSeat();

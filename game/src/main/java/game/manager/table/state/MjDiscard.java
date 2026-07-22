@@ -32,13 +32,24 @@ public class MjDiscard extends AbstractTableHandle {
 	private static final Logger logger = LoggerFactory.getLogger(MjDiscard.class);
 
 	@Override
-	public boolean onTiming(Table table) {
+	public boolean handle(Table table) {
 		MjTable mjTable = (MjTable) table;
 		MjTableContext ctx = mjTable.getMjContext();
 		if (!ctx.isDiscardPromptSent()) {
 			sendDiscardPrompt(mjTable);
 			ctx.setDiscardPromptSent(true);
 		}
+		TableUser seatUser = table.getSeatUser(table.getOp().getCurrOpSeat());
+		if (seatUser != null && seatUser.isRobot()
+				&& System.currentTimeMillis() >= table.getStateStartTime() + 400) {
+			overTime(table);
+			return false;
+		}
+		return super.handle(table);
+	}
+
+	@Override
+	public boolean onTiming(Table table) {
 		return false;
 	}
 
@@ -50,7 +61,7 @@ public class MjDiscard extends AbstractTableHandle {
 
 		int seat = table.getOp().getCurrOpSeat();
 		TableUser seatUser = table.getSeatUser(seat);
-		boolean allowAi = table.getTableModel().getAutoPlay() != 0
+		boolean allowAi = table.isAutoPlayEnabled()
 				|| (seatUser != null && seatUser.isRobot());
 		if (!allowAi) {
 			MjPlayService.afterDiscard(mjTable);

@@ -137,6 +137,25 @@
     <div class="content">
         <button class="refresh-btn" onclick="loadRooms()">刷新房间</button>
 
+        <h2 class="section-title">休闲小游戏</h2>
+        <div class="room-list" style="margin-bottom:8px;">
+            <div class="room-card">
+                <h3>五子棋</h3>
+                <p style="font-size:13px;color:#666;margin-bottom:10px;">本地双人 / 人机 / 联机 1v1</p>
+                <a class="join-btn join-btn-mj" style="display:block;text-align:center;text-decoration:none;" href="gomoku.html" id="linkGomoku">进入五子棋</a>
+            </div>
+            <div class="room-card">
+                <h3>中国象棋</h3>
+                <p style="font-size:13px;color:#666;margin-bottom:10px;">人机对战 / 联机 1v1</p>
+                <a class="join-btn join-btn-ddz" style="display:block;text-align:center;text-decoration:none;" href="chess.html" id="linkChess">进入象棋</a>
+            </div>
+            <div class="room-card">
+                <h3>坦克大战</h3>
+                <p style="font-size:13px;color:#666;margin-bottom:10px;">纯本地打电脑</p>
+                <a class="join-btn" style="display:block;text-align:center;text-decoration:none;background:linear-gradient(135deg,#5d4037,#8d6e63);" href="tank.html" id="linkTank">进入坦克</a>
+            </div>
+        </div>
+
         <h2 class="section-title">创建房间</h2>
         <div class="room-list" style="margin-bottom:8px;">
             <div class="room-card">
@@ -218,6 +237,9 @@
         if (isAdmin) {
             document.getElementById('adminLink').style.display = 'inline-block';
         }
+        document.getElementById('linkGomoku').href = appUrl('/gomoku.html');
+        document.getElementById('linkChess').href = appUrl('/chess.html');
+        document.getElementById('linkTank').href = appUrl('/tank.html');
 
         // TableModel type: 1=麻将, 2=斗地主
         var GAME_MJ = 1;

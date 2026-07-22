@@ -50,6 +50,8 @@ public abstract class Table {
 	private static final AtomicInteger ROBOT_ID_SEQ = new AtomicInteger(-100000);
 	private int timerNodeId = -1;
 	private long currentLoopInterval = IDLE_LOOP_INTERVAL;
+	/** 本桌运行时托管（补机器人后开启，勿改共享 TableModel） */
+	private boolean runtimeAutoPlay;
 
 	protected Table(long tableId, TableModel model, ModelProto.RoomRole creator) {
 		this.tableId = tableId;
@@ -57,6 +59,7 @@ public abstract class Table {
 		this.tableModel = model;
 		this.op = new Operate(this);
 		this.gameResult = createGameResult();
+		this.stateStartTime = System.currentTimeMillis();
 		logger.info("创建桌子实例, tableId: {}, type: {}", tableId, model.getType());
 	}
 
@@ -123,7 +126,11 @@ public abstract class Table {
 		return true;
 	}
 
-	/** 补齐空位为机器人；成功补位后打开 autoPlay 以便超时代打 */
+	public boolean isAutoPlayEnabled() {
+		return runtimeAutoPlay || tableModel.getAutoPlay() != 0;
+	}
+
+	/** 补齐空位为机器人；成功补位后打开本桌托管以便超时代打 */
 	public int fillRobotSeats() {
 		int added = 0;
 		while (!sitFull()) {
@@ -142,7 +149,7 @@ public abstract class Table {
 			added++;
 		}
 		if (added > 0) {
-			tableModel.setAutoPlay(1);
+			runtimeAutoPlay = true;
 			logger.info("桌子补机器人完成, tableId: {}, added: {}, seats: {}/{}",
 					tableId, added, seatUsers.size(), tableModel.getSeatNum());
 		}
@@ -183,6 +190,7 @@ public abstract class Table {
 
 	public void start() {
 		try {
+			if (timerNodeId > 0) return;
 			int groupIndex = getGroupIndex();
 			timerNodeId = Game.getInstance().registerSerialTimerWithId(
 					groupIndex, 1000, IDLE_LOOP_INTERVAL, -1, this::tableLoop, this);
@@ -190,6 +198,19 @@ public abstract class Table {
 			logger.info("启动桌子逻辑循环, tableId: {}, groupIndex: {}", tableId, groupIndex);
 		} catch (Exception e) {
 			logger.error("启动桌子逻辑循环失败, tableId: {}", tableId, e);
+		}
+	}
+
+	/** 停止桌子循环，避免删桌后仍触发 Waiting */
+	public void stop() {
+		try {
+			if (timerNodeId > 0) {
+				Game.getInstance().unregisterTimer(timerNodeId);
+				timerNodeId = -1;
+				logger.info("停止桌子逻辑循环, tableId: {}", tableId);
+			}
+		} catch (Exception e) {
+			logger.error("停止桌子逻辑循环失败, tableId: {}", tableId, e);
 		}
 	}
 
