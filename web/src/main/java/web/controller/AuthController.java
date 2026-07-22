@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.*;
 import web.service.UserService;
 
@@ -34,7 +35,7 @@ public class AuthController {
 			if (userInfo == null) {
 				return ResponseEntity.ok(error(401, "Token无效或已过期"));
 			}
-			return ResponseEntity.ok(success(userInfo));
+			return withSessionCookie(userInfo);
 		}
 
 		String username = request.get("username");
@@ -48,7 +49,7 @@ public class AuthController {
 		if (userInfo == null) {
 			return ResponseEntity.ok(error(401, "登录失败，用户名或密码错误"));
 		}
-		return ResponseEntity.ok(success(userInfo));
+		return withSessionCookie(userInfo);
 	}
 
 	/**
@@ -76,7 +77,13 @@ public class AuthController {
 		if (userInfo.getUserId() <= 0) {
 			return ResponseEntity.ok(error(userInfo.getErrorCode(), registerMsg(userInfo.getErrorCode())));
 		}
-		return ResponseEntity.ok(success(userInfo));
+		return withSessionCookie(userInfo);
+	}
+
+	private ResponseEntity<Map<String, Object>> withSessionCookie(UserService.UserInfo userInfo) {
+		ResponseCookie cookie = ResponseCookie.from("sessionId", userInfo.getSessionId())
+				.path("/").httpOnly(true).sameSite("Lax").build();
+		return ResponseEntity.ok().header("Set-Cookie", cookie.toString()).body(success(userInfo));
 	}
 
 	/**

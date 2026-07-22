@@ -373,6 +373,12 @@
     emptyBoard();
     resize();
     window.addEventListener('beforeunload', closeSock);
+    // Inline handlers run on window; the implementations live in this IIFE.
+    window.startLocal = startLocal;
+    window.startOnline = startOnline;
+    window.cancelOnline = cancelOnline;
+    window.resignGame = resignGame;
+    window.resetToMenu = resetToMenu;
 })();
 </script>
 </body>

@@ -315,12 +315,19 @@
                             (playerNames.length > 0 ? playerNames.join(', ') : '空桌') +
                             ' (' + table.playerCount + '人)</div>';
                         html += '<span class="status ' + statusClass + '">' + statusText + '</span>';
+                        if (table.mine) {
+                            html += '<button class="join-btn ' + btnClass + '" style="width:auto;margin-top:0;padding:7px 12px;" onclick="goTable(' + table.tableId + ',' + room.roomId + ',' + gameType + ')">返回房间</button>';
+                        }
                         html += '</div>';
                     }
                     html += '</div>';
                 }
 
-                html += '<button class="join-btn ' + btnClass + '" onclick="joinRoom(' + room.roomId + ',' + gameType + ')">加入房间</button>';
+                if (room.myTableId) {
+                    html += '<button class="join-btn ' + btnClass + '" onclick="goTable(' + room.myTableId + ',' + room.roomId + ',' + gameType + ')">返回房间</button>';
+                } else {
+                    html += '<button class="join-btn ' + btnClass + '" onclick="joinRoom(' + room.roomId + ',' + gameType + ')">进入房间</button>';
+                }
                 html += '</div>';
             }
             container.innerHTML = html;

@@ -71,9 +71,17 @@ public class RoomController {
 							players.add(playerData);
 						}
 						tableData.put("players", players);
+						tableData.put("mine", table.getTableRolesList().stream()
+								.anyMatch(role -> role.getRoleId() == user.getUserId()));
 						tables.add(tableData);
 					}
 					roomData.put("tables", tables);
+					for (Map<String, Object> table : tables) {
+						if (Boolean.TRUE.equals(table.get("mine"))) {
+							roomData.put("myTableId", table.get("tableId"));
+							break;
+						}
+					}
 					rooms.add(roomData);
 				}
 

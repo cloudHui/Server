@@ -1,6 +1,6 @@
-# Server — 棋牌游戏服务端
+# Server — 休闲小游戏服务端
 
-多人棋牌后端与简易 Web 前端。玩家可注册登录、邀请入局、选模板进桌（斗地主 / 麻将），完成对局流转、结算展示，并支持断线后拉回未结束的桌子。
+休闲小游戏后端与 Web 前端。玩家可注册登录、进入对战房间，并可在浏览器中进行五子棋、象棋和坦克小游戏；系统支持对局流转、结算展示和断线后拉回未结束的桌子。
 
 技术栈：Java 8 · Maven 多模块 · Netty · Protobuf · Spring Boot（web）· SQLite（账号、邀请码、模板与战绩）
 
@@ -13,6 +13,7 @@
 | 账号 | 用户名 + 密码登录；Token 重连；默认需邀请码注册 |
 | 邀请 | 管理员在后台创建 / 列表 / 复制链接 / 作废邀请码 |
 | 大厅 | 固定模板或自定义规则创建麻将、斗地主房间；模板持久化到 SQLite |
+| 休闲游戏 | 五子棋支持本地双人、人机和联机匹配；象棋支持人机和联机匹配；坦克支持本地闯关 |
 | 对局 | 完整进桌、发牌、操作、断线重连、小结算 / 多局总结算 |
 | 战绩 | 每局按玩家落库，后台分页查看本局分数和累计分数 |
 | 回放 | 玩家查看本人最近七天或输入回放码；管理员分页查看全部回放 |
@@ -32,7 +33,7 @@ Server/
   gate/       对玩家网关（TCP / WebSocket），按消息类型转发 Lobby / Game
   lobby/      大厅：账号、邀请、房间列表、进桌编排 + SQLite
   game/       游戏服：玩法与状态机（独立进程，不与大厅合并）
-  web/        HTTP + 静态页 + WebSocket，浏览器入口
+  web/        HTTP + 静态页 + WebSocket，浏览器入口和登录拦截
   robot/      机器人（可选）
   mcp/ sp/    辅助模块（构建时可按需排除）
 ```
@@ -105,6 +106,11 @@ Spring Boot，默认 HTTP **8081**。
 | `/mahjong.html` | 麻将牌桌 |
 | `/admin.html` | 邀请码管理（仅 admin） |
 | `/replays.html` | 当前玩家最近七天回放与回放码查询 |
+| `/gomoku.html` | 五子棋：本地双人、人机和联机匹配 |
+| `/chess.html` | 中国象棋：人机和联机匹配 |
+| `/tank.html` | 坦克大战：本地闯关 |
+
+除登录页、注册登录接口和公共静态资源外，业务页面与业务接口均要求有效登录会话。登录成功后服务端通过会话 Cookie 保护直接访问，页面端同时保留会话信息用于接口和 WebSocket 认证。
 
 主要接口：
 
@@ -112,6 +118,7 @@ Spring Boot，默认 HTTP **8081**。
 - `GET /api/rooms`、`POST /api/rooms/join`
 - `GET|POST /api/admin/invites*`（反代 lobby 邀请管理）
 - WebSocket `/ws/game`：认证、进桌、操作；服务端转发游戏推送与结算
+- WebSocket `/ws/mini`：五子棋、象棋匹配和对局消息
 - `GET /api/replays`、`GET /api/replays/code`：当前玩家回放分页与回放码查询
 - `GET /api/admin/replays`、`GET /api/admin/replays/code`：管理员全部回放分页与回放码查询
 - `GET /api/admin/records`：管理员分页查看 SQLite 战绩
@@ -143,11 +150,3 @@ mvn -pl proto,lobby,gate,game,web -am compile -DskipTests
 起服最短路径：`center + gate + lobby + game + web`，浏览器访问 `http://127.0.0.1:8081/`。
 
 ---
-
-## 验收流程
-
-1. `admin` / `admin123` 登录 → 大厅出现「邀请管理」→ 创建邀请码并复制链接  
-2. 无痕窗口打开 `/?invite=码` 注册新号 → 进大厅 → 加入斗地主或麻将  
-3. 对局中刷新登录页 →「继续进入」→ 应看到桌子列表（含玩法）→ 能回到牌桌  
-4. 同账号再次登录后，旧连接断开不应把新会话打成离线
-5. 完成一局后，玩家打开「我的回放」查看本人记录，管理员在后台分页查看战绩与回放

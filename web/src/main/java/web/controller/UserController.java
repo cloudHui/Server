@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.*;
 import web.service.UserService;
 
@@ -86,7 +87,9 @@ public class UserController {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 0);
 		result.put("msg", "success");
-		return ResponseEntity.ok(result);
+		ResponseCookie cookie = ResponseCookie.from("sessionId", "")
+				.path("/").maxAge(0).httpOnly(true).sameSite("Lax").build();
+		return ResponseEntity.ok().header("Set-Cookie", cookie.toString()).body(result);
 	}
 
 	private Map<String, Object> toSuccess(UserService.UserInfo userInfo) {
