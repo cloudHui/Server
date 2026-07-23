@@ -1,1092 +1,364 @@
 <!DOCTYPE html>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <html lang="zh-CN">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <head>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <meta charset="UTF-8">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <title>坦克大战 · 休闲</title>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-    <script src="/shared/app-base.js"></script>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-    <script src="/shared/mini-base.js"></script>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+    <script src="../../shared/app-base.js"></script>
+    <script src="../../shared/mini-base.js"></script>
     <style>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         :root { --bg0:#0f2a1c; --bg1:#1a472a; --card:rgba(255,252,245,0.96); }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         * { margin:0; padding:0; box-sizing:border-box; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         body {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             min-height:100vh;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             background: radial-gradient(ellipse at 20% 10%,rgba(201,162,39,.18),transparent 45%),
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 linear-gradient(160deg,var(--bg0),var(--bg1) 55%,#12301f);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             color:#fff;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             overflow-x:hidden;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .header {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             background:rgba(0,0,0,.3); padding:14px 24px; display:flex;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             justify-content:space-between; align-items:center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .header h1 { font-size:20px; color:#ffd700; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .header-btn {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             color:#fff; padding:6px 14px; border-radius:6px; text-decoration:none; font-size:13px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .wrap { max-width:720px; margin:16px auto; padding:0 12px 32px; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .panel {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             background:var(--card); border-radius:14px; padding:14px 16px; color:#222;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             box-shadow:0 10px 30px rgba(0,0,0,.25); margin-bottom:12px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .hud {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             color:#ffd700; font-size:14px; margin-bottom:10px; min-height:22px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .board-wrap {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             display:flex; justify-content:center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             background:rgba(0,0,0,.35); border-radius:12px; padding:8px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         canvas {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             display:block; max-width:100%; background:#1b2e1f;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             border-radius:8px; touch-action:none;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             box-shadow:inset 0 0 0 2px #5c4033;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .actions button {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             border:none; border-radius:10px; padding:12px 18px; cursor:pointer;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             color:#fff; font-size:14px; background:linear-gradient(135deg,#1f5c36,#2d8a4e); min-width:110px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .actions button.secondary { background:rgba(0,0,0,.55); }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .hint { font-size:12px; color:#666; text-align:center; margin-top:8px; line-height:1.5; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .pad {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             display:none; margin-top:12px; user-select:none;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             grid-template-columns:72px 72px 72px; gap:8px; justify-content:center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .pad button {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             width:72px; height:52px; border:none; border-radius:10px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             background:rgba(255,255,255,.12); color:#fff; font-size:18px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         .pad .fire { grid-column:2; background:linear-gradient(135deg,#c41e2a,#e63946); }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         @media (max-width:720px) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             .pad { display:grid; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     </style>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 </head>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <body>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <div class="header">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <h1>坦克大战</h1>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         <span id="userDisplay" style="margin-right:10px;font-size:13px;"></span>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <a class="header-btn" id="backLink" href="/pages/home/room.html">返回大厅</a>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        <a class="header-btn" id="backLink" href="../../pages/home/room.html">返回大厅</a>
     </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <div class="wrap">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <div class="panel">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         <div class="hud">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <span id="status">按开始进入战斗</span>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <span id="scoreHud">得分 0 · 关卡 1</span>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         <div class="board-wrap"><canvas id="game" width="520" height="520"></canvas></div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         <div class="actions">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <button type="button" id="startBtn" onclick="startGame()">开始游戏</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <button type="button" class="secondary" onclick="resetMenu()">重来</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         <div class="pad" id="pad">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <span></span><button type="button" data-dir="0">↑</button><span></span>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <button type="button" data-dir="3">←</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <button type="button" class="fire" data-fire="1">开火</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <button type="button" data-dir="1">→</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             <span></span><button type="button" data-dir="2">↓</button><span></span>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         <p class="hint">键盘：方向键 / WASD 移动，空格开火。消灭敌方坦克过关，撞墙或被击中会损血。</p>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <script>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 (function () {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var user = MiniGames.requireLogin();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     if (!user) return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     document.getElementById('userDisplay').textContent = user.nickname;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     document.getElementById('backLink').href = appUrl('/pages/home/room.html');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var canvas = document.getElementById('game');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var ctx = canvas.getContext('2d');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var TILE = 40, COLS = 13, ROWS = 13;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var DIR = [[0,-1],[1,0],[0,1],[-1,0]]; // U R D L
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var keys = {};
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var running = false, over = false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     var player, enemies, bullets, walls, score, level, lives, lastTs, spawnAcc;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function setStatus(t) { document.getElementById('status').textContent = t; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function setHud() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         document.getElementById('scoreHud').textContent =
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             '得分 ' + score + ' · 关卡 ' + level + ' · 生命 ' + lives;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function makeMap(lv) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var w = [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         for (var r = 0; r < ROWS; r++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             w[r] = [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             for (var c = 0; c < COLS; c++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 var edge = r === 0 || c === 0 || r === ROWS - 1 || c === COLS - 1;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 var brick = (!edge && ((r + c + lv) % 5 === 0 || (r * 3 + c) % 11 === 0))
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     && !(r > ROWS - 4 && c > 4 && c < 8);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 w[r][c] = edge ? 2 : (brick ? 1 : 0); // 0空 1砖 2钢
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         // 出生点清空
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         [[ROWS-2,6],[1,2],[1,COLS-3],[1,6]].forEach(function (p) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             w[p[0]][p[1]] = 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             w[p[0]][p[1]-1] = 0; w[p[0]][p[1]+1] = 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         return w;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function tank(x, y, dir, enemy) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         return { x:x, y:y, dir:dir, enemy:!!enemy, cool:0, speed: enemy ? 70 : 95, hp:1 };
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function resetLevel() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         walls = makeMap(level);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         player = tank((COLS/2|0)*TILE + TILE/2, (ROWS-2)*TILE + TILE/2, 0, false);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         enemies = [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         bullets = [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         spawnAcc = 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         for (var i = 0; i < Math.min(2 + level, 5); i++) spawnEnemy();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function spawnEnemy() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var spots = [[1.5*TILE,1.5*TILE],[ (COLS-1.5)*TILE,1.5*TILE],[ (COLS/2)*TILE,1.5*TILE]];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var s = spots[enemies.length % spots.length];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var e = tank(s[0], s[1], 2, true);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         e.think = 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         enemies.push(e);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function startGame() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         score = 0; level = 1; lives = 3; over = false; running = true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         resetLevel(); setHud(); setStatus('战斗中 · 消灭敌军');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         lastTs = performance.now();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         requestAnimationFrame(loop);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function resetMenu() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         running = false; over = false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         score = 0; level = 1; lives = 3;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         walls = makeMap(1); player = null; enemies = []; bullets = [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         setHud(); setStatus('按开始进入战斗');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         draw();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function blocked(nx, ny, self) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var r = 14;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var pts = [[nx-r,ny-r],[nx+r,ny-r],[nx-r,ny+r],[nx+r,ny+r]];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         for (var i = 0; i < pts.length; i++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             var c = (pts[i][0] / TILE) | 0, row = (pts[i][1] / TILE) | 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (row < 0 || c < 0 || row >= ROWS || c >= COLS) return true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (walls[row][c]) return true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var list = enemies.concat(player ? [player] : []);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         for (var j = 0; j < list.length; j++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             var t = list[j];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (!t || t === self) continue;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (Math.abs(t.x - nx) < 28 && Math.abs(t.y - ny) < 28) return true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         return false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function moveTank(t, dt) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var d = DIR[t.dir];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var nx = t.x + d[0] * t.speed * dt;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var ny = t.y + d[1] * t.speed * dt;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (!blocked(nx, t.y, t)) t.x = nx;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (!blocked(t.x, ny, t)) t.y = ny;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function fire(t) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (t.cool > 0) return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         t.cool = t.enemy ? 0.9 : 0.35;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var d = DIR[t.dir];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         bullets.push({
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             x: t.x + d[0]*18, y: t.y + d[1]*18,
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             vx: d[0]*220, vy: d[1]*220,
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             enemy: t.enemy, life: 2.2
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function ai(e, dt) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         e.think -= dt;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (e.think <= 0) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             e.think = 0.4 + Math.random() * 0.8;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (player && Math.random() < 0.55) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 var dx = player.x - e.x, dy = player.y - e.y;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 e.dir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             } else {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 e.dir = (Math.random() * 4) | 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (Math.random() < 0.45) fire(e);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         moveTank(e, dt);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (e.cool > 0) e.cool -= dt;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function update(dt) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (!running || over) return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         // player input
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (keys[38] || keys[87]) player.dir = 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         else if (keys[39] || keys[68]) player.dir = 1;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         else if (keys[40] || keys[83]) player.dir = 2;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         else if (keys[37] || keys[65]) player.dir = 3;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var moving = keys[37]||keys[38]||keys[39]||keys[40]||keys[65]||keys[87]||keys[68]||keys[83];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (moving) moveTank(player, dt);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (keys[32]) fire(player);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (player.cool > 0) player.cool -= dt;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         for (var i = 0; i < enemies.length; i++) ai(enemies[i], dt);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         // bullets
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         for (var b = bullets.length - 1; b >= 0; b--) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             var bul = bullets[b];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             bul.x += bul.vx * dt; bul.y += bul.vy * dt; bul.life -= dt;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             var c = (bul.x / TILE) | 0, r = (bul.y / TILE) | 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             var hitWall = false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (r < 0 || c < 0 || r >= ROWS || c >= COLS) { bullets.splice(b,1); continue; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (walls[r][c] === 1) { walls[r][c] = 0; hitWall = true; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             else if (walls[r][c] === 2) hitWall = true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (hitWall || bul.life <= 0) { bullets.splice(b,1); continue; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (!bul.enemy && player) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 // hit enemies
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 for (var ei = enemies.length - 1; ei >= 0; ei--) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     var en = enemies[ei];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     if (Math.abs(en.x - bul.x) < 16 && Math.abs(en.y - bul.y) < 16) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                         enemies.splice(ei,1); bullets.splice(b,1);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                         score += 100; setHud();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                         break;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             } else if (bul.enemy && player) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 if (Math.abs(player.x - bul.x) < 16 && Math.abs(player.y - bul.y) < 16) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     bullets.splice(b,1);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     lives -= 1; setHud();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     if (lives <= 0) { over = true; running = false; setStatus('战败 · 得分 ' + score); }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     else {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                         player.x = (COLS/2|0)*TILE + TILE/2;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                         player.y = (ROWS-2)*TILE + TILE/2;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                         setStatus('被击中，剩余生命 ' + lives);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (enemies.length === 0) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             level += 1; score += 200; setHud();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             setStatus('过关！进入第 ' + level + ' 关');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             resetLevel();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function drawTank(t) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.save();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.translate(t.x, t.y);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.rotate(t.dir * Math.PI / 2);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillStyle = t.enemy ? '#c62828' : '#f9a825';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillRect(-14, -14, 28, 28);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillStyle = t.enemy ? '#ff8a80' : '#fff59d';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillRect(-4, -22, 8, 16);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillStyle = '#333';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillRect(-16, -10, 6, 20);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillRect(10, -10, 6, 20);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.restore();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function draw() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var w = canvas.width, h = canvas.height;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.clearRect(0,0,w,h);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillStyle = '#243528';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         ctx.fillRect(0,0,w,h);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (!walls) return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (!walls[r][c]) continue;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             ctx.fillStyle = walls[r][c] === 2 ? '#78909c' : '#8d6e63';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             ctx.fillRect(c*TILE+1, r*TILE+1, TILE-2, TILE-2);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             if (walls[r][c] === 1) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 ctx.strokeStyle = 'rgba(0,0,0,.25)';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
                 ctx.strokeRect(c*TILE+1, r*TILE+1, TILE-2, TILE-2);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (player) drawTank(player);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         enemies.forEach(drawTank);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         bullets.forEach(function (b) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             ctx.beginPath();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             ctx.fillStyle = b.enemy ? '#ff5252' : '#ffee58';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             ctx.arc(b.x, b.y, 3.5, 0, Math.PI*2);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             ctx.fill();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function loop(ts) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (!running) { draw(); return; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var dt = Math.min(0.033, (ts - lastTs) / 1000);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         lastTs = ts;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         update(dt);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         draw();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (running) requestAnimationFrame(loop);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     function resize() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var side = Math.min(520, window.innerWidth - 36);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         canvas.style.width = side + 'px';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         canvas.style.height = side + 'px';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     window.addEventListener('resize', resize);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     resize();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     window.addEventListener('keydown', function (e) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         keys[e.keyCode] = true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if ([32,37,38,39,40].indexOf(e.keyCode) >= 0) e.preventDefault();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     window.addEventListener('keyup', function (e) { keys[e.keyCode] = false; });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     document.getElementById('pad').addEventListener('pointerdown', function (e) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var btn = e.target.closest('button');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (!btn) return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         e.preventDefault();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         if (btn.dataset.fire) { keys[32] = true; return; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         var d = parseInt(btn.dataset.dir, 10);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         keys[37]=keys[38]=keys[39]=keys[40]=false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         keys[[38,39,40,37][d]] = true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     document.getElementById('pad').addEventListener('pointerup', function () {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         keys[32]=keys[37]=keys[38]=keys[39]=keys[40]=false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     document.getElementById('pad').addEventListener('pointerleave', function () {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         keys[32]=keys[37]=keys[38]=keys[39]=keys[40]=false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     window.startGame = startGame;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     window.resetMenu = resetMenu;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     resetMenu();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 })();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 </script>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 </body>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 </html>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g

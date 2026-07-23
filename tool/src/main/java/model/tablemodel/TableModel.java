@@ -3,67 +3,67 @@ package model.tablemodel;
  
 public class TableModel implements java.io.Serializable {
 
-    //主键
+    /** Excel列: id; 主键 */
     private int id;
 
-    //类型(1麻将2斗地主)
+    /** Excel列: type; 类型(1麻将2斗地主) */
     private int type;
 
-    //座位数量
+    /** Excel列: seatNum; 座位数量 */
     private int seatNum;
 
-    //牌数量
+    /** Excel列: cardNum; 牌数量 */
     private int cardNum;
 
-    //额外牌数量
+    /** Excel列: exCardNum; 额外牌数量 */
     private int exCardNum;
 
-    //底分
+    /** Excel列: baseScore; 底分 */
     private int baseScore;
 
-    //番数上限(麻将用)
+    /** Excel列: maxFan; 番数上限(麻将用) */
     private int maxFan;
 
-    //允许吃(麻将用 0关1开)
+    /** Excel列: allowChi; 允许吃(麻将用 0关1开) */
     private int allowChi;
 
-    //允许点炮(麻将用 0关1开)
+    /** Excel列: allowDianPao; 允许点炮(麻将用 0关1开) */
     private int allowDianPao;
 
-    //0.0
+    /** Excel列: allowPeng; 0.0 */
     private int allowPeng;
 
-    //0.0
+    /** Excel列: allowGang; 0.0 */
     private int allowGang;
 
-    //0.0
+    /** Excel列: allowHu; 0.0 */
     private int allowHu;
 
-    //0.0
+    /** Excel列: allowSevenPairs; 0.0 */
     private int allowSevenPairs;
 
-    //0.0
+    /** Excel列: gameSubType; 0.0 */
     private int gameSubType;
 
-    //0.0
+    /** Excel列: gangScore; 0.0 */
     private int gangScore;
 
-    //allowGangMing
+    /** Excel列: allowGangMing; allowGangMing */
     private int allowGangMing;
 
-    //allowGangAn
+    /** Excel列: allowGangAn; allowGangAn */
     private int allowGangAn;
 
-    //allowGangBu
+    /** Excel列: allowGangBu; allowGangBu */
     private int allowGangBu;
 
-    //totalRounds
+    /** Excel列: totalRounds; totalRounds */
     private int totalRounds;
 
-    //autoNextRound
+    /** Excel列: autoNextRound; autoNextRound */
     private int autoNextRound;
 
-    //超时自动(0关1开)
+    /** Excel列: autoPlay; 超时自动(0关1开) */
     private int autoPlay;
 
     /** 等人超时秒数；0=不启用 */
@@ -71,7 +71,7 @@ public class TableModel implements java.io.Serializable {
 
     /** 等人超时动作：0=解散 dissolve，1=补机器人 fillRobot */
     private int waitTimeoutAction = 0;
-
+ 
     // Getters and Setters
     public int getId() {
         return id;
@@ -257,6 +257,7 @@ public class TableModel implements java.io.Serializable {
         this.waitTimeoutAction = waitTimeoutAction;
     }
 
+ 
     @Override
     public String toString() {
         return "TableModel{"+
@@ -280,9 +281,7 @@ public class TableModel implements java.io.Serializable {
                 "     allowGangBu="+allowGangBu+ 
                 "     totalRounds="+totalRounds+ 
                 "     autoNextRound="+autoNextRound+ 
-                "     autoPlay="+autoPlay+
-                "     waitTimeoutSec="+waitTimeoutSec+
-                "     waitTimeoutAction="+waitTimeoutAction+
+                "     autoPlay="+autoPlay+ 
                 '}';
     }
 

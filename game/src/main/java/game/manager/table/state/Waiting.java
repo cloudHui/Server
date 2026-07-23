@@ -38,6 +38,10 @@ public class Waiting extends AbstractTableHandle {
 			return true;
 		}
 
+		// 普通房间没有等人超时：真人房间必须一直等待，不能因配置默认值被踢出。
+		// 只有内置机器人房间才允许执行 waitTimeoutAction。
+		if (!table.isRobotRoom()) return false;
+
 		TableModel model = table.getTableModel();
 		int waitSec = model.getWaitTimeoutSec();
 		if (waitSec > 0) {

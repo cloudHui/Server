@@ -16,7 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ModelProto;
 import proto.ServerProto;
+import proto.GameProto;
 import tool.config.TableConfigManager;
+import msg.registor.message.GMsg;
 import utils.metrics.MetricsCollector;
 
 import java.util.ArrayList;
@@ -95,6 +97,7 @@ public class TableManager {
     private void removeTable(long tableId) {
         Table removedTable = tableMap.remove(tableId);
         if (removedTable != null) {
+            notifyPlayersTableDestroyed(removedTable);
             removedTable.stop();
             Game.getInstance().getTableExecutorManager().remove(tableId);
             MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
@@ -103,6 +106,22 @@ public class TableManager {
             notifyRoomTableDestroyed(tableId);
         } else {
             logger.warn("桌子不存在,无法删除, tableId: {}", tableId);
+        }
+    }
+
+    /** 通知仍在桌内的客户端桌子已解散，客户端收到后应清理桌面并返回大厅。 */
+    private void notifyPlayersTableDestroyed(Table table) {
+        GameProto.NotTableState notification = GameProto.NotTableState.newBuilder()
+                .setState(msg.registor.enums.TableState.TABLE_DIS.getId())
+                .setStateStart(System.currentTimeMillis())
+                .setStateDuration(0)
+                .build();
+        for (TableUser user : table.getSeatUsers().values()) {
+            try {
+                user.sendRoleMessage(notification, GMsg.NOT_TABLE_STATE, table.getTableId());
+            } catch (Exception e) {
+                logger.warn("通知玩家桌子解散失败, tableId: {}, userId: {}", table.getTableId(), user.getUserId(), e);
+            }
         }
     }
 
