@@ -41,7 +41,7 @@
         .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
         .actions button { background:rgba(0,0,0,.55); min-width:96px; }
         .hint { font-size:12px; color:#666; text-align:center; margin-top:8px; }
-        .difficulty { display: none; margin: 10px auto 0; text-align: center; font-size: 13px; color: #555; }
+        .difficulty { display: block; margin: 10px auto 0; text-align: center; font-size: 13px; color: #555; }
         .difficulty select { margin-left: 6px; padding: 5px 8px; border: 1px solid #bbb; border-radius: 5px; }
     </style>
 </head>
@@ -59,7 +59,7 @@
             <button type="button" onclick="startLocal()">人机对战（你执红）</button>
             <button type="button" onclick="startOnline()">联机匹配</button>
         </div>
-        <label class="difficulty" id="difficultyBox">电脑水平
+        <label class="difficulty" id="difficultyBox">AI 难度（人机模式生效）
             <select id="difficulty"><option value="1">入门：只看当前局面</option><option value="2" selected>标准：考虑一步反击</option><option value="3">挑战：完整评估反击</option></select>
         </label>
         <p class="hint">红在下方 · 吃将判胜 · 联机为人对人</p>
@@ -325,7 +325,7 @@
         initBoard(); draw(); mode='online'; finished=true;
         document.getElementById('resignBtn').disabled=true;
         document.getElementById('cancelBtn').style.display='inline-block';
-        document.getElementById('difficultyBox').style.display='none';
+        document.getElementById('difficultyBox').style.display='block';
         setStatus('连接中…');
         closeSock();
         sock=new MiniGames.MiniSocket(onSockEvent);

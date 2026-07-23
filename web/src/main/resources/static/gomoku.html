@@ -78,7 +78,7 @@
         .actions button { background: rgba(0,0,0,0.55); min-width: 100px; }
         .actions button.danger { background: linear-gradient(135deg, #8b1e1e, #c41e2a); }
         .hint { font-size: 12px; color: #666; text-align: center; margin-top: 10px; }
-        .difficulty { display: none; margin: 12px auto 0; max-width: 260px; font-size: 13px; color: #555; }
+        .difficulty { display: block; margin: 12px auto 0; max-width: 300px; font-size: 13px; color: #555; }
         .difficulty select { margin-left: 6px; padding: 5px 8px; border: 1px solid #bbb; border-radius: 5px; }
         @media (max-width: 560px) {
             .modes { grid-template-columns: 1fr; }
@@ -100,7 +100,7 @@
                 <button type="button" onclick="startLocal(true)">人机对战</button>
                 <button type="button" onclick="startOnline()">联机匹配</button>
             </div>
-            <label class="difficulty" id="difficultyBox">电脑水平
+            <label class="difficulty" id="difficultyBox">AI 难度（人机模式生效）
                 <select id="difficulty"><option value="1">入门：偏重进攻</option><option value="2" selected>标准：攻守平衡</option><option value="3">挑战：优先封堵</option></select>
             </label>
             <p class="hint">15×15 无禁手 · 黑先 · 联机需另一位登录玩家同时匹配</p>
@@ -398,7 +398,7 @@
         setStatus('请选择模式');
         document.getElementById('resignBtn').disabled = true;
         document.getElementById('cancelBtn').style.display = 'none';
-        document.getElementById('difficultyBox').style.display = 'none';
+        document.getElementById('difficultyBox').style.display = 'block';
     }
 
     function closeSock() {
