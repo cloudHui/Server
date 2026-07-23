@@ -15,12 +15,14 @@ import com.google.protobuf.Message;
 import io.netty.channel.nio.NioEventLoopGroup;
 import javax.annotation.PreDestroy;
 import msg.registor.HandleTypeRegister;
+import msg.registor.message.CMsg;
 import msg.registor.message.GMsg;
 import net.connect.TCPConnect;
 import net.message.Parser;
 import net.message.TCPMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import proto.ServerProto;
 
 /**
  * Gate TCP客户端
@@ -59,6 +61,14 @@ public class GateClient {
 	}
 
 	public TCPConnect getConnection(String sessionId) {
+		TCPConnect existing = connections.get(sessionId);
+		if (existing != null && existing.isActive()) {
+			return existing;
+		}
+		if (existing != null) {
+			connections.remove(sessionId, existing);
+			try { existing.close(); } catch (Exception ignored) { }
+		}
 		return connections.computeIfAbsent(sessionId, this::createConnection);
 	}
 
@@ -90,6 +100,11 @@ public class GateClient {
 	}
 
 	public boolean isAuthenticated(String sessionId) {
+		TCPConnect connection = connections.get(sessionId);
+		if (connection == null || !connection.isActive()) {
+			authenticatedSessions.remove(sessionId);
+			return false;
+		}
 		return authenticatedSessions.contains(sessionId);
 	}
 
@@ -117,6 +132,9 @@ public class GateClient {
 						connections.remove(sessionId);
 					}
 			);
+			// Gate 服务端 90 秒无通信会断开客户端连接；发送心跳保持大厅会话。
+			connect.setIdleRunner(client -> client.sendMessage(CMsg.HEART,
+					ServerProto.ReqHeart.newBuilder().build()));
 
 			CompletableFuture<Void> connectFuture = CompletableFuture.runAsync(connect::connect, connectExecutor);
 			try {
@@ -151,6 +169,9 @@ public class GateClient {
 	 */
 	private boolean handleIncoming(String sessionId, TCPMessage tcpMessage) {
 		int msgId = tcpMessage.getMessageId();
+		if (msgId == CMsg.HEART_ACK) {
+			return true;
+		}
 		// 入桌回复带 sequence，必须走 sendAndWait；仅无 sequence 的座位刷新当推送
 		if (msgId == GMsg.ACK_ENTER_TABLE_MSG && tcpMessage.getSequence() != 0) {
 			return false;

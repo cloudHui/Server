@@ -112,6 +112,11 @@ public class ConnectHandler extends ChannelInboundHandlerAdapter implements Send
 		return localServer;
 	}
 
+	/** 当前底层 TCP 通道是否仍可写。 */
+	public boolean isActive() {
+		return channel != null && channel.isActive();
+	}
+
 	public void setLocalServer(ServerInfo localServer) {
 		this.localServer = localServer;
 	}
