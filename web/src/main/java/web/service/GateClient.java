@@ -2,6 +2,7 @@ package web.service;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -37,6 +38,12 @@ public class GateClient {
 	/** sessionId -> TCPConnect */
 	private final Map<String, TCPConnect> connections = new ConcurrentHashMap<>();
 
+	/**
+	 * Gate 的 roleId 只保存在 TCP 连接对象里，连接断开后即失效。
+	 * 单独记录认证状态，便于 UserService 在自动重连后补发 token 登录。
+	 */
+	private final Set<String> authenticatedSessions = ConcurrentHashMap.newKeySet();
+
 	/** 游戏推送监听 (sessionId, tcpMessage) */
 	private volatile BiConsumer<String, TCPMessage> pushListener;
 
@@ -60,6 +67,7 @@ public class GateClient {
 	}
 
 	public void removeConnection(String sessionId) {
+		authenticatedSessions.remove(sessionId);
 		TCPConnect conn = connections.remove(sessionId);
 		if (conn != null) {
 			try {
@@ -81,6 +89,14 @@ public class GateClient {
 		conn.sendMessage(msgId, msg);
 	}
 
+	public boolean isAuthenticated(String sessionId) {
+		return authenticatedSessions.contains(sessionId);
+	}
+
+	public void markAuthenticated(String sessionId) {
+		authenticatedSessions.add(sessionId);
+	}
+
 	private TCPConnect createConnection(String sessionId) {
 		try {
 			InetSocketAddress addr = new InetSocketAddress(gateHost, gatePort);
@@ -97,6 +113,7 @@ public class GateClient {
 					},
 					client -> {
 						logger.info("Gate连接断开, sessionId: {}", sessionId);
+						authenticatedSessions.remove(sessionId);
 						connections.remove(sessionId);
 					}
 			);
@@ -176,6 +193,7 @@ public class GateClient {
 			}
 		}
 		connections.clear();
+		authenticatedSessions.clear();
 		connectExecutor.shutdownNow();
 		eventLoopGroup.shutdownGracefully();
 		logger.info("Gate客户端已关闭");

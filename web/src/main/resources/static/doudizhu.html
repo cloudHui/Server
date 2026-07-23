@@ -111,6 +111,27 @@
             height: 100%;
             border-radius: 8px;
         }
+
+        /* 使用矢量化的牌面布局，避免把仓库中 44x57 的旧切图放大后变糊。
+         * 中间使用花色点阵，J/Q/K 和大小王使用独立的大字标识，牌面不会退化成单纯数字。 */
+        .card-face { width: 100%; height: 100%; padding: 5px 6px; color: #171717; background: #fff;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+        .card-face.red { color: #c62828; }
+        .card-corner { align-self: flex-start; display: flex; flex-direction: column; align-items: center;
+            font: 700 17px/16px Georgia, serif; }
+        .card-corner .suit { font-size: 14px; line-height: 14px; }
+        .card-art { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center;
+            font: 700 33px/1 Georgia, serif; letter-spacing: 1px; white-space: pre-line; }
+        .card-art.pips { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr;
+            place-items: center; font-size: 19px; line-height: 1; }
+        .card-art.joker { font-size: 23px; letter-spacing: 0; text-align: center; }
+        .played-face { width: 52px; height: 73px; margin-left: -13px; border-radius: 5px; padding: 3px;
+            box-shadow: 0 2px 7px rgba(0,0,0,.35); }
+        .played-face:first-child { margin-left: 0; }
+        .played-face .card-corner { font-size: 12px; line-height: 11px; }
+        .played-face .card-corner .suit { font-size: 10px; line-height: 10px; }
+        .played-face .card-art { font-size: 23px; }
+        .played-face .card-art.pips { font-size: 12px; }
         .card.selected {
             transform: translateY(-20px);
             box-shadow: 0 8px 20px rgba(255,215,0,0.5);
@@ -437,6 +458,9 @@
                 case 'notOp':
                     handleNotOp(data.data);
                     break;
+                case 'ackOp':
+                    if (data.data) renderPlayedCards(data.data.opFrom, data.data.cards || []);
+                    break;
                 case 'notState':
                     handleNotState(data.data);
                     break;
@@ -597,20 +621,31 @@
         }
 
         // ==================== 渲染 ====================
-        function getCardImagePath(cardId) {
-            if (cardId === 516) return '/img/card/pai_516.png';
-            if (cardId === 517) return '/img/card/pai_517.png';
+        function cardMeta(cardId) {
+            if (cardId === 516) return { rank: '大王', suit: '★', red: true, joker: true };
+            if (cardId === 517) return { rank: '小王', suit: '☆', red: false, joker: true };
+            var suitId = Math.floor(cardId / 100), value = cardId % 100;
+            var suits = {1: '♠', 2: '♥', 3: '♣', 4: '♦'};
+            var ranks = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
+            return { rank: ranks[value] || String(value), suit: suits[suitId] || '♠',
+                red: suitId === 2 || suitId === 4, joker: false, pipCount: Math.min(value, 10) };
+        }
 
-            var suitId = Math.floor(cardId / 100);
-            var value = cardId % 100;
-            // Ace: code value 14, image file 1
-            var imgValue = (value === 14) ? 1 : value;
-
-            if (suitId === 1 || suitId === 2) {
-                return '/img/card/pai_0_' + imgValue + '.png';
-            } else {
-                return '/img/card/pai_1_' + imgValue + '.png';
+        function createCardFace(cardId) {
+            var meta = cardMeta(cardId), face = document.createElement('div');
+            face.className = 'card-face' + (meta.red ? ' red' : '');
+            var corner = document.createElement('div'); corner.className = 'card-corner';
+            corner.innerHTML = '<span>' + meta.rank + '</span><span class="suit">' + meta.suit + '</span>';
+            face.appendChild(corner);
+            var art = document.createElement('div'); art.className = 'card-art' + (meta.joker ? ' joker' : '');
+            if (meta.joker) art.textContent = meta.rank === '大王' ? '★\nJOKER' : '☆\nJOKER';
+            else if (meta.rank === 'J' || meta.rank === 'Q' || meta.rank === 'K') art.textContent = meta.rank + meta.suit;
+            else {
+                art.className += ' pips';
+                for (var i = 0; i < meta.pipCount; i++) { var pip = document.createElement('span'); pip.textContent = meta.suit; art.appendChild(pip); }
             }
+            face.appendChild(art);
+            return face;
         }
 
         function renderMyCards() {
@@ -623,10 +658,7 @@
                 card.className = 'card' + (gameState.selectedCards.has(i) ? ' selected' : '');
                 card.dataset.index = i;
 
-                var img = document.createElement('img');
-                img.src = getCardImagePath(cardId);
-                img.alt = cardId;
-                card.appendChild(img);
+                card.appendChild(createCardFace(cardId));
 
                 card.onclick = (function(idx) {
                     return function() {
@@ -638,6 +670,25 @@
             }
         }
 
+        /** 将服务器广播的出牌结果显示在牌桌中央，避免只更新手牌而看不到中间牌。 */
+        function renderPlayedCards(roleId, cardValues) {
+            var target = null;
+            if (roleId === userId) target = document.getElementById('playedBottom');
+            else {
+                for (var i = 0; i < gameState.players.length; i++) {
+                    if (gameState.players[i].roleId === roleId) {
+                        var rel = (gameState.players[i].position - gameState.myPosition + 3) % 3;
+                        target = document.getElementById(rel === 1 ? 'playedLeft' : 'playedRight');
+                        break;
+                    }
+                }
+            }
+            if (!target) return;
+            target.innerHTML = '';
+            (cardValues || []).forEach(function (value) {
+                var face = createCardFace(value); face.classList.add('played-face'); target.appendChild(face);
+            });
+        }
         function toggleCard(index) {
             if (gameState.selectedCards.has(index)) {
                 gameState.selectedCards.delete(index);

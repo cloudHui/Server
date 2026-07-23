@@ -63,6 +63,7 @@ public class UserService {
 				if (uname.isEmpty()) {
 					uname = username;
 				}
+				gateClient.markAuthenticated(sessionId);
 				return storeSession(sessionId, ack.getUserId(), uname,
 						ack.getNickName().toStringUtf8(), ack.getToken().toStringUtf8(),
 						ack.getTablesList(), toTableInfos(ack.getTableInfosList()));
@@ -106,6 +107,7 @@ public class UserService {
 				if (uname.isEmpty()) {
 					uname = username;
 				}
+				gateClient.markAuthenticated(sessionId);
 				return storeSession(sessionId, ack.getUserId(), uname,
 						ack.getNickName().toStringUtf8(), ack.getToken().toStringUtf8(),
 						ack.getTablesList(), toTableInfos(ack.getTableInfosList()));
@@ -143,6 +145,7 @@ public class UserService {
 					if (uname.isEmpty()) {
 						uname = nick;
 					}
+					gateClient.markAuthenticated(sessionId);
 					return storeSession(sessionId, ack.getUserId(), uname, nick,
 							ack.getToken().toStringUtf8(), ack.getTablesList(),
 							toTableInfos(ack.getTableInfosList()));
@@ -223,14 +226,54 @@ public class UserService {
 
 	public CompletableFuture<Message> getRoomList(String sessionId) {
 		LobbyProto.ReqRoomList request = LobbyProto.ReqRoomList.newBuilder().build();
-		return gateClient.sendAndWait(sessionId, LMsg.REQ_ROOM_LIST_MSG, request, 5);
+		return sendAuthenticated(sessionId, LMsg.REQ_ROOM_LIST_MSG, request);
 	}
 
 	public CompletableFuture<Message> joinTable(String sessionId, int roomId) {
 		LobbyProto.ReqJoinRoomTable request = LobbyProto.ReqJoinRoomTable.newBuilder()
 				.setRoomId(roomId)
 				.build();
-		return gateClient.sendAndWait(sessionId, LMsg.REQ_JOIN_ROOM_TABLE_MSG, request, 5);
+		return sendAuthenticated(sessionId, LMsg.REQ_JOIN_ROOM_TABLE_MSG, request);
+	}
+
+	/**
+	 * 发送需要玩家身份的请求。
+	 *
+	 * <p>Gate 的玩家身份绑定在 TCP 连接上，而 Web 会话只保存在 Web 进程内。
+	 * Gate 重启、网络闪断或空闲连接被关闭后，原来的 sessionId 仍然有效，
+	 * 但新 TCP 连接的 roleId 会回到 0。此时直接发送房间请求会被 Gate 以
+	 * “不是安全的消息 ID”拒绝。这里在新连接上先用 token 静默登录，再发送
+	 * 原始请求，避免用户必须重新刷新登录页面。</p>
+	 */
+	private CompletableFuture<Message> sendAuthenticated(String sessionId, int messageId, Message request) {
+		UserInfo user = sessions.get(sessionId);
+		if (user == null) {
+			return failedFuture(new IllegalStateException("会话不存在"));
+		}
+		if (gateClient.isAuthenticated(sessionId)) {
+			return gateClient.sendAndWait(sessionId, messageId, request, 5);
+		}
+
+		LobbyProto.ReqLogin relogin = LobbyProto.ReqLogin.newBuilder()
+				.setUsername(ByteString.EMPTY)
+				.setPassword(ByteString.EMPTY)
+				.setToken(ByteString.copyFromUtf8(user.getToken()))
+				.build();
+		return gateClient.sendAndWait(sessionId, LMsg.REQ_LOGIN_MSG, relogin, 5)
+				.thenCompose(response -> {
+					if (!(response instanceof LobbyProto.AckLogin)
+							|| ((LobbyProto.AckLogin) response).getCode() != 0) {
+						return failedFuture(new IllegalStateException("Gate 会话重新认证失败"));
+					}
+					gateClient.markAuthenticated(sessionId);
+					return gateClient.sendAndWait(sessionId, messageId, request, 5);
+				});
+	}
+
+	private static <T> CompletableFuture<T> failedFuture(Throwable error) {
+		CompletableFuture<T> future = new CompletableFuture<>();
+		future.completeExceptionally(error);
+		return future;
 	}
 
 	public static class TableInfoView {

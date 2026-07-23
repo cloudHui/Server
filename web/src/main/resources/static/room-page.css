@@ -1,0 +1,27 @@
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; font-family: "Microsoft YaHei", sans-serif; color: #24352a;
+    background: radial-gradient(circle at 15% 0%, rgba(255,215,0,.16), transparent 38%), #123522; }
+header { padding: 18px 28px; display: flex; justify-content: space-between; align-items: center;
+    color: #fff; background: rgba(0,0,0,.25); }
+h1 { margin: 0; color: #ffd700; font-size: 23px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.header-btn, button { padding: 8px 14px; border: 1px solid rgba(255,255,255,.35); border-radius: 7px;
+    color: #fff; background: rgba(255,255,255,.12); text-decoration: none; cursor: pointer; }
+main { max-width: 980px; margin: 28px auto; padding: 0 20px 50px; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; color: rgba(255,255,255,.8); }
+.refresh { border-color: rgba(255,215,0,.5); color: #ffd700; }
+.room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.room-card { padding: 18px; border-radius: 13px; background: rgba(255,252,245,.97); box-shadow: 0 6px 22px rgba(0,0,0,.22); }
+.room-card h2 { margin: 0 0 10px; font-size: 18px; }
+.room-card p { color: #667269; font-size: 13px; }
+.table-list { margin: 12px 0; }
+.table-item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px;
+    margin-top: 8px; border-radius: 8px; background: #f0f5ef; font-size: 13px; }
+.table-info { min-width: 0; color: #4b5750; }
+.table-status { white-space: nowrap; padding: 3px 9px; border-radius: 12px; font-size: 12px; }
+.waiting { color: #2e7d32; background: #e8f5e9; }
+.playing { color: #e65100; background: #fff3e0; }
+.join { width: 100%; margin-top: 12px; border: 0; background: linear-gradient(135deg,#b71c1c,#ef5350); }
+.empty, .loading { padding: 38px 15px; text-align: center; color: rgba(255,255,255,.75); }
+.error { color: #ffd5d5; }
+@media (max-width: 600px) { header { padding: 14px 16px; } main { margin-top: 20px; } .toolbar { align-items: flex-start; flex-direction: column; } }

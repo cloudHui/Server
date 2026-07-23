@@ -41,6 +41,8 @@
         .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
         .actions button { background:rgba(0,0,0,.55); min-width:96px; }
         .hint { font-size:12px; color:#666; text-align:center; margin-top:8px; }
+        .difficulty { display: none; margin: 10px auto 0; text-align: center; font-size: 13px; color: #555; }
+        .difficulty select { margin-left: 6px; padding: 5px 8px; border: 1px solid #bbb; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -57,6 +59,9 @@
             <button type="button" onclick="startLocal()">人机对战（你执红）</button>
             <button type="button" onclick="startOnline()">联机匹配</button>
         </div>
+        <label class="difficulty" id="difficultyBox">电脑水平
+            <select id="difficulty"><option value="1">入门：只看当前局面</option><option value="2" selected>标准：考虑一步反击</option><option value="3">挑战：完整评估反击</option></select>
+        </label>
         <p class="hint">红在下方 · 吃将判胜 · 联机为人对人</p>
     </div>
     <div class="status" id="status">请选择模式</div>
@@ -88,6 +93,7 @@
     var selected = null;
     var iAmRed = true;
     var sock = null;
+    var aiLevel = 2; // 默认标准档，兼顾思考速度和对抗性
     var PADX, PADY, CW, CH;
 
     function initBoard() {
@@ -206,10 +212,10 @@
             var m=moves[i], p=board[m[0]][m[1]], cap=board[m[2]][m[3]];
             board[m[2]][m[3]]=p; board[m[0]][m[1]]='.';
             var score=-evalBoard();
-            // one-ply reply peek
             var replies=genMoves(true);
             var worst=1e15;
-            for (var j=0;j<Math.min(replies.length,40);j++){
+            var replyLimit = aiLevel === 3 ? replies.length : (aiLevel === 2 ? Math.min(replies.length, 40) : 0);
+            for (var j=0;j<replyLimit;j++){
                 var rm=replies[j], rp=board[rm[0]][rm[1]], rc=board[rm[2]][rm[3]];
                 board[rm[2]][rm[3]]=rp; board[rm[0]][rm[1]]='.';
                 worst=Math.min(worst,-evalBoard());
@@ -250,8 +256,7 @@
         }
         ctx.beginPath(); ctx.moveTo(PADX,PADY+4*CH); ctx.lineTo(PADX+(COLS-1)*CW,PADY+4*CH); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(PADX,PADY+5*CH); ctx.lineTo(PADX+(COLS-1)*CW,PADY+5*CH); ctx.stroke();
-        // palace X
-        [[0,3],[0,5],[7,3],[7,5]].forEach(function(){});
+        // 楚河汉界两侧的九宫斜线。
         function cross(r0,c0){
             ctx.beginPath();
             ctx.moveTo(PADX+c0*CW,PADY+r0*CH); ctx.lineTo(PADX+(c0+2)*CW,PADY+(r0+2)*CH); ctx.stroke();
@@ -289,7 +294,8 @@
     function setStatus(t){ document.getElementById('status').textContent=t; }
 
     function startLocal(){
-        closeSock(); mode='ai'; iAmRed=true; initBoard(); draw();
+        closeSock(); mode='ai'; iAmRed=true; aiLevel=parseInt(document.getElementById('difficulty').value,10)||2; initBoard(); draw();
+        document.getElementById('difficultyBox').style.display='block';
         document.getElementById('resignBtn').disabled=false;
         document.getElementById('cancelBtn').style.display='none';
         setStatus('你执红，请走棋');
@@ -298,6 +304,7 @@
         initBoard(); draw(); mode='online'; finished=true;
         document.getElementById('resignBtn').disabled=true;
         document.getElementById('cancelBtn').style.display='inline-block';
+        document.getElementById('difficultyBox').style.display='none';
         setStatus('连接中…');
         closeSock();
         sock=new MiniGames.MiniSocket(onSockEvent);
@@ -351,6 +358,7 @@
         setStatus('请选择模式');
         document.getElementById('resignBtn').disabled=true;
         document.getElementById('cancelBtn').style.display='none';
+        document.getElementById('difficultyBox').style.display='none';
     }
     function closeSock(){
         if (sock){ try{sock.send('leave',{});}catch(e){} sock.close(); sock=null; }

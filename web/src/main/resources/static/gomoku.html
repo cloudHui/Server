@@ -78,6 +78,8 @@
         .actions button { background: rgba(0,0,0,0.55); min-width: 100px; }
         .actions button.danger { background: linear-gradient(135deg, #8b1e1e, #c41e2a); }
         .hint { font-size: 12px; color: #666; text-align: center; margin-top: 10px; }
+        .difficulty { display: none; margin: 12px auto 0; max-width: 260px; font-size: 13px; color: #555; }
+        .difficulty select { margin-left: 6px; padding: 5px 8px; border: 1px solid #bbb; border-radius: 5px; }
         @media (max-width: 560px) {
             .modes { grid-template-columns: 1fr; }
         }
@@ -98,6 +100,9 @@
                 <button type="button" onclick="startLocal(true)">人机对战</button>
                 <button type="button" onclick="startOnline()">联机匹配</button>
             </div>
+            <label class="difficulty" id="difficultyBox">电脑水平
+                <select id="difficulty"><option value="1">入门：偏重进攻</option><option value="2" selected>标准：攻守平衡</option><option value="3">挑战：优先封堵</option></select>
+            </label>
             <p class="hint">15×15 无禁手 · 黑先 · 联机需另一位登录玩家同时匹配</p>
         </div>
         <div class="status" id="status">请选择模式</div>
@@ -124,6 +129,7 @@
     var mode = null; // local | ai | online
     var myColor = 1;
     var aiColor = 2;
+    var aiLevel = 2; // 1 入门，2 标准，3 挑战；默认推荐标准
     var sock = null;
     var onlineSide = null;
 
@@ -221,7 +227,6 @@
         if (cells[y][x]) return -1;
         cells[y][x] = color;
         var s = 0;
-        [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]].forEach(function () {});
         var dirs = [[1,0],[0,1],[1,1],[1,-1]];
         dirs.forEach(function (d) {
             var n = 1 + countDir(x,y,d[0],d[1],color) + countDir(x,y,-d[0],-d[1],color);
@@ -241,7 +246,10 @@
         for (var y = 0; y < SIZE; y++) {
             for (var x = 0; x < SIZE; x++) {
                 if (cells[y][x]) continue;
-                var s = scorePoint(x, y, aiColor) * 1.1 + scorePoint(x, y, myColor);
+                var ownWeight = aiLevel === 1 ? 1.05 : (aiLevel === 2 ? 1.15 : 1.25);
+                var defendWeight = aiLevel === 1 ? 0.85 : (aiLevel === 2 ? 1.1 : 1.45);
+                var centerWeight = aiLevel === 3 ? (7 - Math.abs(x - 7) + 7 - Math.abs(y - 7)) : 0;
+                var s = scorePoint(x, y, aiColor) * ownWeight + scorePoint(x, y, myColor) * defendWeight + centerWeight;
                 if (s > best) { best = s; bx = x; by = y; }
             }
         }
@@ -251,6 +259,12 @@
     function startLocal(vsAi) {
         closeSock();
         mode = vsAi ? 'ai' : 'local';
+        if (vsAi) {
+            aiLevel = parseInt(document.getElementById('difficulty').value, 10) || 2;
+            document.getElementById('difficultyBox').style.display = 'block';
+        } else {
+            document.getElementById('difficultyBox').style.display = 'none';
+        }
         myColor = 1; aiColor = 2;
         onlineSide = null;
         emptyBoard();
@@ -337,6 +351,7 @@
         setStatus('请选择模式');
         document.getElementById('resignBtn').disabled = true;
         document.getElementById('cancelBtn').style.display = 'none';
+        document.getElementById('difficultyBox').style.display = 'none';
     }
 
     function closeSock() {

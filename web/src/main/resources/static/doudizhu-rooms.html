@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>斗地主房间</title><script src="app-base.js"></script><link rel="stylesheet" href="room-page.css"></head>
+<body data-game-type="2">
+<header><h1>斗地主房间</h1><div class="actions"><span id="userDisplay"></span><a class="header-btn" href="room.html">返回大厅</a><button onclick="logout()">退出</button></div></header>
+<main><div class="toolbar"><span>选择一个房间进入牌桌</span><button class="refresh" onclick="loadRooms()">刷新房间</button></div><section id="roomList" class="room-grid"><div class="loading">准备加载…</div></section></main>
+<script src="room-page.js"></script></body></html>

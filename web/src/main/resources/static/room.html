@@ -4,420 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>游戏大厅</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-            background:
-                radial-gradient(ellipse at 15% 0%, rgba(201,162,39,0.16), transparent 42%),
-                linear-gradient(160deg, #0f2a1c, #1a472a 55%, #12301f);
-            min-height: 100vh;
-        }
-        .header {
-            background: rgba(0,0,0,0.3);
-            padding: 16px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
-        .header h1 { font-size: 22px; color: #ffd700; letter-spacing: 0.04em; }
-        .user-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .user-info span { font-size: 14px; }
-        .header-btn {
-            background: rgba(255,255,255,0.14);
-            border: 1px solid rgba(255,255,255,0.28);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .header-btn:hover { background: rgba(255,255,255,0.26); }
-        .header-btn.admin { border-color: rgba(255,215,0,0.55); color: #ffd700; }
-
-        .content {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px 40px;
-        }
-        .section-title {
-            color: #ffd700;
-            font-size: 18px;
-            margin-bottom: 14px;
-            margin-top: 28px;
-            padding-left: 8px;
-            border-left: 4px solid #ffd700;
-        }
-        .section-title:first-of-type { margin-top: 0; }
-        .room-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 18px;
-        }
-        .room-card {
-            background: rgba(255,252,245,0.96);
-            border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0 6px 22px rgba(0,0,0,0.22);
-        }
-        .room-card h3 {
-            color: #243;
-            margin-bottom: 12px;
-            font-size: 17px;
-        }
-        .table-list { margin-top: 8px; }
-        .table-item {
-            background: #f3f6f1;
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-        }
-        .table-item .info { font-size: 13px; color: #555; }
-        .table-item .status {
-            font-size: 12px;
-            padding: 3px 10px;
-            border-radius: 12px;
-            white-space: nowrap;
-        }
-        .status-waiting { background: #e8f5e9; color: #2e7d32; }
-        .status-playing { background: #fff3e0; color: #e65100; }
-
-        .join-btn {
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            margin-top: 12px;
-            width: 100%;
-        }
-        .join-btn:hover { filter: brightness(1.05); }
-        .join-btn-ddz { background: linear-gradient(135deg, #c41e2a, #e63946); }
-        .join-btn-mj { background: linear-gradient(135deg, #1565c0, #42a5f5); }
-
-        .empty-tip {
-            text-align: center;
-            color: rgba(255,255,255,0.72);
-            padding: 28px 20px;
-            font-size: 14px;
-        }
-        .refresh-btn {
-            background: rgba(255,215,0,0.16);
-            border: 1px solid rgba(255,215,0,0.45);
-            color: #ffd700;
-            padding: 8px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-        .loading { text-align: center; color: rgba(255,255,255,0.7); padding: 40px; }
-    </style>
     <script src="app-base.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; font-family: "Microsoft YaHei", sans-serif; color: #24352a;
+            background: radial-gradient(circle at 15% 0%, rgba(255,215,0,.16), transparent 38%), #123522; }
+        header { padding: 18px 28px; display: flex; justify-content: space-between; align-items: center;
+            color: #fff; background: rgba(0,0,0,.25); }
+        h1 { margin: 0; color: #ffd700; font-size: 24px; }
+        .user-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .header-btn { padding: 7px 13px; border: 1px solid rgba(255,255,255,.35); border-radius: 7px;
+            color: #fff; background: rgba(255,255,255,.12); text-decoration: none; cursor: pointer; }
+        main { max-width: 980px; margin: 34px auto; padding: 0 20px 50px; }
+        .intro { margin-bottom: 22px; color: rgba(255,255,255,.78); }
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+        .game-card { padding: 24px; min-height: 220px; display: flex; flex-direction: column; justify-content: space-between;
+            border-radius: 16px; background: rgba(255,252,245,.97); box-shadow: 0 8px 28px rgba(0,0,0,.24); }
+        .game-card h2 { margin: 0 0 8px; font-size: 23px; }
+        .game-card p { margin: 0; color: #647067; line-height: 1.7; }
+        .game-icon { font-size: 48px; margin-bottom: 12px; }
+        .game-btn { display: block; padding: 11px 16px; border-radius: 9px; color: white; text-align: center;
+            text-decoration: none; font-size: 15px; }
+        .ddz { background: linear-gradient(135deg, #b71c1c, #ef5350); }
+        .mj { background: linear-gradient(135deg, #1565c0, #42a5f5); }
+        .mini { background: linear-gradient(135deg, #5d4037, #8d6e63); }
+        .links { margin-top: 20px; display: flex; gap: 14px; flex-wrap: wrap; }
+        .links a { color: #ffd700; }
+        @media (max-width: 600px) { header { padding: 14px 16px; } h1 { font-size: 20px; } main { margin-top: 22px; } }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>游戏大厅</h1>
-        <div class="user-info">
-            <span id="userDisplay"></span>
-            <a id="adminLink" class="header-btn admin" href="admin.html" style="display:none;">管理后台</a>
-            <a class="header-btn" href="replays.html">我的回放</a>
-            <button class="header-btn" onclick="doLogout()">退出</button>
-        </div>
+<header>
+    <h1>牌友大厅</h1>
+    <div class="user-actions">
+        <span id="userDisplay"></span>
+        <a class="header-btn" href="replays.html">我的回放</a>
+        <button class="header-btn" onclick="logout()">退出</button>
     </div>
-
-    <div class="content">
-        <button class="refresh-btn" onclick="loadRooms()">刷新房间</button>
-
-        <h2 class="section-title">休闲小游戏</h2>
-        <div class="room-list" style="margin-bottom:8px;">
-            <div class="room-card">
-                <h3>五子棋</h3>
-                <p style="font-size:13px;color:#666;margin-bottom:10px;">本地双人 / 人机 / 联机 1v1</p>
-                <a class="join-btn join-btn-mj" style="display:block;text-align:center;text-decoration:none;" href="gomoku.html" id="linkGomoku">进入五子棋</a>
-            </div>
-            <div class="room-card">
-                <h3>中国象棋</h3>
-                <p style="font-size:13px;color:#666;margin-bottom:10px;">人机对战 / 联机 1v1</p>
-                <a class="join-btn join-btn-ddz" style="display:block;text-align:center;text-decoration:none;" href="chess.html" id="linkChess">进入象棋</a>
-            </div>
-            <div class="room-card">
-                <h3>坦克大战</h3>
-                <p style="font-size:13px;color:#666;margin-bottom:10px;">纯本地打电脑</p>
-                <a class="join-btn" style="display:block;text-align:center;text-decoration:none;background:linear-gradient(135deg,#5d4037,#8d6e63);" href="tank.html" id="linkTank">进入坦克</a>
-            </div>
-        </div>
-
-        <h2 class="section-title">创建房间</h2>
-        <div class="room-list" style="margin-bottom:8px;">
-            <div class="room-card">
-                <h3>固定模板</h3>
-                <p style="font-size:13px;color:#666;margin-bottom:10px;">使用 Excel 配置的经典玩法，直接开桌。</p>
-                <button class="join-btn join-btn-ddz" onclick="createFixed(2)">创建斗地主桌</button>
-                <button class="join-btn join-btn-mj" onclick="createFixed(1)" style="margin-top:8px;">创建麻将桌</button>
-            </div>
-            <div class="room-card">
-                <h3>自定义规则</h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;">
-                    <label>玩法
-                        <select id="cGameType" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-                            <option value="2">斗地主</option>
-                            <option value="1">麻将</option>
-                        </select>
-                    </label>
-                    <label>底分
-                        <input id="cBaseScore" type="number" min="1" value="1" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-                    </label>
-                    <label>总局数
-                        <input id="cRounds" type="number" min="1" value="4" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-                    </label>
-                    <label>人数
-                        <input id="cSeat" type="number" min="2" max="4" value="3" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-                    </label>
-                    <label id="chiLabel">允许吃
-                        <select id="cAllowChi" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-                            <option value="1">开</option>
-                            <option value="0">关</option>
-                        </select>
-                    </label>
-                    <label>点炮
-                        <select id="cAllowDianPao" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-                            <option value="1">开</option>
-                            <option value="0">关</option>
-                        </select>
-                    </label>
-                    <label>等人超时(秒)
-                        <input id="cWaitTimeout" type="number" min="0" value="15" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;" title="0=不启用">
-                    </label>
-                    <label>超时动作
-                        <select id="cWaitAction" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-                            <option value="1">补机器人开局</option>
-                            <option value="0">解散房间</option>
-                        </select>
-                    </label>
-                </div>
-                <button class="join-btn join-btn-mj" style="margin-top:12px;background:linear-gradient(135deg,#2e7d32,#66bb6a);" onclick="createCustom()">按规则创建并进入</button>
-            </div>
-        </div>
-
-        <h2 class="section-title">斗地主</h2>
-        <div id="ddzRooms" class="room-list">
-            <div class="loading">加载中...</div>
-        </div>
-
-        <h2 class="section-title">麻将</h2>
-        <div id="mjRooms" class="room-list">
-            <div class="loading">加载中...</div>
-        </div>
-    </div>
-
-    <script>
-        var sessionId = localStorage.getItem('sessionId');
-        var nickname = localStorage.getItem('nickname');
-        var username = localStorage.getItem('username');
-        var isAdmin = localStorage.getItem('isAdmin') === '1';
-
-        if (!sessionId) { window.location.href = appUrl('/'); }
-        document.getElementById('userDisplay').textContent =
-            (nickname || username || '玩家') + (isAdmin ? ' · 管理' : '');
-        if (isAdmin) {
-            document.getElementById('adminLink').style.display = 'inline-block';
-        }
-        document.getElementById('linkGomoku').href = appUrl('/gomoku.html');
-        document.getElementById('linkChess').href = appUrl('/chess.html');
-        document.getElementById('linkTank').href = appUrl('/tank.html');
-
-        // TableModel type: 1=麻将, 2=斗地主
-        var GAME_MJ = 1;
-        var GAME_DDZ = 2;
-
-        function loadRooms() {
-            document.getElementById('ddzRooms').innerHTML = '<div class="loading">加载中...</div>';
-            document.getElementById('mjRooms').innerHTML = '<div class="loading">加载中...</div>';
-
-            fetch(appUrl('/api/rooms?sessionId=' + encodeURIComponent(sessionId)))
-                .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    if (data.code === 401) { window.location.href = appUrl('/'); return; }
-                    if (data.code !== 0) {
-                        var err = '<div class="empty-tip">' + (data.msg || '加载失败') + '</div>';
-                        document.getElementById('ddzRooms').innerHTML = err;
-                        document.getElementById('mjRooms').innerHTML = err;
-                        return;
-                    }
-                    renderGrouped(data.rooms || []);
-                })
-                .catch(function() {
-                    var err = '<div class="empty-tip">网络错误，请重试</div>';
-                    document.getElementById('ddzRooms').innerHTML = err;
-                    document.getElementById('mjRooms').innerHTML = err;
-                });
-        }
-
-        function renderGrouped(rooms) {
-            var ddzList = [];
-            var mjList = [];
-            for (var i = 0; i < rooms.length; i++) {
-                if (rooms[i].gameType === GAME_MJ) {
-                    mjList.push(rooms[i]);
-                } else {
-                    ddzList.push(rooms[i]);
-                }
-            }
-            renderRooms('ddzRooms', ddzList, GAME_DDZ);
-            renderRooms('mjRooms', mjList, GAME_MJ);
-        }
-
-        function renderRooms(containerId, rooms, gameType) {
-            var container = document.getElementById(containerId);
-            var btnClass = gameType === GAME_MJ ? 'join-btn-mj' : 'join-btn-ddz';
-            var defaultName = gameType === GAME_MJ ? '经典麻将' : '经典斗地主';
-
-            if (rooms.length === 0) {
-                container.innerHTML = '<div class="empty-tip">暂无房间模板（请确认 lobby/game 已启动且 TableModel 已加载）</div>';
-                return;
-            }
-
-            var html = '';
-            for (var i = 0; i < rooms.length; i++) {
-                var room = rooms[i];
-                html += '<div class="room-card">';
-                html += '<h3>' + defaultName + ' · 模板 #' + room.roomId + '</h3>';
-
-                if (room.tables && room.tables.length > 0) {
-                    html += '<div class="table-list">';
-                    for (var j = 0; j < room.tables.length; j++) {
-                        var table = room.tables[j];
-                        var statusClass = table.stat === 0 ? 'status-waiting' : 'status-playing';
-                        var statusText = table.stat === 0 ? '等待中' : '游戏中';
-                        var playerNames = [];
-                        if (table.players) {
-                            for (var k = 0; k < table.players.length; k++) {
-                                playerNames.push(table.players[k].nickName || ('玩家' + table.players[k].roleId));
-                            }
-                        }
-                        html += '<div class="table-item">';
-                        html += '<div class="info">桌号 ' + table.tableId + ' | ' +
-                            (playerNames.length > 0 ? playerNames.join(', ') : '空桌') +
-                            ' (' + table.playerCount + '人)</div>';
-                        html += '<span class="status ' + statusClass + '">' + statusText + '</span>';
-                        if (table.mine) {
-                            html += '<button class="join-btn ' + btnClass + '" style="width:auto;margin-top:0;padding:7px 12px;" onclick="goTable(' + table.tableId + ',' + room.roomId + ',' + gameType + ')">返回房间</button>';
-                        }
-                        html += '</div>';
-                    }
-                    html += '</div>';
-                }
-
-                if (room.myTableId) {
-                    html += '<button class="join-btn ' + btnClass + '" onclick="goTable(' + room.myTableId + ',' + room.roomId + ',' + gameType + ')">返回房间</button>';
-                } else {
-                    html += '<button class="join-btn ' + btnClass + '" onclick="joinRoom(' + room.roomId + ',' + gameType + ')">进入房间</button>';
-                }
-                html += '</div>';
-            }
-            container.innerHTML = html;
-        }
-
-        function joinRoom(roomId, gameType) {
-            fetch(appUrl('/api/rooms/join'), {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sessionId: sessionId, roomId: roomId })
-            })
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                if (data.code === 0) {
-                    goTable(data.tableId, roomId, gameType);
-                } else {
-                    alert(data.msg || '加入房间失败');
-                }
-            })
-            .catch(function() { alert('网络错误，请重试'); });
-        }
-
-        function goTable(tableId, roomId, gameType) {
-            localStorage.setItem('tableId', tableId);
-            localStorage.setItem('roomId', roomId);
-            localStorage.setItem('gameType', gameType);
-            window.location.href = (parseInt(gameType, 10) === GAME_MJ) ? appUrl('/mahjong.html') : appUrl('/doudizhu.html');
-        }
-
-        function createFixed(gameType) {
-            // 固定模板：麻将 roomId=1，斗地主 roomId=2
-            var roomId = gameType === GAME_MJ ? 1 : 2;
-            fetch(appUrl('/api/rooms/create'), {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    sessionId: sessionId,
-                    mode: 'fixed',
-                    roomId: roomId,
-                    gameType: gameType
-                })
-            })
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                if (data.code === 0) {
-                    goTable(data.tableId, data.roomId || roomId, gameType);
-                } else {
-                    alert(data.msg || '创建失败');
-                }
-            })
-            .catch(function() { alert('网络错误'); });
-        }
-
-        function createCustom() {
-            var gameType = parseInt(document.getElementById('cGameType').value, 10);
-            var body = {
-                sessionId: sessionId,
-                mode: 'custom',
-                gameType: gameType,
-                baseScore: parseInt(document.getElementById('cBaseScore').value, 10) || 1,
-                totalRounds: parseInt(document.getElementById('cRounds').value, 10) || 4,
-                seatNum: parseInt(document.getElementById('cSeat').value, 10) || 3,
-                allowChi: parseInt(document.getElementById('cAllowChi').value, 10),
-                allowDianPao: parseInt(document.getElementById('cAllowDianPao').value, 10),
-                waitTimeoutSec: parseInt(document.getElementById('cWaitTimeout').value, 10),
-                waitTimeoutAction: parseInt(document.getElementById('cWaitAction').value, 10),
-            };
-            if (isNaN(body.waitTimeoutSec) || body.waitTimeoutSec < 0) body.waitTimeoutSec = 120;
-            fetch(appUrl('/api/rooms/create'), {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            })
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                if (data.code === 0) {
-                    goTable(data.tableId, data.roomId, gameType);
-                } else {
-                    alert(data.msg || '创建失败');
-                }
-            })
-            .catch(function() { alert('网络错误'); });
-        }
-
-        function doLogout() {
-            fetch(appUrl('/api/logout'), {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sessionId: sessionId })
-            }).catch(function() {});
-            localStorage.clear();
-            window.location.href = appUrl('/');
-        }
-
-        loadRooms();
-        setInterval(loadRooms, 10000);
-    </script>
+</header>
+<main>
+    <p class="intro">选择游戏后进入对应页面。房间数据只在打开具体游戏时加载，首页不会提前请求大厅服务。</p>
+    <section class="game-grid">
+        <article class="game-card">
+            <div><div class="game-icon">🃏</div><h2>斗地主</h2><p>经典三人玩法，进入后查看房间并选择牌桌。</p></div>
+            <a class="game-btn ddz" href="doudizhu-rooms.html">进入斗地主</a>
+        </article>
+        <article class="game-card">
+            <div><div class="game-icon">🀄</div><h2>麻将</h2><p>进入麻将专区后再加载麻将房间和桌子。</p></div>
+            <a class="game-btn mj" href="mahjong-rooms.html">进入麻将</a>
+        </article>
+        <article class="game-card">
+            <div><div class="game-icon">🎮</div><h2>休闲小游戏</h2><p>五子棋、中国象棋、坦克大战等本地或联机小游戏。</p></div>
+            <a class="game-btn mini" href="mini-games.html">查看小游戏</a>
+        </article>
+    </section>
+    <div class="links"><a href="admin.html" id="adminLink" style="display:none">管理后台</a></div>
+</main>
+<script>
+    // 首页只读取登录态，不触发任何房间接口；具体游戏页负责自己的数据加载。
+    var sessionId = localStorage.getItem('sessionId');
+    if (!sessionId) window.location.href = appUrl('/');
+    document.getElementById('userDisplay').textContent = localStorage.getItem('nickname') || localStorage.getItem('username') || '玩家';
+    if (localStorage.getItem('isAdmin') === '1') document.getElementById('adminLink').style.display = 'inline';
+    function logout() {
+        fetch(appUrl('/api/logout'), { method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({sessionId: sessionId}) }).catch(function () {});
+        localStorage.clear();
+        window.location.href = appUrl('/');
+    }
+</script>
 </body>
 </html>

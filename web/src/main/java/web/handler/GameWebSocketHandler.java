@@ -324,6 +324,12 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			m.put("opFrom", ack.getOpFrom());
 			if (ack.hasOp()) {
 				m.put("choice", ack.getOp().getChoiceValue());
+				// 前端需要知道本次实际打出的牌，才能把牌面渲染到桌面中央。
+				List<Integer> cards = new ArrayList<>();
+				for (GameProto.CardInfo cardInfo : ack.getOp().getOpCardsList()) {
+					for (GameProto.Card card : cardInfo.getCardsList()) cards.add(card.getValue());
+				}
+				m.put("cards", cards);
 			}
 			return m;
 		}
