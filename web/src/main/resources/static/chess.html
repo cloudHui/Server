@@ -204,26 +204,47 @@
         }
         return moves;
     }
+    function moveValue(move) {
+        var cap = board[move[2]][move[3]];
+        return cap === '.' ? 0 : material(cap) + (isRed(cap) ? 0 : 20);
+    }
+
+    function orderedMoves(forRed, limit) {
+        var moves = genMoves(forRed);
+        moves.sort(function (a, b) { return moveValue(b) - moveValue(a); });
+        return moves.slice(0, limit);
+    }
+
+    /** 象棋极小化搜索，返回红方视角分数；黑方电脑通过深度档位控制棋力。 */
+    function searchChess(depth, forRed, alpha, beta) {
+        if (!depth) return evalBoard();
+        var limit = aiLevel === 1 ? 12 : (aiLevel === 2 ? 24 : 40);
+        var moves = orderedMoves(forRed, limit);
+        if (!moves.length) return forRed ? -1000000 : 1000000;
+        var best = forRed ? -1e15 : 1e15;
+        for (var i = 0; i < moves.length; i++) {
+            var m = moves[i], p = board[m[0]][m[1]], cap = board[m[2]][m[3]];
+            board[m[2]][m[3]] = p; board[m[0]][m[1]] = '.';
+            var value = searchChess(depth - 1, !forRed, alpha, beta);
+            board[m[0]][m[1]] = p; board[m[2]][m[3]] = cap;
+            if (forRed) { best = Math.max(best, value); alpha = Math.max(alpha, best); }
+            else { best = Math.min(best, value); beta = Math.min(beta, best); }
+            if (beta <= alpha) break;
+        }
+        return best;
+    }
+
     function aiMove(){
         if (finished||mode!=='ai'||redTurn) return;
-        var moves=genMoves(false);
-        var best=-1e15, pick=null;
+        var depth = aiLevel === 1 ? 1 : (aiLevel === 2 ? 2 : 3);
+        var limit = aiLevel === 1 ? 12 : (aiLevel === 2 ? 24 : 40);
+        var moves=orderedMoves(false, limit), best=1e15, pick=null;
         for (var i=0;i<moves.length;i++){
             var m=moves[i], p=board[m[0]][m[1]], cap=board[m[2]][m[3]];
             board[m[2]][m[3]]=p; board[m[0]][m[1]]='.';
-            var score=-evalBoard();
-            var replies=genMoves(true);
-            var worst=1e15;
-            var replyLimit = aiLevel === 3 ? replies.length : (aiLevel === 2 ? Math.min(replies.length, 40) : 0);
-            for (var j=0;j<replyLimit;j++){
-                var rm=replies[j], rp=board[rm[0]][rm[1]], rc=board[rm[2]][rm[3]];
-                board[rm[2]][rm[3]]=rp; board[rm[0]][rm[1]]='.';
-                worst=Math.min(worst,-evalBoard());
-                board[rm[0]][rm[1]]=rp; board[rm[2]][rm[3]]=rc;
-            }
-            if (replies.length) score=Math.min(score, worst);
+            var score=searchChess(depth-1, true, -1e15, 1e15);
             board[m[0]][m[1]]=p; board[m[2]][m[3]]=cap;
-            if (score>best){ best=score; pick=m; }
+            if (score<best){ best=score; pick=m; }
         }
         if (pick) {
             var cap = board[pick[2]][pick[3]];

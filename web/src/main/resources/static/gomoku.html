@@ -240,20 +240,67 @@
         return s;
     }
 
-    function aiMove() {
-        if (finished || mode !== 'ai' || turn !== aiColor) return;
-        var best = -1, bx = 7, by = 7;
-        for (var y = 0; y < SIZE; y++) {
-            for (var x = 0; x < SIZE; x++) {
-                if (cells[y][x]) continue;
-                var ownWeight = aiLevel === 1 ? 1.05 : (aiLevel === 2 ? 1.15 : 1.25);
-                var defendWeight = aiLevel === 1 ? 0.85 : (aiLevel === 2 ? 1.1 : 1.45);
-                var centerWeight = aiLevel === 3 ? (7 - Math.abs(x - 7) + 7 - Math.abs(y - 7)) : 0;
-                var s = scorePoint(x, y, aiColor) * ownWeight + scorePoint(x, y, myColor) * defendWeight + centerWeight;
-                if (s > best) { best = s; bx = x; by = y; }
+    function hasNeighbor(x, y, distance) {
+        for (var dy = -distance; dy <= distance; dy++) for (var dx = -distance; dx <= distance; dx++) {
+            var nx = x + dx, ny = y + dy;
+            if ((dx || dy) && nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE && cells[ny][nx]) return true;
+        }
+        return false;
+    }
+
+    /** 只保留棋子附近的高价值点，避免移动端搜索整张空棋盘。 */
+    function candidateMoves(limit) {
+        var list = [], occupied = cells.some(function (row) {
+            return row.some(function (value) { return value !== 0; });
+        });
+        for (var y = 0; y < SIZE; y++) for (var x = 0; x < SIZE; x++) {
+            if (!cells[y][x] && (!occupied || hasNeighbor(x, y, 2))) {
+                list.push({ x: x, y: y, score: scorePoint(x, y, aiColor) * 1.1
+                    + scorePoint(x, y, myColor) * 1.25 });
             }
         }
-        placeLocal(bx, by);
+        if (!occupied) return [{ x: 7, y: 7, score: 0 }];
+        list.sort(function (a, b) { return b.score - a.score; });
+        return list.slice(0, limit);
+    }
+
+    function evaluateGomoku() {
+        var score = 0;
+        for (var y = 0; y < SIZE; y++) for (var x = 0; x < SIZE; x++) {
+            if (!cells[y][x]) score += scorePoint(x, y, aiColor) * 0.08;
+        }
+        return score;
+    }
+
+    /** 五子棋分档搜索：入门1层、标准2层、挑战3层，并使用剪枝。 */
+    function searchGomoku(depth, maximizing, alpha, beta) {
+        if (!depth) return evaluateGomoku();
+        var moves = candidateMoves(depth === 1 ? 10 : 7), best = maximizing ? -1e15 : 1e15;
+        for (var i = 0; i < moves.length; i++) {
+            var move = moves[i], color = maximizing ? aiColor : myColor;
+            cells[move.y][move.x] = color;
+            var value = checkWin(move.x, move.y, color) ? (maximizing ? 1e6 : -1e6)
+                : searchGomoku(depth - 1, !maximizing, alpha, beta);
+            cells[move.y][move.x] = 0;
+            if (maximizing) { best = Math.max(best, value); alpha = Math.max(alpha, best); }
+            else { best = Math.min(best, value); beta = Math.min(beta, best); }
+            if (beta <= alpha) break;
+        }
+        return best;
+    }
+
+    function aiMove() {
+        if (finished || mode !== 'ai' || turn !== aiColor) return;
+        var depth = aiLevel === 1 ? 1 : (aiLevel === 2 ? 2 : 3);
+        var moves = candidateMoves(depth === 1 ? 14 : 9), best = -1e15, pick = moves[0];
+        for (var i = 0; i < moves.length; i++) {
+            var move = moves[i]; cells[move.y][move.x] = aiColor;
+            var value = checkWin(move.x, move.y, aiColor) ? 1e6
+                : searchGomoku(depth - 1, false, -1e15, 1e15);
+            cells[move.y][move.x] = 0;
+            if (value > best) { best = value; pick = move; }
+        }
+        placeLocal(pick.x, pick.y);
     }
 
     function startLocal(vsAi) {
