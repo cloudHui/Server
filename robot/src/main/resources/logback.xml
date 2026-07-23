@@ -20,9 +20,7 @@
             <fileNamePattern>${LOGGER_ROOT}/${APPName}/%d{yyyy-MM-dd}-%i.log</fileNamePattern>
             <maxHistory>7</maxHistory>
             <totalSizeCap>2GB</totalSizeCap>
-            <timeBasedNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>20MB</maxFileSize>
-            </timeBasedNamingAndTriggeringPolicy>
+            <maxFileSize>20MB</maxFileSize>
         </rollingPolicy>
         <encoder charset="UTF8">
             <pattern>${PATTERN}</pattern>
@@ -37,9 +35,7 @@
             <fileNamePattern>${LOGGER_ROOT}/${APPName}/error-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
             <maxHistory>7</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
-            <timeBasedNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>20MB</maxFileSize>
-            </timeBasedNamingAndTriggeringPolicy>
+            <maxFileSize>20MB</maxFileSize>
         </rollingPolicy>
         <encoder charset="UTF8">
             <pattern>${PATTERN}</pattern>
