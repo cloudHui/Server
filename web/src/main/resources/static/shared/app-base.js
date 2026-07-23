@@ -6,6 +6,8 @@
     base = '/' + parts[0];
   }
   w.APP_BASE = base;
+  // 与服务端 TableState.TABLE_DIS 保持一致：桌子已解散。
+  w.TABLE_STATE_DIS = 9;
   w.appUrl = function (path) {
     if (path == null || path === '') {
       return base || '/';

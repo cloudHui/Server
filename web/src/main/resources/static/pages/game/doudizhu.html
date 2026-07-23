@@ -550,7 +550,7 @@
 
         function handleNotState(data) {
             // 桌子状态通知
-            if (data && data.state === 9) {
+            if (data && data.state === TABLE_STATE_DIS) {
                 if (ws) ws.onclose = null;
                 window.location.href = appUrl('/pages/home/room.html');
                 return;
