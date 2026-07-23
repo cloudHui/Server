@@ -35,7 +35,7 @@ Server/
   game/       游戏服：玩法与状态机（独立进程，不与大厅合并）
   web/        HTTP + 静态页 + WebSocket，浏览器入口和登录拦截
   robot/      机器人（可选）
-  mcp/ sp/    辅助模块（构建时可按需排除）
+  sp/         辅助模块（构建时可按需排除）
 ```
 
 ---
@@ -136,8 +136,8 @@ lobby:
 ## 构建与启动
 
 ```bash
-# 常用：跳过 mcp / sp
-mvn install -DskipTests -pl '!mcp,!sp'
+# 常用：跳过辅助模块 sp
+mvn install -DskipTests -pl '!sp'
 
 # 仅编译相关模块示例
 mvn -pl proto,lobby,gate,game,web -am compile -DskipTests

@@ -19,7 +19,6 @@
         <module>robot</module>
         <module>web</module>
         <module>sp</module>
-        <module>mcp</module>
     </modules>
 
     <build>

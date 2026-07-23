@@ -102,8 +102,8 @@ exit /b 0
 cd /d "%ROOT%"
 where mvn >nul 2>&1 || (echo 未找到 Maven，请先配置 PATH。& exit /b 1)
 echo.
-echo [打包] Maven install（跳过测试，跳过 mcp、sp）...
-mvn -q install -DskipTests -pl ^!mcp,^!sp
+echo [打包] Maven install（跳过测试，跳过 sp）...
+mvn -q install -DskipTests -pl ^!sp
 if errorlevel 1 (echo Maven 打包失败。& exit /b 1)
 
 for %%S in (center gate lobby game web) do if not exist "%BUILD%\%%S" mkdir "%BUILD%\%%S"

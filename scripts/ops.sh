@@ -242,8 +242,8 @@ cmd_status() {
 cmd_build() {
   command -v mvn >/dev/null 2>&1 || { echo "未找到 mvn"; exit 1; }
   cd "$ROOT"
-  echo "打包中（跳过 mcp/sp，跳过测试）..."
-  mvn -q install -DskipTests -pl '!mcp,!sp'
+  echo "打包中（跳过 sp，跳过测试）..."
+  mvn -q install -DskipTests -pl '!sp'
   # Maven 的 copy-dependencies 会排除 com.cloud 内部模块；这里必须显式同步，
   # 否则业务 JAR 更新后仍可能加载旧的 tool/utils/proto JAR。
   local module jar svc lib

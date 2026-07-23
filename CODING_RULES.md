@@ -13,3 +13,8 @@
 9. 前端路径统一使用 `appUrl()`，保证根路径和随机 context-path 都能正常访问。
 10. 修改后至少执行对应的 Java 构建和前端脚本语法检查，并在提交说明中写清楚功能、修复和验证结果。
 11. Git 提交作者使用 `liuyunhui`，提交信息要具体描述本次改动，不使用无意义的“更新代码”。
+12. Git 提交标题和提交说明统一使用中文，格式应说明本次功能、修复或整理内容；提交前检查提交范围，不把无关的本地改动带入提交。
+13. 房间规则以 `tool/src/main/resources/xml/TableModel.xlsx` 为源文件；修改规则后必须重新生成 `config/tablemodel_models.dat`，并将 Excel 与 dat 一起提交。
+14. `config/tablemodel_models.dat` 是运行时配置，不能删除；构建脚本必须同步最新配置到部署目录。
+15. Maven 的临时产物（如 `target/`、`dependency-reduced-pom.xml`）不属于业务源码，除非明确需要，不纳入提交。
+16. 删除或新增模块时，必须同步更新根 `pom.xml`、README、Linux/Windows 构建脚本和相关部署说明。
