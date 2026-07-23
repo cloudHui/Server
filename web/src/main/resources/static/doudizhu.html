@@ -55,7 +55,8 @@
         .player-bottom {
             bottom: 0; left: 50%;
             transform: translateX(-50%);
-            width: 100%;
+            width: calc(100% - 32px);
+            padding: 0 16px;
         }
         .player-left {
             left: 20px;
@@ -88,9 +89,14 @@
         /* 手牌区域 */
         .my-cards {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            padding: 10px 0 20px;
+            align-content: flex-end;
+            gap: 12px;
+            padding: 10px 12px 20px;
             min-height: 160px;
+            max-width: 100%;
+            margin: 0 auto;
         }
 
         /* 扑克牌 */
@@ -139,11 +145,8 @@
         .card:not(.selected):hover {
             transform: translateY(-5px);
         }
-        /* 牌的间距 - 重叠效果 */
+        /* 手牌不再重叠，窄屏自动换行，保证牌值和中央花色都能看清。 */
         .my-cards .card {
-            margin-left: -30px;
-        }
-        .my-cards .card:first-child {
             margin-left: 0;
         }
 
@@ -279,7 +282,9 @@
         .played-cards {
             position: absolute;
             display: flex;
-            gap: 2px;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-width: min(42vw, 360px);
         }
         .played-left { left: 120px; top: 45%; }
         .played-right { right: 120px; top: 45%; }
@@ -287,7 +292,7 @@
         .played-cards .card {
             width: 50px;
             height: 70px;
-            margin-left: -15px;
+            margin-left: 0;
             cursor: default;
         }
         .played-cards .card:first-child { margin-left: 0; }
@@ -304,6 +309,29 @@
         }
         .ws-status.connected { color: #4caf50; }
         .ws-status.disconnected { color: #f44336; }
+
+        @media (max-width: 640px) {
+            .card { width: 64px; height: 90px; }
+            .my-cards { gap: 8px; padding-left: 8px; padding-right: 8px; }
+            .card-corner { font-size: 15px; line-height: 14px; }
+            .card-corner .suit { font-size: 12px; line-height: 12px; }
+            .card-art { font-size: 27px; }
+            .card-art.pips { font-size: 15px; }
+            .card-art.joker { font-size: 18px; }
+            .played-left { left: 8px; }
+            .played-right { right: 8px; }
+            .played-cards { max-width: 32vw; gap: 4px; }
+            .played-face { width: 42px; height: 59px; margin-left: 0; }
+            .played-face .card-art { font-size: 18px; }
+            .played-face .card-art.pips { font-size: 10px; }
+        }
+
+        @media (max-height: 720px) {
+            .my-cards { padding-top: 4px; padding-bottom: 8px; min-height: 118px; gap: 6px; }
+            .card { width: 58px; height: 81px; }
+            .action-bar { bottom: 112px; }
+            .played-bottom { bottom: 128px; }
+        }
     </style>
     <script src="app-base.js"></script>
 </head>

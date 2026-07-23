@@ -27,8 +27,8 @@ public class DdzTable extends Table {
     private final Banner banner;
     private final DdzTableContext ddz = new DdzTableContext();
 
-    public DdzTable(long tableId, TableModel model, ModelProto.RoomRole creator, int threadIndex) {
-        super(tableId, model, creator, threadIndex);
+    public DdzTable(long tableId, TableModel model, ModelProto.RoomRole creator) {
+        super(tableId, model, creator);
         this.cardPool = new CardPool(this);
         this.banner = new Banner();
     }

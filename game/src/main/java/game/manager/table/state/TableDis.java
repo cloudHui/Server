@@ -16,7 +16,7 @@ public class TableDis extends AbstractTableHandle {
 
 	@Override
 	public boolean onTiming(Table table) {
-		Game.getInstance().getTableManager().removeTable(table.getTableId());
+		Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
 		return true;
 	}
 }

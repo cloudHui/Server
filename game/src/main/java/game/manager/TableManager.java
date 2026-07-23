@@ -5,6 +5,7 @@ import game.manager.table.DdzTable;
 import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
+import game.manager.thread.TableManagerExecutor;
 import model.tablemodel.TableModel;
 import model.tablemodel.TableModelJson;
 import msg.registor.enums.ServerType;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 桌子管理器
@@ -37,23 +39,7 @@ public class TableManager {
     private final AtomicLong tableIdSeq = new AtomicLong(System.currentTimeMillis());
 
     private final TableConfigManager configManager;
-
-    /**
-     * 线程下表
-     **/
-    private int threadIndex = 0;
-
-    /**
-     * 获取线程下表
-     *
-     * @return 按顺序线程下表
-     */
-    private int getThreadIndex() {
-        if (++threadIndex >= Game.getInstance().getPoolSize()) {
-            threadIndex = 0;
-        }
-        return threadIndex;
-    }
+    private final TableManagerExecutor managerExecutor = new TableManagerExecutor();
 
     public TableManager() {
         tableMap = new ConcurrentHashMap<>();
@@ -68,7 +54,7 @@ public class TableManager {
     /**
      * 添加桌子
      */
-    public void addTable(Table table) {
+    private void addTable(Table table) {
         if (table == null) {
             logger.warn("尝试添加空桌子");
             return;
@@ -81,6 +67,7 @@ public class TableManager {
             logger.warn("桌子已存在,添加失败, tableId: {}", tableId);
         } else {
             tableMap.put(tableId, table);
+            Game.getInstance().getTableExecutorManager().register(tableId);
             MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
             MetricsCollector.getInstance().incrementCounter("game.tables_created");
             logger.debug("添加新桌子, tableId: {}", tableId);
@@ -101,10 +88,11 @@ public class TableManager {
     /**
      * 删除桌子
      */
-    public void removeTable(long tableId) {
+    private void removeTable(long tableId) {
         Table removedTable = tableMap.remove(tableId);
         if (removedTable != null) {
             removedTable.stop();
+            Game.getInstance().getTableExecutorManager().remove(tableId);
             MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
             MetricsCollector.getInstance().incrementCounter("game.tables_destroyed");
             logger.info("删除桌子, tableId: {}", tableId);
@@ -112,6 +100,49 @@ public class TableManager {
         } else {
             logger.warn("桌子不存在,无法删除, tableId: {}", tableId);
         }
+    }
+
+    /** 在桌子管理线程创建桌子，网络线程只接收 Future。 */
+    public CompletableFuture<Table> createTableAsync(int roomId, ModelProto.RoomRole role) {
+        return managerExecutor.submit(() -> createTable(roomId, role));
+    }
+
+    /** 在桌子管理线程删除桌子，桌子线程不直接修改全局索引。 */
+    public CompletableFuture<Void> removeTableAsync(long tableId) {
+        return managerExecutor.submit(() -> {
+            removeTable(tableId);
+            return null;
+        });
+    }
+
+    public CompletableFuture<List<Table>> findTablesByUserIdAsync(int userId) {
+        return managerExecutor.submit(() -> findTablesByUserId(userId));
+    }
+
+    public CompletableFuture<List<ModelProto.RoomTableInfo>> getAllTableInfoAsync() {
+        return managerExecutor.submit(this::snapshotTables).thenCompose(this::collectTableInfo);
+    }
+
+    /** 关闭桌子管理线程，供服务停止时释放资源。 */
+    public void shutdown() {
+        managerExecutor.shutdown();
+    }
+
+    private List<Table> snapshotTables() {
+        return new ArrayList<>(tableMap.values());
+    }
+
+    private CompletableFuture<List<ModelProto.RoomTableInfo>> collectTableInfo(List<Table> tables) {
+        List<CompletableFuture<ModelProto.RoomTableInfo>> futures = new ArrayList<>();
+        for (Table table : tables) futures.add(table.getRoomTableInfoAsync());
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenApply(ignored -> collectResults(futures));
+    }
+
+    private List<ModelProto.RoomTableInfo> collectResults(List<CompletableFuture<ModelProto.RoomTableInfo>> futures) {
+        List<ModelProto.RoomTableInfo> result = new ArrayList<>();
+        for (CompletableFuture<ModelProto.RoomTableInfo> future : futures) result.add(future.join());
+        return result;
     }
 
     /**
@@ -187,11 +218,10 @@ public class TableManager {
                 throw new IllegalArgumentException("未知房间模板 roomId=" + roomId);
             }
             Table table;
-            int threadIndex = getThreadIndex();
             if (model.getType() == 1) {
-                table = new MjTable(getTableId(), model, role, threadIndex);
+                table = new MjTable(getTableId(), model, role);
             } else {
-                table = new DdzTable(getTableId(), model, role, threadIndex);
+                table = new DdzTable(getTableId(), model, role);
             }
             addTable(table);
             return table;

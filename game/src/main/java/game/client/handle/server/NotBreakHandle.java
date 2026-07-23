@@ -1,7 +1,5 @@
 package game.client.handle.server;
 
-import java.util.List;
-
 import com.google.protobuf.Message;
 import game.Game;
 import game.manager.table.Table;
@@ -32,9 +30,16 @@ public class NotBreakHandle implements Handler {
 
 			TraceContext.setUserId(userId);
 			logger.info("处理玩家断线通知, userId: {}, gateClientId: {}", userId, gateClientId);
-
-			processUserDisconnect(userId, gateClientId);
-
+			Game.getInstance().getTableManager().findTablesByUserIdAsync(userId)
+					.whenComplete((tables, error) -> {
+						if (error != null) {
+							logger.error("查找断线玩家所在桌子失败, userId: {}", userId, error);
+							return;
+						}
+						for (Table table : tables) {
+							table.execute(() -> processUserDisconnect(table, userId, gateClientId));
+						}
+					});
 			return true;
 		} catch (Exception e) {
 			logger.error("处理玩家断线通知失败, clientId: {}", clientId, e);
@@ -42,36 +47,20 @@ public class NotBreakHandle implements Handler {
 		}
 	}
 
-	private void processUserDisconnect(int userId, int gateClientId) {
-		List<Table> tables = Game.getInstance().getTableManager().findTablesByUserId(userId);
-
-		if (tables.isEmpty()) {
-			logger.debug("断线玩家不在任何桌子中, userId: {}", userId);
-			return;
-		}
-
-		for (Table table : tables) {
+	private void processUserDisconnect(Table table, int userId, int gateClientId) {
 			TableUser user = table.getUsers().get(userId);
-			if (user == null) {
-				continue;
-			}
-
-			// 已被新连接顶替：忽略旧连接断线
+			if (user == null) return;
 			if (gateClientId != 0 && user.getGateId() != 0 && user.getGateId() != gateClientId) {
 				logger.info("忽略旧连接断线, userId: {}, tableId: {}, noticeGate: {}, currentGate: {}",
 						userId, table.getTableId(), gateClientId, user.getGateId());
-				continue;
+				return;
 			}
-
 			user.setOnLine(false);
 			TraceContext.setTableId(table.getTableId());
 			logger.info("玩家标记离线, userId: {}, tableId: {}", userId, table.getTableId());
-
 			if (table.gaming()) {
 				logger.info("游戏进行中玩家断线, userId: {}, tableId: {}，等待超时自动处理",
 						userId, table.getTableId());
 			}
-			// 等待阶段断线：保留座位（支持「回大厅」再进），真正退桌走 REQ_LEAVE
-		}
 	}
 }

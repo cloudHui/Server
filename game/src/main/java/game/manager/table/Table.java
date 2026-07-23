@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * 游戏桌子基类
@@ -49,20 +51,18 @@ public abstract class Table {
     private static final long LOOP_INTERVAL = 500;
     private static final long IDLE_LOOP_INTERVAL = 2000;
     private static final AtomicInteger ROBOT_ID_SEQ = new AtomicInteger(-100000);
-    private int timerNodeId = -1;
+    private ScheduledFuture<?> loopFuture;
     private long currentLoopInterval = IDLE_LOOP_INTERVAL;
-    private int threadIndex;
     /**
      * 本桌运行时托管（补机器人后开启，勿改共享 TableModel）
      */
     private boolean runtimeAutoPlay;
 
-    protected Table(long tableId, TableModel model, ModelProto.RoomRole creator,int threadIndex) {
+    protected Table(long tableId, TableModel model, ModelProto.RoomRole creator) {
         this.tableId = tableId;
         this.creator = creator;
         this.tableModel = model;
         this.op = new Operate(this);
-        this.threadIndex = threadIndex;
         this.gameResult = createGameResult();
         this.stateStartTime = System.currentTimeMillis();
         logger.info("创建桌子实例, tableId: {}, type: {}", tableId, model.getType());
@@ -70,10 +70,6 @@ public abstract class Table {
 
     public int getOwnerId() {
         return creator != null ? creator.getRoleId() : 0;
-    }
-
-    public int getThreadIndex() {
-        return threadIndex;
     }
 
     // ======================== 抽象方法(子类实现) ========================
@@ -281,13 +277,18 @@ public abstract class Table {
 
     // ======================== 定时器 ========================
 
+    /** 将桌子内的所有状态任务投递到本桌唯一线程。 */
+    public CompletableFuture<Void> execute(Runnable task) {
+        return Game.getInstance().getTableExecutorManager().submit(tableId, task);
+    }
+
     public void start() {
         try {
-            if (timerNodeId > 0) return;
-            timerNodeId = Game.getInstance().registerSerialTimerWithId(
-                    threadIndex, 1000, IDLE_LOOP_INTERVAL, -1, this::tableLoop, this);
+            if (loopFuture != null && !loopFuture.isCancelled()) return;
+            loopFuture = Game.getInstance().getTableExecutorManager().schedule(
+                    tableId, () -> tableLoop(this), 1000, IDLE_LOOP_INTERVAL);
             currentLoopInterval = IDLE_LOOP_INTERVAL;
-            logger.info("启动桌子逻辑循环, tableId: {}, groupIndex: {}", tableId, threadIndex);
+            logger.info("启动桌子逻辑循环, tableId: {}", tableId);
         } catch (Exception e) {
             logger.error("启动桌子逻辑循环失败, tableId: {}", tableId, e);
         }
@@ -298,9 +299,9 @@ public abstract class Table {
      */
     public void stop() {
         try {
-            if (timerNodeId > 0) {
-                Game.getInstance().unregisterTimer(timerNodeId);
-                timerNodeId = -1;
+            if (loopFuture != null) {
+                Game.getInstance().getTableExecutorManager().cancel(loopFuture);
+                loopFuture = null;
                 logger.info("停止桌子逻辑循环, tableId: {}", tableId);
             }
         } catch (Exception e) {
@@ -311,9 +312,9 @@ public abstract class Table {
     public void setLoopInterval(long intervalMs) {
         if (currentLoopInterval == intervalMs) return;
         try {
-            if (timerNodeId > 0) Game.getInstance().unregisterTimer(timerNodeId);
-            timerNodeId = Game.getInstance().registerSerialTimerWithId(
-                    threadIndex, 0, intervalMs, -1, this::tableLoop, this);
+            if (loopFuture != null) Game.getInstance().getTableExecutorManager().cancel(loopFuture);
+            loopFuture = Game.getInstance().getTableExecutorManager().schedule(
+                    tableId, () -> tableLoop(this), 0, intervalMs);
             currentLoopInterval = intervalMs;
         } catch (Exception e) {
             logger.error("调整循环间隔失败, tableId: {}", tableId, e);
@@ -329,6 +330,28 @@ public abstract class Table {
             logger.error("桌子循环执行异常, tableId: {}", tableId, e);
             return false;
         }
+    }
+
+    /** 在本桌线程生成大厅需要的只读快照，避免并发读取座位状态。 */
+    public CompletableFuture<ModelProto.RoomTableInfo> getRoomTableInfoAsync() {
+        CompletableFuture<ModelProto.RoomTableInfo> result = new CompletableFuture<>();
+        execute(() -> result.complete(buildRoomTableInfo())).exceptionally(error -> {
+            result.completeExceptionally(error);
+            return null;
+        });
+        return result;
+    }
+
+    private ModelProto.RoomTableInfo buildRoomTableInfo() {
+        ModelProto.RoomTableInfo.Builder builder = ModelProto.RoomTableInfo.newBuilder()
+                .setTableId(tableId).setRoomId(getRoomId()).setOwnerId(getOwnerId())
+                .setCreatorId(getOwnerId()).setGameType(getGameType());
+        for (TableUser user : seatUsers.values()) {
+            if (user == null) continue;
+            builder.addTableRoles(ModelProto.RoomRole.newBuilder().setRoleId(user.getUserId())
+                    .setNickName(com.google.protobuf.ByteString.copyFromUtf8(user.getNick())).build());
+        }
+        return builder.build();
     }
 
     // ======================== 玩家管理 ========================

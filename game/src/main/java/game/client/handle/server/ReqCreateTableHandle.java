@@ -23,48 +23,36 @@ public class ReqCreateTableHandle implements Handler {
 
 	@Override
 	public boolean handler(Sender sender, int clientId, Message message, long mapId, int sequence) {
+		final int roomId;
+		final ModelProto.RoomRole role;
 		try {
 			ServerProto.ReqCreateGameTable request = (ServerProto.ReqCreateGameTable) message;
-			int roomId = request.getRoomId();
+			roomId = request.getRoomId();
+			role = request.getRoomRole();
 			logger.info("处理创建桌子请求, clientId: {}, roomId: {}", clientId, roomId);
 
-			// 创建桌子并生成响应
-			ServerProto.AckCreateGameTable response = createGameTable(roomId, request.getRoomRole());
-
-			// 发送响应
-			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId, response, sequence);
-
-			if (response.hasTables()) {
-				logger.info("创建桌子请求处理完成, clientId: {}, tableId: {}", clientId, response.getTables().getTableId());
-			}
-
-		} catch (IllegalArgumentException e) {
-			logger.warn("创建桌子被拒绝, clientId: {}, reason: {}", clientId, e.getMessage());
-			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId,
-					ServerProto.AckCreateGameTable.getDefaultInstance(), sequence);
 		} catch (Exception e) {
 			logger.error("处理创建桌子请求失败, clientId: {}", clientId, e);
+			return true;
 		}
+		Game.getInstance().getTableManager().createTableAsync(roomId, role)
+				.whenComplete((table, error) -> sendCreateResponse(sender, clientId, mapId, sequence, table, error));
 		return true;
 	}
 
-	/**
-	 * 创建游戏桌子
-	 */
-	private ServerProto.AckCreateGameTable createGameTable(int roomId, ModelProto.RoomRole role) {
-		TableManager tableManager = Game.getInstance().getTableManager();
-
-		// 创建桌子实例
-		Table table = tableManager.createTable(roomId, role);
-
-		// 构建响应
-		ServerProto.AckCreateGameTable.Builder response = ServerProto.AckCreateGameTable.newBuilder();
-		response.setTables(ModelProto.RoomTableInfo.newBuilder()
-				.setTableId(table.getTableId())
-				.setRoomId(roomId)
-				.build());
-
-		logger.debug("创建游戏桌子成功, tableId: {}, roomId: {}", table.getTableId(), roomId);
-		return response.build();
+	/** 在生命周期线程完成后返回结果，网络线程不阻塞等待桌子创建。 */
+	private void sendCreateResponse(Sender sender, int clientId, long mapId, int sequence,
+			Table table, Throwable error) {
+		if (error != null || table == null) {
+			logger.error("创建桌子失败, clientId: {}", clientId, error);
+			sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId,
+					ServerProto.AckCreateGameTable.getDefaultInstance(), sequence);
+			return;
+		}
+		ServerProto.AckCreateGameTable response = ServerProto.AckCreateGameTable.newBuilder()
+				.setTables(ModelProto.RoomTableInfo.newBuilder().setTableId(table.getTableId())
+						.setRoomId(table.getRoomId()).build()).build();
+		sender.sendMessage(clientId, SMsg.ACK_CREATE_TABLE_MSG, mapId, response, sequence);
+		logger.info("创建桌子请求处理完成, clientId: {}, tableId: {}", clientId, table.getTableId());
 	}
 }

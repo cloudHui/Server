@@ -34,7 +34,7 @@ public class Waiting extends AbstractTableHandle {
 		if (table.isEmpty() || !table.hasHumanPlayer()) {
 			logger.info("等待阶段无真人，解散桌子, tableId: {}, empty: {}, allRobot: {}",
 					table.getTableId(), table.isEmpty(), table.isAllRobot());
-			Game.getInstance().getTableManager().removeTable(table.getTableId());
+			Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
 			return true;
 		}
 

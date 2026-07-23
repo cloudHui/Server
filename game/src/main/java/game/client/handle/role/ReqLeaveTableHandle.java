@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
-import threadtutil.thread.Task;
 
 /**
  * 处理玩家请求离开桌子
@@ -37,14 +36,7 @@ public class ReqLeaveTableHandle implements Handler {
                 return true;
             }
 
-            Game.getInstance().serialExecute(new Task() {
-                @Override
-                public int groupId() {
-                    return table.getThreadIndex();
-                }
-
-                @Override
-                public void run() {
+            table.execute(() -> {
                     int result = processLeave(clientId, table);
                     if (result == ConstProto.Result.SUCCESS_VALUE) {
                         GameProto.AckLeaveTable response = GameProto.AckLeaveTable.newBuilder()
@@ -55,7 +47,9 @@ public class ReqLeaveTableHandle implements Handler {
                     } else {
                         sender.sendMessage(TCPMessage.newInstance(result));
                     }
-                }
+            }).exceptionally(error -> {
+                logger.error("桌子线程处理离开请求失败, tableId: {}", mapId, error);
+                return null;
             });
         } catch (Exception e) {
             logger.error("处理离开桌子请求失败, userId: {}", clientId, e);
@@ -80,7 +74,7 @@ public class ReqLeaveTableHandle implements Handler {
                 }
             }
             table.removeUser(user);
-            Game.getInstance().getTableManager().removeTable(tableId);
+            Game.getInstance().getTableManager().removeTableAsync(tableId);
             return ConstProto.Result.SUCCESS_VALUE;
         }
 
@@ -91,7 +85,7 @@ public class ReqLeaveTableHandle implements Handler {
         // 空桌或只剩机器人：立即销毁，并通知大厅
         if (table.isEmpty() || !table.hasHumanPlayer()
                 || table.getTableState() == TableState.TABLE_DIS) {
-            Game.getInstance().getTableManager().removeTable(tableId);
+            Game.getInstance().getTableManager().removeTableAsync(tableId);
         } else {
             // 仍有真人：同步大厅名单
             Game.getInstance().getTableManager().notifyRoomPlayerLeft(tableId, userId);

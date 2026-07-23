@@ -16,8 +16,14 @@ public class ScoreRepository {
 	private static final Logger logger = LoggerFactory.getLogger(ScoreRepository.class);
 	private static volatile ScoreRepository instance;
 	private final String jdbcUrl;
+	private final DatabaseExecutorManager databaseExecutorManager;
 
 	public ScoreRepository(String dbPath) {
+		this(dbPath, new DatabaseExecutorManager(1));
+	}
+
+	public ScoreRepository(String dbPath, DatabaseExecutorManager databaseExecutorManager) {
+		this.databaseExecutorManager = databaseExecutorManager;
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -34,6 +40,10 @@ public class ScoreRepository {
 		instance = new ScoreRepository(dbPath);
 	}
 
+	public static void initialize(String dbPath, DatabaseExecutorManager databaseExecutorManager) {
+		instance = new ScoreRepository(dbPath, databaseExecutorManager);
+	}
+
 	public static ScoreRepository getInstance() {
 		ScoreRepository value = instance;
 		if (value == null) {
@@ -46,35 +56,66 @@ public class ScoreRepository {
 	}
 
 	public void saveRound(Table table) {
-		String sql = "INSERT OR REPLACE INTO score_record(table_id, room_id, game_type, round, user_id, seat, score, total_score, winner_seat, score_value, win_type, created_at)"
-				+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-		int winnerSeat = table.getGameResult().getRoundEntries().get(table.getGameResult().getRoundEntries().size() - 1).getWinnerSeat();
+		RoundSnapshot snapshot = createSnapshot(table);
+		if (snapshot == null) return;
+		databaseExecutorManager.submit(() -> writeRound(snapshot)).exceptionally(error -> {
+			logger.error("保存战绩异步任务失败, tableId={}", snapshot.tableId, error);
+			return null;
+		});
+	}
+
+	/** 在桌子线程复制结算数据，数据库线程只接触不可变快照。 */
+	private RoundSnapshot createSnapshot(Table table) {
+		if (table.getGameResult().getRoundEntries().isEmpty()) return null;
 		game.manager.table.GameResult.RoundEntry entry = table.getGameResult().getRoundEntries()
 				.get(table.getGameResult().getRoundEntries().size() - 1);
+		java.util.List<ScoreRow> rows = new java.util.ArrayList<>();
+		for (int seat = 0; seat < table.getTableModel().getSeatNum(); seat++) {
+			TableUser user = table.getSeatUser(seat);
+			if (user != null) rows.add(new ScoreRow(user.getUserId(), seat, entry.getScores()[seat],
+					table.getGameResult().getTotalScore(seat)));
+		}
+		return new RoundSnapshot(table.getTableId(), table.getRoomId(), table.getGameType(), entry.getRound(),
+				entry.getWinnerSeat(), entry.getScore(), entry.getWinType(), System.currentTimeMillis(), rows);
+	}
+
+	private void writeRound(RoundSnapshot snapshot) {
+		String sql = "INSERT OR REPLACE INTO score_record(table_id, room_id, game_type, round, user_id, seat, score, total_score, winner_seat, score_value, win_type, created_at)"
+				+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(jdbcUrl);
-			 PreparedStatement ps = conn.prepareStatement(sql)) {
+				 PreparedStatement ps = conn.prepareStatement(sql)) {
 			conn.setAutoCommit(false);
-			for (int seat = 0; seat < table.getTableModel().getSeatNum(); seat++) {
-				TableUser user = table.getSeatUser(seat);
-				if (user == null) continue;
-				ps.setLong(1, table.getTableId());
-				ps.setInt(2, table.getRoomId());
-				ps.setInt(3, table.getGameType());
-				ps.setInt(4, entry.getRound());
-				ps.setInt(5, user.getUserId());
-				ps.setInt(6, seat);
-				ps.setInt(7, entry.getScores()[seat]);
-				ps.setInt(8, table.getGameResult().getTotalScore(seat));
-				ps.setInt(9, winnerSeat);
-				ps.setInt(10, entry.getScore());
-				ps.setString(11, entry.getWinType());
-				ps.setLong(12, System.currentTimeMillis());
+			for (ScoreRow row : snapshot.rows) {
+				ps.setLong(1, snapshot.tableId); ps.setInt(2, snapshot.roomId); ps.setInt(3, snapshot.gameType);
+				ps.setInt(4, snapshot.round); ps.setInt(5, row.userId); ps.setInt(6, row.seat);
+				ps.setInt(7, row.score); ps.setInt(8, row.totalScore); ps.setInt(9, snapshot.winnerSeat);
+				ps.setInt(10, snapshot.scoreValue); ps.setString(11, snapshot.winType);
+				ps.setLong(12, snapshot.createdAt);
 				ps.addBatch();
 			}
 			ps.executeBatch();
 			conn.commit();
 		} catch (SQLException e) {
-			logger.error("保存战绩失败, tableId={}, round={}", table.getTableId(), entry.getRound(), e);
+			logger.error("保存战绩失败, tableId={}, round={}", snapshot.tableId, snapshot.round, e);
+		}
+	}
+
+	private static final class RoundSnapshot {
+		private final long tableId; private final int roomId; private final int gameType; private final int round;
+		private final int winnerSeat; private final int scoreValue; private final String winType;
+		private final long createdAt; private final java.util.List<ScoreRow> rows;
+		private RoundSnapshot(long tableId, int roomId, int gameType, int round, int winnerSeat,
+				int scoreValue, String winType, long createdAt, java.util.List<ScoreRow> rows) {
+			this.tableId = tableId; this.roomId = roomId; this.gameType = gameType; this.round = round;
+			this.winnerSeat = winnerSeat; this.scoreValue = scoreValue; this.winType = winType;
+			this.createdAt = createdAt; this.rows = java.util.Collections.unmodifiableList(rows);
+		}
+	}
+
+	private static final class ScoreRow {
+		private final int userId; private final int seat; private final int score; private final int totalScore;
+		private ScoreRow(int userId, int seat, int score, int totalScore) {
+			this.userId = userId; this.seat = seat; this.score = score; this.totalScore = totalScore;
 		}
 	}
 

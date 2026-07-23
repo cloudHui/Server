@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.ConstProto;
 import proto.GameProto;
-import threadtutil.thread.Task;
 
 /**
  * 处理玩家请求进入桌子
@@ -41,12 +40,7 @@ public class ReqEnterTableHandle implements Handler {
 
 			// gateId 用 Gate→Game 连接 id，便于后续推送找对网关
 			final int gateConnId = (sender instanceof ClientHandler) ? ((ClientHandler) sender).getId() : 0;
-			Game.getInstance().serialExecute(new Task() {
-				@Override
-				public int groupId() { return table.getThreadIndex(); }
-
-				@Override
-				public void run() {
+			table.execute(() -> {
 					int result = processEnterTable(clientId, request.getTableId(), gateConnId, request, table);
 					if (result == ConstProto.Result.SUCCESS_VALUE) {
 						GameProto.AckEnterTable response = buildEnterTableResponse(table);
@@ -59,7 +53,9 @@ public class ReqEnterTableHandle implements Handler {
 					}
 					logger.info("进入桌子请求处理完成, userId: {}, tableId: {}, success: {}, gateConnId: {}",
 							clientId, request.getTableId(), result, gateConnId);
-				}
+			}).exceptionally(error -> {
+				logger.error("桌子线程处理进入请求失败, tableId: {}", request.getTableId(), error);
+				return null;
 			});
 		} catch (Exception e) {
 			logger.error("处理进入桌子请求失败, userId: {}", mapId, e);

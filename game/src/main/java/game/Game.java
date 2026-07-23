@@ -26,6 +26,8 @@ import utils.config.ConfigurationManager;
 import utils.metrics.MetricsCollector;
 import utils.metrics.MetricsHttpServer;
 import game.db.ScoreRepository;
+import game.db.DatabaseExecutorManager;
+import game.manager.thread.TableExecutorManager;
 
 /**
  * @author cloud
@@ -39,7 +41,6 @@ import game.db.ScoreRepository;
 public class Game {
 	private static final Logger logger = LoggerFactory.getLogger(Game.class);
 	private static final Game instance = new Game();
-
 	private final ServerClientManager serverClientManager = new ServerClientManager();
 	private ExecutorPool executorPool;
 	private Timer timer;
@@ -48,6 +49,8 @@ public class Game {
 	private ModelProto.ServerInfo serverInfo;
 	private ServerManager serverManager;
 	private TableManager tableManager;
+	private TableExecutorManager tableExecutorManager;
+	private DatabaseExecutorManager databaseExecutorManager;
 	private MetricsHttpServer metricsHttpServer;
 
 	private Game() {
@@ -92,6 +95,21 @@ public class Game {
 
 	public TableManager getTableManager() {
 		return tableManager;
+	}
+
+	public TableExecutorManager getTableExecutorManager() {
+		return tableExecutorManager;
+	}
+
+	public DatabaseExecutorManager getDatabaseExecutorManager() {
+		return databaseExecutorManager;
+	}
+
+	/** 统一释放桌子、定时器和数据库线程池，避免服务重启遗留非守护线程。 */
+	public void shutdown() {
+		if (tableManager != null) tableManager.shutdown();
+		if (tableExecutorManager != null) tableExecutorManager.shutdown();
+		if (databaseExecutorManager != null) databaseExecutorManager.shutdown();
 	}
 
 	public ModelProto.ServerInfo getServerInfo() {
@@ -207,11 +225,14 @@ public class Game {
 
 		executorPool = new ExecutorPool("Game", poolSize, queueCap);
 		timer = new Timer().setRunners(executorPool);
+		tableExecutorManager = new TableExecutorManager();
+		databaseExecutorManager = new DatabaseExecutorManager(config.getInt("game.databasePoolSize", 2));
 		serverManager = new ServerManager(timer,
 				config.getInt("plant", 0) != 0);
 		logger.info("服务器组件初始化完成, 线程数:{}, 队列容量:{}", poolSize, queueCap);
 		String scoreDb = config.getProperty("game.score-db");
-		ScoreRepository.initialize(scoreDb == null || scoreDb.isEmpty() ? "../lobby/data/lobby.db" : scoreDb);
+		ScoreRepository.initialize(scoreDb == null || scoreDb.isEmpty() ? "../lobby/data/lobby.db" : scoreDb,
+				databaseExecutorManager);
 	}
 
 	/**

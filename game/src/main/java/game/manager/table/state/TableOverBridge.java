@@ -53,7 +53,7 @@ public class TableOverBridge extends AbstractTableHandle {
 				DdzSettleService.sendGameResult(table);
 			}
 		}
-		Game.getInstance().getTableManager().removeTable(table.getTableId());
+		Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
 	}
 
 	private void sendPreparePrompt(Table table) {

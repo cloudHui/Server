@@ -19,7 +19,6 @@ import net.handler.Handler;
 import net.message.TCPMessage;
 import proto.ConstProto;
 import proto.GameProto;
-import threadtutil.thread.Task;
 
 /**
  * 处理玩家操作请求
@@ -43,18 +42,15 @@ public class ReqOpHandle implements Handler {
 				return true;
 			}
 
-			Game.getInstance().serialExecute(new Task() {
-				@Override
-				public int groupId() { return table.getThreadIndex(); }
-
-				@Override
-				public void run() {
+            table.execute(() -> {
 					int result = processUserOp(clientId, request.getOp(), table, sender, mapId, sequence);
 					if (result != ConstProto.Result.SUCCESS_VALUE) {
 						sender.sendMessage(TCPMessage.newInstance(result));
 					}
 					logger.info("玩家操作请求处理完成, userId: {}, tableId: {}, success: {}", clientId, mapId, result);
-				}
+			}).exceptionally(error -> {
+				logger.error("桌子线程处理玩家操作失败, tableId: {}", mapId, error);
+				return null;
 			});
 		} catch (Exception e) {
 			logger.error("处理操作请求失败, userId: {}", mapId, e);
@@ -105,7 +101,7 @@ public class ReqOpHandle implements Handler {
 				} else {
 					DdzSettleService.sendGameResult(table);
 				}
-				Game.getInstance().getTableManager().removeTable(table.getTableId());
+				Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
 				logger.info("最后一局完成, 总结算已发送, tableId: {}", table.getTableId());
 			} else {
 				logger.info("所有玩家已准备, 开始下一局, tableId: {}", table.getTableId());
