@@ -9,6 +9,7 @@ import lobby.db.CustomRoomRepository;
 import lobby.db.SqliteDatabase;
 import lobby.manager.User;
 import model.tablemodel.TableModel;
+import model.tablemodel.RobotRoomTemplates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import proto.LobbyProto;
@@ -36,6 +37,8 @@ public class TableManager {
 		for (TableModel model : customRoomRepository.listEnabled()) {
 			configManager.putRuntimeModel(model);
 		}
+		// 内置机器人模板不落库，服务启动时始终注册，保证大厅和游戏服都能看到。
+		RobotRoomTemplates.register(configManager::putRuntimeModel);
 		configManager.startWatch();
 	}
 
@@ -47,6 +50,8 @@ public class TableManager {
 		if (configManager.loadFail()) {
 			throw new RuntimeException("加载配置文件失败");
 		}
+		// init 会重新读取配置文件，必须在最后一次 load 后再次注册内置机器人模板。
+		RobotRoomTemplates.register(configManager::putRuntimeModel);
 		roomTables.clear();
 		for (TableModel model : configManager.getAllTableModels().values()) {
 			roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());

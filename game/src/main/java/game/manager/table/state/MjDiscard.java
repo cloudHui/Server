@@ -41,11 +41,15 @@ public class MjDiscard extends AbstractTableHandle {
 		}
 		TableUser seatUser = table.getSeatUser(table.getOp().getCurrOpSeat());
 		if (seatUser != null && seatUser.isRobot()
-				&& System.currentTimeMillis() >= table.getStateStartTime() + 400) {
+				&& System.currentTimeMillis() >= table.getStateStartTime() + randomRobotDelay()) {
 			overTime(table);
 			return false;
 		}
 		return super.handle(table);
+	}
+
+	private long randomRobotDelay() {
+		return java.util.concurrent.ThreadLocalRandom.current().nextLong(250, 3001);
 	}
 
 	@Override

@@ -23,15 +23,15 @@ public class Waiting extends AbstractTableHandle {
 	@Override
 	public boolean onTiming(Table table) {
 		if (table.sitFull()) {
-			if (table.isAllRobot()) {
-				logger.info("全机器人不开局，解散桌子, tableId: {}", table.getTableId());
+			if (table.isAllRobot() && !table.isRobotRoom()) {
+				logger.info("普通桌全机器人不开局，解散桌子, tableId: {}", table.getTableId());
 				table.upNextState(TableState.TABLE_DIS);
 				return false;
 			}
 			startGame(table);
 			return false;
 		}
-		if (table.isEmpty() || !table.hasHumanPlayer()) {
+		if (table.isEmpty() || (!table.hasHumanPlayer() && !table.isRobotRoom())) {
 			logger.info("等待阶段无真人，解散桌子, tableId: {}, empty: {}, allRobot: {}",
 					table.getTableId(), table.isEmpty(), table.isAllRobot());
 			Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
@@ -50,7 +50,7 @@ public class Waiting extends AbstractTableHandle {
 						logger.warn("补机器人失败，回退解散, tableId: {}", table.getTableId());
 						table.upNextState(TableState.TABLE_DIS);
 					} else if (table.sitFull()) {
-						if (table.isAllRobot()) {
+						if (table.isAllRobot() && !table.isRobotRoom()) {
 							logger.info("补机器人后全机桌，解散, tableId: {}", table.getTableId());
 							table.upNextState(TableState.TABLE_DIS);
 						} else {

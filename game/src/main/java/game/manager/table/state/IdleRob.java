@@ -27,11 +27,15 @@ public class IdleRob extends AbstractTableHandle {
 		int seat = table.getOp().getCurrOpSeat();
 		TableUser u = table.getSeatUser(seat);
 		if (u != null && u.isRobot()
-				&& System.currentTimeMillis() >= table.getStateStartTime() + 500) {
+				&& System.currentTimeMillis() >= table.getStateStartTime() + randomRobotDelay()) {
 			overTime(table);
 			return false;
 		}
 		return super.handle(table);
+	}
+
+	private long randomRobotDelay() {
+		return java.util.concurrent.ThreadLocalRandom.current().nextLong(250, 3001);
 	}
 
 	@Override

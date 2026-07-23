@@ -8,6 +8,7 @@ import game.manager.table.TableUser;
 import game.manager.thread.TableManagerExecutor;
 import model.tablemodel.TableModel;
 import model.tablemodel.TableModelJson;
+import model.tablemodel.RobotRoomTemplates;
 import msg.registor.enums.ServerType;
 import msg.registor.message.SMsg;
 import net.client.handler.ClientHandler;
@@ -47,6 +48,8 @@ public class TableManager {
         if (configManager.loadFail()) {
             throw new RuntimeException("加载配置文件失败");
         }
+		// 与大厅注册同一组固定模板，机器人桌无需依赖外部配置文件。
+		RobotRoomTemplates.register(configManager::putRuntimeModel);
         configManager.startWatch();
         logger.info("桌子管理器初始化完成");
     }

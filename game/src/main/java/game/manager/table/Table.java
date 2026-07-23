@@ -6,6 +6,7 @@ import game.manager.table.op.Operate;
 import game.manager.table.replay.ReplayRecorder;
 import game.manager.table.state.TableStateHandleManager;
 import model.tablemodel.TableModel;
+import model.tablemodel.RobotRoomTemplates;
 import msg.registor.enums.TableState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 游戏桌子基类
@@ -202,7 +204,7 @@ public abstract class Table {
                 ROBOT_ID_SEQ.set(-100000);
                 botId = ROBOT_ID_SEQ.decrementAndGet();
             }
-            TableUser bot = new TableUser(botId, "", "机器人" + Math.abs(botId % 1000), 0);
+			TableUser bot = new TableUser(botId, "", randomBotName(), 0);
             bot.setRobot(true);
             int result = addUser(bot);
             if (result != ConstProto.Result.SUCCESS_VALUE) {
@@ -217,8 +219,23 @@ public abstract class Table {
                     tableId, added, seatUsers.size(), tableModel.getSeatNum());
             notifySeatPlayers();
         }
-        return added;
-    }
+		return added;
+	}
+
+	/** 机器人昵称只使用随机英文字母，固定十位且不暴露机器人身份。 */
+	private static String randomBotName() {
+		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		StringBuilder name = new StringBuilder(10);
+		for (int i = 0; i < 10; i++) {
+			name.append(alphabet.charAt(ThreadLocalRandom.current().nextInt(alphabet.length())));
+		}
+		return name.toString();
+	}
+
+	/** 机器人模板允许全机器人桌开局；普通桌仍保持原有保护逻辑。 */
+	public boolean isRobotRoom() {
+		return RobotRoomTemplates.isRobotRoom(getRoomId());
+	}
 
     /**
      * 推送当前座位名单（补机器人后刷新前端显示）
@@ -378,9 +395,12 @@ public abstract class Table {
             if (isEmpty()) start();
             int seat = occupySeat(user);
             if (seat == -1) return ConstProto.Result.TABLE_FULL_VALUE;
-            users.put(user.getUserId(), user);
-            logger.info("玩家加入桌子, userId: {}, tableId: {} seat:{}", user.getUserId(), tableId, seat);
-            return ConstProto.Result.SUCCESS_VALUE;
+			users.put(user.getUserId(), user);
+			logger.info("玩家加入桌子, userId: {}, tableId: {} seat:{}", user.getUserId(), tableId, seat);
+			// 机器人模板的体验是进入即开局：第一个真人入座后立即补齐其余席位。
+			// 递归补位时跳过机器人自身，避免重复触发。
+			if (!user.isRobot() && isRobotRoom()) fillRobotSeats();
+			return ConstProto.Result.SUCCESS_VALUE;
         } catch (Exception e) {
             logger.error("添加玩家到桌子失败, userId: {}, tableId: {}", user.getUserId(), tableId, e);
             return ConstProto.Result.ROLE_ERROR_VALUE;
