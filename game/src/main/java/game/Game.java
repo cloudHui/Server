@@ -225,11 +225,12 @@ public class Game {
 
 		executorPool = new ExecutorPool("Game", poolSize, queueCap);
 		timer = new Timer().setRunners(executorPool);
-		tableExecutorManager = new TableExecutorManager();
+		// 桌线程与 Game 业务池同规格：max(32, 核*2)，按 tableId 亲和串行
+		tableExecutorManager = new TableExecutorManager(poolSize, queueCap);
 		databaseExecutorManager = new DatabaseExecutorManager(config.getInt("game.databasePoolSize", 2));
 		serverManager = new ServerManager(timer,
 				config.getInt("plant", 0) != 0);
-		logger.info("服务器组件初始化完成, 线程数:{}, 队列容量:{}", poolSize, queueCap);
+		logger.info("服务器组件初始化完成, 业务/桌线程数:{}, 队列容量:{}", poolSize, queueCap);
 		String scoreDb = config.getProperty("game.score-db");
 		ScoreRepository.initialize(scoreDb == null || scoreDb.isEmpty() ? "../lobby/data/lobby.db" : scoreDb,
 				databaseExecutorManager);

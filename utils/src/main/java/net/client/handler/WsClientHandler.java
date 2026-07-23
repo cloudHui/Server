@@ -190,6 +190,10 @@ public class WsClientHandler extends SimpleChannelInboundHandler<WebSocketFrame>
 	private boolean executeMessageHandler(TCPMessage tcpMsg, Message message) {
 		Handler handler = handlers.getHandler(tcpMsg.getMessageId());
 		if (null == handler) {
+			if (tcpMsg.getMessageId() == 0) {
+				logger.debug("[{}] 忽略空消息(0x0)", channel);
+				return true;
+			}
 			logger.error("[{}] 找不到消息({})的处理器", channel, Integer.toHexString(tcpMsg.getMessageId()));
 			return false;
 		}

@@ -30,7 +30,8 @@ public class NotClientLinkHandle implements Handler {
 		if (removedGate != null) {
 			logger.info("客户端断开连接, clientIp: {}, gate: {}", clientIp, removedGate);
 		} else {
-			logger.error("客户端断开连接但未找到映射, clientIp: {}", clientIp);
+			// 重复断连或未登记过的客户端，降为 WARN
+			logger.warn("客户端断开连接但未找到映射, clientIp: {}", clientIp);
 		}
 	}
 

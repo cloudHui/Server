@@ -294,7 +294,7 @@ public abstract class Table {
 
     // ======================== 定时器 ========================
 
-    /** 将桌子内的所有状态任务投递到本桌唯一线程。 */
+    /** 将桌子内状态任务投递到桌串行队列（物理线程可与其他桌共享）。 */
     public CompletableFuture<Void> execute(Runnable task) {
         return Game.getInstance().getTableExecutorManager().submit(tableId, task);
     }

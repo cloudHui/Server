@@ -72,13 +72,14 @@ public class ClientProto {
 		}
 		GateTcpClient client = (GateTcpClient) channelHandler;
 		int msgId = tcpMessage.getMessageId();
-
 		int sequence = tcpMessage.getSequence();
 
 		setClientMap(tcpMessage, client);
-		ConnectHandler serverConnection = getTargetServerConnection(msgId);
+		ConnectHandler serverConnection = getTargetServerConnection(msgId, client);
 		if (serverConnection == null) {
-			logger.error("无法找到目标服务器连接, msgId: {}", Integer.toHexString(msgId));
+			// 保留 ERROR，补关联字段便于跨服排查未知 msgId / 无连接
+			logger.error("无法找到目标服务器连接, msgId: {}, clientId: {}, roleId: {}, mapId: {}, sequence: {}",
+					Integer.toHexString(msgId), client.getId(), client.getRoleId(), client.getMapId(), sequence);
 			return false;
 		}
 
@@ -108,7 +109,7 @@ public class ClientProto {
 		serverConnection.sendTcpMessage(tcpMessage, SERVER_REQUEST_TIMEOUT)
 				.whenComplete((response, error) -> {
 					if (error != null) {
-						handleSendError(error, msgId, serverConnection, client);
+						handleSendError(error, msgId, sequence, startTime, serverConnection, client);
 					} else {
 						handleServerResponse(response, sequence, startTime, client, msgId);
 					}
@@ -118,10 +119,14 @@ public class ClientProto {
 	}
 
 	/**
-	 * 处理发送错误
+	 * 处理发送错误（超时等）：保留 ERROR，带齐跨服关联字段。
 	 */
-	private static void handleSendError(Throwable error, int msgId, ConnectHandler server, GateTcpClient client) {
-		logger.error("发送消息到服务器失败, msgId: {}, server: {}, error: {}", Integer.toHexString(msgId), server.getConnectServer(), error.getMessage());
+	private static void handleSendError(Throwable error, int msgId, int sequence, long startTime,
+										ConnectHandler server, GateTcpClient client) {
+		long costMs = System.currentTimeMillis() - startTime;
+		logger.error("发送消息到服务器失败, msgId: {}, server: {}, clientId: {}, roleId: {}, mapId: {}, sequence: {}, costMs: {}, error: {}",
+				Integer.toHexString(msgId), server.getConnectServer(),
+				client.getId(), client.getRoleId(), client.getMapId(), sequence, costMs, error.getMessage());
 		client.sendMessage(TCPMessage.newInstance(ConstProto.Result.TIME_OUT_VALUE));
 	}
 
@@ -152,18 +157,20 @@ public class ClientProto {
 
 
 	/**
-	 * 获取目标服务器连接
+	 * 获取目标服务器连接；无法路由时打 ERROR 并带上客户端关联字段。
 	 */
-	private static ConnectHandler getTargetServerConnection(int msgId) {
+	private static ConnectHandler getTargetServerConnection(int msgId, GateTcpClient client) {
 		ServerType serverType = getServerTypeByMessageId(msgId);
 		if (serverType == null) {
-			logger.error("无法根据消息ID确定服务器类型, msgId: {}", Integer.toHexString(msgId));
+			logger.error("无法根据消息ID确定服务器类型, msgId: {}, clientId: {}, roleId: {}, mapId: {}",
+					Integer.toHexString(msgId), client.getId(), client.getRoleId(), client.getMapId());
 			return null;
 		}
 
 		ConnectHandler connection = Gate.getInstance().getServerManager().getServerClient(serverType);
 		if (connection == null) {
-			logger.warn("服务器连接不可用, serverType: {}, msgId: {}", serverType, Integer.toHexString(msgId));
+			logger.warn("服务器连接不可用, serverType: {}, msgId: {}, clientId: {}, roleId: {}, mapId: {}",
+					serverType, Integer.toHexString(msgId), client.getId(), client.getRoleId(), client.getMapId());
 		}
 
 		return connection;

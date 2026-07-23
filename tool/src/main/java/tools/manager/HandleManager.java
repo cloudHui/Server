@@ -101,7 +101,8 @@ public class HandleManager {
 				Message message = parser.parser(msg.getMessageId(), msg.getMessage());
 				ConnectHandle connectHandle = handleMap.get(message.getClass());
 				if (connectHandle == null) {
-					LOGGER.error("未找到对应的消息处理器 - 解析器类型:{},消息ID:0x{},用户ID:{}",
+					// 部分中心回包无业务 Handle（如 0x16006），降为 WARN 避免误报
+					LOGGER.warn("未找到对应的消息处理器 - 解析器类型:{},消息ID:0x{},用户ID:{}",
 							parser.getClass().getSimpleName(), Integer.toHexString(msg.getMessageId()), userId);
 					return;
 				}

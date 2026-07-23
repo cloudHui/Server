@@ -247,6 +247,9 @@ public class ConnectHandler extends ChannelInboundHandlerAdapter implements Send
 		Handler handler = handlers.getHandler(msg.getMessageId());
 		if (null != handler) {
 			handler.handler(this, msg.getClientId(), parseMessage(msg), msg.getMapId(), msg.getSequence());
+		} else if (msg.getMessageId() == 0) {
+			// 空消息降级，避免跨服心跳/脏包打 ERROR
+			LOGGER.debug("忽略空消息(0x0), channel: {}, clientId: {}", channel.remoteAddress(), msg.getClientId());
 		} else {
 			LOGGER.error("找不到消息(0x{})的处理器, channel: {}, clientId: {}", Integer.toHexString(msg.getMessageId()), channel.remoteAddress(), msg.getClientId());
 		}

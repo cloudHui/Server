@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import com.google.protobuf.Message;
 import org.slf4j.Logger;
@@ -120,6 +121,7 @@ public class RoomController {
 		int roomId = roomIdNum.intValue();
 		logger.info("用户请求加入桌子, userId: {}, roomId: {}", user.getUserId(), roomId);
 
+		long startMs = System.currentTimeMillis();
 		try {
 			CompletableFuture<Message> future = userService.joinTable(sessionId, roomId);
 			Message response = future.get(10, TimeUnit.SECONDS);
@@ -135,8 +137,13 @@ public class RoomController {
 			}
 
 			return ResponseEntity.ok(errorResponse(500, "加入桌子失败"));
+		} catch (TimeoutException e) {
+			logger.error("加入桌子超时, userId: {}, roomId: {}, sessionId: {}, timeoutSec: 10, costMs: {}",
+					user.getUserId(), roomId, sessionId, System.currentTimeMillis() - startMs);
+			return ResponseEntity.ok(errorResponse(500, "加入桌子超时"));
 		} catch (Exception e) {
-			logger.error("加入桌子异常, userId: {}, roomId: {}", user.getUserId(), roomId, e);
+			logger.error("加入桌子异常, userId: {}, roomId: {}, sessionId: {}, costMs: {}, cause: {}",
+					user.getUserId(), roomId, sessionId, System.currentTimeMillis() - startMs, e.toString(), e);
 			return ResponseEntity.ok(errorResponse(500, "加入桌子异常: " + e.getMessage()));
 		}
 	}

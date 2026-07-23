@@ -128,7 +128,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements Sende
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) {
-		logger.error("[{}] 连接关闭", ctx.channel());
+		// 正常断连降为 INFO，避免 error 日志被连接抖动刷屏
+		logger.info("[{}] 连接关闭", ctx.channel());
 		if (completerGroup != null) {
 			completerGroup.destroy();
 			completerGroup = null;
@@ -223,6 +224,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements Sende
 	private boolean executeMessageHandler(TCPMessage tcpMsg, Message message) {
 		Handler handler = handlers.getHandler(tcpMsg.getMessageId());
 		if (null == handler) {
+			// 空包 0x0 常见于心跳/脏数据，降级；其它未知消息仍 ERROR
+			if (tcpMsg.getMessageId() == 0) {
+				logger.debug("[{}] 忽略空消息(0x0)", channel);
+				return true;
+			}
 			logger.error("[{}] 错误! 找不到消息({})的处理器", channel, Integer.toHexString(tcpMsg.getMessageId()));
 			return false;
 		}

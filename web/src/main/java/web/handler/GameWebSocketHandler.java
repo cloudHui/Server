@@ -151,6 +151,9 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 
 		future.whenComplete((response, error) -> {
 			if (error != null) {
+				logger.error("进入桌子超时, sessionId: {}, userId: {}, tableId: {}, seq: {}, msgId: 0x{}, cause: {}",
+						sessionId, user.getUserId(), tableId, seq,
+						Integer.toHexString(GMsg.REQ_ENTER_TABLE_MSG), error.toString());
 				sendError(wsSession, seq, "进入桌子超时");
 				return;
 			}
@@ -170,7 +173,8 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 					sendError(wsSession, seq, "进入桌子失败");
 				}
 			} catch (Exception e) {
-				logger.error("处理进入桌子响应异常", e);
+				logger.error("处理进入桌子响应异常, sessionId: {}, userId: {}, tableId: {}",
+						sessionId, user.getUserId(), tableId, e);
 				sendError(wsSession, seq, "处理响应失败");
 			}
 		});
@@ -219,6 +223,8 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 
 		future.whenComplete((response, error) -> {
 			if (error != null) {
+				logger.error("操作超时, sessionId: {}, seq: {}, choice: {}, msgId: 0x{}, cause: {}",
+						sessionId, seq, opChoice, Integer.toHexString(GMsg.REQ_OP), error.toString());
 				sendError(wsSession, seq, "操作超时");
 				return;
 			}
@@ -234,7 +240,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 					sendError(wsSession, seq, "操作失败");
 				}
 			} catch (Exception e) {
-				logger.error("处理操作响应异常", e);
+				logger.error("处理操作响应异常, sessionId: {}, seq: {}", sessionId, seq, e);
 				sendError(wsSession, seq, "处理响应失败");
 			}
 		});
@@ -254,6 +260,8 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 
 		future.whenComplete((response, error) -> {
 			if (error != null) {
+				logger.error("离开桌子超时, sessionId: {}, seq: {}, msgId: 0x{}, cause: {}",
+						sessionId, seq, Integer.toHexString(GMsg.REQ_LEAVE), error.toString());
 				sendError(wsSession, seq, "离开桌子超时");
 				return;
 			}
@@ -495,6 +503,12 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 	}
 
 	private void sendResponse(WebSocketSession session, String action, int seq, int code, String msg, Object data) {
+		// 会话已关闭则跳过，避免回调超时后二次报错
+		if (session == null || !session.isOpen()) {
+			logger.warn("跳过已关闭WebSocket发送, action: {}, seq: {}, sessionId: {}",
+					action, seq, session == null ? null : session.getId());
+			return;
+		}
 		try {
 			Map<String, Object> response = new HashMap<>();
 			response.put("action", action);
@@ -506,10 +520,12 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 			}
 			String json = objectMapper.writeValueAsString(response);
 			synchronized (session) {
+				if (!session.isOpen()) return;
 				session.sendMessage(new TextMessage(json));
 			}
 		} catch (Exception e) {
-			logger.error("发送WebSocket消息失败, action: {}, sessionId: {}", action, session.getId(), e);
+			logger.warn("发送WebSocket消息失败, action: {}, sessionId: {}, cause: {}",
+					action, session.getId(), e.toString());
 		}
 	}
 
