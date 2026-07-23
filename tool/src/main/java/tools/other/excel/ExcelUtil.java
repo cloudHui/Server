@@ -514,6 +514,9 @@ public class ExcelUtil {
             String name = getCellValue(propertyName.getCell(cellIndex));
             String type = getCellValue(propertyType.getCell(cellIndex));
             String description = getCellValue(desc.getCell(cellIndex));
+            if (!isAsciiIdentifierNoDigits(name)) {
+                throw new IllegalArgumentException("TableModel Excel列名必须是合法Java属性: " + name);
+            }
             titleList.add(new Title(name, type, description));
         }
 

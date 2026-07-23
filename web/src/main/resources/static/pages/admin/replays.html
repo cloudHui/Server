@@ -1,9 +1,27 @@
 <!DOCTYPE html>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <title>我的回放</title><style>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 body{font-family:Arial,"Microsoft YaHei",sans-serif;background:#10261a;color:#fff;margin:0}.wrap{max-width:900px;margin:30px auto;padding:0 18px}.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}input,button{padding:9px;border-radius:6px;border:0}button{cursor:pointer;background:#e8b923;color:#241b00}table{width:100%;margin-top:18px;background:#fff;color:#333;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}pre{white-space:pre-wrap;background:#07140d;padding:16px;border-radius:8px}.muted{color:#b9c9be}
-</style>    <script src="app-base.js"></script>
-</head><body><div class="wrap"><div class="bar"><h1>我的回放</h1><a href="room.html" style="color:#ffd45a;margin-left:auto">回大厅</a></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+</style>    <script src="/shared/app-base.js"></script>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+</head><body><div class="wrap"><div class="bar"><h1>我的回放</h1><a href="/pages/home/room.html" style="color:#ffd45a;margin-left:auto">回大厅</a></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <p class="muted">只展示你参与的最近七天对局。也可以输入回放码查看。</p><div class="bar"><input id="code" placeholder="2026-07-21/90001_1.txt" style="flex:1"><button onclick="byCode()">打开回放</button></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <table><thead><tr><th>日期</th><th>回放码</th><th>桌号</th><th>玩法</th><th>操作</th></tr></thead><tbody id="rows"></tbody></table><p id="msg" class="muted"></p><pre id="detail" style="display:none"></pre></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <script>var sid=localStorage.getItem('sessionId'),page=1;if(!sid)location.href = appUrl('/');function load(){fetch(appUrl('/api/replays?sessionId='+encodeURIComponent(sid)+'&page='+page+'&size=20')).then(r=>r.json()).then(d=>{if(d.code!==0){msg(d.msg);return}var rows=d.replays||[];document.getElementById('rows').innerHTML=rows.length?rows.map(function(x){return '<tr><td>'+x.date+'</td><td>'+x.replayCode+'</td><td>'+x.tableId+'</td><td>'+x.gameType+'</td><td><button onclick="openCode(\''+x.replayCode+'\')">查看</button></td></tr>'}).join(''):'<tr><td colspan="5">暂无回放</td></tr>';msg('第 '+d.page+' 页，共 '+d.total+' 条');}).catch(function(){msg('网络错误')})}function openCode(c){document.getElementById('code').value=c;byCode()}function byCode(){var c=document.getElementById('code').value.trim();fetch(appUrl('/api/replays/code?sessionId='+encodeURIComponent(sid)+'&code='+encodeURIComponent(c))).then(r=>r.json()).then(d=>{if(d.code!==0){msg(d.msg);return}var e=document.getElementById('detail');e.style.display='block';e.textContent=d.content||''})}function msg(x){document.getElementById('msg').textContent=x||''}load();</script></body></html>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g

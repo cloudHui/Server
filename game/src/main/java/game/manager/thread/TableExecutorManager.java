@@ -34,6 +34,15 @@ public class TableExecutorManager {
         });
     }
 
+    public TableExecutorManager(ExecutorPool workers, int queueCapacity) {
+        this.workers = workers;
+        this.scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = new Thread(r, "TableScheduler");
+            t.setDaemon(true);
+            return t;
+        });
+    }
+
     /** 建桌时登记，允许后续 submit/schedule。 */
     public void register(long tableId) {
         activeTables.add(tableId);

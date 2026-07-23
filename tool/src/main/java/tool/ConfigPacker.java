@@ -35,6 +35,10 @@ public class ConfigPacker {
     public static void packAllExcel() throws Exception {
         System.out.println("开始扫描 Excel 文件...");
 
+        // Excel 是唯一配置源：先按列名/类型/说明生成 model.tablemodel 下的 Java 类，
+        // 随后的读取阶段只反射这些类并输出 .dat，不再通过 JSON 拼装配置对象。
+        ExcelUtil.scanResourcesCreateJavaHead("tool");
+
         // 扫描 tool/src/main/resources/xml 目录下所有 xlsx 文件
         Path excelDir = Paths.get(EXCEL_DIR);
         if (!Files.isDirectory(excelDir)) {

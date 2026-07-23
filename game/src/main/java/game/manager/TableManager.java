@@ -40,9 +40,10 @@ public class TableManager {
     private final AtomicLong tableIdSeq = new AtomicLong(System.currentTimeMillis());
 
     private final TableConfigManager configManager;
-    private final TableManagerExecutor managerExecutor = new TableManagerExecutor();
+    private final TableManagerExecutor managerExecutor;
 
     public TableManager() {
+        managerExecutor = new TableManagerExecutor(Game.getInstance().getThreadPoolManager().tableManagerPool().getExecutorService());
         tableMap = new ConcurrentHashMap<>();
         configManager = new TableConfigManager();
         if (configManager.loadFail()) {

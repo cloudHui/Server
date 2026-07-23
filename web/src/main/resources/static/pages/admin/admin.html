@@ -13,7 +13,7 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-    <title>游戏大厅 · 登录</title>
+    <title>管理后台</title>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <style>
@@ -22,25 +22,28 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         :root {
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            --bg0: #0f2a1c;
+            --bg0: #101820;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            --bg1: #1a472a;
+            --bg1: #1c2b36;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             --accent: #c9a227;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            --danger: #d64545;
+            --card: #f7f4ee;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            --ink: #1b1b1b;
+            --ink: #1c2430;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             --muted: #6b7280;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            --card: rgba(255,252,245,0.96);
+            --ok: #1f6b45;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            --bad: #b33a3a;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
@@ -61,25 +64,10 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             background:
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                radial-gradient(ellipse at 20% 10%, rgba(201,162,39,0.18), transparent 45%),
+                radial-gradient(ellipse at top right, rgba(201,162,39,0.12), transparent 40%),
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                radial-gradient(ellipse at 80% 90%, rgba(45,106,58,0.5), transparent 50%),
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                linear-gradient(160deg, var(--bg0), var(--bg1) 55%, #12301f);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            display: flex;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            justify-content: center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            align-items: center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 24px;
+                linear-gradient(165deg, var(--bg0), var(--bg1));
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             color: var(--ink);
@@ -88,406 +76,7 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .shell {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            width: 100%;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            max-width: 420px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: var(--card);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 18px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 36px 32px 28px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            position: relative;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            overflow: hidden;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .shell::before {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            content: "";
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            position: absolute;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            inset: 0 0 auto 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            height: 4px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: linear-gradient(90deg, #8b6914, var(--accent), #8b6914);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .brand {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            text-align: center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-bottom: 28px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .brand h1 {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 30px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            letter-spacing: 0.08em;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: #1f3d2a;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-weight: 700;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .brand p {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-top: 6px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: var(--muted);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 13px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .tabs {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            display: flex;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            gap: 8px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-bottom: 20px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: #eef2ec;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 10px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 4px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .tabs button {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            flex: 1;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border: none;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: transparent;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 10px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 8px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            cursor: pointer;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 14px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: var(--muted);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .tabs button.active {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: #fff;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: #1f3d2a;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-weight: 600;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        label {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            display: block;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 12px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: var(--muted);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-bottom: 6px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .field { margin-bottom: 14px; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        input {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            width: 100%;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 12px 14px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border: 1px solid #d7ddd4;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 10px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 15px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            outline: none;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: #fff;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        input:focus { border-color: #2d6a3a; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .primary {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            width: 100%;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-top: 8px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 13px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border: none;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 10px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: linear-gradient(135deg, #1f5c36, #2d8a4e);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: #fff;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 16px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            cursor: pointer;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            letter-spacing: 0.04em;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .primary:disabled { opacity: 0.55; cursor: not-allowed; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .primary:hover:not(:disabled) { filter: brightness(1.05); }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .error {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            min-height: 20px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-top: 12px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: var(--danger);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 13px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            text-align: center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .hint {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-top: 16px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            text-align: center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 12px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: var(--muted);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .panel { display: none; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .panel.show { display: block; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        /* 拉回桌子 */
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .overlay {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            display: none;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            position: fixed;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            inset: 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: rgba(8, 18, 12, 0.62);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            z-index: 20;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            align-items: center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            justify-content: center;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 20px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .overlay.show { display: flex; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .modal {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            width: 100%;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            max-width: 420px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: #fffaf0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 16px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 24px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .modal h2 {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 18px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-bottom: 8px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: #1f3d2a;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .modal .sub {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            font-size: 13px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: var(--muted);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-bottom: 16px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .table-item {
+        .header {
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             display: flex;
@@ -499,31 +88,34 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             align-items: center;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 12px 14px;
+            padding: 18px 28px;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: #f3f6f1;
+            background: rgba(0,0,0,0.28);
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 10px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-bottom: 8px;
+            color: #f5f0e6;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .table-item button {
+        .header h1 { font-size: 20px; color: var(--accent); letter-spacing: 0.06em; }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border: none;
+        .header a, .header button {
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: #1f5c36;
+            color: #f5f0e6;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: #fff;
+            text-decoration: none;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            background: rgba(255,255,255,0.1);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border: 1px solid rgba(255,255,255,0.2);
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             padding: 7px 14px;
@@ -538,85 +130,34 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             font-size: 13px;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .skip-btn {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            width: 100%;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-top: 12px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 11px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border: 1px solid #cfd7cb;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: transparent;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 10px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            cursor: pointer;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            color: #445;
+            margin-left: 8px;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .resume-box {
+        .wrap { max-width: 1100px; margin: 20px auto; padding: 0 20px 40px; }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            display: none;
+        .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            background: #eef5ea;
+        .tab {
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 14px;
+            color: #eee;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.18);
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            text-align: left;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .resume-box.show { display: block; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .resume-box p { font-size: 13px; color: #334; margin-bottom: 10px; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .resume-actions { display: flex; gap: 8px; }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .resume-actions button {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            flex: 1;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            padding: 10px;
+            padding: 8px 14px;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             border-radius: 8px;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            border: none;
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             cursor: pointer;
@@ -628,10 +169,214 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .resume-go { background: #1f5c36; color: #fff; }
+        .tab.active { background: var(--accent); color: #1a1408; border-color: var(--accent); font-weight: 600; }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        .resume-clear { background: #fff; border: 1px solid #cfd7cb !important; color: #445; }
+        .panel { display: none; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .panel.active { display: block; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .card {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            background: var(--card);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border-radius: 14px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            padding: 22px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            margin-bottom: 20px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .card h2 { font-size: 16px; margin-bottom: 14px; color: #243447; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .form-row {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            display: grid;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            grid-template-columns: 2fr 1fr 1fr auto;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            gap: 10px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            align-items: end;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        input {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            width: 100%;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            padding: 10px 12px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border: 1px solid #d8d2c6;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border-radius: 8px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            font-size: 14px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            background: #fff;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .btn {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border: none;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            background: #1f5c36;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            color: #fff;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            padding: 10px 18px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border-radius: 8px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            cursor: pointer;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            font-size: 14px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            white-space: nowrap;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .btn:hover { filter: brightness(1.06); }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .btn-ghost { background: transparent; color: #334; border: 1px solid #cfc7b8; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .btn-danger { background: #9e3535; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        th, td {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            text-align: left;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            padding: 10px 8px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border-bottom: 1px solid #e6e0d4;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            vertical-align: middle;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        th { color: var(--muted); font-weight: 600; font-size: 12px; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .token { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; word-break: break-all; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .badge-ok { background: #e5f5ec; color: var(--ok); }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .badge-bad { background: #f8e8e8; color: var(--bad); }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .actions button { margin-right: 6px; margin-top: 4px; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .msg { margin-top: 10px; font-size: 13px; color: var(--muted); min-height: 18px; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .msg.err { color: var(--bad); }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .msg.ok { color: var(--ok); }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        .meta { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        pre.replay {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            background: #1a222c;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            color: #e8e2d6;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            padding: 14px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            border-radius: 10px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            max-height: 480px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            overflow: auto;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            font-size: 12px;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            line-height: 1.45;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            white-space: pre-wrap;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        @media (max-width: 720px) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .form-row { grid-template-columns: 1fr; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     </style>
@@ -646,157 +391,22 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 <body>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-    <div class="shell">
+    <div class="header">
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div class="brand">
+        <h1>管理后台</h1>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <h1>游戏大厅</h1>
+        <div>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <p id="brandHint">登录 · 邀请入局</p>
+            <a href="/pages/home/room.html">回大厅</a>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div class="resume-box" id="resumeBox">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <p>检测到已登录账号：<strong id="resumeName"></strong></p>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div class="resume-actions">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <button type="button" class="resume-go" onclick="resumeSession()">继续进入</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <button type="button" class="resume-clear" onclick="clearSession()">换号登录</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            </div>
+            <button onclick="doLogout()">退出</button>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div class="tabs">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <button type="button" id="tabLogin" class="active" onclick="switchTab('login')">登录</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <button type="button" id="tabRegister" style="display:none" onclick="switchTab('register')">注册</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div id="loginPanel" class="panel show">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div class="field">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <label>用户名</label>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <input id="loginUser" autocomplete="username" placeholder="用户名">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div class="field">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <label>密码</label>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <input id="loginPass" type="password" autocomplete="current-password" placeholder="密码">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <button class="primary" id="loginBtn" onclick="doLogin()">进入大厅</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div id="registerPanel" class="panel" style="display:none">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div class="field">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <label>用户名</label>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <input id="regUser" autocomplete="username" placeholder="用户名">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div class="field">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <label>昵称（可选）</label>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <input id="regNick" placeholder="默认同用户名">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div class="field">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <label>密码</label>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <input id="regPass" type="password" autocomplete="new-password" placeholder="密码">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div class="field" id="inviteField">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <label>邀请码</label>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                <input id="regInvite" placeholder="邀请码">
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <button class="primary" id="regBtn" onclick="doRegister()">注册并进入</button>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        </div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div class="error" id="errorMsg"></div>
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div class="hint" id="regHint" style="display:none">邀请码已带入，可注册</div>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     </div>
@@ -805,22 +415,388 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-    <div class="overlay" id="tableOverlay">
+    <div class="wrap">
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        <div class="modal">
+        <div class="tabs">
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <h2>你还有未结束的牌桌</h2>
+            <button class="tab active" data-tab="invites" onclick="switchTab('invites')">邀请</button>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <p class="sub">选择一张回到对局，或暂不进入去大厅</p>
+            <button class="tab" data-tab="users" onclick="switchTab('users')">玩家</button>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <div id="tableList"></div>
+            <button class="tab" data-tab="tables" onclick="switchTab('tables')">桌子</button>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            <button class="skip-btn" onclick="skipTables()">暂不进入</button>
+            <button class="tab" data-tab="records" onclick="switchTab('records')">战绩/回放</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        <div id="panel-invites" class="panel active">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            <div class="card">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <h2>创建邀请码</h2>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="form-row">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <label>备注</label>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <input id="note" placeholder="例如：朋友局">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <label>可用次数</label>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <input id="maxUses" type="number" min="1" value="5">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <label>有效天数</label>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <input id="expiresDays" type="number" min="0" value="7">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn" onclick="createInvite()">创建</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="msg" id="createMsg"></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            <div class="card">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <h2 style="margin:0;">邀请列表</h2>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="loadInvites()">刷新</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="overflow-x:auto;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            <tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                <th>邀请码</th><th>备注</th><th>使用</th><th>过期</th><th>状态</th><th>操作</th>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            </tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        </thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <tbody id="inviteBody"><tr><td colspan="6">加载中...</td></tr></tbody>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    </table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="msg" id="listMsg"></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        <div id="panel-users" class="panel">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            <div class="card">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <h2 style="margin:0;">玩家列表</h2>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="loadUsers()">刷新</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="meta" id="usersMeta"></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="overflow-x:auto;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            <tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                <th>ID</th><th>用户名</th><th>昵称</th><th>在线</th><th>状态</th><th>最近登录</th><th>操作</th>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            </tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        </thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <tbody id="userBody"><tr><td colspan="7">切换到此页后加载</td></tr></tbody>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    </table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="msg" id="usersMsg"></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        <div id="panel-tables" class="panel">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            <div class="card">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <h2 style="margin:0;">在线桌子</h2>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="loadTables()">刷新</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="meta" id="tablesMeta"></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="overflow-x:auto;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            <tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                <th>桌号</th><th>模板</th><th>玩法</th><th>状态</th><th>人数</th><th>房主</th>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            </tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        </thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <tbody id="tableBody"><tr><td colspan="6">切换到此页后加载</td></tr></tbody>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    </table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="msg" id="tablesMsg"></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        <div id="panel-records" class="panel">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            <div class="card">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <h2 style="margin:0;">战绩 / 回放记录</h2>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="loadReplays()">刷新</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="form-row">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <input id="replayCode" placeholder="输入回放码，例如 2026-07-21/90001_1.txt">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="openReplayCode()">打开回放</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="loadReplays(1)">刷新全部</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="meta">管理员列表展示全部回放并分页；回放码由日期和文件名组成。</div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="overflow-x:auto;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            <tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                <th>日期</th><th>文件</th><th>桌号</th><th>局</th><th>玩法</th><th>操作</th>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            </tr>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        </thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        <tbody id="replayBody"><tr><td colspan="6">切换到此页后加载</td></tr></tbody>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    </table>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="form-row" style="justify-content:flex-end;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="loadReplays(replayPage - 1)">上一页</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <span id="replayPageLabel" class="meta"></span>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <button class="btn btn-ghost" onclick="loadReplays(replayPage + 1)">下一页</button>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="msg" id="replayMsg"></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            <div class="card">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <h2>落库战绩</h2>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div class="meta">游戏结算后按玩家、局次和累计分数保存到 SQLite。</div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <div style="overflow-x:auto;"><table><thead><tr><th>桌号</th><th>局</th><th>玩家</th><th>本局</th><th>累计</th><th>结果</th></tr></thead>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    <tbody id="recordBody"><tr><td colspan="6">切换到此页后加载</td></tr></tbody></table></div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            </div>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            <div class="card" id="replayDetailCard" style="display:none;">
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <h2 id="replayDetailTitle">回放详情</h2>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                <pre class="replay" id="replayContent"></pre>
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            </div>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
         </div>
@@ -835,763 +811,19 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     <script>
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        var registrationAvailable = false;
+        var sessionId = localStorage.getItem('sessionId');
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        var pendingAuth = null;
+        var isAdmin = localStorage.getItem('isAdmin') === '1';
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        var savedToken = null;
+        if (!sessionId) { window.location.href = appUrl('/'); }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
+        if (!isAdmin) {
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        window.onload = function() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var params = new URLSearchParams(window.location.search);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var invite = params.get('invite');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (invite && invite.trim()) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                registrationAvailable = true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                document.getElementById('tabRegister').style.display = '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                document.getElementById('registerPanel').style.display = '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                document.getElementById('regHint').style.display = '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                document.getElementById('brandHint').textContent = '登录 · 注册 · 邀请入局';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                switchTab('register');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                document.getElementById('regInvite').value = invite.trim();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            } else {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                switchTab('login');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            savedToken = localStorage.getItem('token');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var nick = localStorage.getItem('nickname') || localStorage.getItem('username');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (savedToken && nick) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                document.getElementById('resumeName').textContent = nick;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                document.getElementById('resumeBox').className = 'resume-box show';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        };
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function resumeSession() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (!savedToken) return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('resumeBox').className = 'resume-box';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            setError('恢复登录中...');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            restoreToken(savedToken);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function clearSession() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.clear();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            savedToken = null;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('resumeBox').className = 'resume-box';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            setError('');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function switchTab(name) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (name === 'register' && !registrationAvailable) name = 'login';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('tabLogin').className = name === 'login' ? 'active' : '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('tabRegister').className = name === 'register' ? 'active' : '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('loginPanel').className = 'panel' + (name === 'login' ? ' show' : '');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('registerPanel').className = 'panel' + (name === 'register' ? ' show' : '');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('errorMsg').textContent = '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function setError(msg) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('errorMsg').textContent = msg || '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function restoreToken(token) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            fetch(appUrl('/api/auth/login'), {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                method: 'POST',
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                headers: { 'Content-Type': 'application/json' },
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                body: JSON.stringify({ token: token })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .then(function(r) { return r.json(); })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .then(function(data) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                if (data.code === 0) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    onAuthSuccess(data);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                } else {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    setError(data.msg || '登录已失效，请重新登录');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    clearSession();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .catch(function() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                setError('网络错误，请重试');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function doLogin() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var username = document.getElementById('loginUser').value.trim();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var password = document.getElementById('loginPass').value;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (!username || !password) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                setError('请输入用户名和密码');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var btn = document.getElementById('loginBtn');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            btn.disabled = true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            btn.textContent = '登录中...';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            setError('');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            fetch(appUrl('/api/auth/login'), {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                method: 'POST',
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                headers: { 'Content-Type': 'application/json' },
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                body: JSON.stringify({ username: username, password: password })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .then(function(r) { return r.json(); })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .then(function(data) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.disabled = false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.textContent = '进入大厅';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                if (data.code === 0) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    onAuthSuccess(data);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                } else {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    setError(data.msg || '登录失败');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .catch(function() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.disabled = false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.textContent = '进入大厅';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                setError('网络错误，请重试');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function doRegister() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (!registrationAvailable) return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var username = document.getElementById('regUser').value.trim();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var password = document.getElementById('regPass').value;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var nickname = document.getElementById('regNick').value.trim();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var invite = document.getElementById('regInvite').value.trim();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (!username || !password) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                setError('请输入用户名和密码');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (!invite) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                setError('请填写邀请码');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                return;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var btn = document.getElementById('regBtn');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            btn.disabled = true;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            btn.textContent = '注册中...';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            setError('');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            fetch(appUrl('/api/auth/register'), {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                method: 'POST',
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                headers: { 'Content-Type': 'application/json' },
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                body: JSON.stringify({
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    username: username,
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    password: password,
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    nickname: nickname || username,
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    invite: invite
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .then(function(r) { return r.json(); })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .then(function(data) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.disabled = false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.textContent = '注册并进入';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                if (data.code === 0) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    onAuthSuccess(data);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                } else {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    setError(data.msg || '注册失败');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            .catch(function() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.disabled = false;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                btn.textContent = '注册并进入';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                setError('网络错误，请重试');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function onAuthSuccess(data) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('sessionId', data.sessionId);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('userId', data.userId);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('username', data.username || '');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('nickname', data.nickname || '');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('token', data.token || '');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('isAdmin', data.isAdmin ? '1' : '0');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            pendingAuth = data;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var tableInfos = data.tableInfos || [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var tables = data.tables || [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (tableInfos.length > 0) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                showTablePickerFromInfos(tableInfos);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            } else if (tables.length > 0) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                showTablePicker(tables);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            } else {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                goHall();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function showTablePickerFromInfos(infos) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var list = document.getElementById('tableList');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            list.innerHTML = '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            for (var i = 0; i < infos.length; i++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                (function(info) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var name = info.gameType === 1 ? '麻将' : (info.gameType === 2 ? '斗地主' : '牌桌');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var row = document.createElement('div');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    row.className = 'table-item';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    row.innerHTML = '<span>' + name + ' · 桌号 ' + info.tableId + '</span>';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var btn = document.createElement('button');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    btn.textContent = '进入';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    btn.onclick = function() { enterTableDirect(info); };
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    row.appendChild(btn);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    list.appendChild(row);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                })(infos[i]);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('tableOverlay').className = 'overlay show';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function showTablePicker(tables) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var list = document.getElementById('tableList');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            list.innerHTML = '';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            for (var i = 0; i < tables.length; i++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                (function(tid) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var row = document.createElement('div');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    row.className = 'table-item';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    row.innerHTML = '<span>桌号 ' + tid + '</span>';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var btn = document.createElement('button');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    btn.textContent = '进入';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    btn.onclick = function() { enterTable(tid); };
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    row.appendChild(btn);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    list.appendChild(row);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                })(tables[i]);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('tableOverlay').className = 'overlay show';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function skipTables() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            document.getElementById('tableOverlay').className = 'overlay';
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            goHall();
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function enterTableDirect(info) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('tableId', info.tableId);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('roomId', info.roomId || 0);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            localStorage.setItem('gameType', info.gameType || 2);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var page = info.gameType === 1 ? appUrl('/pages/game/mahjong.html') : appUrl('/pages/game/doudizhu.html');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            window.location.href = page;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function enterTable(tableId) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            var sessionId = localStorage.getItem('sessionId');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            fetch(appUrl('/api/rooms?sessionId=' + encodeURIComponent(sessionId)))
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                .then(function(r) { return r.json(); })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                .then(function(data) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var gameType = 2;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var roomId = 0;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    if (data.code === 0 && data.rooms) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                        for (var i = 0; i < data.rooms.length; i++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                            var room = data.rooms[i];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                            var tables = room.tables || [];
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                            for (var j = 0; j < tables.length; j++) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                                if (String(tables[j].tableId) === String(tableId)) {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                                    gameType = room.gameType;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                                    roomId = room.roomId;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                                }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                            }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    localStorage.setItem('tableId', tableId);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    localStorage.setItem('roomId', roomId);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    localStorage.setItem('gameType', gameType);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    var page = gameType === 1 ? appUrl('/pages/game/mahjong.html') : appUrl('/pages/game/doudizhu.html');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    window.location.href = page;
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                })
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                .catch(function() {
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    localStorage.setItem('tableId', tableId);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    localStorage.setItem('gameType', 2);
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                    window.location.href = appUrl('/pages/game/doudizhu.html');
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-                });
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        }
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-
-ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
-ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        function goHall() {
+            alert('需要管理员账号');
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
             window.location.href = appUrl('/pages/home/room.html');
@@ -1603,22 +835,817 @@ ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
 
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        document.getElementById('loginPass').addEventListener('keypress', function(e) {
+        function switchTab(name) {
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (e.key === 'Enter') doLogin();
+            var tabs = document.querySelectorAll('.tab');
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        });
+            for (var i = 0; i < tabs.length; i++) {
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        document.getElementById('regPass').addEventListener('keypress', function(e) {
+                tabs[i].className = 'tab' + (tabs[i].getAttribute('data-tab') === name ? ' active' : '');
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-            if (e.key === 'Enter') doRegister();
+            }
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
-        });
+            var panels = document.querySelectorAll('.panel');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            for (var j = 0; j < panels.length; j++) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                panels[j].className = 'panel' + (panels[j].id === 'panel-' + name ? ' active' : '');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            if (name === 'users') loadUsers();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            if (name === 'tables') loadTables();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            if (name === 'records') loadReplays();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function setMsg(id, text, ok) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            var el = document.getElementById(id);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            el.textContent = text || '';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            el.className = 'msg' + (ok === true ? ' ok' : ok === false ? ' err' : '');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function createInvite() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            var note = document.getElementById('note').value.trim();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            var maxUses = parseInt(document.getElementById('maxUses').value, 10) || 1;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            var expiresDays = parseInt(document.getElementById('expiresDays').value, 10);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            if (isNaN(expiresDays)) expiresDays = 7;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            setMsg('createMsg', '创建中...');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/invites'), {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                method: 'POST',
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                headers: { 'Content-Type': 'application/json' },
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                body: JSON.stringify({
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    sessionId: sessionId,
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    note: note,
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    maxUses: maxUses,
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    expiresDays: expiresDays
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                if (data.code === 0 && data.invite) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('createMsg', '已创建: ' + data.invite.token, true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('note').value = '';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    loadInvites();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                } else {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('createMsg', data.msg || '创建失败', false);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .catch(function() { setMsg('createMsg', '网络错误', false); });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function loadInvites() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/invites?sessionId=' + encodeURIComponent(sessionId)))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var body = document.getElementById('inviteBody');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (data.code !== 0) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        body.innerHTML = '<tr><td colspan="6">' + (data.msg || '加载失败') + '</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var list = data.invites || [];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (!list.length) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        body.innerHTML = '<tr><td colspan="6">暂无邀请码</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var html = '';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    for (var i = 0; i < list.length; i++) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var it = list[i];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var exp = it.expiresAt ? new Date(it.expiresAt).toLocaleString() : '永久';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var st = it.valid
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            ? '<span class="badge badge-ok">可用</span>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            : '<span class="badge badge-bad">失效</span>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        html += '<tr><td class="token">' + it.token + '</td><td>' + (it.note || '') + '</td>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + '<td>' + it.usedCount + '/' + it.maxUses + '</td><td>' + exp + '</td><td>' + st + '</td>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + '<td class="actions"><button class="btn btn-ghost" onclick="copyInvite(\'' + it.token + '\')">复制链接</button>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + (it.valid ? '<button class="btn btn-danger" onclick="revokeInvite(\'' + it.token + '\')">作废</button>' : '')
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + '</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    body.innerHTML = html;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('listMsg', '共 ' + list.length + ' 条', true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .catch(function() { setMsg('listMsg', '网络错误', false); });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function copyInvite(token) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            var url = location.origin + appUrl('/?invite=' + encodeURIComponent(token));
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                navigator.clipboard.writeText(url).then(function() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('listMsg', '已复制: ' + url, true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            } else {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                prompt('复制链接', url);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function revokeInvite(token) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            if (!confirm('作废邀请码 ' + token + ' ?')) return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/invites/revoke'), {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                method: 'POST',
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                headers: { 'Content-Type': 'application/json' },
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                body: JSON.stringify({ sessionId: sessionId, token: token })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                if (data.code === 0) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('listMsg', '已作废', true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    loadInvites();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                } else {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('listMsg', data.msg || '失败', false);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function loadUsers() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/users?sessionId=' + encodeURIComponent(sessionId)))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var body = document.getElementById('userBody');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (data.code !== 0) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        body.innerHTML = '<tr><td colspan="7">' + (data.msg || '加载失败') + '</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('usersMeta').textContent = '在线 ' + (data.online || 0) + ' 人';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var list = data.users || [];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (!list.length) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        body.innerHTML = '<tr><td colspan="7">暂无玩家</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var html = '';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    for (var i = 0; i < list.length; i++) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var u = list[i];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var online = u.online
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            ? '<span class="badge badge-ok">在线</span>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            : '<span class="badge">离线</span>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var en = u.enabled
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            ? '<span class="badge badge-ok">启用</span>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            : '<span class="badge badge-bad">禁用</span>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var login = u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleString() : '-';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        html += '<tr><td>' + u.id + '</td><td>' + u.username + '</td><td>' + (u.nickname || '') + '</td>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + '<td>' + online + '</td><td>' + en + '</td><td>' + login + '</td><td class="actions">'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + (u.username === 'admin' ? '' :
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                (u.enabled
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                    ? '<button class="btn btn-danger" onclick="setEnabled(' + u.id + ',false)">禁用</button>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                    : '<button class="btn" onclick="setEnabled(' + u.id + ',true)">启用</button>'))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + '</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    body.innerHTML = html;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('usersMsg', '共 ' + list.length + ' 人', true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .catch(function() { setMsg('usersMsg', '网络错误', false); });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function setEnabled(userId, enabled) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/users/enable'), {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                method: 'POST',
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                headers: { 'Content-Type': 'application/json' },
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                body: JSON.stringify({ sessionId: sessionId, userId: userId, enabled: enabled })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                if (data.code === 0) loadUsers();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                else setMsg('usersMsg', data.msg || '失败', false);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function loadTables() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/tables?sessionId=' + encodeURIComponent(sessionId)))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var body = document.getElementById('tableBody');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (data.code !== 0) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        body.innerHTML = '<tr><td colspan="6">' + (data.msg || '加载失败') + '</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('tablesMeta').textContent = '在线用户 ' + (data.onlineUsers || 0);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var rooms = data.rooms || [];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var rows = [];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    for (var i = 0; i < rooms.length; i++) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var room = rooms[i];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var tables = room.tables || [];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        for (var j = 0; j < tables.length; j++) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            var t = tables[j];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            var gt = t.gameType === 1 ? '麻将' : (t.gameType === 2 ? '斗地主' : t.gameType);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            rows.push('<tr><td>' + t.tableId + '</td><td>' + t.roomId + '</td><td>' + gt
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                + '</td><td>' + t.state + '</td><td>' + t.playerCount + '</td><td>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                                + t.ownerId + '</td></tr>');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    body.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="6">暂无桌子</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('tablesMsg', '共 ' + rows.length + ' 桌', true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .catch(function() { setMsg('tablesMsg', '网络错误', false); });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        var replayPage = 1;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function loadReplays(page) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            replayPage = Math.max(page || 1, 1);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/replays?sessionId=' + encodeURIComponent(sessionId) + '&page=' + replayPage + '&size=20'))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var body = document.getElementById('replayBody');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (data.code !== 0) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        body.innerHTML = '<tr><td colspan="6">' + (data.msg || '加载失败') + '</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var list = data.replays || [];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (!list.length) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        body.innerHTML = '<tr><td colspan="6">暂无回放（对局结算后才会生成）</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        setMsg('replayMsg', '0 条', true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        loadRecords();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var html = '';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    for (var i = 0; i < list.length; i++) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        var r = list[i];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        html += '<tr><td>' + r.date + '</td><td class="token">' + r.name + '</td><td>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + (r.tableId || '-') + '</td><td>' + (r.round || '-') + '</td><td>'
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + (r.gameType || '-') + '</td><td><button class="btn btn-ghost" onclick="openReplay(\''
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + r.date + '\',\'' + r.name + '\')">查看</button></td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    body.innerHTML = html;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('replayPageLabel').textContent = '第 ' + data.page + ' 页 / 共 ' + data.total + ' 条';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    setMsg('replayMsg', '本页 ' + list.length + ' 条', true);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    loadRecords();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .catch(function() { setMsg('replayMsg', '网络错误', false); });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function openReplayCode() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            var code = document.getElementById('replayCode').value.trim();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            if (!code) return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/replays/code?sessionId=' + encodeURIComponent(sessionId) + '&code=' + encodeURIComponent(code)))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(r) { return r.json(); }).then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (data.code !== 0) { setMsg('replayMsg', data.msg || '读取失败', false); return; }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('replayDetailCard').style.display = 'block';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('replayDetailTitle').textContent = '回放 ' + data.date + '/' + data.name;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('replayContent').textContent = data.content || '';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function loadRecords() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/records?sessionId=' + encodeURIComponent(sessionId) + '&page=1&size=20'))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(r) { return r.json(); }).then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    var body = document.getElementById('recordBody'), rows = data.records || [];
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    body.innerHTML = rows.length ? rows.map(function(r) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return '<tr><td>' + r.tableId + '</td><td>' + r.round + '</td><td>' + r.userId
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                            + '</td><td>' + r.score + '</td><td>' + r.totalScore + '</td><td>' + r.winType + '</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }).join('') : '<tr><td colspan="6">暂无落库战绩</td></tr>';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function openReplay(date, name) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            fetch(appUrl('/api/admin/replays/detail?sessionId=' + encodeURIComponent(sessionId)
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                + '&date=' + encodeURIComponent(date) + '&name=' + encodeURIComponent(name)))
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(r) { return r.json(); })
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                .then(function(data) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    if (data.code !== 0) {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        setMsg('replayMsg', data.msg || '读取失败', false);
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        return;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('replayDetailCard').style.display = 'block';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('replayDetailTitle').textContent =
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                        '回放 ' + data.date + '/' + data.name;
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                    document.getElementById('replayContent').textContent = data.content || '';
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+                });
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        function doLogout() {
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            localStorage.clear();
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+            window.location.href = appUrl('/');
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        }
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+
+ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
+ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
+        loadInvites();
 ppUrl('/admin.html')#appUrl('/pages/admin/admin.html')#g
 ppUrl('/replays.html')#appUrl('/pages/admin/replays.html')#g
     </script>

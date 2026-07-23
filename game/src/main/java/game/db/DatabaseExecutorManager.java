@@ -13,6 +13,10 @@ public class DatabaseExecutorManager {
                 new Thread(runnable, "Game-Database"));
     }
 
+    public DatabaseExecutorManager(ExecutorService executor) {
+        this.executor = executor;
+    }
+
     public CompletableFuture<Void> submit(Runnable task) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         executor.execute(() -> runTask(task, future));

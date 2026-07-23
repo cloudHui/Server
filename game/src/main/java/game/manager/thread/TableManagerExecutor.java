@@ -7,8 +7,15 @@ import java.util.concurrent.Executors;
 
 /** 桌子生命周期和桌子索引使用的独立单线程执行器。 */
 public class TableManagerExecutor {
-    private final ExecutorService executor = Executors.newSingleThreadExecutor(r ->
-            new Thread(r, "TableManager"));
+    private final ExecutorService executor;
+
+    public TableManagerExecutor() {
+        this(Executors.newSingleThreadExecutor(r -> new Thread(r, "TableManager")));
+    }
+
+    public TableManagerExecutor(ExecutorService executor) {
+        this.executor = executor;
+    }
 
     public <T> CompletableFuture<T> submit(Callable<T> task) {
         CompletableFuture<T> future = new CompletableFuture<>();

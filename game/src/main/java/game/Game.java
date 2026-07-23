@@ -28,6 +28,7 @@ import utils.metrics.MetricsHttpServer;
 import game.db.ScoreRepository;
 import game.db.DatabaseExecutorManager;
 import game.manager.thread.TableExecutorManager;
+import game.manager.thread.GameThreadPoolManager;
 
 /**
  * @author cloud
@@ -52,6 +53,7 @@ public class Game {
 	private TableExecutorManager tableExecutorManager;
 	private DatabaseExecutorManager databaseExecutorManager;
 	private MetricsHttpServer metricsHttpServer;
+	private GameThreadPoolManager threadPoolManager;
 
 	private Game() {
 		// 私有构造函数,单例模式
@@ -105,11 +107,12 @@ public class Game {
 		return databaseExecutorManager;
 	}
 
+	public GameThreadPoolManager getThreadPoolManager() { return threadPoolManager; }
+
 	/** 统一释放桌子、定时器和数据库线程池，避免服务重启遗留非守护线程。 */
 	public void shutdown() {
 		if (tableManager != null) tableManager.shutdown();
-		if (tableExecutorManager != null) tableExecutorManager.shutdown();
-		if (databaseExecutorManager != null) databaseExecutorManager.shutdown();
+		if (threadPoolManager != null) threadPoolManager.shutdown();
 	}
 
 	public ModelProto.ServerInfo getServerInfo() {
@@ -223,11 +226,12 @@ public class Game {
 		int poolSize = config.getInt("game.threadPoolSize", Math.max(32, TimeUtils.PROCESS_NUMBER));
 		int queueCap = config.getInt("game.queueCapacity", 100000);
 
-		executorPool = new ExecutorPool("Game", poolSize, queueCap);
+		threadPoolManager = new GameThreadPoolManager(poolSize, queueCap,
+				config.getInt("game.databasePoolSize", 2));
+		executorPool = threadPoolManager.playerPool();
 		timer = new Timer().setRunners(executorPool);
-		// 桌线程与 Game 业务池同规格：max(32, 核*2)，按 tableId 亲和串行
-		tableExecutorManager = new TableExecutorManager(poolSize, queueCap);
-		databaseExecutorManager = new DatabaseExecutorManager(config.getInt("game.databasePoolSize", 2));
+		tableExecutorManager = new TableExecutorManager(threadPoolManager.tablePool(), queueCap);
+		databaseExecutorManager = new DatabaseExecutorManager(threadPoolManager.databasePool());
 		serverManager = new ServerManager(timer,
 				config.getInt("plant", 0) != 0);
 		logger.info("服务器组件初始化完成, 业务/桌线程数:{}, 队列容量:{}", poolSize, queueCap);

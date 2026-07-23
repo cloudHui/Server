@@ -99,7 +99,8 @@ public class ExcelToJavaGenerator {
 		String type = getTypeName(propertyType);
 		String desc = title.getDes();
 		javaCode.append("\n");
-		javaCode.append("    //").append(desc).append("\n");
+		javaCode.append("    /** Excel列: ").append(propertyName)
+				.append("; ").append(desc == null ? "" : desc).append(" */\n");
 		javaCode.append("    private ").append(type).append(" ").append(propertyName).append(";\n");
 	}
 
