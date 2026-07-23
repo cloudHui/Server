@@ -2,6 +2,8 @@ package game.manager.table.banner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 斗地主叫分与抢地主阶段状态管理
@@ -23,6 +25,8 @@ public class Banner {
 	private int candidateSeat = -1;
 	/** 叫分阶段已响应人数 */
 	private int bidResponses;
+	/** 本轮已经被叫出的分值，叫分不可重复。 */
+	private final Set<Integer> calledScores = new HashSet<>();
 	/** 参与抢地主的农民座位列表（按顺序） */
 	private final List<Integer> robFarmerSeats = new ArrayList<>();
 	/** 抢地主轮次索引 */
@@ -93,6 +97,18 @@ public class Banner {
 
 	public void addBidResponse() {
 		this.bidResponses++;
+	}
+
+	public boolean hasCalledScore(int score) {
+		return calledScores.contains(score);
+	}
+
+	public void addCalledScore(int score) {
+		if (score > 0) calledScores.add(score);
+	}
+
+	public boolean isScoreAvailable(int score) {
+		return score > maxCallScore && !calledScores.contains(score);
 	}
 
 	public List<Integer> getRobFarmerSeats() {
@@ -168,6 +184,7 @@ public class Banner {
 		maxCallScore = 0;
 		candidateSeat = -1;
 		bidResponses = 0;
+		calledScores.clear();
 		robFarmerSeats.clear();
 		robTurnIndex = 0;
 		robResponses = 0;

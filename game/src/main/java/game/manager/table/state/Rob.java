@@ -39,23 +39,26 @@ public class Rob extends AbstractTableHandle {
 			table.getOp().setCurrOpSeat(first);
 
 			GameProto.OpInfo notCall = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.NOT_CALL).build();
-			GameProto.OpInfo s1 = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL_SCORE_1).build();
-			GameProto.OpInfo s2 = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL_SCORE_2).build();
-			GameProto.OpInfo s3 = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL_SCORE_3).build();
+			if (table.getTableModel().getGameSubType() == 1) {
+				GameProto.OpInfo call = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL).build();
+				table.getOp().addPosOpInfo(first, call);
+				table.sendTableMessage(GameProto.NotOperation.newBuilder().setWait(TableState.IDLE_ROB.getOverTime()).setOpSeat(first).addChoice(notCall).addChoice(call).build(), GMsg.NOT_OP);
+				ddzTable.getBanner().setRobBroadcastDone(true); table.upNextState(); return false;
+			}
 			table.getOp().addPosOpInfo(first, notCall);
-			table.getOp().addPosOpInfo(first, s1);
-			table.getOp().addPosOpInfo(first, s2);
-			table.getOp().addPosOpInfo(first, s3);
-
-			GameProto.NotOperation not = GameProto.NotOperation.newBuilder()
+			GameProto.NotOperation.Builder notBuilder = GameProto.NotOperation.newBuilder()
 					.setWait(TableState.IDLE_ROB.getOverTime())
-					.setOpSeat(first)
-					.addChoice(notCall)
-					.addChoice(s1)
-					.addChoice(s2)
-					.addChoice(s3)
-					.build();
-			table.sendTableMessage(not, GMsg.NOT_OP);
+					.setOpSeat(first).addChoice(notCall);
+			for (int score = 1; score <= 3; score++) {
+				if (ddzTable.getBanner().isScoreAvailable(score)) {
+					int choice = score == 1 ? ConstProto.Operation.CALL_SCORE_1_VALUE
+							: score == 2 ? ConstProto.Operation.CALL_SCORE_2_VALUE : ConstProto.Operation.CALL_SCORE_3_VALUE;
+					GameProto.OpInfo call = GameProto.OpInfo.newBuilder().setChoiceValue(choice).build();
+					table.getOp().addPosOpInfo(first, call);
+					notBuilder.addChoice(call);
+				}
+			}
+			table.sendTableMessage(notBuilder.build(), GMsg.NOT_OP);
 		} else {
 			int seat = ddzTable.getBanner().getCurrentRobSeat();
 			if (seat < 0) {

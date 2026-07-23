@@ -90,10 +90,31 @@ public final class DdzBidService {
 	 */
 	private static int applyCall(DdzTable table, int userId, GameProto.OpInfo opInfo, TableUser user, Banner banner) {
 		int cv = opInfo.getChoiceValue();
+		if (table.getTableModel().getGameSubType() == 1) {
+			if (cv != ConstProto.Operation.CALL_VALUE && cv != ConstProto.Operation.NOT_CALL_VALUE) return ConstProto.Result.OP_CURR_ERROR_VALUE;
+			if (cv == ConstProto.Operation.NOT_CALL_VALUE) {
+				broadcastAck(table, userId, GameProto.OpInfo.newBuilder().setChoiceValue(cv).build());
+				banner.setRobPhase(false);
+				int next = (user.getSeated() + 1) % table.getTableModel().getSeatNum();
+				banner.setFirstRandomRobSeat(next); table.getOp().setCurrOpSeat(next); banner.setRobBroadcastDone(false);
+				table.upNextStateWithTime(TableState.ROB, System.currentTimeMillis());
+				return ConstProto.Result.SUCCESS_VALUE;
+			}
+			banner.setCandidateSeat(user.getSeated()); banner.setMaxCallScore(1);
+			banner.setRobPhase(true); banner.prepareRobFarmerOrder(user.getSeated(), table.getTableModel().getSeatNum());
+			banner.setRobBroadcastDone(false); table.getOp().setCurrOpSeat(banner.getCurrentRobSeat());
+			broadcastAck(table, userId, GameProto.OpInfo.newBuilder().setChoiceValue(cv).build());
+			table.upNextStateWithTime(TableState.ROB, System.currentTimeMillis());
+			return ConstProto.Result.SUCCESS_VALUE;
+		}
 		if (cv != ConstProto.Operation.NOT_CALL_VALUE && !DdzBidOpcodes.isCallScore(cv)) {
 			return ConstProto.Result.OP_CURR_ERROR_VALUE;
 		}
 		int score = cv == ConstProto.Operation.NOT_CALL_VALUE ? 0 : DdzBidOpcodes.callScoreFromChoiceValue(cv);
+		if (score > 0 && !banner.isScoreAvailable(score)) {
+			return ConstProto.Result.OP_CURR_ERROR_VALUE;
+		}
+		banner.addCalledScore(score);
 
 		ReplayRecorder replay = table.getReplayRecorder();
 		if (replay instanceof DdzReplayRecorder) {
@@ -107,11 +128,16 @@ public final class DdzBidService {
 		if (score > banner.getMaxCallScore()) {
 			banner.setMaxCallScore(score);
 			banner.setCandidateSeat(user.getSeated());
-		} else if (score > 0 && score == banner.getMaxCallScore()) {
-			banner.setCandidateSeat(user.getSeated());
 		}
 		broadcastAck(table, userId, GameProto.OpInfo.newBuilder().setChoiceValue(cv).build());
 		banner.addBidResponse();
+		// 叫到最高分直接定地主，不再进入抢地主阶段。
+		if (score == 3) {
+			banner.setCandidateSeat(user.getSeated());
+			banner.setMaxCallScore(3);
+			finishBidding(table, banner);
+			return ConstProto.Result.SUCCESS_VALUE;
+		}
 		int seatNum = table.getTableModel().getSeatNum();
 		if (banner.getBidResponses() >= seatNum) {
 			completeCallPhase(table, banner, seatNum);
@@ -172,6 +198,8 @@ public final class DdzBidService {
 
 		if (cv == ConstProto.Operation.ROB_VALUE) {
 			banner.setRobMultiplierAccum(banner.getRobMultiplierAccum() * 2);
+			// 抢/再抢成功者成为当前地主候选人，后续无人再抢时由其当选。
+			banner.setCandidateSeat(user.getSeated());
 		}
 		broadcastAck(table, userId, GameProto.OpInfo.newBuilder().setChoiceValue(cv).build());
 		banner.addRobResponse();

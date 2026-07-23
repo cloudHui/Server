@@ -13,6 +13,7 @@
 
     /** 协议暂未携带完整 TableModel，列表先展示固定模板的核心规则，避免重复请求后台配置。 */
     function ruleTip(room) {
+        if (room.roomId === 9003) return '电脑快速房间 · 叫地主后逆时针抢/再抢 · 抢一次倍数翻倍';
         if (room.roomId >= 10000) return '自定义规则 · 以创建房间时的配置为准';
         return gameType === 2
             ? '经典斗地主 · 3人 · 17张手牌 · 3张底牌 · 轮流叫/抢地主'
@@ -38,7 +39,13 @@
         list.innerHTML = '';
         rooms.forEach(function (room) {
             var card = document.createElement('article'); card.className = 'room-card';
-            var title = document.createElement('h2'); title.textContent = gameName + ' · 模板 #' + room.roomId; card.appendChild(title);
+            var title = document.createElement('h2');
+            title.textContent = gameName + ' · 模板 #' + room.roomId;
+            if (room.roomId === 9001 || room.roomId === 9002 || room.roomId === 9003) {
+                var fast = document.createElement('span'); fast.className = 'quick-room-badge'; fast.textContent = '快速房间';
+                title.appendChild(fast);
+            }
+            card.appendChild(title);
             var desc = document.createElement('p'); desc.textContent = ruleTip(room); card.appendChild(desc);
             var tableList = document.createElement('div'); tableList.className = 'table-list';
             (room.tables || []).forEach(function (table) {

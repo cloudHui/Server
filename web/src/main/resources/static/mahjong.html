@@ -534,7 +534,11 @@
                     }
                 }
             }
-            gameState.myTiles.sort(function(a, b) { return a - b; });
+            // 同色归组，组内从大到小；万、条、筒、风、箭依次排列。
+            gameState.myTiles.sort(function(a, b) {
+                var sa = Math.floor(a / 100), sb = Math.floor(b / 100);
+                return sa - sb || (b % 100) - (a % 100);
+            });
             gameState.selectedTile = -1;
             renderMyTiles();
             updateTileCount();
