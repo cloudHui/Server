@@ -65,6 +65,10 @@ public class TableModel implements java.io.Serializable {
 
     /** Excel列: autoPlay; 超时自动(0关1开) */
     private int autoPlay;
+
+    /** 等待超时配置：秒数及超时动作（0=解散，1=填充机器人）。 */
+    private int waitTimeoutSec;
+    private int waitTimeoutAction;
  
     // Getters and Setters
     public int getId() {
@@ -233,6 +237,22 @@ public class TableModel implements java.io.Serializable {
 
     public void setAutoPlay(int autoPlay) {
         this.autoPlay = autoPlay;
+    }
+
+    public int getWaitTimeoutSec() {
+        return waitTimeoutSec;
+    }
+
+    public void setWaitTimeoutSec(int waitTimeoutSec) {
+        this.waitTimeoutSec = waitTimeoutSec;
+    }
+
+    public int getWaitTimeoutAction() {
+        return waitTimeoutAction;
+    }
+
+    public void setWaitTimeoutAction(int waitTimeoutAction) {
+        this.waitTimeoutAction = waitTimeoutAction;
     }
 
  
