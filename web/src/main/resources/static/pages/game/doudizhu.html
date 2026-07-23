@@ -550,6 +550,11 @@
 
         function handleNotState(data) {
             // 桌子状态通知
+            if (data && data.state === 9) {
+                if (ws) ws.onclose = null;
+                window.location.href = appUrl('/pages/home/room.html');
+                return;
+            }
             if (data.state === 1) {
                 document.getElementById('tableState').textContent = '游戏进行中';
             } else {
