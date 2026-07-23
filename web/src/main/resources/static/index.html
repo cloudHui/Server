@@ -211,7 +211,18 @@
         .resume-go { background: #1f5c36; color: #fff; }
         .resume-clear { background: #fff; border: 1px solid #cfd7cb !important; color: #445; }
     </style>
-    <script src="shared/app-base.js"></script>
+    <!--
+        该页面可能经过 HTTPS 反向代理访问。先提供最小的同源路径函数，
+        这样即使旧缓存/代理把 app-base.js 误解析成 HTTP，登录流程也不会失效。
+    -->
+    <script>
+        window.APP_BASE = '/Baa3SVlpDCyPh9T9v0';
+        window.appUrl = window.appUrl || function (path) {
+            if (!path) return window.APP_BASE + '/';
+            return window.APP_BASE + (path.charAt(0) === '/' ? path : '/' + path);
+        };
+    </script>
+    <script src="./shared/app-base.js"></script>
 </head>
 <body>
     <div class="shell">
