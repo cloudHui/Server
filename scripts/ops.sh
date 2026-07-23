@@ -244,14 +244,29 @@ cmd_build() {
   cd "$ROOT"
   echo "打包中（跳过 mcp/sp，跳过测试）..."
   mvn -q install -DskipTests -pl '!mcp,!sp'
-  # 同步 proto（SMsg 等）；tool/utils 含序列化模型，勿盲拷以免与 .dat 不兼容
-  if [[ -f "$ROOT/proto/target/proto-1.0-SNAPSHOT.jar" ]]; then
+  # Maven 的 copy-dependencies 会排除 com.cloud 内部模块；这里必须显式同步，
+  # 否则业务 JAR 更新后仍可能加载旧的 tool/utils/proto JAR。
+  local module jar svc lib
+  for module in utils proto tool; do
+    jar="$ROOT/$module/target/$module-1.0-SNAPSHOT.jar"
+    if [[ ! -f "$jar" ]]; then
+      echo "缺少内部模块产物: $jar" >&2
+      return 1
+    fi
     for svc in center gate lobby game; do
-      if [[ -d "$BUILD/${svc}/lib" ]]; then
-        cp -f "$ROOT/proto/target/proto-1.0-SNAPSHOT.jar" "$BUILD/${svc}/lib/proto-1.0-SNAPSHOT.jar"
-      fi
+      lib="$BUILD/$svc/lib"
+      mkdir -p "$lib"
+      cp -f "$jar" "$lib/$module-1.0-SNAPSHOT.jar"
     done
+  done
+
+  # 校验改包后的运行时类确实来自最新 tool JAR。
+  if ! jar tf "$BUILD/center/lib/tool-1.0-SNAPSHOT.jar" | grep -q '^tools/ServerManager.class$'; then
+    echo "tool JAR 校验失败：未找到 tools/ServerManager.class" >&2
+    return 1
   fi
+  echo "内部模块依赖已同步并校验: utils / proto / tool"
+
   # 刷新 tablemodel 配置（与当前 tool 类一致）
   if [[ -f "$ROOT/tool/target/tool-1.0-SNAPSHOT.jar" ]]; then
     (cd "$ROOT" && java -cp "tool/target/tool-1.0-SNAPSHOT.jar:$BUILD/game/lib/*" tool.ConfigPacker >/dev/null 2>&1 || true)

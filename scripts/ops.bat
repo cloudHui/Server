@@ -113,15 +113,25 @@ if not exist "%BUILD%\lobby\Lobby.jar" (echo 缺少 build\lobby\Lobby.jar& exit 
 if not exist "%BUILD%\game\Game.jar" (echo 缺少 build\game\Game.jar& exit /b 1)
 if not exist "%BUILD%\web\Web.jar" (echo 缺少 build\web\Web.jar& exit /b 1)
 call :sync_proto
+call :sync_internal_modules || exit /b 1
 echo [打包] 完成，产物位于 %BUILD%。
 exit /b 0
 
 :sync_proto
-if not exist "%ROOT%\proto\target\proto-1.0-SNAPSHOT.jar" exit /b 0
-for %%S in (center gate lobby game) do (
-  if not exist "%BUILD%\%%S\lib" mkdir "%BUILD%\%%S\lib"
-  copy /y "%ROOT%\proto\target\proto-1.0-SNAPSHOT.jar" "%BUILD%\%%S\lib\proto-1.0-SNAPSHOT.jar" >nul
+exit /b 0
+
+:sync_internal_modules
+for %%M in (utils proto tool) do (
+  if not exist "%ROOT%\%%M\target\%%M-1.0-SNAPSHOT.jar" (
+    echo 缺少内部模块产物：%%M-1.0-SNAPSHOT.jar
+    exit /b 1
+  )
+  for %%S in (center gate lobby game) do (
+    if not exist "%BUILD%\%%S\lib" mkdir "%BUILD%\%%S\lib"
+    copy /y "%ROOT%\%%M\target\%%M-1.0-SNAPSHOT.jar" "%BUILD%\%%S\lib\%%M-1.0-SNAPSHOT.jar" >nul
+  )
 )
+echo [打包] 已同步内部模块依赖：utils / proto / tool
 exit /b 0
 
 :choose_access_mode
