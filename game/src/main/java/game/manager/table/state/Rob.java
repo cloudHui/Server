@@ -30,31 +30,27 @@ public class Rob extends AbstractTableHandle {
 		int seats = table.getTableModel().getSeatNum();
 
 		if (!ddzTable.getBanner().isRobPhase()) {
-			int first = ddzTable.getBanner().getFirstRandomRobSeat();
-			if (first < 0) {
-				first = ThreadLocalRandom.current().nextInt(seats);
-				ddzTable.getBanner().setFirstRandomRobSeat(first);
-			}
+			// 叫分阶段：仅首次选定首叫座位；后续轮次由 DdzBidService.moveToNextOp 推进，不得重置回首叫位。
+			int seat = resolveCallOpSeat(table, ddzTable, seats);
 			table.getOp().clearChoiceMap();
-			table.getOp().setCurrOpSeat(first);
 
 			GameProto.OpInfo notCall = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.NOT_CALL).build();
 			if (table.getTableModel().getGameSubType() == 1) {
 				GameProto.OpInfo call = GameProto.OpInfo.newBuilder().setChoice(ConstProto.Operation.CALL).build();
-				table.getOp().addPosOpInfo(first, call);
-				table.sendTableMessage(GameProto.NotOperation.newBuilder().setWait(TableState.IDLE_ROB.getOverTime()).setOpSeat(first).addChoice(notCall).addChoice(call).build(), GMsg.NOT_OP);
+				table.getOp().addPosOpInfo(seat, call);
+				table.sendTableMessage(GameProto.NotOperation.newBuilder().setWait(TableState.IDLE_ROB.getOverTime()).setOpSeat(seat).addChoice(notCall).addChoice(call).build(), GMsg.NOT_OP);
 				ddzTable.getBanner().setRobBroadcastDone(true); table.upNextState(); return false;
 			}
-			table.getOp().addPosOpInfo(first, notCall);
+			table.getOp().addPosOpInfo(seat, notCall);
 			GameProto.NotOperation.Builder notBuilder = GameProto.NotOperation.newBuilder()
 					.setWait(TableState.IDLE_ROB.getOverTime())
-					.setOpSeat(first).addChoice(notCall);
+					.setOpSeat(seat).addChoice(notCall);
 			for (int score = 1; score <= 3; score++) {
 				if (ddzTable.getBanner().isScoreAvailable(score)) {
 					int choice = score == 1 ? ConstProto.Operation.CALL_SCORE_1_VALUE
 							: score == 2 ? ConstProto.Operation.CALL_SCORE_2_VALUE : ConstProto.Operation.CALL_SCORE_3_VALUE;
 					GameProto.OpInfo call = GameProto.OpInfo.newBuilder().setChoiceValue(choice).build();
-					table.getOp().addPosOpInfo(first, call);
+					table.getOp().addPosOpInfo(seat, call);
 					notBuilder.addChoice(call);
 				}
 			}
@@ -84,5 +80,24 @@ public class Rob extends AbstractTableHandle {
 		ddzTable.getBanner().setRobBroadcastDone(true);
 		table.upNextState();
 		return false;
+	}
+
+	/**
+	 * 解析叫分阶段当前操作座位：首次随机首叫，之后沿用已推进的 currOpSeat。
+	 */
+	private static int resolveCallOpSeat(Table table, DdzTable ddzTable, int seats) {
+		int first = ddzTable.getBanner().getFirstRandomRobSeat();
+		if (first < 0) {
+			first = ThreadLocalRandom.current().nextInt(seats);
+			ddzTable.getBanner().setFirstRandomRobSeat(first);
+			table.getOp().setCurrOpSeat(first);
+			return first;
+		}
+		int seat = table.getOp().getCurrOpSeat();
+		if (seat < 0) {
+			seat = first;
+			table.getOp().setCurrOpSeat(seat);
+		}
+		return seat;
 	}
 }
