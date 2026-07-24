@@ -1,5 +1,6 @@
 package tool.config;
 
+import model.tablemodel.RobotRoomTemplates;
 import model.tablemodel.TableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,14 +91,17 @@ public class TableConfigManager {
 	}
 
 	/**
-	 * 配置变更回调
+	 * 配置变更回调。
+	 * Excel 热更会清空内存表，必须保留自定义房间（>=10000）和内置机器人模板（9001-9003），
+	 * 否则大厅斗地主/麻将页只能看到普通桌，快速机器人房间卡片会消失。
 	 */
 	private void onConfigChange(List<TableModel> newConfigs) {
 		logger.info("检测到配置变更，重新加载房间模板...");
 		Map<Integer, TableModel> runtimeKeep = new ConcurrentHashMap<>();
 		for (Map.Entry<Integer, TableModel> e : tableModelMap.entrySet()) {
-			if (e.getKey() >= 10000) {
-				runtimeKeep.put(e.getKey(), e.getValue());
+			int id = e.getKey();
+			if (id >= 10000 || RobotRoomTemplates.isRobotRoom(id)) {
+				runtimeKeep.put(id, e.getValue());
 			}
 		}
 		tableModelMap.clear();
@@ -105,6 +109,8 @@ public class TableConfigManager {
 			tableModelMap.put(model.getId(), model);
 		}
 		tableModelMap.putAll(runtimeKeep);
+		// 再强制注册一遍，避免热更瞬间 map 中尚无机器人模板时被漏掉。
+		RobotRoomTemplates.register(this::putRuntimeModel);
 		logger.info("房间模板更新完成, 数量: {}", tableModelMap.size());
 
 		if (onChangeCallback != null) {

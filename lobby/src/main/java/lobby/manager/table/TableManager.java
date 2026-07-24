@@ -50,7 +50,10 @@ public class TableManager {
 		if (configManager.loadFail()) {
 			throw new RuntimeException("加载配置文件失败");
 		}
-		// init 会重新读取配置文件，必须在最后一次 load 后再次注册内置机器人模板。
+		// loadFail 会清空内存表，需重新装入库中自定义房间，再注册内置机器人模板。
+		for (TableModel model : customRoomRepository.listEnabled()) {
+			configManager.putRuntimeModel(model);
+		}
 		RobotRoomTemplates.register(configManager::putRuntimeModel);
 		roomTables.clear();
 		for (TableModel model : configManager.getAllTableModels().values()) {
