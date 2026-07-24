@@ -230,7 +230,7 @@ public class Game {
 				config.getInt("game.databasePoolSize", 2));
 		executorPool = threadPoolManager.playerPool();
 		timer = new Timer().setRunners(executorPool);
-		tableExecutorManager = new TableExecutorManager(threadPoolManager.tablePool(), queueCap);
+		tableExecutorManager = new TableExecutorManager(threadPoolManager.tablePool());
 		databaseExecutorManager = new DatabaseExecutorManager(threadPoolManager.databasePool());
 		serverManager = new ServerManager(timer,
 				config.getInt("plant", 0) != 0);

@@ -130,9 +130,11 @@ public class TableManager {
         return managerExecutor.submit(() -> createTable(roomId, role));
     }
 
-    /** 在桌子管理线程删除桌子，桌子线程不直接修改全局索引。 */
-    public CompletableFuture<Void> removeTableAsync(long tableId) {
-        return managerExecutor.submit(() -> {
+    /**
+     * 在桌子管理线程删除桌子，桌子线程不直接修改全局索引。
+     */
+    public void removeTableAsync(long tableId) {
+        managerExecutor.submit(() -> {
             removeTable(tableId);
             return null;
         });

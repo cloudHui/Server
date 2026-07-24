@@ -34,7 +34,7 @@ public class TableExecutorManager {
         });
     }
 
-    public TableExecutorManager(ExecutorPool workers, int queueCapacity) {
+    public TableExecutorManager(ExecutorPool workers) {
         this.workers = workers;
         this.scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
             Thread t = new Thread(r, "TableScheduler");

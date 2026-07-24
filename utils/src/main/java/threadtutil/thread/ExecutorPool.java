@@ -122,7 +122,7 @@ public class ExecutorPool {
                     }
                     // 获取处理权限并执行任务
                     else if (this.taskLists[idx].getProcessingAuthority(threadId)) {
-                        processTaskList(idx, threadId);
+                        processTaskList(idx);
                         this.taskLists[idx].releaseProcessingAuthority(threadId);
                     }
                 }
@@ -174,9 +174,8 @@ public class ExecutorPool {
      * 处理指定任务列表中的所有任务
      *
      * @param idx      任务列表索引
-     * @param threadId 当前线程ID
      */
-    private void processTaskList(int idx, long threadId) {
+    private void processTaskList(int idx) {
         TaskNode task;
         while ((task = (TaskNode) this.taskLists[idx].pop()) != null) {
             this.taskLists[idx].updateTime();
@@ -185,12 +184,12 @@ public class ExecutorPool {
                 task.run();
                 task.completableFuture.complete(task.t);
             } catch (Throwable e) {
-                LOGGER.error("RUN1:{}", task.toString(), e);
+                LOGGER.error("RUN1:{}", task, e);
 
                 try {
                     task.completableFuture.completeExceptionally(e);
                 } catch (Throwable e2) {
-                    LOGGER.error("RUN2:{}", task.toString(), e2);
+                    LOGGER.error("RUN2:{}", task, e2);
                 }
             }
         }
