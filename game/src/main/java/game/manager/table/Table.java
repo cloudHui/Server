@@ -296,13 +296,13 @@ public abstract class Table {
 
     /** 将桌子内状态任务投递到桌串行队列（物理线程可与其他桌共享）。 */
     public CompletableFuture<Void> execute(Runnable task) {
-        return Game.getInstance().getTableExecutorManager().submit(tableId, task);
+        return Game.getInstance().getThreadPoolManager().submitTable(tableId, task);
     }
 
     public void start() {
         try {
             if (loopFuture != null && !loopFuture.isCancelled()) return;
-            loopFuture = Game.getInstance().getTableExecutorManager().schedule(
+            loopFuture = Game.getInstance().getThreadPoolManager().scheduleTable(
                     tableId, () -> tableLoop(this), 1000, IDLE_LOOP_INTERVAL);
             currentLoopInterval = IDLE_LOOP_INTERVAL;
             logger.info("启动桌子逻辑循环, tableId: {}", tableId);
@@ -317,7 +317,7 @@ public abstract class Table {
     public void stop() {
         try {
             if (loopFuture != null) {
-                Game.getInstance().getTableExecutorManager().cancel(loopFuture);
+                Game.getInstance().getThreadPoolManager().cancelTableSchedule(loopFuture);
                 loopFuture = null;
                 logger.info("停止桌子逻辑循环, tableId: {}", tableId);
             }
@@ -329,8 +329,10 @@ public abstract class Table {
     public void setLoopInterval(long intervalMs) {
         if (currentLoopInterval == intervalMs) return;
         try {
-            if (loopFuture != null) Game.getInstance().getTableExecutorManager().cancel(loopFuture);
-            loopFuture = Game.getInstance().getTableExecutorManager().schedule(
+            if (loopFuture != null) {
+                Game.getInstance().getThreadPoolManager().cancelTableSchedule(loopFuture);
+            }
+            loopFuture = Game.getInstance().getThreadPoolManager().scheduleTable(
                     tableId, () -> tableLoop(this), 0, intervalMs);
             currentLoopInterval = intervalMs;
         } catch (Exception e) {

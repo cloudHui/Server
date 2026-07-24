@@ -135,7 +135,8 @@ public abstract class AbstractTimer<T> implements Runnable {
     }
 
     /**
-     * 退出定时器，停止当前循环
+     * 退出定时器，停止当前循环。
+     * 调用方若线程正阻塞在 waitSignal，需额外 notifySignal。
      */
     public void exit() {
         ++loops;

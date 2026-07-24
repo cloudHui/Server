@@ -1,31 +1,37 @@
 package threadtutil.utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TimeUtils {
-	public final static int SECOND = 1;
-	public final static int MINUTE = 2;
-	public final static int HOUR = 3;
-	public final static int DATE = 4;
-	public final static int WEEK = 5;
-	public final static int MONTH = 6;
-	public final static int YEAR = 7;
+/**
+ * 时间工具。格式化使用线程安全的 DateTimeFormatter，避免 SimpleDateFormat 的同步与重复创建开销。
+ */
+public final class TimeUtils {
+	public static final int SECOND = 1;
+	public static final int MINUTE = 2;
+	public static final int HOUR = 3;
+	public static final int DATE = 4;
+	public static final int WEEK = 5;
+	public static final int MONTH = 6;
+	public static final int YEAR = 7;
 
-	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-	public static int PROCESS_NUMBER = Runtime.getRuntime().availableProcessors() * 2;
+	private static final DateTimeFormatter DATE_TIME =
+			DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	private static final ZoneId ZONE = ZoneId.systemDefault();
+	private static final Date EPOCH = Date.from(Instant.EPOCH);
 
-	public TimeUtils() {
+	/** 默认线程数建议值：CPU 核数 * 2。 */
+	public static int PROCESS_NUMBER = Math.max(2, Runtime.getRuntime().availableProcessors() * 2);
+
+	private TimeUtils() {
 	}
 
 	public static Date defaultTime() {
-		try {
-			return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse("1970-01-01 00:00:00");
-		} catch (ParseException var1) {
-			return null;
-		}
+		return EPOCH;
 	}
 
 	public static Date now() {
@@ -45,11 +51,11 @@ public class TimeUtils {
 	}
 
 	public static String getDate(Date date) {
-		return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(date);
+		return LocalDateTime.ofInstant(date.toInstant(), ZONE).format(DATE_TIME);
 	}
 
 	public static String getStrDate(long mills) {
-		return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date(mills));
+		return LocalDateTime.ofInstant(Instant.ofEpochMilli(mills), ZONE).format(DATE_TIME);
 	}
 
 	public static long diffTime(Date d1, Date d2) {
@@ -66,13 +72,7 @@ public class TimeUtils {
 
 	/**
 	 * @param date  需要延迟的起始时间
-	 * @param type  延迟类型
-	 *              SECOND = 1;
-	 *              MINUTE = 2;
-	 *              HOUR = 3;
-	 *              DATE = 4;
-	 *              MONTH = 5;
-	 *              YEAR = 6;
+	 * @param type  延迟类型 SECOND/MINUTE/HOUR/DATE/WEEK/MONTH/YEAR
 	 * @param delay 延迟的数量
 	 * @return 延迟后的时间
 	 */
@@ -100,10 +100,10 @@ public class TimeUtils {
 				break;
 			case YEAR:
 				calendar.add(Calendar.YEAR, delay);
+				break;
 			default:
 				break;
 		}
-
 		return calendar.getTime();
 	}
 }

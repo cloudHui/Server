@@ -5,7 +5,7 @@ import game.manager.table.DdzTable;
 import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
-import game.manager.thread.TableManagerExecutor;
+import game.manager.thread.GameThreadPoolManager;
 import model.tablemodel.TableModel;
 import model.tablemodel.TableModelJson;
 import model.tablemodel.RobotRoomTemplates;
@@ -42,10 +42,10 @@ public class TableManager {
     private final AtomicLong tableIdSeq = new AtomicLong(System.currentTimeMillis());
 
     private final TableConfigManager configManager;
-    private final TableManagerExecutor managerExecutor;
+    private final GameThreadPoolManager threadPoolManager;
 
     public TableManager() {
-        managerExecutor = new TableManagerExecutor(Game.getInstance().getThreadPoolManager().tableManagerPool().getExecutorService());
+        threadPoolManager = Game.getInstance().getThreadPoolManager();
         tableMap = new ConcurrentHashMap<>();
         configManager = new TableConfigManager();
         if (configManager.loadFail()) {
@@ -73,7 +73,7 @@ public class TableManager {
             logger.warn("桌子已存在,添加失败, tableId: {}", tableId);
         } else {
             tableMap.put(tableId, table);
-            Game.getInstance().getTableExecutorManager().register(tableId);
+            threadPoolManager.registerTable(tableId);
             MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
             MetricsCollector.getInstance().incrementCounter("game.tables_created");
             logger.debug("添加新桌子, tableId: {}", tableId);
@@ -99,7 +99,7 @@ public class TableManager {
         if (removedTable != null) {
             notifyPlayersTableDestroyed(removedTable);
             removedTable.stop();
-            Game.getInstance().getTableExecutorManager().remove(tableId);
+            threadPoolManager.removeTable(tableId);
             MetricsCollector.getInstance().setGauge("game.active_tables", tableMap.size());
             MetricsCollector.getInstance().incrementCounter("game.tables_destroyed");
             logger.info("删除桌子, tableId: {}", tableId);
@@ -127,30 +127,30 @@ public class TableManager {
 
     /** 在桌子管理线程创建桌子，网络线程只接收 Future。 */
     public CompletableFuture<Table> createTableAsync(int roomId, ModelProto.RoomRole role) {
-        return managerExecutor.submit(() -> createTable(roomId, role));
+        return threadPoolManager.submitTableManager(() -> createTable(roomId, role));
     }
 
     /**
      * 在桌子管理线程删除桌子，桌子线程不直接修改全局索引。
      */
     public void removeTableAsync(long tableId) {
-        managerExecutor.submit(() -> {
+        threadPoolManager.submitTableManager(() -> {
             removeTable(tableId);
             return null;
         });
     }
 
     public CompletableFuture<List<Table>> findTablesByUserIdAsync(int userId) {
-        return managerExecutor.submit(() -> findTablesByUserId(userId));
+        return threadPoolManager.submitTableManager(() -> findTablesByUserId(userId));
     }
 
     public CompletableFuture<List<ModelProto.RoomTableInfo>> getAllTableInfoAsync() {
-        return managerExecutor.submit(this::snapshotTables).thenCompose(this::collectTableInfo);
+        return threadPoolManager.submitTableManager(this::snapshotTables).thenCompose(this::collectTableInfo);
     }
 
-    /** 关闭桌子管理线程，供服务停止时释放资源。 */
+    /** 线程池由 GameThreadPoolManager 统一关闭，这里仅做业务侧占位。 */
     public void shutdown() {
-        managerExecutor.shutdown();
+        // no-op：共享线程池生命周期归属 GameThreadPoolManager
     }
 
     private List<Table> snapshotTables() {

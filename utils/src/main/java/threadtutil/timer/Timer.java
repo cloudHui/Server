@@ -6,54 +6,51 @@ import threadtutil.timer.model.TimeNode;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 定时器实现
- * 管理多个时间节点的执行，支持延迟执行、间隔执行和有限次执行
- * 支持普通节点和串行节点的执行
+ * 定时器：在独立调度线程上检查到期节点，实际业务投递到 ExecutorPool。
  */
 public class Timer extends AbstractTimer<ExecutorPool> {
+	private static final AtomicInteger TIMER_SEQ = new AtomicInteger();
+	private volatile Thread schedulerThread;
 
-    public Timer() {
-        super(new ArrayList<>());
-    }
+	public Timer() {
+		super(new ArrayList<>());
+	}
 
-    /**
-     * 设置任务执行器
-     *
-     * @param runners 任务执行器实例
-     * @return 当前Timer实例
-     */
-    @Override
-    public Timer setRunners(ExecutorPool runners) {
-        exit();
-        this.runners = runners;
-        (new Thread(this)).start();
-        return this;
-    }
+	@Override
+	public Timer setRunners(ExecutorPool runners) {
+		exit();
+		timeSignal.notifySignal();
+		this.runners = runners;
+		Thread thread = new Thread(this, "Threadtutil-Timer-" + TIMER_SEQ.incrementAndGet());
+		thread.setDaemon(true);
+		this.schedulerThread = thread;
+		thread.start();
+		return this;
+	}
 
-    /**
-     * 执行时间节点
-     *
-     * @param timeNode 要执行的时间节点
-     * @return 任务的CompletableFuture
-     */
-    @Override
-    protected CompletableFuture<?> executeTimeNode(TimeNode<?> timeNode) {
-        if (timeNode instanceof SerialTimeNode) {
-            return runners.serialExecute((SerialTimeNode<?>) timeNode);
-        } else {
-            return runners.run(timeNode);
-        }
-    }
+	@Override
+	protected CompletableFuture<?> executeTimeNode(TimeNode<?> timeNode) {
+		if (timeNode instanceof SerialTimeNode) {
+			return runners.serialExecute((SerialTimeNode<?>) timeNode);
+		}
+		return runners.run(timeNode);
+	}
 
-    /**
-     * 重新调度节点
-     *
-     * @param node 需要重新调度的节点
-     */
-    @Override
-    protected void rescheduleNode(TimeNode<?> node) {
-        runners.run(() -> addNode(node));
-    }
+	@Override
+	protected void rescheduleNode(TimeNode<?> node) {
+		runners.run(() -> addNode(node));
+	}
+
+	/** 停止调度线程（通过 exit 打断循环）。 */
+	public void stop() {
+		exit();
+		timeSignal.notifySignal();
+		Thread thread = schedulerThread;
+		if (thread != null) {
+			thread.interrupt();
+		}
+	}
 }

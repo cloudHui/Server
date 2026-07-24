@@ -27,7 +27,6 @@ import utils.metrics.MetricsCollector;
 import utils.metrics.MetricsHttpServer;
 import game.db.ScoreRepository;
 import game.db.DatabaseExecutorManager;
-import game.manager.thread.TableExecutorManager;
 import game.manager.thread.GameThreadPoolManager;
 
 /**
@@ -50,7 +49,6 @@ public class Game {
 	private ModelProto.ServerInfo serverInfo;
 	private ServerManager serverManager;
 	private TableManager tableManager;
-	private TableExecutorManager tableExecutorManager;
 	private DatabaseExecutorManager databaseExecutorManager;
 	private MetricsHttpServer metricsHttpServer;
 	private GameThreadPoolManager threadPoolManager;
@@ -99,15 +97,13 @@ public class Game {
 		return tableManager;
 	}
 
-	public TableExecutorManager getTableExecutorManager() {
-		return tableExecutorManager;
-	}
-
 	public DatabaseExecutorManager getDatabaseExecutorManager() {
 		return databaseExecutorManager;
 	}
 
-	public GameThreadPoolManager getThreadPoolManager() { return threadPoolManager; }
+	public GameThreadPoolManager getThreadPoolManager() {
+		return threadPoolManager;
+	}
 
 	/** 统一释放桌子、定时器和数据库线程池，避免服务重启遗留非守护线程。 */
 	public void shutdown() {
@@ -230,7 +226,6 @@ public class Game {
 				config.getInt("game.databasePoolSize", 2));
 		executorPool = threadPoolManager.playerPool();
 		timer = new Timer().setRunners(executorPool);
-		tableExecutorManager = new TableExecutorManager(threadPoolManager.tablePool());
 		databaseExecutorManager = new DatabaseExecutorManager(threadPoolManager.databasePool());
 		serverManager = new ServerManager(timer,
 				config.getInt("plant", 0) != 0);
