@@ -52,4 +52,19 @@ public class CustomRoomRepository {
 		}
 		return models;
 	}
+
+	/** 禁用全部历史自定义模板，清理大厅脏数据。 */
+	public int disableAll() {
+		String sql = "UPDATE custom_room SET enabled = 0 WHERE enabled = 1";
+		try (Connection conn = database.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			int n = ps.executeUpdate();
+			if (n > 0) {
+				logger.info("已禁用历史自定义房间模板, count={}", n);
+			}
+			return n;
+		} catch (SQLException e) {
+			logger.error("禁用自定义房间模板失败", e);
+			return 0;
+		}
+	}
 }

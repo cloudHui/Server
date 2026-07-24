@@ -369,6 +369,8 @@ function createCardFace(cardId) {
 function renderMyCards() {
     var container = document.getElementById('myCards');
     container.innerHTML = '';
+    // 17 张以上（含底牌）压缩手牌宽度，避免遮挡左右玩家
+    container.className = 'my-cards' + (gameState.myCards.length >= 18 ? ' compact' : '');
     for (var i = 0; i < gameState.myCards.length; i++) {
         var cardId = gameState.myCards[i];
         var card = document.createElement('div');

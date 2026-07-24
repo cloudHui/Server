@@ -6,6 +6,8 @@
     var sessionId = localStorage.getItem('sessionId');
     var gameType = parseInt(document.body.dataset.gameType, 10);
     var gameName = gameType === 2 ? '斗地主' : '麻将';
+    // 官方模板：麻将 1/9001；斗地主 2/9002/9003（一个经典 + 两个快速金币房）
+    var OFFICIAL = gameType === 2 ? [2, 9002, 9003] : [1, 9001];
     if (!sessionId) {
         window.location.href = appUrl('/');
         return;
@@ -22,10 +24,15 @@
         if (room.roomId === 9003) return '电脑快速房间 · 叫地主后逆时针抢/再抢 · 抢一次倍数翻倍';
         if (room.roomId === 9002) return '经典斗地主 · 3人 · 17张手牌 · 3张底牌 · 轮流叫/抢地主';
         if (room.roomId === 9001) return '经典麻将 · 3人 · 13张手牌 · 支持吃/碰/杠 · 4局';
-        if (room.roomId >= 10000) return '自定义规则 · 以创建房间时的配置为准';
+        if (room.roomId === 2) return '经典斗地主 · 3人 · 手动准备下一局';
+        if (room.roomId === 1) return '经典麻将 · 3人 · 手动准备下一局';
         return gameType === 2
             ? '经典斗地主 · 3人 · 17张手牌 · 3张底牌 · 轮流叫/抢地主'
             : '经典麻将 · 3人 · 13张手牌 · 支持吃/碰/杠 · 4局';
+    }
+
+    function isOfficial(roomId) {
+        return OFFICIAL.indexOf(Number(roomId)) >= 0;
     }
 
     window.loadRooms = function () {
@@ -43,7 +50,7 @@
                     return;
                 }
                 renderRooms((data.rooms || []).filter(function (room) {
-                    return Number(room.gameType) === gameType;
+                    return Number(room.gameType) === gameType && isOfficial(room.roomId);
                 }));
             })
             .catch(function () {
@@ -97,25 +104,41 @@
 
             var button = document.createElement('button');
             button.className = 'join';
-            button.textContent = room.myTableId ? '返回我的牌桌' : '进入房间';
+            button.textContent = room.myTableId ? '返回房间' : '创建房间';
             button.onclick = function () {
-                room.myTableId ? goTable(room.myTableId, room.roomId) : joinRoom(room.roomId);
+                room.myTableId ? goTable(room.myTableId, room.roomId) : createAndEnter(room.roomId);
             };
             card.appendChild(button);
             list.appendChild(card);
         });
     }
 
-    function joinRoom(roomId) {
-        fetch(appUrl('/api/rooms/join'), {
+    /** 创建并立刻进入；失败时若服务端已入座则拉回牌桌。 */
+    function createAndEnter(roomId) {
+        fetch(appUrl('/api/rooms/create'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sessionId: sessionId, roomId: roomId })
+            body: JSON.stringify({ sessionId: sessionId, mode: 'fixed', roomId: roomId, gameType: gameType })
         })
             .then(function (r) { return r.json(); })
             .then(function (data) {
-                if (data.code === 0) goTable(data.tableId, roomId);
-                else alert(data.msg || '进入房间失败');
+                if (data.code === 0 && data.tableId) {
+                    goTable(data.tableId, data.roomId || roomId);
+                    return;
+                }
+                // 创房回包失败时，刷新列表看是否已有我的桌子（兼容旧超时）
+                return fetch(appUrl('/api/rooms?sessionId=' + encodeURIComponent(sessionId)))
+                    .then(function (r) { return r.json(); })
+                    .then(function (listData) {
+                        var mine = null;
+                        (listData.rooms || []).forEach(function (room) {
+                            if (Number(room.roomId) === Number(roomId) && room.myTableId) {
+                                mine = room.myTableId;
+                            }
+                        });
+                        if (mine) goTable(mine, roomId);
+                        else alert((data && data.msg) || '创建房间失败');
+                    });
             })
             .catch(function () { alert('网络错误，请重试'); });
     }
@@ -124,7 +147,6 @@
         localStorage.setItem('tableId', tableId);
         localStorage.setItem('roomId', roomId);
         localStorage.setItem('gameType', gameType);
-        // 游戏页已迁到 pages/game，避免跳到根路径导致 404。
         window.location.href = appUrl(gameType === 2
             ? '/pages/game/doudizhu.html'
             : '/pages/game/mahjong.html');
@@ -140,6 +162,5 @@
         window.location.href = appUrl('/');
     };
 
-    // 仅在具体游戏房间页调用一次，避免首页轮询和无意义的 Gate 请求。
     loadRooms();
 })();

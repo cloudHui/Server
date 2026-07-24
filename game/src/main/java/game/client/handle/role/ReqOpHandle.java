@@ -44,6 +44,15 @@ public class ReqOpHandle implements Handler {
 					int result = processUserOp(clientId, request.getOp(), table, sender, mapId, sequence);
 					if (result != ConstProto.Result.SUCCESS_VALUE) {
 						sender.sendMessage(TCPMessage.newInstance(result));
+					} else {
+						// 成功时桌内已广播 ACK_OP(无 sequence)；这里必须带原 sequence 回给请求方，
+						// 否则 Gate 3 秒超时会向客户端推 TIME_OUT，牌桌中央就会反复出现「操作超时」。
+						GameProto.AckOp ack = GameProto.AckOp.newBuilder()
+								.setOp(request.getOp())
+								.setOpId(clientId)
+								.setOpFrom(clientId)
+								.build();
+						sender.sendMessage(clientId, GMsg.ACK_OP, mapId, ack, sequence);
 					}
 					logger.info("玩家操作请求处理完成, userId: {}, tableId: {}, success: {}", clientId, mapId, result);
 			}).exceptionally(error -> {

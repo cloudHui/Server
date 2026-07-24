@@ -68,8 +68,12 @@ public class ConnectProcessor {
 		if (method == null) {
 			return false;
 		}
-		// 带 sequence 的入桌回复走请求回调，不要当推送吞掉
-		if (tcpMessage.getMessageId() == GMsg.ACK_ENTER_TABLE_MSG && tcpMessage.getSequence() != 0) {
+		// 带 sequence 的请求回复走 completer，不要当推送吞掉（入桌/出牌/离开）
+		int msgId = tcpMessage.getMessageId();
+		if (tcpMessage.getSequence() != 0
+				&& (msgId == GMsg.ACK_ENTER_TABLE_MSG
+				|| msgId == GMsg.ACK_OP
+				|| msgId == GMsg.ACK_LEAVE)) {
 			return false;
 		}
 		try {

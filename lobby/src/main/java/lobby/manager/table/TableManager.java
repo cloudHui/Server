@@ -34,9 +34,8 @@ public class TableManager {
 		if (configManager.loadFail()) {
 			throw new RuntimeException("加载配置文件失败");
 		}
-		for (TableModel model : customRoomRepository.listEnabled()) {
-			configManager.putRuntimeModel(model);
-		}
+		// 历史自定义模板曾污染房间列表；官方只保留 Excel(1/2) + 内置机器人(9001-9003)。
+		customRoomRepository.disableAll();
 		// 内置机器人模板不落库，服务启动时始终注册，保证大厅和游戏服都能看到。
 		RobotRoomTemplates.register(configManager::putRuntimeModel);
 		configManager.startWatch();
@@ -50,27 +49,40 @@ public class TableManager {
 		if (configManager.loadFail()) {
 			throw new RuntimeException("加载配置文件失败");
 		}
-		// loadFail 会清空内存表，需重新装入库中自定义房间，再注册内置机器人模板。
-		for (TableModel model : customRoomRepository.listEnabled()) {
-			configManager.putRuntimeModel(model);
-		}
+		customRoomRepository.disableAll();
 		RobotRoomTemplates.register(configManager::putRuntimeModel);
 		roomTables.clear();
 		for (TableModel model : configManager.getAllTableModels().values()) {
+			if (!isOfficialRoom(model.getId())) {
+				continue;
+			}
 			roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
 		}
-		logger.info("房间管理器初始化完成,加载模板数量: {}", configManager.getAllTableModels().size());
+		logger.info("房间管理器初始化完成,加载模板数量: {}", roomTables.size());
+	}
+
+	/** 大厅对外只展示官方模板：麻将 1/9001，斗地主 2/9002/9003。 */
+	public static boolean isOfficialRoom(int roomId) {
+		return roomId == 1 || roomId == 2
+				|| roomId == RobotRoomTemplates.MAHJONG_ROOM_ID
+				|| roomId == RobotRoomTemplates.DOU_DIZHU_ROOM_ID
+				|| roomId == RobotRoomTemplates.DOU_DIZHU_ROB_ROOM_ID;
 	}
 
 	public synchronized LobbyProto.AckRoomList getAllRoomTable() {
 		LobbyProto.AckRoomList.Builder response = LobbyProto.AckRoomList.newBuilder();
 		try {
-			// 确保配置里的模板都有房间桶（热更/运行时模板）
 			for (TableModel model : configManager.getAllTableModels().values()) {
+				if (!isOfficialRoom(model.getId())) {
+					continue;
+				}
 				roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
 			}
 			int totalRooms = 0;
 			for (Map.Entry<Integer, Map<Long, TableInfo>> roomEntry : roomTables.entrySet()) {
+				if (!isOfficialRoom(roomEntry.getKey())) {
+					continue;
+				}
 				ModelProto.Room.Builder roomBuilder = ModelProto.Room.newBuilder();
 				roomBuilder.setRoomId(roomEntry.getKey());
 				TableModel tableModel = configManager.getTableModel(roomEntry.getKey());
@@ -86,7 +98,7 @@ public class TableManager {
 				}
 				response.addRoomList(roomBuilder);
 			}
-			logger.debug("返回房间列表,房间类型数: {}, 总房间数: {}", roomTables.size(), totalRooms);
+			logger.debug("返回房间列表,房间类型数: {}, 总房间数: {}", response.getRoomListCount(), totalRooms);
 		} catch (Exception e) {
 			logger.error("获取房间列表失败", e);
 		}
@@ -102,9 +114,13 @@ public class TableManager {
 	}
 
 	public synchronized void putRuntimeModel(TableModel model, String createdBy) {
+		// 自定义模板仅运行时可用，不再落库，避免大厅被历史模板刷屏。
 		configManager.putRuntimeModel(model);
-		customRoomRepository.save(model, createdBy);
-		roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
+		if (isOfficialRoom(model.getId()) || model.getId() >= 10000) {
+			roomTables.computeIfAbsent(model.getId(), k -> new ConcurrentHashMap<>());
+		}
+		logger.info("注册运行时房间模板(不落库), id: {}, type: {}, by: {}",
+				model.getId(), model.getType(), createdBy);
 	}
 
 	public synchronized int nextRuntimeModelId() {

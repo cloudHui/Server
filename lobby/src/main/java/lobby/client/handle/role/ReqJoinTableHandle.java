@@ -48,35 +48,36 @@ public class ReqJoinTableHandle implements Handler {
 			return true;
 		}
 
-		if (!joinTable(tableModel, user, sequence)) {
+		if (!joinTable(tableModel, user, sequence, sender)) {
 			ConnectHandler gameServer = Lobby.getInstance().getServerManager().getServerClient(ServerType.Game);
 			if (gameServer == null) {
 				logger.error("游戏服务器不可用");
 				sender.sendMessage(TCPMessage.newInstance(ConstProto.Result.SERVER_NULL_VALUE));
 				return true;
 			}
-			createTable(gameServer, roomId, sequence, clientId);
+			createTable(gameServer, roomId, sequence, clientId, sender);
 		}
 		return true;
 	}
 
-	private boolean joinTable(TableModel tableModel, User user, int sequence) {
+	private boolean joinTable(TableModel tableModel, User user, int sequence, Sender replyTo) {
 		TableInfo canJoinTable = TableManager.getInstance().getCanJoinTable(tableModel.getId());
 		if (canJoinTable == null) {
 			return false;
 		}
 		canJoinTable.joinRole(user);
-		sendJoinTableAck(canJoinTable.getTableId(), sequence, user);
+		sendJoinTableAck(canJoinTable.getTableId(), sequence, user, replyTo);
 		return true;
 	}
 
-	private void createTable(ConnectHandler gameServer, int roomId, long sequence, int userId) {
+	private void createTable(ConnectHandler gameServer, int roomId, int sequence, int userId, Sender replyTo) {
+		PendingCreateJoin.put(userId, sequence, replyTo);
 		HandleManager.sendMsg(
 				SMsg.REQ_CREATE_TABLE_MSG,
 				buildCreateTableRequest(roomId, userId),
 				gameServer,
 				ClientProto.PARSER,
-				(int) sequence,
+				sequence,
 				userId,
 				true
 		);
@@ -96,6 +97,19 @@ public class ReqJoinTableHandle implements Handler {
 	}
 
 	public static void sendJoinTableAck(long tableId, int sequence, User user) {
+		sendJoinTableAck(tableId, sequence, user, null);
+	}
+
+	public static void sendJoinTableAck(long tableId, int sequence, User user, Sender replyTo) {
+		LobbyProto.AckJoinRoomTable ack = LobbyProto.AckJoinRoomTable.newBuilder()
+				.setTableId(tableId)
+				.build();
+		// 优先走原请求连接，保证 Gate 侧 completer 能匹配到 sequence。
+		if (replyTo != null) {
+			replyTo.sendMessage(LMsg.ACK_JOIN_ROOM_TABLE_MSG, ack, sequence);
+			logger.info("玩家加入桌子成功, userId: {}, tableId: {}, via: request-sender", user.getUserId(), tableId);
+			return;
+		}
 		ClientHandler gate = Lobby.getInstance().getServerClientManager()
 				.getServerClient(ServerType.Gate, user.getClientId());
 		if (gate == null) {
@@ -105,9 +119,7 @@ public class ReqJoinTableHandle implements Handler {
 			logger.error("sendJoinTableAck role:{} gate null", user.getUserId());
 			return;
 		}
-		gate.sendMessage(LMsg.ACK_JOIN_ROOM_TABLE_MSG, LobbyProto.AckJoinRoomTable.newBuilder()
-				.setTableId(tableId)
-				.build(), sequence);
-		logger.info("玩家加入桌子成功, userId: {}, tableId: {}", user.getUserId(), tableId);
+		gate.sendMessage(LMsg.ACK_JOIN_ROOM_TABLE_MSG, ack, sequence);
+		logger.info("玩家加入桌子成功, userId: {}, tableId: {}, via: fallback-gate", user.getUserId(), tableId);
 	}
 }

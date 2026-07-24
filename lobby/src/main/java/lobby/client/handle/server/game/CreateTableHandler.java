@@ -1,6 +1,7 @@
 package lobby.client.handle.server.game;
 
 import com.google.protobuf.Message;
+import lobby.client.handle.role.PendingCreateJoin;
 import lobby.client.handle.role.ReqJoinTableHandle;
 import lobby.manager.User;
 import lobby.manager.UserManager;
@@ -27,15 +28,20 @@ public class CreateTableHandler implements ConnectHandle {
 	private void dealCreateSuccessTableJoin(int sequence, ServerProto.AckCreateGameTable ack, int userId) {
 		TableInfo tableInfo = TableManager.getInstance().putRoomInfo(ack.getTables());
 		if (tableInfo == null) {
+			PendingCreateJoin.take(userId);
 			logger.warn("创建桌子信息注册失败, userId: {}", userId);
 			return;
 		}
 		User user = UserManager.getInstance().getUser(userId);
 		if (user == null) {
+			PendingCreateJoin.take(userId);
 			logger.warn("创建桌子时用户不存在, userId: {}", userId);
 			return;
 		}
 		tableInfo.joinRole(user);
-		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId(), sequence, user);
+		PendingCreateJoin pending = PendingCreateJoin.take(userId);
+		Sender replyTo = pending != null ? pending.replyTo : null;
+		int replySeq = pending != null ? pending.sequence : sequence;
+		ReqJoinTableHandle.sendJoinTableAck(ack.getTables().getTableId(), replySeq, user, replyTo);
 	}
 }

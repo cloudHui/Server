@@ -59,13 +59,18 @@ body {
     margin-left: 8px;
     }
     .player-info.active { color: #ff6b6b; }
-    /* 麻将牌 - 自己的手牌 */
+    /* 麻将牌 - 自己的手牌：一排放不下则多排 */
     .my-tiles {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-end;
+    align-content: flex-end;
+    gap: 4px 0;
     padding: 26px 8px 10px;
     min-height: 120px;
+    max-width: min(920px, calc(100vw - 48px));
+    margin: 0 auto;
     overflow: visible;
     }
     .tile {
@@ -86,6 +91,20 @@ body {
     height: 100%;
     border-radius: 5px;
     }
+    .tile-face {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1b1b1b;
+    font: 700 16px/1.1 "Microsoft YaHei", sans-serif;
+    letter-spacing: 0;
+    text-align: center;
+    padding: 2px;
+    box-sizing: border-box;
+    }
+    .tile-face.small { font-size: 11px; }
     .tile.selected {
     transform: translateY(-22px);
     box-shadow: 0 8px 16px rgba(255,215,0,0.5);
@@ -93,11 +112,11 @@ body {
     .tile:not(.selected):hover {
     transform: translateY(-6px);
     }
-    /* 重叠减半，提起后邻牌仍可见可点 */
-    .my-tiles .tile {
-    margin-left: -12px;
+    /* 多排时用 gap，避免负 margin 把下一排首张顶歪 */
+    .my-tiles {
+    gap: 6px 4px;
     }
-    .my-tiles .tile:first-child {
+    .my-tiles .tile {
     margin-left: 0;
     }
     /* 对手的牌（竖排/横排） */

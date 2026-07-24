@@ -17,6 +17,8 @@ public class CustomRoomRepositoryTest {
 		assertEquals(true, repository.save(model, "tester"));
 		assertEquals(1, repository.listEnabled().size());
 		assertEquals(10000, repository.listEnabled().get(0).getId());
+		assertEquals(1, repository.disableAll());
+		assertEquals(0, repository.listEnabled().size());
 		Files.deleteIfExists(file);
 	}
 }

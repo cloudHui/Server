@@ -99,10 +99,16 @@ body {
     gap: 0;
     padding: 28px 12px 12px;
     min-height: 120px;
-    max-width: 100%;
+    max-width: min(960px, calc(100vw - 160px));
     margin: 0 auto;
     overflow: visible;
     }
+    /* 地主 20 张时压缩牌宽与重叠，避免手牌过长遮住左右玩家 */
+    .my-cards.compact .card { width: 42px; height: 59px; margin-left: -22px; }
+    .my-cards.compact .card:first-child { margin-left: 0; }
+    .my-cards.compact .card-corner { font-size: 10px; line-height: 10px; }
+    .my-cards.compact .card-art { font-size: 16px; }
+    .my-cards.compact .card-art.pips { font-size: 9px; }
 
     /* 扑克牌：原 80×112 → 54×75 */
     .card {

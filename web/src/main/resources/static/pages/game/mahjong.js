@@ -39,12 +39,15 @@ var gameState = {
 function getTileImagePath(tileId) {
     var suit = Math.floor(tileId / 100);
     var value = tileId % 100;
-    if (suit === 1) return '/img/card/B_character_' + value + '.png';
-    if (suit === 2) return '/img/card/B_bamboo_' + value + '.png';
-    if (suit === 3) return '/img/card/B_dot_' + value + '.png';
-    if (suit === 4) return '/img/card/B_wind_' + value + '.png';
-    if (suit === 5) return '/img/card/B_wind_' + (value + 4) + '.png';
-    return '';
+    var name = '';
+    if (suit === 1) name = 'B_character_' + value + '.png';
+    else if (suit === 2) name = 'B_bamboo_' + value + '.png';
+    else if (suit === 3) name = 'B_dot_' + value + '.png';
+    else if (suit === 4) name = 'B_wind_' + value + '.png';
+    else if (suit === 5) name = 'B_wind_' + (value + 4) + '.png';
+    else return '';
+    // 必须走 appUrl，外网随机 context-path 下绝对 /img 会 404
+    return appUrl('/img/card/' + name);
 }
 
 // 牌名显示
@@ -323,18 +326,23 @@ function renderMyTiles() {
         tile.dataset.index = i;
         tile.style.zIndex = String(i + 1);
 
+        var face = document.createElement('div');
+        face.className = 'tile-face';
+        face.textContent = getTileName(tileId);
         var img = document.createElement('img');
         img.src = getTileImagePath(tileId);
         img.alt = getTileName(tileId);
-        img.onerror = function() {
-            // 图片加载失败时显示文字
-            this.style.display = 'none';
-            this.parentElement.textContent = getTileName(parseInt(this.alt) || 0);
-            this.parentElement.style.lineHeight = '70px';
-            this.parentElement.style.fontSize = '18px';
-            this.parentElement.style.fontWeight = 'bold';
-            this.parentElement.style.textAlign = 'center';
+        img.onload = function() {
+            face.style.display = 'none';
+            img.style.display = 'block';
         };
+        img.onerror = function() {
+            // 图片失败时保留中文牌名（旧逻辑 parseInt(alt) 会把「3万」变成纯数字）
+            img.style.display = 'none';
+            face.style.display = 'flex';
+        };
+        img.style.display = 'none';
+        tile.appendChild(face);
         tile.appendChild(img);
 
         tile.onclick = (function(idx) {
@@ -374,9 +382,22 @@ function renderDiscarded() {
         var tileId = gameState.discardedTiles[i];
         var tile = document.createElement('div');
         tile.className = 'tile';
+        var face = document.createElement('div');
+        face.className = 'tile-face small';
+        face.textContent = getTileName(tileId);
         var img = document.createElement('img');
         img.src = getTileImagePath(tileId);
-        img.onerror = function() { this.style.display = 'none'; };
+        img.alt = getTileName(tileId);
+        img.onload = function() {
+            this.previousSibling.style.display = 'none';
+            this.style.display = 'block';
+        };
+        img.onerror = function() {
+            this.style.display = 'none';
+            this.previousSibling.style.display = 'flex';
+        };
+        img.style.display = 'none';
+        tile.appendChild(face);
         tile.appendChild(img);
         container.appendChild(tile);
     }
