@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.service.ReplayService;
+import web.service.ShellService;
 import web.service.UserService;
 
 /**
- * 管理后台 API：邀请 / 玩家 / 桌子 / 回放
+ * 管理后台 API：邀请 / 玩家 / 桌子 / 回放 / 终端
  */
 @RestController
 @RequestMapping("/api/admin")
@@ -21,11 +22,14 @@ public class AdminController {
 	private final UserService userService;
 	private final LobbyAdminClient lobbyAdminClient;
 	private final ReplayService replayService;
+	private final ShellService shellService;
 
-	public AdminController(UserService userService, LobbyAdminClient lobbyAdminClient, ReplayService replayService) {
+	public AdminController(UserService userService, LobbyAdminClient lobbyAdminClient,
+			ReplayService replayService, ShellService shellService) {
 		this.userService = userService;
 		this.lobbyAdminClient = lobbyAdminClient;
 		this.replayService = replayService;
+		this.shellService = shellService;
 	}
 
 	@GetMapping("/invites")
@@ -145,6 +149,36 @@ public class AdminController {
 		int slash = code == null ? -1 : code.indexOf('/');
 		if (slash <= 0 || slash == code.length() - 1) return ResponseEntity.ok(error(400, "回放码格式为 日期/文件名"));
 		return ResponseEntity.ok(replayService.getReplay(code.substring(0, slash), code.substring(slash + 1)));
+	}
+
+	/** 管理员 Linux 终端：返回当前工作目录（默认 /home/ec2-user）。 */
+	@GetMapping("/shell")
+	public ResponseEntity<Map<String, Object>> shellCwd(@RequestParam String sessionId) {
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) return ResponseEntity.ok(error(403, "需要管理员账号"));
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 0);
+		result.put("cwd", shellService.currentCwd(sessionId));
+		result.put("user", "ec2-user");
+		result.put("host", "server");
+		return ResponseEntity.ok(result);
+	}
+
+	/** 管理员 Linux 终端：执行一行命令并返回输出 / 退出码 / 最新 cwd。 */
+	@PostMapping("/shell")
+	public ResponseEntity<Map<String, Object>> shellExec(@RequestBody Map<String, Object> body) {
+		String sessionId = str(body.get("sessionId"));
+		UserService.UserInfo user = requireAdmin(sessionId);
+		if (user == null) return ResponseEntity.ok(error(403, "需要管理员账号"));
+		String command = str(body.get("command"));
+		logger.info("管理员终端执行, user: {}, cmd: {}", user.getUsername(), command);
+		Map<String, Object> exec = shellService.execute(sessionId, command);
+		exec.put("msg", "success");
+		// ShellService 已写入 code（进程退出码）；对外业务成功固定为 0，退出码放 exitCode。
+		Object exit = exec.remove("code");
+		exec.put("exitCode", exit == null ? 0 : exit);
+		exec.put("code", 0);
+		return ResponseEntity.ok(exec);
 	}
 
 	private UserService.UserInfo requireAdmin(String sessionId) {
