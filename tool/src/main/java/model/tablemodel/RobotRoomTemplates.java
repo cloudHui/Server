@@ -23,20 +23,18 @@ public final class RobotRoomTemplates {
 				+ "\"allowDianPao\":1,\"allowPeng\":1,\"allowGang\":1,\"allowHu\":1,"
 				+ "\"allowSevenPairs\":1,\"gameSubType\":0,\"gangScore\":1,"
 				+ "\"allowGangMing\":1,\"allowGangAn\":1,\"allowGangBu\":1,"
-				+ "\"totalRounds\":4,\"autoNextRound\":1,\"autoPlay\":1,"
-				+ "\"waitTimeoutSec\":0,\"waitTimeoutAction\":1}");
+				+ "\"totalRounds\":4,\"autoNextRound\":1,\"autoPlay\":1}");
 	}
 
 	public static TableModel douDiZhu() {
 		return TableModelJson.parse("{\"id\":9002,\"type\":2,\"seatNum\":3,\"cardNum\":17,"
 				+ "\"exCardNum\":3,\"baseScore\":1,\"maxFan\":16,\"totalRounds\":1,"
-				+ "\"autoNextRound\":1,\"autoPlay\":1,\"waitTimeoutSec\":0,"
-				+ "\"waitTimeoutAction\":1}");
+				+ "\"autoNextRound\":1,\"autoPlay\":1}");
 	}
 
 	/** 电脑快速房间：叫地主后立即进入逆时针抢/再抢。 */
 	public static TableModel douDiZhuRob() {
-		return TableModelJson.parse("{\"id\":9003,\"type\":2,\"seatNum\":3,\"cardNum\":17,\"exCardNum\":3,\"baseScore\":1,\"maxFan\":16,\"gameSubType\":1,\"totalRounds\":1,\"autoNextRound\":1,\"autoPlay\":1,\"waitTimeoutSec\":0,\"waitTimeoutAction\":1}");
+		return TableModelJson.parse("{\"id\":9003,\"type\":2,\"seatNum\":3,\"cardNum\":17,\"exCardNum\":3,\"baseScore\":1,\"maxFan\":16,\"gameSubType\":1,\"totalRounds\":1,\"autoNextRound\":1,\"autoPlay\":1}");
 	}
 
 	public static void register(TableConfigManagerFacade manager) {

@@ -38,8 +38,6 @@ public final class TableModelJson {
 			m.setTotalRounds(intVal(json, "totalRounds", 4));
 			m.setAutoNextRound(intVal(json, "autoNextRound", 0));
 			m.setAutoPlay(intVal(json, "autoPlay", 0));
-			m.setWaitTimeoutSec(intVal(json, "waitTimeoutSec", 120));
-			m.setWaitTimeoutAction(actionVal(json, "waitTimeoutAction", 0));
 			return m;
 		} catch (Exception e) {
 			logger.warn("解析自定义 TableModel 失败: {}", e.getMessage());
@@ -69,30 +67,8 @@ public final class TableModelJson {
                 "\"allowGangBu\":" + m.getAllowGangBu() + ',' +
                 "\"totalRounds\":" + m.getTotalRounds() + ',' +
                 "\"autoNextRound\":" + m.getAutoNextRound() + ',' +
-                "\"autoPlay\":" + m.getAutoPlay() + ',' +
-                "\"waitTimeoutSec\":" + m.getWaitTimeoutSec() + ',' +
-                "\"waitTimeoutAction\":" + m.getWaitTimeoutAction() + ',' +
+                "\"autoPlay\":" + m.getAutoPlay() +
                 '}';
-	}
-
-	/** 0=dissolve / 1=fillRobot，兼容数字或字符串 */
-	private static int actionVal(String json, String key, int def) {
-		String pattern = "\"" + key + "\"";
-		int idx = json.indexOf(pattern);
-		if (idx < 0) return def;
-		int colon = json.indexOf(':', idx + pattern.length());
-		if (colon < 0) return def;
-		int i = colon + 1;
-		while (i < json.length() && Character.isWhitespace(json.charAt(i))) i++;
-		if (i < json.length() && json.charAt(i) == '"') {
-			int end = json.indexOf('"', i + 1);
-			if (end < 0) return def;
-			String s = json.substring(i + 1, end).trim().toLowerCase();
-			if ("fillrobot".equals(s) || "1".equals(s)) return 1;
-			if ("dissolve".equals(s) || "0".equals(s)) return 0;
-			return def;
-		}
-		return intVal(json, key, def);
 	}
 
 	private static int intVal(String json, String key, int def) {

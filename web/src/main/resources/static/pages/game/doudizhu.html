@@ -86,24 +86,24 @@
         }
         .player-info.active { color: #ff6b6b; }
 
-        /* 手牌区域 */
+        /* 手牌区域：缩小 1/3（约为原尺寸 2/3），后牌覆盖前牌 2/3 */
         .my-cards {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
-            align-content: flex-end;
-            gap: 12px;
+            align-items: flex-end;
+            gap: 0;
             padding: 10px 12px 20px;
-            min-height: 160px;
+            min-height: 110px;
             max-width: 100%;
             margin: 0 auto;
         }
 
-        /* 扑克牌 */
+        /* 扑克牌：原 80×112 → 54×75 */
         .card {
-            width: 80px;
-            height: 112px;
-            border-radius: 8px;
+            width: 54px;
+            height: 75px;
+            border-radius: 6px;
             position: relative;
             cursor: pointer;
             transition: transform 0.15s, margin-bottom 0.15s;
@@ -115,22 +115,22 @@
         .card img {
             width: 100%;
             height: 100%;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         /* 使用矢量化的牌面布局，避免把仓库中 44x57 的旧切图放大后变糊。
          * 中间使用花色点阵，J/Q/K 和大小王使用独立的大字标识，牌面不会退化成单纯数字。 */
-        .card-face { width: 100%; height: 100%; padding: 5px 6px; color: #171717; background: #fff;
+        .card-face { width: 100%; height: 100%; padding: 3px 4px; color: #171717; background: #fff;
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
         .card-face.red { color: #c62828; }
         .card-corner { align-self: flex-start; display: flex; flex-direction: column; align-items: center;
-            font: 700 17px/16px Georgia, serif; }
-        .card-corner .suit { font-size: 14px; line-height: 14px; }
+            font: 700 12px/11px Georgia, serif; }
+        .card-corner .suit { font-size: 10px; line-height: 10px; }
         .card-art { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center;
-            font: 700 33px/1 Georgia, serif; letter-spacing: 1px; white-space: pre-line; }
+            font: 700 22px/1 Georgia, serif; letter-spacing: 1px; white-space: pre-line; }
         .card-art.pips { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr;
-            place-items: center; font-size: 19px; line-height: 1; }
-        .card-art.joker { font-size: 23px; letter-spacing: 0; text-align: center; }
+            place-items: center; font-size: 12px; line-height: 1; }
+        .card-art.joker { font-size: 15px; letter-spacing: 0; text-align: center; }
         .played-face { width: 52px; height: 73px; margin-left: -13px; border-radius: 5px; padding: 3px;
             box-shadow: 0 2px 7px rgba(0,0,0,.35); }
         .played-face:first-child { margin-left: 0; }
@@ -139,18 +139,23 @@
         .played-face .card-art { font-size: 23px; }
         .played-face .card-art.pips { font-size: 12px; }
         .card.selected {
-            transform: translateY(-20px);
+            transform: translateY(-14px);
             box-shadow: 0 8px 20px rgba(255,215,0,0.5);
+            z-index: 20;
         }
         .card:not(.selected):hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
+            z-index: 15;
         }
-        /* 手牌不再重叠，窄屏自动换行，保证牌值和中央花色都能看清。 */
+        /* 后一张覆盖前一张的 2/3（露出约 1/3） */
         .my-cards .card {
+            margin-left: -36px;
+        }
+        .my-cards .card:first-child {
             margin-left: 0;
         }
 
-        /* 对手的牌（背面） */
+        /* 对手的牌（背面）：后牌重叠前牌 4/5 */
         .opponent-cards {
             display: flex;
             justify-content: center;
@@ -158,18 +163,19 @@
         .opponent-cards .card-back {
             width: 40px;
             height: 56px;
-            margin-left: -15px;
+            margin-left: -32px;
             border-radius: 4px;
             background: linear-gradient(135deg, #1a237e, #283593);
             border: 2px solid #ffd700;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            flex-shrink: 0;
         }
         .opponent-cards .card-back:first-child { margin-left: 0; }
 
         /* 操作按钮区 */
         .action-bar {
             position: absolute;
-            bottom: 150px;
+            bottom: 120px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -288,7 +294,7 @@
         }
         .played-left { left: 120px; top: 45%; }
         .played-right { right: 120px; top: 45%; }
-        .played-bottom { bottom: 170px; left: 50%; transform: translateX(-50%); }
+        .played-bottom { bottom: 130px; left: 50%; transform: translateX(-50%); }
         .played-cards .card {
             width: 50px;
             height: 70px;
@@ -311,13 +317,15 @@
         .ws-status.disconnected { color: #f44336; }
 
         @media (max-width: 640px) {
-            .card { width: 64px; height: 90px; }
-            .my-cards { gap: 8px; padding-left: 8px; padding-right: 8px; }
-            .card-corner { font-size: 15px; line-height: 14px; }
-            .card-corner .suit { font-size: 12px; line-height: 12px; }
-            .card-art { font-size: 27px; }
-            .card-art.pips { font-size: 15px; }
-            .card-art.joker { font-size: 18px; }
+            .card { width: 44px; height: 62px; }
+            .my-cards .card { margin-left: -29px; }
+            .my-cards { padding-left: 8px; padding-right: 8px; }
+            .card-corner { font-size: 10px; line-height: 10px; }
+            .card-corner .suit { font-size: 9px; line-height: 9px; }
+            .card-art { font-size: 18px; }
+            .card-art.pips { font-size: 10px; }
+            .card-art.joker { font-size: 12px; }
+            .opponent-cards .card-back { width: 32px; height: 45px; margin-left: -26px; }
             .played-left { left: 8px; }
             .played-right { right: 8px; }
             .played-cards { max-width: 32vw; gap: 4px; }
@@ -327,10 +335,11 @@
         }
 
         @media (max-height: 720px) {
-            .my-cards { padding-top: 4px; padding-bottom: 8px; min-height: 118px; gap: 6px; }
-            .card { width: 58px; height: 81px; }
-            .action-bar { bottom: 112px; }
-            .played-bottom { bottom: 128px; }
+            .my-cards { padding-top: 4px; padding-bottom: 8px; min-height: 90px; }
+            .card { width: 44px; height: 62px; }
+            .my-cards .card { margin-left: -29px; }
+            .action-bar { bottom: 100px; }
+            .played-bottom { bottom: 112px; }
         }
     </style>
     <script src="../../shared/app-base.js"></script>
@@ -412,7 +421,9 @@
             players: [],
             myPosition: -1,
             lastPlayedCards: [],
-            currentOp: null
+            currentOp: null,
+            /** 其他玩家手牌张数（发牌通知里他人牌值为0，但张数有效） */
+            opponentCounts: {}
         };
 
         // 未登录跳转
@@ -487,7 +498,7 @@
                     handleNotOp(data.data);
                     break;
                 case 'ackOp':
-                    if (data.data) renderPlayedCards(data.data.opFrom, data.data.cards || []);
+                    if (data.data) handleAckOp(data.data);
                     break;
                 case 'notState':
                     handleNotState(data.data);
@@ -517,22 +528,55 @@
             });
         }
 
+        /** 按牌值升序；同牌值按花色：方块→梅花→红桃→黑桃（左到右） */
+        function sortHandCards(cards) {
+            cards.sort(function(a, b) {
+                var va = a % 100, vb = b % 100;
+                if (va !== vb) return va - vb;
+                return Math.floor(a / 100) - Math.floor(b / 100);
+            });
+        }
+
         function handleNotCard(data) {
-            // 发牌通知
+            // 发牌通知：自己有牌值，他人牌值为0但需按张数显示牌背
             if (!data || !data.nCards) return;
             gameState.myCards = [];
+            gameState.opponentCounts = {};
             for (var i = 0; i < data.nCards.length; i++) {
                 var nc = data.nCards[i];
-                if (nc.roleId === userId && nc.cards) {
+                if (!nc.cards) continue;
+                if (nc.roleId === userId) {
                     for (var j = 0; j < nc.cards.length; j++) {
                         gameState.myCards.push(nc.cards[j].value);
                     }
+                } else {
+                    gameState.opponentCounts[nc.roleId] = nc.cards.length;
                 }
             }
-            gameState.myCards.sort(function(a, b) { return a - b; });
+            sortHandCards(gameState.myCards);
             gameState.selectedCards.clear();
             renderMyCards();
+            renderOpponentHands();
             showCenterMsg('发牌完成');
+        }
+
+        /** 出牌确认：刷新中央出牌，并同步自己手牌 / 他人牌背张数 */
+        function handleAckOp(data) {
+            var cards = data.cards || [];
+            renderPlayedCards(data.opFrom, cards);
+            if (!cards.length) return;
+            if (data.opFrom === userId) {
+                for (var i = 0; i < cards.length; i++) {
+                    var idx = gameState.myCards.indexOf(cards[i]);
+                    if (idx >= 0) gameState.myCards.splice(idx, 1);
+                }
+                gameState.selectedCards.clear();
+                renderMyCards();
+            } else {
+                var prev = gameState.opponentCounts[data.opFrom] || 0;
+                gameState.opponentCounts[data.opFrom] = Math.max(0, prev - cards.length);
+                renderOpponentHands();
+            }
         }
 
         function handleNotOp(data) {
@@ -654,14 +698,15 @@
         }
 
         // ==================== 渲染 ====================
+        // 花色编码与后端 CardSuit 一致：1方块 2梅花 3红桃 4黑桃
         function cardMeta(cardId) {
-            if (cardId === 516) return { rank: '大王', suit: '★', red: true, joker: true };
-            if (cardId === 517) return { rank: '小王', suit: '☆', red: false, joker: true };
+            if (cardId === 516) return { rank: '小王', suit: '☆', red: false, joker: true };
+            if (cardId === 517) return { rank: '大王', suit: '★', red: true, joker: true };
             var suitId = Math.floor(cardId / 100), value = cardId % 100;
-            var suits = {1: '♠', 2: '♥', 3: '♣', 4: '♦'};
-            var ranks = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'};
-            return { rank: ranks[value] || String(value), suit: suits[suitId] || '♠',
-                red: suitId === 2 || suitId === 4, joker: false, pipCount: Math.min(value, 10) };
+            var suits = {1: '♦', 2: '♣', 3: '♥', 4: '♠'};
+            var ranks = {11: 'J', 12: 'Q', 13: 'K', 14: 'A', 15: '2'};
+            return { rank: ranks[value] || String(value), suit: suits[suitId] || '♦',
+                red: suitId === 1 || suitId === 3, joker: false, pipCount: Math.min(value, 10) };
         }
 
         function createCardFace(cardId) {
@@ -672,7 +717,7 @@
             face.appendChild(corner);
             var art = document.createElement('div'); art.className = 'card-art' + (meta.joker ? ' joker' : '');
             if (meta.joker) art.textContent = meta.rank === '大王' ? '★\nJOKER' : '☆\nJOKER';
-            else if (meta.rank === 'J' || meta.rank === 'Q' || meta.rank === 'K') art.textContent = meta.rank + meta.suit;
+            else if (meta.rank === 'J' || meta.rank === 'Q' || meta.rank === 'K' || meta.rank === 'A' || meta.rank === '2') art.textContent = meta.rank + meta.suit;
             else {
                 art.className += ' pips';
                 for (var i = 0; i < meta.pipCount; i++) { var pip = document.createElement('span'); pip.textContent = meta.suit; art.appendChild(pip); }
@@ -741,6 +786,30 @@
             }
         }
 
+        /** 根据相对座位刷新左右对手牌背与张数（牌值为0时仍显示牌背） */
+        function renderOpponentHands() {
+            var leftEl = document.getElementById('playerLeft');
+            var rightEl = document.getElementById('playerRight');
+            var players = gameState.players || [];
+            for (var i = 0; i < players.length; i++) {
+                var p = players[i];
+                if (p.roleId === userId) continue;
+                var cardCount = gameState.opponentCounts[p.roleId];
+                if (cardCount == null) cardCount = p.cardCount || 0;
+                var displayName = p.nickName || (p.robot || p.roleId < 0 ? '机器人' : '玩家');
+                var nameHtml = '<span class="name">' + displayName + '</span>' +
+                    '<span class="card-count">' + cardCount + '张</span>';
+                var relPos = (p.position - gameState.myPosition + 3) % 3;
+                if (relPos === 1) {
+                    leftEl.innerHTML = nameHtml;
+                    renderCardBacks('cardsLeft', cardCount);
+                } else {
+                    rightEl.innerHTML = nameHtml;
+                    renderCardBacks('cardsRight', cardCount);
+                }
+            }
+        }
+
         function updatePlayers(players) {
             gameState.players = players;
             var leftEl = document.getElementById('playerLeft');
@@ -761,26 +830,7 @@
                 }
             }
 
-            // 显示其他玩家
-            for (var i = 0; i < players.length; i++) {
-                var p = players[i];
-                if (p.roleId === userId) continue;
-
-                var cardCount = p.cardCount || 0;
-                var displayName = p.nickName || (p.robot || p.roleId < 0 ? '机器人' : '玩家');
-                var nameHtml = '<span class="name">' + displayName + '</span>' +
-                    '<span class="card-count">' + cardCount + '张</span>';
-
-                // 根据相对位置分配到左边或右边
-                var relPos = (p.position - gameState.myPosition + 3) % 3;
-                if (relPos === 1) {
-                    leftEl.innerHTML = nameHtml;
-                    renderCardBacks('cardsLeft', cardCount);
-                } else {
-                    rightEl.innerHTML = nameHtml;
-                    renderCardBacks('cardsRight', cardCount);
-                }
-            }
+            renderOpponentHands();
         }
 
         function highlightActivePlayer(position) {

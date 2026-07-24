@@ -5,7 +5,6 @@ import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.mj.MjDrawService;
 import game.manager.table.replay.ReplayRecorder;
-import model.tablemodel.TableModel;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
 import org.slf4j.Logger;
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * 等待阶段：坐满后开局；支持等人超时解散/补机器人；全机器人可删桌不开局。
+ * 等待阶段：坐满后开局；无真人则解散；全机器人普通桌可删桌不开局。
  */
 @ProcessEnum(TableState.WAITING)
 public class Waiting extends AbstractTableHandle {
@@ -37,39 +36,7 @@ public class Waiting extends AbstractTableHandle {
 			Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
 			return true;
 		}
-
-		// 普通房间没有等人超时：真人房间必须一直等待，不能因配置默认值被踢出。
-		// 只有内置机器人房间才允许执行 waitTimeoutAction。
-		if (!table.isRobotRoom()) return false;
-
-		TableModel model = table.getTableModel();
-		int waitSec = model.getWaitTimeoutSec();
-		if (waitSec > 0) {
-			long deadline = table.getStateStartTime() + waitSec * 1000L;
-			if (System.currentTimeMillis() >= deadline) {
-				if (model.getWaitTimeoutAction() == 1) {
-					logger.info("等人超时，补机器人, tableId: {}, waitSec: {}", table.getTableId(), waitSec);
-					int added = table.fillRobotSeats();
-					if (added <= 0 && !table.sitFull()) {
-						logger.warn("补机器人失败，回退解散, tableId: {}", table.getTableId());
-						table.upNextState(TableState.TABLE_DIS);
-					} else if (table.sitFull()) {
-						if (table.isAllRobot() && !table.isRobotRoom()) {
-							logger.info("补机器人后全机桌，解散, tableId: {}", table.getTableId());
-							table.upNextState(TableState.TABLE_DIS);
-						} else {
-							startGame(table);
-						}
-					} else {
-						// 未坐满：重置计时，避免每个 tick 反复补位
-						table.upNextStateWithTime(TableState.WAITING, System.currentTimeMillis());
-					}
-				} else {
-					logger.info("等人超时，解散桌子, tableId: {}, waitSec: {}", table.getTableId(), waitSec);
-					table.upNextState(TableState.TABLE_DIS);
-				}
-			}
-		}
+		// 未坐满则继续等待；不再使用桌模 waitTimeout 配置。
 		return false;
 	}
 
@@ -119,9 +86,7 @@ public class Waiting extends AbstractTableHandle {
 				table.getTableModel().getSeatNum(), userIds, nicknames);
 		replay.writeConfig("底分=" + table.getTableModel().getBaseScore()
 				+ ", 最大番=" + table.getTableModel().getMaxFan()
-				+ ", autoPlay=" + table.getTableModel().getAutoPlay()
-				+ ", waitTimeoutSec=" + table.getTableModel().getWaitTimeoutSec()
-				+ ", waitTimeoutAction=" + table.getTableModel().getWaitTimeoutAction());
+				+ ", autoPlay=" + table.getTableModel().getAutoPlay());
 
 		if (table.getGameType() == 1) {
 			game.manager.table.MjTable mjTable = (game.manager.table.MjTable) table;
