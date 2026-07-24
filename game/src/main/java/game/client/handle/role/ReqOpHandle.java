@@ -1,7 +1,7 @@
 package game.client.handle.role;
 
-import game.manager.table.MjTable;
-import game.manager.table.mj.MjSettleService;
+import game.manager.table.Table;
+import game.manager.table.state.TableSettleSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,8 +9,6 @@ import com.google.protobuf.Message;
 
 import game.Game;
 import game.manager.TableManager;
-import game.manager.table.Table;
-import game.manager.table.ddz.DdzSettleService;
 import msg.annotation.ProcessType;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -95,13 +93,7 @@ public class ReqOpHandle implements Handler {
 
 		if (table.allReady()) {
 			if (table.isLastRound()) {
-				if (table.getGameType() == 1) {
-					MjSettleService.sendGameResult(
-                            (MjTable) table);
-				} else {
-					DdzSettleService.sendGameResult(table);
-				}
-				Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
+				TableSettleSupport.sendFinalResultAndRemove(table);
 				logger.info("最后一局完成, 总结算已发送, tableId: {}", table.getTableId());
 			} else {
 				logger.info("所有玩家已准备, 开始下一局, tableId: {}", table.getTableId());

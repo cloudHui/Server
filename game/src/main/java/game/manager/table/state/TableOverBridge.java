@@ -1,11 +1,7 @@
 package game.manager.table.state;
 
-import game.Game;
-import game.manager.table.MjTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
-import game.manager.table.ddz.DdzSettleService;
-import game.manager.table.mj.MjSettleService;
 import msg.annotation.ProcessEnum;
 import msg.registor.enums.TableState;
 import msg.registor.message.GMsg;
@@ -48,14 +44,7 @@ public class TableOverBridge extends AbstractTableHandle {
 				return;
 			}
 		}
-		if (table.isMultiRound()) {
-			if (table.getGameType() == 1) {
-				MjSettleService.sendGameResult((MjTable) table);
-			} else {
-				DdzSettleService.sendGameResult(table);
-			}
-		}
-		Game.getInstance().getTableManager().removeTableAsync(table.getTableId());
+		TableSettleSupport.sendFinalResultAndRemove(table);
 	}
 
 	/** 小结算 tick：仅发一次准备提示；非自动房给机器人自动准备。 */

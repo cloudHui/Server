@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import game.manager.table.DdzTable;
 import game.manager.table.Table;
 import game.manager.table.TableUser;
 import game.manager.table.card.CardSuit;
@@ -106,16 +107,16 @@ public class CardPool {
 			landlord.addCards(c);
 		}
 		bottomCards.clear();
-		if (table instanceof game.manager.table.DdzTable) {
-			((game.manager.table.DdzTable) table).getDdz().setRevealedBottomCards(bottomIds);
+		if (table instanceof DdzTable) {
+			((DdzTable) table).getDdz().setRevealedBottomCards(bottomIds);
 		}
 		sendInitCardNotice(table.getSeatUsers());
 	}
 
 	public void sendInitCardNotice(Map<Integer, TableUser> seatUsers) {
 		List<Integer> bottomIds = Collections.emptyList();
-		if (table instanceof game.manager.table.DdzTable) {
-			bottomIds = ((game.manager.table.DdzTable) table).getDdz().getRevealedBottomCards();
+		if (table instanceof DdzTable) {
+			bottomIds = ((DdzTable) table).getDdz().getRevealedBottomCards();
 		}
 		for (Map.Entry<Integer, TableUser> entry : seatUsers.entrySet()) {
 			TableUser sendUser = entry.getValue();

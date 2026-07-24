@@ -1,0 +1,267 @@
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background: #1a3a1a;
+    min-height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    }
+    .table-bg {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(ellipse at center, #2a5a2a 0%, #1a3a1a 70%);
+    }
+    /* 牌墙剩余 */
+    .wall-info {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    z-index: 50;
+    }
+    /* 玩家区域 */
+    .player-area {
+    position: absolute;
+    text-align: center;
+    }
+    .player-bottom {
+    bottom: 16px; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 40;
+    }
+    .player-top {
+    top: 80px; left: 50%;
+    transform: translateX(-50%);
+    }
+    .player-left {
+    left: 20px; top: 50%;
+    transform: translateY(-50%);
+    }
+    .player-right {
+    right: 20px; top: 50%;
+    transform: translateY(-50%);
+    }
+    .player-info {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    .player-info .name { color: #ffd700; font-weight: bold; }
+    .player-info .tile-count {
+    background: rgba(0,0,0,0.5);
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 8px;
+    }
+    .player-info.active { color: #ff6b6b; }
+    /* 麻将牌 - 自己的手牌 */
+    .my-tiles {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 26px 8px 10px;
+    min-height: 120px;
+    overflow: visible;
+    }
+    .tile {
+    width: 50px;
+    height: 70px;
+    border-radius: 6px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.15s, margin-bottom 0.15s;
+    flex-shrink: 0;
+    background: #f5f0e0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    overflow: hidden;
+    border: 1px solid #ccc;
+    }
+    .tile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    }
+    .tile.selected {
+    transform: translateY(-22px);
+    box-shadow: 0 8px 16px rgba(255,215,0,0.5);
+    }
+    .tile:not(.selected):hover {
+    transform: translateY(-6px);
+    }
+    /* 重叠减半，提起后邻牌仍可见可点 */
+    .my-tiles .tile {
+    margin-left: -12px;
+    }
+    .my-tiles .tile:first-child {
+    margin-left: 0;
+    }
+    /* 对手的牌（竖排/横排） */
+    .opponent-tiles {
+    display: flex;
+    justify-content: center;
+    }
+    .opponent-tiles .tile-back {
+    width: 28px;
+    height: 36px;
+    margin-left: -10px;
+    border-radius: 3px;
+    background: linear-gradient(135deg, #1a6b1a, #2a8b2a);
+    border: 1px solid #4aaa4a;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .opponent-tiles .tile-back:first-child { margin-left: 0; }
+    /* 侧边玩家牌（竖向排列） */
+    .side-tiles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+    .side-tiles .tile-back {
+    width: 36px;
+    height: 14px;
+    margin-top: -4px;
+    border-radius: 2px;
+    background: linear-gradient(135deg, #1a6b1a, #2a8b2a);
+    border: 1px solid #4aaa4a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .side-tiles .tile-back:first-child { margin-top: 0; }
+    /* 打出的牌区域 */
+    .discarded-area {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 300px;
+    gap: 3px;
+    }
+    .discarded-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    }
+    .discarded-area .tile {
+    width: 32px;
+    height: 44px;
+    margin-left: 0;
+    cursor: default;
+    }
+    .discarded-area .tile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    }
+    /* 操作按钮 */
+    .action-bar {
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 50;
+    }
+    .action-btn {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s;
+    }
+    .action-btn:hover { transform: translateY(-2px); }
+    .btn-discard {
+    background: linear-gradient(135deg, #c41e2a, #e63946);
+    color: white;
+    }
+    .btn-pass {
+    background: linear-gradient(135deg, #555, #777);
+    color: white;
+    }
+    .btn-chi {
+    background: linear-gradient(135deg, #e6a817, #ffd700);
+    color: #333;
+    }
+    .btn-peng {
+    background: linear-gradient(135deg, #ff8c00, #ffa500);
+    color: white;
+    }
+    .btn-gang {
+    background: linear-gradient(135deg, #8b008b, #ba55d3);
+    color: white;
+    }
+    .btn-hu {
+    background: linear-gradient(135deg, #ff0000, #ff4444);
+    color: white;
+    }
+    .btn-prepare {
+    background: linear-gradient(135deg, #2196F3, #42A5F5);
+    color: white;
+    }
+    .action-btn:disabled {
+    background: #999;
+    cursor: not-allowed;
+    transform: none;
+    }
+    /* 中央提示 */
+    .center-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffd700;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+    }
+    .center-message.show { opacity: 1; }
+    .settle-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.62);
+    z-index: 80;
+    align-items: center;
+    justify-content: center;
+    }
+    .settle-overlay.show { display: flex; }
+    .settle-panel {
+    width: min(420px, 92vw);
+    background: #fffaf0;
+    border-radius: 14px;
+    padding: 22px 20px 16px;
+    color: #1c2430;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    text-align: center;
+    }
+    .settle-panel h3 { font-size: 20px; margin-bottom: 8px; color: #1a4a7a; }
+    .settle-panel .meta { font-size: 13px; color: #666; margin-bottom: 12px; line-height: 1.5; }
+    .settle-panel .row {
+    display: flex; justify-content: space-between;
+    padding: 6px 4px; border-bottom: 1px solid #eee; font-size: 13px;
+    }
+    .settle-panel button {
+    margin-top: 14px; border: none; background: #1565c0; color: #fff;
+    padding: 9px 22px; border-radius: 8px; cursor: pointer;
+    }
+    /* 连接状态 */
+    .ws-status {
+    position: absolute;
+    top: 55px;
+    right: 20px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    z-index: 100;
+    }
+    .ws-status.connected { color: #4caf50; }
+    .ws-status.disconnected { color: #f44336; }
