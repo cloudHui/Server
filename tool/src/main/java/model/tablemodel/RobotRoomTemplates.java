@@ -27,14 +27,15 @@ public final class RobotRoomTemplates {
 	}
 
 	public static TableModel douDiZhu() {
+		// totalRounds 取较大值：小结算 15 秒后自动连局，地主连庄优先叫牌。
 		return TableModelJson.parse("{\"id\":9002,\"type\":2,\"seatNum\":3,\"cardNum\":17,"
-				+ "\"exCardNum\":3,\"baseScore\":1,\"maxFan\":16,\"totalRounds\":1,"
+				+ "\"exCardNum\":3,\"baseScore\":1,\"maxFan\":16,\"totalRounds\":100,"
 				+ "\"autoNextRound\":1,\"autoPlay\":1}");
 	}
 
 	/** 电脑快速房间：叫地主后立即进入逆时针抢/再抢。 */
 	public static TableModel douDiZhuRob() {
-		return TableModelJson.parse("{\"id\":9003,\"type\":2,\"seatNum\":3,\"cardNum\":17,\"exCardNum\":3,\"baseScore\":1,\"maxFan\":16,\"gameSubType\":1,\"totalRounds\":1,\"autoNextRound\":1,\"autoPlay\":1}");
+		return TableModelJson.parse("{\"id\":9003,\"type\":2,\"seatNum\":3,\"cardNum\":17,\"exCardNum\":3,\"baseScore\":1,\"maxFan\":16,\"gameSubType\":1,\"totalRounds\":100,\"autoNextRound\":1,\"autoPlay\":1}");
 	}
 
 	public static void register(TableConfigManagerFacade manager) {

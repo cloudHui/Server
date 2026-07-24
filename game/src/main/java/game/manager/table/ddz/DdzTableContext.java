@@ -1,5 +1,7 @@
 package game.manager.table.ddz;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +42,8 @@ public class DdzTableContext {
 	private int visionLevel = AiVision.LEVEL_NORMAL;
 	/** AI 智能等级：0=最笨(出最小/pass), 1=基础策略, 2=高级策略。支持运行时修改 */
 	private int aiLevel = AiVision.AI_ADVANCED;
+	/** 已亮出的底牌（定地主后桌面顶部展示，roleId=0 附在 NotCard 末尾） */
+	private final List<Integer> revealedBottomCards = new ArrayList<>();
 
 	public GameProto.CardInfo getLastPlayed() {
 		return lastPlayed;
@@ -165,6 +169,18 @@ public class DdzTableContext {
 		farmerEverPlayed = false;
 		landlordPlayCount = 0;
 		playedCardIds.clear();
+		revealedBottomCards.clear();
 		resetCurrentTrickCards();
+	}
+
+	public List<Integer> getRevealedBottomCards() {
+		return Collections.unmodifiableList(revealedBottomCards);
+	}
+
+	public void setRevealedBottomCards(List<Integer> cardIds) {
+		revealedBottomCards.clear();
+		if (cardIds != null) {
+			revealedBottomCards.addAll(cardIds);
+		}
 	}
 }

@@ -234,14 +234,8 @@ public final class DdzBidService {
 
 		ReplayRecorder replay = table.getReplayRecorder();
 		if (replay instanceof DdzReplayRecorder) {
-			TableUser landlord = table.getSeatUser(landlordSeat);
-			if (landlord != null) {
-				List<Integer> bottomIds = new ArrayList<>();
-				for (game.manager.table.cards.Card c : landlord.getCards()) {
-					bottomIds.add(c.getId());
-				}
-				((DdzReplayRecorder) replay).recordBottomCards(landlordSeat, bottomIds);
-			}
+			List<Integer> bottomIds = new ArrayList<>(table.getDdz().getRevealedBottomCards());
+			((DdzReplayRecorder) replay).recordBottomCards(landlordSeat, bottomIds);
 		}
 
 		table.getOp().reset();

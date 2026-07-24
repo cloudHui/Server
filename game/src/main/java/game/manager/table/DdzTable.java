@@ -26,6 +26,8 @@ public class DdzTable extends Table {
     private final CardPool cardPool;
     private final Banner banner;
     private final DdzTableContext ddz = new DdzTableContext();
+    /** 下一局优先叫牌座位（地主连庄或农民胜后下家优先） */
+    private int nextFirstCallSeat = -1;
 
     public DdzTable(long tableId, TableModel model, ModelProto.RoomRole creator) {
         super(tableId, model, creator);
@@ -47,8 +49,24 @@ public class DdzTable extends Table {
 
     @Override
     public void resetGameContext() {
+        int keepFirstCall = nextFirstCallSeat;
         banner.reset();
         ddz.resetHand();
+        // 连庄/下家优先：保留下一局首叫座位，避免 banner.reset 清掉后随机重选。
+        if (keepFirstCall >= 0) {
+            banner.setFirstRandomRobSeat(keepFirstCall);
+            getOp().setCurrOpSeat(keepFirstCall);
+            nextFirstCallSeat = -1;
+        }
+    }
+
+    /** 结算后设置下一局优先叫牌座位 */
+    public void setNextFirstCallSeat(int seat) {
+        this.nextFirstCallSeat = seat;
+    }
+
+    public int getNextFirstCallSeat() {
+        return nextFirstCallSeat;
     }
 
     @Override

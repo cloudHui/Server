@@ -53,10 +53,11 @@
             text-align: center;
         }
         .player-bottom {
-            bottom: 0; left: 50%;
+            bottom: 18px; left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 32px);
             padding: 0 16px;
+            z-index: 40;
         }
         .player-left {
             left: 20px;
@@ -85,18 +86,57 @@
             margin-left: 8px;
         }
         .player-info.active { color: #ff6b6b; }
+        .role-badge {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .role-badge.landlord { background: #c62828; color: #fff; }
+        .role-badge.farmer { background: #2e7d32; color: #fff; }
+        .avatar-mark {
+            display: inline-flex;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            align-items: center; justify-content: center;
+            margin-right: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            vertical-align: middle;
+            border: 2px solid rgba(255,255,255,0.55);
+        }
+        .avatar-mark.landlord { background: linear-gradient(135deg,#ff8a65,#c62828); color:#fff; }
+        .avatar-mark.farmer { background: linear-gradient(135deg,#81c784,#2e7d32); color:#fff; }
+        .pass-hint {
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+            padding: 4px 8px;
+        }
+        .settle-hands { margin-top: 8px; text-align: left; }
+        .settle-hand-row { margin: 8px 0; }
+        .settle-hand-row .label { font-size: 12px; color: #555; margin-bottom: 4px; }
+        .settle-hand-cards { display: flex; flex-wrap: wrap; gap: 0; }
+        .settle-hand-cards .played-face { width: 36px; height: 50px; margin-left: -10px; }
+        .settle-hand-cards .played-face:first-child { margin-left: 0; }
+        .settle-countdown { font-size: 12px; color: #888; margin-top: 8px; }
 
-        /* 手牌区域：缩小 1/3（约为原尺寸 2/3），后牌覆盖前牌 2/3 */
+        /* 手牌区域：提起需留空；重叠约一半，保证点选多张时仍能看到/点到邻牌 */
         .my-cards {
             display: flex;
             flex-wrap: nowrap;
             justify-content: center;
             align-items: flex-end;
             gap: 0;
-            padding: 10px 12px 20px;
-            min-height: 110px;
+            padding: 28px 12px 12px;
+            min-height: 120px;
             max-width: 100%;
             margin: 0 auto;
+            overflow: visible;
         }
 
         /* 扑克牌：原 80×112 → 54×75 */
@@ -139,17 +179,15 @@
         .played-face .card-art { font-size: 23px; }
         .played-face .card-art.pips { font-size: 12px; }
         .card.selected {
-            transform: translateY(-14px);
+            transform: translateY(-22px);
             box-shadow: 0 8px 20px rgba(255,215,0,0.5);
-            z-index: 20;
         }
         .card:not(.selected):hover {
-            transform: translateY(-4px);
-            z-index: 15;
+            transform: translateY(-6px);
         }
-        /* 后一张覆盖前一张的 2/3（露出约 1/3） */
+        /* 后牌覆盖约一半，露出足够牌面便于多选 */
         .my-cards .card {
-            margin-left: -36px;
+            margin-left: -26px;
         }
         .my-cards .card:first-child {
             margin-left: 0;
@@ -175,7 +213,7 @@
         /* 操作按钮区 */
         .action-bar {
             position: absolute;
-            bottom: 120px;
+            bottom: 148px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -267,14 +305,23 @@
             padding: 9px 22px; border-radius: 8px; cursor: pointer;
         }
 
-        /* 底牌区域 */
+        /* 底牌区域：牌桌最上方 */
         .dizhu-cards {
             position: absolute;
-            top: 60px;
+            top: 56px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 8px;
+            gap: 10px;
+            z-index: 45;
+            min-height: 84px;
+            align-items: center;
+        }
+        .dizhu-label {
+            color: #ffd700;
+            font-size: 12px;
+            margin-right: 4px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
         .dizhu-cards .card {
             width: 60px;
@@ -284,17 +331,20 @@
         }
         .dizhu-cards .card img { width: 100%; height: 100%; border-radius: 6px; }
 
-        /* 对手出牌区 */
+        /* 出牌区：靠桌子中央，朝向出牌者 */
         .played-cards {
             position: absolute;
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 0;
             max-width: min(42vw, 360px);
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
         }
-        .played-left { left: 120px; top: 45%; }
-        .played-right { right: 120px; top: 45%; }
-        .played-bottom { bottom: 130px; left: 50%; transform: translateX(-50%); }
+        .played-left { left: 22%; top: 42%; transform: translateY(-50%); }
+        .played-right { right: 22%; top: 42%; transform: translateY(-50%); }
+        .played-bottom { bottom: 38%; left: 50%; transform: translateX(-50%); }
         .played-cards .card {
             width: 50px;
             height: 70px;
@@ -318,7 +368,7 @@
 
         @media (max-width: 640px) {
             .card { width: 44px; height: 62px; }
-            .my-cards .card { margin-left: -29px; }
+            .my-cards .card { margin-left: -22px; }
             .my-cards { padding-left: 8px; padding-right: 8px; }
             .card-corner { font-size: 10px; line-height: 10px; }
             .card-corner .suit { font-size: 9px; line-height: 9px; }
@@ -335,11 +385,12 @@
         }
 
         @media (max-height: 720px) {
-            .my-cards { padding-top: 4px; padding-bottom: 8px; min-height: 90px; }
+            .my-cards { padding-top: 22px; padding-bottom: 8px; min-height: 100px; }
             .card { width: 44px; height: 62px; }
-            .my-cards .card { margin-left: -29px; }
-            .action-bar { bottom: 100px; }
-            .played-bottom { bottom: 112px; }
+            .my-cards .card { margin-left: -22px; }
+            .action-bar { bottom: 128px; }
+            .played-bottom { bottom: 36%; }
+            .player-bottom { bottom: 12px; }
         }
     </style>
     <script src="../../shared/app-base.js"></script>
@@ -389,6 +440,8 @@
                 <h3 id="settleTitle">本局结算</h3>
                 <div class="meta" id="settleMeta"></div>
                 <div id="settleRows"></div>
+                <div class="settle-hands" id="settleHands"></div>
+                <div class="settle-countdown" id="settleCountdown"></div>
                 <button onclick="closeSettle()">继续</button>
             </div>
         </div>
@@ -417,13 +470,19 @@
         var pendingCallbacks = {};
         var gameState = {
             myCards: [],
+            /** 选中的牌值（非下标），出牌时直接发送给服务端 */
             selectedCards: new Set(),
             players: [],
             myPosition: -1,
             lastPlayedCards: [],
             currentOp: null,
-            /** 其他玩家手牌张数（发牌通知里他人牌值为0，但张数有效） */
-            opponentCounts: {}
+            opponentCounts: {},
+            landlordId: 0,
+            bottomCards: [],
+            roomId: parseInt(localStorage.getItem('roomId') || '0'),
+            autoNextRound: false,
+            settleTimer: null,
+            lastChoices: []
         };
 
         // 未登录跳转
@@ -520,12 +579,24 @@
                     if (resp.data.tableInfo) {
                         document.getElementById('roomInfo').textContent =
                             '桌号: ' + resp.data.tableInfo.tableId;
+                        if (resp.data.tableInfo.roomId) {
+                            gameState.roomId = resp.data.tableInfo.roomId;
+                            localStorage.setItem('roomId', String(gameState.roomId));
+                        }
+                        if (resp.data.tableInfo.landlord) {
+                            gameState.landlordId = resp.data.tableInfo.landlord;
+                        }
                     }
+                    gameState.autoNextRound = isQuickRobotRoom(gameState.roomId);
                     showActionButtons('waiting');
                 } else {
                     showCenterMsg(resp.msg || '进入桌子失败');
                 }
             });
+        }
+
+        function isQuickRobotRoom(roomId) {
+            return roomId === 9001 || roomId === 9002 || roomId === 9003;
         }
 
         /** 按牌值升序；同牌值按花色：方块→梅花→红桃→黑桃（左到右） */
@@ -538,13 +609,22 @@
         }
 
         function handleNotCard(data) {
-            // 发牌通知：自己有牌值，他人牌值为0但需按张数显示牌背
+            // 发牌通知：自己有牌值；roleId=0 为桌面底牌；他人牌值为0但张数有效
             if (!data || !data.nCards) return;
             gameState.myCards = [];
             gameState.opponentCounts = {};
+            var bottom = [];
+            var maxCount = 0;
+            var landlordCandidate = 0;
             for (var i = 0; i < data.nCards.length; i++) {
                 var nc = data.nCards[i];
                 if (!nc.cards) continue;
+                if (nc.roleId === 0) {
+                    for (var b = 0; b < nc.cards.length; b++) {
+                        if (nc.cards[b].value) bottom.push(nc.cards[b].value);
+                    }
+                    continue;
+                }
                 if (nc.roleId === userId) {
                     for (var j = 0; j < nc.cards.length; j++) {
                         gameState.myCards.push(nc.cards[j].value);
@@ -552,19 +632,39 @@
                 } else {
                     gameState.opponentCounts[nc.roleId] = nc.cards.length;
                 }
+                if (nc.cards.length > maxCount) {
+                    maxCount = nc.cards.length;
+                    landlordCandidate = nc.roleId;
+                }
+            }
+            if (bottom.length) {
+                gameState.bottomCards = bottom;
+                renderDizhuCards(bottom);
+            }
+            // 20 张视为地主（17+3 底牌）
+            if (maxCount >= 20 && landlordCandidate) {
+                gameState.landlordId = landlordCandidate;
             }
             sortHandCards(gameState.myCards);
             gameState.selectedCards.clear();
             renderMyCards();
             renderOpponentHands();
-            showCenterMsg('发牌完成');
+            showCenterMsg(bottom.length ? '地主亮牌' : '发牌完成');
         }
 
-        /** 出牌确认：刷新中央出牌，并同步自己手牌 / 他人牌背张数 */
+        /** 出牌确认：只保留最后一手；过牌显示「不要」；同步手牌张数 */
         function handleAckOp(data) {
             var cards = data.cards || [];
-            renderPlayedCards(data.opFrom, cards);
+            var choice = data.choice;
+            if (choice === 0 || (!cards.length && choice !== 6)) {
+                showPassHint(data.opFrom);
+                return;
+            }
             if (!cards.length) return;
+            clearAllPlayedAreas();
+            clearPassHints();
+            renderPlayedCards(data.opFrom, cards);
+            gameState.lastPlayedCards = cards.slice();
             if (data.opFrom === userId) {
                 for (var i = 0; i < cards.length; i++) {
                     var idx = gameState.myCards.indexOf(cards[i]);
@@ -580,20 +680,34 @@
         }
 
         function handleNotOp(data) {
-            // 操作通知
             if (!data) return;
             var opSeat = data.opSeat;
             highlightActivePlayer(opSeat);
-
-            // 判断是否轮到自己操作
+            var choices = data.choice || [];
+            // 仅有出牌、无可过：新一轮首出，清掉桌面上一手牌
+            var hasPlay = false, hasPass = false, hasPrepare = false;
+            for (var i = 0; i < choices.length; i++) {
+                if (choices[i].choice === 6) hasPlay = true;
+                if (choices[i].choice === 0) hasPass = true;
+                if (choices[i].choice === 7) hasPrepare = true;
+            }
+            if (hasPlay && !hasPass) {
+                clearAllPlayedAreas();
+                clearPassHints();
+            }
+            if (hasPrepare) {
+                showActionButtons('prepare');
+                return;
+            }
             if (gameState.myPosition >= 0 && opSeat === gameState.myPosition) {
-                var choices = data.choice || [];
+                gameState.lastChoices = choices;
                 showOperationChoices(choices);
+            } else {
+                hideActions();
             }
         }
 
         function handleNotState(data) {
-            // 桌子状态通知
             if (data && data.state === TABLE_STATE_DIS) {
                 if (ws) ws.onclose = null;
                 window.location.href = appUrl('/pages/home/room.html');
@@ -601,13 +715,21 @@
             }
             if (data.state === 1) {
                 document.getElementById('tableState').textContent = '游戏进行中';
+            } else if (data.state === 10) {
+                document.getElementById('tableState').textContent = '小结算';
             } else {
                 document.getElementById('tableState').textContent = '等待中';
+                clearAllPlayedAreas();
+                clearPassHints();
+                gameState.bottomCards = [];
+                document.getElementById('dizhuCards').innerHTML = '';
+                gameState.landlordId = 0;
             }
         }
 
         function handleNotResult(data) {
             if (!data) return;
+            if (data.landlord_id) gameState.landlordId = data.landlord_id;
             var title = data.win_team === 0 ? '地主获胜' : '农民获胜';
             if (data.spring) title += ' · 春天';
             if (data.anti_spring) title += ' · 反春';
@@ -619,12 +741,27 @@
             for (var i = 0; i < players.length; i++) {
                 var p = players[i];
                 var tag = (p.roleId === data.landlord_id) ? '地主' : '农民';
-                rows += '<div class="row"><span>玩家 ' + p.roleId + '（' + tag + '）</span>'
+                var name = findPlayerName(p.roleId);
+                rows += '<div class="row"><span>' + name + '（' + tag + '）</span>'
                     + '<span>余牌 ' + ((p.cards && p.cards.length) || 0) + '</span></div>';
             }
-            showSettle(title, meta, rows);
+            showSettle(title, meta, rows, players, data.landlord_id);
             showCenterMsg(title, 2500);
-            showActionButtons('prepare');
+            if (!gameState.autoNextRound) {
+                showActionButtons('prepare');
+            } else {
+                hideActions();
+            }
+        }
+
+        function findPlayerName(roleId) {
+            if (roleId === userId) return nickname || '我';
+            for (var i = 0; i < gameState.players.length; i++) {
+                if (gameState.players[i].roleId === roleId) {
+                    return gameState.players[i].nickName || ('玩家' + roleId);
+                }
+            }
+            return '玩家' + roleId;
         }
 
         function handleNotGameResult(data) {
@@ -641,15 +778,64 @@
             showActionButtons('prepare');
         }
 
-        function showSettle(title, meta, rowsHtml) {
+        function showSettle(title, meta, rowsHtml, remainPlayers, landlordId) {
             document.getElementById('settleTitle').textContent = title || '结算';
             document.getElementById('settleMeta').textContent = meta || '';
             document.getElementById('settleRows').innerHTML = rowsHtml || '';
+            var hands = document.getElementById('settleHands');
+            hands.innerHTML = '';
+            if (remainPlayers && remainPlayers.length) {
+                for (var i = 0; i < remainPlayers.length; i++) {
+                    var p = remainPlayers[i];
+                    var cards = p.cards || [];
+                    if (!cards.length) continue;
+                    var row = document.createElement('div');
+                    row.className = 'settle-hand-row';
+                    var tag = (p.roleId === landlordId) ? '地主' : '农民';
+                    row.innerHTML = '<div class="label">' + findPlayerName(p.roleId) + '（' + tag + '）剩余手牌</div>';
+                    var wrap = document.createElement('div');
+                    wrap.className = 'settle-hand-cards';
+                    for (var c = 0; c < cards.length; c++) {
+                        var face = createCardFace(cards[c]);
+                        face.classList.add('played-face');
+                        wrap.appendChild(face);
+                    }
+                    row.appendChild(wrap);
+                    hands.appendChild(row);
+                }
+            }
             document.getElementById('settleOverlay').className = 'settle-overlay show';
+            var cd = document.getElementById('settleCountdown');
+            if (gameState.settleTimer) {
+                clearInterval(gameState.settleTimer);
+                gameState.settleTimer = null;
+            }
+            if (gameState.autoNextRound) {
+                var left = 15;
+                cd.textContent = '小结算展示中，' + left + ' 秒后自动准备下一局';
+                gameState.settleTimer = setInterval(function() {
+                    left -= 1;
+                    if (left <= 0) {
+                        clearInterval(gameState.settleTimer);
+                        gameState.settleTimer = null;
+                        closeSettle();
+                        // 快速房由服务端 TABLE_OVER 超时自动准备开下一局，前端只负责清小结算展示
+                        return;
+                    }
+                    cd.textContent = '小结算展示中，' + left + ' 秒后自动准备下一局';
+                }, 1000);
+            } else {
+                cd.textContent = '请手动准备后开始下一局';
+            }
         }
 
         function closeSettle() {
             document.getElementById('settleOverlay').className = 'settle-overlay';
+            document.getElementById('settleCountdown').textContent = '';
+            if (gameState.settleTimer) {
+                clearInterval(gameState.settleTimer);
+                gameState.settleTimer = null;
+            }
         }
 
         function doOp(choice) {
@@ -657,6 +843,10 @@
             gameState.selectedCards.forEach(function(cardValue) {
                 selected.push({ value: cardValue });
             });
+            if (choice === 6 && selected.length === 0) {
+                showCenterMsg('请先选择要出的牌');
+                return;
+            }
 
             sendWsMessage('op', {
                 choice: choice,
@@ -664,6 +854,11 @@
             }, function(resp) {
                 if (resp.code !== 0) {
                     showCenterMsg(resp.msg || '操作失败');
+                    // 失败时保留选牌，并恢复刚才的操作按钮
+                    if (gameState.lastChoices && gameState.lastChoices.length) {
+                        showOperationChoices(gameState.lastChoices);
+                    }
+                    return;
                 }
                 gameState.selectedCards.clear();
                 renderMyCards();
@@ -729,51 +924,105 @@
         function renderMyCards() {
             var container = document.getElementById('myCards');
             container.innerHTML = '';
-
             for (var i = 0; i < gameState.myCards.length; i++) {
                 var cardId = gameState.myCards[i];
                 var card = document.createElement('div');
-                card.className = 'card' + (gameState.selectedCards.has(i) ? ' selected' : '');
+                card.className = 'card' + (gameState.selectedCards.has(cardId) ? ' selected' : '');
                 card.dataset.index = i;
-
+                card.style.zIndex = String(i + 1);
                 card.appendChild(createCardFace(cardId));
-
-                card.onclick = (function(idx) {
-                    return function() {
-                        toggleCard(idx);
+                card.onclick = (function(value) {
+                    return function(ev) {
+                        ev.stopPropagation();
+                        toggleCard(value);
                     };
-                })(i);
-
+                })(cardId);
                 container.appendChild(card);
+            }
+            renderPlayerLabels();
+        }
+
+        function renderDizhuCards(cardValues) {
+            var box = document.getElementById('dizhuCards');
+            box.innerHTML = '';
+            if (!cardValues || !cardValues.length) return;
+            var label = document.createElement('span');
+            label.className = 'dizhu-label';
+            label.textContent = '底牌';
+            box.appendChild(label);
+            for (var i = 0; i < cardValues.length; i++) {
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.appendChild(createCardFace(cardValues[i]));
+                box.appendChild(card);
             }
         }
 
-        /** 将服务器广播的出牌结果显示在牌桌中央，避免只更新手牌而看不到中间牌。 */
-        function renderPlayedCards(roleId, cardValues) {
-            var target = null;
-            if (roleId === userId) target = document.getElementById('playedBottom');
-            else {
-                for (var i = 0; i < gameState.players.length; i++) {
-                    if (gameState.players[i].roleId === roleId) {
-                        var rel = (gameState.players[i].position - gameState.myPosition + 3) % 3;
-                        target = document.getElementById(rel === 1 ? 'playedLeft' : 'playedRight');
-                        break;
-                    }
+        function clearAllPlayedAreas() {
+            ['playedLeft', 'playedRight', 'playedBottom'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.innerHTML = '';
+            });
+        }
+
+        function playedTargetForRole(roleId) {
+            if (roleId === userId) return document.getElementById('playedBottom');
+            for (var i = 0; i < gameState.players.length; i++) {
+                if (gameState.players[i].roleId === roleId) {
+                    var rel = (gameState.players[i].position - gameState.myPosition + 3) % 3;
+                    return document.getElementById(rel === 1 ? 'playedLeft' : 'playedRight');
                 }
             }
+            return null;
+        }
+
+        /** 将最后一手牌放到对应方位（朝向出牌者）。 */
+        function renderPlayedCards(roleId, cardValues) {
+            var target = playedTargetForRole(roleId);
             if (!target) return;
             target.innerHTML = '';
             (cardValues || []).forEach(function (value) {
-                var face = createCardFace(value); face.classList.add('played-face'); target.appendChild(face);
+                var face = createCardFace(value);
+                face.classList.add('played-face');
+                target.appendChild(face);
             });
         }
-        function toggleCard(index) {
-            if (gameState.selectedCards.has(index)) {
-                gameState.selectedCards.delete(index);
+
+        function showPassHint(roleId) {
+            var target = playedTargetForRole(roleId);
+            if (!target) return;
+            target.innerHTML = '<div class="pass-hint">不要</div>';
+        }
+
+        function clearPassHints() {
+            ['playedLeft', 'playedRight', 'playedBottom'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                if (el.querySelector('.pass-hint')) el.innerHTML = '';
+            });
+        }
+
+        function toggleCard(cardValue) {
+            if (gameState.selectedCards.has(cardValue)) {
+                gameState.selectedCards.delete(cardValue);
             } else {
-                gameState.selectedCards.add(index);
+                gameState.selectedCards.add(cardValue);
             }
             renderMyCards();
+        }
+
+        function roleBadgeHtml(roleId) {
+            if (!gameState.landlordId) return '';
+            if (roleId === gameState.landlordId) {
+                return '<span class="avatar-mark landlord">地</span><span class="role-badge landlord">地主</span>';
+            }
+            return '<span class="avatar-mark farmer">农</span><span class="role-badge farmer">农民</span>';
+        }
+
+        function renderPlayerLabels() {
+            var bottom = document.getElementById('playerBottom');
+            bottom.innerHTML = roleBadgeHtml(userId)
+                + '<span class="name" id="myName">' + (nickname || '我') + '</span>';
         }
 
         function renderCardBacks(containerId, count) {
@@ -786,19 +1035,21 @@
             }
         }
 
-        /** 根据相对座位刷新左右对手牌背与张数（牌值为0时仍显示牌背） */
+        /** 根据相对座位刷新左右对手牌背、张数与地主/农民标识 */
         function renderOpponentHands() {
             var leftEl = document.getElementById('playerLeft');
             var rightEl = document.getElementById('playerRight');
             var players = gameState.players || [];
+            renderPlayerLabels();
             for (var i = 0; i < players.length; i++) {
                 var p = players[i];
                 if (p.roleId === userId) continue;
                 var cardCount = gameState.opponentCounts[p.roleId];
                 if (cardCount == null) cardCount = p.cardCount || 0;
                 var displayName = p.nickName || (p.robot || p.roleId < 0 ? '机器人' : '玩家');
-                var nameHtml = '<span class="name">' + displayName + '</span>' +
-                    '<span class="card-count">' + cardCount + '张</span>';
+                var nameHtml = roleBadgeHtml(p.roleId)
+                    + '<span class="name">' + displayName + '</span>'
+                    + '<span class="card-count">' + cardCount + '张</span>';
                 var relPos = (p.position - gameState.myPosition + 3) % 3;
                 if (relPos === 1) {
                     leftEl.innerHTML = nameHtml;

@@ -60,9 +60,10 @@
             text-align: center;
         }
         .player-bottom {
-            bottom: 0; left: 50%;
+            bottom: 16px; left: 50%;
             transform: translateX(-50%);
             width: 100%;
+            z-index: 40;
         }
         .player-top {
             top: 80px; left: 50%;
@@ -95,8 +96,10 @@
         .my-tiles {
             display: flex;
             justify-content: center;
-            padding: 10px 0 20px;
+            align-items: flex-end;
+            padding: 26px 8px 10px;
             min-height: 120px;
+            overflow: visible;
         }
         .tile {
             width: 50px;
@@ -117,14 +120,15 @@
             border-radius: 5px;
         }
         .tile.selected {
-            transform: translateY(-18px);
+            transform: translateY(-22px);
             box-shadow: 0 8px 16px rgba(255,215,0,0.5);
         }
         .tile:not(.selected):hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
         }
+        /* 重叠减半，提起后邻牌仍可见可点 */
         .my-tiles .tile {
-            margin-left: -18px;
+            margin-left: -12px;
         }
         .my-tiles .tile:first-child {
             margin-left: 0;
@@ -188,7 +192,7 @@
         /* 操作按钮 */
         .action-bar {
             position: absolute;
-            bottom: 130px;
+            bottom: 150px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -749,6 +753,7 @@
                 var tile = document.createElement('div');
                 tile.className = 'tile' + (gameState.selectedTile === i ? ' selected' : '');
                 tile.dataset.index = i;
+                tile.style.zIndex = String(i + 1);
 
                 var img = document.createElement('img');
                 img.src = getTileImagePath(tileId);

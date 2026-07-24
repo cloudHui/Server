@@ -92,6 +92,7 @@ public class CardPool {
 
 	/**
 	 * 将底牌并入地主手牌并再次通知手牌。
+	 * 底牌 ID 写入上下文，NotCard 末尾以 roleId=0 附带正面牌值，供桌面顶部展示。
 	 */
 	public void attachBottomToLandlord(Table table, int landlordSeat) {
 		TableUser landlord = table.getSeatUser(landlordSeat);
@@ -99,14 +100,23 @@ public class CardPool {
 			logger.error("attachBottomToLandlord landlord null seat:{} table:{}", landlordSeat, table.getTableId());
 			return;
 		}
+		List<Integer> bottomIds = new ArrayList<>(bottomCards.size());
 		for (Card c : bottomCards) {
+			bottomIds.add(c.getId());
 			landlord.addCards(c);
 		}
 		bottomCards.clear();
+		if (table instanceof game.manager.table.DdzTable) {
+			((game.manager.table.DdzTable) table).getDdz().setRevealedBottomCards(bottomIds);
+		}
 		sendInitCardNotice(table.getSeatUsers());
 	}
 
 	public void sendInitCardNotice(Map<Integer, TableUser> seatUsers) {
+		List<Integer> bottomIds = Collections.emptyList();
+		if (table instanceof game.manager.table.DdzTable) {
+			bottomIds = ((game.manager.table.DdzTable) table).getDdz().getRevealedBottomCards();
+		}
 		for (Map.Entry<Integer, TableUser> entry : seatUsers.entrySet()) {
 			TableUser sendUser = entry.getValue();
 			GameProto.NotCard.Builder builder = GameProto.NotCard.newBuilder();
@@ -119,6 +129,14 @@ public class CardPool {
 					nCards.addCards(GameProto.Card.newBuilder().setValue(owner ? card.getId() : 0).build());
 				}
 				builder.addNCards(nCards.build());
+			}
+			// 末尾附加底牌（roleId=0），机器人取首个正面牌组为自己，不受影响。
+			if (!bottomIds.isEmpty()) {
+				GameProto.NCardsInfo.Builder bottom = GameProto.NCardsInfo.newBuilder().setRoleId(0);
+				for (int id : bottomIds) {
+					bottom.addCards(GameProto.Card.newBuilder().setValue(id).build());
+				}
+				builder.addNCards(bottom.build());
 			}
 			sendUser.sendRoleMessage(builder.build(), GMsg.NOT_CARD, table.getTableId());
 			logger.info("table:{} role:{} sendCardNotify", table.getTableId(), sendUser.getUserId());

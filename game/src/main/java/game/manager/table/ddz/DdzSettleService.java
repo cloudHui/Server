@@ -61,6 +61,10 @@ public final class DdzSettleService {
 		saveReplay(table, winner, settleFactor, winType, scores);
 		sendResultMessage(table, winner, rPlayers(table), landlordUserId, winTeam, ctx, spring, antiSpring, settleFactor, seatNum, scores, winType);
 
+		// 地主胜连庄优先叫；农民胜则地主下家优先叫牌。
+		int nextCall = landlordWin ? landlordSeat : (landlordSeat + 1) % seatNum;
+		table.setNextFirstCallSeat(nextCall);
+
 		table.upNextStateWithTime(TableState.TABLE_OVER, System.currentTimeMillis());
 	}
 
